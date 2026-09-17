@@ -1,0 +1,15 @@
+# The repository is worked on from Windows and built on Linux. Without this,
+# one machine commits CRLF and the next commits LF, and a one-line change shows
+# up as the whole file.
+* text=auto eol=lf
+
+# Binary, so git never tries to normalise or diff them as text.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.woff binary
+*.woff2 binary
+*.pdf  binary

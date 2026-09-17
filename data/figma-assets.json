@@ -1,0 +1,609 @@
+{
+  "_comment": "Figma asset manifest for the built pages. Node ids are recorded so any asset can be re-exported if a URL expires. Figma export URLs live about 7 days from the date they were pulled; the original set was pulled 15 Sep 2026. Entries carrying their own `fileKey` come from the designer's updated copy (jWPItVReOYx661IlH738fg) rather than the top-level file, and were pulled 16 Sep 2026. Run `node scripts/fetch-figma-assets.mjs --missing` to pull only what is not on disk.",
+  "fileKey": "E9vPA3ZvIjK6kx8MVLqY6R",
+  "assets": [
+    {
+      "to": "public/images/logo.png",
+      "id": "b352233d-bdba-42f2-ad6d-cf6f64450a7b.png",
+      "node": "6107:1841",
+      "name": "Logo"
+    },
+    {
+      "to": "public/images/mail-in-icon.png",
+      "id": "14661646-b0e8-4fdf-bf92-22912c850860.png",
+      "node": "6225:5016",
+      "name": "Mail In Program icon"
+    },
+    {
+      "to": "public/images/icons/search-23.svg",
+      "id": "d160c64a-e6df-44c3-82a2-371800357a4b.svg",
+      "node": "6029:15692",
+      "name": "search icon"
+    },
+    {
+      "to": "public/images/icons/close-24.svg",
+      "id": "a4b33474-71dd-4195-be92-771f509bd8c9.svg",
+      "node": "6032:16940",
+      "name": "close icon"
+    },
+    {
+      "to": "public/images/icons/chevron-14.svg",
+      "id": "042fba42-6f30-4e12-8f3a-45a812b7e0cb.svg",
+      "node": "6029:15548",
+      "name": "chevron 14"
+    },
+    {
+      "to": "public/images/home/hero-photo.png",
+      "id": "45ee6c02-f43f-49ba-ad95-1dcf26b2a53a.png",
+      "node": "6107:2803",
+      "name": "hero photograph \u2014 export 6107:2803 (e-waste bin). Comes back 1920x940 with frame 6023:13153\u2019s 55% opacity and the #0b1f3a base already baked in, so Hero.tsx draws it at full opacity."
+    },
+    {
+      "to": "public/images/icons/chevron-24.svg",
+      "id": "9a789920-e2a9-4d41-b953-75a65befac29.svg",
+      "node": "6107:781",
+      "name": "chevron 24"
+    },
+    {
+      "to": "public/images/icons/arrow-white.svg",
+      "id": "6b1d1cf1-7c48-4092-808b-d230829aa64b.svg",
+      "node": "I6032:16992;6032:16984",
+      "name": "arrow right white"
+    },
+    {
+      "to": "public/images/icons/arrow-teal.svg",
+      "id": "1d98ff20-1831-43da-863a-aa0d43e982cd.svg",
+      "node": "I6107:1552;6107:2837;6032:15855",
+      "name": "arrow right teal"
+    },
+    {
+      "to": "public/images/home/cert-1.png",
+      "id": "4709a344-b97b-4eae-8bae-46bb349c0fea.png",
+      "node": "6044:19739",
+      "name": "cert logo 1"
+    },
+    {
+      "to": "public/images/home/cert-2.png",
+      "id": "a4c49303-9679-4121-b488-d88fe49a3043.png",
+      "node": "6044:19741",
+      "name": "cert logo 2"
+    },
+    {
+      "to": "public/images/home/cert-3.png",
+      "id": "92a64ca4-1b0d-4017-9f7b-6a98d7127437.png",
+      "node": "6044:19743",
+      "name": "cert logo 3"
+    },
+    {
+      "to": "public/images/home/cert-4.png",
+      "id": "784ea83c-241a-4872-bb4e-6668d22f38e5.png",
+      "node": "6044:19745",
+      "name": "cert logo 4"
+    },
+    {
+      "to": "public/images/home/cert-5.png",
+      "id": "7fc18ebf-62e1-4a87-94d4-dfb895c0784c.png",
+      "node": "6044:19749",
+      "name": "cert logo 5"
+    },
+    {
+      "to": "public/images/home/svc-bulbs.png",
+      "id": "041f6b63-0b99-42cb-8b45-b604cd71b7e4.png",
+      "node": "6040:17981",
+      "name": "bulbs icon"
+    },
+    {
+      "to": "public/images/home/svc-electronics.png",
+      "id": "272dd35f-4dc0-4900-a4f4-e709a76e48bb.png",
+      "node": "6040:18098",
+      "name": "electronics icon"
+    },
+    {
+      "to": "public/images/home/svc-batteries.png",
+      "id": "b63dba1a-a000-4ba5-8d68-922b610c56f9.png",
+      "node": "6040:18107",
+      "name": "batteries icon"
+    },
+    {
+      "to": "public/images/home/svc-ballasts.png",
+      "id": "f4a038a5-6fbe-4a98-b35d-f31005376bdf.png",
+      "node": "6040:18117",
+      "name": "ballasts icon"
+    },
+    {
+      "to": "public/images/home/svc-tv.png",
+      "id": "5d113dc2-bb0d-4294-ba4d-b3c8da25760b.png",
+      "node": "6040:18124",
+      "name": "tv icon"
+    },
+    {
+      "to": "public/images/icons/tab-recycling.png",
+      "id": "afcbb65c-7976-4190-a095-f4d9fb0313eb.png",
+      "node": "I6107:1552;6107:2807",
+      "name": "tab recycling"
+    },
+    {
+      "to": "public/images/icons/tab-destruction.png",
+      "id": "1b772848-f0f0-4d82-a9a7-efadaa6bb50c.png",
+      "node": "I6107:1552;6107:1150",
+      "name": "tab destruction"
+    },
+    {
+      "to": "public/images/icons/tab-programs.png",
+      "id": "02b97769-64a8-4def-b9be-1a551c0d751c.png",
+      "node": "I6107:1552;6107:1159",
+      "name": "tab programs"
+    },
+    {
+      "to": "public/images/home/ind-retail.png",
+      "id": "f12cdd3f-bf1f-4ef6-9721-8277599bac20.png",
+      "node": "6040:18301",
+      "name": "Retail"
+    },
+    {
+      "to": "public/images/home/ind-manufacturing.png",
+      "id": "ecc5a129-8d1b-4084-93b0-abb6d1a08bae.png",
+      "node": "6040:18394",
+      "name": "Manufacturing"
+    },
+    {
+      "to": "public/images/home/ind-healthcare.png",
+      "id": "d469f0ff-6a74-4d5b-bcc6-0c78f69eac69.png",
+      "node": "6040:18412",
+      "name": "Healthcare"
+    },
+    {
+      "to": "public/images/home/ind-construction.png",
+      "id": "df821096-fb99-4b68-8bb6-3204cae9e097.png",
+      "node": "6040:18425",
+      "name": "Construction"
+    },
+    {
+      "to": "public/images/home/ind-logistics.png",
+      "id": "bbe604eb-d570-4eb5-9a0f-1ac8ac0ff1a8.png",
+      "node": "6040:18448",
+      "name": "Distribution & Logistics"
+    },
+    {
+      "to": "public/images/home/ind-banking.png",
+      "id": "3e77263c-72c3-4467-bce7-b255df59b551.png",
+      "node": "6040:18460",
+      "name": "Banking & Finance"
+    },
+    {
+      "to": "public/images/home/ind-food.png",
+      "id": "704adc0e-0942-42f0-bf79-18782771160b.png",
+      "node": "6040:18488",
+      "name": "Food Services"
+    },
+    {
+      "to": "public/images/home/ind-education.png",
+      "id": "36c896e3-6c1f-45bd-96d6-a196940c3175.png",
+      "node": "6040:18502",
+      "name": "Education & Government"
+    },
+    {
+      "to": "public/images/icons/step-arrow.png",
+      "id": "236b04ba-7da0-4f96-9b02-ad1a114c0a12.png",
+      "node": "6044:18843",
+      "name": "step connector arrow"
+    },
+    {
+      "to": "public/images/icons/step-badge.svg",
+      "id": "ae3459c6-21bc-41ea-a8e1-0e8f6031b3b0.svg",
+      "node": "6044:18774",
+      "name": "step number badge"
+    },
+    {
+      "to": "public/images/home/step-1.svg",
+      "id": "7d0beb68-16c2-4d59-b83d-864eb606fb83.svg",
+      "node": "6044:18763",
+      "name": "step 1 glyph"
+    },
+    {
+      "to": "public/images/home/step-2.svg",
+      "id": "282b7b21-c3de-4455-a7a6-d38fd953774f.svg",
+      "node": "6044:18794",
+      "name": "step 2 glyph"
+    },
+    {
+      "to": "public/images/home/step-3.svg",
+      "id": "c21f79f3-630e-4029-a17e-3f4d8ac6b83c.svg",
+      "node": "6044:18807",
+      "name": "step 3 glyph (reused for step 4 in the design)"
+    },
+    {
+      "to": "public/images/home/why-bg.png",
+      "id": "1e5d5f6f-1a55-46c5-9c51-493b54c06eeb.png",
+      "node": "6065:21654",
+      "name": "why-choose background"
+    },
+    {
+      "to": "public/images/icons/stat-icon.svg",
+      "id": "3656ad5f-e539-4e10-a3a1-903d2279f02e.svg",
+      "node": "6065:21682",
+      "name": "stat card icon"
+    },
+    {
+      "to": "public/images/home/map.png",
+      "id": "85c4a494-967b-4f69-a1f1-4509163c47c0.png",
+      "node": "6024:14083",
+      "name": "US coverage map"
+    },
+    {
+      "to": "public/images/home/impact.png",
+      "id": "eee3b653-49d4-4fbc-8a0e-d1de011c44e9.png",
+      "node": "6044:19124",
+      "name": "impact banner art"
+    },
+    {
+      "to": "public/images/icons/pin-card.png",
+      "id": "347c3249-ab0e-4a5c-accc-c6a22d2fadba.png",
+      "node": "6044:19532",
+      "name": "facility card pin"
+    },
+    {
+      "to": "public/images/icons/map-pin.svg",
+      "id": "f02bd380-929b-4e78-a980-c4ce64dff462.svg",
+      "node": "6044:19535",
+      "name": "map pin"
+    },
+    {
+      "to": "public/images/icons/map-dot-outer.svg",
+      "id": "1e57c441-73ca-4e39-b574-6bd2a7c88d1b.svg",
+      "node": "6044:19548",
+      "name": "map dot outer"
+    },
+    {
+      "to": "public/images/icons/map-dot-inner.svg",
+      "id": "5122e3ac-72a8-4ec9-ac3d-de4d32209fe8.svg",
+      "node": "6044:19549",
+      "name": "map dot inner"
+    },
+    {
+      "to": "public/images/icons/star.svg",
+      "id": "d622ae22-d3d8-4c41-8123-c06228f61dbc.svg",
+      "node": "6024:14178",
+      "name": "review star"
+    },
+    {
+      "to": "public/images/icons/google.svg",
+      "id": "35ed3851-e965-4b83-a9a2-cbb666139e5f.svg",
+      "node": "6024:14193",
+      "name": "google mark"
+    },
+    {
+      "to": "public/images/home/case-1.png",
+      "id": "ed987c82-199d-4ae6-9ac9-3492ff2da56a.png",
+      "node": "6044:19196",
+      "name": "case study 1"
+    },
+    {
+      "to": "public/images/home/case-2.png",
+      "id": "82a3bb80-96fe-4d5a-9ca3-a021dfc6b4c8.png",
+      "node": "6044:19227",
+      "name": "case study 2"
+    },
+    {
+      "to": "public/images/home/case-3.png",
+      "id": "10be5451-f1f4-4fdc-bad8-1c2ea8a25911.png",
+      "node": "6044:19264",
+      "name": "case study 3"
+    },
+    {
+      "to": "public/images/home/cta-bg.png",
+      "id": "cc0ad4c5-0604-47e1-ab8b-25955392e885.png",
+      "node": "6107:3979",
+      "name": "final CTA background"
+    },
+    {
+      "to": "public/images/home/cta-art.png",
+      "id": "6d1a0440-ac16-492f-ad52-00cbe10394b2.png",
+      "node": "6107:3167",
+      "name": "final CTA artwork"
+    },
+    {
+      "to": "public/images/icons/foot-mail.png",
+      "id": "0569a03b-27c0-495c-ac2f-b4209a40189e.png",
+      "node": "6059:21193",
+      "name": "footer mail icon"
+    },
+    {
+      "to": "public/images/icons/foot-pin.png",
+      "id": "04f0d2c0-44e5-4ec8-bd78-f848a90e05a7.png",
+      "node": "6107:3044",
+      "name": "footer pin icon"
+    },
+    {
+      "to": "public/images/icons/foot-phone.png",
+      "id": "66d765e1-a2cc-481a-865d-5509730273a0.png",
+      "node": "6107:3048",
+      "name": "footer phone icon"
+    },
+    {
+      "to": "public/images/home/svc-harddrive.png",
+      "id": "6059234e-ce61-433f-a638-28a1cdebfc96.png",
+      "node": "6142:784",
+      "name": "hard drive destruction icon"
+    },
+    {
+      "to": "public/images/home/svc-offsite.png",
+      "id": "15c87e49-aab3-4f42-8913-76d5d92aa859.png",
+      "node": "6142:784",
+      "name": "off-site shredding icon"
+    },
+    {
+      "to": "public/images/home/svc-paper.png",
+      "id": "32aab21e-a9b6-49bb-8da1-663aad38d18b.png",
+      "node": "6142:784",
+      "name": "paper shredding icon"
+    },
+    {
+      "to": "public/images/home/svc-mailin.png",
+      "id": "29371515-bc5d-4561-82a1-990fe22b8bf6.png",
+      "node": "6142:784",
+      "name": "mail in program icon"
+    },
+    {
+      "to": "public/images/icons/foot-email.png",
+      "id": "f54f54be-7ab2-44bf-aa06-93802e959291.png",
+      "node": "6107:3064",
+      "name": "footer email icon"
+    },
+    {
+      "to": "public/images/icons/chat-icon.png",
+      "id": "e1789282-a03c-4c17-b2e7-a213e1bb0722.png",
+      "node": "6107:3084",
+      "name": "footer chat icon"
+    },
+    {
+      "to": "public/images/services/hero.png",
+      "id": "4505b889-4aa2-4886-902e-fe49216fa420.png",
+      "node": "6142:787",
+      "name": "Services hero \u2014 base plate"
+    },
+    {
+      "to": "public/images/services/hero-photo.png",
+      "id": "12951b71-abfe-4cd1-b563-588a0eed3ac8.png",
+      "node": "6142:788",
+      "name": "Services hero \u2014 photo"
+    },
+    {
+      "to": "public/images/icons/mail-24.svg",
+      "id": "0cee8e10-2829-476a-8aa2-ecf12046c974.svg",
+      "node": "6166:2761",
+      "name": "mail icon (Don't See Your Item input)"
+    },
+    {
+      "to": "public/images/services/hero-bg.png",
+      "id": "6d174ba2-cc63-4b0d-a350-826dbcce3249.png",
+      "node": "6472:3967",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Shared interior hero photo, 1920x470 as exported. Still what every interior page except /services/ draws; the designer has since given each page its own."
+    },
+    {
+      "to": "public/images/home/cta-ewaste-flat.png",
+      "id": "df50a454-6103-4e51-aabb-dceb2be651d6.png",
+      "node": "6478:5192",
+      "fileKey": "jWPItVReOYx661IlH738fg",
+      "name": "Final CTA artwork 'image 426' (replaces home/cta-art.png) - 527x328. Arrives as an OPAQUE plate of #0c4e5a because a node export is rendered on the fill behind it; run scripts/cut-figma-plate.mjs on it to produce the cut-out the site actually loads, home/cta-ewaste.png."
+    },
+    {
+      "to": "public/images/services/hero-services.png",
+      "id": "c22c322c-c8d6-4bf6-8a88-b557d568e7f5.png",
+      "node": "6472:3862",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "/services/ hero photo - the recycling floor. Exported 1920x470 (clipped to the frame)."
+    },
+    {
+      "to": "public/images/services/detail-intro.png",
+      "id": "b9844a4d-1330-4f1a-b3e6-a3bc0687d29e.png",
+      "node": "6197:4467",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Service detail - first split block photo, 568x295. Replaces electronics-intro.png."
+    },
+    {
+      "to": "public/images/services/detail-process.png",
+      "id": "b34d4156-be15-4288-87dd-4e01cd1ed361.png",
+      "node": "6173:4390",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Service detail - second split block photo, 750x579. Replaces electronics-process.png."
+    },
+    {
+      "to": "public/images/services/hero-electronics.png",
+      "id": "8ec671c5-efa9-401f-9a5c-8fb472a846ff.png",
+      "node": "6491:5727",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "/electronic-recycle/ hero photo, from the per-service hero frame 6491:5724. Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-light-bulbs.png",
+      "id": "df73584a-5b51-4ffd-aa11-35877a071682.png",
+      "node": "6491:5763",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for light-bulbs - Figma frame \"Lighting Bulbs Recycling (6491:5760)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-batteries.png",
+      "id": "8e20b288-14a4-479b-bcab-39c18ea1f4e9.png",
+      "node": "6491:5790",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for battery-recycling - Figma frame \"Batteries Recycling Service (6491:5787)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-ballasts.png",
+      "id": "dc2a0219-b67c-4183-983e-18f0ac9cbae2.png",
+      "node": "6491:5817",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for ballasts - Figma frame \"Ballasts Recycling (6491:5814)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-television.png",
+      "id": "5a2136f2-88ca-4621-bd29-8884c59561e5.png",
+      "node": "6491:5844",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for tv-recycling - Figma frame \"Television Recycling (6491:5841)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-hard-drives.png",
+      "id": "80d31ee3-4ded-462c-bc5e-05ea520ddf35.png",
+      "node": "6491:5871",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for hard-drive-destruction - Figma frame \"Hard Drives Destruction (6491:5868)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-paper-shredding.png",
+      "id": "a8486071-e550-4465-996b-86294696d685.png",
+      "node": "6491:5898",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for paper-shredding - Figma frame \"Paper Shredding (6491:5895)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-off-site-shredding.png",
+      "id": "ab7d9284-43cd-4739-ae5e-4f4584b2d93c.png",
+      "node": "6491:5925",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for off-site-shredding - Figma frame \"Off Site Shredding (6491:5922)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/services/hero-mail-in.png",
+      "id": "a4c36616-d89c-4ce8-8173-1777e0d98f8d.png",
+      "node": "6491:6006",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo for mail-in-recycling - Figma frame \"Mail In Program (6491:6003)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-industries.png",
+      "id": "0a85ca22-e4ed-47b0-9556-9a5e11b313cc.png",
+      "node": "6472:3847",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "All Industries hero (frame 6472:3844). Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-healthcare.png",
+      "id": "a5983292-b70c-40db-bba8-23d94ce1006e.png",
+      "node": "6478:5245",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Healthcare (6478:5242)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-retail.png",
+      "id": "70276d95-7842-4456-8cc6-86fbb89a1a3c.png",
+      "node": "6478:5286",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Retail (6478:5283)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-manufacturing.png",
+      "id": "34dd80ce-9594-4f9e-9175-e66d6cd93e48.png",
+      "node": "6478:5303",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Manufacturing (6478:5300)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-banking.png",
+      "id": "d97d4202-e1fc-4a93-9d23-e83c9ad7b2a7.png",
+      "node": "6478:5354",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Banking & Finance (6478:5351)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-automotive.png",
+      "id": "7c896412-872e-4a13-82e0-c0a371a47608.png",
+      "node": "6478:5371",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Automotive & transportation (6478:5368)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/industries/hero-education.png",
+      "id": "9b673b75-44cb-423c-b4c0-53825cbda363.png",
+      "node": "6478:5388",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Industry hero - Figma frame \"Education & Government (6478:5385)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-about.png",
+      "id": "a4e77127-67c8-4803-ab9d-1b3b8985bc86.png",
+      "node": "6472:3892",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"About Us (6371:3478)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-locations.png",
+      "id": "f9b22a88-b6c0-49da-8acb-0aef537ec543.png",
+      "node": "6472:3922",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Locations (6374:4194)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-why-choose-us.png",
+      "id": "439a5829-3200-4bbc-8f2d-23eb7ee979a7.png",
+      "node": "6472:3937",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Why Choose Us (6374:4567)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-certifications.png",
+      "id": "361cb071-2ac1-491f-9983-80b665be224d.png",
+      "node": "6472:3952",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Certifications (6374:4886)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-blog.png",
+      "id": "0c0b14b3-78cc-44de-a618-115981135683.png",
+      "node": "6478:4372",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Blogs (6382:5541)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-compliance.png",
+      "id": "9c3ef8c0-bd67-4f90-b4ba-8ed3a7221f02.png",
+      "node": "6478:4675",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Compliance Center (6382:6227)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-case-studies.png",
+      "id": "ce6d5f61-1433-4b2a-8591-ea8a86e2c934.png",
+      "node": "6478:5140",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Case Studies (6382:6595)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-contact.png",
+      "id": "d8923c4f-36e2-4398-b00f-b81eabafddae.png",
+      "node": "6472:3877",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Hero photo - Figma frame \"Contact Us (6365:1082)\". Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-resources.png",
+      "id": "0031cdb9-b65e-4be4-b265-a9431e6a74c7.png",
+      "node": "6472:3907",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Resources hero (frame 6472:3904). Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-downloads.png",
+      "id": "7298a7a8-01cc-4083-8782-152cf65a0fcd.png",
+      "node": "6478:5170",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "Downloads hero (frame 6478:5167). Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-guides.png",
+      "id": "9108d262-ccfd-43a0-990b-7c4df268af11.png",
+      "node": "6478:4387",
+      "fileKey": "fFS1bD6V6j1RhhmzfPxpHk",
+      "name": "ITAD & Recycling Guides hero (frame 6478:4384). Exported 1920x470."
+    },
+    {
+      "to": "public/images/pages/hero-faqs.png",
+      "id": "0f43ae45-42ee-4391-9b98-c9fbf5adb85c.png",
+      "node": "6478:5155",
+      "fileKey": "lRkITk6QLzsscWUO40karx",
+      "name": "FAQs hero photograph"
+    }
+  ]
+}

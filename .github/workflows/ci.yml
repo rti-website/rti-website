@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The Turbopack build cache only helps if it survives between runs.
+      # Without this, builds start cold every time.
+      - name: Restore Next build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
+      - run: npm ci
+
+      - name: Types
+        run: npm run typecheck
+
+      - name: Redirects generate cleanly
+        run: npm run redirects:build
+
+      - name: Build
+        run: npx next build
+        env:
+          # Never set NEXT_PUBLIC_NOINDEX here. The guard below fails the build
+          # if it is present, which is the point.
+          DEPLOY_ENV: production
+
+      - name: Build guard
+        # Fails on: noindex in a production build, any route not prerendered,
+        # any declared content URL missing from the build.
+        run: npm run verify:static
+
+      - name: Fail if any route is dynamic
+        run: |
+          if grep -qE '^\s*ƒ ' build.log 2>/dev/null; then
+            echo "A route is server-rendered on demand. Every page must be static."
+            exit 1
+          fi

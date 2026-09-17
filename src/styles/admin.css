@@ -1,0 +1,800 @@
+/* ===========================================================================
+   RTI Publisher — the admin's own stylesheet.
+   Imported ONLY by src/app/admin/page.tsx, so none of it ships on a public page.
+
+   Written as plain CSS rather than Tailwind classes because it is one dense
+   application screen, not a page of components: the editor alone needs about
+   forty rules that would be unreadable as class strings. Every colour comes
+   from the tokens in globals.css — this file introduces no new brand values.
+
+   Everything is scoped under .rti-admin so it can never leak into the site.
+   =========================================================================== */
+
+.rti-admin {
+  --ground: #ffffff;
+  --panel: #f7f8fa;
+  --panel-2: #fbfbfb;
+  --rail: #0b1f3a;
+  --rail-2: #0e2748;
+  --rail-ink: #e8eef6;
+  --rail-muted: #8ba0bd;
+  --rule: #e5e5e5;
+  --rule-soft: #eff1f4;
+  --a-ink: #212529;
+  --a-ink-2: #132119;
+  --a-muted: #7e7e7e;
+  --a-brand: #05838b;
+  --a-brand-deep: #012325;
+  --a-brand-soft: #eaf4f5;
+  --a-accent: #1b7a3d;
+  --a-accent-soft: #e8f5ec;
+  --a-warn: #9a6200;
+  --a-warn-soft: #fdf3e3;
+  --a-stop: #b3261e;
+  --a-stop-soft: #fdeceb;
+  --a-shadow: 0 1px 2px rgba(11, 31, 58, .05), 0 8px 24px rgba(11, 31, 58, .06);
+  --a-lift: 0 12px 34px rgba(11, 31, 58, .14);
+  --a-body: "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --a-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --a-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  font-family: var(--a-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--a-ink);
+  background: var(--ground);
+  min-height: 100vh;
+}
+
+/* !! THE PAGE ITSELF DOES NOT SCROLL. THE PANELS DO.
+   The admin is an application, not a document: the navigation, the formatting
+   toolbar and the publish bar have to stay where they are while the article
+   moves. With one outer scrollbar they did not — scrolling the body dragged the
+   whole shell and the toolbar slid away with it.
+   So the shell is pinned to the viewport and each region gets its own overflow:
+   the left navigation, the outline rail, the writing column, the settings rail.
+   position:sticky inside those now sticks to THAT box, which is why the toolbar
+   sits at top:0 rather than top:64px.
+   (The site sets overflow-x:hidden on body for its fixed design canvas, which
+   also breaks sticky — hence overriding it here rather than there.) */
+/* !! `overflow: hidden` ALONE. Writing `overflow: hidden; overflow-x: visible`
+   here — which is what this was, to undo the site's own overflow-x — does NOT
+   leave the page unscrollable: CSS says that when one axis is `visible` and the
+   other is not, the `visible` one COMPUTES TO `auto`. So the body kept a
+   horizontal scrollbar, and one nudge sideways slid the whole shell over and
+   pushed the navigation off the left edge, where it stayed. Both axes are
+   pinned now. Sticky still works because our sticky elements live inside
+   .a-edmid, which is their scroll container, not the body. */
+html:has(.rti-admin), body:has(.rti-admin) { height: 100%; overflow: hidden; }
+.rti-admin { height: 100dvh; overflow: hidden; }
+
+/* !! THE :where() IS LOAD-BEARING. `.rti-admin button` scores (0,1,1), which
+   beats a component class like `.a-btn` at (0,1,0) — so the reset below would
+   silently win the padding and font on every button and input in the admin.
+   :where() drops these to (0,0,1) so they are a floor, not a ceiling. This bit
+   once: the tabs ran together and the post title rendered at body size. */
+:where(.rti-admin) *, :where(.rti-admin) *::before, :where(.rti-admin) *::after { box-sizing: border-box; }
+:where(.rti-admin) button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
+:where(.rti-admin) input, :where(.rti-admin) select, :where(.rti-admin) textarea { font: inherit; color: inherit; }
+:where(.rti-admin) a { color: var(--a-brand); }
+.rti-admin :focus-visible { outline: 2px solid var(--a-brand); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .rti-admin *, .rti-admin *::before, .rti-admin *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* ------------------------------------------------------------------ shell */
+.a-app { display: grid; grid-template-columns: 232px minmax(0, 1fr); height: 100%; min-height: 0; }
+.a-rail {
+  overflow-y: auto;
+  background: var(--rail); color: var(--rail-ink); display: flex; flex-direction: column; gap: 2px;
+  padding: 18px 14px; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.a-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 2px 4px 18px; }
+.a-brand img { display: block; width: 170px; height: auto; background: #fff; border-radius: 9px; padding: 9px 12px; }
+.a-brand span {
+  font-family: var(--a-sans); font-size: 10.5px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--rail-muted); padding-left: 3px;
+}
+.a-navlabel {
+  font-family: var(--a-sans); font-size: 10px; font-weight: 600; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--rail-muted); padding: 16px 10px 6px; margin: 0;
+}
+.a-nav {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 8px;
+  font-family: var(--a-sans); font-size: 13.5px; font-weight: 500; color: var(--rail-ink);
+  text-align: left; transition: background .15s;
+}
+.a-nav:hover { background: var(--rail-2); }
+.a-nav[aria-current="page"] { background: linear-gradient(90deg, var(--a-brand-deep) 0%, var(--a-brand) 160%); }
+.a-nav svg { flex: none; opacity: .85; }
+.a-nav .a-count { margin-left: auto; font-family: var(--a-mono); font-size: 11px; color: var(--rail-muted); }
+.a-railfoot { margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .08); }
+.a-who { display: flex; align-items: center; gap: 10px; padding: 8px 10px; }
+.a-who .a-av {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--a-brand); display: grid; place-items: center;
+  font-family: var(--a-sans); font-size: 11px; font-weight: 600; color: #fff; flex: none;
+}
+.a-who strong { font-family: var(--a-sans); font-size: 12.5px; font-weight: 500; display: block; }
+.a-who small { display: block; color: var(--rail-muted); font-size: 11px; text-transform: capitalize; }
+
+.a-work { min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.a-top {
+  /* matches .a-sheet, so the heading lines up with the content under it */
+  display: flex; align-items: center; gap: 14px; padding: 14px 32px; border-bottom: 1px solid var(--rule);
+  background: var(--ground); position: sticky; top: 0; z-index: 20; flex-wrap: wrap;
+}
+.a-top h1 { font-family: var(--a-sans); font-size: 19px; font-weight: 600; margin: 0; letter-spacing: -.01em; }
+.a-top .a-sub { color: var(--a-muted); font-size: 12.5px; }
+.a-spacer { flex: 1 1 auto; min-width: 8px; }
+.a-sheet { padding: 22px 32px 60px; min-width: 0; flex: 1 1 auto; overflow-y: auto; }
+
+/* --------------------------------------------------------------- controls */
+.a-btn {
+  display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; border-radius: 8px;
+  font-family: var(--a-sans); font-size: 13px; font-weight: 500; border: 1px solid var(--rule);
+  background: var(--ground); color: var(--a-ink); transition: background .15s, border-color .15s; white-space: nowrap;
+}
+.a-btn:hover { background: var(--panel); border-color: #d5d9de; }
+.a-btn:disabled { opacity: .5; cursor: not-allowed; }
+.a-btn.p { background: var(--a-brand); border-color: var(--a-brand); color: #fff; }
+.a-btn.p:hover { background: var(--a-brand-deep); border-color: var(--a-brand-deep); }
+.a-btn.go { background: var(--a-accent); border-color: var(--a-accent); color: #fff; }
+.a-btn.go:hover { filter: brightness(.93); }
+.a-btn.sm { height: 28px; padding: 0 10px; font-size: 12px; border-radius: 7px; }
+/* Destructive, and deliberately quiet until you are on it: a red button sitting
+   in a toolbar all day teaches people to stop seeing red. */
+.a-btn.stop { color: var(--a-stop); border-color: var(--rule); }
+.a-btn.stop:hover { background: var(--a-stop); border-color: var(--a-stop); color: #fff; }
+
+.a-field { display: flex; flex-direction: column; gap: 5px; }
+.a-field > label {
+  font-family: var(--a-sans); font-size: 11.5px; font-weight: 600; letter-spacing: .03em;
+  text-transform: uppercase; color: var(--a-muted);
+}
+.a-inp { height: 36px; padding: 0 11px; border: 1px solid var(--rule); border-radius: 8px; background: var(--ground); width: 100%; }
+textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height: 1.5; }
+.a-inp:focus { outline: none; border-color: var(--a-brand); box-shadow: 0 0 0 3px var(--a-brand-soft); }
+.a-hint { font-size: 11.5px; color: var(--a-muted); }
+
+.a-pill {
+  display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 999px;
+  font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .02em;
+}
+.a-pill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.a-pill.live { background: var(--a-accent-soft); color: var(--a-accent); }
+.a-pill.draft { background: var(--a-warn-soft); color: var(--a-warn); }
+.a-pill.sched { background: var(--a-brand-soft); color: var(--a-brand); }
+.a-pill.off { background: var(--rule-soft); color: var(--a-muted); }
+.a-pill.bad { background: var(--a-stop-soft); color: var(--a-stop); }
+.a-mono { font-family: var(--a-mono); font-size: 12px; }
+.a-tnum { font-variant-numeric: tabular-nums; }
+
+/* ----------------------------------------------------------------- tables */
+.a-tablewrap { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--ground); }
+.a-scroll { overflow-x: auto; }
+.rti-admin table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 640px; }
+.rti-admin thead th {
+  background: var(--panel); text-align: left; font-family: var(--a-sans); font-size: 11px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--a-muted); padding: 10px 16px;
+  border-bottom: 1px solid var(--rule); white-space: nowrap;
+}
+.rti-admin tbody td { padding: 13px 16px; border-bottom: 1px solid var(--rule-soft); vertical-align: middle; }
+.rti-admin tbody tr:last-child td { border-bottom: 0; }
+.rti-admin tbody tr.a-click { cursor: pointer; }
+.rti-admin tbody tr.a-click:hover { background: var(--panel-2); }
+.a-ttl { font-family: var(--a-sans); font-size: 14px; font-weight: 500; color: var(--a-ink); display: block; }
+.a-slug { font-family: var(--a-mono); font-size: 11.5px; color: var(--a-muted); }
+
+/* -------------------------------------------------------------- dashboard */
+.a-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.a-tile { border: 1px solid var(--rule); border-radius: 12px; padding: 15px 16px; background: var(--ground); }
+.a-tile .k { font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--a-muted); }
+.a-tile .v { font-family: var(--a-sans); font-size: 27px; font-weight: 600; letter-spacing: -.02em; margin-top: 6px; line-height: 1; }
+.a-tile .n { font-size: 12px; color: var(--a-muted); margin-top: 5px; }
+.a-h2 { font-family: var(--a-sans); font-size: 14px; font-weight: 600; margin: 0 0 10px; }
+
+.a-note {
+  display: flex; gap: 10px; padding: 12px 14px; border: 1px solid var(--rule); border-left: 3px solid var(--a-brand);
+  border-radius: 0 10px 10px 0; background: var(--panel); font-size: 12.5px; line-height: 1.55; margin-bottom: 18px;
+}
+.a-note b { font-family: var(--a-sans); }
+
+.a-search { position: relative; flex: 1 1 220px; max-width: 330px; min-width: 160px; }
+.a-search .a-inp { padding-left: 32px; }
+.a-search svg { position: absolute; left: 10px; top: 10px; color: var(--a-muted); }
+
+/* ----------------------------------------------------------------- editor */
+.a-ed {
+  display: grid; grid-template-columns: 208px minmax(0, 1fr) 328px;
+  flex: 1 1 auto; min-height: 0; overflow: hidden;
+}
+.a-edrail { padding: 20px 16px 20px 26px; border-right: 1px solid var(--rule); overflow-y: auto; min-height: 0; }
+/* !! THE SCROLL IS INSIDE THE WRITING BOX, NOT AROUND IT.
+   .a-edmid does NOT scroll. The title, the meta fields, the toolbar and the
+   publish bar are fixed panes; only .a-canvas moves. Two reasons, and the
+   second is the one that decided it:
+     1. A scrollbar in .a-edmid's padding sat in the gutter BETWEEN the writing
+        box and the settings rail — a dark column belonging to neither.
+     2. Scrolling an article used to carry the title and the meta fields off the
+        top. The toolbar stuck, but nothing else did, so the thing you were
+        typing into kept sliding away from the thing you were typing.
+   Because the canvas is now the scroll container, the toolbar does not need
+   position:sticky at all — it is simply above a box that scrolls. */
+.a-edmid {
+  padding: 20px 26px; min-width: 0; min-height: 0; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.a-edside { padding: 20px 26px 20px 20px; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; }
+
+/* Full screen drops the OUTLINE rail and keeps the settings rail: search
+   appearance, the URL and the checks are what a writer glances at mid-sentence,
+   while the outline is a navigation aid you do not need when you are heads-down
+   in one section. */
+.a-ed.focus { grid-template-columns: minmax(0, 1fr) 328px; }
+.a-ed.focus .a-edrail { display: none; }
+.a-ed.focus .a-edmid { padding-left: max(26px, calc((100% - 980px) / 2)); padding-right: max(26px, calc((100% - 980px) / 2)); }
+.a-railh { font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--a-muted); margin: 0 0 10px; }
+.a-outline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+.a-outline button {
+  display: block; width: 100%; text-align: left; padding: 6px 9px; border-radius: 7px; font-size: 12.5px;
+  color: var(--a-muted); border-left: 2px solid transparent; transition: color .15s, background .15s;
+}
+.a-outline button:hover { background: var(--panel); color: var(--a-ink); }
+.a-outline li.lv3 button { padding-left: 20px; font-size: 12px; }
+.a-outline li.lv4 button { padding-left: 30px; font-size: 12px; }
+.a-outline .a-empty { font-size: 12px; color: var(--a-muted); padding: 6px 9px; }
+
+.a-titlebox { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+.a-title {
+  font-family: var(--a-sans); font-size: 27px; font-weight: 600; letter-spacing: -.02em; border: 0;
+  border-bottom: 1px solid var(--rule); border-radius: 0; padding: 4px 0 10px; height: auto; background: none; width: 100%;
+}
+.a-title:focus { outline: none; border-bottom-color: var(--a-brand); box-shadow: none; }
+.a-title::placeholder { color: #c3c8cd; }
+.a-metarow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.a-toolbar {
+  flex: none; z-index: 15; display: flex; flex-wrap: wrap; align-items: center; gap: 3px;
+  padding: 7px 8px; border: 1px solid var(--rule); border-radius: 10px; background: var(--panel); margin-bottom: 14px;
+}
+.a-titlebox { flex: none; }
+.a-tb { width: 29px; height: 29px; border-radius: 6px; display: grid; place-items: center; color: var(--a-ink); transition: background .12s; }
+.a-tb:hover { background: var(--ground); }
+.a-tb.on { background: var(--a-brand-soft); color: var(--a-brand); }
+.a-tb.wide { width: auto; padding: 0 8px; font-family: var(--a-sans); font-size: 12px; font-weight: 500; display: inline-flex; gap: 5px; }
+.a-tbsel { height: 29px; border: 1px solid transparent; border-radius: 6px; background: transparent; padding: 0 4px; font-family: var(--a-sans); font-size: 12.5px; max-width: 132px; }
+.a-tbsel:hover { background: var(--ground); }
+.a-tbdiv { width: 1px; height: 18px; background: var(--rule); margin: 0 4px; }
+.a-swatch { position: relative; width: 29px; height: 29px; border-radius: 6px; display: grid; place-items: center; }
+.a-swatch:hover { background: var(--ground); }
+.a-swatch input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.a-swatch .a-bar { position: absolute; left: 6px; right: 6px; bottom: 5px; height: 3px; border-radius: 2px; }
+
+/* The body. These rules are the editor's WYSIWYG contract — the published page
+   uses the site's article styles, which are deliberately close but not identical
+   (the site sets its own measure and colour). */
+.a-canvas {
+  border: 1px solid var(--rule); border-radius: 12px; background: var(--ground);
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+}
+.a-canvas .tiptap {
+  padding: 30px 34px 44px; min-height: 440px; outline: none;
+  /* Pasted content is not always well behaved: one 300-character URL with no
+     spaces used to widen the writing column and, before the fix above, the
+     whole page with it. */
+  overflow-wrap: anywhere;
+}
+.a-canvas:focus-within { border-color: var(--a-brand); box-shadow: 0 0 0 3px var(--a-brand-soft); }
+.a-canvas h2 { font-family: var(--a-sans); font-size: 23px; font-weight: 600; color: var(--a-ink-2); margin: 30px 0 10px; letter-spacing: -.01em; scroll-margin-top: 16px; }
+.a-canvas h3 { font-family: var(--a-sans); font-size: 17.5px; font-weight: 600; color: var(--a-ink-2); margin: 22px 0 8px; scroll-margin-top: 16px; }
+.a-canvas h4 { font-family: var(--a-sans); font-size: 15.5px; font-weight: 600; color: var(--a-ink-2); margin: 18px 0 6px; scroll-margin-top: 16px; }
+.a-canvas h2:first-child, .a-canvas h3:first-child { margin-top: 0; }
+.a-canvas p { margin: 0 0 15px; font-size: 15.5px; line-height: 1.72; color: #3f4a50; }
+/* !! TAILWIND'S PREFLIGHT SETS `ol, ul { list-style: none }`. It is loaded by
+   globals.css, which the admin route inherits, so without these three lines a
+   bulleted list in the editor renders as indented text with no bullet — and,
+   worse, the preview shows the same thing, so nobody notices until it is on the
+   site. The nested levels are spelled out because the browser defaults that
+   would have given disc → circle → square are gone too. */
+.a-canvas ul, .a-canvas ol { margin: 0 0 15px; padding-left: 22px; font-size: 15.5px; line-height: 1.72; color: #3f4a50; }
+.a-canvas ul, .a-article ul { list-style: disc outside; }
+.a-canvas ul ul, .a-article ul ul { list-style-type: circle; }
+.a-canvas ul ul ul, .a-article ul ul ul { list-style-type: square; }
+.a-canvas ol, .a-article ol { list-style: decimal outside; }
+.a-canvas li::marker, .a-article li::marker { color: var(--a-muted); }
+.a-canvas li { margin-bottom: 5px; }
+.a-canvas ul[data-type="taskList"], .a-article ul[data-type="taskList"] { list-style: none !important; padding-left: 2px; }
+.a-canvas ul[data-type="taskList"] li { display: flex; gap: 9px; align-items: flex-start; }
+.a-canvas ul[data-type="taskList"] li > label { flex: none; margin-top: 4px; }
+.a-canvas blockquote { margin: 0 0 15px; padding: 4px 0 4px 20px; border-left: 3px solid var(--a-brand); font-style: italic; color: var(--a-ink-2); }
+.a-canvas a { color: var(--a-brand); text-decoration: underline; text-underline-offset: 2px; }
+.a-canvas table { min-width: 0; width: 100%; max-width: 100%; table-layout: fixed; margin-bottom: 15px; }
+.a-canvas td, .a-canvas th { border: 1px solid var(--rule); padding: 8px 11px; font-size: 14px; }
+.a-canvas th { background: var(--panel); font-family: var(--a-sans); font-weight: 600; text-align: left; }
+.a-canvas img { max-width: 100%; border-radius: 10px; display: block; margin: 0 0 15px; }
+.a-canvas mark { padding: 1px 2px; border-radius: 2px; }
+.a-canvas p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: #c3c8cd;
+}
+
+.a-status { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 11px 2px 0; font-size: 12px; color: var(--a-muted); }
+.a-dotsep { width: 3px; height: 3px; border-radius: 50%; background: var(--rule); }
+
+.a-actionbar {
+  position: sticky; bottom: 0; z-index: 16; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin: 18px -26px 0; padding: 12px 26px; border-top: 1px solid var(--rule);
+  /* mt:auto pins it to the bottom of a short document instead of leaving it
+     floating halfway up the panel. */
+  margin-top: auto;
+  background: rgba(255, 255, 255, .93); backdrop-filter: blur(8px);
+}
+
+.a-card { border: 1px solid var(--rule); border-radius: 12px; padding: 15px; margin-bottom: 14px; background: var(--ground); }
+.a-card > h3 {
+  font-family: var(--a-sans); font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--a-muted); margin: 0 0 12px;
+}
+.a-stack { display: flex; flex-direction: column; gap: 12px; }
+.a-meter { height: 3px; border-radius: 2px; background: var(--rule-soft); overflow: hidden; margin-top: 5px; }
+.a-meter i { display: block; height: 100%; background: var(--a-accent); transition: width .18s, background .18s; }
+.a-meter.warn i { background: var(--a-warn); }
+.a-meter.bad i { background: var(--a-stop); }
+.a-counter { display: flex; justify-content: space-between; font-size: 11px; color: var(--a-muted); margin-top: 4px; }
+
+/* Google result preview. Arial on purpose — it is what Google renders in, so a
+   pixel measurement in any other face would be a lie. */
+.a-serp { border: 1px solid var(--rule); border-radius: 10px; padding: 13px 14px; background: var(--ground); font-family: Arial, Helvetica, sans-serif; }
+.a-serp .crumb { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+.a-serp .fav { width: 18px; height: 18px; border-radius: 50%; background: var(--a-brand-soft); display: grid; place-items: center; flex: none; }
+.a-serp .host { font-size: 12px; color: #202124; line-height: 1.2; }
+.a-serp .host small { display: block; font-size: 11px; color: #5f6368; }
+.a-serp .t { color: #1a0dab; font-size: 17px; line-height: 1.3; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a-serp .d { color: #4d5156; font-size: 13px; line-height: 1.45; }
+
+.a-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.a-checks li { display: flex; gap: 9px; align-items: flex-start; font-size: 12.5px; line-height: 1.45; }
+.a-checks .m { width: 15px; height: 15px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 9px; font-weight: 700; margin-top: 1px; color: #fff; }
+.a-checks .ok .m { background: var(--a-accent); }
+.a-checks .no .m { background: var(--a-warn); }
+.a-checks .er .m { background: var(--a-stop); }
+.a-checks b { font-family: var(--a-sans); font-weight: 500; }
+.a-checks small { color: var(--a-muted); display: block; }
+
+.a-switch { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--rule-soft); }
+.a-switch:last-child { border-bottom: 0; }
+.a-switch p { margin: 0; font-family: var(--a-sans); font-size: 13px; font-weight: 500; }
+.a-switch small { color: var(--a-muted); font-size: 11.5px; }
+.a-sw { width: 38px; height: 21px; border-radius: 999px; background: var(--rule); position: relative; flex: none; transition: background .16s; }
+.a-sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: transform .16s; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+.a-sw[aria-pressed="true"] { background: var(--a-accent); }
+.a-sw[aria-pressed="true"]::after { transform: translateX(17px); }
+
+/* -------------------------------------------------------- media, settings */
+.a-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 16px; }
+.a-asset { border: 1px solid var(--rule); border-radius: 11px; overflow: hidden; background: var(--ground); margin: 0; }
+.a-asset .th {
+  aspect-ratio: 4/3; display: grid; place-items: center; color: var(--a-brand); overflow: hidden;
+  /* A checkerboard, so a PNG with a transparent background reads as transparent
+     instead of as a white rectangle nobody can see the edge of. */
+  background:
+    linear-gradient(45deg, var(--rule-soft) 25%, transparent 25% 75%, var(--rule-soft) 75%) 0 0 / 16px 16px,
+    linear-gradient(45deg, var(--rule-soft) 25%, transparent 25% 75%, var(--rule-soft) 75%) 8px 8px / 16px 16px,
+    var(--ground);
+}
+.a-asset .th img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.a-asset .th .pdf {
+  font-family: var(--a-sans); font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  color: var(--a-stop); background: var(--a-stop-soft); padding: 7px 11px; border-radius: 7px;
+}
+.a-asset figcaption { padding: 9px 11px; }
+.a-asset b { display: block; font-family: var(--a-sans); font-size: 12.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a-asset span { font-family: var(--a-mono); font-size: 11px; color: var(--a-muted); }
+.a-asset .mt { margin-top: 6px; }
+.a-asset .acts { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+
+/* ----------------------------------------------------------------- upload */
+.a-drop {
+  border: 1.5px dashed var(--rule); border-radius: 12px; background: var(--panel-2);
+  padding: 22px 18px; text-align: center; margin-bottom: 18px; color: var(--a-muted);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.a-drop p { margin: 0; font-size: 13px; }
+.a-drop b { font-family: var(--a-sans); font-weight: 500; color: var(--a-ink); }
+.a-drop.over { border-color: var(--a-brand); background: var(--a-brand-soft); color: var(--a-brand); }
+.a-drop.over b { color: var(--a-brand); }
+.a-drop.busy { opacity: .7; pointer-events: none; }
+.a-link {
+  color: var(--a-brand); text-decoration: underline; text-underline-offset: 2px;
+  font: inherit; padding: 0;
+}
+.a-link:hover { color: var(--a-brand-deep); }
+
+/* ------------------------------------------------------------ row actions */
+.a-rowacts { text-align: right; white-space: nowrap; width: 1%; }
+.a-icobtn {
+  width: 28px; height: 28px; border-radius: 7px; display: inline-grid; place-items: center;
+  color: var(--a-muted); border: 1px solid transparent; vertical-align: middle;
+}
+.a-icobtn + .a-icobtn { margin-left: 2px; }
+.a-icobtn:hover { background: var(--panel); border-color: var(--rule); color: var(--a-ink); }
+.a-icobtn.stop:hover { background: var(--a-stop-soft); border-color: var(--a-stop-soft); color: var(--a-stop); }
+
+/* --------------------------------------------------------------- dialogs */
+.a-scrim {
+  position: fixed; inset: 0; z-index: 80; background: rgba(11, 31, 58, .42);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: max(24px, env(safe-area-inset-top)) 18px 40px; overflow-y: auto;
+  animation: a-fade .14s ease-out;
+}
+@keyframes a-fade { from { opacity: 0 } to { opacity: 1 } }
+.a-dlg {
+  width: 100%; max-width: 480px; margin: auto; background: var(--ground); border-radius: 14px;
+  box-shadow: var(--a-lift); overflow: hidden; animation: a-rise .16s ease-out;
+}
+.a-dlg.wide { max-width: 880px; }
+.a-dlg:focus { outline: none; }
+@keyframes a-rise { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+.a-dlghead { display: flex; align-items: center; gap: 12px; padding: 16px 18px 0; }
+.a-dlghead h2 {
+  font-family: var(--a-sans); font-size: 16px; font-weight: 600; margin: 0; flex: 1;
+  letter-spacing: -.01em; min-width: 0;
+}
+.a-x { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--a-muted); flex: none; }
+.a-x:hover { background: var(--panel); color: var(--a-ink); }
+.a-dlgintro { padding: 8px 18px 0; font-size: 12.5px; line-height: 1.55; color: var(--a-muted); }
+.a-dlgintro b { color: var(--a-ink); font-family: var(--a-sans); font-weight: 500; }
+.a-dlgbody { padding: 16px 18px 4px; }
+.a-dlgtext { font-size: 13px; line-height: 1.6; }
+.a-dlgtext p { margin: 0 0 10px; }
+.a-dlgtext p:last-child { margin-bottom: 0; }
+.a-dlgfoot {
+  display: flex; align-items: center; gap: 8px; justify-content: flex-end;
+  padding: 16px 18px; margin-top: 8px; border-top: 1px solid var(--rule-soft); background: var(--panel-2);
+}
+.a-list { margin: 6px 0 0; padding-left: 17px; font-size: 12.5px; line-height: 1.8; }
+.a-list b { font-family: var(--a-sans); font-weight: 500; }
+
+/* Inputs that only appear inside dialogs. */
+.a-ta { height: auto; padding: 9px 11px; line-height: 1.5; resize: vertical; }
+.a-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.a-check input { margin: 2px 0 0; width: 15px; height: 15px; accent-color: var(--a-brand); flex: none; }
+.a-prefixed { display: flex; align-items: center; gap: 2px; }
+.a-prefixed > span { color: var(--a-muted); flex: none; }
+.a-altrow { display: flex; gap: 14px; align-items: flex-start; }
+.a-altthumb {
+  width: 108px; height: 84px; flex: none; border: 1px solid var(--rule); border-radius: 9px;
+  overflow: hidden; display: grid; place-items: center; background: var(--panel);
+}
+.a-altthumb img { width: 100%; height: 100%; object-fit: contain; }
+.a-altthumb .pdf { font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--a-stop); }
+.a-social { display: flex; flex-direction: column; gap: 10px; }
+.a-socialrow { display: grid; grid-template-columns: 168px minmax(0, 1fr) auto; gap: 11px; align-items: center; }
+.a-socialrow .plat { display: flex; align-items: center; gap: 9px; font-family: var(--a-sans); font-size: 13px; font-weight: 500; }
+.a-socialrow .ic { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--panel); color: var(--a-brand); flex: none; }
+.a-tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--rule); margin-bottom: 18px; overflow-x: auto; }
+.a-tab { padding: 8px 14px; font-family: var(--a-sans); font-size: 13px; font-weight: 500; color: var(--a-muted); border-bottom: 2px solid transparent; white-space: nowrap; }
+.a-tab[aria-selected="true"] { color: var(--a-brand); border-bottom-color: var(--a-brand); }
+
+/* --------------------------------------------------------- login / toast  */
+.a-login { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--panel); }
+.a-logincard { width: 100%; max-width: 380px; background: var(--ground); border: 1px solid var(--rule); border-radius: 14px; padding: 28px; box-shadow: var(--a-shadow); }
+.a-logincard img { display: block; width: 190px; height: auto; margin: 0 auto 22px; }
+.a-logincard h1 { font-family: var(--a-sans); font-size: 18px; font-weight: 600; margin: 0 0 4px; text-align: center; }
+.a-logincard .a-hint { text-align: center; margin: 0 0 22px; }
+.a-err { background: var(--a-stop-soft); color: var(--a-stop); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; margin-bottom: 14px; }
+
+.a-toast {
+  position: fixed; left: 50%; transform: translateX(-50%) translateY(14px); bottom: 26px; z-index: 60;
+  display: flex; align-items: center; gap: 10px; padding: 11px 17px; border-radius: 10px; background: var(--rail);
+  color: #fff; font-family: var(--a-sans); font-size: 13px; box-shadow: var(--a-lift);
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.a-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ------------------------------------------------------------- responsive */
+.a-railtoggle { display: none; }
+@media (max-width: 1180px) {
+  .a-ed { grid-template-columns: minmax(0, 1fr) 300px; }
+  .a-edrail { display: none; }
+}
+@media (max-width: 980px) {
+  /* One column, so one scroller: the whole editor scrolls as a unit and the
+     settings rail follows the article rather than sitting beside it. */
+  .a-ed { grid-template-columns: minmax(0, 1fr); display: flex; flex-direction: column; overflow-y: auto; }
+  .a-edmid { overflow: visible; }
+  /* One scroller on a narrow screen: the canvas grows and the page moves. */
+  .a-canvas { overflow: visible; flex: none; }
+  .a-canvas .tiptap { min-height: 440px; }
+  .a-ed.focus { grid-template-columns: minmax(0, 1fr); }
+  .a-ed.focus .a-edmid { padding-left: 26px; padding-right: 26px; }
+  .a-edside { border-left: 0; border-top: 1px solid var(--rule); padding: 20px 26px; margin-top: 18px; overflow: visible; }
+  .a-actionbar { margin-top: 18px; }
+}
+@media (max-width: 760px) {
+  .a-app { grid-template-columns: minmax(0, 1fr); }
+  .a-rail { position: fixed; inset: 0 auto 0 0; width: 232px; transform: translateX(-100%); transition: transform .22s; z-index: 50; height: 100%; }
+  .a-rail.open { transform: none; box-shadow: var(--a-lift); }
+  .a-railtoggle { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--rule); border-radius: 8px; }
+  .a-top, .a-sheet { padding-left: 16px; padding-right: 16px; }
+  .a-edmid, .a-edside { padding-left: 16px; padding-right: 16px; }
+  .a-actionbar { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
+  .a-metarow { grid-template-columns: 1fr; }
+  .a-socialrow { grid-template-columns: 1fr; gap: 7px; }
+  .a-canvas .tiptap { padding: 20px 18px 32px; }
+  .a-title { font-size: 22px; }
+}
+
+/* A library row whose file is gone — see Thumb() in MediaLibrary.tsx. */
+.a-asset .th .gone, .a-altthumb .gone {
+  font-family: var(--a-sans); font-size: 11.5px; font-weight: 500; color: var(--a-muted);
+  background: var(--panel); padding: 6px 10px; border-radius: 7px;
+}
+
+/* ======================================================= the title, as H1 == */
+.a-titlehead { display: flex; align-items: center; gap: 9px; }
+.a-titlehead > label {
+  font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--a-muted);
+}
+/* Not decoration. Writers treated the title as a filename because it looked
+   like one, then typed the real headline again as the first body line — two H1s
+   on every post. The badge is the cheapest possible fix. */
+.a-h1tag {
+  font-family: var(--a-mono); font-size: 10px; font-weight: 600; letter-spacing: .04em;
+  color: var(--a-brand); background: var(--a-brand-soft); padding: 2px 6px; border-radius: 5px;
+}
+.a-title { transition: border-color .15s, background .15s; }
+.a-title:hover { border-bottom-color: #c3c8cd; background: var(--panel-2); }
+.a-outline li.lv1 button { font-family: var(--a-sans); font-weight: 500; color: var(--a-ink); display: flex; align-items: baseline; gap: 6px; }
+.a-outline li.lv1 small { font-family: var(--a-mono); font-size: 9.5px; color: var(--a-brand); flex: none; }
+.a-outline li.lv1 { margin-bottom: 4px; padding-bottom: 5px; border-bottom: 1px solid var(--rule-soft); }
+
+/* ============================================================ toolbar menus = */
+.a-tb.caret { width: auto; padding: 0 5px 0 6px; gap: 2px; }
+.a-tb.caret .chev { opacity: .55; }
+.a-tb.caret[aria-expanded="true"] { background: var(--ground); }
+.a-menupanel {
+  /* Fixed and portalled to <body> — see the note in Menu.tsx. It has to escape
+     .a-edmid, which scrolls and therefore clips. */
+  position: fixed; z-index: 70;
+  background: var(--ground); border: 1px solid var(--rule); border-radius: 10px;
+  box-shadow: var(--a-lift); padding: 5px; max-height: 70vh; overflow-y: auto;
+  animation: a-rise .12s ease-out;
+}
+.a-menupanel.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 7px; }
+.a-menuitem {
+  display: flex; align-items: flex-start; gap: 7px; width: 100%; text-align: left;
+  padding: 7px 9px; border-radius: 7px; font-size: 13px; line-height: 1.35;
+}
+.a-menuitem:hover { background: var(--panel); }
+.a-menuitem.on { color: var(--a-brand); }
+.a-menuitem .tick { width: 11px; flex: none; font-size: 11px; line-height: 1.5; }
+.a-menuitem .lbl { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.a-menuitem small { display: block; width: 100%; font-size: 11px; color: var(--a-muted); margin-top: 1px; }
+.a-menuglyph { color: var(--a-muted); display: inline-grid; place-items: center; }
+.a-menuitem.on .a-menuglyph { color: var(--a-brand); }
+.a-menudiv { display: block; height: 1px; background: var(--rule-soft); margin: 5px 2px; }
+.a-menunote { margin: 4px 9px 6px; font-size: 11px; line-height: 1.5; color: var(--a-muted); }
+
+/* The list-marker pickers: a real miniature list, so the choice is the thing
+   you are choosing rather than a word for it. */
+.a-menutile {
+  border: 1px solid var(--rule); border-radius: 8px; padding: 11px 8px 11px 4px; background: var(--ground);
+  display: grid; place-items: center; min-height: 62px;
+}
+.a-menutile:hover { border-color: var(--a-brand); background: var(--a-brand-soft); }
+.a-menutile.on { border-color: var(--a-brand); box-shadow: 0 0 0 2px var(--a-brand-soft); }
+.a-menutile ul, .a-menutile ol { margin: 0; padding-left: 18px; width: 100%; }
+.a-menutile li { height: 3px; border-radius: 2px; background: #c9ced3; margin: 0 0 6px; list-style-position: outside; }
+.a-menutile li::marker { color: var(--a-ink); font-size: 10px; }
+.a-menutile ol li::marker { font-family: var(--a-mono); font-size: 8.5px; }
+.a-menutile li:last-child { margin-bottom: 0; }
+
+.a-split { display: inline-flex; align-items: center; }
+.a-split .a-tb { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.a-split .a-menu .a-tb.caret { width: 15px; padding: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.a-splitcaret { display: none; }
+
+/* ================================================= the bubble on selection == */
+.a-bubble {
+  display: flex; align-items: center; gap: 2px; padding: 4px 5px;
+  background: var(--ground); border: 1px solid var(--rule); border-radius: 10px; box-shadow: var(--a-lift);
+}
+.a-bubblefacts {
+  display: flex; align-items: center; gap: 6px; padding: 0 7px 0 4px;
+  font-family: var(--a-sans); font-size: 11.5px; color: var(--a-muted); white-space: nowrap;
+}
+.a-bubblefacts b { font-weight: 500; color: var(--a-ink); }
+.a-bubbletag {
+  font-family: var(--a-mono); font-size: 10px; color: var(--a-brand);
+  background: var(--a-brand-soft); padding: 1px 5px; border-radius: 4px;
+}
+.a-bubbledot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .12); }
+.a-tbsel.sm { height: 25px; font-size: 12px; max-width: 62px; }
+
+/* ======================================================== featured image === */
+.a-featured { border: 1px solid var(--rule); border-radius: 9px; overflow: hidden; background: var(--panel); }
+.a-featured img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.a-featuredempty {
+  width: 100%; border: 1.5px dashed var(--rule); border-radius: 9px; background: var(--panel-2);
+  padding: 22px 12px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+  color: var(--a-muted); font-size: 12.5px; transition: border-color .15s, background .15s, color .15s;
+}
+.a-featuredempty:hover { border-color: var(--a-brand); background: var(--a-brand-soft); color: var(--a-brand); }
+
+/* ============================================================== preview ==== */
+.a-preview { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; background: var(--panel-2); }
+.a-previewbar {
+  display: flex; align-items: center; gap: 12px; padding: 10px 26px; flex: none;
+  border-bottom: 1px solid var(--rule); background: var(--ground);
+}
+.a-previewscroll { flex: 1 1 auto; overflow-y: auto; padding: 34px 26px 70px; }
+.a-article {
+  max-width: 760px; margin: 0 auto; background: var(--ground); border: 1px solid var(--rule);
+  border-radius: 14px; padding: 46px 56px 54px;
+}
+.a-article .kicker {
+  font-family: var(--a-sans); font-size: 11.5px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--a-brand); margin: 0 0 12px;
+}
+.a-article h1 {
+  font-family: var(--a-sans); font-size: 38px; line-height: 1.16; font-weight: 600;
+  letter-spacing: -.025em; color: var(--a-ink-2); margin: 0 0 14px;
+}
+.a-article .byline { font-size: 13px; color: var(--a-muted); margin: 0 0 26px; }
+.a-article .hero { width: 100%; border-radius: 12px; margin: 0 0 30px; display: block; }
+.a-article .tiptap > :first-child { margin-top: 0; }
+.a-previewnote {
+  max-width: 760px; margin: 18px auto 0; font-size: 12px; line-height: 1.6;
+  color: var(--a-muted); text-align: center;
+}
+
+/* The preview reuses the editor body styles, at the measure the site uses. */
+.a-article .tiptap { font-size: 16.5px; }
+.a-article h2 { font-family: var(--a-sans); font-size: 25px; font-weight: 600; color: var(--a-ink-2); margin: 34px 0 12px; letter-spacing: -.015em; }
+.a-article h3 { font-family: var(--a-sans); font-size: 18.5px; font-weight: 600; color: var(--a-ink-2); margin: 26px 0 9px; }
+.a-article h4 { font-family: var(--a-sans); font-size: 16px; font-weight: 600; color: var(--a-ink-2); margin: 20px 0 7px; }
+.a-article p { margin: 0 0 17px; line-height: 1.75; color: #3f4a50; }
+.a-article ul, .a-article ol { margin: 0 0 17px; padding-left: 24px; line-height: 1.75; color: #3f4a50; }
+.a-article li { margin-bottom: 6px; }
+.a-article blockquote { margin: 0 0 17px; padding: 4px 0 4px 22px; border-left: 3px solid var(--a-brand); font-style: italic; color: var(--a-ink-2); }
+.a-article a { color: var(--a-brand); text-decoration: underline; text-underline-offset: 2px; }
+.a-article img { max-width: 100%; border-radius: 10px; display: block; margin: 0 0 17px; }
+.a-article table { width: 100%; margin-bottom: 17px; border-collapse: collapse; }
+.a-article td, .a-article th { border: 1px solid var(--rule); padding: 9px 12px; font-size: 14.5px; }
+.a-article th { background: var(--panel); font-family: var(--a-sans); font-weight: 600; text-align: left; }
+
+/* ========================================== date filter and sub-categories = */
+.a-daterange { display: inline-flex; align-items: center; gap: 7px; }
+.a-daterange .a-inp { width: auto; font-size: 12.5px; }
+.rti-admin tbody tr.a-sub td:first-child { padding-left: 30px; }
+.a-subtick {
+  display: inline-block; width: 9px; height: 9px; margin-right: 7px; vertical-align: 1px;
+  border-left: 1.5px solid var(--rule); border-bottom: 1.5px solid var(--rule);
+  border-bottom-left-radius: 3px;
+}
+
+/* A field that only exists because of the choice above it — indented and ruled
+   so it reads as part of that choice rather than as a new question. */
+.a-nested {
+  border-left: 2px solid var(--a-brand-soft); padding-left: 12px; margin-left: 2px;
+}
+
+/* The alt text shown in the picture bubble, kept to one line. */
+.a-bubbletrunc { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ------------------------------------------------------------ scrollbars --
+   Thin and quiet. The OS default is a 15px bar in a strong grey that reads as a
+   structural column of its own — fine on a document, wrong in a panelled
+   application where it sits right next to a real divider. */
+.a-canvas, .a-edside, .a-edrail, .a-sheet, .a-rail, .a-previewscroll, .a-menupanel, .a-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c9ced3 transparent;
+}
+.a-rail { scrollbar-color: #2c3f5c transparent; }
+.a-canvas::-webkit-scrollbar, .a-edside::-webkit-scrollbar, .a-edrail::-webkit-scrollbar,
+.a-sheet::-webkit-scrollbar, .a-rail::-webkit-scrollbar, .a-previewscroll::-webkit-scrollbar,
+.a-menupanel::-webkit-scrollbar, .a-scroll::-webkit-scrollbar { width: 9px; height: 9px; }
+.a-canvas::-webkit-scrollbar-thumb, .a-edside::-webkit-scrollbar-thumb, .a-edrail::-webkit-scrollbar-thumb,
+.a-sheet::-webkit-scrollbar-thumb, .a-previewscroll::-webkit-scrollbar-thumb,
+.a-menupanel::-webkit-scrollbar-thumb, .a-scroll::-webkit-scrollbar-thumb {
+  background: #c9ced3; border-radius: 6px; border: 2px solid transparent; background-clip: content-box;
+}
+.a-rail::-webkit-scrollbar-thumb { background: #2c3f5c; border-radius: 6px; border: 2px solid transparent; background-clip: content-box; }
+.a-canvas::-webkit-scrollbar-thumb:hover, .a-edside::-webkit-scrollbar-thumb:hover,
+.a-sheet::-webkit-scrollbar-thumb:hover { background: #9aa2aa; background-clip: content-box; }
+.a-canvas::-webkit-scrollbar-track, .a-edside::-webkit-scrollbar-track, .a-edrail::-webkit-scrollbar-track,
+.a-sheet::-webkit-scrollbar-track, .a-rail::-webkit-scrollbar-track { background: transparent; }
+
+/* ------------------------------------------- a post imported from WordPress */
+.a-imported { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.a-importedbar {
+  flex: none; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 11px 14px; border: 1px solid var(--rule); border-bottom: 0;
+  border-radius: 12px 12px 0 0; background: var(--panel);
+}
+.a-importedbody {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 30px 34px 44px;
+  border: 1px solid var(--rule); border-radius: 0 0 12px 12px; background: var(--ground);
+}
+/* The public stylesheet is not loaded in the admin, so the imported markup gets
+   just enough of it here to be readable while somebody decides about it. */
+.a-importedbody { font-size: 15px; line-height: 1.72; color: #3f4a50; }
+.a-importedbody h2 { font-family: var(--a-sans); font-size: 22px; font-weight: 600; color: var(--a-ink-2); margin: 28px 0 10px; }
+.a-importedbody h3 { font-family: var(--a-sans); font-size: 17px; font-weight: 600; color: var(--a-ink-2); margin: 22px 0 8px; }
+.a-importedbody h4 { font-family: var(--a-sans); font-size: 15px; font-weight: 600; color: var(--a-ink-2); margin: 18px 0 6px; }
+.a-importedbody p { margin: 0 0 14px; }
+.a-importedbody ul { list-style: disc outside; margin: 0 0 14px; padding-left: 24px; }
+.a-importedbody ol { list-style: decimal outside; margin: 0 0 14px; padding-left: 24px; }
+.a-importedbody li { margin-bottom: 5px; }
+.a-importedbody a { color: var(--a-brand); text-decoration: underline; }
+.a-importedbody img { max-width: 100%; height: auto; border-radius: 9px; }
+.a-importedbody table { width: 100%; border-collapse: collapse; margin: 0 0 14px; font-size: 14px; }
+.a-importedbody script { display: none; }
+
+/* ===========================================================================
+   The SEO desk — components/client/admin/SeoDesk.tsx
+
+   Two columns: the field groups on the left, and a rail on the right that never
+   scrolls out of the way, because the whole point of the panel is watching the
+   Google preview and the checks change while you type in the left-hand column.
+   =========================================================================== */
+.a-seohead { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.a-seohead__t { display: flex; flex-direction: column; min-width: 0; }
+.a-seohead__t strong { font-family: var(--a-sans); font-size: 15px; font-weight: 600; }
+.a-seohead__t .a-mono { color: var(--a-muted); }
+
+.a-seogrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+.a-seomain { min-width: 0; }
+.a-seoside {
+  position: sticky; top: 14px; display: flex; flex-direction: column; gap: 14px;
+  /* One window tall, scrolling its own overflow: the checks list runs to
+     seventeen rows and the rail must not push the page taller than the form. */
+  max-height: calc(100dvh - 28px); overflow-y: auto; scrollbar-width: thin;
+}
+@media (max-width: 1100px) {
+  .a-seogrid { grid-template-columns: minmax(0, 1fr); }
+  .a-seoside { position: static; max-height: none; overflow: visible; }
+}
+
+.a-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.a-score {
+  display: flex; flex-direction: column; gap: 2px; padding: 11px 12px;
+  border: 1px solid var(--rule); border-radius: 10px; background: var(--panel);
+}
+.a-score strong { font-family: var(--a-sans); font-size: 24px; font-weight: 600; line-height: 1; }
+.a-score span { font-size: 11px; color: var(--a-muted); }
+.a-score span small { display: block; font-size: 10.5px; }
+.a-score.good strong { color: var(--a-accent); }
+.a-score.ok strong { color: var(--a-warn); }
+.a-score.bad strong { color: var(--a-stop); }
+
+.a-stats { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.a-stats > div { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; }
+.a-stats dt { color: var(--a-muted); }
+.a-stats dd { margin: 0; font-family: var(--a-sans); font-weight: 500; }
+
+/* An `na` check: the rule does not apply, which is not the same as passing. */
+.a-checks .off .m { background: var(--rule); color: var(--a-muted); }
+.a-checks .off b, .a-checks .off small { color: var(--a-muted); }
+
+.a-switches { border: 1px solid var(--rule); border-radius: 10px; padding: 2px 12px; background: var(--ground); }
+
+/* Secondary keyphrases. The input sits inside the box with the chips so the
+   whole thing reads as one field rather than a list and a text box. */
+.a-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  border: 1px solid var(--rule); border-radius: 9px; padding: 6px; background: var(--ground);
+}
+.a-chips .a-inp { border: 0; background: none; flex: 1; min-width: 150px; height: 26px; padding: 0 4px; }
+.a-chips .a-inp:focus { box-shadow: none; }
+.a-chip {
+  display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 6px 0 10px;
+  border-radius: 999px; background: var(--a-brand-soft); color: var(--a-brand);
+  font-family: var(--a-sans); font-size: 12px; font-weight: 500;
+}
+.a-chip button { background: none; border: 0; color: inherit; cursor: pointer; font-size: 15px; line-height: 1; padding: 0 2px; }
+
+/* The role cards under the accounts table. */
+.a-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 18px; }

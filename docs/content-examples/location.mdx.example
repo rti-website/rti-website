@@ -1,0 +1,11 @@
+---
+# Deep location paths are preserved exactly. Do not flatten them — these are the
+# local SEO pages and their URL structure is part of what ranks.
+url: /minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/
+type: location
+title: Bloomington Recycling Center | Recycle Technologies
+description: Electronics, battery and light bulb recycling serving Bloomington and Hennepin County, Minnesota.
+h1: Bloomington Recycling Center
+---
+
+Body copy migrated verbatim.
