@@ -58,6 +58,18 @@ if (isProd && ENV.NEXT_PUBLIC_NOINDEX === 'true') {
   )
 }
 
+// --- 1b. an admin cookie without Secure must never reach production either --
+// ADMIN_ALLOW_HTTP lets the dev box run its admin over plain HTTP to a LAN
+// address (see secureCookie() in src/lib/auth.ts). On the live site it would
+// mean the login cookie travels in the clear. Same shape as the noindex check:
+// fine on staging, a build failure anywhere that calls itself production.
+if (isProd && ENV.ADMIN_ALLOW_HTTP === 'true') {
+  fail(
+    'ADMIN_ALLOW_HTTP=true in a production build.\n' +
+      '  This would send the admin login cookie without the Secure flag on the live site.',
+  )
+}
+
 // --- 2 & 3. everything declared must be prerendered -------------------------
 const manifestPath = path.join(ROOT, '.next', 'prerender-manifest.json')
 if (!fs.existsSync(manifestPath)) {

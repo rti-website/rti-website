@@ -95,12 +95,38 @@ export async function createSession(userId: number, userAgent?: string): Promise
   jar.set(COOKIE, `${id}.${sign(id)}`, {
     httpOnly: true,
     sameSite: 'lax',
-    // Off on localhost, on everywhere else — otherwise nobody can log in in dev.
-    secure: process.env.NODE_ENV === 'production',
+    secure: secureCookie(),
     path: '/',
     expires,
   })
   return id
+}
+
+/**
+ * Whether the login cookie carries the Secure flag.
+ *
+ * Secure means a browser will only send it over HTTPS. That is exactly right
+ * for the live site and must never be turned off there — an admin cookie that
+ * travels in the clear is an admin cookie somebody else can pick up.
+ *
+ * !! BUT IT ALSO MEANS THE ADMIN CANNOT WORK OVER PLAIN HTTP TO AN IP ADDRESS,
+ * which is what a dev box on a LAN is until somebody puts a proxy and a
+ * certificate in front of it. On 18 Sep 2026 the dev server answered every
+ * login with a 401 on the very next request: the browser accepted the cookie
+ * and then, correctly, refused to send it back over http://192.168.90.152.
+ * Nothing in the logs said why. `next dev` never hits this because Chrome
+ * treats localhost as secure; `next start` on a LAN address hits it every time.
+ *
+ * ADMIN_ALLOW_HTTP=true is the opt-out, and it is spelled out as a separate
+ * variable rather than inferred from the request for two reasons: inferring
+ * from x-forwarded-proto trusts whatever proxy happens to be in front, and an
+ * explicit flag is something scripts/check-static.mjs can refuse to let into a
+ * production build, which it does. Take it out of .env.local once the dev site
+ * is served over HTTPS again — it should be true for as short a time as it can.
+ */
+function secureCookie(): boolean {
+  if (process.env.NODE_ENV !== 'production') return false   // next dev, localhost
+  return process.env.ADMIN_ALLOW_HTTP !== 'true'
 }
 
 export async function destroySession(): Promise<void> {
