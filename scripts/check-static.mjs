@@ -18,9 +18,40 @@ import path from 'node:path'
 const ROOT = process.cwd()
 const fail = (msg) => { console.error(`\n  BUILD GUARD FAILED\n  ${msg}\n`); process.exit(1) }
 
+/**
+ * .env.local, then .env, then the real environment — the same precedence Next
+ * itself uses, and the same helper db-seed.mjs and make-user.mjs already have.
+ *
+ * !! WITHOUT THIS THE GUARD BELOW COULD NEVER FIRE, WHICH IS WORSE THAN NOT
+ * HAVING IT. This is plain node, not Next, so nothing loads .env.local for it —
+ * and .env.local is exactly where NEXT_PUBLIC_NOINDEX lives. `next build` read
+ * the file and baked noindex into every page; this script read process.env, saw
+ * nothing, printed "noindex flag: off" and passed. So the one check CLAUDE.md
+ * rule 9 leans on was reporting all clear without ever having looked, and the
+ * only way to trip it was to export the variable in the shell by hand.
+ *
+ * Found on the dev server, 18 Sep 2026, when a staging build that genuinely had
+ * noindex on reported it as off.
+ */
+function env() {
+  const out = {}
+  for (const f of ['.env.local', '.env']) {
+    const file = path.join(ROOT, f)
+    if (!fs.existsSync(file)) continue
+    for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
+      const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/)
+      if (m) out[m[1]] ??= m[2].trim().replace(/^["']|["']$/g, '')
+    }
+  }
+  // A variable set in the shell beats the file, as it does everywhere else.
+  return { ...out, ...process.env }
+}
+
+const ENV = env()
+
 // --- 1. noindex must never reach production --------------------------------
-const isProd = (process.env.VERCEL_ENV || process.env.DEPLOY_ENV || 'production') === 'production'
-if (isProd && process.env.NEXT_PUBLIC_NOINDEX === 'true') {
+const isProd = (ENV.VERCEL_ENV || ENV.DEPLOY_ENV || 'production') === 'production'
+if (isProd && ENV.NEXT_PUBLIC_NOINDEX === 'true') {
   fail(
     'NEXT_PUBLIC_NOINDEX=true in a production build.\n' +
       '  This would ship <meta robots="noindex"> and Disallow: / to the live site.',
@@ -73,4 +104,5 @@ if (missing.length) {
 console.log(`\n  Build guard passed`)
 console.log(`   - ${prerendered.size} routes prerendered`)
 console.log(`   - ${declared.length} declared content URLs, all present`)
-console.log(`   - noindex flag: ${process.env.NEXT_PUBLIC_NOINDEX === 'true' ? 'ON (staging)' : 'off'}\n`)
+console.log(`   - noindex flag: ${ENV.NEXT_PUBLIC_NOINDEX === 'true' ? 'ON (staging)' : 'off'}`)
+console.log(`   - deploy env:   ${ENV.VERCEL_ENV || ENV.DEPLOY_ENV || 'production'}\n`)
