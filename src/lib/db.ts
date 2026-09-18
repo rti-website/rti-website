@@ -40,22 +40,32 @@ function pool(): Pool {
       )
     }
     /*
-     * !! THESE NUMBERS ARE SIZED FOR THE BUILD, NOT FOR A REQUEST. A production
-     * build prerenders 429 pages, and the ones that read posts do so in
-     * parallel — far more than eight at a time. At max:8 with a five second
-     * connect timeout, queries queued behind the pool started timing out on the
-     * dev server, and a timeout here is indistinguishable from "no database" to
-     * the caller, so pages were rendering with no posts while the build still
-     * reported success. Found deploying to the dev server, 18 Sep 2026.
+     * !! `max` IS PER PROCESS, AND A BUILD IS NOT ONE PROCESS. Next prerenders
+     * with one worker per core — seven on the dev server — each with its own
+     * pool. So the number that reaches PostgreSQL is `max` times the worker
+     * count, and PostgreSQL's default max_connections is 100, shared with
+     * whatever else lives on the box.
      *
-     * 16 is still modest against PostgreSQL's default max_connections of 100,
-     * and this box shares one server with five other apps. The long connect
-     * timeout costs nothing when the database is up and is what stops a busy
-     * moment from being read as an outage.
+     * Both halves of that were learned the hard way on 18 Sep 2026:
+     *   max 8, 5s timeout  -> 7 x 8 = 56 plus neighbours. Queries queued and
+     *                         exceeded the timeout, and a timeout used to be
+     *                         indistinguishable from "no database", so pages
+     *                         rendered with no posts and the build exited 0.
+     *   max 16, 30s        -> 7 x 16 = 112. "remaining connection slots are
+     *                         reserved for roles with the SUPERUSER attribute".
+     *
+     * Four is the answer, not eight, because almost every read here is cached
+     * per process after its first call — allDbPosts and dbCategories both are —
+     * so a worker needs a couple of connections, not a dozen. 7 x 4 = 28 leaves
+     * the other five apps on that server alone, and a build host with more cores
+     * still has room. DB_POOL_MAX is there for a machine that wants more.
+     *
+     * The long connect timeout costs nothing when the database is up, and is
+     * what stops a busy moment being reported as an outage.
      */
     globalThis.__rtiPool = new Pool({
       connectionString,
-      max: 16,
+      max: Number(process.env.DB_POOL_MAX) || 4,
       idleTimeoutMillis: 30_000,
       connectionTimeoutMillis: 30_000,
     })
