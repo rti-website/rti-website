@@ -14,7 +14,6 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { execSync } from 'node:child_process'
 
 const ROOT = process.cwd()
 const fail = (msg) => { console.error(`\n  BUILD GUARD FAILED\n  ${msg}\n`); process.exit(1) }

@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 
 /**
  * Newsletter signup — Figma 6059:21192.

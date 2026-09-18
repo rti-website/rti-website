@@ -8,6 +8,7 @@ import { slugify } from '@/lib/slug'
 import { AskDialog, ConfirmDialog, Dialog } from './Dialog'
 import { MediaLibrary, type MediaRow } from './MediaLibrary'
 import { Menu, MenuItem, MenuDivider, MenuNote, MenuTile } from './Menu'
+import { SplitGrip, useSplit } from './Split'
 import { BULLET_STYLES, NUMBER_STYLES } from '@/lib/editor-marks'
 import { isImage } from '@/lib/media-kinds'
 import { api } from './api'
@@ -118,7 +119,7 @@ function pixels(text: string, font: string): number {
 }
 
 export function PostEditor({
-  postId, categories, authors, canPublish, onClose, onToast, onAuthorAdded,
+  postId, categories, authors, canPublish, onClose, onToast, onAuthorAdded, onFocusChange,
 }: {
   postId: number
   categories: { id: number; name: string; parent_id?: number | null }[]
@@ -129,6 +130,12 @@ export function PostEditor({
   /** Puts a newly added byline into the shared list, so the dropdown has it
       without a full reload of the admin. */
   onAuthorAdded: (a: Named) => void
+  /** Full screen has to fold away the app's navigation rail and page header,
+      and neither belongs to this component. It says so and the shell obeys —
+      cheaper and far easier to follow than reaching up the DOM for them. Called
+      with false on unmount, so closing the editor mid-full-screen cannot strand
+      the app with no navigation. */
+  onFocusChange?: (on: boolean) => void
 }) {
   const [post, setPost] = useState<Post | null>(null)
   const [saving, setSaving] = useState<'idle' | 'saving' | 'saved'>('idle')
@@ -136,14 +143,32 @@ export function PostEditor({
   /* The toolbar's link and picture buttons used to be window.prompt(). See the
      note at the top of Dialog.tsx for why they are not any more. */
   const [inserting, setInserting] = useState<null | 'link' | 'image' | 'featured' | 'author' | 'alt'>(null)
-  /* Focus mode hides both rails and widens the writing column; preview swaps the
-     whole editor for the article as a reader gets it. Neither touches the
-     document, so leaving either is instant and lossless. */
+  /* Full screen drops the outline rail, the app's own navigation and the page
+     header, and takes the browser into real full screen; preview swaps the whole
+     editor for the article as a reader gets it. Neither touches the document, so
+     leaving either is instant and lossless. */
   const [focusMode, setFocusMode] = useState(false)
   const [previewing, setPreviewing] = useState(false)
   const [converting, setConverting] = useState(false)
   const dirty = useRef(false)
   const saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+  /* The Search Appearance rail. It was a hard 328px; Asim asked on 17 Sep 2026
+     for a divider he could move. 560 for the writing column is roughly where a
+     line of body text stops being comfortable to read, so that is the floor the
+     rail may not eat into.
+     384 to start, not the 420 this was first written with, and the 36px is not
+     arbitrary: on a 1920 screen the formatting toolbar fits on one row while the
+     writing box is 1020px or wider, and 420 took it to 1010 and wrapped the
+     toolbar onto two. A default that makes the editor look worse out of the box
+     is a bad default however easy it is to drag away from. Measured at 1920,
+     17 Sep 2026 — one row up to 390, two from 400. */
+  /* Destructured rather than kept as one `split` object: passing `split.hostRef`
+     straight into a `ref=` attribute makes the lint infer the whole object is a
+     ref, and then every other property read in the same JSX is reported as
+     touching a ref during render. */
+  const { hostRef: splitRef, hostStyle: splitStyle, dragging: splitDragging, grip: splitGrip } =
+    useSplit('rti.admin.editorRail', { min: 300, mainMin: 560, initial: () => 384 })
 
   const editor = useEditor({
     extensions: EDITOR_EXTENSIONS,
@@ -255,6 +280,42 @@ export function PostEditor({
     clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(() => { void save() }, 1200)
   }, [save])
+
+  /* ------------------------------------------------------------ full screen */
+  /*
+   * !! "FULL SCREEN" USED TO MEAN "HIDE ONE 208px RAIL", WHICH IS WHY ASIM ASKED
+   * FOR THIS AGAIN. The button dropped the outline column and left the app's
+   * navigation rail, the page header and the browser chrome exactly where they
+   * were, so the writing column gained about a fifth of an inch and the screen
+   * still looked like the screen. Full screen now means all three: the editor
+   * asks the document for real full screen, and tells the shell to fold the
+   * navigation rail and the header away.
+   *
+   * requestFullscreen is best-effort on purpose. It rejects when the click that
+   * led here was not a user gesture, and iframes without allow="fullscreen"
+   * refuse outright — in both cases the in-page part still happens, which is the
+   * part that matters, so the rejection is swallowed rather than surfaced.
+   */
+  useEffect(() => { onFocusChange?.(focusMode) }, [focusMode, onFocusChange])
+  useEffect(() => () => onFocusChange?.(false), [onFocusChange])
+
+  useEffect(() => {
+    const el = document.documentElement
+    if (focusMode) {
+      if (!document.fullscreenElement) void el.requestFullscreen?.().catch(() => {})
+    } else if (document.fullscreenElement) {
+      void document.exitFullscreen?.().catch(() => {})
+    }
+  }, [focusMode])
+
+  /* F11 and the browser's own Escape leave full screen without going through the
+     button, and a chrome-less page still showing an "Exit full screen" button is
+     a lie about the state. */
+  useEffect(() => {
+    const sync = () => { if (!document.fullscreenElement) setFocusMode(false) }
+    document.addEventListener('fullscreenchange', sync)
+    return () => document.removeEventListener('fullscreenchange', sync)
+  }, [])
 
   // Escape is the way out of both full-screen modes; without it the only exit is
   // a button that full screen has just moved.
@@ -400,7 +461,11 @@ export function PostEditor({
   }
 
   return (
-    <div className={`a-ed${focusMode ? ' focus' : ''}`}>
+    <div
+      ref={splitRef}
+      className={`a-ed${focusMode ? ' focus' : ''}${splitDragging ? ' dragging' : ''}`}
+      style={splitStyle}
+    >
       {/* ---- outline rail ---- */}
       <aside className="a-edrail">
         <p className="a-railh">In this post</p>
@@ -435,7 +500,9 @@ export function PostEditor({
               <PathIcon d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z M12 9.2a2.8 2.8 0 1 0 .01 0" /> Preview
             </button>
             <button type="button" className="a-btn sm" onClick={() => setFocusMode((f) => !f)}
-              title={focusMode ? 'Bring the outline back' : 'Hide the outline and widen the page'}>
+              title={focusMode
+                ? 'Bring the navigation and the outline back (Esc)'
+                : 'Hide everything but the article'}>
               {focusMode
                 ? <><PathIcon d="M9 3v6H3M15 21v-6h6M9 9 3 3M15 15l6 6" /> Exit full screen</>
                 : <><PathIcon d="M8 3H3v5M16 21h5v-5M21 8V3h-5M3 16v5h5" /> Full screen</>}
@@ -728,6 +795,8 @@ export function PostEditor({
           )}
         </div>
       </div>
+
+      <SplitGrip label="Settings panel width" {...splitGrip} />
 
       {/* ---- search appearance and publishing ---- */}
       <aside className="a-edside">
@@ -1106,8 +1175,13 @@ function Preview({ post, html, words, category, author, onClose }: {
   category: string | null; author: string | null
   onClose: () => void
 }) {
-  const date = new Date(post.published_at ?? Date.now()).toLocaleDateString('en-GB',
-    { day: 'numeric', month: 'long', year: 'numeric' })
+  /* No Date.now() fallback here: calling it during render makes the component
+     impure — the preview would print a different date on every re-render — and
+     an unpublished draft has no publication date to print anyway. */
+  const date = post.published_at
+    ? new Date(post.published_at).toLocaleDateString('en-GB',
+        { day: 'numeric', month: 'long', year: 'numeric' })
+    : 'Not published yet'
 
   return (
     <div className="a-preview">

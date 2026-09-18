@@ -36,6 +36,10 @@ const nextConfig: NextConfig = {
 
   pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
 
+  /* `X-Powered-By: Next.js` on every response tells a scanner exactly which
+     framework and therefore which CVE list to try. It buys nothing. */
+  poweredByHeader: false,
+
   // NEVER set `output: 'export'`. Static export disables redirects(),
   // rewrites(), headers() and proxy — the ~500 redirects would vanish with
   // no error. Pages are still fully prerendered without it: the build output
@@ -59,6 +63,25 @@ const nextConfig: NextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
           },
+          /* Nothing on this site asks for a camera, a microphone or a location,
+             so nothing embedded in it should be able to either. Named here
+             rather than left to default because the default is "allowed". */
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          },
+        ],
+      },
+      {
+        /* The two faces in public/fonts that are not @fontsource packages (see
+           the note at the top of styles/globals.css). Next sets a long
+           immutable Cache-Control for everything under /_next/static, but not
+           for public/ — and these files are replaced by editing the repo, never
+           in place, so a year is safe. Without this they are revalidated on
+           every navigation. */
+        source: '/fonts/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {

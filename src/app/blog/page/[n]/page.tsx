@@ -8,7 +8,7 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { BlogArticles, blogListHeight } from '@/components/sections/blog/BlogArticles'
 import { BlogNewsletter } from '@/components/sections/blog/BlogNewsletter'
 import { blogCards, blogChips, blogPagePath, pageCount, pageNumberParam, pageSlice } from '@/lib/blog-index'
-import { HERO, INTRO, LIVE_SEO } from '@/data/blog'
+import { HERO, INTRO } from '@/data/blog'
 
 /**
  * /blog/page/2/ and beyond — the same frame as /blog/, a different slice.
@@ -43,12 +43,28 @@ export async function generateMetadata({ params }: Props) {
   const { n } = await params
   const page = pageNumberParam(n)
   if (page === null) return {}
+  const pages = pageCount((await blogCards()).length)
   return buildMetadata({
     url: blogPagePath(page),
-    // A new URL, so rule 6 does not pin this string — but it stays built from
-    // the live title so the pages read as one set in a SERP.
-    title: `${LIVE_SEO.title} — Page ${page}`,
-    description: LIVE_SEO.description,
+    /*
+     * NOT `${LIVE_SEO.title} — Page N`, AND NOT `${LIVE_SEO.description} Page
+     * N of M` EITHER, which is what the first pass at this wrote.
+     *
+     * Two things had to be true at once and the obvious version got one of
+     * them. Every page of the set used to send a byte-identical title stem and
+     * a byte-identical description, so twenty-six URLs read as twenty-six
+     * copies of one page to a crawler that weighs head tags before body text —
+     * that is what the page number fixes. But the live title is already 66
+     * characters and the live description 157, so appending to them produced 77
+     * and 172: both past the point a SERP truncates, on every page of the set.
+     *
+     * So page 1 — /blog/, the URL that actually ranks — keeps the live strings
+     * verbatim under rule 6, and pages 2+ get their own short ones. These URLs
+     * are new, so no rule 6 string is being touched here.
+     */
+    title: `Blog — Page ${page} of ${pages} | Recycle Technologies`,
+    description:
+      `Recycling and e-waste articles from Recycle Technologies — page ${page} of ${pages}.`,
   })
 }
 

@@ -29,6 +29,26 @@ import { KINDS } from './media-kinds'
 export const MEDIA_ROOT = process.env.MEDIA_DIR || path.join(process.cwd(), 'var', 'uploads')
 const BASE_URL = (process.env.MEDIA_BASE_URL || '/uploads').replace(/\/+$/, '')
 
+/**
+ * MEDIA_ROOT resolved once, at import.
+ *
+ * !! IT IS HOISTED OUT OF remove(), AND THE turbopackIgnore IS NOT COSMETIC.
+ * Turbopack reported "Dynamic filesystem access causes tracing of the whole
+ * project" against the path.resolve() that used to sit inside that function.
+ * That is not a style note: it means the bundler gives up working out which
+ * files this server module touches and traces EVERYTHING into the server
+ * output — public/ included, and public/ on this site holds the whole imported
+ * public/wp-content/uploads tree. A deployment bundle carrying every legacy
+ * image is slower to ship and, on a platform with a size cap, fails outright.
+ *
+ * MEDIA_ROOT comes out of an environment variable on purpose (a VPS points it
+ * at a mounted volume), so it can never be statically analysable. The ignore
+ * comment is the opt-out Turbopack itself names for exactly this case; the
+ * path is still checked at runtime by the prefix test in remove(), which is
+ * what actually keeps a doctored row from deleting something else.
+ */
+export const ROOT_ABS = path.resolve(/* turbopackIgnore: true */ MEDIA_ROOT)
+
 export type Stored = {
   filename: string; url: string; mime: string; bytes: number
   width: number | null; height: number | null
@@ -73,8 +93,8 @@ export async function remove(url: string): Promise<void> {
   const rel = url.slice(BASE_URL.length + 1)
   // Belt and braces against a doctored row: the resolved path must stay inside
   // ROOT, so "../../src/app/page.tsx" cannot be talked into being deleted.
-  const target = path.resolve(MEDIA_ROOT, rel)
-  if (target !== path.normalize(target) || !target.startsWith(path.resolve(MEDIA_ROOT) + path.sep)) return
+  const target = path.resolve(ROOT_ABS, rel)
+  if (target !== path.normalize(target) || !target.startsWith(ROOT_ABS + path.sep)) return
   try { await unlink(target) } catch { /* already gone; the row still goes */ }
 }
 

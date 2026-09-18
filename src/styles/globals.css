@@ -1,18 +1,45 @@
 @import "tailwindcss";
 
-/* Self-hosted so there is no third-party font request and no layout shift. */
-@import "@fontsource/ibm-plex-sans/400.css";
-@import "@fontsource/ibm-plex-sans/500.css";
-@import "@fontsource/ibm-plex-sans/600.css";
-@import "@fontsource/ibm-plex-sans/700.css";
-@import "@fontsource/roboto/300.css";
-@import "@fontsource/roboto/400.css";
-@import "@fontsource/roboto/500.css";
-@import "@fontsource/roboto/700.css";
-@import "@fontsource/roboto/300-italic.css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/barlow-condensed/600.css";
+/* Self-hosted so there is no third-party font request and no layout shift.
+ *
+ * !! latin AND latin-ext ONLY, NOT THE FULL FACE. The bare
+ * "@fontsource/roboto/400.css" import pulls @font-face rules for every subset
+ * @fontsource ships — cyrillic, cyrillic-ext, greek, greek-ext, vietnamese,
+ * math, symbols — and thirteen of those imports put 88 @font-face blocks into
+ * the stylesheet. No browser DOWNLOADS a face it has no characters for, so the
+ * fonts themselves were never the cost; the CSS was, and this stylesheet is
+ * render-blocking on every page of the site. Measured in the end-to-end QA on
+ * 17 Sep 2026: 98 KB raw / 16 KB gzipped before.
+ *
+ * latin-ext stays because it is the one that is not safely droppable — it
+ * carries the accented Latin letters that turn up in a supplier's name or an
+ * imported WordPress post (Ångström, Peña, façade). Without it those render in
+ * the fallback face mid-sentence. Anything beyond it is a subset this site has
+ * no text for, and the cure if that ever changes is one more import here. */
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-sans/latin-700.css";
+@import "@fontsource/ibm-plex-sans/latin-ext-400.css";
+@import "@fontsource/ibm-plex-sans/latin-ext-500.css";
+@import "@fontsource/ibm-plex-sans/latin-ext-600.css";
+@import "@fontsource/ibm-plex-sans/latin-ext-700.css";
+@import "@fontsource/roboto/latin-300.css";
+@import "@fontsource/roboto/latin-400.css";
+@import "@fontsource/roboto/latin-500.css";
+@import "@fontsource/roboto/latin-700.css";
+@import "@fontsource/roboto/latin-300-italic.css";
+@import "@fontsource/roboto/latin-ext-300.css";
+@import "@fontsource/roboto/latin-ext-400.css";
+@import "@fontsource/roboto/latin-ext-500.css";
+@import "@fontsource/roboto/latin-ext-700.css";
+@import "@fontsource/roboto/latin-ext-300-italic.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-ext-400.css";
+@import "@fontsource/inter/latin-ext-500.css";
+@import "@fontsource/barlow-condensed/latin-600.css";
+@import "@fontsource/barlow-condensed/latin-ext-600.css";
 /* IBM Plex Mono is NOT an @fontsource import.
    The service detail pages set their category and step labels in it, but
    adding a package means every checkout has to npm install before the build

@@ -84,6 +84,14 @@ html:has(.rti-admin), body:has(.rti-admin) { height: 100%; overflow: hidden; }
 
 /* ------------------------------------------------------------------ shell */
 .a-app { display: grid; grid-template-columns: 232px minmax(0, 1fr); height: 100%; min-height: 0; }
+/* Full screen. Set by AdminApp when the post editor asks for it, and the reason
+   the button now does what its name says: the navigation rail and the page
+   header are this component's, not the editor's, so nothing inside the editor
+   could ever have hidden them. Together with the browser's own full screen
+   (requested in PostEditor.tsx) the article is the only thing left on screen. */
+.a-app.focus { grid-template-columns: minmax(0, 1fr); }
+.a-app.focus .a-rail { display: none; }
+.a-app.focus .a-top { display: none; }
 .a-rail {
   overflow-y: auto;
   background: var(--rail); color: var(--rail-ink); display: flex; flex-direction: column; gap: 2px;
@@ -205,9 +213,58 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
 
 /* ----------------------------------------------------------------- editor */
 .a-ed {
-  display: grid; grid-template-columns: 208px minmax(0, 1fr) 328px;
+  /* --rail-w is written by useSplit() onto this element's style attribute and
+     remembered in localStorage. The fallback is what a browser with no stored
+     value gets, and what the media queries below fall back to when they drop
+     the grip. */
+  display: grid; grid-template-columns: 208px minmax(0, 1fr) 18px var(--rail-w, 384px);
   flex: 1 1 auto; min-height: 0; overflow: hidden;
 }
+/* ------------------------------------------------------------- split grip
+   The draggable divider between a form and its live preview. Used by the post
+   editor and the SEO desk; the behaviour is in components/client/admin/Split.tsx.
+
+   It occupies a grid track of its own rather than sitting on top of a border,
+   because a 1px border is not a pointer target — the hairline it draws is
+   cosmetic and the whole 18px column is what you can grab. */
+.a-grip {
+  position: relative; align-self: stretch; cursor: col-resize;
+  display: flex; align-items: center; justify-content: center;
+  /* Without this a drag on a touchscreen scrolls the page instead. */
+  touch-action: none; user-select: none;
+}
+/* The hairline that used to be .a-edside's border-left. */
+.a-grip::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px;
+  margin-left: -0.5px; background: var(--rule); transition: background .15s;
+}
+/* pointer-events: none so that every click in this column targets the grip
+   itself and not the bar. A double-click only counts as one when both halves
+   land on the same element, and the bar sits exactly where you aim. */
+.a-grip__bar {
+  position: relative; width: 4px; height: 38px; border-radius: 3px;
+  background: transparent; transition: background .15s; pointer-events: none;
+}
+.a-grip:hover::before, .a-grip:focus-visible::before { background: var(--a-brand-soft); }
+.a-grip:hover .a-grip__bar, .a-grip:focus-visible .a-grip__bar { background: var(--a-brand); }
+.a-grip:focus-visible { outline: none; }
+
+/* While the pointer is down the divider stays lit, the page stops selecting
+   text, and everything else stops answering the pointer — otherwise dragging
+   across the editor drops the caret into the article, and dragging across the
+   preview selects the snippet. */
+.a-ed.dragging, .a-seogrid.dragging { cursor: col-resize; user-select: none; }
+.a-ed.dragging *, .a-seogrid.dragging * { pointer-events: none; }
+/* !! EXCEPT THE GRIP, AND THIS IS NOT A DETAIL. Pressing the pointer down sets
+   .dragging on the same tick, so without this line the grip has already stopped
+   answering the pointer by the time the button comes back up: the mouseup lands
+   on the grid instead, the two halves of the click disagree about their target,
+   and the browser never raises a dblclick — which is the reset. Found by the
+   browser check, 17 Sep 2026; it is invisible to a type checker and to the eye. */
+.a-ed.dragging .a-grip, .a-seogrid.dragging .a-grip { pointer-events: auto; }
+.a-ed.dragging .a-grip::before, .a-seogrid.dragging .a-grip::before { background: var(--a-brand); }
+.a-ed.dragging .a-grip__bar, .a-seogrid.dragging .a-grip__bar { background: var(--a-brand); }
+
 .a-edrail { padding: 20px 16px 20px 26px; border-right: 1px solid var(--rule); overflow-y: auto; min-height: 0; }
 /* !! THE SCROLL IS INSIDE THE WRITING BOX, NOT AROUND IT.
    .a-edmid does NOT scroll. The title, the meta fields, the toolbar and the
@@ -224,15 +281,23 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
   padding: 20px 26px; min-width: 0; min-height: 0; overflow: hidden;
   display: flex; flex-direction: column;
 }
-.a-edside { padding: 20px 26px 20px 20px; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; }
+/* No border-left: the hairline is drawn by .a-grip, which sits in the track
+   before this one and is what you actually drag. */
+.a-edside { padding: 20px 26px 20px 12px; overflow-y: auto; min-height: 0; }
 
 /* Full screen drops the OUTLINE rail and keeps the settings rail: search
    appearance, the URL and the checks are what a writer glances at mid-sentence,
    while the outline is a navigation aid you do not need when you are heads-down
-   in one section. */
-.a-ed.focus { grid-template-columns: minmax(0, 1fr) 328px; }
+   in one section. The app's navigation rail and page header go too — see
+   .a-app.focus at the top of this file. */
+.a-ed.focus { grid-template-columns: minmax(0, 1fr) 18px var(--rail-w, 384px); }
 .a-ed.focus .a-edrail { display: none; }
-.a-ed.focus .a-edmid { padding-left: max(26px, calc((100% - 980px) / 2)); padding-right: max(26px, calc((100% - 980px) / 2)); }
+/* 1180, not 980. With the app rail and the header gone there is a great deal
+   more width to spend, and 980 left the writing box marooned in the middle of
+   a very wide empty page — which is the opposite of what full screen is for.
+   It is still a cap rather than 100%: a line of 15.5px text running the full
+   width of a 27-inch monitor is unreadable. */
+.a-ed.focus .a-edmid { padding-left: max(26px, calc((100% - 1180px) / 2)); padding-right: max(26px, calc((100% - 1180px) / 2)); }
 .a-railh { font-family: var(--a-sans); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--a-muted); margin: 0 0 10px; }
 .a-outline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
 .a-outline button {
@@ -495,20 +560,21 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
 /* ------------------------------------------------------------- responsive */
 .a-railtoggle { display: none; }
 @media (max-width: 1180px) {
-  .a-ed { grid-template-columns: minmax(0, 1fr) 300px; }
+  .a-ed { grid-template-columns: minmax(0, 1fr) 18px var(--rail-w, 300px); }
   .a-edrail { display: none; }
 }
 @media (max-width: 980px) {
   /* One column, so one scroller: the whole editor scrolls as a unit and the
      settings rail follows the article rather than sitting beside it. */
   .a-ed { grid-template-columns: minmax(0, 1fr); display: flex; flex-direction: column; overflow-y: auto; }
+  .a-ed .a-grip { display: none; }
   .a-edmid { overflow: visible; }
   /* One scroller on a narrow screen: the canvas grows and the page moves. */
   .a-canvas { overflow: visible; flex: none; }
   .a-canvas .tiptap { min-height: 440px; }
   .a-ed.focus { grid-template-columns: minmax(0, 1fr); }
   .a-ed.focus .a-edmid { padding-left: 26px; padding-right: 26px; }
-  .a-edside { border-left: 0; border-top: 1px solid var(--rule); padding: 20px 26px; margin-top: 18px; overflow: visible; }
+  .a-edside { border-top: 1px solid var(--rule); padding: 20px 26px; margin-top: 18px; overflow: visible; }
   .a-actionbar { margin-top: 18px; }
 }
 @media (max-width: 760px) {
@@ -745,7 +811,17 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
 .a-seohead__t strong { font-family: var(--a-sans); font-size: 15px; font-weight: 600; }
 .a-seohead__t .a-mono { color: var(--a-muted); }
 
-.a-seogrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+/* Half and half to start with, and a divider the person can move after that —
+   Asim, 17 Sep 2026. The initial number is worked out in Split.tsx from the
+   width of this element, so it is half of whatever the sheet actually is rather
+   than half of a guess; the fallback below only applies before the first
+   measurement and on the narrow layouts that drop the grip. No `gap`: the grip
+   column IS the gutter, and a gap would put dead space either side of the one
+   thing on this row you are meant to grab. */
+.a-seogrid {
+  display: grid; grid-template-columns: minmax(0, 1fr) 26px var(--rail-w, 340px);
+  gap: 0; align-items: start;
+}
 .a-seomain { min-width: 0; }
 .a-seoside {
   position: sticky; top: 14px; display: flex; flex-direction: column; gap: 14px;
@@ -754,7 +830,12 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
   max-height: calc(100dvh - 28px); overflow-y: auto; scrollbar-width: thin;
 }
 @media (max-width: 1100px) {
-  .a-seogrid { grid-template-columns: minmax(0, 1fr); }
+  /* One column, so there is nothing left to drag: the grip is hidden rather
+     than left as a 26px stripe between two stacked panels. --rail-w is simply
+     not read here, which is why the width lives in a custom property the
+     stylesheet can ignore instead of on the rail element itself. */
+  .a-seogrid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .a-seogrid .a-grip { display: none; }
   .a-seoside { position: static; max-height: none; overflow: visible; }
 }
 

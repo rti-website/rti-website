@@ -113,7 +113,16 @@ export function categoryPagePath(slug: string, page: number): string {
  * Page 1 is rejected on purpose: /blog/page/1/ and /category/x/page/1/ would be
  * second URLs for lists that already answer at /blog/ and /category/x/, which
  * is the duplicate-content problem a replatform exists to avoid.
+ *
+ * !! THIS WAS /^[2-9]\d*$/ AND IT 404ed PAGES 10 TO 19. The class was written
+ * to exclude page 1 and it excluded every number that *starts* with a 1 — so
+ * with 307 posts at twelve a page, ten of the twenty-six pages were built,
+ * listed in the sitemap, linked from the pager, and then refused by the route
+ * that had just prerendered them. The digit test and the page-1 test are two
+ * different rules; they are now two different lines.
  */
 export function pageNumberParam(raw: string): number | null {
-  return /^[2-9]\d*$/.test(raw) ? Number(raw) : null
+  if (!/^[1-9]\d*$/.test(raw)) return null
+  const n = Number(raw)
+  return n >= 2 ? n : null
 }

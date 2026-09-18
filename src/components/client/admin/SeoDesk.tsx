@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { getJSON, sendJSON } from './api'
 import { Empty, Icon, Retry, Table } from './Bits'
+import { SplitGrip, useSplit } from './Split'
 import {
   analyse, lengthStatus, TITLE_MAX, DESCRIPTION_MAX, DESCRIPTION_MIN,
   type Analysis, type Check, type CheckStatus,
@@ -235,6 +236,16 @@ function SeoEditor({ postId, canEdit, onBack, onToast }: {
   const [busy, setBusy] = useState(false)
   const [group, setGroup] = useState<'core' | 'social' | 'advanced' | 'schema'>('core')
 
+  /* The Google preview column. Asim asked for it at half the page on
+     17 Sep 2026, and for a divider he could move himself — so half is only the
+     starting point, and whatever he drags it to is what he gets next time.
+     480 for the form is the width at which the two-up Robots switches and the
+     Open Graph fields stop wrapping into an unreadable ladder. */
+  /* Destructured rather than kept as one `split` object — see the same note in
+     PostEditor.tsx: a `ref={x.hostRef}` teaches the lint that `x` is a ref. */
+  const { hostRef: splitRef, hostStyle: splitStyle, dragging: splitDragging, grip: splitGrip } =
+    useSplit('rti.admin.seoRail', { min: 320, mainMin: 480, initial: (w) => w / 2 })
+
   useEffect(() => {
     void (async () => {
       const r = await getJSON<{ post: FullPost; keywordUsedBy: string[] }>(`/seo/${postId}`)
@@ -332,7 +343,11 @@ function SeoEditor({ postId, canEdit, onBack, onToast }: {
         </span></div>
       )}
 
-      <div className="a-seogrid">
+      <div
+        ref={splitRef}
+        className={`a-seogrid${splitDragging ? ' dragging' : ''}`}
+        style={splitStyle}
+      >
         <div className="a-seomain">
           <div className="a-tabs" role="tablist">
             {([['core', 'Core'], ['social', 'Social'], ['advanced', 'Advanced'], ['schema', 'Schema']] as const)
@@ -541,6 +556,8 @@ function SeoEditor({ postId, canEdit, onBack, onToast }: {
             </div>
           )}
         </div>
+
+        <SplitGrip label="Preview panel width" {...splitGrip} />
 
         <aside className="a-seoside">
           <SerpPreview slug={String(post.slug ?? '')} title={titleShown} description={descShown} />

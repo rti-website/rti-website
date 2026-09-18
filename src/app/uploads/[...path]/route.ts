@@ -2,7 +2,7 @@ import { createReadStream } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import { Readable } from 'node:stream'
 import path from 'node:path'
-import { MEDIA_ROOT } from '@/lib/media-store'
+import { ROOT_ABS } from '@/lib/media-store'
 import { KINDS } from '@/lib/media-kinds'
 
 /**
@@ -32,8 +32,13 @@ export async function GET(_req: Request, ctx: { params: Promise<{ path: string[]
 
   // Path traversal: resolve against the root and insist the answer is inside it.
   // "../../.env.local" gets no further than this line.
-  const target = path.resolve(MEDIA_ROOT, ...segments)
-  if (!target.startsWith(path.resolve(MEDIA_ROOT) + path.sep)) {
+  //
+  // ROOT_ABS rather than path.resolve(MEDIA_ROOT) twice a request: media-store
+  // resolves it once at import, behind the turbopackIgnore that stops this
+  // module's filesystem access from dragging the whole project — public/ and
+  // every legacy image in it — into the server bundle.
+  const target = path.resolve(ROOT_ABS, ...segments)
+  if (!target.startsWith(ROOT_ABS + path.sep)) {
     return new Response('Not found', { status: 404 })
   }
 

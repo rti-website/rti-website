@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Box } from '@/components/design/Frame'
-import { Btn } from '@/components/ui/Bits'
 import { href } from '@/lib/urls'
 import { FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { NewsletterForm } from '@/components/client/NewsletterForm'

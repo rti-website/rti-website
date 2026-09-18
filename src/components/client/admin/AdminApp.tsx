@@ -58,6 +58,9 @@ export function AdminApp() {
   const [view, setView] = useState<View>('dash')
   const [editing, setEditing] = useState<number | null>(null)
   const [railOpen, setRailOpen] = useState(false)
+  /* Full screen, owned here because it hides this component's own navigation
+     rail and header. The post editor raises it; nothing else sets it. */
+  const [focus, setFocus] = useState(false)
   const [toast, setToast] = useState('')
   const [asking, setAsking] = useState<null | 'post'>(null)
 
@@ -109,7 +112,9 @@ export function AdminApp() {
   }
 
   return (
-    <div className="a-app">
+    /* `focus` folds the navigation rail and the page header away. The post
+       editor's Full screen button is what sets it — see onFocusChange below. */
+    <div className={`a-app${focus ? ' focus' : ''}`}>
       <nav className={`a-rail${railOpen ? ' open' : ''}`} aria-label="Sections">
         <div className="a-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -185,6 +190,7 @@ export function AdminApp() {
         {view === 'editor' && editing !== null && (
           <PostEditor postId={editing} categories={boot.categories} authors={boot.authors}
             canPublish={canPublish} onClose={() => { show('posts'); void load() }} onToast={say}
+            onFocusChange={setFocus}
             onAuthorAdded={(a) => setBoot((b) => (b ? { ...b, authors: [...b.authors, a].sort((x, y) => x.name.localeCompare(y.name)) } : b))} />
         )}
         {view === 'cats' && <Categories canEdit={canPublish} onToast={say} onChanged={load} />}

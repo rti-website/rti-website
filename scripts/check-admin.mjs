@@ -310,12 +310,27 @@ await page.waitForTimeout(200)
 
 /* ---- the title is an editable H1 ---- */
 check('the title is labelled H1', await page.locator('.a-h1tag:has-text("H1")').isVisible())
+
+/* !! THE ORIGINAL TITLE IS PUT BACK, AND IT DID NOT USED TO BE. This check
+   renamed a real published post to "Edited From Inside The Post" and left it
+   that way, so the NEXT run of this script could not find "Recycling Symbols
+   Explained" and failed the published-delete check — a failure with nothing
+   wrong behind it, caused entirely by the previous run. The canonical field a
+   few lines down was already being restored; the title was not. Found in the
+   end-to-end QA, 17 Sep 2026. */
+const originalTitle = await page.locator('#articleTitle').inputValue()
+
 await page.fill('#articleTitle', 'Edited From Inside The Post')
 await page.waitForTimeout(1800)
 check('editing the title saves',
   (await page.locator('.a-status').innerText()).toLowerCase().includes('saved'))
 check('the outline rail shows it as the H1',
   (await page.locator('.a-outline li.lv1').innerText()).includes('Edited From Inside'))
+
+await page.fill('#articleTitle', originalTitle)
+await page.waitForTimeout(1800)
+check('the title is back to what it was', 
+  (await page.locator('#articleTitle').inputValue()) === originalTitle)
 
 /* ---- canonical ---- */
 await page.fill('#canonical', 'https://example.com/original/')
@@ -433,15 +448,70 @@ check('it names the font and size of the selection',
   /px/.test(await page.locator('.a-bubblefacts').innerText()))
 await shot(page, '25-bubble')
 
+/* ---- the settings rail can be resized ----
+   Two bugs lived in this divider and neither was visible to the type checker:
+   the grip's own grid track was not counted against the writing column's
+   minimum, and a preventDefault on pointerdown suppressed the synthesised
+   dblclick, so double-click-to-reset silently did nothing. Both were found by
+   driving it in a browser, which is what these lines do. */
+const railWidth = () => page.locator('.a-edside').evaluate((el) => Math.round(el.getBoundingClientRect().width))
+const gripBox = () => page.locator('.a-ed .a-grip').boundingBox()
+
+const rail0 = await railWidth()
+let g = await gripBox()
+check('the settings rail has a divider', Boolean(g))
+await page.mouse.move(g.x + g.width / 2, g.y + 240)
+await page.mouse.down()
+await page.mouse.move(g.x - 170, g.y + 240, { steps: 12 })
+check('the divider lights up while it is being dragged',
+  await page.locator('.a-ed').evaluate((el) => el.classList.contains('dragging')))
+await page.mouse.up()
+await page.waitForTimeout(300)
+const rail1 = await railWidth()
+/* Just "wider", not "wider by 170". How far the divider can actually travel
+   depends on the window: the writing column's floor stops it, and on this
+   suite's viewport the ceiling is only about forty pixels past the default.
+   The floor itself is asserted on its own, two checks down. */
+check(`dragging the divider widens the settings rail (${rail0} -> ${rail1})`, rail1 > rail0 + 20)
+check('the new width is remembered',
+  Number(await page.evaluate(() => localStorage.getItem('rti.admin.editorRail'))) > 0)
+await shot(page, '26a-rail-wide')
+
+/* However far you drag, the writing column keeps a usable width. */
+g = await gripBox()
+await page.mouse.move(g.x + g.width / 2, g.y + 240)
+await page.mouse.down()
+await page.mouse.move(30, g.y + 240, { steps: 14 })
+await page.mouse.up()
+await page.waitForTimeout(300)
+/* The parentheses are load-bearing: `await x.evaluate(...) >= 540` is
+   `await (Promise >= 540)`, which is `await false`, which is false every time. */
+const mainW = await page.locator('.a-edmid').evaluate((el) => Math.round(el.getBoundingClientRect().width))
+check(`the writing column keeps its minimum width (${mainW})`, mainW >= 540)
+
+await page.locator('.a-ed .a-grip').dblclick()
+await page.waitForTimeout(350)
+check(`double-clicking the divider puts it back (${await railWidth()} ~ ${rail0})`,
+  Math.abs((await railWidth()) - rail0) < 14)
+
 /* ---- full screen and preview ---- */
 await page.click('button:has-text("Full screen")')
-await page.waitForTimeout(400)
+await page.waitForTimeout(500)
 check('full screen hides the outline rail', !(await page.locator('.a-edrail').isVisible()))
 check('full screen KEEPS the settings rail', await page.locator('.a-edside').isVisible())
+/* The three that make "full screen" mean what it says. The button used to hide
+   one 208px rail and leave the app's own navigation, the page header and the
+   browser chrome exactly where they were. */
+check('full screen hides the app navigation', !(await page.locator('.a-rail').isVisible()))
+check('full screen hides the page header', !(await page.locator('.a-top').isVisible()))
+const fsCanvas = await page.locator('.a-canvas').evaluate((el) => Math.round(el.getBoundingClientRect().width))
+check(`the writing area is wider in full screen (${fsCanvas})`, fsCanvas > 700)
+check('the divider is still there in full screen', Boolean(await gripBox()))
 await shot(page, '26-fullscreen')
 await page.keyboard.press('Escape')
-await page.waitForTimeout(350)
+await page.waitForTimeout(400)
 check('Escape leaves full screen', await page.locator('.a-edrail').isVisible())
+check('Escape brings the app navigation back', await page.locator('.a-rail').isVisible())
 
 await page.click('button:has-text("Preview")')
 await page.waitForSelector('.a-article', { timeout: 8000 })
@@ -654,10 +724,6 @@ if (await importedRow.count()) {
      document for emptiness, and Tiptap's empty document is one blank paragraph
      — so it passed, and typing in the title box overwrote a live article with
      "<p></p>". This is the check that would have caught it. */
-  const before = await page.evaluate(async () => {
-    const r = await fetch('/api/admin/posts/' + location.hash.slice(1) + '/')
-    return null
-  }).catch(() => null)
   const bodyLen = () => page.locator('.a-importedbody').innerHTML().then((h) => h.length)
   const lenBefore = await bodyLen()
   await page.fill('#articleTitle', 'Touched By The Test Suite')

@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "nextjs", "typescript", "oxc", "import"],
+  "env": { "browser": true, "es2024": true, "node": true },
+  "ignorePatterns": [".next", "node_modules", "public", "var", "**/*.d.ts"],
+  "categories": { "correctness": "error", "suspicious": "warn" },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "nextjs/no-img-element": "off",
+    "react/set-state-in-effect": "off",
+    "import/no-unassigned-import": "off",
+    "eslint/no-underscore-dangle": "off",
+    "eslint/no-shadow": "off",
+    "react/jsx-no-target-blank": "error",
+    "react/no-danger-with-children": "error",
+    "typescript/no-explicit-any": "warn"
+  },
+  "overrides": [
+    { "files": ["scripts/**/*.mjs"], "env": { "browser": false, "node": true } }
+  ]
+}

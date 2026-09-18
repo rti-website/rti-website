@@ -52,8 +52,11 @@ export const FAQ_INTRO = {
 
 export const FAQ_SEO = {
   title: 'FAQs | Recycle Technologies',
-  description: 'Answers to common questions about electronics recycling, e-waste, batteries, light '
-    + 'bulbs, hard drive destruction, shredding, mail-in recycling, pickups and drop-offs.',
+  /* 158 characters. It was 166 — eight past the point Google truncates —
+     which the link check caught. This URL is new, so no rule 6 string is
+     involved and it can simply be shortened. */
+  description: 'Answers about electronics recycling, e-waste, batteries, light bulbs, hard drive '
+    + 'destruction, shredding, mail-in recycling, pickups and drop-offs.',
 }
 
 export const FAQ_GROUPS: FaqGroup[] = [

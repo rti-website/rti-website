@@ -345,8 +345,6 @@ async function rehostBody(html) {
 }
 
 /* ------------------------------------------------------------------- main */
-const slugify = (t) => String(t).toLowerCase().replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-').slice(0, 80)
-
 say(`\n  ${c.b('WordPress import')}  ${c.dim(SITE)}${DRY ? c.warn('   DRY RUN — nothing will be written') : ''}\n`)
 
 /* ---- categories ---- */

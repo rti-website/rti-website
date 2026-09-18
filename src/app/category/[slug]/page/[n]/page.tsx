@@ -41,11 +41,17 @@ export async function generateMetadata({ params }: Props) {
   const page = pageNumberParam(n)
   const cat = (await dbCategories()).find((c) => c.slug === slug && c.source === 'wordpress')
   if (page === null || !cat) return {}
+  const pages = pageCount((await dbPostsInCategory(cat.slug)).length)
   return buildMetadata({
     url: categoryPagePath(cat.slug, page),
-    title: `${cat.name} — Page ${page} | Recycle Technologies`,
-    description: cat.description
-      ?? `Articles on ${cat.name.toLowerCase()} from Recycle Technologies.`,
+    /* Same reasoning as /blog/page/[n]/: page 1 keeps the category's own
+       description, and pages 2+ get a short one that names the page, so an
+       archive of sixteen pages is not sixteen identical <head>s. Built here
+       rather than appended to cat.description, which can be long enough on its
+       own to push the result past a SERP's cut-off. */
+    title: `${cat.name} — Page ${page} of ${pages} | Recycle Technologies`,
+    description:
+      `${cat.name} articles from Recycle Technologies — page ${page} of ${pages}.`,
   })
 }
 
