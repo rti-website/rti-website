@@ -203,16 +203,53 @@ export async function liveDbCategories(): Promise<DbCategory[]> {
  * Filtering on the single editorial column would leave /category/blog/ empty,
  * which is an indexed URL with 252 posts behind it. See db/003_wordpress.sql.
  */
-export async function dbPostsInCategory(slug: string): Promise<DbPost[]> {
+/*
+ * !! THIS USED TO RUN A QUERY PER CALL, AND THE QUERY RETURNED FULL POST BODIES.
+ * Every category page calls it three times — generateStaticParams, then
+ * generateMetadata, then the page itself — and the "blog" category holds 252
+ * posts, so each call shipped several megabytes of content_html over one of a
+ * worker's four connections. Forty-three category URLs across seven workers
+ * made that ~90 heavy queries in a burst; the build passed once by luck and on
+ * the next run the pool waited out its 30 seconds and the guard above stopped
+ * it. Found on the dev server, 18 Sep 2026.
+ *
+ * allDbPosts() and dbCategories() are cached for exactly this reason and this
+ * one had been missed. Now membership is one small cached query — two columns,
+ * no bodies — and the posts themselves come from the already-cached list. Per
+ * worker that is two queries for the whole build instead of ninety.
+ *
+ * Order is preserved: allDbPosts() is sorted the way the old query was, and a
+ * filter does not reorder.
+ */
+let membership: Map<string, Set<string>> | null = null
+
+async function categoryMembership(): Promise<Map<string, Set<string>>> {
+  if (membership) return membership
   try {
-    const rows = await q<Row>(`${SELECT}
-       AND p.id IN (
-             SELECT pc.post_id FROM post_categories pc
-               JOIN categories cc ON cc.id = pc.category_id
-              WHERE cc.slug = $1)
-     ORDER BY p.published_at DESC NULLS LAST, p.id DESC`, [slug])
-    return rows.map(toPost)
+    const rows = await q<{ cat: string; post: string }>(`
+      SELECT cc.slug AS cat, p.slug AS post
+        FROM post_categories pc
+        JOIN categories cc ON cc.id = pc.category_id
+        JOIN posts p       ON p.id  = pc.post_id
+       WHERE p.status = 'published'`)
+    const m = new Map<string, Set<string>>()
+    for (const r of rows) {
+      let set = m.get(r.cat)
+      if (!set) { set = new Set(); m.set(r.cat, set) }
+      set.add(r.post)
+    }
+    membership = m
+    return m
   } catch (err) {
-    return noDatabase(err)
+    noDatabase(err)            // throws when DATABASE_URL is set; warns otherwise
+    membership = new Map()
+    return membership
   }
+}
+
+export async function dbPostsInCategory(slug: string): Promise<DbPost[]> {
+  const [all, m] = await Promise.all([allDbPosts(), categoryMembership()])
+  const wanted = m.get(slug)
+  if (!wanted) return []
+  return all.filter((p) => wanted.has(p.slug))
 }
