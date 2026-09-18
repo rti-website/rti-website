@@ -39,11 +39,25 @@ function pool(): Pool {
         'DATABASE_URL is not set. Copy .env.example to .env.local and run `npm run db:setup`.',
       )
     }
+    /*
+     * !! THESE NUMBERS ARE SIZED FOR THE BUILD, NOT FOR A REQUEST. A production
+     * build prerenders 429 pages, and the ones that read posts do so in
+     * parallel — far more than eight at a time. At max:8 with a five second
+     * connect timeout, queries queued behind the pool started timing out on the
+     * dev server, and a timeout here is indistinguishable from "no database" to
+     * the caller, so pages were rendering with no posts while the build still
+     * reported success. Found deploying to the dev server, 18 Sep 2026.
+     *
+     * 16 is still modest against PostgreSQL's default max_connections of 100,
+     * and this box shares one server with five other apps. The long connect
+     * timeout costs nothing when the database is up and is what stops a busy
+     * moment from being read as an outage.
+     */
     globalThis.__rtiPool = new Pool({
       connectionString,
-      max: 8,
+      max: 16,
       idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 5_000,
+      connectionTimeoutMillis: 30_000,
     })
   }
   return globalThis.__rtiPool

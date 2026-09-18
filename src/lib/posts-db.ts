@@ -11,10 +11,13 @@ import type { ContentMeta } from '@/lib/content'
  * fetching, exactly like reading MDX off the disk, and the output is the same:
  * fully prerendered HTML. The build guard still reports the pages as static.
  *
- * !! IT ALSO MUST NOT BREAK A BUILD WITH NO DATABASE. Until the import has run,
- * and on any machine that has never set DATABASE_URL, every function here
- * returns nothing and says so once. A migration in progress must never be able
- * to stop the existing site from building.
+ * !! IT MUST NOT BREAK A BUILD ON A MACHINE WITH NO DATABASE CONFIGURED. On a
+ * fresh clone, or in CI, DATABASE_URL is unset: every function here returns
+ * nothing and says so once. A migration in progress must never stop the
+ * existing site from building.
+ *
+ * !! BUT A CONFIGURED DATABASE THAT FAILS TO ANSWER STOPS THE BUILD. That is a
+ * different thing entirely and it used to be silent — see noDatabase() below.
  */
 
 export type DbPost = ContentMeta & {
@@ -41,14 +44,47 @@ export type DbCategory = {
   count: number
 }
 
+/**
+ * What to do when a read fails.
+ *
+ * !! IT DEPENDS ENTIRELY ON WHETHER DATABASE_URL IS SET, AND IT DID NOT USED TO.
+ * Two completely different situations were taking the same path:
+ *
+ *   1. There is no database configured. A fresh clone, a contributor working on
+ *      the static pages, CI. Building without the imported posts is correct, and
+ *      a warning is the right response.
+ *
+ *   2. A database IS configured and the read failed anyway — it is down, the
+ *      password is wrong, or the pool timed out under build load. Returning an
+ *      empty list here ships a blog index with no articles, a sitemap missing
+ *      304 URLs and category pages with nothing on them, and the build still
+ *      exits 0. Nothing downstream can tell the difference.
+ *
+ * The second one is the dangerous one, and it happened on the dev server on
+ * 18 Sep 2026: the connect timeout was exceeded mid-build and the only trace was
+ * one warning in several hundred lines of output. So a configured-but-unreachable
+ * database now throws and stops the build, which is the same reasoning as
+ * `dynamic = 'error'` in app/layout.tsx — a loud failure beats a quiet lie.
+ */
 let warned = false
 function noDatabase(err: unknown): [] {
+  const message = (err as Error).message
+
+  if (process.env.DATABASE_URL) {
+    throw new Error(
+      `Could not read posts, and DATABASE_URL is set — so this is a broken `
+      + `connection, not a missing one:\n    ${message}\n`
+      + `  Refusing to build a site with no articles in it. Check the database `
+      + `is running and that DATABASE_URL is right.`,
+    )
+  }
+
   if (!warned) {
     warned = true
     console.warn(
-      `\n  [posts-db] No database, so no imported posts are in this build.`
-      + `\n             ${(err as Error).message}`
-      + `\n             This is expected before \`npm run wp:import\` has run.\n`,
+      `\n  [posts-db] No DATABASE_URL, so no imported posts are in this build.`
+      + `\n             ${message}`
+      + `\n             This is expected before \`npm run db:setup\` has run.\n`,
     )
   }
   return []
