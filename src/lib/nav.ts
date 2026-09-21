@@ -6,7 +6,7 @@
  * change a single URL. Every path goes through href() so the trailing-slash
  * rule is applied in exactly one place.
  */
-import { QUOTE_HREF, href } from './urls'
+import { href } from './urls'
 import type { IndustryMark } from '@/components/ui/IndustryMarks'
 
 export type NavItem = {
@@ -73,7 +73,9 @@ export const TOP_BAR = {
   phoneMn: { label: 'MN:(800)969-5166', tel: 'tel:+18009695166' },
   phoneWi: { label: 'WI:(800)205-3040', tel: 'tel:+18002053040' },
   contact: { label: 'Contact Us', href: href('/contact-us/') },
-  quote:   { label: 'Get a quote', href: QUOTE_HREF },
+  // `quote` was here until 21 Sep 2026. Asim removed the second button from
+  // the announcement bar and gave Contact Us its filled style; nothing else
+  // read this row, so it went with the button rather than sitting unused.
 }
 
 /**

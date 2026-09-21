@@ -36,6 +36,30 @@ const ROW_GAP = 24
 const BANNER_H = 140
 const PER_ROW = 3
 
+/**
+ * How long each tab holds before the next one opens — Asim, 21 Sep 2026.
+ * Set to 3s, then to 1s the same day. At 1s the whole set cycles in three
+ * seconds, so the four stops below carry more weight than they did: the tabs
+ * are different heights and every switch moves the page under this section.
+ *
+ * Four things stop the timer, and the first is not optional:
+ *
+ *  1. THE SECTION BEING OFF SCREEN. The tabs are not the same height — a
+ *     one-row tab is 398px shorter than a two-row one, which is the whole
+ *     point of HOME_SERVICES_DELTA_VAR below. Rotating while the reader is
+ *     further down the page would jerk everything under them by 398px every
+ *     few seconds, with no idea why. So it only runs while the section is
+ *     actually in view.
+ *  2. A pointer over it, or focus inside it. Nobody wants a card to vanish
+ *     mid-read, or the email field to move while they are typing in it.
+ *  3. A click on any tab. They have chosen; stop deciding for them. This is
+ *     also what makes the rotation meet WCAG 2.2.2, which wants a way to stop
+ *     anything that moves on its own.
+ *  4. prefers-reduced-motion. For some people this kind of movement is not a
+ *     matter of taste.
+ */
+const AUTO_MS = 1000
+
 /** Height of a tab's panel: its rows of cards, the gap, the banner. */
 function panelH(count: number): number {
   const rows = Math.max(1, Math.ceil(count / PER_ROW))
@@ -51,6 +75,13 @@ export function ServiceTabs() {
   const cards = SERVICE_CARDS[active] ?? []
   const host = useRef<HTMLDivElement>(null)
 
+  /** Cleared for good by a click on any tab. */
+  const [auto, setAuto] = useState(true)
+  /** Pointer over the section, or focus inside it. */
+  const [held, setHeld] = useState(false)
+  const [onScreen, setOnScreen] = useState(false)
+  const [reduced, setReduced] = useState(false)
+
   useEffect(() => {
     // The variable lives on the canvas, which is where every reader sits.
     const canvas = host.current?.closest<HTMLElement>('.design-canvas')
@@ -59,8 +90,50 @@ export function ServiceTabs() {
     return () => { canvas.style.removeProperty(HOME_SERVICES_DELTA_VAR) }
   }, [cards.length])
 
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const read = () => setReduced(mq.matches)
+    read()
+    mq.addEventListener('change', read)
+    return () => { mq.removeEventListener('change', read) }
+  }, [])
+
+  useEffect(() => {
+    const el = host.current
+    if (!el) return
+    // A third of the section showing counts as watching it. Any less and the
+    // rotation runs while it is only just clipping into view at the bottom.
+    const io = new IntersectionObserver(
+      ([entry]) => { setOnScreen(Boolean(entry?.isIntersecting)) },
+      { threshold: 0.34 },
+    )
+    io.observe(el)
+    return () => { io.disconnect() }
+  }, [])
+
+  useEffect(() => {
+    if (!auto || held || !onScreen || reduced) return
+    const id = window.setInterval(() => {
+      setActive((current) => {
+        const i = SERVICE_TABS.findIndex((t) => t.id === current)
+        return SERVICE_TABS[(i + 1) % SERVICE_TABS.length]?.id ?? current
+      })
+    }, AUTO_MS)
+    return () => { window.clearInterval(id) }
+  }, [auto, held, onScreen, reduced])
+
   return (
-    <div ref={host} className="flex w-full items-start gap-[32px]">
+    <div
+      ref={host}
+      className="flex w-full items-start gap-[32px]"
+      onPointerEnter={() => setHeld(true)}
+      onPointerLeave={() => setHeld(false)}
+      onFocusCapture={() => setHeld(true)}
+      onBlurCapture={(e) => {
+        // Focus moving between two children is not focus leaving the section.
+        if (!e.currentTarget.contains(e.relatedTarget)) setHeld(false)
+      }}
+    >
       <div role="tablist" aria-label="Service categories" aria-orientation="vertical" className="flex w-[417px] shrink-0 flex-col gap-[12px]">
         {SERVICE_TABS.map((tab) => {
           const on = tab.id === active
@@ -68,7 +141,7 @@ export function ServiceTabs() {
             <button
               key={tab.id} role="tab" type="button" id={`tab-${tab.id}`}
               aria-selected={on} aria-controls={`panel-${tab.id}`}
-              onClick={() => setActive(tab.id)}
+              onClick={() => { setActive(tab.id); setAuto(false) }}
               className={`flex h-[102px] w-full cursor-pointer items-center gap-[16px] rounded-[12px] px-[22px] text-left transition-colors ${
                 on
                   ? 'bg-gradient-to-r from-navy to-brand text-white'

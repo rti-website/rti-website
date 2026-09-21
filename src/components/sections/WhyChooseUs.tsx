@@ -62,11 +62,17 @@ export function WhyChooseUs() {
         {STATS.map((s, i) => (
           <div
             key={i}
-            className="absolute flex h-[166.51px] w-[274.064px] flex-col items-center justify-center gap-[4px] rounded-[12.747px] border-[1.062px] border-white/40 bg-white/10"
+            className="absolute flex h-[166.51px] w-[274.064px] flex-col items-center justify-center gap-[6px] rounded-[12.747px] border-[1.062px] border-white/40 bg-white/10"
             style={{ left: s.x, top: s.y }}
           >
-            <Image src="/images/icons/stat-icon.svg" alt="" width={30} height={26} />
-            <p className="font-sans text-[23.37px] font-bold leading-[35.055px] tracking-[-0.4674px] text-white">{s.v}</p>
+            {/* The frame puts a star above each figure. Asim took it out on
+                21 Sep 2026 — four identical stars say nothing the numbers do
+                not — and the figure grew into the room it left: 23.37 -> 30,
+                with line-height and tracking scaled by the same 1.284 so the
+                type keeps its proportions instead of just getting taller.
+                justify-center was already here, so with the star gone the
+                number and its label centre themselves in the card. */}
+            <p className="font-sans text-[30px] font-bold leading-[45px] tracking-[-0.6px] text-white">{s.v}</p>
             <p className="font-roboto text-[11.685px] leading-[14.606px] text-white">{s.l}</p>
           </div>
         ))}

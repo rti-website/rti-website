@@ -65,26 +65,24 @@ export async function Header() {
           <a href={TOP_BAR.phoneWi.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneWi.label}</a>
         </Box>
 
-        {/* Contact Us / Get a Quote. Figma pins each button to its own x, and
-            those two numbers only work at the exact text width the frame was
-            drawn with: as rendered, Contact Us ran to 1510.6 and Get a Quote
-            began at 1508, so the white button sat 2.6px on top of the bordered
-            one. They are one right-anchored row now — the right edge stays on
-            the 1601 gutter, the 10px gap is real, and neither button's width
-            can close it again. The box starts at 1380, clear of the WI phone
-            number, so its empty left end covers nothing clickable. */}
-        <Box x={1380} y={0} w={221.4} h={41} className="flex items-center justify-end gap-[10px]">
+        {/* One button, right-anchored on the 1601 gutter.
+            The frame draws two — an outlined Contact Us beside a white-filled
+            Get a Quote — and pins each to its own x, which only works at the
+            exact text width it was drawn with: as rendered, Contact Us ran to
+            1510.6 and Get a Quote began at 1508, so the white button sat 2.6px
+            on top of the bordered one. Asim dropped Get a Quote on 21 Sep 2026
+            and moved its filled style onto Contact Us, so the bar carries one
+            button and the overlap has nothing left to happen to. The quote is
+            still one click away — the hero, every section CTA and the closing
+            band all point at it.
+            No fixed width: the frame's 93.392 was cut to "Get a quote" and
+            would clip the longer label. Padding sets the width instead. */}
+        <Box x={1380} y={0} w={221.4} h={41} className="flex items-center justify-end">
           <Link
             href={TOP_BAR.contact.href}
-            className="flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-white"
+            className="flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
           >
             {TOP_BAR.contact.label}
-          </Link>
-          <Link
-            href={TOP_BAR.quote.href}
-            className="flex h-[26.5px] w-[93.392px] shrink-0 items-center justify-center rounded-[2.426px] border-[0.606px] border-brand bg-white font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
-          >
-            {TOP_BAR.quote.label}
           </Link>
         </Box>
       </Box>
