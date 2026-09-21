@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /light-bulbs/ — copy from the "Light Bulb Recycling" doc, geometry from 6142:2048. */
 export const CONTENT: ServicePageContent = {
@@ -17,7 +17,7 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "LIGHT BULB RECYCLING" — see the gate 2 note in the build docs.
     h1: 'Light Bulb Recycling Services',
     lead: 'Recycle Technologies has recycled fluorescent lamps and other light bulbs since 1993, processing everything at its own Minnesota and Wisconsin facilities rather than sending materials through a broker.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-light-bulbs.png',
   },
   intro: {
@@ -64,7 +64,7 @@ export const CONTENT: ServicePageContent = {
       'Whether you need a commercial pickup or want to ship bulbs through the mail-in program, Recycle Technologies can get your used or spent lighting into a documented recycling process. Get a quote or schedule a pickup to get started.',
       'Related service: Ballast Recycling, for the PCB- and DEHP-containing capacitors often found alongside fluorescent fixtures.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

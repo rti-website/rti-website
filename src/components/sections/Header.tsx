@@ -29,8 +29,8 @@ import { HEADER_H } from '@/lib/layout'
  * TWO DEPARTURES FROM THE DESIGN'S ITEM LIST, both Asim's, both 15 Sep 2026:
  * ITAD is not in the nav, and "Drop off Locations" is "Locations" pointing at
  * the built page rather than at /dropoff/, which has no page and would 404 from
- * the header of every page on the site. Resources is the one addition, asked
- * for on 16 Sep, after the module was drawn. See src/lib/nav.ts.
+ * the header of every page on the site. Resources was added on 16 Sep and
+ * removed again on 21 Sep; the footer links the page now. See src/lib/nav.ts.
  */
 export async function Header() {
   /*

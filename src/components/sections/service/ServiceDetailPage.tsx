@@ -3,7 +3,7 @@ import { FOOTER_H } from '@/lib/layout'
 import { Canvas } from '@/components/design/Frame'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
-import { CaseStudies } from '@/components/sections/CaseStudies'
+import { CASE_STUDIES_H, CaseStudies } from '@/components/sections/CaseStudies'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -39,7 +39,7 @@ const HERO_H = 470
 const GAP = 150
 const ACCEPT_H_DEFAULT = 446.36
 const CERT_H_DEFAULT = 299.035
-const CASE_H = 885
+const CASE_H = CASE_STUDIES_H
 const FAQ_H_DEFAULT = 676.93
 const CTA_H = 456
 

@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /phone-shredding-service/ — copy from the "Phone Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -64,7 +64,7 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If your business has old phones to dispose of securely, schedule a pickup or get a quote to get started. Pickup service is exclusively available to commercial clients; residential customers can find a nearby drop-off location or order a mail-in recycling kit instead.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

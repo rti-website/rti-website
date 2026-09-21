@@ -25,7 +25,7 @@ import { NewsletterForm } from '@/components/client/NewsletterForm'
  */
 
 type LinkItem = { l: string; h: string; external?: boolean }
-type Group = { heading: string; links: LinkItem[] }
+type Group = { heading: string; headingHref?: string; links: LinkItem[] }
 
 const COL_1: Group[] = [
   {
@@ -53,6 +53,9 @@ const COL_1: Group[] = [
 const COL_2: Group[] = [
   {
     heading: 'Resources',
+    // The heading itself opens /resources/ since 21 Sep 2026, when Resources
+    // came out of the header bar — this is now the page's link.
+    headingHref: href('/resources/'),
     links: [
       { l: 'Contact US',     h: href('/contact-us/') },
       { l: 'Certifications', h: href('/certifications/') },
@@ -208,7 +211,9 @@ function LinkColumn({ groups }: { groups: Group[] }) {
     <div className="flex flex-col gap-[24px]">
       {groups.map((g) => (
         <nav key={g.heading} aria-label={g.heading}>
-          <h3 className="mb-[12px] font-sans text-[15px] font-semibold leading-[20px] text-ink">{g.heading}</h3>
+          <h3 className="mb-[12px] font-sans text-[15px] font-semibold leading-[20px] text-ink">
+            {g.headingHref ? <Link href={g.headingHref} className="hover:text-brand">{g.heading}</Link> : g.heading}
+          </h3>
           <ul className="flex flex-col gap-[9px]">
             {g.links.map((l) => (
               <li key={l.l} className="flex items-center gap-[7px]">

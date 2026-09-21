@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /contact-us/ — copy from the "Contact Us" doc, geometry from Figma 6365:1082.
@@ -35,31 +35,60 @@ export const HERO = {
   lead: 'Recycle Technologies has been providing services to the community since 1993.',
 }
 
-/** Left column — Figma 6370:758. */
+/**
+ * Left column — Figma 6370:758, as redrawn in 6365:1082 on 21 Sep 2026.
+ *
+ * The form grew from four fields to ten: name / email, phone / company, a full
+ * width address, city / state / zip, then "What would you like to recycle?"
+ * beside "Is it for?", a message and the button. The frame draws that last
+ * pair of selects TWICE and labels the message box with the same question — a
+ * copy-paste slip Asim caught on 21 Sep 2026 ("don't repeat this, add it one
+ * time"), so the pair appears once and the message keeps its own label.
+ *
+ * The earlier "I'm Contacting About" topic select is not in the redrawn form
+ * and is gone with it.
+ *
+ * Placeholders for the fields the content doc names are the doc's. The frame
+ * draws "--" in the address fields and "Select" in Company name, which are
+ * stand-ins, not copy; those say what the field is.
+ */
 export const FORM = {
   eyebrow: 'Get In Touch',
   heading: 'Get a Quote',
   lead: 'Questions about a pickup, drop-off, or your recycling program? Fill out the short form below and our team will get back to you shortly.',
   fields: {
-    name:    { label: 'Full Name',            placeholder: 'John Smith' },
-    email:   { label: 'Email Address',        placeholder: 'jamie@company.com' },
-    phone:   { label: 'Phone Number',         placeholder: '(XXX) XXX-XXXX' },
-    topic:   { label: 'I’m Contacting About', placeholder: 'Select a topic' },
-    message: { label: 'Message',              placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
+    name:    { label: 'Full Name',     placeholder: 'John Smith' },
+    email:   { label: 'Email Address', placeholder: 'jamie@company.com' },
+    phone:   { label: 'Phone Number',  placeholder: '(XXX) XXX-XXXX' },
+    company: { label: 'Company name',  placeholder: 'Company name' },
+    address: { label: 'Address',       placeholder: 'Street address' },
+    city:    { label: 'City',          placeholder: 'City' },
+    state:   { label: 'State',         placeholder: 'State' },
+    zip:     { label: 'Zip code',      placeholder: 'Zip code' },
+    item:    { label: 'What would you like to recycle?', placeholder: 'Select' },
+    audience:{ label: 'Is it for?',    placeholder: 'Select' },
+    message: { label: 'Message',       placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
   },
   /**
-   * TODO(content): the doc specifies a "Select a topic" dropdown but not its
-   * options. These are drawn from what the site actually offers so the field
-   * works; Musaveer should confirm the list.
+   * TODO(content): the frame shows the closed select only, so the options are
+   * not designed. These are the services the site offers, in catalogue order,
+   * plus a catch-all; Musaveer should confirm the list.
    */
-  topics: [
-    'Request a pickup',
-    'Drop-off question',
-    'Mail-In Program',
-    'Get a quote',
-    'IT asset disposition',
+  items: [
+    'Lighting bulbs',
+    'Electronics',
+    'Batteries',
+    'Ballasts',
+    'Televisions',
+    'Hard drives',
+    'Paper',
+    'Off-site shredding',
+    'Cell phones',
+    'Airbags',
     'Something else',
   ],
+  /** The frame shows "Residential" in the closed select; the other case is the business one. */
+  audiences: ['Residential', 'Commercial'],
   submit: 'Send Message',
 }
 
@@ -105,6 +134,6 @@ export const CTA = {
   body: [
     'Recycle Technologies has been providing services to the community since 1993. Tell us what you need to recycle and we’ll send a fast, no-obligation quote — or set up a pickup with one of our licensed Minnesota or Wisconsin facilities.',
   ],
-  primary:   { label: 'Get a Quote',       href: href('/quote/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
   secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
 }

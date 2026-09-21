@@ -5,7 +5,7 @@ import { SERVICES_CTA } from '@/data/services'
 import { Accordion } from '@/components/client/Accordion'
 import { Footer } from '@/components/sections/Footer'
 import { CTA_H, ClosingCtaBand } from '@/components/sections/ClosingCta'
-import { FOOTER_H, HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { FOOTER_H, HOME_BELOW_CASES_SHIFT } from '@/lib/layout'
 
 /**
  * FAQ + final CTA + footer — Figma 6044:20133, 1920x1873.
@@ -15,7 +15,7 @@ import { FOOTER_H, HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
  */
 export function FaqCtaFooter() {
   return (
-    <Section top={8518 - HOME_BELOW_CERT_SHIFT} height={1192 + FOOTER_H} label="6044:20133">
+    <Section top={8518 - HOME_BELOW_CASES_SHIFT} height={1192 + FOOTER_H} label="6044:20133">
       {/* ---------------------------------------------------------------- FAQ */}
       <Box x={0} y={0} w={1920} h={736} className="bg-[#f4f9f6]">
         <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>FAQs</Eyebrow></CenterBox>

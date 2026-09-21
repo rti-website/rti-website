@@ -89,3 +89,48 @@ export const CERT_TRIM = 0
  * because it sits directly under the hero and only loses its own padding.
  */
 export const HOME_BELOW_CERT_SHIFT = HOME_HERO_SHIFT + CERT_TRIM
+
+/**
+ * Our Services grew on 21 Sep 2026. Figma 6107:1552 (860 tall: a tab strip
+ * over a row of icon tiles) was replaced by 6532:2049 (1133 tall: vertical
+ * tabs beside a grid of photo cards and an enquiry banner). Every homepage
+ * section below it keeps its ORIGINAL Figma y and moves down by this much —
+ * which is exactly where the new frame draws them (Industries 6023:12500 sits
+ * at 2962 there, and 2689 + 273 = 2962).
+ */
+export const HOME_SERVICES_GROWTH = 1133 - 860
+
+/**
+ * What every homepage section BELOW Our Services subtracts from its Figma y:
+ * the hero and band reductions, less the room the new services frame needs.
+ */
+export const HOME_BELOW_SERVICES_SHIFT = HOME_BELOW_CERT_SHIFT - HOME_SERVICES_GROWTH
+
+/**
+ * The CSS custom property that carries the OPEN tab's height difference on the
+ * homepage: 0px with the Recycling tab (two rows of cards, the 1133 the frame
+ * draws), -398px with either one-row tab. ServiceTabs sets it on the canvas;
+ * OurServices adds it to its height; page.tsx moves everything below by it;
+ * Canvas adds it to the page height. One variable, so the four cannot drift.
+ */
+export const HOME_SERVICES_DELTA_VAR = '--home-svc-delta'
+
+/**
+ * Client's Testimonials grew on 21 Sep 2026: three cards and a pager (594)
+ * became four cards over a stats strip (6024:14149 in file L79HFCNBww8pW6pPGfQi3e,
+ * 826). Client's Stories and everything under it move down by this much.
+ */
+export const HOME_TESTIMONIALS_GROWTH = 826 - 594
+
+/** What Client's Stories subtracts from its Figma y. */
+export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_SERVICES_SHIFT - HOME_TESTIMONIALS_GROWTH
+
+/**
+ * Client's Stories grew on 21 Sep 2026 too: the three-up row (6026:14726, 885)
+ * became the carousel (6557:12903, 934). The FAQ / CTA / footer block under it
+ * moves down by this much on top of everything above.
+ */
+export const HOME_CASES_GROWTH = 934 - 885
+
+/** What the homepage's FAQ / CTA / footer block subtracts from its Figma y. */
+export const HOME_BELOW_CASES_SHIFT = HOME_BELOW_TESTIMONIALS_SHIFT - HOME_CASES_GROWTH

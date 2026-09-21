@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /all-locations/ — copy from the "Locations" doc, geometry from Figma
@@ -111,7 +111,7 @@ export const CTA = {
   heading: 'Don’t See Your City Listed?',
   body: 'Our Mail-In Program brings the same certified recycling and shredding to all 50 states — order a kit, pack it up, and drop it at the nearest FedEx.',
   primary:   { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
-  secondary: { label: 'Get a Quote',             href: href('/quote/') },
+  secondary: { label: 'Get a Quote',             href: QUOTE_HREF },
 }
 
 /** Gaps between Figma 6374:4194 and the Locations doc, for Aqeel and Musaveer. */

@@ -16,16 +16,29 @@ import { CHROME_SHIFT, HEADER_H } from '@/lib/layout'
  * has to know, and no page is left with a band of white under its footer.
  */
 export function Canvas({
-  height, children,
+  height, grow, children,
 }: {
   height: number
+  /**
+   * Name of a CSS custom property, set somewhere inside the canvas at runtime,
+   * that is ADDED to the height — e.g. `--home-svc-delta`, which the homepage's
+   * service tabs set to a negative length when the open tab needs fewer rows
+   * (see ServiceTabs). Unset, the variable reads as 0px. The change is eased
+   * so the page does not jump.
+   */
+  grow?: string
   children: React.ReactNode
 }) {
+  const h = height - CHROME_SHIFT
   return (
     <div className="design-shell">
       <div
         className="design-canvas"
-        style={{ height: height - CHROME_SHIFT, '--chrome-shift': `${CHROME_SHIFT}px` } as React.CSSProperties}
+        style={{
+          height: grow ? `calc(${h}px + var(${grow}, 0px))` : h,
+          transition: grow ? 'height 300ms ease-out' : undefined,
+          '--chrome-shift': `${CHROME_SHIFT}px`,
+        } as React.CSSProperties}
       >
         {children}
       </div>
@@ -41,7 +54,8 @@ export function Section({
   top: number
   left?: number
   width?: number
-  height: number
+  /** A number in design px, or a CSS length expression for the one section whose height moves at runtime. */
+  height: number | string
   className?: string
   /** For a background a Tailwind class cannot express — the About Us closing
    *  CTA (6372:846) is a gradient at 159.649deg with explicit colour stops. */

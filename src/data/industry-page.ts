@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * Shared scaffolding for the seven industry detail pages — Figma 6246:1390.
@@ -49,7 +49,7 @@ export const SERVICE_LINKS = {
 
 /** Every industry doc closes the same way. */
 export const CTA_BUTTONS = {
-  primary:   { label: 'Get a Quote', href: href('/quote/') },
+  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
   secondary: { label: 'Contact Us',  href: href('/contact-us/') },
 }
 

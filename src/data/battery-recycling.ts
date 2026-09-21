@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /battery-recycling/ — all page copy.
@@ -49,7 +49,7 @@ export const HERO = {
     + 'up in the trash.',
   pickerPlaceholder: 'Select Your Location',
   pickerOptions: ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'],
-  cta: { label: 'Get Started', href: href('/quote/') },
+  cta: { label: 'Get Started', href: QUOTE_HREF },
 }
 
 /* ------------------------------------------------- what's battery recycling --

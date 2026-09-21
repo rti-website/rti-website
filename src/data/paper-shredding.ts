@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /paper-shredding-services/ — copy from the "Paper Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -17,7 +17,7 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "Paper Shredding".
     h1: 'Paper Shredding Services',
     lead: 'Recycle Technologies provides secure paper shredding for businesses and offices in Minnesota and Wisconsin, destroying confidential documents and recycling the shredded material afterward.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-paper-shredding.png',
   },
   intro: {
@@ -66,7 +66,7 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If your business has confidential paperwork to destroy, get a quote or schedule a pickup to get started. Pickup service is exclusively available to commercial clients; residential customers can find a nearby drop-off location instead.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

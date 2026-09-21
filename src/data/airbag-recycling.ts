@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /airbag-recycling/ — copy from the "Airbag Recycling" doc, geometry from
@@ -26,7 +26,7 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "Airbag Recycling" — this page's only difference is "Services".
     h1: 'Airbag Recycling Services',
     lead: 'Recycle Technologies provides certified airbag disposal for deployed and undeployed units, serving auto shops, dealerships, and fleet operators with a reliable, compliant recycling process.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
   },
   intro: {
     heading: 'What Is Airbag Recycling?',
@@ -80,7 +80,7 @@ export const CONTENT: ServicePageContent = {
       'Recycle Technologies also handles electronics recycling and battery recycling for shops and facilities managing multiple waste streams.',
       'Stop storing liability. Get a quote or schedule a pickup and get your airbags recycled the right way. Pickup service is exclusively available to commercial clients.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

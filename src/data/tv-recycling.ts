@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /tv-recycling/ — copy from the "Television Recycling" doc, geometry from 6142:2048. */
 export const CONTENT: ServicePageContent = {
@@ -17,7 +17,7 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "TV RECYCLING".
     h1: 'Television Recycling Services',
     lead: 'Recycle Technologies provides commercial television recycling for businesses, offices, and facilities, handling CRT, LCD, LED, plasma, and flat-screen TVs so hazardous components are properly managed rather than sent to a landfill.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-television.png',
   },
   intro: {
@@ -69,7 +69,7 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If your business has retired televisions to dispose of, schedule a pickup or get a quote to get started. Pickup service is available only to commercial clients; residential customers can use a nearby drop-off location or order a mail-in recycling kit instead.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
 import { buildMetadata } from '@/lib/seo'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
@@ -20,13 +20,13 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  *   Header          6107:2737      y0      h140
  *   Hero            6023:13152     y140    h940
  *   Certifications  6044:19732     y1080   h449
- *   Our Services    6107:1552      y1679   h860   (x319, w1282)
+ *   Our Services    6532:2049      y1679   h1133  (x319, w1282) — was 6107:1552, 860; below moves +273
  *   Industries      6023:12500     y2689   h887
  *   How It Works    6040:18591     y3726   h559
  *   Why Choose Us   6065:21652     y4435   h532   (x320, w1280)
  *   Locations       6024:14077     y5117   h1472
- *   Testimonials    6024:14149     y6739   h594
- *   Case Studies    6026:14726     y7483   h885
+ *   Testimonials    6024:14149     y6739   h826   — four cards + stats (file L79…); was 594; below moves +232 more
+ *   Case Studies    6557:12903     y7483   h934   — was 6026:14726, 885; below moves +49 more
  *   FAQ/CTA/Footer  6044:20133     y8518   h1873
  *
  * Title and meta description are VERBATIM from the live homepage, captured
@@ -46,19 +46,28 @@ export const metadata = buildMetadata({
 
 export default function HomePage() {
   return (
-    <Canvas height={10391 - HOME_BELOW_CERT_SHIFT - 60}>
+    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - 60} grow={HOME_SERVICES_DELTA_VAR}>
       <Header />
       <main>
         <Hero />
         <Certifications />
         <OurServices />
-        <Industries />
-        <HowItWorks />
-        <WhyChooseUs />
-        <Locations />
-        <Testimonials />
-        <CaseStudies />
-        <FaqCtaFooter />
+        {/* Everything under Our Services rides one positioned wrapper whose
+            top is the open tab's height difference (see OurServices), so a
+            one-row tab pulls the rest of the page up instead of leaving a
+            gap. The sections keep their own pinned tops inside it. */}
+        <div
+          className="absolute inset-x-0 transition-[top] duration-300 ease-out"
+          style={{ top: `var(${HOME_SERVICES_DELTA_VAR}, 0px)` }}
+        >
+          <Industries />
+          <HowItWorks />
+          <WhyChooseUs />
+          <Locations />
+          <Testimonials />
+          <CaseStudies />
+          <FaqCtaFooter />
+        </div>
       </main>
     </Canvas>
   )

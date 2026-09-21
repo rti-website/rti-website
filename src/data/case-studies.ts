@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /case-studies/ — a 1:1 build of Figma frame 6382:6595.
@@ -123,7 +123,7 @@ export const GRID = {
 export const CTA = {
   heading: 'Have a Similar Challenge?',
   body: 'Tell us what you’re working with, and we’ll put together a plan that fits your industry and compliance needs.',
-  primary:   { label: 'Get a Quote', href: href('/quote/') },
+  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
   secondary: { label: 'Contact Us',  href: href('/contact-us/') },
 }
 

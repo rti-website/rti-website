@@ -1,61 +1,99 @@
 import { Section } from '@/components/design/Frame'
-import { ServiceTile } from '@/components/ui/ServiceTile'
+import { ServicePhotoCard } from '@/components/ui/ServicePhotoCard'
 import { SERVICE_GROUPS, type ServiceGroup } from '@/data/services'
 
 /**
- * The full catalogue — Figma 6142:1559. 1282 wide at x319, 1814.83 tall.
+ * The full catalogue — Figma 6142:1559 in file drzg9BI08Dy8eWZNBfXBzD (the
+ * 21 Sep 2026 redraw), 1282 wide at x319.
  *
- * Built as flow, not absolute offsets. The frame is auto-layout in Figma and
- * card height depends on how the blurb wraps, so pinning the rows to hardcoded
- * y values is what made the homepage CTA land on top of its own cards. Every
- * gap below is the measured distance between two Figma nodes:
+ * The homepage's photo cards (ServicePhotoCard) at 0.9172 scale — 239.4 x
+ * 343.05 — in the frame's arrangement:
  *
- *   pt 150     canvas top -> "Recycling Services" heading (y150)
- *   gap 48     heading bottom (210)     -> cards (258)
- *   gap 48     cards bottom (713.93)    -> heading 2 (761.93)
- *   gap 48     heading 2 bottom (856.93)-> cards (904.93)
- *   gap 48     cards bottom (1402.86)   -> heading 3 (1450.86)
- *   gap 48     heading 3 bottom(1545.86)-> cards (1593.86)
- *              cards bottom             = 1814.83 = frame height
+ *   Recycling Services        full width: heading, 48, five cards spread
+ *                             across the 1282 (gap 21.25)
+ *   Destruction & Shredding   a 746.2 column: heading, 48, three per row,
+ *                             gap 14
+ *   Recycling Programs        a 487.8 column beside it (48 between): heading,
+ *                             48, its card centred
+ *
+ * Built as flow, not absolute offsets. The gaps are the frame's: 150 above
+ * the first heading, 48 between every heading and its cards and between the
+ * two blocks. A fourth Destruction card would wrap onto a second row of that
+ * column (Phone Shredding did, until Asim took it off the page — see its row
+ * in src/data/services.ts).
+ *
+ * CATALOG_H is that flow added up, so the services page can place what
+ * follows without anyone measuring a screenshot.
  */
-export function ServicesCatalog() {
-  return (
-    <Section top={610} left={319} width={1282} height={1814.83} label="6142:1559" className="bg-white">
-      <div className="flex flex-col gap-[48px] pt-[150px]">
-        {SERVICE_GROUPS.map((g) => (
-          <GroupBlock key={g.id} group={g} />
-        ))}
-      </div>
-    </Section>
-  )
-}
+const SCALE = 239.4 / 261
+const CARD_W = 261 * SCALE
+const CARD_H = 374 * SCALE
+const PT = 150
+const BLOCK_GAP = 48
+const COL_GAP = 48
+const WIDE_W = 1282
+const LEFT_W = 746.2
+const RIGHT_W = 487.8
+const LEFT_GAP = 14
+const LEFT_PER_ROW = 3
 
-function GroupBlock({ group }: { group: ServiceGroup }) {
+function visible(group: ServiceGroup) {
   // menuOnly: live service Figma has no card for — menu only.
   // unbuilt:   no page yet, so it would link to a 404 — hidden everywhere.
-  const cards = group.cards.filter((c) => !c.menuOnly && !c.unbuilt)
+  return group.cards.filter((c) => !c.menuOnly && !c.unbuilt)
+}
+
+/** The frame names its three blocks; a missing group is a build error, not a blank. */
+function group(id: string): ServiceGroup {
+  const g = SERVICE_GROUPS.find((x) => x.id === id)
+  if (!g) throw new Error(`ServicesCatalog: no service group "${id}" in src/data/services.ts`)
+  return g
+}
+const RECYCLING = group('recycling')
+const DESTRUCTION = group('destruction')
+const PROGRAMS = group('programs')
+
+const LEFT_ROWS = Math.ceil(visible(DESTRUCTION).length / LEFT_PER_ROW)
+const LEFT_CARDS_H = LEFT_ROWS * CARD_H + (LEFT_ROWS - 1) * LEFT_GAP
+const RIGHT_ROWS = Math.ceil(visible(PROGRAMS).length / 2)
+const RIGHT_CARDS_H = RIGHT_ROWS * CARD_H + (RIGHT_ROWS - 1) * LEFT_GAP
+
+const WIDE_H = RECYCLING.headingH + BLOCK_GAP + CARD_H
+const PAIR_H = Math.max(
+  DESTRUCTION.headingH + BLOCK_GAP + LEFT_CARDS_H,
+  PROGRAMS.headingH + BLOCK_GAP + RIGHT_CARDS_H,
+)
+export const CATALOG_H = PT + WIDE_H + BLOCK_GAP + PAIR_H
+
+export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
   return (
-    <div className="flex flex-col gap-[48px]">
-      <GroupHeading group={group} />
-      <div className="flex flex-col gap-[14px]">
-        {group.rows.map((row, i) => (
-          <div
-            key={i}
-            className="flex w-full items-center justify-center"
-            style={{ gap: row.gap }}
-          >
-            {cards.slice(row.from, row.to).map((card) => (
-              <ServiceTile
-                key={`${card.l1}-${card.l2}`}
-                card={card}
-                className={row.w === null ? 'flex-1 min-w-px' : 'shrink-0'}
-                {...(row.w === null ? {} : { style: { width: row.w } })}
-              />
-            ))}
+    <Section top={top} left={319} width={WIDE_W} height={CATALOG_H} label="6142:1559" className="bg-white">
+      <div className="flex flex-col" style={{ paddingTop: PT, gap: BLOCK_GAP }}>
+        {/* Recycling Services — 6142:2018 over 6142:1587 */}
+        <div className="flex flex-col" style={{ gap: BLOCK_GAP }}>
+          <GroupHeading group={RECYCLING} />
+          <div className="flex w-full items-start justify-between">
+            {visible(RECYCLING).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
           </div>
-        ))}
+        </div>
+
+        {/* Destruction & Shredding beside Recycling Programs — 6593:5943 */}
+        <div className="flex items-start" style={{ gap: COL_GAP }}>
+          <div className="flex shrink-0 flex-col" style={{ width: LEFT_W, gap: BLOCK_GAP }}>
+            <GroupHeading group={DESTRUCTION} />
+            <div className="flex flex-wrap" style={{ gap: LEFT_GAP }}>
+              {visible(DESTRUCTION).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+            </div>
+          </div>
+          <div className="flex shrink-0 flex-col" style={{ width: RIGHT_W, gap: BLOCK_GAP }}>
+            <GroupHeading group={PROGRAMS} />
+            <div className="flex flex-wrap justify-center" style={{ gap: LEFT_GAP }}>
+              {visible(PROGRAMS).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </Section>
   )
 }
 
@@ -77,3 +115,6 @@ function GroupHeading({ group }: { group: ServiceGroup }) {
     </div>
   )
 }
+
+// Keep the unused-width guard honest: five cards must fit the wide row.
+if (5 * CARD_W > WIDE_W) throw new Error('ServicesCatalog: five cards no longer fit the 1282 row')

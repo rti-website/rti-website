@@ -38,3 +38,18 @@ export function href(input: string): string {
 export function isExternal(input: string): boolean {
   return /^https?:\/\//i.test(input) && !input.startsWith(SITE.origin)
 }
+
+/**
+ * Where every "Get a Quote" button goes.
+ *
+ * It used to be `/quote/`, which is a KEEP row in url-map.csv but has no page
+ * in this build — so all thirty-odd of those buttons 404'd, the hero's
+ * included. Asim caught the hero one on 21 Sep 2026 ("when user click on get a
+ * quote land on contact page"), so they now all go to /contact-us/, whose form
+ * IS the quote form (its heading is literally "Get a Quote").
+ *
+ * ONE constant rather than thirty edits: when /quote/ gets built, or gets a
+ * 301 to /contact-us/ in url-map.csv, this line is the only thing to change.
+ * /quote/ still needs one of those two before launch — it ranks today.
+ */
+export const QUOTE_HREF = path('/contact-us/')

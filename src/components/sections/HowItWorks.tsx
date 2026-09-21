@@ -1,16 +1,16 @@
 import Image from 'next/image'
-import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { STEPS } from '@/data/home'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** How It Works — Figma 6040:18591. Steps at x319 / 666 / 1013 / 1360, y218.81. */
 const X: readonly number[] = [319, 666, 1013, 1360]
 
 export function HowItWorks() {
   return (
-    <Section top={3726 - HOME_BELOW_CERT_SHIFT} height={559} label="6040:18591" className="bg-white">
+    <Section top={3726 - HOME_BELOW_SERVICES_SHIFT} height={559} label="6040:18591" className="bg-white">
       <CenterBox y={0} w={400} offset={-0.47} className="flex justify-center"><Eyebrow>Simple &amp; Secure</Eyebrow></CenterBox>
       <CenterBox y={52} w={500}><Title className="text-center">How It Works</Title></CenterBox>
       <CenterBox y={126} w={594}>
@@ -49,7 +49,7 @@ export function HowItWorks() {
 
       <CenterBox y={511} w={700} offset={13.78} className="flex items-center justify-center gap-[12px]">
         <Btn href={href('/it-asset-disposition/')} variant="colored">Learn Complete Process</Btn>
-        <Btn href={href('/quote/')} variant="coloredWhite">Get a Free Quote</Btn>
+        <Btn href={QUOTE_HREF} variant="coloredWhite">Get a Free Quote</Btn>
       </CenterBox>
     </Section>
   )

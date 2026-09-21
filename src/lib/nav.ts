@@ -6,7 +6,7 @@
  * change a single URL. Every path goes through href() so the trailing-slash
  * rule is applied in exactly one place.
  */
-import { href } from './urls'
+import { QUOTE_HREF, href } from './urls'
 import type { IndustryMark } from '@/components/ui/IndustryMarks'
 
 export type NavItem = {
@@ -22,9 +22,10 @@ export type NavItem = {
  * Asim's instruction, 16 Sep 2026 ("make the navbar exactly like this"); the
  * list used to lead with Services.
  *
- * Resources is the one addition. It is not in the design's header module — the
- * page did not exist when that module was drawn — and Asim asked for it in the
- * nav the same day. It sits with Blogs because both are reading.
+ * Resources was added here on 16 Sep 2026 (it is not in the design's header
+ * module) and taken out again on 21 Sep 2026, on Asim's instruction, so the
+ * bar matches the frame. /resources/ is still linked: the footer's "Resources"
+ * heading points at it (Footer.tsx), and the page keeps its sitemap entry.
  */
 export const MAIN_NAV: NavItem[] = [
   { label: 'About',      href: href('/about-us-commercial-recycling-solutions/'), hasDropdown: true },
@@ -32,7 +33,6 @@ export const MAIN_NAV: NavItem[] = [
   { label: 'Industries', href: href('/industries/'), hasDropdown: true },
   // "Blogs", plural, is the design's label. The page is still /blog/.
   { label: 'Blogs',      href: href('/blog/'), hasDropdown: true },
-  { label: 'Resources',  href: href('/resources/') },
   // Was "Drop off Locations" pointing at /dropoff/, which has no page and 404s.
   // Renamed and repointed at the built locations page on Asim's instruction,
   // 15 Sep 2026. /dropoff/ is still a KEEP row in url-map.csv with nothing
@@ -73,7 +73,7 @@ export const TOP_BAR = {
   phoneMn: { label: 'MN:(800)969-5166', tel: 'tel:+18009695166' },
   phoneWi: { label: 'WI:(800)205-3040', tel: 'tel:+18002053040' },
   contact: { label: 'Contact Us', href: href('/contact-us/') },
-  quote:   { label: 'Get a quote', href: href('/quote/') },
+  quote:   { label: 'Get a quote', href: QUOTE_HREF },
 }
 
 /**

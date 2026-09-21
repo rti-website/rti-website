@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -19,7 +19,7 @@ export const CONTENT: ServicePageContent = {
     // with Rizwan separately from the other H1 diffs.
     h1: 'Off-Site and On-Site Shredding',
     lead: 'Recycle Technologies provides secure shredding for businesses handling confidential paperwork, with an off-site option that transports documents to a shredding facility and an on-site option that shreds documents at your location.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-off-site-shredding.png',
   },
   intro: {
@@ -69,7 +69,7 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If your business has confidential documents to destroy, get a quote or schedule a pickup to choose the shredding option that fits your needs. Pickup service is exclusively available to commercial clients.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

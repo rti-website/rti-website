@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { LOCATION_CARDS } from '@/data/home'
@@ -21,7 +21,7 @@ const PINS = [
 
 export function Locations() {
   return (
-    <Section top={5117 - HOME_BELOW_CERT_SHIFT} height={1472} label="6024:14077" className="bg-white" overflow="visible">
+    <Section top={5117 - HOME_BELOW_SERVICES_SHIFT} height={1472} label="6024:14077" className="bg-white" overflow="visible">
       <CenterBox y={0} w={400} className="flex justify-center"><Eyebrow>Where We Serve</Eyebrow></CenterBox>
       <CenterBox y={52} w={700}><Title className="text-center">Our Strategic National Network</Title></CenterBox>
       <CenterBox y={130} w={819}>
@@ -82,11 +82,17 @@ export function Locations() {
         <Box x={57} y={164}>
           <Btn href={href('/blog/')} variant="whiteFill">Download Resources</Btn>
         </Box>
-        {/* Brochure art — 6044:19124, 576.695x349.613 at x751 y-37. It breaks
-            out of the card top, bottom and right on purpose; that overhang is
-            the whole effect, so neither this box nor the card may clip. */}
-        <Box x={751} y={-37} w={576.695} h={349.6125}>
-          <Image src="/images/home/impact.png" alt="" width={577} height={350} className="size-full" />
+        {/* Brochure art — 6557:12912, a 566x309 clip at x772 y-22 holding the
+            image at 110.91% of its height, top-aligned. It breaks out of the
+            card top, bottom and right on purpose; that overhang is the whole
+            effect, so the card must not clip.
+            The art is the RTI-branded report mock-up (Asim, 21 Sep 2026;
+            Figma carried a competitor's cover before). Its teal plate is the
+            brand teal and it is transparent elsewhere, so the plate reads as
+            the card itself — including the rounded corner it adds past the
+            card's right edge, exactly as the frame draws it. */}
+        <Box x={772} y={-22} w={566} h={309} className="overflow-hidden">
+          <Image src="/images/home/impact.webp" alt="" width={1132} height={685} className="h-[110.91%] w-full max-w-none object-cover object-top" />
         </Box>
       </Box>
     </Section>

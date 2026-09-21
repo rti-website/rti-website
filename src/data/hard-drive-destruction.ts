@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /** /hard-drive-destruction-services/ — copy from the "Hard Drive Destruction" doc. */
 export const CONTENT: ServicePageContent = {
@@ -63,7 +63,7 @@ export const CONTENT: ServicePageContent = {
     body: [
       'Recycle Technologies handles hard drive destruction, as well as electronics, battery, light bulb, ballast, TV, and airbag recycling for businesses in Minnesota and Wisconsin. Request a pickup or get a quote today to get started.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
 }

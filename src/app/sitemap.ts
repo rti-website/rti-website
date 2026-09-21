@@ -24,7 +24,11 @@ import { blogPagePath, categoryPagePath, pageCount } from '@/lib/blog-index'
  * slash comes from sitemapEntry() -> urls.path(). Do not build these by hand.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPages = ['/', '/blog/', '/services/', '/all-locations/', '/faqs/', '/contact-us/', '/quote/']
+  // /quote/ came out on 21 Sep 2026: it is a KEEP row in url-map.csv with no
+  // page in this build, so listing it here advertised a 404 to Google. It goes
+  // back the day that page exists — until then every "Get a Quote" button
+  // points at /contact-us/ instead (see QUOTE_HREF in lib/urls.ts).
+  const staticPages = ['/', '/blog/', '/services/', '/all-locations/', '/faqs/', '/contact-us/']
   const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
 
   const entries = [

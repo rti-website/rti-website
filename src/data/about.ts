@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /about-us-commercial-recycling-solutions/ — copy from the "About Us" doc,
@@ -149,7 +149,7 @@ export const FACILITIES = {
 export const CTA = {
   heading: 'Ready to Partner With a Team You Can Trust?',
   body: 'From the first pickup to the final Certificate of Recycling, our Midwest-based team handles your materials responsibly, securely, and on time.',
-  primary:   { label: 'Get a Quote', href: href('/quote/') },
+  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
   secondary: { label: 'Contact Us',  href: href('/contact-us/') },
 }
 

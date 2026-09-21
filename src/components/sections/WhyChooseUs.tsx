@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * Why Choose Recycle Technologies — Figma 6065:21652. 1280x532 at x320, r40.
@@ -19,7 +19,7 @@ const STATS = [
 
 export function WhyChooseUs() {
   return (
-    <Section top={4435 - HOME_BELOW_CERT_SHIFT} left={320} width={1280} height={532} label="6065:21652" className="rounded-[40px]">
+    <Section top={4435 - HOME_BELOW_SERVICES_SHIFT} left={320} width={1280} height={532} label="6065:21652" className="rounded-[40px]">
       <Box x={0} y={0} w={1280} h={532}>
         <Image src="/images/home/why-bg.png" alt="" fill sizes="1280px" className="object-cover" />
       </Box>
@@ -48,7 +48,7 @@ export function WhyChooseUs() {
       </Box>
 
       <Box x={56} y={423}>
-        <Btn href={href('/quote/')} variant="whiteFill" className="w-[210px] justify-center">Get a Free Estimate</Btn>
+        <Btn href={QUOTE_HREF} variant="whiteFill" className="w-[210px] justify-center">Get a Free Estimate</Btn>
       </Box>
       <Box x={272} y={424}>
         <Btn href={href('/about-us-commercial-recycling-solutions/')} variant="white">Read More About Us</Btn>

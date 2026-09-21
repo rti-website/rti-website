@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /ballasts/ — copy from the "Ballast Recycling" doc, geometry from 6142:2048.
@@ -25,7 +25,7 @@ export const CONTENT: ServicePageContent = {
     crumb: 'Ballasts Recycling',
     h1: 'Ballasts Recycling',
     lead: 'Recycle Technologies accepts PCB, non-PCB, electronic, and magnetic ballasts from commercial and industrial facilities, processing hazardous components through an EPA-approved incineration facility and reclaiming non-hazardous metals like copper and steel.',
-    cta: { label: 'Get a Quote', href: href('/quote/') },
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-ballasts.png',
   },
   intro: {
@@ -85,7 +85,7 @@ export const CONTENT: ServicePageContent = {
       'If your business has used or retired ballasts to dispose of, request a pickup or get a quote to get started.',
       'Pickup service is available exclusively for commercial customers; if you’re a residential customer, you can find a nearby drop-off location or order a mail-in recycling kit instead.',
     ],
-    primary:   { label: 'Get a Quote',       href: href('/quote/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
   todo: [

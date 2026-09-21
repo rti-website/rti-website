@@ -5,8 +5,11 @@ import type { ServiceMark } from '@/components/ui/ServiceMarks'
  * The service catalogue — ONE source of truth.
  *
  * Consumed by:
- *   /services/   Figma 6142:784 — all three groups stacked, every card visible
- *   /            Figma 6107:1552 — the same groups behind a three-tab switcher
+ *   /services/   Figma 6142:784 — all three groups stacked, every card visible,
+ *                drawn as the homepage's photo cards since 21 Sep 2026 (Asim:
+ *                "add the services cards in service page that we add on home")
+ *   /            Figma 6532:2049 — the same groups behind vertical tabs
+ *   header       the Services dropdown, which is where `icon` is still used
  *
  * Three inputs were reconciled to build this list:
  *   1. Figma 6142:784   — layout, icons, card blurbs
@@ -54,22 +57,16 @@ export type ServiceCard = {
   mark?: ServiceMark
   iw: number
   ih: number
+  /**
+   * The homepage card photo — Figma 6532:2049 draws each service as a 221x270
+   * photograph under its title. Stored at 2x (442x540 WebP), cropped exactly
+   * as the frame crops it. A card WITHOUT one is not on the homepage: the
+   * design has no photo for Phone Shredding, so that card stays on /services/
+   * and in the menu until Aqeel supplies one.
+   */
+  photo?: string
   href: string
   external?: boolean
-}
-
-/**
- * How one row of cards is laid out. Taken straight off the Figma frames, where
- * the rows genuinely differ: the first row of Recycling stretches to fill,
- * everything else is a fixed width centred in the 1282 column.
- */
-export type CardRow = {
-  /** Slice of `cards` this row draws. */
-  from: number
-  to: number
-  /** Fixed card width, or null for flex-1. */
-  w: number | null
-  gap: number
 }
 
 export type ServiceGroup = {
@@ -82,11 +79,16 @@ export type ServiceGroup = {
   headingW: number
   /** Tab label on the homepage. */
   tab: string
-  tabIcon: string
-  tabW: number
-  tabH: number
+  /** The one-line summary under the tab label — Figma 6533:1968. */
+  tabSub: string
+  /**
+   * The tab's 22px line glyph, once per state: Figma draws the selected tab
+   * white on a navy-to-teal gradient and the others teal on white, and an SVG
+   * carries its own stroke colour, so each glyph is exported twice.
+   */
+  tabIconOn: string
+  tabIconOff: string
   cards: ServiceCard[]
-  rows: CardRow[]
 }
 
 export const SERVICE_GROUPS: ServiceGroup[] = [
@@ -96,15 +98,15 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     headingH: 60,
     headingW: 345,
     tab: 'Recycling Services',
-    tabIcon: '/images/icons/tab-recycling.png',
-    tabW: 25,
-    tabH: 25,
+    tabSub: 'Bulbs, electronics, batteries, TVs & ballasts',
+    tabIconOn: '/images/icons/tab-recycling-on.svg',
+    tabIconOff: '/images/icons/tab-recycling-off.svg',
     cards: [
-      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulbs.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, href: href('/light-bulbs/') },
-      { l1: 'Electronic',     l2: 'Recycling Kit',     blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, href: href('/electronic-recycle/') },
-      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Safe collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, href: href('/battery-recycling/') },
-      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, href: href('/ballasts/') },
-      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of TVs and electronic displays.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, href: href('/tv-recycling/') },
+      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulbs.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/') },
+      { l1: 'Electronic',     l2: 'Recycling Kit',     blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/') },
+      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Safe collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/') },
+      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/') },
+      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of TVs and electronic displays.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/') },
       // Live and linked from the live /services/ page, but absent from Figma
       // 6142:784 — menu only until a card is designed.
       // No Figma card and no Figma icon, so this row borrowed the TELEVISION
@@ -113,12 +115,6 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // a real asset the moment Aqeel draws one.
       { l1: 'Airbag',         l2: 'Recycling',         blurb: 'Certified disposal of deployed and undeployed airbags.',  mark: 'airbag',                          iw: 30, ih: 23, href: href('/airbag-recycling/'), menuOnly: true },
     ],
-    // Figma draws five cards here, 3 on the first row and 2 on the second.
-    // Airbag is menu-only (no card in 6142:784), so it is not in either row.
-    rows: [
-      { from: 0, to: 3, w: null,     gap: 16 },
-      { from: 3, to: 5, w: 416.667,  gap: 16 },
-    ],
   },
   {
     id: 'destruction',
@@ -126,19 +122,19 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     headingH: 95,
     headingW: 384,
     tab: 'Destruction & Shredding',
-    tabIcon: '/images/icons/tab-destruction.png',
-    tabW: 21,
-    tabH: 22,
+    tabSub: 'Paper, hard drives, and mobile shredding',
+    tabIconOn: '/images/icons/tab-destruction-on.svg',
+    tabIconOff: '/images/icons/tab-destruction-off.svg',
     cards: [
-      { l1: 'Hard Drives', l2: 'Destruction', blurb: 'Secure destruction and responsible recycling of hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, href: href('/hard-drive-destruction-services/') },
-      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential paper.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, href: href('/paper-shredding-services/') },
-      { l1: 'Off Site',    l2: 'Shredding',   blurb: 'Convenient off-site shredding for documents and materials.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, href: href('/off-site-shredding/') },
-      // See the conflict note at the top of this file.
-      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, href: href('/phone-shredding-service/') },
-    ],
-    rows: [
-      { from: 0, to: 3, w: 416.67, gap: 16 },
-      { from: 3, to: 4, w: 416.67, gap: 16 },
+      { l1: 'Hard Drives', l2: 'Destruction', blurb: 'Secure destruction and responsible recycling of hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/') },
+      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential paper.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/') },
+      { l1: 'Off Site',    l2: 'Shredding',   blurb: 'Convenient off-site shredding for documents and materials.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/') },
+      // See the conflict note at the top of this file. Menu only since
+      // 21 Sep 2026: the redrawn /services/ frame (6142:1559 in file
+      // drzg9BI08Dy8eWZNBfXBzD) draws three Destruction cards, and Asim asked
+      // for this one taken off the page ("remove this one"). The page itself
+      // stays live and the header menu still links it.
+      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, href: href('/phone-shredding-service/'), menuOnly: true },
     ],
   },
   {
@@ -147,19 +143,20 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     headingH: 95,
     headingW: 310,
     tab: 'Recycling Programs',
-    tabIcon: '/images/icons/tab-programs.png',
-    tabW: 29,
-    tabH: 20,
+    tabSub: 'Mail-in kits, drop-off, and airbag disposal',
+    tabIconOn: '/images/icons/tab-programs-on.svg',
+    tabIconOff: '/images/icons/tab-programs-off.svg',
     cards: [
-      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, href: href('/electronic-recycle/') },
-      { l1: 'Mail In',    l2: 'Program',       blurb: 'Nationwide mail-in program for eligible materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, href: 'https://ezontheearth.com/', external: true },
+      // In the Services menu's Recycling Programs column, but no card: the
+      // 21 Sep 2026 frames draw this group with Mail In Program alone, on the
+      // homepage tab (6563:2130) and on /services/ (6142:1688), and the kit
+      // already has its card under Recycling Services.
+      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), menuOnly: true },
+      { l1: 'Mail In',    l2: 'Program',       blurb: 'Nationwide mail-in program for eligible materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true },
       // The new /mail-in-recycling/ page. Every existing "Mail In Program" link
       // still goes to ezontheearth.com — repointing them is Asim's call, so for
       // now the page is reachable from the menu only.
       { l1: 'About the',  l2: 'Mail-In Program', blurb: 'How the nationwide mail-in recycling program works.',   icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, href: href('/mail-in-recycling/'), menuOnly: true },
-    ],
-    rows: [
-      { from: 0, to: 2, w: 416, gap: 14 },
     ],
   },
 ]

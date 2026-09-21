@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { Picker } from '@/components/client/Picker'
 
@@ -88,7 +88,7 @@ export function Hero() {
       </Box>
 
       {/* Get Started — 6032:16992, moved up with the headline. */}
-      <Box x={724} y={337}><Btn href={href('/quote/')} variant="colored">Get Started</Btn></Box>
+      <Box x={724} y={337}><Btn href={QUOTE_HREF} variant="colored">Get Started</Btn></Box>
 
       {/* Glass quote card — 6098:518, moved up with the headline. w398. */}
       <Box x={1203} y={88} w={398}>
@@ -118,7 +118,7 @@ export function Hero() {
                 ]} />
               </div>
             </div>
-            <Btn href={href('/quote/')} variant="whiteFill" className="w-full justify-center font-bold">
+            <Btn href={QUOTE_HREF} variant="whiteFill" className="w-full justify-center font-bold">
               Get a Quote
             </Btn>
           </div>

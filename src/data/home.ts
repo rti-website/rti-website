@@ -1,3 +1,4 @@
+import { href } from '@/lib/urls'
 import { SERVICE_GROUPS, type ServiceCard } from '@/data/services'
 import { ALL_FAQS, type Faq } from '@/data/faqs'
 
@@ -24,15 +25,23 @@ function pickFaqs(questions: string[]): Faq[] {
  * pages drifting apart (a card here, a URL there) is exactly the kind of bug
  * that survives review and then shows up as a 404 in the crawl.
  */
-export type Card = ServiceCard
+export type Card = ServiceCard & { photo: string }
 
 export const SERVICE_TABS = SERVICE_GROUPS.map((g) => ({
-  id: g.id, label: g.tab, icon: g.tabIcon, w: g.tabW, h: g.tabH,
+  id: g.id, label: g.tab, sub: g.tabSub, iconOn: g.tabIconOn, iconOff: g.tabIconOff,
 }))
 
+/**
+ * The homepage draws a service as a photo card (Figma 6532:2049), so a card
+ * is on the homepage only when the catalogue carries a photo for it — see the
+ * `photo` note in src/data/services.ts for the one that has none. menuOnly
+ * cards are live services with no Figma card at all: header menu only.
+ */
 export const SERVICE_CARDS: Record<string, Card[]> = Object.fromEntries(
-  // menuOnly cards are live services with no Figma card — header menu only.
-  SERVICE_GROUPS.map((g) => [g.id, g.cards.filter((c) => !c.menuOnly && !c.unbuilt)]),
+  SERVICE_GROUPS.map((g) => [
+    g.id,
+    g.cards.filter((c): c is Card => Boolean(c.photo) && !c.menuOnly && !c.unbuilt),
+  ]),
 )
 
 /** Industries — Figma 6023:12500. Eight cards, 310x226, two rows of four. */
@@ -63,24 +72,55 @@ export const LOCATION_CARDS = [
 ]
 
 /**
- * TODO(content): the Figma file repeats one review three times and the
- * designer's note in the frame says: "The current homepage's testimonial
- * section contains placeholder Lorem Ipsum, so you should not use those
- * testimonials." Replace with real Google reviews before launch.
+ * Client's Testimonials — Figma 6024:14149 in L79HFCNBww8pW6pPGfQi3e, the
+ * four-card version of 21 Sep 2026. The frame repeats one review four times.
+ *
+ * TODO(content): the designer's note on the earlier frame still stands — "the
+ * current homepage's testimonial section contains placeholder Lorem Ipsum, so
+ * you should not use those testimonials." Replace with four real Google
+ * reviews before launch; the shape below is what each one needs.
  */
-export const TESTIMONIAL = {
-  quote: '“These guys are great to work with. I get to work with eWaste Solutions regularly, always professional, punctual, and they handle everything correctly. Highest recommendation.”',
-  name: 'John Barrett',
-  meta: 'Local Guide · 123 reviews',
-  source: 'Google Review',
+export type Testimonial = {
+  quote: string
+  name: string
+  /** "Local Guide", or whatever Google shows under the reviewer. */
+  role: string
+  reviews: string
 }
 
-/** Case studies — Figma 6026:14726. All three carry the same placeholder title. */
-export const CASE_STUDIES = [
-  { x: 319,  img: '/images/home/case-1.png', tall: true  },
-  { x: 753,  img: '/images/home/case-2.png', tall: false },
-  { x: 1187, img: '/images/home/case-3.png', tall: false },
+const REVIEW: Testimonial = {
+  quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof.',
+  name: 'John Dev',
+  role: 'Local Guide',
+  reviews: '123 Reviews',
+}
+
+export const TESTIMONIALS: Testimonial[] = [REVIEW, REVIEW, REVIEW, REVIEW]
+
+/** The stats strip under the reviews — 6554:2121. Agrees with the hero's strip. */
+export const TESTIMONIAL_STATS = [
+  { n: '30+',  l: 'Years serving the Midwest' },
+  { n: '2',    l: 'R2v3-certified facilities' },
+  { n: '50',   l: 'States reached nationwide' },
+  { n: '100%', l: 'Shipments documented' },
 ]
+
+/**
+ * Case studies — Figma 6557:12903, the carousel that replaced the three-up row
+ * (6026:14726) on 21 Sep 2026. Same three photos, same placeholder copy on all
+ * three cards, as drawn. The frame opens with the server-rack story in the
+ * middle, which is why `CASE_STUDIES_START` is 1.
+ *
+ * TODO(content): the copy is the frame's placeholder. /case-studies/ now has
+ * five written stories (src/data/case-studies.ts) — swap these for three of
+ * them, with matching photos, once Asim picks which.
+ */
+export const CASE_STUDIES = [
+  { img: '/images/home/case-1.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
+  { img: '/images/home/case-2.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
+  { img: '/images/home/case-3.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
+]
+export const CASE_STUDIES_START = 1
 
 /**
  * The homepage FAQ band — Figma 6044:19905.

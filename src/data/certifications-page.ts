@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
  * /certifications/ — copy from the "Certifications" doc, geometry from Figma
@@ -139,7 +139,7 @@ export const CTA = {
   heading: 'Questions About Our Standards?',
   body: 'Whether you need documentation for an audit or just want to understand our process, our team is happy to walk you through it.',
   primary:   { label: 'Contact Us',  href: href('/contact-us/') },
-  secondary: { label: 'Get a Quote', href: href('/quote/') },
+  secondary: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
 /** Gaps between Figma 6374:4886, the doc and the live site. */

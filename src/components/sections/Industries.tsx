@@ -1,5 +1,5 @@
 import { Box, CenterBox, Section } from '@/components/design/Frame'
-import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { INDUSTRIES } from '@/data/home'
 import { IndustryCard } from '@/components/ui/IndustryCard'
@@ -14,7 +14,7 @@ import { IndustryCard } from '@/components/ui/IndustryCard'
  */
 export function Industries() {
   return (
-    <Section top={2689 - HOME_BELOW_CERT_SHIFT} height={887} label="6023:12500" className="bg-mist">
+    <Section top={2689 - HOME_BELOW_SERVICES_SHIFT} height={887} label="6023:12500" className="bg-mist">
       <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>Who We Serve</Eyebrow></CenterBox>
       <CenterBox y={125} w={600}><Title className="text-center">Industries We Serve</Title></CenterBox>
       <CenterBox y={199} w={857}>
