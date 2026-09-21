@@ -30,8 +30,8 @@ export function CertAccountability({ top, height }: { top: number; height: numbe
 
       <div className="flex w-[1282px] items-start gap-[24px]">
         {ACCOUNTABILITY.cards.map((c) => (
-          <article key={c.title} className="flex w-[629px] shrink-0 flex-col items-start gap-[18px] rounded-[12px] border border-line bg-white p-[36px]">
-            <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-brand">
+          <article key={c.title} className="grad-card flex w-[629px] shrink-0 flex-col items-start gap-[18px] rounded-[12px] border border-line bg-white p-[36px]">
+            <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
               <svg viewBox="0 0 22 22" className="size-[22px] fill-white" aria-hidden="true">
                 {(MARKS[c.glyph] ?? []).map((d) => <path key={d} d={d} />)}
               </svg>
@@ -40,7 +40,7 @@ export function CertAccountability({ top, height }: { top: number; height: numbe
             <ul className="flex w-[557px] flex-col gap-[10px]">
               {c.points.map((t) => (
                 <li key={t} className="flex items-start gap-[10px]">
-                  <span className="mt-[7px] size-[6px] shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                  <span className="grad-card__dot mt-[7px] size-[6px] shrink-0 rounded-full bg-brand transition-colors" aria-hidden="true" />
                   <span className="w-[535px] font-roboto text-[15px] leading-[1.5] text-muted">{t}</span>
                 </li>
               ))}

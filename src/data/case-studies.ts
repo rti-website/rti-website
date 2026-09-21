@@ -34,6 +34,11 @@ export const SEO = {
  * Hero — 6382:6597. The frame's breadcrumb is correct here ("Home / Case
  * Studies"), unlike the Sustainability and Why Choose Us heroes, which both
  * carry a "Certifications" leftover.
+ *
+ * The lead is this page's own, not the "providing services to the community
+ * since 1993" line every other interior hero repeats: Asim supplied one written
+ * for this page on 21 Sep 2026 and it is the only interior hero in that set
+ * that gets its own. It sets to two lines in the 686 box, as the frame draws.
  */
 export const HERO = {
   crumbs: [
@@ -41,7 +46,8 @@ export const HERO = {
     { label: 'Case Studies', href: null },
   ],
   h1: 'Case Studies',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  lead: 'Real recycling challenges, solved. See how we’ve helped businesses across '
+    + 'industries stay compliant and keep materials out of landfills.',
 }
 
 export type CaseStudyCard = {

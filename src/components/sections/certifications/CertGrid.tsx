@@ -45,14 +45,14 @@ export function CertGrid({ top, height }: { top: number; height: number }) {
 
       <ul className="grid w-[844px] grid-cols-2 items-start gap-[24px]">
         {CERTS.map((c) => (
-          <li key={c.title} className="flex w-[410px] flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
+          <li key={c.title} className="grad-card flex w-[410px] flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
             <div className="flex h-[48px] w-[346px] items-center justify-between">
-              <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-brand">
+              <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
                 <svg viewBox="0 0 22 22" className="size-[22px] fill-white" aria-hidden="true">
                   {(MARKS[c.glyph] ?? []).map((d) => <path key={d} d={d} />)}
                 </svg>
               </span>
-              <span className="flex h-[26px] items-center whitespace-nowrap rounded-full bg-accent-soft px-[12px] font-roboto text-[10.5px] font-bold uppercase leading-[1.175] tracking-[0.4px] text-accent">
+              <span className="grad-card__badge flex h-[26px] items-center whitespace-nowrap rounded-full bg-accent-soft px-[12px] font-roboto text-[10.5px] font-bold uppercase leading-[1.175] tracking-[0.4px] text-accent">
                 {c.badge}
               </span>
             </div>

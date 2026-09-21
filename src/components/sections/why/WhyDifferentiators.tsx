@@ -20,8 +20,8 @@ export function WhyDifferentiators({ top, height }: { top: number; height: numbe
 
       <ul className="flex items-start gap-[24px]">
         {DIFFERENTIATORS.cards.map((c) => (
-          <li key={c.title} className="flex w-[410px] shrink-0 flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
-            <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-brand fill-white">
+          <li key={c.title} className="grad-card flex w-[410px] shrink-0 flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
+            <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand fill-white transition-colors">
               <Mark glyph={c.glyph} size={22} />
             </span>
             <h3 className="font-sans text-[20px] font-medium leading-[1.3] text-heading">{c.title}</h3>

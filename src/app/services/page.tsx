@@ -5,6 +5,7 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { CATALOG_H, ServicesCatalog } from '@/components/sections/services/ServicesCatalog'
+import { SERVICES_CERT_BODY } from '@/data/services'
 import { ServicesEnquiry } from '@/components/sections/services/ServicesEnquiry'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
@@ -60,7 +61,7 @@ export default function ServicesPage() {
         <ServicesHero />
         <ServicesCatalog top={CATALOG_TOP} />
         <ServicesEnquiry top={ENQUIRY_TOP} />
-        <CertificationsBand top={CERT_TOP} height={CERT_H} />
+        <CertificationsBand top={CERT_TOP} height={CERT_H} body={SERVICES_CERT_BODY} />
         <ServicesCta top={CTA_TOP} />
       </main>
       <Footer top={FOOTER_TOP} />

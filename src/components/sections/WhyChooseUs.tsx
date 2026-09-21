@@ -7,14 +7,17 @@ import { QUOTE_HREF, href } from '@/lib/urls'
 /**
  * Why Choose Recycle Technologies — Figma 6065:21652. 1280x532 at x320, r40.
  *
- * TODO(content): the design repeats "92% / Diversion Rate" in all four stat
- * cards. Three are placeholders — replace before launch.
+ * The four stat cards. The frame repeats "92% / Diversion Rate" in all four —
+ * one real number and three copies of it — and Asim supplied the real set on
+ * 21 Sep 2026, in this order. They are claims about the business, so Rizwan
+ * should check them against the impact report before launch; the frame's 92%
+ * and this 95% cannot both be the diversion rate.
  */
 const STATS = [
-  { x: 0,      y: 0,     v: '92%', l: 'Diversion Rate' },
-  { x: 288.94, y: 0,     v: '92%', l: 'Diversion Rate' },
-  { x: 0,      y: 177.4, v: '92%', l: 'Diversion Rate' },
-  { x: 288.94, y: 177.4, v: '92%', l: 'Diversion Rate' },
+  { x: 0,      y: 0,     v: '5,000+ Tons', l: 'E-Waste Processed' },
+  { x: 288.94, y: 0,     v: '95%',         l: 'Diversion Rate' },
+  { x: 0,      y: 177.4, v: '1,500+',      l: 'Businesses Served' },
+  { x: 288.94, y: 177.4, v: '100,000+',    l: 'Devices Securely Destroyed' },
 ]
 
 export function WhyChooseUs() {

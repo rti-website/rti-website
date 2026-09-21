@@ -22,7 +22,7 @@ export function AboutFacilities({ top, height }: { top: number; height: number }
 
       <div className="flex items-start gap-[24px]">
         {FACILITIES.cards.map((c) => (
-          <article key={c.name} className="flex w-[429px] shrink-0 flex-col items-start gap-[18px] rounded-[12px] bg-brand-soft p-[32px]">
+          <article key={c.name} className="grad-card flex w-[429px] shrink-0 flex-col items-start gap-[18px] rounded-[12px] bg-brand-soft p-[32px]">
             <h3 className="font-sans text-[20px] font-medium leading-[1.3] text-heading">{c.name}</h3>
             <InfoRow glyph="pin" text={c.address} />
             {c.phone && (

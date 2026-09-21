@@ -67,13 +67,28 @@ export function Accordion({ items, gap = 14, variant = 'plain', idPrefix = 'faq'
                 </span>
               )}
             </button>
-            {isOpen && (
-              <div id={id} className="px-[20px] pb-[16px] font-roboto text-[15px] leading-[24px] text-muted">
-                {/* TODO(content): pages whose copy doc has no answers yet still
-                    fall through to this line. Musaveer to supply per page. */}
-                {a ?? 'Answer copy to be supplied.'}
-              </div>
-            )}
+            {/*
+              ALWAYS RENDERED, hidden when closed — never `{isOpen && …}`.
+              Conditional mounting kept every answer out of the prerendered
+              HTML: on 21 Sep 2026 all 114 answers on /faqs/, the six on
+              /contact-us/ and every service and industry FAQ existed only
+              inside the FAQPage JSON-LD. That is a crawler-visible hole in a
+              replatform whose whole point is full HTML for Googlebot
+              (CLAUDE.md rule 2), and Google retired FAQ rich results in
+              May 2026, so the JSON-LD no longer compensates.
+
+              `hidden` is display:none, so the collapsed row measures exactly
+              as before and no section height budget moves.
+            */}
+            <div
+              id={id}
+              hidden={!isOpen}
+              className="px-[20px] pb-[16px] font-roboto text-[15px] leading-[24px] text-muted"
+            >
+              {/* TODO(content): pages whose copy doc has no answers yet still
+                  fall through to this line. Musaveer to supply per page. */}
+              {a ?? 'Answer copy to be supplied.'}
+            </div>
           </li>
         )
       })}

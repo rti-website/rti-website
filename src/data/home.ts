@@ -149,3 +149,31 @@ export const FAQS: Faq[] = pickFaqs([
   'Does Recycle Technologies offer recycling pickup?',
   'How do I get started with Recycle Technologies?',
 ])
+
+/* ------------------------------------------------------------ closing CTA --
+ * The homepage's own closing copy — Asim, 21 Sep 2026.
+ *
+ * The band itself is shared with every other page (see ClosingCta), and until
+ * now its COPY was shared too, from SERVICES_CTA. The homepage doc and the Our
+ * Services doc word the same band differently, and Asim's call was that the
+ * homepage carries its own and nothing else changes. So this is the one page
+ * that passes its own content into the shared band.
+ *
+ * If a third page ever wants its own wording, add it beside this one. Do not
+ * edit SERVICES_CTA to suit a page that is not /services/ — every service
+ * detail page reads it too.
+ *
+ * The doc writes " - " between the clauses of the second line; set as an em
+ * dash, which is what that punctuation is and what the rest of the site uses.
+ */
+export const HOME_CTA = {
+  heading: 'Ready to Recycle Responsibly?',
+  body: [
+    'Whether you’re a business managing IT asset disposition or an individual looking to '
+    + 'recycle old electronics, Recycle Technologies makes it simple, secure, and sustainable.',
+    'Find a location near you or ship your items through our Mail-In Program — certified data '
+    + 'destruction and environmental impact reporting included.',
+  ],
+  primary:   { label: 'Find a Location',         href: href('/all-locations/') },
+  secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+}

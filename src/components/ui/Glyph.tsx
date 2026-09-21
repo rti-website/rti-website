@@ -29,7 +29,10 @@ export function InfoRow({
 }) {
   const body = (
     <>
-      <span className="grid size-[32px] shrink-0 place-items-center rounded-full bg-brand">
+      {/* grad-card__disc does nothing on its own — it only bites inside a card
+          carrying `grad-card`, where it inverts to a white plate so the mark
+          survives the gradient. See globals.css. */}
+      <span className="grad-card__disc grid size-[32px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
         <svg viewBox="0 0 16 16" className="size-[16px] fill-white" aria-hidden="true"><path d={GLYPHS[glyph]} /></svg>
       </span>
       <span className="font-poppins text-[14.5px] leading-[22px] text-muted">{text}</span>

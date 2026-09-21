@@ -43,8 +43,8 @@ export function AboutValues({ top, height }: { top: number; height: number }) {
 
       <div className="flex items-start gap-[24px]">
         {VALUES.cards.map((c) => (
-          <article key={c.title} className="flex w-[410px] shrink-0 flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
-            <span className="grid size-[48px] shrink-0 place-items-center rounded-full bg-brand">
+          <article key={c.title} className="grad-card flex w-[410px] shrink-0 flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
+            <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
               <svg viewBox="0 0 22 22" className="size-[22px] fill-white" aria-hidden="true">
                 {MARKS[c.glyph].map((d) => <path key={d} d={d} />)}
               </svg>

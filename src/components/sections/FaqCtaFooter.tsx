@@ -1,7 +1,6 @@
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
-import { FAQS } from '@/data/home'
-import { SERVICES_CTA } from '@/data/services'
+import { FAQS, HOME_CTA } from '@/data/home'
 import { Accordion } from '@/components/client/Accordion'
 import { Footer } from '@/components/sections/Footer'
 import { CTA_H, ClosingCtaBand } from '@/components/sections/ClosingCta'
@@ -35,11 +34,13 @@ export function FaqCtaFooter() {
           page — see ClosingCta — after Asim asked on 16 Sep 2026 for the
           redesigned, centred version everywhere.
 
-          It takes SERVICES_CTA rather than copy of its own because the redesign
-          put the services paragraph and its two buttons on the homepage frame
-          too; one source means the wording cannot drift page to page. */}
+          The BAND is shared; the COPY is not. It read SERVICES_CTA until
+          21 Sep 2026, when Asim's homepage copy doc turned out to word this
+          band differently from the Our Services doc. His call: the homepage
+          carries its own wording and every other page keeps SERVICES_CTA. See
+          HOME_CTA in src/data/home.ts. */}
       <Box x={0} y={736} w={1920} h={CTA_H}>
-        <ClosingCtaBand content={SERVICES_CTA} />
+        <ClosingCtaBand content={HOME_CTA} />
       </Box>
 
       <Footer />

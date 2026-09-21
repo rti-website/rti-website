@@ -34,7 +34,7 @@ export function Testimonials() {
       {/* Cards Row — 6554:2055 */}
       <Box x={327} y={235} w={1266} h={350} className="flex items-start gap-[22px]">
         {TESTIMONIALS.map((t, i) => (
-          <article key={i} className="flex h-[350px] w-[300px] shrink-0 flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px]">
+          <article key={i} className="grad-card flex h-[350px] w-[300px] shrink-0 flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px]">
             <div className="flex flex-col gap-[22px]">
               <div className="flex h-[23px] w-[112px] items-center gap-[0.5px]" aria-label="Five stars">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -47,9 +47,9 @@ export function Testimonials() {
             </div>
 
             <div className="flex flex-col gap-[16px]">
-              <div className="h-px w-[244px] bg-[#e6e6e6]" />
+              <div className="grad-card__rule h-px w-[244px] bg-[#e6e6e6] transition-colors" />
               <div className="flex w-[244px] items-start gap-[12px]">
-                <span className="mt-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold leading-none text-white">
+                <span className="grad-card__disc mt-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold leading-none text-white transition-colors">
                   {t.name.charAt(0)}
                 </span>
                 <div className="flex flex-col gap-[2px]">

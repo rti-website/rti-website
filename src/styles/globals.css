@@ -214,6 +214,72 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
+   Feature card hover — the navy-to-teal wash.
+
+   Asim asked on 21 Sep 2026 for the Our Services tab's gradient to come up
+   under a whole card on hover: the testimonial cards, Mission/Vision/Values,
+   the facility cards, both Why Choose Us rows and both Certifications rows.
+   Same two stops as that tab (ServiceTabs.tsx), on the diagonal so the shift is
+   visible across a card rather than only across a 417px strip.
+
+   Same mechanics as the article card below, and for the same two reasons:
+   `background-image` does not interpolate, so swapping one in on :hover pops —
+   the gradient therefore lives on a pseudo-element behind the content and fades
+   its opacity, which does interpolate. `isolation: isolate` keeps the negative
+   z-index inside the card rather than dropping it behind the page.
+
+   A negative-z-index pseudo paints ABOVE its parent's own background, so the
+   cards keep their `bg-white` / `bg-brand-soft` and nothing has to be made
+   transparent for this to show.
+
+   Everything inside then has to survive on a dark ground: headings go white,
+   prose a notch down, the disc inverts to a white plate with a navy mark, and
+   dots and rules are handled separately because they are backgrounds rather
+   than text. The status badge on the certification cards is the one exception —
+   it is dark green on a pale plate and stays that way, so it needs its own rule
+   to outrank the blanket prose colour.
+   --------------------------------------------------------------------------- */
+.grad-card {
+  position: relative;
+  isolation: isolate;
+  transition: border-color .22s ease;
+}
+.grad-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: linear-gradient(to bottom right, var(--color-navy), var(--color-brand));
+  opacity: 0;
+  transition: opacity .22s ease;
+  z-index: -1;
+}
+.grad-card:hover::before,
+.grad-card:focus-within::before { opacity: 1; }
+.grad-card:hover,
+.grad-card:focus-within { border-color: transparent; }
+
+.grad-card:hover :is(h2, h3, h4),
+.grad-card:focus-within :is(h2, h3, h4) { color: #ffffff; }
+.grad-card:hover :is(p, li, span, a),
+.grad-card:focus-within :is(p, li, span, a) { color: rgba(255, 255, 255, .82); }
+
+/* The disc inverts, so the mark stays legible. `color` as well as `fill` —
+   the testimonial avatar is a letter, not an svg. */
+.grad-card:hover .grad-card__disc,
+.grad-card:focus-within .grad-card__disc { background: #ffffff; color: var(--color-navy); }
+.grad-card:hover .grad-card__disc svg,
+.grad-card:focus-within .grad-card__disc svg { fill: var(--color-navy); }
+
+.grad-card:hover .grad-card__dot,
+.grad-card:focus-within .grad-card__dot { background: rgba(255, 255, 255, .7); }
+.grad-card:hover .grad-card__rule,
+.grad-card:focus-within .grad-card__rule { background: rgba(255, 255, 255, .25); }
+
+.grad-card:hover .grad-card__badge,
+.grad-card:focus-within .grad-card__badge { color: var(--color-accent); }
+
+/* ---------------------------------------------------------------------------
    Article card hover — components/ui/PostCard.tsx.
 
    Asim asked on 17 Sep 2026 for the "Ask Our Team" gradient to come up under a

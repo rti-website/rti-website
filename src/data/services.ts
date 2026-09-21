@@ -102,11 +102,11 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     tabIconOn: '/images/icons/tab-recycling-on.svg',
     tabIconOff: '/images/icons/tab-recycling-off.svg',
     cards: [
-      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulbs.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/') },
-      { l1: 'Electronic',     l2: 'Recycling Kit',     blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/') },
-      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Safe collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/') },
-      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/') },
-      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of TVs and electronic displays.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/') },
+      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulb types.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/') },
+      { l1: 'Electronic',     l2: 'Recycling Kit',     blurb: 'Mail-in kit for recycling smaller quantities of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/') },
+      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/') },
+      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/') },
+      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/') },
       // Live and linked from the live /services/ page, but absent from Figma
       // 6142:784 — menu only until a card is designed.
       // No Figma card and no Figma icon, so this row borrowed the TELEVISION
@@ -126,9 +126,9 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     tabIconOn: '/images/icons/tab-destruction-on.svg',
     tabIconOff: '/images/icons/tab-destruction-off.svg',
     cards: [
-      { l1: 'Hard Drives', l2: 'Destruction', blurb: 'Secure destruction and responsible recycling of hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/') },
-      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential paper.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/') },
-      { l1: 'Off Site',    l2: 'Shredding',   blurb: 'Convenient off-site shredding for documents and materials.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/') },
+      { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/') },
+      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/') },
+      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/') },
       // See the conflict note at the top of this file. Menu only since
       // 21 Sep 2026: the redrawn /services/ frame (6142:1559 in file
       // drzg9BI08Dy8eWZNBfXBzD) draws three Destruction cards, and Asim asked
@@ -151,8 +151,8 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // 21 Sep 2026 frames draw this group with Mail In Program alone, on the
       // homepage tab (6563:2130) and on /services/ (6142:1688), and the kit
       // already has its card under Recycling Services.
-      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Easy collection and recycling of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), menuOnly: true },
-      { l1: 'Mail In',    l2: 'Program',       blurb: 'Nationwide mail-in program for eligible materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true },
+      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), menuOnly: true },
+      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true },
       // The new /mail-in-recycling/ page. Every existing "Mail In Program" link
       // still goes to ezontheearth.com — repointing them is Asim's call, so for
       // now the page is reachable from the menu only.
@@ -168,8 +168,18 @@ export const SERVICES_HERO = {
     { label: 'Services', href: null },
   ],
   h1: 'Our Services',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  lead: 'Recycle Technologies has been providing services to the community since 1993. Explore our full range of recycling, destruction, and mail-in programs below.',
 }
+
+/**
+ * The certifications band's paragraph on /services/ only. CERT_COPY carries the
+ * shared one; the "Our Services" doc (Asim, 21 Sep 2026) writes its own for
+ * this page, naming R2v3 explicitly, so it is passed as an override rather
+ * than changed for every page that shows the band.
+ */
+export const SERVICES_CERT_BODY =
+  'Recycle Technologies holds R2v3 certification at select facilities and follows '
+  + 'recognized environmental standards across its recycling and destruction services.'
 
 /** "Don't See Your Item?" teal panel — Figma 6166:2746. */
 export const SERVICES_ENQUIRY = {
@@ -183,8 +193,8 @@ export const SERVICES_ENQUIRY = {
 export const SERVICES_CTA = {
   heading: 'Ready to Recycle Responsibly?',
   body: [
-    'Whether you’re a business managing IT asset disposition or an individual looking to recycle old electronics, Recycle Technologies makes it simple, secure, and sustainable.',
-    'Find a location near you or ship your items through our Mail-In Program - certified data destruction and environmental impact reporting included.',
+    'Whether you’re a business or an individual looking to recycle old electronics, Recycle Technologies makes it simple and secure.',
+    'Find a location near you or ship your items through our Mail-In Program, with a Certificate of Recycling provided for your records.',
   ],
   primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },

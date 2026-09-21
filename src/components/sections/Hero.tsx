@@ -33,10 +33,24 @@ import { Picker } from '@/components/client/Picker'
  * cache key. public/images/home/hero.png is the dead corridor shot and can be
  * deleted.
  */
+/**
+ * Four tiles, as the homepage copy doc writes them. It ran three until
+ * 21 Sep 2026, because "3 Locations / MNC WI CH" and "R2v3 Ctfd / Recycling"
+ * had been folded into one "R2v3 Certified Locations / Minnesota. Wisconsin"
+ * tile — which quietly dropped Chicago, even though "Where We Serve" further
+ * down the same page names it. Asim asked for the locations tile back.
+ *
+ * The two claims stay separate on purpose. Chicago is NOT an R2v3 facility
+ * (/about-us…/ lists it as "Not yet a certified facility"), so a tile that
+ * named all three under an "R2v3 Certified" heading would be a false
+ * certification claim. Locations are counted in one tile; certification is
+ * stated in the other and names nothing.
+ */
 const STATS = [
-  { v: '30+ Years', l: 'Of recycling experience' },
-  { v: '50 States', l: 'Accessible through our Mail-In Program' },
-  { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin' },
+  { v: '30+ Years',      l: 'Of recycling experience' },
+  { v: '50 States',      l: 'Accessible through our Mail-In Program' },
+  { v: '3 Locations',    l: 'Minnesota. Wisconsin. Chicago' },
+  { v: 'R2v3 Certified', l: 'Recycling' },
 ]
 
 export function Hero() {
@@ -144,7 +158,7 @@ export function Hero() {
           nothing — the strip moves with it. */}
       <Box x={319} y={519} w={1281.335} className="flex border-t-[1.001px] border-white/40 pt-[10px]">
         {STATS.map((s, i) => (
-          <div key={s.v} className={`flex-1 px-[28.029px] py-[20.021px] ${i < 2 ? 'border-r-[1.001px] border-white/40' : ''}`}>
+          <div key={s.v} className={`flex-1 px-[28.029px] py-[20.021px] ${i < STATS.length - 1 ? 'border-r-[1.001px] border-white/40' : ''}`}>
             <p className="whitespace-nowrap font-sans text-[38.04px] font-semibold leading-[38.04px] tracking-[-1.1512px] text-white">{s.v}</p>
             <p className="pt-[4.004px] font-roboto text-[14px] font-medium leading-[19.52px] tracking-[-0.0801px] text-white/80">{s.l}</p>
           </div>
