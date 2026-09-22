@@ -48,7 +48,14 @@ const MARKS: Record<Card['glyph'], string[]> = {
 
 export function CaseStudyCardView({ card }: { card: Card }) {
   return (
-    <article className="flex w-[410px] shrink-0 flex-col items-start gap-[14px] rounded-[12px] bg-brand-soft p-[32px]">
+    /*
+     * MOBILE — 6638:8929. Identical to the board apart from its width: 350 in a
+     * 390 frame, so p32, the 14px stack, the 44px disc and every type size are
+     * the frame's own numbers at both breakpoints. The card is `w-full` rather
+     * than a second fixed number, and the three 346px text runs go fluid with
+     * it — 410 and 346 were the only two things here that could not fit a phone.
+     */
+    <article className="flex w-full flex-col items-start gap-[14px] rounded-[12px] bg-brand-soft p-[32px] lg:w-[410px] lg:shrink-0">
       <span className="grid size-[44px] shrink-0 place-items-center rounded-full bg-brand fill-white">
         <svg viewBox="0 0 22 22" fillRule="evenodd" className="size-[20px] shrink-0" aria-hidden="true">
           {MARKS[card.glyph].map((d) => <path key={d} d={d} />)}
@@ -57,9 +64,9 @@ export function CaseStudyCardView({ card }: { card: Card }) {
       <p className="whitespace-nowrap font-roboto text-[11px] font-bold uppercase tracking-[0.6px] text-brand">
         {card.industry}
       </p>
-      <h3 className="w-[346px] font-sans text-[19px] font-medium leading-[1.3] text-heading">{card.title}</h3>
-      <p className="w-[346px] font-roboto text-[14px] leading-[1.55] text-muted">Challenge: {card.challenge}</p>
-      <p className="w-[346px] font-roboto text-[14px] leading-[1.55] text-muted">Approach: {card.approach}</p>
+      <h3 className="w-full font-sans text-[19px] font-medium leading-[1.3] text-heading lg:w-[346px]">{card.title}</h3>
+      <p className="w-full font-roboto text-[14px] leading-[1.55] text-muted lg:w-[346px]">Challenge: {card.challenge}</p>
+      <p className="w-full font-roboto text-[14px] leading-[1.55] text-muted lg:w-[346px]">Approach: {card.approach}</p>
     </article>
   )
 }

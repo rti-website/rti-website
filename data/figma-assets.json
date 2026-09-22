@@ -36,7 +36,7 @@
       "to": "public/images/home/hero-photo.png",
       "id": "45ee6c02-f43f-49ba-ad95-1dcf26b2a53a.png",
       "node": "6107:2803",
-      "name": "hero photograph \u2014 export 6107:2803 (e-waste bin). Comes back 1920x940 with frame 6023:13153\u2019s 55% opacity and the #0b1f3a base already baked in, so Hero.tsx draws it at full opacity."
+      "name": "hero photograph — export 6107:2803 (e-waste bin). Comes back 1920x940 with frame 6023:13153’s 55% opacity and the #0b1f3a base already baked in, so Hero.tsx draws it at full opacity."
     },
     {
       "to": "public/images/icons/chevron-24.svg",
@@ -57,34 +57,39 @@
       "name": "arrow right teal"
     },
     {
-      "to": "public/images/home/cert-1.png",
-      "id": "4709a344-b97b-4eae-8bae-46bb349c0fea.png",
-      "node": "6044:19739",
-      "name": "cert logo 1"
+      "to": "public/images/certs/1.png",
+      "id": "e31cf600-6aef-47e5-ac9e-ef5f17607bbc.png",
+      "node": "6695:3630",
+      "name": "Certification mark 1 — R2v3. Re-exported 22 Sep 2026: the earlier file still carried the frame’s old 40% container fade, composited onto white (darkest pixel rgb(213,238,211)), which alpha checks could not see. Node export, 2x.",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC"
     },
     {
-      "to": "public/images/home/cert-2.png",
-      "id": "a4c49303-9679-4121-b488-d88fe49a3043.png",
-      "node": "6044:19741",
-      "name": "cert logo 2"
+      "to": "public/images/certs/2.png",
+      "id": "63ac6f60-687b-4141-8846-9716354f2470.png",
+      "node": "6695:3635",
+      "name": "Certification mark 2 — RIOS. Re-exported 22 Sep 2026, same 60% fade problem as 1.png. Node export, 2x.",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC"
     },
     {
-      "to": "public/images/home/cert-3.png",
-      "id": "92a64ca4-1b0d-4017-9f7b-6a98d7127437.png",
-      "node": "6044:19743",
-      "name": "cert logo 3"
+      "to": "public/images/certs/3.png",
+      "id": "73a27e9d-58f9-463b-b77d-6cf3de4d0ef0.png",
+      "node": "6695:3646",
+      "name": "Certification mark 3 — slot labelled FACTA, artwork is a Brazilian loan company. Re-exported 22 Sep 2026 (was carrying an 80% fade). See src/data/certifications.ts.",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC"
     },
     {
-      "to": "public/images/home/cert-4.png",
-      "id": "784ea83c-241a-4872-bb4e-6668d22f38e5.png",
-      "node": "6044:19745",
-      "name": "cert logo 4"
+      "to": "public/images/certs/4.png",
+      "id": "f97d4231-33b0-4409-b1ff-6b05a403eb57.png",
+      "node": "6695:5825",
+      "name": "Certification mark 5 of 8 in the 22 Sep order — IEEE. Artwork node, 2x.",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC"
     },
     {
-      "to": "public/images/home/cert-5.png",
-      "id": "7fc18ebf-62e1-4a87-94d4-dfb895c0784c.png",
-      "node": "6044:19749",
-      "name": "cert logo 5"
+      "to": "public/images/certs/5.png",
+      "id": "65704660-94c3-4391-9858-5014af3634f4.png",
+      "node": "6695:5830",
+      "name": "Certification mark 6 in the 22 Sep order — NAID AAA Certified. Re-exported 22 Sep 2026 (was carrying a fade). Disputed claim, see src/data/certifications.ts.",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC"
     },
     {
       "to": "public/images/home/svc-bulbs.png",
@@ -360,13 +365,13 @@
       "to": "public/images/services/hero.png",
       "id": "4505b889-4aa2-4886-902e-fe49216fa420.png",
       "node": "6142:787",
-      "name": "Services hero \u2014 base plate"
+      "name": "Services hero — base plate"
     },
     {
       "to": "public/images/services/hero-photo.png",
       "id": "12951b71-abfe-4cd1-b563-588a0eed3ac8.png",
       "node": "6142:788",
-      "name": "Services hero \u2014 photo"
+      "name": "Services hero — photo"
     },
     {
       "to": "public/images/icons/mail-24.svg",
@@ -604,6 +609,34 @@
       "node": "6478:5155",
       "fileKey": "lRkITk6QLzsscWUO40karx",
       "name": "FAQs hero photograph"
+    },
+    {
+      "to": "public/images/certs/6.svg",
+      "id": "4690ac0c-c461-47e2-9440-c0ca1bf3d169.svg",
+      "node": "6695:5832",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Certification mark 4 of 8 in the 22 Sep order — RCRA wordmark (vector). Figma’s export wrapped the paths in the clipped page; the file on disk is those four paths with the scaffolding stripped."
+    },
+    {
+      "to": "public/images/certs/7.svg",
+      "id": "a61690b6-8730-495b-8970-073ac1e85a30.svg",
+      "node": "6695:5838",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Certification mark 7 of 8 — FCRA wordmark (vector), same treatment as 6.svg."
+    },
+    {
+      "to": "public/images/certs/8.png",
+      "id": "4863196c-201f-46b3-90ad-5b53364a64c7.png",
+      "node": "6721:5861",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Certification mark 8 of 8 — GLBA wordmark. Added by the designer on 22 Sep 2026 (frame 6044:19764). Artwork node, 2x, 172x44."
+    },
+    {
+      "to": "public/images/icons/accept-tick.png",
+      "id": "fddca5ec-d1fb-450e-badc-1ab2d73dc03b.png",
+      "node": "6695:5813",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "\"What We Accept\" row tick — Figma \"image 437\", 30x27.604, exported 3x."
     }
   ]
 }

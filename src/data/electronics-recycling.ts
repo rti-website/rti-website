@@ -96,6 +96,10 @@ export const ACCEPT = {
     + 'If you’re not sure whether an item qualifies, call the location nearest you to '
     + 'confirm before scheduling.',
   items: [
+    /* Added 22 Sep 2026 from the redrawn frame (6695:5812). Asim: this row is
+       for THIS page only — every other service and industry page keeps the
+       list its own doc gives it, and only the row DESIGN is shared. */
+    { label: 'General E-Waste',           text: 'Cables, switches, chargers, keyboards, mice, remotes, microwaves, televisions, and other everyday electronic items.' },
     { label: 'Computers & Laptops',       text: 'Desktops, laptops, and servers.' },
     { label: 'Monitors & Displays',       text: 'Monitors, including CRT units.' },
     { label: 'Office & Imaging Equipment',text: 'Fax machines, printers, scanners, and copiers.' },

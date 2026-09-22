@@ -24,6 +24,20 @@ import { SERVICE_GROUPS, type ServiceGroup } from '@/data/services'
  *
  * CATALOG_H is that flow added up, so the services page can place what
  * follows without anyone measuring a screenshot.
+ *
+ * MOBILE — Figma 6638:8546 "Our Services Content" in file BVtf2AOuUOcYbiMIlcKmbC.
+ * px20 / pt32 / pb8, the three groups stacked 32 apart, each one a plain
+ * heading over a single column of full-width cards 16 apart. The cards need
+ * nothing here: ServicePhotoCard is already `w-full lg:w-[261px]`. What did
+ * need doing is the INLINE widths and gaps around it — `style={{ width: 746.2 }}`
+ * and `style={{ gap: 48 }}` apply at every viewport, so they are custom
+ * properties now, read only by an `lg:` utility.
+ *
+ * NOT BUILT: the frame opens the section with a "Chips Scroll" rail (6638:8547)
+ * — three gradient/outline chips carrying the group names and an icon each.
+ * It has no desktop counterpart, needs three icon assets that are not in the
+ * repo, and would put a second copy of all three headings in the DOM. Flagged
+ * for Aqeel/Asim rather than invented here.
  */
 const SCALE = 239.4 / 261
 const CARD_W = 261 * SCALE
@@ -65,29 +79,51 @@ const PAIR_H = Math.max(
 )
 export const CATALOG_H = PT + WIDE_H + BLOCK_GAP + PAIR_H
 
+/**
+ * Every measurement the Figma board asks for, as custom properties. They used
+ * to be inline `style={{ width }}` / `style={{ gap }}`, which no media query
+ * can switch off — 746.2px of column on a 350px screen. Only `lg:` utilities
+ * read these, so below lg the same markup is a plain single column.
+ */
+const BOARD = {
+  '--cat-pt': `${PT}px`,
+  '--cat-block': `${BLOCK_GAP}px`,
+  '--cat-col': `${COL_GAP}px`,
+  '--cat-card': `${LEFT_GAP}px`,
+  '--cat-left': `${LEFT_W}px`,
+  '--cat-right': `${RIGHT_W}px`,
+} as React.CSSProperties
+
 export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
   return (
-    <Section top={top} left={319} width={WIDE_W} height={CATALOG_H} label="6142:1559" className="bg-white">
-      <div className="flex flex-col" style={{ paddingTop: PT, gap: BLOCK_GAP }}>
-        {/* Recycling Services — 6142:2018 over 6142:1587 */}
-        <div className="flex flex-col" style={{ gap: BLOCK_GAP }}>
+    <Section
+      top={top} left={319} width={WIDE_W} height={CATALOG_H} label="6142:1559"
+      className="bg-white px-[20px] pb-[8px] pt-[32px] lg:p-0"
+    >
+      <div
+        className="flex flex-col gap-[32px] lg:gap-[var(--cat-block)] lg:pt-[var(--cat-pt)]"
+        style={BOARD}
+      >
+        {/* Recycling Services — 6142:2018 over 6142:1587; 6638:8568 on the phone. */}
+        <div className="flex flex-col gap-[16px] lg:gap-[var(--cat-block)]">
           <GroupHeading group={RECYCLING} />
-          <div className="flex w-full items-start justify-between">
+          <div className="flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:justify-between lg:gap-0">
             {visible(RECYCLING).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
           </div>
         </div>
 
-        {/* Destruction & Shredding beside Recycling Programs — 6593:5943 */}
-        <div className="flex items-start" style={{ gap: COL_GAP }}>
-          <div className="flex shrink-0 flex-col" style={{ width: LEFT_W, gap: BLOCK_GAP }}>
+        {/* Destruction & Shredding beside Recycling Programs — 6593:5943.
+            One under the other on a phone: 6638:8681 then 6638:8705. */}
+        <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[var(--cat-col)]">
+          <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-left)] lg:shrink-0 lg:gap-[var(--cat-block)]">
             <GroupHeading group={DESTRUCTION} />
-            <div className="flex flex-wrap" style={{ gap: LEFT_GAP }}>
+            <div className="flex flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:gap-[var(--cat-card)]">
               {visible(DESTRUCTION).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
             </div>
           </div>
-          <div className="flex shrink-0 flex-col" style={{ width: RIGHT_W, gap: BLOCK_GAP }}>
+          <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-right)] lg:shrink-0 lg:gap-[var(--cat-block)]">
             <GroupHeading group={PROGRAMS} />
-            <div className="flex flex-wrap justify-center" style={{ gap: LEFT_GAP }}>
+            <div className="flex flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-[var(--cat-card)]">
               {visible(PROGRAMS).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
             </div>
           </div>
@@ -100,18 +136,24 @@ export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
 /**
  * The rule-flanked green title — Figma 6142:2018 / 2028 / 2038.
  * Flex, gap 36, hairlines take whatever the fixed-width title leaves.
+ *
+ * The mobile frames (6638:8569 / 8682 / 8706) drop the rules and set the title
+ * left, full width, Inter Bold 20 on black — not centred IBM Plex 35 in accent
+ * green. So the hairlines are hidden below lg and the h2 carries two skins.
+ * Its Figma width and height are custom properties for the same reason the
+ * block's are: an inline `width` would follow it onto the phone.
  */
 function GroupHeading({ group }: { group: ServiceGroup }) {
   return (
-    <div className="flex items-center gap-[36px]" style={{ height: group.headingH }}>
-      <span aria-hidden="true" className="h-px flex-1 bg-line" />
-      <h2
-        className="flex shrink-0 items-center justify-center text-center font-sans text-[35px] font-normal leading-none text-accent"
-        style={{ width: group.headingW, height: group.headingH }}
-      >
+    <div
+      className="flex items-center gap-[36px] lg:h-[var(--gh-h)]"
+      style={{ '--gh-h': `${group.headingH}px`, '--gh-w': `${group.headingW}px` } as React.CSSProperties}
+    >
+      <span aria-hidden="true" className="hidden h-px flex-1 bg-line lg:block" />
+      <h2 className="block w-full font-inter text-[20px] font-bold leading-normal text-black lg:flex lg:h-[var(--gh-h)] lg:w-[var(--gh-w)] lg:shrink-0 lg:items-center lg:justify-center lg:text-center lg:font-sans lg:text-[35px] lg:font-normal lg:leading-none lg:text-accent">
         {group.heading}
       </h2>
-      <span aria-hidden="true" className="h-px flex-1 bg-line" />
+      <span aria-hidden="true" className="hidden h-px flex-1 bg-line lg:block" />
     </div>
   )
 }

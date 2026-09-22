@@ -41,29 +41,29 @@ export default function NotFound() {
     <FlowCanvas>
       <Header />
       <main>
-        <div className="relative h-[380px] overflow-hidden bg-navy">
+        <div className="relative overflow-hidden bg-navy py-[48px] lg:h-[380px] lg:py-0">
           <InteriorHeroArt />
-          <div className="relative flex h-full flex-col justify-center px-[319px]">
+          <div className="relative flex h-full flex-col justify-center px-[20px] lg:px-[319px]">
             <span className="font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px] text-white/50">
               Error 404
             </span>
-            <h1 className="mt-[18px] font-sans text-[60px] font-semibold leading-[74.7px] text-white">
+            <h1 className="mt-[18px] font-sans text-[32px] font-semibold leading-[40px] text-white lg:text-[60px] lg:leading-[74.7px]">
               We could not find that page
             </h1>
-            <p className="mt-[14px] w-[620px] font-roboto text-[20px] leading-[30.031px] text-white/70">
+            <p className="mt-[14px] w-full font-roboto text-[16px] leading-[24px] text-white/70 lg:w-[620px] lg:text-[20px] lg:leading-[30.031px]">
               The address may have changed, or the page may have been retired. Everything below is
               still where it should be.
             </p>
           </div>
         </div>
 
-        <section className="bg-white py-[90px]">
-          <div className="mx-auto grid w-[1280px] grid-cols-3 gap-[24px]">
+        <section className="bg-white px-[20px] py-[48px] lg:px-0 lg:py-[90px]">
+          <div className="mx-auto grid w-full grid-cols-1 gap-[16px] lg:w-[1280px] lg:grid-cols-3 lg:gap-[24px]">
             {LINKS.map((l) => (
               <Link
                 key={l.to}
                 href={href(l.to)}
-                className="post-card flex flex-col rounded-[12px] border border-[#e5e5e5] bg-white p-[29px] hover:shadow-[0_10px_28px_rgba(13,39,80,0.18)]"
+                className="post-card flex flex-col rounded-[12px] border border-[#e5e5e5] bg-white p-[24px] hover:shadow-[0_10px_28px_rgba(13,39,80,0.18)] lg:p-[29px]"
               >
                 <span className="post-card__title font-sans text-[20px] font-medium leading-[1.3] text-[#132119] transition-colors">
                   {l.label}
@@ -80,7 +80,9 @@ export default function NotFound() {
         </section>
       </main>
 
-      <div className="relative" style={{ height: FOOTER_H }}>
+      {/* lg-only: the footer is 681 design px on the board and about 1486 on a
+          phone, so a fixed box would end long before the footer does. */}
+      <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
         <Footer top={0} />
       </div>
     </FlowCanvas>

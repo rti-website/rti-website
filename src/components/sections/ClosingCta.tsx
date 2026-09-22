@@ -64,48 +64,69 @@ export type CtaContent = {
  */
 export function ClosingCtaBand({ content }: { content: CtaContent }) {
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-[22px] overflow-hidden bg-[#0c4e5a]">
-      {/* Watermark — 6107:3979, 1920x1081 at y-312.02, 10% opacity, flipped. */}
-      <Box x={0} y={-312.02} w={1920} h={1081} className="opacity-10">
-        <Image src="/images/home/cta-bg.png" alt="" fill sizes="1920px" className="-scale-x-100 object-cover" />
+    /*
+     * Below lg this is an ordinary block in flow carrying the mobile frame's own
+     * shell — 6619:2356: px20 / py48 / gap20 on #0c4e5a. It stays `relative` so
+     * the watermark's `fill` box still has something to cover. At lg it goes
+     * back to `absolute inset-0`, filling whatever Box or Section holds it.
+     */
+    <div className="relative flex flex-col items-center gap-[20px] overflow-hidden bg-[#0c4e5a] px-[20px] py-[48px] lg:absolute lg:inset-0 lg:justify-center lg:gap-[22px] lg:p-0">
+      {/* Watermark — 6107:3979, 1920x1081 at y-312.02, 10% opacity, flipped;
+          6619:2366 on the phone, where it covers the band at 390x462. `fill`
+          is what keeps it covering below lg — without it the wrapper collapses
+          to zero height in flow and the picture is simply not there. */}
+      <Box x={0} y={-312.02} w={1920} h={1081} fill className="opacity-10">
+        <Image src="/images/home/cta-bg.png" alt="" fill sizes="(min-width: 1024px) 1920px, 100vw" className="-scale-x-100 object-cover" />
       </Box>
 
       {/* Green wash — 6107:3981. Drawn at 270deg rather than 90deg: that is the
-          design's horizontal flip, and it is what puts the green on the right. */}
+          design's horizontal flip, and it is what puts the green on the right.
+          Desktop only: the mobile frame draws the watermark alone, with no
+          gradient layer over it. */}
       <Box
         x={4} y={-259.02} w={1920} h={974.39}
+        className="hidden lg:block"
         style={{ backgroundImage: 'linear-gradient(270deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
       />
 
-      {/* 6107:2952 */}
+      {/* 6107:2952 / 6619:2357 — 40/53.7 on the board, 26/32 on the phone.
+          The heading width goes out as a CUSTOM PROPERTY rather than an inline
+          `width`, because an inline width applies at every viewport: at 390 a
+          723px heading is 333px of horizontal overflow. */}
       <h2
-        className="text-center font-sans text-[40px] font-semibold leading-[53.7px] text-white"
-        style={{ width: content.headingWidth ?? 723 }}
+        className="w-full text-center font-sans text-[26px] font-semibold leading-[32px] text-white lg:w-[var(--cta-hw)] lg:text-[40px] lg:leading-[53.7px]"
+        style={{ '--cta-hw': `${content.headingWidth ?? 723}px` } as React.CSSProperties}
       >
         {content.heading}
       </h2>
 
-      {/* 6107:3101. Figma holds this as ONE text node, so the second sentence
-          carries on along the first's last line — three lines at 1084 wide, not
-          four. Pages that supply a list get it joined rather than stacked, or
-          the block sets to a different shape than the frame. */}
-      <p className="w-[1084px] text-center font-roboto text-[17.018px] leading-[27.654px] text-white/80">
+      {/* 6107:3101 / 6619:2358. Figma holds this as ONE text node, so the second
+          sentence carries on along the first's last line — three lines at 1084
+          wide, not four. Pages that supply a list get it joined rather than
+          stacked, or the block sets to a different shape than the frame. */}
+      <p className="w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
         {(Array.isArray(content.body) ? content.body : [content.body]).join(' ')}
       </p>
 
       {/* 6491:6403 — 449.279 wide: a 210 filled button, 6px, then the bordered
           one at its own width. `min-w` rather than `w` so a page with a longer
-          primary label gets a wider button instead of a clipped one. */}
-      <div className="flex items-start gap-[6px]">
+          primary label gets a wider button instead of a clipped one.
+          6619:2359 stacks them full-width at 12px apart on the phone. */}
+      <div className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start lg:gap-[6px]">
         <Btn
           href={content.primary.href}
           variant="whiteFill"
           external={content.primary.external}
-          className="min-w-[210px] justify-center"
+          className="w-full justify-center lg:w-auto lg:min-w-[210px]"
         >
           {content.primary.label}
         </Btn>
-        <Btn href={content.secondary.href} variant="white" external={content.secondary.external}>
+        <Btn
+          href={content.secondary.href}
+          variant="white"
+          external={content.secondary.external}
+          className="w-full justify-center lg:w-auto"
+        >
           {content.secondary.label}
         </Btn>
       </div>

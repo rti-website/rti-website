@@ -6,7 +6,8 @@ import { INDUSTRY_MARKS } from '@/components/ui/IndustryMarks'
 import { SERVICE_MARKS } from '@/components/ui/ServiceMarks'
 import { SERVICE_GROUPS } from '@/data/services'
 import { HeaderNav, type NavEntry } from '@/components/client/HeaderNav'
-import { href } from '@/lib/urls'
+import { MobileNav } from '@/components/client/MobileNav'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import { blogMenuColumns } from '@/lib/blog-index'
 import { HEADER_H } from '@/lib/layout'
 
@@ -41,9 +42,26 @@ export async function Header() {
   const NAV = buildNav(await blogMenuColumns())
 
   return (
-    // overflow="visible" so the menus can hang below the 140px bar. Every other
-    // section clips on purpose; this one must not.
-    <Section top={0} height={HEADER_H} label="6107:2737" overflow="visible" className="z-30 border-b border-line bg-white">
+    <>
+      {/* Below lg the bar and its mega-menus are replaced wholesale by the
+          drawer — Figma BVtf2AOuUOcYbiMIlcKmbC "MainMenu Module 2 - Mobile".
+          Same NAV object, so the two lists cannot drift. See MobileNav.tsx for
+          why the header is the one place this build renders two trees. */}
+      <MobileNav
+        nav={NAV}
+        mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }}
+        topBar={TOP_BAR}
+        quoteHref={QUOTE_HREF}
+        announce={{
+          text: 'It is a long established fact that a reader will be distracted…',
+          cta: 'Learn more',
+          href: TOP_BAR.contact.href,
+        }}
+      />
+
+    {/* overflow="visible" so the menus can hang below the 140px bar. Every other
+        section clips on purpose; this one must not. */}
+    <Section top={0} height={HEADER_H} label="6107:2737" overflow="visible" className="z-30 hidden border-b border-line bg-white lg:block">
       {/* Announcement bar */}
       <Box x={0} y={0} w={1920} h={41} className="bg-brand">
         {/* TODO(content): lorem ipsum in the Figma file. The migration plan
@@ -97,6 +115,7 @@ export async function Header() {
 
       <HeaderNav nav={NAV} mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }} />
     </Section>
+    </>
   )
 }
 

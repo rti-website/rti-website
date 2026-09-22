@@ -56,8 +56,12 @@ export default function HomePage() {
             top is the open tab's height difference (see OurServices), so a
             one-row tab pulls the rest of the page up instead of leaving a
             gap. The sections keep their own pinned tops inside it. */}
+        {/* `lg:` because below it there is no board to pin to: the wrapper is an
+            ordinary block and the sections inside it stack after Our Services.
+            Left absolute at every width it covered the hero. `top` is ignored
+            on a static box, so the inline style can stay as written. */}
         <div
-          className="absolute inset-x-0 transition-[top] duration-300 ease-out"
+          className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0"
           style={{ top: `var(${HOME_SERVICES_DELTA_VAR}, 0px)` }}
         >
           <Industries />

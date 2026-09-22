@@ -31,6 +31,14 @@ import { href } from '@/lib/urls'
  * Figma's own values for the two variable blocks are 495 and 579. Anything
  * larger is real copy that would otherwise be clipped — flag the frame to
  * Aqeel rather than cutting the writer's sentences.
+ *
+ * BELOW lg every one of those offsets and heights is ignored (see Frame.tsx)
+ * and the sections stack in source order — which is precisely the order of the
+ * mobile frame, 6638:8236 in file BVtf2AOuUOcYbiMIlcKmbC: hero, intro split,
+ * What We Accept, process split, certifications, case studies, FAQ, CTA. So
+ * the arithmetic above is desktop-only and nothing here needs a mobile branch;
+ * each section answers the phone itself. The seven /industries/* pages render
+ * through this same component, so they inherit the same treatment.
  */
 
 const HERO_TOP = 140
@@ -43,8 +51,14 @@ const CASE_H = CASE_STUDIES_H
 const FAQ_H_DEFAULT = 676.93
 const CTA_H = 456
 
-const PROSE = 'font-roboto text-[17.018px] leading-[27.654px] text-muted'
-const STEP = 'font-roboto text-[16px] leading-[24px] text-muted'
+/*
+ * Body copy is 15/1.5 on a phone against the board's 17.018/27.654 — the size
+ * every mobile frame in BVtf2AOuUOcYbiMIlcKmbC sets (6638:10513 for the prose,
+ * 6638:10566 for a step row at 15/1.4). Set here rather than inside
+ * ServiceSplit because the caller owns the rhythm of its own children.
+ */
+const PROSE = 'font-roboto text-[15px] leading-[1.5] text-muted lg:text-[17.018px] lg:leading-[27.654px]'
+const STEP = 'font-roboto text-[15px] leading-[1.4] text-muted lg:text-[16px] lg:leading-[24px]'
 
 /** A section's closing copy is one paragraph on most pages and several on some. */
 function toParagraphs(v: string | string[] | undefined): string[] {

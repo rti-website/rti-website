@@ -5,7 +5,12 @@ import Link from 'next/link'
 
 /** Pill eyebrow — Figma "Container" + "Text", h34 / px20 / r-full. */
 export function Eyebrow({ children, tone = 'green' }: { children: React.ReactNode; tone?: 'green' | 'glass' }) {
-  const base = 'inline-flex h-[34px] items-center rounded-full px-[20px] font-roboto text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.89px] whitespace-nowrap'
+  /* Wraps below lg. /faqs/ has an eyebrow reading "COMPLIANCE, CERTIFICATIONS &
+     RESPONSIBLE RECYCLING", which at 11px with 0.89px tracking is ~370px — it
+     was being cut off at the right edge of a 390px screen behind the shell's
+     overflow clip, where no scrollbar gives it away. At lg the pill is exactly
+     what it was: 34 tall, one line. */
+  const base = 'inline-flex min-h-[34px] items-center justify-center rounded-full px-[20px] py-[7px] text-center font-roboto text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.89px] lg:h-[34px] lg:py-0 lg:whitespace-nowrap'
   return (
     <span className={tone === 'green'
       ? `${base} bg-accent-soft text-accent`
@@ -15,19 +20,25 @@ export function Eyebrow({ children, tone = 'green' }: { children: React.ReactNod
   )
 }
 
-/** Section title — IBM Plex Sans SemiBold 40px. */
+/**
+ * Section title — IBM Plex Sans SemiBold 40px, 26/32 on a phone.
+ *
+ * The mobile figure is the one every mobile frame in BVtf2AOuUOcYbiMIlcKmbC
+ * uses — Certifications 6605:2330, Our Services, Industries, all of them — so
+ * it is set once here rather than fourteen times in fourteen sections.
+ */
 export function Title({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className={`font-sans text-[40px] font-semibold leading-[1.18] text-black ${className}`}>
+    <h2 className={`font-sans text-[26px] font-semibold leading-[32px] text-black lg:text-[40px] lg:leading-[1.18] ${className}`}>
       {children}
     </h2>
   )
 }
 
-/** Section lead — Roboto 17.018 / 27.654, #7e7e7e. */
+/** Section lead — Roboto 17.018 / 27.654, #7e7e7e. 15/22 on a phone. */
 export function Lead({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={`font-roboto text-[17.018px] leading-[27.654px] text-muted ${className}`}>
+    <p className={`font-roboto text-[15px] leading-[22px] text-muted lg:text-[17.018px] lg:leading-[27.654px] ${className}`}>
       {children}
     </p>
   )

@@ -18,6 +18,17 @@ import Image from 'next/image'
  * Figma draws the dark button's label white on a white fill, which is
  * invisible; it is rendered teal here, matching every other "Bordered colored
  * White V1" instance in the file and how it reads in the Figma preview.
+ *
+ * BELOW lg the mobile frames stack it — input over button, both full width,
+ * 12px apart: 6638:8919 on /services/ and 6605:2397 on the homepage draw the
+ * identical shape, so it is one rule here rather than a per-caller override.
+ *
+ * `inputWidth` used to be an inline `style={{ width }}`, which applies at EVERY
+ * viewport — 971px, or 588 against the homepage's 302px column. It now rides a
+ * custom property that only an `lg:` utility reads, so the phone gets a real
+ * full-width field and the board keeps its exact Figma measure. Callers that
+ * currently neutralise the old inline width from outside (ServiceTabs wraps it
+ * in `max-lg:[&>div]:w-full!`) no longer need to; that wrapper is inert now.
  */
 const TONE = {
   dark: {
@@ -42,14 +53,18 @@ export function ConnectForm({
   placeholder: string
   cta: string
   tone?: keyof typeof TONE
-  /** Fixed input width; the button takes the rest of the row. */
+  /**
+   * Input width AT lg AND UP; the button takes the rest of the row. Below lg
+   * both are full width and the row is a column — see the note above.
+   */
   inputWidth?: number
   id?: string
 }) {
   const t = TONE[tone]
   return (
     <form
-      className="flex w-full items-start gap-[10px]"
+      className="flex w-full flex-col gap-[12px] lg:flex-row lg:items-start lg:gap-[10px]"
+      style={{ '--connect-input-w': `${inputWidth}px` } as React.CSSProperties}
       onSubmit={(e) => {
         e.preventDefault()
         // TODO(phase-2): post to the quote-intake Worker once the Phase 0
@@ -57,8 +72,7 @@ export function ConnectForm({
       }}
     >
       <div
-        className={`relative h-[50px] shrink-0 overflow-hidden rounded-[8px] border backdrop-blur-[24px] ${t.input}`}
-        style={{ width: inputWidth }}
+        className={`relative h-[50px] w-full overflow-hidden rounded-[8px] border backdrop-blur-[24px] lg:w-[var(--connect-input-w)] lg:shrink-0 ${t.input}`}
       >
         <label htmlFor={id} className="sr-only">Email address</label>
         <input
@@ -79,7 +93,7 @@ export function ConnectForm({
 
       <button
         type="submit"
-        className={`flex h-[50px] min-w-px flex-1 items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] ${t.button}`}
+        className={`flex h-[50px] w-full items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1 ${t.button}`}
       >
         <span className="whitespace-nowrap">{cta}</span>
         <Image src={t.arrow} alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

@@ -62,14 +62,25 @@ export function BlogArticles({
   heading?: string | undefined
 }) {
   return (
+    /*
+     * MOBILE — 6638:8106 "Section - Latest Articles Heading" and 6638:8126
+     * "Articles List", which Aqeel drew as two frames and this builds as the one
+     * section it already is: px20, pt40, a 12px heading stack, then the cards
+     * 16 apart with pb40. The heading block is LEFT aligned on the phone and
+     * centred on the board.
+     *
+     * The 32px between the chip row and the first card is the frame's 24 of
+     * pb on the heading frame plus 8 of pt on the list frame; it lands on the
+     * grid as a 20px top margin on top of the section's own 12px gap.
+     */
     <Section top={top} height={height} label="6384:1225"
-      className="flex flex-col items-center gap-[44px] bg-white pb-[100px] pt-[90px]">
-      <div className="flex w-[780px] flex-col items-center gap-[10px] text-center">
+      className="flex flex-col items-start gap-[12px] bg-white px-[20px] py-[40px] lg:items-center lg:gap-[44px] lg:px-0 lg:pb-[100px] lg:pt-[90px]">
+      <div className="flex w-full flex-col items-start gap-[12px] text-left lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{INTRO.eyebrow}</Eyebrow>
-        <h2 className="font-sans text-[40px] font-semibold leading-[1.3] text-black">
+        <h2 className="font-sans text-[26px] font-semibold leading-[1.3] text-black lg:text-[40px]">
           {heading ?? INTRO.heading}
         </h2>
-        <p className="font-roboto text-[17px] leading-[1.175] text-muted">{INTRO.lead}</p>
+        <p className="font-roboto text-[14px] leading-[1.175] text-muted lg:text-[17px]">{INTRO.lead}</p>
       </div>
 
       <CategoryChips chips={chips} />
@@ -78,8 +89,12 @@ export function BlogArticles({
           Cards STRETCH to fill the row rather than sitting at the top of it: the
           frame happens to draw a short one-line card at 198, but with real
           titles that reads as a ragged row of different-sized boxes, which Asim
-          asked to even out on 17 Sep 2026. Every card is exactly 221 now. */}
-      <div className="grid w-[1278px] auto-rows-[221px] grid-cols-3 gap-[24px]">
+          asked to even out on 17 Sep 2026. Every card is exactly 221 now.
+
+          One column on the phone (6638:8126), 16 apart, and the rows are NOT
+          fixed there — the frame itself draws 196 and 219 side by side, so the
+          cards are left to size to their titles. */}
+      <div className="flex w-full flex-col gap-[16px] max-lg:mt-[20px] lg:grid lg:w-[1278px] lg:auto-rows-[221px] lg:grid-cols-3 lg:gap-[24px]">
         {posts.map((p) => <PostCard key={p.url} post={p} />)}
       </div>
 

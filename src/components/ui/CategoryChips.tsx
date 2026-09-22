@@ -17,7 +17,14 @@ import { href } from '@/lib/urls'
  */
 export type Chip = { slug: string; name: string; path: string }
 
-const BASE = 'flex h-[38px] items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium leading-[1.3] transition-colors'
+/**
+ * MOBILE — 6638:8111 "Category Filters - Scroll". Seven pills on a 350-wide
+ * track that is 767 wide, so the row scrolls sideways rather than wrapping:
+ * a wrapped chip row would change the section's height, and the frame draws it
+ * as one line. 44px tall on the phone (the tap-target minimum) against the
+ * board's 38, 10 apart rather than 12.
+ */
+const BASE = 'flex h-[38px] items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium leading-[1.3] transition-colors max-lg:h-[44px] max-lg:shrink-0'
 const ON = 'bg-brand text-white'
 const OFF = 'bg-brand-soft text-brand hover:bg-[#dbecee]'
 
@@ -29,7 +36,10 @@ export function CategoryChips({
   active?: string | undefined
 }) {
   return (
-    <nav aria-label="Filter articles by category" className="flex items-start gap-[12px]">
+    <nav
+      aria-label="Filter articles by category"
+      className="flex items-start gap-[12px] max-lg:w-full max-lg:gap-[10px] max-lg:overflow-x-auto max-lg:py-[4px] max-lg:[-ms-overflow-style:none] max-lg:[scrollbar-width:none] max-lg:[&::-webkit-scrollbar]:hidden"
+    >
       <Link
         href={href('/blog/')}
         aria-current={active ? undefined : 'page'}

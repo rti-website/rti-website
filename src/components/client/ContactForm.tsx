@@ -19,10 +19,31 @@ import { path } from '@/lib/urls'
  * See the FORM note in src/data/contact.ts for the pair the frame repeats.
  *
  * Client only because it owns a submit handler.
+ *
+ * MOBILE — Figma 6638:8418 ("Section - Get a Quote" in "Contact Us - Mobile",
+ * 6638:2221, file BVtf2AOuUOcYbiMIlcKmbC). The field itself does not change:
+ * still a 14px label over a 48px input with a 16px inset and an 8px radius.
+ * What changes is the rails and the rows.
+ *
+ *   Fields column   gap 20 -> 16
+ *   name/email, phone/company, recycle/is-it-for   two-up -> stacked
+ *   city / state / zip   STAYS three-up, 16 apart (6653:2443: 106px each)
+ *   submit button   still hugs its content (183.28 x 48.05 in the frame)
+ *
+ * so ROW stacks below lg and ROW_INLINE never does. Nothing here changes what
+ * the form POSTs: same eleven names, same honeypot, same handler.
  */
 const INPUT = 'h-[48px] w-full rounded-[8px] border border-field bg-white px-[16px] font-poppins text-[14px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand'
 const LABEL = 'font-sans text-[14px] font-medium leading-none text-label'
-const ROW = 'flex w-full items-start gap-[20px]'
+/** A pair of fields: one under the other on a phone, side by side at lg. */
+const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[20px]'
+/**
+ * City / State / Zip. The one row the mobile frame keeps horizontal — three
+ * 106px fields with a 16px gap inside the 350px column — because a state
+ * abbreviation and a ZIP do not earn a line each.
+ */
+const ROW_INLINE = 'flex w-full items-start gap-[16px] lg:gap-[20px]'
+const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -96,7 +117,7 @@ export function ContactForm() {
   }
 
   return (
-    <form className="flex w-full flex-col gap-[20px]" onSubmit={submit}>
+    <form className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit}>
       {/* Honeypot. Hidden from sight AND from screen readers, and out of the
           tab order, so no person is ever offered it — only a bot that fills
           every input it finds. See the check in /api/leads. */}
@@ -119,7 +140,7 @@ export function ContactForm() {
         <Field id="contact-address" f={FORM.fields.address} type="text" autoComplete="street-address" />
       </div>
 
-      <div className={ROW}>
+      <div className={ROW_INLINE}>
         <Field id="contact-city" f={FORM.fields.city} type="text" autoComplete="address-level2" />
         <Field id="contact-state" f={FORM.fields.state} type="text" autoComplete="address-level1" />
         <Field id="contact-zip" f={FORM.fields.zip} type="text" inputMode="numeric" autoComplete="postal-code" />
@@ -185,7 +206,11 @@ function Field({
   required?: boolean
 }) {
   return (
-    <div className="flex min-w-px flex-1 flex-col gap-[8px]">
+    /* `w-full` rather than `flex-1` below lg: in a stacked ROW the row is a
+       COLUMN there, where flex-1 would be a grow factor on the height. In
+       ROW_INLINE three equal `w-full` siblings shrink to equal thirds, which
+       is the frame's 106px, so the one horizontal row still works. */
+    <div className={FIELD}>
       <label htmlFor={id} className={LABEL}>{f.label}</label>
       <input id={id} name={fieldName(id)} type={type} inputMode={inputMode} autoComplete={autoComplete} required={required} placeholder={f.placeholder} className={INPUT} />
     </div>
@@ -200,7 +225,7 @@ function Select({
   options: readonly string[]
 }) {
   return (
-    <div className="flex min-w-px flex-1 flex-col gap-[8px]">
+    <div className={FIELD}>
       <label htmlFor={id} className={LABEL}>{f.label}</label>
       <div className="relative">
         <select id={id} name={fieldName(id)} defaultValue="" className={`${INPUT} appearance-none pr-[44px] text-muted`}>

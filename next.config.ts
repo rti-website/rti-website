@@ -103,6 +103,32 @@ const nextConfig: NextConfig = {
   // Do NOT enable cacheComponents. It removes `dynamic`, `dynamicParams`,
   // `revalidate` and `fetchCache` — and `dynamic = 'error'` is the guard that
   // makes an accidental dynamic route fail the build.
+
+  experimental: {
+    /*
+     * HOW MANY PROCESSES PRERENDER PAGES. Unset, Next uses one per core, and
+     * on a box that cannot feed them that is slower than using fewer.
+     *
+     * Measured 21 Sep 2026. One worker peaks around 740 MB building this site
+     * — 520 MB of that is Next and React before a single post exists, the rest
+     * is rendering 379 blog and archive pages. The dev server has 8 cores, so
+     * it was starting 8 workers:
+     *
+     *     8 x ~740 MB  =  ~5.9 GB needed
+     *     free -h      =  2.9 GB available, and 4.0 GB of swap ALREADY FULL
+     *
+     * Two times over capacity with nothing left to page out to. Eight pages
+     * blew past the 60-second render timeout and were retried; the build only
+     * finished because Next retries three times. Nothing was wrong with the
+     * code or the queries — total PostgreSQL time for a whole build is about
+     * two milliseconds. See claude/build-performance-investigation-21-sep.md.
+     *
+     * Left unset everywhere by default, because a build host with real memory
+     * SHOULD use its cores. The dev server sets BUILD_CPUS=3 in .env.local.
+     * Raise it only after `free -h` on that box says there is room.
+     */
+    cpus: Number(process.env.BUILD_CPUS) || undefined,
+  },
 }
 
 const withMDX = createMDX({

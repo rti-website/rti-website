@@ -11,7 +11,14 @@ import { ComplianceDownloads } from '@/components/sections/compliance/Compliance
 import { HERO, SEO } from '@/data/compliance-center'
 
 /**
- * Compliance Center — a 1:1 build of Figma frame 6382:6227.
+ * Compliance Center — a 1:1 build of Figma frame 6382:6227, and of 6638:8303
+ * ("Compliance Center - Mobile", file BVtf2AOuUOcYbiMIlcKmbC) below lg.
+ *
+ * The section coordinates and heights below apply at lg and up ONLY — see the
+ * note at the top of components/design/Frame.tsx. Below lg each Section is an
+ * ordinary block in normal flow and styles itself, and the standards table
+ * restyles into one card per standard rather than scrolling sideways — read
+ * the note in StandardsTable.tsx.
  *
  * NEW URL. /compliance-center/ does not resolve on the live site: it serves the
  * homepage, titled "E-Waste, Electronics & Industrial Recycling Services" with

@@ -3,12 +3,21 @@ import { Section } from '@/components/design/Frame'
 import type { DownloadCard, DownloadSection } from '@/data/downloads'
 
 /**
- * A band of download cards — Figma 6393:1579, 6393:1580 and 6393:1581.
+ * A band of download cards — Figma 6393:1579, 6393:1580 and 6393:1581, and on
+ * a phone 6638:10255, 6638:10328 and 6638:10372 in "Downloads - Mobile"
+ * (6638:10182, file BVtf2AOuUOcYbiMIlcKmbC).
  *
  * All three sections are the same shape and differ only in copy, card count and
  * background, so one component builds them: py-90, a 44px gap, a centred header
  * (eyebrow pill, 36px heading, 16px lead) and a row of 410-wide cards with a
  * 24px gap. Two cards or three, the row is centred either way.
+ *
+ * MOBILE. px20 / py48 on a flat 20px rhythm: the eyebrow pill sits LEFT while
+ * the heading and lead stay centred across the full column (24px heading,
+ * 15px lead), and the card row becomes one full-width column on a 16px gap.
+ * The card itself is unchanged apart from its width — except that the frame
+ * gives "Request Download" py14, which is what turns a 16px text line into a
+ * 44px tap target.
  *
  * ! THE MARKS ARE DRAWN, NOT EXPORTED. Figma has eight one-colour SVGs here.
  * Exporting them would mean eight more assets fetched by hand on Asim's machine
@@ -58,17 +67,17 @@ export function DownloadGrid({
   return (
     <Section
       top={top} height={height} label={section.label}
-      className={`flex flex-col items-center gap-[44px] py-[90px] ${tone === 'white' ? 'bg-white' : 'bg-[#fcfcfc]'}`}
+      className={`flex flex-col items-start gap-[20px] px-[20px] py-[48px] lg:items-center lg:gap-[44px] lg:px-0 lg:py-[90px] ${tone === 'white' ? 'bg-white' : 'bg-[#fcfcfc]'}`}
     >
-      <div className="flex w-[820px] flex-col items-center gap-[10px]">
-        <span className="flex h-[34px] items-center rounded-full bg-[#e8f5ec] px-[20px] font-roboto text-[11px] font-bold tracking-[0.89px] text-[#1b7a3d]">
+      <div className="flex w-full flex-col items-start gap-[20px] lg:w-[820px] lg:items-center lg:gap-[10px]">
+        <span className="flex h-[34px] shrink-0 items-center rounded-full bg-[#e8f5ec] px-[20px] font-roboto text-[11px] font-bold tracking-[0.89px] text-[#1b7a3d]">
           {section.eyebrow}
         </span>
-        <h2 className="text-center font-sans text-[36px] font-semibold text-black">{section.heading}</h2>
-        <p className="text-center font-roboto text-[16px] text-[#7e7e7e]">{section.lead}</p>
+        <h2 className="text-center font-sans text-[36px] font-semibold text-black max-lg:w-full max-lg:text-[24px]">{section.heading}</h2>
+        <p className="text-center font-roboto text-[16px] text-[#7e7e7e] max-lg:w-full max-lg:text-[15px]">{section.lead}</p>
       </div>
 
-      <div className="flex items-start gap-[24px]">
+      <div className="flex items-start gap-[24px] max-lg:w-full max-lg:flex-col max-lg:gap-[16px]">
         {section.cards.map((c) => <DownloadTile key={c.title} card={c} />)}
       </div>
     </Section>
@@ -76,16 +85,23 @@ export function DownloadGrid({
 }
 
 /**
- * One 410-wide card — 6388:1534 and its siblings. Exported because
- * /itad-recycling-guides/ draws the identical tile under a header of its own.
+ * One 410-wide card — 6388:1534 and its siblings, 6638:10261 on a phone.
+ * Exported because /itad-recycling-guides/ draws the identical tile under a
+ * header of its own.
+ *
+ * ! THE TWO MOBILE FRAMES DISAGREE ABOUT THIS CARD. 6638:10261 (Downloads)
+ * keeps p32 / r12 / the download mark and pads the action row to 44px;
+ * 6674:2454 (ITAD & Recycling Guides) redraws it at p24 / r16 with a 13px
+ * bold link and no mark. Built to the Downloads frame, which is this tile's
+ * home and the only one of the two that gives the link a tap target.
  */
 export function DownloadTile({ card: c }: { card: DownloadCard }) {
   return (
     <Link
       href={c.href}
-      className="flex w-[410px] flex-col items-start gap-[16px] rounded-[12px] border border-[#e5e5e5] bg-white p-[32px] transition-shadow hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)]"
+      className="flex w-[410px] flex-col items-start gap-[16px] rounded-[12px] border border-[#e5e5e5] bg-white p-[32px] transition-shadow hover:shadow-[0_4px_18px_rgba(0,0,0,0.06)] max-lg:w-full"
     >
-      <span className="flex h-[44px] w-[346px] items-center justify-between">
+      <span className="flex h-[44px] w-[346px] items-center justify-between max-lg:w-full">
         <span className="grid size-[44px] place-items-center rounded-full bg-brand">
           <svg viewBox="0 0 20 20" fillRule="evenodd" className="size-[20px] fill-white" aria-hidden="true">
             <path d={MARKS[c.glyph]} />
@@ -94,10 +110,10 @@ export function DownloadTile({ card: c }: { card: DownloadCard }) {
         <span className="font-roboto text-[11px] font-bold tracking-[0.6px] text-[#a6a6a6]">{c.kind}</span>
       </span>
 
-      <span className="w-[346px] font-sans text-[19px] font-medium leading-[25px] text-[#132119]">{c.title}</span>
-      <span className="w-[346px] font-roboto text-[14.5px] leading-[22px] text-[#7e7e7e]">{c.body}</span>
+      <span className="w-[346px] font-sans text-[19px] font-medium leading-[25px] text-[#132119] max-lg:w-full">{c.title}</span>
+      <span className="w-[346px] font-roboto text-[14.5px] leading-[22px] text-[#7e7e7e] max-lg:w-full">{c.body}</span>
 
-      <span className="flex items-center gap-[8px]">
+      <span className="flex items-center gap-[8px] max-lg:py-[14px]">
         <svg viewBox="0 0 20 18" className="size-[16px] fill-brand" aria-hidden="true">
           <path d={DOWNLOAD_MARK} />
         </svg>

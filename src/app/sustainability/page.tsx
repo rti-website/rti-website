@@ -35,6 +35,18 @@ import { CTA, HERO, SEO } from '@/data/sustainability'
  * !! Three blocks of copy differ from the content doc, and in each case the
  * reason is a factual or compliance claim rather than a design preference.
  * Read the notes in src/data/sustainability.ts before changing them.
+ *
+ * MOBILE — "Sustainability & Environmental Impact - Mobile" 6638:8275 in file
+ * BVtf2AOuUOcYbiMIlcKmbC. The heights and tops above are lg-only custom
+ * properties, so this file needs nothing: each section answers its own mobile
+ * node — 6638:10158 (circular economy), 6638:10228 (zero-landfill),
+ * 6638:10308 (impact reporting), 6638:10515 (goals).
+ *
+ * !! The mobile frame does NOT restore the absolute landfill claims: 6638:10228
+ * carries the same softened wording as the board, and 6638:10311 still reads
+ * "100% Shipments Documented" rather than "Materials Diverted from Landfill".
+ * It does repeat the desktop frame's "R2v3-Scoped Facilities" stat, which
+ * overstates Wisconsin; the doc's "Licensed Facilities" is kept.
  */
 const H = {
   circ:   523,   // Figma 521 — the doc's two paragraphs run two lines longer

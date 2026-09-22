@@ -10,28 +10,38 @@ import { GOALS } from '@/data/sustainability'
  * The four goals are the content doc's, not the frame's — the frame names a
  * different four. See the note above GOALS in src/data/sustainability.ts; the
  * geometry is identical either way if the frame's set is the newer thinking.
+ *
+ * MOBILE — Figma 6638:10515. 390 wide: px20 / py48 on white, a flat 24px gap,
+ * heading block left-aligned, and the four cards stacked full width 16 apart on
+ * #f6f6f6 at r16 / p24 with their title up to 19/25.
+ *
+ * !! The mobile frame names the SAME four goals the desktop frame does
+ * ("Expand Certified Capacity", "Widen Accessible Recycling", "Maintain Full
+ * Transparency", "Strengthen the Circular Loop") — so that is now two frames
+ * against the doc's four. Still built as the doc's, per doc-wins-on-words, but
+ * it is worth a decision. See TODO_FOR_DESIGN.
  */
 export function SustainabilityGoals({ top, height }: { top: number; height: number }) {
   return (
     <Section top={top} height={height} label="6383:1164"
-      className="flex flex-col items-center gap-[50px] bg-white py-[100px]">
-      {/* Heading block — 6383:1236 */}
-      <div className="flex w-[780px] flex-col items-center gap-[10px] text-center">
+      className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
+      {/* Heading block — 6383:1236 / 6638:10516..10519 */}
+      <div className="flex w-full flex-col items-start gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{GOALS.eyebrow}</Eyebrow>
-        <h2 className="w-[780px] font-sans text-[40px] font-semibold leading-[1.3] text-black">{GOALS.heading}</h2>
-        <p className="w-[780px] font-roboto text-[17px] leading-[1.175] text-muted">{GOALS.lead}</p>
+        <h2 className="w-full font-sans text-[26px] font-semibold leading-[32px] text-black lg:w-[780px] lg:text-[40px] lg:leading-[1.3]">{GOALS.heading}</h2>
+        <p className="w-full font-roboto text-[16px] leading-[24px] text-muted lg:w-[780px] lg:text-[17px] lg:leading-[1.175]">{GOALS.lead}</p>
       </div>
 
-      {/* Cards — 6383:1241 */}
-      <div className="flex items-start gap-[24px]">
+      {/* Cards — 6383:1241 / 6638:10520 */}
+      <div className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-start lg:gap-[24px]">
         {GOALS.cards.map((c) => (
           <article key={c.title}
-            className="flex w-[302px] shrink-0 flex-col items-start gap-[14px] rounded-[12px] bg-brand-soft p-[28px]">
+            className="flex w-full flex-col items-start gap-[16px] rounded-[16px] bg-card p-[24px] lg:w-[302px] lg:shrink-0 lg:gap-[14px] lg:rounded-[12px] lg:bg-brand-soft lg:p-[28px]">
             <span className="grid size-[44px] shrink-0 place-items-center rounded-full bg-brand fill-white">
               <Mark glyph={c.glyph} size={20} />
             </span>
-            <h3 className="w-[246px] font-sans text-[17px] font-medium leading-[1.3] text-heading">{c.title}</h3>
-            <p className="w-[246px] font-roboto text-[14px] leading-[1.55] text-muted">{c.body}</p>
+            <h3 className="w-full font-sans text-[19px] font-medium leading-[25px] text-heading lg:w-[246px] lg:text-[17px] lg:leading-[1.3]">{c.title}</h3>
+            <p className="w-full font-roboto text-[14px] leading-[21px] text-muted lg:w-[246px] lg:leading-[1.55]">{c.body}</p>
           </article>
         ))}
       </div>

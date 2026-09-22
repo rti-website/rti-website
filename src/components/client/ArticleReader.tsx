@@ -110,7 +110,27 @@ export function ArticleBody({
   const pct = Math.round(progress * 100)
 
   return (
-    <div className="px-[319px] pb-[64px] pt-[42px]">
+    /*
+     * MOBILE — 6638:8639 / 6638:8666 / 6638:8714. The 319px gutter is the whole
+     * page's worst overflow below lg (638px of padding in a 390px window), so it
+     * becomes the frame's 20.
+     *
+     * The frame re-orders this band rather than restyling it: the share row
+     * first, then "ON THIS PAGE" as a horizontal chip rail, then the article,
+     * then "Ask Our Team" at the very end. That is done with `order`, not with a
+     * second copy of the markup — the aside goes `display: contents` below lg so
+     * its three children become siblings of the article and can be ordered
+     * against it. ArticleTemplate sets the orders on the two cards it owns.
+     *
+     * NOT BUILT, deliberately: 6638:8639 also draws a GUIDES pill and an author
+     * row — an "RT" avatar over "Recycle Technologies Team". The pill repeats
+     * the category the hero meta line already prints, and the byline is copy
+     * this page has never carried: a DB post's `author` is the admin user who
+     * typed it (posts-db.ts) and an MDX post has no author field at all, so
+     * "Recycle Technologies Team" would be a string invented here. That is a
+     * content decision, not a layout one — flagged, not guessed.
+     */
+    <div className="px-[20px] pb-[48px] pt-[24px] lg:px-[319px] lg:pb-[64px] lg:pt-[42px]">
       {/*
         Reading progress — 6497:1749, 1282x4 across the full column width.
 
@@ -127,8 +147,14 @@ export function ArticleBody({
         The padding here is the row's old padding moved up: 42 + 18 puts the
         track at y60 and 14 + 14 puts the article at y92, exactly where they
         were before this became its own band.
+
+        BOARD ONLY. 6638:8525 draws no progress track and no percentage, and a
+        4px line pinned to the top of a phone window would be fighting the
+        header for the same 4px. Both are hidden below lg rather than removed,
+        so the desktop band and its negative margins are untouched; the scroll
+        measurement keeps running either way, which costs one rAF per scroll.
       */}
-      <div className="sticky top-0 z-[2] -mx-[319px] bg-white px-[319px] pb-[14px] pt-[18px]">
+      <div className="sticky top-0 z-[2] -mx-[319px] bg-white px-[319px] pb-[14px] pt-[18px] max-lg:hidden">
         <div className="h-[4px] w-full overflow-hidden rounded-full bg-[#ececec]" aria-hidden="true">
           <div
             className="h-full rounded-full bg-brand transition-[width] duration-150 ease-out"
@@ -137,9 +163,10 @@ export function ArticleBody({
         </div>
       </div>
 
-      {/* Row — 6497:1751. Article 760, gap 70, sidebar 380. */}
-      <div className="flex items-start gap-[70px] pt-[14px]">
-        <article id="post-body" className="w-[760px] shrink-0">
+      {/* Row — 6497:1751. Article 760, gap 70, sidebar 380. One column 24 apart
+          below lg, where `order` decides what the frame puts where. */}
+      <div className="flex flex-col gap-[24px] lg:flex-row lg:items-start lg:gap-[70px] lg:pt-[14px]">
+        <article id="post-body" className="order-3 w-full lg:order-none lg:w-[760px] lg:shrink-0">
           {article}
         </article>
 
@@ -151,42 +178,51 @@ export function ArticleBody({
           for it gone, and the cap clipped the Share card on a tall contents
           list. It sits below the sticky progress band, which is 36px tall.
         */}
-        <aside className="sticky top-[48px] flex w-[380px] shrink-0 flex-col gap-[24px]">
-          {/* 6501:1750. Hidden until the headings are read, so no empty card. */}
+        {/* `contents` below lg: the aside's own box disappears so the contents
+            list and the two cards become siblings of the article and can be
+            ordered around it. It is a full sticky column again at lg. */}
+        <aside className="contents lg:sticky lg:top-[48px] lg:flex lg:w-[380px] lg:shrink-0 lg:flex-col lg:gap-[24px]">
+          {/* 6501:1750. Hidden until the headings are read, so no empty card.
+              6638:8666 on the phone: the card loses its border and padding and
+              becomes a label over a horizontal rail of 44px chips. */}
           {headings.length > 0 && (
-            <nav className="flex w-[380px] flex-col gap-[4px] rounded-[12px] border border-[#e5e5e5] bg-white p-[26px]" aria-label="On this page">
-              <div className="flex h-[30px] items-center justify-between pb-[10px]">
-                <span className="font-sans text-[16px] font-medium text-[#132119]">On This Page</span>
-                <span className="font-roboto text-[12px] text-brand tabular-nums">{pct}%</span>
+            <nav className="order-2 flex w-full flex-col gap-[10px] lg:order-none lg:w-[380px] lg:gap-[4px] lg:rounded-[12px] lg:border lg:border-[#e5e5e5] lg:bg-white lg:p-[26px]" aria-label="On this page">
+              <div className="flex items-center justify-between lg:h-[30px] lg:pb-[10px]">
+                <span className="font-roboto text-[12px] font-bold uppercase tracking-[0.6px] text-brand lg:font-sans lg:text-[16px] lg:font-medium lg:normal-case lg:tracking-normal lg:text-[#132119]">On This Page</span>
+                <span className="font-roboto text-[12px] text-brand tabular-nums max-lg:hidden">{pct}%</span>
               </div>
-              {headings.map((h) => {
-                const active = h.id === activeId
-                return (
-                  <a
-                    key={h.id}
-                    href={`#${h.id}`}
-                    aria-current={active ? 'true' : undefined}
-                    className={`flex h-[38px] items-center gap-[10px] rounded-[8px] px-[12px] transition-colors duration-200 ${
-                      active ? 'bg-[#eaf4f5]' : 'hover:bg-[#f4f9f9]'
-                    }`}
-                  >
-                    <span
-                      className={`h-[16px] w-[3px] shrink-0 rounded-full transition-colors duration-200 ${
-                        active ? 'bg-brand' : 'bg-[#d9d9d9]'
-                      }`}
-                    />
-                    <span
-                      className={`truncate transition-colors duration-200 ${
-                        active
-                          ? 'font-sans text-[14px] font-medium text-brand'
-                          : 'font-roboto text-[14px] text-[#666]'
+              {/* `lg:contents` so the chips are still direct children of the nav
+                  on the board and nothing about that column moves. */}
+              <div className="flex gap-[10px] overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:contents">
+                {headings.map((h) => {
+                  const active = h.id === activeId
+                  return (
+                    <a
+                      key={h.id}
+                      href={`#${h.id}`}
+                      aria-current={active ? 'true' : undefined}
+                      className={`flex h-[44px] shrink-0 items-center rounded-[22px] px-[16px] transition-colors duration-200 lg:h-[38px] lg:shrink lg:gap-[10px] lg:rounded-[8px] lg:px-[12px] ${
+                        active ? 'bg-[#eaf4f5]' : 'bg-[#f6f6f6] lg:bg-transparent lg:hover:bg-[#f4f9f9]'
                       }`}
                     >
-                      {h.text}
-                    </span>
-                  </a>
-                )
-              })}
+                      <span
+                        className={`h-[16px] w-[3px] shrink-0 rounded-full transition-colors duration-200 max-lg:hidden ${
+                          active ? 'bg-brand' : 'bg-[#d9d9d9]'
+                        }`}
+                      />
+                      <span
+                        className={`truncate transition-colors duration-200 ${
+                          active
+                            ? 'font-sans text-[13.5px] font-medium text-brand lg:text-[14px]'
+                            : 'font-roboto text-[13.5px] font-medium text-[#212529] lg:text-[14px] lg:font-normal lg:text-[#666]'
+                        }`}
+                      >
+                        {h.text}
+                      </span>
+                    </a>
+                  )
+                })}
+              </div>
             </nav>
           )}
 

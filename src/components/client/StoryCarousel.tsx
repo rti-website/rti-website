@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
 
 /**
@@ -23,6 +23,31 @@ import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
  * light" Asim asked for on 21 Sep 2026.
  *
  * Client only because it owns the active index.
+ *
+ * ===========================================================================
+ * TOUCH, AND WHERE THIS RENDERS AT ALL — 22 Sep 2026
+ * ===========================================================================
+ * This is a 1920-canvas board: the three slots below are absolute design
+ * coordinates and the side cards hang off both edges on purpose. It therefore
+ * only ever renders at lg and up — the mobile frame (6617:2334) drops the
+ * cards entirely, so CaseStudies wraps this Box in `max-lg:hidden`. There is
+ * no phone layout to build here; if the cards are ever wanted back on a phone
+ * they want a snap rail, not this.
+ *
+ * lg is 1024, which an iPad in landscape and every touchscreen laptop clear,
+ * so the board is reachable by finger and is built for one:
+ *
+ *   - Previous / Next are 66px discs, comfortably past the 44px target.
+ *   - A horizontal drag of SWIPE_PX or more, travelling further across than
+ *     down, rotates the carousel the way the finger went.
+ *   - `touch-pan-y` leaves VERTICAL panning entirely to the browser, so a
+ *     scroll that starts on a card scrolls the page. Nothing is hijacked:
+ *     there is no scroll container here to fight over, and the swipe is read
+ *     from pointer coordinates rather than from a scroll position.
+ *   - A drag that crosses the threshold swallows the click it ends on, so a
+ *     swipe never navigates to the story it started on. Mouse pointers are
+ *     ignored outright — a mouse has the two buttons and dragging a link is
+ *     the browser's job, not ours.
  */
 type Slot = { x: number; y: number; w: number; h: number; on: boolean }
 
@@ -35,13 +60,62 @@ const SLOTS: Slot[] = [
 /** Where the pager sits, relative to the track's top. Frame: y867.96 - y284.96. */
 const PAGER_Y = 583
 
+/**
+ * How far a drag has to travel across before it is a swipe. It also has to
+ * beat its own vertical travel, so a finger on its way down the page never
+ * turns the carousel on the way past.
+ */
+const SWIPE_PX = 44
+
 export function StoryCarousel() {
   const n = CASE_STUDIES.length
   const [active, setActive] = useState(CASE_STUDIES_START)
   const go = (d: number) => setActive((i) => (i + d + n) % n)
 
+  /** Where the current touch started, and whether it ended up a swipe. */
+  const from = useRef<{ x: number; y: number } | null>(null)
+  const swiped = useRef(false)
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    swiped.current = false
+    if (e.pointerType === 'mouse') return
+    from.current = { x: e.clientX, y: e.clientY }
+  }
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    const start = from.current
+    from.current = null
+    if (!start) return
+    const dx = e.clientX - start.x
+    const dy = e.clientY - start.y
+    if (Math.abs(dx) < SWIPE_PX || Math.abs(dx) <= Math.abs(dy)) return
+    swiped.current = true
+    go(dx < 0 ? 1 : -1)
+  }
+
+  /**
+   * A swipe ends on whichever card was under the finger, and that card is a
+   * link. Capture phase, so this runs before the Link's own handler: the
+   * default is prevented (the anchor) and propagation stopped (Next's client
+   * navigation), and the flag is spent either way.
+   */
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (!swiped.current) return
+    swiped.current = false
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
   return (
-    <div className="absolute left-0 top-0 h-[649px] w-[1920px]" aria-roledescription="carousel">
+    <div
+      className="absolute left-0 top-0 h-[649px] w-[1920px] touch-pan-y"
+      role="group"
+      aria-roledescription="carousel"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => { from.current = null }}
+      onClickCapture={onClickCapture}
+    >
       {CASE_STUDIES.map((story, i) => {
         // -1, 0, +1 for the three visible positions; anything else is parked
         // off-canvas so a fourth story, if one is added, has somewhere to be.

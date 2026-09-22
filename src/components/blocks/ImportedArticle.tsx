@@ -36,7 +36,35 @@ export function ImportedArticle({ post }: { post: DbPost }) {
 
   return (
     <ArticleTemplate entry={entry}>
-      <div className="wp-content" dangerouslySetInnerHTML={{ __html: post.html }} />
+      {/*
+        PHONE CONTAINMENT — added 22 Sep 2026, and deliberately all CSS.
+        Rewriting the markup would break the one promise this component makes
+        (the body a crawler sees is byte-identical to WordPress's), so the phone
+        is answered entirely from the wrapper.
+
+        `.wp-content`'s own rules sit OUTSIDE any cascade layer in globals.css,
+        so an unlayered declaration beats every Tailwind utility whatever its
+        specificity — which is why the two type rules carry `!`. globals.css is
+        another agent's file; move these into it when both passes have landed.
+
+        What each rule is for, checked against the 302 imported bodies:
+         - 16/26 is 6638:8714's body setting; the board keeps 16.5/1.78.
+         - h2 at 30px is two words a line in a 350px column, so 22/1.3
+           (6638:8788 measures a 29px line box), and h3 follows it down.
+         - six posts carry hand-built comparison tables. globals.css scrolls a
+           table that is a DIRECT child of .wp-content; Gutenberg just as often
+           wraps one in a <figure class="wp-block-table">, so the scroller is
+           widened to any descendant table here.
+         - `max-w-full` on anything carrying an inline width, because a legacy
+           `width:700px` on a panel or an image is the other way these bodies
+           escape a 390px viewport.
+         - bare URLs in link text are long enough in this archive to push the
+           page out on their own; `break-words` wraps them instead.
+      */}
+      <div
+        className="wp-content max-lg:text-[16px]! max-lg:leading-[26px]! max-lg:[&_[style*=width]]:max-w-full max-lg:[&_a]:break-words max-lg:[&_h2]:text-[22px]! max-lg:[&_h2]:leading-[1.3]! max-lg:[&_h3]:text-[19px]! max-lg:[&_pre]:overflow-x-auto max-lg:[&_table]:block max-lg:[&_table]:overflow-x-auto"
+        dangerouslySetInnerHTML={{ __html: post.html }}
+      />
     </ArticleTemplate>
   )
 }

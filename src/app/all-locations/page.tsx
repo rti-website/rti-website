@@ -31,6 +31,12 @@ import { CTA, HERO, LIVE_SEO } from '@/data/locations'
  *
  * !! H1 !! Live is "All Locations"; the design says "Locations". Same H1
  * conflict the rest of the build carries into gate 2.
+ *
+ * MOBILE — "Locations - Mobile" 6638:2230 in file BVtf2AOuUOcYbiMIlcKmbC.
+ * Nothing changes here: the heights and tops above go out as custom properties
+ * and globals.css only applies them at lg, so below it every section is an
+ * ordinary block in source order. Each section answers its own mobile node —
+ * 6669:2420 for the finder, 6670:2383 for the coverage note.
  */
 const H = {
   finder: 902,    // Figma 902 exactly

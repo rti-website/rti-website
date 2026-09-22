@@ -8,7 +8,13 @@ import { DownloadGrid } from '@/components/sections/downloads/DownloadGrid'
 import { CERTIFICATES, CHECKLISTS, HERO, SEO, SHIPPING } from '@/data/downloads'
 
 /**
- * Downloads — a 1:1 build of Figma frame 6382:7043.
+ * Downloads — a 1:1 build of Figma frame 6382:7043, and of 6638:10182
+ * ("Downloads - Mobile", file BVtf2AOuUOcYbiMIlcKmbC) below lg.
+ *
+ * The section coordinates and heights below apply at lg and up ONLY — see the
+ * note at the top of components/design/Frame.tsx. Below lg each Section is an
+ * ordinary block in normal flow and styles itself; DownloadGrid carries the
+ * mobile shell for all three bands.
  *
  * NEW URL, like /sustainability/ and /case-studies/ before it: /downloads/ does
  * not resolve on the live site, so there is no live title, description or H1 to

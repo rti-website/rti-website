@@ -35,7 +35,11 @@ export function InfoRow({
       <span className="grad-card__disc grid size-[32px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
         <svg viewBox="0 0 16 16" className="size-[16px] fill-white" aria-hidden="true"><path d={GLYPHS[glyph]} /></svg>
       </span>
-      <span className="font-poppins text-[14.5px] leading-[22px] text-muted">{text}</span>
+      {/* min-w-px and the break are not cosmetic: dispatch@recycletechnologies.com
+          is a 271px unbreakable word, and a flex item's min-width defaults to
+          auto, so without them it pushes the whole row past a 390px screen
+          instead of wrapping. 22 Sep 2026. */}
+      <span className="min-w-px font-poppins text-[14.5px] leading-[22px] text-muted [word-break:break-word]">{text}</span>
     </>
   )
   return href

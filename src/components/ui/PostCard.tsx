@@ -100,10 +100,17 @@ export function PostCard({ post }: { post: CardPost }) {
   return (
     /* .post-card carries the hover state — the sidebar CTA's gradient fading in
        behind the content, with the disc and the type inverting to match.
-       globals.css has the reasoning. */
+       globals.css has the reasoning.
+
+       MOBILE — 6638:8127. The same card at 350 (the 20px gutter either side of
+       a 390 frame), p24 and a 16px stack. It takes `w-full` rather than a second
+       fixed number so it survives 320 and 430 as well, and the two 354px runs
+       below go fluid with it. Cards are no longer a fixed 221 high either: the
+       frame draws 196 for a one-line title and 219 for two, and `auto-rows` only
+       applies at lg. */
     <Link
       href={href(post.url)}
-      className="post-card flex w-[410px] flex-col items-start gap-[14px] rounded-[12px] border border-line bg-white p-[28px] hover:shadow-[0px_10px_28px_0px_rgba(13,39,80,0.18)]"
+      className="post-card flex w-full flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[24px] hover:shadow-[0px_10px_28px_0px_rgba(13,39,80,0.18)] lg:w-[410px] lg:gap-[14px] lg:p-[28px]"
     >
       <span className="post-card__disc grid size-[44px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
         <svg viewBox="0 0 20 20" className="size-[20px] fill-white transition-colors" aria-hidden="true">
@@ -121,14 +128,14 @@ export function PostCard({ post }: { post: CardPost }) {
         two-line box the frame draws. Real WordPress titles run to 90
         characters, which is three lines at 18px in 354px.
       */}
-      <h3 className="post-card__title line-clamp-2 w-[354px] font-sans text-[18px] font-medium leading-[1.3] text-heading transition-colors">
+      <h3 className="post-card__title line-clamp-2 w-full font-sans text-[18px] font-medium leading-[1.3] text-heading transition-colors lg:w-[354px]">
         {post.title}
       </h3>
       {/* mt-auto, so the date row sits on the bottom edge whatever the title
           did. The grid gives every card the frame's 221px row (below), and
           without this a one-line title left its date floating in the middle of
           an otherwise empty card. */}
-      <span className="mt-auto flex h-[20px] w-[354px] items-center justify-between whitespace-nowrap">
+      <span className="mt-auto flex h-[20px] w-full items-center justify-between whitespace-nowrap lg:w-[354px]">
         <span className="post-card__date font-roboto text-[13px] leading-[1.175] text-[#a6a6a6] transition-colors">{date}</span>
         <span className="post-card__read font-roboto text-[13.5px] font-medium leading-[1.175] text-brand transition-colors">Read &rarr;</span>
       </span>

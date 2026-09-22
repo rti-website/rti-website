@@ -18,5 +18,5 @@ export const metadata = buildMetadata({
 })
 
 export default function Page() {
-  return <ServiceDetailPage content={CONTENT} layout={{ intro: 693, process: 553 }} />
+  return <ServiceDetailPage content={CONTENT} layout={{ intro: 768, process: 685, accept: 747, certifications: 346, faq: 729 }} />
 }

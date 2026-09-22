@@ -6,8 +6,15 @@ import { CERTS, INTRO } from '@/data/certifications-page'
  * Certifications grid — Figma 6380:1097. py 100, gap 50: heading block on an
  * 820px column, then a 2x2 grid of 410px cards on a 24px gutter (844 total).
  *
+ * On a phone — 6704:2383 in BVtf2AOuUOcYbiMIlcKmbC, 22 Sep 2026 — the section
+ * is px20 / py40 on a 24px rhythm, the heading drops to 26 / 15, and the cards
+ * stack one per row at p24 with the disc and the status pill sitting side by
+ * side (gap 12) instead of at opposite ends of the row.
+ *
  * Each card carries a status sentence the frame has no room for, so the cards
  * run taller than the 239 the frame draws. See src/data/certifications-page.ts.
+ * The mobile frame omits that sentence too; it stays, because it is where the
+ * "pursuing" qualifier on the Wisconsin card lives.
  *
  * Marks are drawn inline, like every other glyph in this build — figma.com is
  * unreachable from the build sandbox, so an exported asset costs a manual fetch
@@ -36,17 +43,17 @@ const MARKS: Record<string, string[]> = {
 export function CertGrid({ top, height }: { top: number; height: number }) {
   return (
     <Section top={top} height={height} label="6380:1097"
-      className="flex flex-col items-center gap-[50px] bg-white py-[100px]">
-      <div className="flex w-[820px] flex-col items-center gap-[10px] text-center">
+      className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[40px] lg:gap-[50px] lg:px-0 lg:py-[100px]">
+      <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[820px]">
         <Eyebrow>{INTRO.eyebrow}</Eyebrow>
-        <h2 className="font-sans text-[40px] font-semibold leading-[1.3] text-black">{INTRO.heading}</h2>
-        <p className="font-roboto text-[17px] leading-[1.175] text-muted">{INTRO.lead}</p>
+        <h2 className="font-sans text-[26px] font-semibold leading-normal text-black lg:text-[40px] lg:leading-[1.3]">{INTRO.heading}</h2>
+        <p className="font-roboto text-[15px] leading-normal text-muted lg:text-[17px] lg:leading-[1.175]">{INTRO.lead}</p>
       </div>
 
-      <ul className="grid w-[844px] grid-cols-2 items-start gap-[24px]">
+      <ul className="grid w-full grid-cols-1 items-start gap-[24px] lg:w-[844px] lg:grid-cols-2">
         {CERTS.map((c) => (
-          <li key={c.title} className="grad-card flex w-[410px] flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[32px]">
-            <div className="flex h-[48px] w-[346px] items-center justify-between">
+          <li key={c.title} className="grad-card flex w-full flex-col items-start gap-[16px] rounded-[12px] border border-line bg-white p-[24px] lg:w-[410px] lg:p-[32px]">
+            <div className="flex h-[48px] w-full items-center gap-[12px] lg:w-[346px] lg:justify-between lg:gap-0">
               <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand transition-colors">
                 <svg viewBox="0 0 22 22" className="size-[22px] fill-white" aria-hidden="true">
                   {(MARKS[c.glyph] ?? []).map((d) => <path key={d} d={d} />)}
@@ -56,9 +63,9 @@ export function CertGrid({ top, height }: { top: number; height: number }) {
                 {c.badge}
               </span>
             </div>
-            <h3 className="w-[346px] font-sans text-[20px] font-medium leading-[1.3] text-heading">{c.title}</h3>
-            <p className="w-[346px] font-roboto text-[14.5px] leading-[1.6] text-muted">{c.body}</p>
-            <p className="w-[346px] font-roboto text-[13.5px] leading-[1.6] text-muted/80">{c.status}</p>
+            <h3 className="w-full font-sans text-[20px] font-medium leading-normal text-heading lg:w-[346px] lg:leading-[1.3]">{c.title}</h3>
+            <p className="w-full font-roboto text-[14px] leading-[1.6] text-muted lg:w-[346px] lg:text-[14.5px]">{c.body}</p>
+            <p className="w-full font-roboto text-[13.5px] leading-[1.6] text-muted/80 lg:w-[346px]">{c.status}</p>
           </li>
         ))}
       </ul>

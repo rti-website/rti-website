@@ -8,7 +8,13 @@ import { ResourceArticles, ResourceGuides, ResourceSearch } from '@/components/s
 import { HERO, SEO } from '@/data/resources'
 
 /**
- * Resources — a 1:1 build of Figma frame 6374:3828.
+ * Resources — a 1:1 build of Figma frame 6374:3828, and of 6638:2227
+ * ("Resources - Mobile", file BVtf2AOuUOcYbiMIlcKmbC) below lg.
+ *
+ * The section coordinates and heights below apply at lg and up ONLY — see the
+ * note at the top of components/design/Frame.tsx. Below lg each Section is an
+ * ordinary block in normal flow and styles itself; nothing on this page needs
+ * to change for that, the three bands carry their own mobile shells.
  *
  * NEW URL, like /downloads/ alongside it: /resources/ does not resolve on the
  * live site, so there is no live title, description or H1 to preserve and

@@ -11,12 +11,24 @@ import { FOOTER_H, HOME_BELOW_CASES_SHIFT } from '@/lib/layout'
  *   FAQ    6044:19905  y0    h736   bg #f4f9f6
  *   CTA    6107:2950   y736  h456   bg #0c4e5a
  *   Footer 6044:19944  y1192 h681   bg #fcfcfc
+ *
+ * Mobile (BVtf2AOuUOcYbiMIlcKmbC) draws the three as separate 390-wide frames:
+ *   FAQ    6618:2338  390x718
+ *   CTA    6619:2356  390x462
+ *   Footer 6620:2370  390x1486
+ *
+ * ONE Section still holds all three. Its `height` goes out as the `--sh` custom
+ * property and globals.css only applies it at lg, so below lg the section is a
+ * plain block as tall as its content and the three bands stack in flow at their
+ * own frames' paddings. Nothing here needs to know the number.
  */
 export function FaqCtaFooter() {
   return (
     <Section top={8518 - HOME_BELOW_CASES_SHIFT} height={1192 + FOOTER_H} label="6044:20133">
-      {/* ---------------------------------------------------------------- FAQ */}
-      <Box x={0} y={0} w={1920} h={736} className="bg-[#f4f9f6]">
+      {/* ---------------------------------------------------------------- FAQ
+          6618:2338: px20 / py48 / gap20, and the phone frame draws this band on
+          WHITE rather than the board's #f4f9f6 wash. */}
+      <Box x={0} y={0} w={1920} h={736} className="flex flex-col items-center gap-[20px] bg-white px-[20px] py-[48px] lg:block lg:bg-[#f4f9f6] lg:p-0">
         <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>FAQs</Eyebrow></CenterBox>
         <CenterBox y={130} w={900}><Title className="text-center">Frequently Asked Questions</Title></CenterBox>
         <CenterBox y={205} w={900}>

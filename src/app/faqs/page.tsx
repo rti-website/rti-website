@@ -63,20 +63,26 @@ export default function FaqsPage() {
             node scripts/fetch-figma-assets.mjs --missing
           then pass src="/images/pages/hero-faqs.png" below.
         */}
-        <div data-figma="6478:5152" className="relative h-[470px] overflow-hidden bg-navy">
+        {/*
+          MOBILE — 6687:3554. 276 tall on the same navy, one centred column at
+          px20: no breadcrumb (hidden, not deleted — the crumb link stays in the
+          DOM), the H1 at 32/1.2 and the lead at 15/1.5 capped at 273 wide, both
+          centred. `min-h` rather than `h` so a longer H1 cannot be clipped.
+        */}
+        <div data-figma="6478:5152" className="relative flex min-h-[276px] flex-col justify-center overflow-hidden bg-navy px-[20px] py-[48px] lg:block lg:h-[470px] lg:p-0">
           <InteriorHeroArt />
-          <Box x={319} y={139} w={504} h={192}>
-            <nav aria-label="Breadcrumb">
+          <Box x={319} y={139} w={504} h={192} className="flex flex-col items-center lg:block">
+            <nav aria-label="Breadcrumb" className="max-lg:hidden">
               <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
                 <li><Link href={href('/')} className="text-white/50 hover:text-white">Home</Link></li>
                 <li aria-hidden="true" className="text-white/50">/</li>
                 <li className="text-white">FAQs</li>
               </ol>
             </nav>
-            <h1 className="mt-[21px] font-sans text-[60px] font-semibold leading-[74.7px] text-white">
+            <h1 className="w-full text-center font-sans text-[32px] font-semibold leading-[1.2] text-white lg:mt-[21px] lg:w-auto lg:text-left lg:text-[60px] lg:leading-[74.7px]">
               {FAQ_HERO.h1}
             </h1>
-            <p className="mt-[19px] w-[504px] font-roboto text-[20px] leading-[30.031px] text-white/70">
+            <p className="mt-[16px] w-full max-w-[273px] text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:mt-[19px] lg:w-[504px] lg:max-w-none lg:text-left lg:text-[20px] lg:leading-[30.031px]">
               {FAQ_HERO.lead}
             </p>
           </Box>
@@ -86,7 +92,12 @@ export default function FaqsPage() {
             group a heading block but no page-level one; the content document
             opens with this, and a page of seventeen accordions with no sentence
             at the top reads as a wall. */}
-        <section className="bg-white pb-[10px] pt-[90px]">
+        {/* !! 6638:9435 DROPS THIS BLOCK. The phone frame goes straight from the
+            hero into "FAQ Section 1", so it is hidden below lg rather than
+            removed — the heading and the lead stay in the one DOM and in the
+            HTML a crawler is served. Flagged for Aqeel: the page's own opening
+            sentence is the one thing a phone reader loses here. */}
+        <section className="bg-white pb-[10px] pt-[90px] max-lg:hidden">
           <div className="mx-auto flex w-[900px] flex-col items-center gap-[14px] text-center">
             <h2 className="font-sans text-[40px] font-semibold leading-[1.25] text-black">
               {FAQ_INTRO.heading}
@@ -102,17 +113,25 @@ export default function FaqsPage() {
             data-figma="6392:1531"
             /* scroll-margin so a link to #batteries does not land the heading
                under the header on the way in. */
-            className={`scroll-mt-[120px] py-[90px] ${i % 2 === 0 ? 'bg-white' : 'bg-[#f4f9f6]'}`}
+            /* MOBILE — 6638:9805 and its three siblings: px20 / py48 and a flat
+               20px rhythm through the eyebrow, heading, lead and list. The
+               eyebrow pill sits on the left margin while the heading and lead
+               are centred, which is how 6638:9806..9809 are drawn. */
+            className={`scroll-mt-[120px] px-[20px] py-[48px] lg:px-0 lg:py-[90px] ${i % 2 === 0 ? 'bg-white' : 'bg-[#f4f9f6]'}`}
           >
-            <div className="mx-auto flex w-[900px] flex-col items-center gap-[44px]">
-              <div className="flex w-[780px] flex-col items-center gap-[10px] text-center">
-                <span className="inline-flex h-[34px] items-center whitespace-nowrap rounded-full bg-accent-soft px-[20px] font-roboto text-[11px] font-bold uppercase tracking-[0.89px] text-accent">
+            <div className="mx-auto flex w-full flex-col items-start gap-[20px] lg:w-[900px] lg:items-center lg:gap-[44px]">
+              <div className="flex w-full flex-col items-start gap-[20px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+                {/* Wraps below lg — "COMPLIANCE, CERTIFICATIONS & RESPONSIBLE
+                    RECYCLING" is ~370px at this size and was cut off at the
+                    edge of a 390px screen. Same treatment as the shared
+                    Eyebrow in ui/Bits.tsx. */}
+                <span className="inline-flex min-h-[34px] items-center rounded-full bg-accent-soft px-[20px] py-[7px] font-roboto text-[11px] font-bold uppercase leading-[16.5px] tracking-[0.89px] text-accent lg:h-[34px] lg:py-0 lg:whitespace-nowrap">
                   {g.eyebrow}
                 </span>
-                <h2 className="w-[780px] font-sans text-[36px] font-semibold leading-[1.2] text-black">
+                <h2 className="w-full text-center font-sans text-[26px] font-semibold leading-[1.3] text-black lg:w-[780px] lg:text-[36px] lg:leading-[1.2]">
                   {g.heading}
                 </h2>
-                <p className="w-[780px] font-roboto text-[16px] leading-[1.5] text-muted">{g.lead}</p>
+                <p className="w-full text-center font-roboto text-[15px] leading-[1.2] text-muted lg:w-[780px] lg:text-[16px] lg:leading-[1.5]">{g.lead}</p>
               </div>
 
               <Accordion items={g.items} gap={15} variant="ring" idPrefix={g.id} />
@@ -124,7 +143,10 @@ export default function FaqsPage() {
       {/* Footer is built for the pinned canvas — a Box at an absolute y — so it
           needs a relative parent of exactly FOOTER_H to sit in the flow. Same
           fix as blocks/ArticleTemplate.tsx. */}
-      <div className="relative" style={{ height: FOOTER_H }}>
+      <div
+        className="relative lg:h-[var(--footer-h)]"
+        style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}
+      >
         <Footer top={0} />
       </div>
 

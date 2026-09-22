@@ -25,6 +25,12 @@ import { ServicesCta } from '@/components/sections/services/ServicesCta'
  *   Closing CTA     6142:1153   +150        h456
  *   Footer          6142:1161   flush       FOOTER_H
  *
+ * BELOW lg none of those offsets apply — see Frame.tsx. The five sections
+ * become ordinary blocks in this source order, which is exactly the order of
+ * the mobile frame (6638:8235 in file BVtf2AOuUOcYbiMIlcKmbC): hero, catalogue,
+ * "Don't See Your Item?", certifications, closing CTA. So this file needs no
+ * mobile branch of its own; each section answers the phone itself.
+ *
  * Title and meta description are VERBATIM from the live /services/ page,
  * captured 15 Sep 2026. Per the migration plan they are not rewritten at launch.
  *

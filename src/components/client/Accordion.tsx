@@ -34,7 +34,23 @@ export function Accordion({ items, gap = 14, variant = 'plain', idPrefix = 'faq'
   const ring = variant === 'ring'
 
   return (
-    <ul className="flex w-full flex-col" style={{ gap }}>
+    /*
+     * The gap is a CUSTOM PROPERTY, not an inline `gap`: an inline style applies
+     * at every viewport, and the mobile rows sit 4px apart (6618:2344) against
+     * the board's 14/15. Same trick the Frame primitives use.
+     */
+    <ul
+      className="flex w-full flex-col gap-[var(--faq-gap-m)] lg:gap-[var(--faq-gap)]"
+      /* The phone gap is 4 on the homepage band (6618:2344) and 10 on /faqs/
+         (6638:9810), so it follows the same prop rather than being fixed at
+         the homepage's number: `gap` is 15 there and 14 by default, and the
+         two frames scale the same way. Clamped so a big desktop gap does not
+         become a big phone gap. Asim's /faqs/ frame, 22 Sep 2026. */
+      style={{
+        '--faq-gap': `${gap}px`,
+        '--faq-gap-m': `${gap >= 15 ? 10 : 4}px`,
+      } as React.CSSProperties}
+    >
       {items.map((item, i) => {
         const q = typeof item === 'string' ? item : item.q
         const a = typeof item === 'string' ? null : item.a
@@ -47,11 +63,12 @@ export function Accordion({ items, gap = 14, variant = 'plain', idPrefix = 'faq'
               onClick={() => setOpen(isOpen ? null : i)}
               aria-expanded={isOpen}
               aria-controls={id}
-              className={`flex w-full items-center justify-between px-[20px] text-left ${ring ? 'py-[10px]' : 'py-[7px]'}`}
+              /* py14 / gap12 on the phone (6618:2345), the board's 7 or 10 at lg. */
+              className={`flex w-full items-center justify-between gap-[12px] px-[20px] py-[14px] text-left lg:gap-0 ${ring ? 'lg:py-[10px]' : 'lg:py-[7px]'}`}
             >
-              <span className={ring
-                ? 'pr-[20px] font-sans text-[16px] leading-[24px] text-black'
-                : 'font-sans text-[16px] font-medium leading-[28px] text-ink'}>
+              <span className={`flex-1 font-sans text-[16px] leading-[normal] text-black lg:flex-initial ${ring
+                ? 'lg:pr-[20px] lg:leading-[24px]'
+                : 'font-normal lg:font-medium lg:leading-[28px] lg:text-ink'}`}>
                 {q}
               </span>
               {ring ? (
@@ -62,7 +79,12 @@ export function Accordion({ items, gap = 14, variant = 'plain', idPrefix = 'faq'
                   +
                 </span>
               ) : (
-                <span className={`ml-4 shrink-0 font-sans text-[22px] leading-none text-brand transition-transform ${isOpen ? 'rotate-45' : ''}`}>
+                /* The phone draws the HOMEPAGE band's rows with the FAQs page's
+                   ringed +: 6618:2345 instantiates 6107:512, the `ring` row.
+                   So this is the ring below lg and the board's bare + at lg —
+                   one span with every mobile property reset at `lg:`, rather
+                   than a second element that would double the markup. */
+                <span className={`grid size-[22px] shrink-0 place-items-center rounded-full border border-[#d6e6de] font-sans text-[15px] font-semibold leading-none text-brand transition-transform lg:ml-4 lg:block lg:size-auto lg:rounded-none lg:border-0 lg:text-[22px] lg:font-normal ${isOpen ? 'rotate-45' : ''}`}>
                   +
                 </span>
               )}

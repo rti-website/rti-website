@@ -31,6 +31,11 @@ import { CTA, HERO, SEO } from '@/data/why-choose-us'
  *
  * !! One factual correction: the doc's R2v3 card claims Wisconsin is certified.
  * It is not. See the note in src/data/why-choose-us.ts.
+ *
+ * MOBILE — "Why Choose Us - Mobile" 6638:8261 in file BVtf2AOuUOcYbiMIlcKmbC.
+ * The heights and tops above are lg-only custom properties, so this file needs
+ * nothing: each section answers its own mobile node — 6638:8761
+ * (differentiators), 6638:8989 (callout), 6638:9114 (trust).
  */
 const H = {
   diff:    644,    // Figma 642 — the doc's Minority-Owned card is two pixels longer

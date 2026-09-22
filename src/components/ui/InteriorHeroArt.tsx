@@ -63,26 +63,29 @@ export function InteriorHeroArt({
   const photo = src ?? SHARED_HERO
   return (
     <>
-      <Box x={0} y={0} w={1920} h={470}>
+      {/* All three take `fill` — they are layers, not content. Without it they
+          join the flow below lg, the picture's wrapper collapses to nothing and
+          every interior hero on the site goes flat navy. Added 22 Sep 2026. */}
+      <Box x={0} y={0} w={1920} h={470} fill>
         <Image
           src={photo}
           alt=""
           fill
           priority
-          sizes="1920px"
+          sizes="(width < 64rem) 100vw, 1920px"
           className="object-cover"
         />
       </Box>
 
       {/* Navy wash, bottom to top — 6472:3968. The green wash is its child. */}
       <Box
-        x={0} y={0} w={1920} h={470}
+        x={0} y={0} w={1920} h={470} fill
         style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
       >
         {/* 6472:3969. Figma draws it 1935 wide inside a 1920 frame; kept as
             drawn because the section clips and the extra 15px never shows. */}
         <Box
-          x={0} y={0} w={1935} h={470}
+          x={0} y={0} w={1935} h={470} fill
           style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
         />
       </Box>

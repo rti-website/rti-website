@@ -47,7 +47,16 @@ export function Pager({
   if (count <= 1) return null
 
   return (
-    <nav aria-label="Pagination" className="flex h-[44px] items-center gap-[10px]">
+    /* !! STILL NOT IN THE FIGMA FILE, mobile frames included — 6638:2235 draws
+       ten cards and stops, exactly as the desktop frame does. So the phone
+       treatment is the smallest thing that cannot overflow: the same pills,
+       centred, allowed to wrap onto a second line. The fixed 44px height is
+       dropped below lg because a wrapped row is two lines tall; nothing
+       downstream measures it there, since the whole canvas is in flow. */
+    <nav
+      aria-label="Pagination"
+      className="flex h-[44px] items-center gap-[10px] max-lg:h-auto max-lg:w-full max-lg:flex-wrap max-lg:justify-center"
+    >
       {page > 1 && (
         <Link href={href(pathFor(page - 1))} rel="prev" className={STEP}>&larr;&nbsp;Previous</Link>
       )}

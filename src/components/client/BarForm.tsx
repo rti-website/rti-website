@@ -35,8 +35,13 @@ export function BarForm({
 }) {
   return (
     <form
-      className="flex h-[56px] items-center justify-between rounded-[10px] border border-field bg-white pl-[20px] pr-[8px]"
-      style={{ width }}
+      // The width was an inline `style={{ width }}` until 22 Sep 2026, which
+      // applied at EVERY viewport: 560px on the blog newsletter and 680px on
+      // the locations finder, both inside a 350px column on a phone. It is a
+      // custom property now, read only at lg, so below lg the bar is as wide
+      // as its column. Callers restack the row from their own mobile frames.
+      className="flex h-[56px] w-full items-center justify-between rounded-[10px] border border-field bg-white pl-[20px] pr-[8px] lg:w-[var(--bar-w)]"
+      style={{ '--bar-w': `${width}px` } as React.CSSProperties}
       onSubmit={(e) => { e.preventDefault(); onSubmit() }}
     >
       <div className="flex flex-1 items-center gap-[12px]">

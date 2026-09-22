@@ -211,6 +211,91 @@ body {
      `zoom` rather than `transform: scale` because it scales the layout box too,
      keeping document height correct and scrolling normal. */
   zoom: calc(100cqw / (1920px - 2 * var(--canvas-inset)));
+
+  /* Written by Canvas as a custom property rather than as a height, so the
+     media query below can ignore it without an !important. See Frame.tsx. */
+  height: var(--canvas-h, auto);
+}
+
+/* ===========================================================================
+   THE RESPONSIVE SWITCH — 22 Sep 2026.
+
+   Everything above this line describes a 1920px drawing board. Aqeel's mobile
+   frames (BVtf2AOuUOcYbiMIlcKmbC, "Home - Mobile" 6588:2308, 390 wide) mean the
+   same markup now has to answer a phone as well, and Asim asked for that on
+   22 Sep 2026.
+
+   The rule is: ONE DOM. The Section/Box/CenterBox primitives hand their Figma
+   coordinates over as custom properties, and the geometry is applied here, at
+   lg and up, and nowhere else. Below lg every one of them is an ordinary block
+   in normal flow and the sections style themselves with mobile-first Tailwind
+   that they switch back off with `lg:` prefixes.
+
+   64rem is Tailwind's own `lg`, spelled the same way Tailwind spells it, so the
+   two queries are exact complements. If one is ever changed the other has to
+   change in the same commit or there is a width where neither layout applies.
+   =========================================================================== */
+.design-section { position: relative; width: 100%; }
+.design-box     { position: relative; }
+.design-center  { position: relative; width: 100%; }
+
+@media (width >= 64rem) {
+  .design-section {
+    position: absolute;
+    top: var(--sy);
+    left: var(--sx);
+    width: var(--sw);
+    height: var(--sh);
+    overflow: hidden;
+  }
+  /* The header, so its mega-menus can hang below the bar. */
+  .design-section--visible { overflow: visible; }
+
+  .design-box {
+    position: absolute;
+    left: var(--bx);
+    top: var(--by);
+    width: var(--bw);
+    height: var(--bh);
+  }
+
+  .design-center {
+    position: absolute;
+    left: calc(50% + var(--cx));
+    top: var(--cy);
+    width: var(--cw);
+    height: var(--ch);
+    transform: translateX(-50%);
+  }
+}
+
+@media (width < 64rem) {
+  /* No board, no zoom, no fixed height: the page is as long as its content and
+     as wide as the window. */
+  .design-canvas {
+    width: 100%;
+    left: 0;
+    zoom: 1;
+    height: auto;
+  }
+  /* main is pulled up by --chrome-shift on the board because the built header
+     is shorter than the 140px Figma drew. In flow there is no shift to make:
+     the header is a block and main starts under it. */
+  .design-canvas > main,
+  .design-canvas--flow > main {
+    position: static;
+    top: auto;
+    padding-top: 0;
+  }
+  /* A full-bleed photo or a tint keeps covering its section. In flow it would
+     be a wrapper of zero height around an `<Image fill>` — the picture would
+     simply not be there. See the `fill` prop in Frame.tsx. */
+  .design-box.design-box--fill {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -341,6 +426,26 @@ body {
   animation: logo-marquee-scroll linear infinite;
 }
 .logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }
+
+/*
+ * EDGE FADE — Asim, 22 Sep 2026: "fade on the sides and colourful in centre".
+ *
+ * The frame fades the marks 40/60/80/100/80/60/40 by setting opacity on each
+ * container, and a node export bakes that in. That works in a still drawing and
+ * not in a moving strip: the fade travels WITH the logo, so a 40% R2v3 stays
+ * 40% as it scrolls into the middle, and at any moment the pale ones are
+ * wherever the animation happens to have put them. The marks are exported at
+ * full colour now and the fade lives here, on the window, so it stays put while
+ * the logos move through it — which is the effect the frame was reaching for.
+ *
+ * mask-image rather than a pair of white gradient overlays: the section is not
+ * always on white (the /services/ band sits on its own tint), and an overlay
+ * would show as two pale rectangles there.
+ */
+.logo-marquee {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .logo-marquee { overflow-x: auto; }

@@ -5,7 +5,40 @@ import { CHROME_SHIFT, HEADER_H } from '@/lib/layout'
  *
  * Every value passed to these is read straight off the Figma node, so a diff
  * against the design is a diff against these numbers.
+ *
+ * ===========================================================================
+ * !! THE GEOMETRY ONLY APPLIES AT lg (1024px) AND UP — 22 Sep 2026
+ * ===========================================================================
+ * These used to write `position: absolute` and the Figma left/top/width/height
+ * straight into the style attribute, which is what made the desktop build
+ * exact and what made it impossible to reflow. Aqeel delivered mobile frames
+ * (file BVtf2AOuUOcYbiMIlcKmbC, "Home - Mobile" 6588:2308) and Asim asked for
+ * the site to answer them.
+ *
+ * The numbers now go out as CUSTOM PROPERTIES and a class name, and
+ * globals.css applies them inside `@media (width >= 64rem)` only. So:
+ *
+ *   at 1024 and up   identical to before — same absolute boxes, same canvas,
+ *                    same zoom. The rendered desktop page is unchanged.
+ *   below 1024       every Section and Box is an ordinary block in normal
+ *                    flow, stacked in source order, and each section styles
+ *                    itself with plain mobile-first Tailwind that it turns off
+ *                    again with `lg:` prefixes.
+ *
+ * ONE DOM, NOT TWO. The alternative — a <MobileHome/> beside the desktop tree
+ * with one of them hidden — would duplicate the body copy and every internal
+ * link on a site whose whole purpose is to carry ~600 ranking URLs across a
+ * replatform intact. Two copies of every link is not a thing to do to that.
+ *
+ * WHY EVERY CUSTOM PROPERTY IS ALWAYS WRITTEN, even when the value is `auto`:
+ * custom properties inherit. A Box nested in a Box that left `--bw` unset would
+ * pick up its parent's width — the header's announcement bar is 1920 wide and
+ * holds three boxes that set no width of their own, so leaving them unset would
+ * have made all three 1920. Writing `auto` explicitly stops the inheritance.
  */
+
+const len = (v: number | string | undefined): string =>
+  v === undefined ? 'auto' : typeof v === 'number' ? `${v}px` : v
 
 /**
  * The 1920-wide page canvas. See .design-canvas in globals.css.
@@ -14,6 +47,10 @@ import { CHROME_SHIFT, HEADER_H } from '@/lib/layout'
  * is built shorter than that, so the rendered canvas is CHROME_SHIFT shorter
  * too and <main> is pulled up by the same amount — doing it here means no page
  * has to know, and no page is left with a band of white under its footer.
+ *
+ * Below lg none of that applies: the canvas is as tall as its content and the
+ * header is an ordinary block above it, so the height goes out as `--canvas-h`
+ * rather than as a height, and the media query decides whether to use it.
  */
 export function Canvas({
   height, grow, children,
@@ -35,9 +72,9 @@ export function Canvas({
       <div
         className="design-canvas"
         style={{
-          height: grow ? `calc(${h}px + var(${grow}, 0px))` : h,
-          transition: grow ? 'height 300ms ease-out' : undefined,
+          '--canvas-h': grow ? `calc(${h}px + var(${grow}, 0px))` : `${h}px`,
           '--chrome-shift': `${CHROME_SHIFT}px`,
+          transition: grow ? 'height 300ms ease-out' : undefined,
         } as React.CSSProperties}
       >
         {children}
@@ -46,7 +83,7 @@ export function Canvas({
   )
 }
 
-/** An absolutely positioned section at its exact offset in the canvas. */
+/** A section at its exact offset in the canvas — absolutely, at lg and up. */
 export function Section({
   top, left = 0, width = 1920, height, className = '', style, children, label,
   overflow = 'hidden',
@@ -67,36 +104,59 @@ export function Section({
    * Sections clip by default, because most of them crop oversized art on
    * purpose (the hero photo, the CTA plate). The header opts out so its
    * Services dropdown can hang below the 140px bar instead of being cut off.
+   *
+   * Below lg NOTHING clips, whatever this says: a section that is as tall as
+   * its content has nothing to crop, and a leftover `overflow: hidden` would
+   * cut off the first line of anything that grew.
    */
   overflow?: 'hidden' | 'visible'
 }) {
   return (
     <section
       data-figma={label}
-      className={`absolute ${overflow === 'visible' ? 'overflow-visible' : 'overflow-hidden'} ${className}`}
-      style={{ top, left, width, height, ...style }}
+      className={`design-section ${overflow === 'visible' ? 'design-section--visible' : ''} ${className}`}
+      style={{
+        '--sx': len(left),
+        '--sy': len(top),
+        '--sw': len(width),
+        '--sh': len(height),
+        ...style,
+      } as React.CSSProperties}
     >
       {children}
     </section>
   )
 }
 
-/** Absolutely positioned box inside a section. */
+/** A box inside a section — absolutely positioned at lg and up. */
 export function Box({
-  x, y, w, h, className = '', style, children,
+  x, y, w, h, fill = false, className = '', style, children,
 }: {
   x: number
   y: number
   w?: number
   h?: number
+  /**
+   * This box is a LAYER, not content: a full-bleed photo, a tint, a gradient
+   * wash. Those keep covering their section below lg instead of joining the
+   * flow, where a wrapper around an `<Image fill>` would collapse to nothing
+   * and the picture would vanish.
+   */
+  fill?: boolean
   className?: string
   style?: React.CSSProperties
   children?: React.ReactNode
 }) {
   return (
     <div
-      className={`absolute ${className}`}
-      style={{ left: x, top: y, width: w, height: h, ...style }}
+      className={`design-box ${fill ? 'design-box--fill' : ''} ${className}`}
+      style={{
+        '--bx': len(x),
+        '--by': len(y),
+        '--bw': len(w),
+        '--bh': len(h),
+        ...style,
+      } as React.CSSProperties}
     >
       {children}
     </div>
@@ -117,8 +177,13 @@ export function CenterBox({
 }) {
   return (
     <div
-      className={`absolute ${className}`}
-      style={{ left: `calc(50% + ${offset}px)`, top: y, width: w, height: h, transform: 'translateX(-50%)' }}
+      className={`design-center ${className}`}
+      style={{
+        '--cx': `${offset}px`,
+        '--cy': len(y),
+        '--cw': len(w),
+        '--ch': len(h),
+      } as React.CSSProperties}
     >
       {children}
     </div>

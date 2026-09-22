@@ -12,6 +12,11 @@ import { HERO, SEO } from '@/data/guides'
  * fFS1bD6V6j1RhhmzfPxpHk. Asim, 16 Sep 2026: "also make this page and add it in
  * footer below resource heading".
  *
+ * Below lg it is a build of 6638:8289 ("ITAD & Recycling Guides - Mobile",
+ * file BVtf2AOuUOcYbiMIlcKmbC). The coordinates and heights below apply at lg
+ * and up ONLY — see the note at the top of components/design/Frame.tsx. Both
+ * bands carry their own mobile shell in GuideSections.
+ *
  * NEW URL, like /resources/ and /downloads/: it does not resolve on the live
  * site, so there is no live title, description or H1 to preserve and CLAUDE.md
  * rule 6 does not bite.

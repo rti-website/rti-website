@@ -15,6 +15,12 @@ export type Crumb = { label: string; href: string | null }
  *
  * Written generic because every other service page uses this same frame, and
  * /industries/ uses it too with the button row omitted.
+ *
+ * MOBILE — Figma 6638:10136 in file BVtf2AOuUOcYbiMIlcKmbC (frame 6638:8236).
+ * 390x360 on the same navy: one centred column, px20, H1 28/1.18 and lead
+ * 15/1.5 both centred, then the picker over the button — full width, 12 apart,
+ * not side by side. As on /services/, the frame carries NO breadcrumb, so it
+ * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
   crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, label, image,
@@ -35,12 +41,27 @@ export function ServiceHero({
   label?: string
 }) {
   return (
-    <Section top={140} height={470} label={label} className="bg-navy">
-      <InteriorHeroArt src={image} />
+    <Section
+      top={140} height={470} label={label}
+      className="flex flex-col justify-center bg-navy px-[20px] py-[48px] max-lg:min-h-[360px] lg:block lg:p-0"
+    >
+      {/*
+        See the same wrapper in ServicesHero: InteriorHeroArt still builds its
+        photo and washes from plain `Box`es with no `fill`, which collapse to
+        zero height below lg and take the picture with them. Forced on from
+        here — `!` because `.design-box { position: relative }` is unlayered in
+        globals.css and outranks any utility, `lg:contents` so the board still
+        resolves each Box against the Section. Delete once that file takes
+        `fill`; it is a no-op then.
+      */}
+      <div className="max-lg:absolute max-lg:inset-0 max-lg:[&_.design-box]:absolute! max-lg:[&_.design-box]:inset-0! lg:contents">
+        <InteriorHeroArt src={image} />
+      </div>
 
-      {/* Content column — 6199:4945 at x319 y113, w946, gap 20. */}
-      <Box x={319} y={113} w={946} className="flex flex-col items-start gap-[20px]">
-        <nav aria-label="Breadcrumb">
+      {/* Content column — 6199:4945 at x319 y113, w946, gap 20; 6638:10147..
+          on the phone, where the column is centred and the crumbs are gone. */}
+      <Box x={319} y={113} w={946} className="flex flex-col items-start gap-[20px] max-lg:items-center">
+        <nav aria-label="Breadcrumb" className="max-lg:hidden">
           <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
             {crumbs.map((c, i) => (
               <li key={c.label} className="flex items-center gap-[13px]">
@@ -53,16 +74,18 @@ export function ServiceHero({
           </ol>
         </nav>
 
-        <h1 className="font-sans text-[60px] font-semibold leading-[70px] tracking-[-1.5px] text-white">
+        <h1 className="w-full text-center font-sans text-[28px] font-semibold leading-[1.18] text-white lg:w-auto lg:text-left lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]">
           {h1}
         </h1>
 
-        <p className="font-roboto text-[18px] leading-[27px] text-white/70">{lead}</p>
+        <p className="w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:w-auto lg:text-left lg:text-[18px] lg:leading-[27px]">
+          {lead}
+        </p>
 
         {(cta || pickerOptions) && (
-          <div className="flex items-start gap-[12px]">
+          <div className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start">
             {pickerOptions && (
-              <div className="h-[50px] w-[393px]">
+              <div className="h-[50px] w-full lg:w-[393px]">
                 <Picker
                   id="service-location"
                   placeholder={pickerPlaceholder ?? 'Select Your Location'}
@@ -72,7 +95,14 @@ export function ServiceHero({
               </div>
             )}
             {cta && (
-              <Btn href={cta.href} variant="colored" external={cta.external}>{cta.label}</Btn>
+              <Btn
+                href={cta.href}
+                variant="colored"
+                external={cta.external}
+                className="max-lg:w-full max-lg:justify-center"
+              >
+                {cta.label}
+              </Btn>
             )}
           </div>
         )}

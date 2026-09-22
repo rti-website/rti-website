@@ -49,26 +49,46 @@ export function ArticleTemplate({
     <FlowCanvas>
       <Header />
       <main>
-        {/* Hero — 6491:6034. Same art as every interior page; the text block is
-            taller (240 not 192) because it carries the byline line under the
-            headline. */}
-        <div data-figma="6491:6034" className="relative h-[470px] overflow-hidden bg-navy">
-          <InteriorHeroArt src={entry.heroImage} />
-          <Box x={319} y={115} w={871} h={240}>
+        {/*
+          Hero — 6491:6034. Same art as every interior page; the text block is
+          taller (240 not 192) because it carries the byline line under the
+          headline.
+
+          MOBILE — 6638:8537, and it is a different hero, not a narrower one.
+          The board's full-bleed navy band becomes a light section on white:
+          px20 / py32, a 350x220 rounded-16 CARD holding the same photograph and
+          its baked-in navy fade, then the breadcrumb in grey, the meta line in
+          teal, and the headline last at 30/1.2 in #132119.
+
+          The meta line moves ABOVE the headline on the phone, so it is ordered
+          rather than re-emitted — one DOM, one H1, one copy of the byline.
+
+          `lg:contents` on the art wrapper is what keeps the board exact: at lg
+          the wrapper generates no box at all, so InteriorHeroArt's three `fill`
+          boxes still resolve against this section the way they always did.
+          Below lg they resolve against the wrapper instead, which is the card.
+        */}
+        <div data-figma="6491:6034" className="relative flex flex-col gap-[16px] overflow-hidden bg-white px-[20px] py-[32px] lg:block lg:h-[470px] lg:bg-navy lg:p-0">
+          <div className="relative aspect-[350/220] w-full shrink-0 overflow-hidden rounded-[16px] lg:contents">
+            <InteriorHeroArt src={entry.heroImage} />
+          </div>
+          <Box x={319} y={115} w={871} h={240} className="flex flex-col gap-[16px] lg:block">
             <nav aria-label="Breadcrumb">
               <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
-                <li><Link href={href('/')} className="text-white/50 hover:text-white">Home</Link></li>
-                <li aria-hidden="true" className="text-white/50">/</li>
-                <li><Link href={href('/blog/')} className="text-white/50 hover:text-white">Blogs</Link></li>
+                <li><Link href={href('/')} className="text-muted hover:text-ink lg:text-white/50 lg:hover:text-white">Home</Link></li>
+                <li aria-hidden="true" className="text-muted lg:text-white/50">/</li>
+                <li><Link href={href('/blog/')} className="text-muted hover:text-ink lg:text-white/50 lg:hover:text-white">Blogs</Link></li>
               </ol>
             </nav>
             {/* 6491:6042 — 871 wide, two lines at 60/74. entry.h1 is the ported
-                value; the frame's placeholder is the sample post's own title. */}
-            <h1 className="mt-[21px] w-[871px] font-sans text-[54px] font-semibold leading-[1.22] tracking-[-1.2px] text-white">
+                value; the frame's placeholder is the sample post's own title.
+                6638:8545 on the phone: 30/1.2, dark, and third in the column. */}
+            <h1 className="order-3 w-full font-sans text-[30px] font-semibold leading-[1.2] text-heading lg:order-none lg:mt-[21px] lg:w-[871px] lg:text-[54px] lg:leading-[1.22] lg:tracking-[-1.2px] lg:text-white">
               {entry.h1}
             </h1>
             {meta && (
-              <p className="mt-[18px] font-roboto text-[15px] leading-[22px] text-white/70">{meta}</p>
+              /* 6638:8544 — the same string, teal at 13px, above the headline. */
+              <p className="order-2 font-roboto text-[13px] leading-[1.6] text-brand lg:order-none lg:mt-[18px] lg:text-[15px] lg:leading-[22px] lg:text-white/70">{meta}</p>
             )}
           </Box>
         </div>
@@ -80,24 +100,31 @@ export function ArticleTemplate({
             sidebar={
               <>
                 {/* Ask Our Team — 6501:1772, the same diagonal gradient the old
-                    GradientCta used before the closing band was unified. */}
+                    GradientCta used before the closing band was unified.
+                    6638:9404 on the phone: unchanged apart from its width, and
+                    ordered LAST so it closes the article the way the frame has
+                    it rather than sitting beside the body. */}
                 <div
-                  className="flex w-[380px] flex-col gap-[14px] rounded-[12px] p-[32px]"
+                  className="order-4 flex w-full flex-col gap-[14px] rounded-[12px] p-[32px] lg:order-none lg:w-[380px]"
                   style={{ backgroundImage: 'linear-gradient(138.443deg, #0b1f3a 7.2464%, #1b7a3d 79.71%)' }}
                 >
-                  <p className="w-[316px] font-sans text-[20px] font-semibold text-white">Ask Our Team</p>
-                  <p className="w-[316px] font-roboto text-[14.5px] leading-[1.55] text-white/85">
+                  <p className="w-full font-sans text-[20px] font-semibold text-white lg:w-[316px]">Ask Our Team</p>
+                  <p className="w-full font-roboto text-[14.5px] leading-[1.55] text-white/85 lg:w-[316px]">
                     Not sure how to recycle something specific? Our ITAD &amp; e-waste specialists can help.
                   </p>
-                  <Btn href={href('/contact-us/')} variant="whiteFill">Contact Us</Btn>
+                  <Btn href={href('/contact-us/')} variant="whiteFill" className="max-lg:w-full max-lg:justify-center">Contact Us</Btn>
                 </div>
 
                 {/* Share This Guide — 6501:1778. Copy-link, Facebook, LinkedIn,
                     email. They are <a>s with real targets rather than buttons
-                    that need JS, so the card works without hydration. */}
-                <div className="flex w-[380px] flex-col gap-[14px] rounded-[12px] border border-[#e5e5e5] bg-white px-[26px] py-[24px]">
-                  <p className="font-sans text-[15px] font-medium text-[#132119]">Share This Guide</p>
-                  <ul className="flex items-start gap-[10px]">
+                    that need JS, so the card works without hydration.
+
+                    6638:8648 on the phone: not a card at all but a bare row
+                    under the hero — label left, four 44px discs right — and
+                    ordered FIRST so it lands where the frame puts it. */}
+                <div className="order-1 flex w-full items-center justify-between gap-[14px] lg:order-none lg:w-[380px] lg:flex-col lg:items-stretch lg:rounded-[12px] lg:border lg:border-[#e5e5e5] lg:bg-white lg:px-[26px] lg:py-[24px]">
+                  <p className="font-sans text-[16px] font-medium text-[#132119] lg:text-[15px]">Share This Guide</p>
+                  <ul className="flex items-center gap-[10px] lg:items-start">
                     {SHARE.map((s) => (
                       <li key={s.label}>
                         <a
@@ -105,7 +132,7 @@ export function ArticleTemplate({
                           target={s.label === 'Email' ? undefined : '_blank'}
                           rel="noopener noreferrer"
                           aria-label={s.label}
-                          className="grid size-[38px] place-items-center rounded-full bg-[#eaf4f5] transition-colors hover:bg-[#dbeced]"
+                          className="grid size-[44px] place-items-center rounded-full bg-[#eaf4f5] transition-colors hover:bg-[#dbeced] lg:size-[38px]"
                         >
                           <svg viewBox="0 0 16 16" className="size-[16px] fill-brand" aria-hidden="true">
                             <path d={s.path} />
@@ -125,8 +152,18 @@ export function ArticleTemplate({
 
       {/* The footer is absolutely positioned inside its own box, because Footer
           is built for the pinned canvas. Giving it a relative parent of exactly
-          FOOTER_H puts it back into the flow without touching that component. */}
-      <div className="relative" style={{ height: FOOTER_H }}>
+          FOOTER_H puts it back into the flow without touching that component.
+
+          !! THE HEIGHT IS AN `lg:` UTILITY FED BY A CUSTOM PROPERTY, not an
+          inline height, because an inline height applies at every width. Below
+          lg the footer is an ordinary block roughly twice FOOTER_H tall
+          (6638:8328 measures 1486 against the board's 681), so a hard 681 here
+          left it overflowing a box that had already ended. Same fix is needed in
+          app/not-found.tsx, which is not this pass's file. */}
+      <div
+        className="relative lg:h-[var(--footer-h)]"
+        style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}
+      >
         <Footer top={0} />
       </div>
     </FlowCanvas>

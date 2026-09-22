@@ -31,6 +31,20 @@ import {
  * the homepage, as every unresolvable path on that site does. So there is no
  * live title, description or H1 to port, and the metadata here was written
  * from the content doc. See src/data/industries.ts for the full note.
+ *
+ * MOBILE — frame 6638:8497 "All Industries - Mobile" (390 wide), which stacks
+ * the same six sections in this source order. Only the catalogue is styled for
+ * it here; IndustriesCatalog carries that work. The hero, certifications band
+ * and closing CTA are ServiceHero / CertificationsBand / ServicesCta, shared
+ * with the ten service detail pages, /blog/, /contact-us/ and a dozen others,
+ * and are converted by whoever owns those components — not from here.
+ *
+ * THE MOBILE FRAME'S COPY IS PLACEHOLDER THROUGHOUT and is not followed;
+ * CLAUDE.md rule 6. It draws the shared boilerplate lead, certifications
+ * paragraph and closing CTA rather than this page's own, and its card grid is
+ * the homepage's eight placeholder categories rather than these seven
+ * industries — the same "only five distinct cards" tell src/data/industries.ts
+ * already records about the desktop frame. Flagged for Aqeel, not acted on.
  */
 export const metadata = buildMetadata({
   url: '/industries/',
