@@ -19,7 +19,7 @@ import { CTA, HERO, SEO } from '@/data/case-studies'
  *   Section          Node        Figma h    built h   why
  *   Header           —           140        140
  *   Hero             6382:6597   470        470
- *   Filters + grid   6391:1527   1178       H.grid
+ *   Filters + grid   6391:1527   1178       H.grid   taller cards, see below
  *   Closing CTA      6391:1528   399.05     H.cta
  *   Footer           6382:6611   681        681
  *
@@ -27,11 +27,17 @@ import { CTA, HERO, SEO } from '@/data/case-studies'
  * `node scripts/measure-sections.mjs --route case-studies`.
  *
  * The grid's height is fixed whichever industry filter is active — see the note
- * on CaseStudyGrid. The five stories themselves live in src/data/case-studies.ts
- * and are shared with /compliance-center/, which shows the first three.
+ * on CaseStudyGrid. The three stories themselves live in src/data/case-studies.ts
+ * and are shared with /compliance-center/, which shows all three.
  */
 const H = {
-  grid: 1180, // Figma 1178
+  /* Measured, not drawn. The frame's 1178 was sized around five short cards
+     (challenge + approach only). The three real case studies carry a key-benefits
+     list, a customer quote and a download link each, so the row is taller — hence
+     922 — the cards became small PDF-preview tiles on 22 Sep 2026, so the row
+     is shorter than the frame's 1178, not taller. Re-run after any card change:
+     node scripts/measure-sections.mjs --route case-studies --port 3200 */
+  grid: 922,
   cta:  CTA_H,  // the shared closing band; this frame drew 399.05 before the 16 Sep redesign
 }
 

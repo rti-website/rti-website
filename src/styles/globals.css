@@ -125,7 +125,9 @@ body {
 
    `zoom` (rather than `transform: scale`) is used deliberately: it scales the
    element's layout box too, so the document height stays correct and the page
-   scrolls normally. Supported in Chrome, Edge, Safari and Firefox 126+.
+   scrolls normally. Supported in Chrome, Edge, Safari and Firefox 126+ — and
+   see the note on the `zoom:` line itself for the one way to write its value
+   that ALL of those browsers accept.
 
    This is a faithful desktop build. True responsive reflow is a separate pass
    and needs mobile frames from Aqeel — there are none in the file today.
@@ -209,8 +211,26 @@ body {
   /* Scales BOTH ways: down on laptops, up on displays wider than 1920, so the
      page always fills the window instead of sitting in white margins.
      `zoom` rather than `transform: scale` because it scales the layout box too,
-     keeping document height correct and scrolling normal. */
-  zoom: calc(100cqw / (1920px - 2 * var(--canvas-inset)));
+     keeping document height correct and scrolling normal.
+
+     !! WHY tan(atan2()) AND NOT A PLAIN DIVISION — 22 Sep 2026, Asim:
+     !! "on firefox there is issues".
+     This line used to read `calc(100cqw / (1920px - 2 * var(--canvas-inset)))`.
+     Dividing one length by another to get a number is "CSS typed arithmetic",
+     and it shipped in Chrome 140 and Safari 26 — and in NO version of Firefox
+     (caniuse, checked 22 Sep 2026). In every browser without it the whole
+     declaration is invalid and dropped, zoom stays 1, and the 1920px board
+     renders at 1920px on a 1660px window, shifted 130px left: everything
+     oversized, the right edge cut off, a horizontal scrollbar. That is the
+     Firefox report. It was also every Chrome and Edge older than 140.
+
+     atan2() takes two lengths of the same kind and returns their angle; tan()
+     of that angle is exactly their ratio, as a plain number. It is the
+     standard way to divide lengths in CSS, and it has worked in Firefox since
+     118, Chrome since 111 and Safari since 15.4 — three years wider than the
+     division it replaces. Same number, same layout, in every browser that
+     has `zoom` at all (Firefox 126+; Tailwind v4 needs 128 anyway). */
+  zoom: tan(atan2(100cqw, 1920px - 2 * var(--canvas-inset)));
 
   /* Written by Canvas as a custom property rather than as a height, so the
      media query below can ignore it without an !important. See Frame.tsx. */
@@ -510,3 +530,19 @@ body {
 
 /* JSON-LD is read out of the HTML source by crawlers and must never be painted. */
 .wp-content script { display: none; }
+
+/* ===========================================================================
+   The browser's own "x" in search fields — hidden. 22 Sep 2026.
+
+   Only Chrome and Edge draw one, at the right edge of the field. On the
+   locator bar the field runs the width of the bar, so the x landed hard
+   against the Search button (Asim's screenshot). It cannot be moved next to
+   the text, Firefox and Safari never had it, and the locator draws its own
+   Clear control in the result card — so all browsers now match.
+   =========================================================================== */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}

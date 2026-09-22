@@ -35,6 +35,30 @@ import { Btn } from '@/components/ui/Bits'
  * up on the RIGHT. An earlier note in ServicesCta claimed the flip was a no-op
  * for a horizontal gradient — it is not, it reverses it, which is why that
  * build had green on the left where the design has it on the right.
+ *
+ * ===========================================================================
+ * !! WHY THE CONTENT IS `relative` AND THE TWO BACKGROUND LAYERS ARE
+ * !! `pointer-events-none`. DO NOT REMOVE EITHER.
+ * ===========================================================================
+ * Asim, 22 Sep 2026: "these find a location and start mail in recycling is not
+ * working", and separately the same two buttons on /why-choose-us/. It was
+ * every closing CTA on the site — this band ends every page — and the cause
+ * was CSS painting order, not the links, which were correct all along.
+ *
+ * A positioned element paints ABOVE non-positioned content in the same stacking
+ * context, whatever the source order. The watermark and the green wash are
+ * absolutely positioned; the heading, body and button row were static. So the
+ * wash was painted over the buttons and swallowed every click, and because it
+ * is a mostly-transparent gradient nothing looked wrong.
+ *
+ * Two changes, either of which would fix the clicks and both of which are
+ * correct on their own terms: the decoration takes no pointer events, because
+ * decoration never should, and the content is positioned, so it paints above
+ * the wash instead of under it — which is also what the design draws.
+ *
+ * This is the same trap as `after:z-[1]` on the stretched link in
+ * CaseStudyCard. If a band on this site has a decorative absolute layer, check
+ * the content above it is positioned too.
  */
 
 /** The band's height. Figma 456, and the same on every frame that carries it. */
@@ -75,7 +99,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           6619:2366 on the phone, where it covers the band at 390x462. `fill`
           is what keeps it covering below lg — without it the wrapper collapses
           to zero height in flow and the picture is simply not there. */}
-      <Box x={0} y={-312.02} w={1920} h={1081} fill className="opacity-10">
+      <Box x={0} y={-312.02} w={1920} h={1081} fill className="pointer-events-none opacity-10">
         <Image src="/images/home/cta-bg.png" alt="" fill sizes="(min-width: 1024px) 1920px, 100vw" className="-scale-x-100 object-cover" />
       </Box>
 
@@ -85,7 +109,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           gradient layer over it. */}
       <Box
         x={4} y={-259.02} w={1920} h={974.39}
-        className="hidden lg:block"
+        className="pointer-events-none hidden lg:block"
         style={{ backgroundImage: 'linear-gradient(270deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
       />
 
@@ -94,7 +118,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           `width`, because an inline width applies at every viewport: at 390 a
           723px heading is 333px of horizontal overflow. */}
       <h2
-        className="w-full text-center font-sans text-[26px] font-semibold leading-[32px] text-white lg:w-[var(--cta-hw)] lg:text-[40px] lg:leading-[53.7px]"
+        className="relative w-full text-center font-sans text-[26px] font-semibold leading-[32px] text-white lg:w-[var(--cta-hw)] lg:text-[40px] lg:leading-[53.7px]"
         style={{ '--cta-hw': `${content.headingWidth ?? 723}px` } as React.CSSProperties}
       >
         {content.heading}
@@ -104,7 +128,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           sentence carries on along the first's last line — three lines at 1084
           wide, not four. Pages that supply a list get it joined rather than
           stacked, or the block sets to a different shape than the frame. */}
-      <p className="w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
+      <p className="relative w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
         {(Array.isArray(content.body) ? content.body : [content.body]).join(' ')}
       </p>
 
@@ -112,7 +136,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           one at its own width. `min-w` rather than `w` so a page with a longer
           primary label gets a wider button instead of a clipped one.
           6619:2359 stacks them full-width at 12px apart on the phone. */}
-      <div className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start lg:gap-[6px]">
+      <div className="relative flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start lg:gap-[6px]">
         <Btn
           href={content.primary.href}
           variant="whiteFill"

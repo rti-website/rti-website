@@ -27,7 +27,12 @@ export const HERO = {
     { label: 'Blogs', href: null },
   ],
   h1: 'Blogs',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  /* Was the site-wide "providing services to the community since 1993" line
+     every hero carries. Replaced 22 Sep 2026 on Asim's instruction, from
+     Rizwan's content sheet — the generic line said nothing about what this
+     page actually holds, and it is the one hero whose subject is the blog
+     rather than the company. The other twelve heroes keep the 1993 line. */
+  lead: 'In-depth insights, researched information, practical guides — straight from our regularly updated blogs.',
 }
 
 export const INTRO = {

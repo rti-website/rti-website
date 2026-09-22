@@ -10,13 +10,18 @@
  *
  * Elements inside a fixed layer are skipped: the closed nav drawer parks one
  * viewport-width to the right and is not a defect. So are aria-hidden/inert
- * subtrees and anything inside a deliberate horizontal scroller.
+ * subtrees and anything inside a clipping box that is not the page shell —
+ * a carousel slide sitting off to the side of its own overflow-hidden track
+ * is contained, and flagging it made this scan cry wolf on the homepage and
+ * /services/ service-card carousels (22 Sep 2026). The check that actually
+ * proves the page is sound is documentElement.scrollWidth === 390, which the
+ * summary line below asserts too.
  *
  *   npx next start -p 3200 && node scripts/check-mobile-clip.mjs
  */
 import { chromium } from 'playwright'
 
-const PORT = 3200
+const PORT = Number(process.env.PORT || 3200)
 const ROUTES = [
   '/', '/services/', '/electronic-recycle/', '/industries/', '/industries/healthcare/',
   '/contact-us/', '/about-us/', '/resources/', '/all-locations/', '/why-choose-us/',
@@ -37,6 +42,14 @@ let bad = 0
 
 for (const r of ROUTES) {
   const res = await page.goto(`http://localhost:${PORT}${r}`, { waitUntil: 'networkidle' })
+  /* Measured BEFORE the freeze below. Killing animations stops a carousel
+     mid-slide, which parks a slide outside its track and makes the page look
+     like it scrolls when in normal use it does not. The real-world state is
+     the one that decides. */
+  const scrolls = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+  )
+
   await page.addStyleTag({ content: '*{animation:none !important;transition:none !important}' })
   await page.waitForTimeout(150)
   const hits = await page.evaluate(() => {
@@ -54,7 +67,14 @@ for (const r of ROUTES) {
         const pcs = getComputedStyle(p)
         if (pcs.position === 'fixed') { skip = true; break }
         if (p.hasAttribute('inert') || p.getAttribute('aria-hidden') === 'true') { skip = true; break }
-        if (['auto', 'scroll', 'hidden', 'clip'].includes(pcs.overflowX) && p.scrollWidth > p.clientWidth + 1) { skip = true; break }
+        // A clipping ancestor means the overflow is contained, not visible.
+        // The page shell is excluded: it clips everything by design, so
+        // honouring it would make this scan pass on any page at all — and
+        // catching what IT hides is the whole reason this script exists.
+        const clips = ['auto', 'scroll', 'hidden', 'clip'].includes(pcs.overflowX)
+        const isShell = p.classList.contains('design-shell') || p.classList.contains('design-canvas')
+        if (clips && !isShell) { skip = true; break }
+        if (clips && isShell && p.scrollWidth > p.clientWidth + 1) { skip = true; break }
         p = p.parentElement
       }
       if (skip) continue
@@ -68,8 +88,16 @@ for (const r of ROUTES) {
     return out.slice(0, 5)
   })
   const status = res.status()
-  if (hits.length) { bad++; console.log(`CLIP ${r} (${status})`); hits.forEach((h) => console.log('   ', h)) }
-  else console.log(`ok   ${r} (${status})`)
+  if (scrolls) {
+    bad++
+    console.log(`CLIP ${r} (${status}) — page scrolls horizontally at 390`)
+    hits.forEach((h) => console.log('   ', h))
+  } else if (hits.length) {
+    console.log(`ok   ${r} (${status}) — ${hits.length} element(s) outside the viewport box but contained:`)
+    hits.slice(0, 2).forEach((h) => console.log('      ', h))
+  } else {
+    console.log(`ok   ${r} (${status})`)
+  }
 }
-console.log(bad ? `\n${bad} route(s) with content outside 390px` : '\nno content outside 390px')
+console.log(bad ? `\n${bad} route(s) scroll horizontally at 390px` : '\nno route scrolls horizontally at 390px')
 await browser.close()

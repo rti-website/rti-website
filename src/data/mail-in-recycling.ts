@@ -47,7 +47,7 @@ export const CONTENT: ServicePageContent = {
       'Once received, materials sent through the Mail-In Program enter the same recycling operation that Recycle Technologies has run out of its licensed Minnesota and Wisconsin facilities since 1993.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/mail-in-intro.jpg',
   },
   accept: {
     heading: 'What Can I Send Through the Mail-In Program?',
@@ -62,7 +62,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Order online:',           text: 'Purchase what you need through Recycle Technologies’ Mail-In Program to get started.' },
       { label: 'Receipt and Recycling:',  text: 'Once your shipment arrives, it’s processed through Recycle Technologies’ recycling operations at its licensed facilities in Minnesota and Wisconsin.' },
     ],
-    image: '/images/services/detail-process.png',
+    image: '/images/services/mail-in-process.jpg',
   },
   faqs: [
     { q: 'Can I use the Mail-In Program if I live outside Minnesota or Wisconsin?', a: 'Yes. The program is described as countrywide, built for customers without a nearby drop-off or pickup option.' },
@@ -75,7 +75,7 @@ export const CONTENT: ServicePageContent = {
       'If a local drop-off or pickup option isn’t available to you, get started with the Mail-In Program to send in your eligible materials. Business pickup service is available exclusively to commercial clients; the Mail-In Program is described as open to anyone.',
     ],
     primary:   { label: 'Get Started',    href: 'https://ezontheearth.com/', external: true },
-    secondary: { label: 'Find Locations', href: href('/dropoff/') },
+    secondary: { label: 'Find Locations', href: href('/all-locations/') },
   },
   todo: [
     'What Can I Send: no itemised eligibility list published. Section renders the general paragraph only, with no grid.',

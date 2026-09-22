@@ -53,3 +53,16 @@ export function isExternal(input: string): boolean {
  * /quote/ still needs one of those two before launch — it ranks today.
  */
 export const QUOTE_HREF = path('/contact-us/')
+
+/**
+ * The contact form itself, rather than the top of the page it sits on.
+ *
+ * Used by the "Don't See Your Item?" email band, which captures an address and
+ * had nowhere to send it — Asim, 22 Sep 2026: "on click it should go to form".
+ * The anchor is rendered by ContactSection; see the note there for why it is an
+ * offset span and not an id on the form element.
+ *
+ * Built here, not at the call site: rule 3 in CLAUDE.md. If /contact-us/ ever
+ * moves, this and QUOTE_HREF are the two lines that change.
+ */
+export const CONTACT_FORM_HREF = `${path('/contact-us/')}#contact-form`

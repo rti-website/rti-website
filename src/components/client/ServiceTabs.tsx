@@ -101,7 +101,10 @@ const PER_ROW = 3
  *  4. prefers-reduced-motion. For some people this kind of movement is not a
  *     matter of taste.
  */
-const AUTO_MS = 1000
+/* 3000 since 22 Sep 2026. It was 3000, Asim shortened it to 1000 the same
+ * week, then asked for 3 seconds back — one second is not long enough to read
+ * a tab's five card titles before the panel moves under you. */
+const AUTO_MS = 3000
 
 /** Height of a tab's panel: its rows of cards, the gap, the banner. */
 function panelH(count: number): number {

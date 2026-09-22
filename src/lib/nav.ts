@@ -69,7 +69,33 @@ export const MAIL_IN: NavItem = {
  * `ctaBody` strings in src/data/industries/*.ts.
  */
 export const TOP_BAR = {
-  dropOff: { label: 'Drop Off Locations', href: href('/dropoff/') },
+  /**
+   * The announcement. Real copy since 22 Sep 2026 — Asim replaced the Figma
+   * file's lorem ipsum ("It is a long established fact that a reader will be
+   * distracted…") and pointed Learn More at /sustainability/ rather than the
+   * contact page it borrowed while the text was placeholder.
+   *
+   * It lives here rather than in Header.tsx because the bar is rendered TWICE:
+   * once in the desktop header and once inside MobileNav's drawer. Hardcoding
+   * it in both is how the two quietly say different things.
+   */
+  announce: {
+    text: 'Ensuring a sustainable future together.',
+    cta: 'Learn More',
+    href: href('/sustainability/'),
+  },
+  /*
+   * Points at /all-locations/, the built Locations page — Asim, 22 Sep 2026:
+   * "land this on location page".
+   *
+   * It pointed at /dropoff/, which is a KEEP row in data/url-map.csv (it
+   * exists on the live WordPress site) but has no page in this build yet, so
+   * this link 404'd from the top bar of every page. When /dropoff/ is built,
+   * decide deliberately which of the two this should point at rather than
+   * assuming it goes back. The same swap was made on the three "Find
+   * Locations" CTAs in the service page data, for the same reason.
+   */
+  dropOff: { label: 'Drop Off Locations', href: href('/all-locations/') },
   phoneMn: { label: 'MN:(800)969-5166', tel: 'tel:+18009695166' },
   phoneWi: { label: 'WI:(800)205-3040', tel: 'tel:+18002053040' },
   contact: { label: 'Contact Us', href: href('/contact-us/') },

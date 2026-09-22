@@ -6,9 +6,9 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  *
  * Content: the "Battery Recycling" doc (Google Docs 1LJhFM2j1b...).
  * Geometry: the service detail template, Figma 6142:2048 — Aqeel has not drawn
- * a per-service frame, so this page reuses the Electronics Recycling layout and
- * its two photos. Swap `INTRO.image` / `PROCESS.image` when battery-specific
- * art exists.
+ * a per-service frame, so this page reuses the Electronics Recycling LAYOUT.
+ * The two photos are its own since 22 Sep 2026: Figma 6732:5873 (overview) and
+ * 6732:5872 (detail), fetched by scripts/fetch-figma-assets.mjs.
  * URL: the LIVE url, /battery-recycling/. Verified 15 Sep 2026.
  */
 
@@ -62,7 +62,8 @@ export const INTRO = {
     + 'properly instead of throwing them away with regular trash. Batteries contain materials '
     + 'that can be hazardous if they’re crushed, damaged, or left to leak, and different '
     + 'battery types need to be handled differently.',
-    'Because batteries can start fires or leak chemicals if they’re stored or handled '
+    // "start fires" → "catch fires", Asim 22 Sep 2026.
+    'Because batteries can catch fires or leak chemicals if they’re stored or handled '
     + 'incorrectly, sorting them by type is a key part of the process. At Recycle Technologies, '
     + 'trained staff sort and separate each battery received by type once it arrives, since a '
     + 'container of mixed battery types takes longer to process safely than one that’s '
@@ -72,7 +73,7 @@ export const INTRO = {
     + 'documented way to clear out old battery inventory instead of letting it accumulate.',
   ],
   more: { label: 'Read More', href: '#how-we-recycle' },
-  image: '/images/services/detail-intro.png',
+  image: '/images/services/batteries-intro.jpg',
 }
 
 /* --------------------------------------------------------- what we accept --*/
@@ -111,7 +112,7 @@ export const PROCESS = {
   outro:
     'Recycle Technologies has handled battery recycling from its Minnesota and Wisconsin '
     + 'facilities since 1993.',
-  image: '/images/services/detail-process.png',
+  image: '/images/services/batteries-process.jpg',
 }
 
 /* -------------------------------------------------------------------- FAQ --*/
@@ -153,7 +154,7 @@ export const CTA = {
     + 'properly. Businesses can schedule a pickup or get a quote; individuals can find a '
     + 'drop-off location or start a mail-in kit.',
   ],
-  primary:   { label: 'Find Locations',          href: href('/dropoff/') },
+  primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
 }
 

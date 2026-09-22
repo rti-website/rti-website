@@ -31,7 +31,7 @@ export const CONTENT: ServicePageContent = {
       'Both options are built around the same goal: making sure confidential paper doesn’t leave your control unshredded. Once destroyed, the shredded material is recycled rather than sent to a landfill.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/off-site-shredding-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -55,7 +55,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Certificate of Destruction:', text: 'Once your documents are shredded, Recycle Technologies provides a Certificate of Destruction for your records.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/off-site-shredding-process.jpg',
   },
   faqs: [
     { q: 'What’s the difference between on-site and off-site shredding?', a: 'On-site shredding destroys documents at your location; off-site shredding transports them to a facility for destruction and typically costs less.' },

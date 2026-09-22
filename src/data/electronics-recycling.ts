@@ -78,7 +78,7 @@ export const INTRO = {
     + 'a documented way to retire old equipment.',
   ],
   more: { label: 'Read More', href: '#how-we-recycle' },
-  image: '/images/services/detail-intro.png',
+  image: '/images/services/electronics-intro.jpg',
 }
 
 /* --------------------------------------------------------- what we accept --
@@ -131,7 +131,7 @@ export const PROCESS = {
   outro:
     'Not every device follows an identical path through the facility, since equipment types '
     + 'vary, but this is the general process electronics go through once they arrive.',
-  image: '/images/services/detail-process.png',
+  image: '/images/services/electronics-process.jpg',
 }
 
 /* -------------------------------------------------------------------- FAQ --
@@ -179,7 +179,7 @@ export const CTA = {
     + 'closet, Recycle Technologies can help you recycle it properly. Businesses can schedule '
     + 'a pickup or get a quote; individuals can find a drop-off location or start a mail-in kit.',
   ],
-  primary:   { label: 'Find Locations',          href: href('/dropoff/') },
+  primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
 }
 

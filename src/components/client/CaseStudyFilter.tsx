@@ -14,13 +14,15 @@ import { CASE_STUDY_CARDS, GRID } from '@/data/case-studies'
  * that do nothing are a promise the page does not keep. It is ~1KB of state and
  * a click handler, no dependency.
  *
- * ALL FIVE CARDS ARE ALWAYS IN THE DOM. Non-matching ones are hidden with the
+ * EVERY CARD IS ALWAYS IN THE DOM. Non-matching ones are hidden with the
  * `hidden` attribute rather than unmounted, so the prerendered HTML a crawler
  * sees always carries every story regardless of which pill is active.
  *
- * The grid is a 1278px wrapping row of 410px cards on a 24px gutter, which
- * gives exactly the frame's 3 + 2 layout (410x3 + 24x2 = 1278) and reflows on
- * its own when a filter is applied.
+ * The grid is a 1278px wrapping row of 410px cards on a 24px gutter (410x3 +
+ * 24x2 = 1278). The frame drew five in a 3 + 2 layout; since 22 Sep 2026 there
+ * are three real ones and they fill exactly one row. The row is `items-stretch`
+ * so all three cards match the tallest — without it the download link floats
+ * mid-card on the shorter two, because the card pins it with `mt-auto`.
  */
 export function CaseStudyFilter() {
   const [active, setActive] = useState<string | null>(null)
@@ -46,9 +48,9 @@ export function CaseStudyFilter() {
       </div>
 
       {/* Grid — 6391:1547 */}
-      <div className="flex w-[1278px] flex-wrap items-start gap-[24px]">
+      <div className="flex w-[1278px] flex-wrap items-stretch gap-[24px]">
         {CASE_STUDY_CARDS.map((c) => (
-          <div key={c.id} hidden={active !== null && c.industry !== active}>
+          <div key={c.id} hidden={active !== null && c.industry !== active} className="flex">
             <CaseStudyCardView card={c} />
           </div>
         ))}

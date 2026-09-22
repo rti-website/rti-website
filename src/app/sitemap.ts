@@ -1,4 +1,6 @@
 import type { MetadataRoute } from 'next'
+import fs from 'node:fs'
+import path from 'node:path'
 import { allContent } from '@/lib/content'
 import { sitemapEntry } from '@/lib/seo'
 import { allDbPosts, liveDbCategories } from '@/lib/posts-db'
@@ -28,7 +30,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // page in this build, so listing it here advertised a 404 to Google. It goes
   // back the day that page exists — until then every "Get a Quote" button
   // points at /contact-us/ instead (see QUOTE_HREF in lib/urls.ts).
-  const staticPages = ['/', '/blog/', '/services/', '/all-locations/', '/faqs/', '/contact-us/']
+  /*
+   * EVERY EXPLICIT ROUTE, READ OFF THE APP FOLDER — not a hand-kept list.
+   *
+   * Until 22 Sep 2026 this was six strings: '/', '/blog/', '/services/',
+   * '/all-locations/', '/faqs/', '/contact-us/'. Thirteen service pages, eight
+   * industry pages, About, Why Choose Us, Certifications, Sustainability,
+   * Compliance Center, Case Studies, Resources, Downloads, the ITAD guides and
+   * Mail-In — thirty-odd built pages — were not in the sitemap at all, and the
+   * two facility pages built that day would have joined them. Same quiet
+   * regression as the imported posts, one layer up.
+   *
+   * So the list is now the folders under src/app that carry a page.tsx, walked
+   * at build time (this file prerenders to a static sitemap.xml — the build
+   * guard says so — so reading the filesystem here is build-time, not
+   * request-time, and rule 2 is untouched). /admin and /api are not pages;
+   * the catch-all is covered by allContent() below.
+   */
+  const staticPages = ['/', ...explicitRoutes()]
   const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
 
   const entries = [
@@ -53,4 +72,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      actually serves. */
   const seen = new Set<string>()
   return entries.filter((e) => (seen.has(e.url) ? false : (seen.add(e.url), true)))
+}
+
+/**
+ * Every folder under src/app with a page.tsx, as a URL path — the same walk
+ * scripts/check-overlaps.mjs and check-clickable.mjs use to find pages to test,
+ * so what QA covers and what the sitemap advertises cannot drift apart.
+ */
+function explicitRoutes(): string[] {
+  const APP = path.join(process.cwd(), 'src', 'app')
+  const out: string[] = []
+  const walk = (dir: string, prefix: string) => {
+    for (const d of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (!d.isDirectory() || d.name.startsWith('[') || d.name.startsWith('_')) continue
+      if (prefix === '' && (d.name === 'admin' || d.name === 'api')) continue
+      const route = `${prefix}/${d.name}`
+      if (fs.existsSync(path.join(dir, d.name, 'page.tsx'))) out.push(`${route}/`)
+      walk(path.join(dir, d.name), route)
+    }
+  }
+  walk(APP, '')
+  return out.sort()
 }

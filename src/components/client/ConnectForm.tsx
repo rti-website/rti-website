@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { CONTACT_FORM_HREF } from '@/lib/urls'
 
 /**
  * "Don't See Your Item?" email capture.
@@ -30,6 +32,16 @@ import Image from 'next/image'
  * currently neutralise the old inline width from outside (ServiceTabs wraps it
  * in `max-lg:[&>div]:w-full!`) no longer need to; that wrapper is inert now.
  */
+/**
+ * Where the typed address is parked on the way to the contact form.
+ *
+ * sessionStorage, NOT a query string: an email address in a URL ends up in
+ * server logs, in the browser's history and in the Referer header of every
+ * request the contact page makes. This keeps it in the tab, and ContactForm
+ * removes it the moment it has read it.
+ */
+export const CONNECT_EMAIL_KEY = 'rti:connect-email'
+
 const TONE = {
   dark: {
     input: 'border-white/20 bg-white/5',
@@ -61,14 +73,42 @@ export function ConnectForm({
   id?: string
 }) {
   const t = TONE[tone]
+  const router = useRouter()
   return (
     <form
       className="flex w-full flex-col gap-[12px] lg:flex-row lg:items-start lg:gap-[10px]"
       style={{ '--connect-input-w': `${inputWidth}px` } as React.CSSProperties}
+      /*
+       * noValidate, and the field is no longer `required`.
+       *
+       * The button's job is to GET YOU TO THE FORM — Asim, 22 Sep 2026: "on
+       * click it should go to form" — so nothing may stop the click. With
+       * native validation on, an empty field or a half-typed address makes the
+       * browser refuse to submit and the button reads as broken, which is
+       * exactly what it looked like before. Now: type nothing and you land on
+       * the form; type an address and you land on the form with it filled in.
+       *
+       * This band captures one field and the contact form wants ten, so it
+       * hands the address over rather than posting it. When there IS a
+       * quote-intake endpoint, that is a decision to make here — posting one
+       * email and never asking what they want recycled is not obviously
+       * better than sending them to the real form.
+       */
+      noValidate
       onSubmit={(e) => {
         e.preventDefault()
-        // TODO(phase-2): post to the quote-intake Worker once the Phase 0
-        // tracking inventory says where submissions should land.
+        const email = new FormData(e.currentTarget).get('email')
+        // Deliberately loose: something@something. A stricter test would drop
+        // valid addresses, and the contact form validates it properly anyway.
+        if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+          try {
+            sessionStorage.setItem(CONNECT_EMAIL_KEY, email.trim())
+          } catch {
+            // Private mode, or storage blocked. The navigation still happens;
+            // they just retype the address.
+          }
+        }
+        router.push(CONTACT_FORM_HREF)
       }}
     >
       <div
@@ -77,8 +117,8 @@ export function ConnectForm({
         <label htmlFor={id} className="sr-only">Email address</label>
         <input
           id={id}
+          name="email"
           type="email"
-          required
           placeholder={placeholder}
           className={`size-full bg-transparent px-[16px] py-[12px] pr-[52px] font-inter text-[16px] outline-none ${t.text}`}
         />

@@ -637,6 +637,209 @@
       "node": "6695:5813",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "\"What We Accept\" row tick — Figma \"image 437\", 30x27.604, exported 3x."
+    },
+    {
+      "to": "public/images/services/electronics-intro.jpg",
+      "id": "db1d64df-6144-4ac0-af7b-4f3fb8c3a4de.jpeg",
+      "node": "6732:5868",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics Recycling — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/electronics-process.jpg",
+      "id": "b567841d-688f-477d-acc7-5d9c40652cc4.jpeg",
+      "node": "6732:5869",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics Recycling — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/light-bulbs-intro.jpg",
+      "id": "b78626da-a8db-4369-9427-b721cc517cf9.jpeg",
+      "node": "6732:5871",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Lighting Bulbs Recycling — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/light-bulbs-process.jpg",
+      "id": "3146dc93-082c-4e2b-8926-09e3ae2da917.jpeg",
+      "node": "6732:5870",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Lighting Bulbs Recycling — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/batteries-intro.jpg",
+      "id": "6a527d39-f99c-4955-9ec1-8de98cd44204.jpeg",
+      "node": "6732:5873",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Batteries Recycling Service — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/batteries-process.jpg",
+      "id": "58ce1033-9db7-4243-931a-75d2156bb415.jpeg",
+      "node": "6732:5872",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Batteries Recycling Service — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/ballasts-intro.jpg",
+      "id": "5315ac7c-d8da-4e0b-bc5e-5e73641c7479.jpeg",
+      "node": "6732:5875",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballasts Recycling — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/ballasts-process.jpg",
+      "id": "a04ac7d8-84c4-4391-a9b8-6bff5fabb606.jpeg",
+      "node": "6732:5874",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballasts Recycling — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/tv-intro.jpg",
+      "id": "b581f0b1-d041-4d6a-888c-81ea5f1c346b.jpeg",
+      "node": "6732:5877",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Television Recycling — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/tv-process.jpg",
+      "id": "c3971b2d-34e6-4223-9de4-73eee01a2317.jpeg",
+      "node": "6732:5876",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Television Recycling — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/hard-drive-intro.jpg",
+      "id": "f5d751ec-af4c-40a5-96a4-7c52e70537f9.jpeg",
+      "node": "6732:5879",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drives Destruction — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/hard-drive-process.jpg",
+      "id": "9c534909-3d52-405e-abfc-6a5f191513fc.jpeg",
+      "node": "6732:5878",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drives Destruction — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/paper-shredding-intro.jpg",
+      "id": "150b8c5e-e4c3-4175-be49-ee04974bc118.jpeg",
+      "node": "6732:5881",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/paper-shredding-process.jpg",
+      "id": "a8de5e70-4a82-45a1-a3d3-6688cc1af664.jpeg",
+      "node": "6732:5880",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/off-site-shredding-intro.jpg",
+      "id": "11e926b6-9cca-4b45-b4fc-144eba252188.jpeg",
+      "node": "6732:5883",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Off-Site Shredding — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/off-site-shredding-process.jpg",
+      "id": "08fe3081-acd2-47a2-915a-c6618538183f.jpeg",
+      "node": "6732:5882",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Off-Site Shredding — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/mail-in-intro.jpg",
+      "id": "b397f612-2dce-4fc0-9abe-92f79e3971c7.jpeg",
+      "node": "6732:5889",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail In Program — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/mail-in-process.jpg",
+      "id": "b7ef4073-ecd8-4487-b9f8-d1900ae8700d.jpeg",
+      "node": "6732:5888",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail In Program — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/services/recycling-kit-intro.jpg",
+      "id": "9d8d2c56-79b9-4b94-9843-37b281845801.jpeg",
+      "node": "6732:5887",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronic Recycling Kit — overview (568x295) — the photo-right block. Supplied by Asim 22 Sep 2026; exported jpg 568x295 @2x."
+    },
+    {
+      "to": "public/images/services/recycling-kit-process.jpg",
+      "id": "b436604c-c130-4366-b5ee-d0ba81bdd7e9.jpeg",
+      "node": "6732:5886",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronic Recycling Kit — detail (750x579) — the photo-left block. Supplied by Asim 22 Sep 2026; exported jpg 750x579 @2x."
+    },
+    {
+      "to": "public/images/certs/9.png",
+      "id": "d26341f1-bf34-41a0-8a00-f03419a74526/003bd.png",
+      "node": "6754:2597",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "NIST wordmark for the certifications strip. Added 22 Sep 2026, pulled that day, so the URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/certs/10.svg",
+      "id": "32c75570-c8de-4ec9-81df-4e3e3fa8889c/b97b9.svg",
+      "node": "6754:2594",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "The badge the designer drew as HIPPA for the certifications strip. THE ARTWORK IS MISSPELLED — the statute is HIPAA. Needs re-exporting once Aqeel fixes it; see the note in src/data/certifications.ts. Pulled 22 Sep 2026."
+    },
+    {
+      "to": "public/images/locations/mat-electronics.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/1c5d8.svg",
+      "node": "6746:8390",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-batteries.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/6a2e7.svg",
+      "node": "6746:8396",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Batteries icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-bulbs.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/0978f.svg",
+      "node": "6746:8402",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Light Bulbs icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-ballasts.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/dbddc.svg",
+      "node": "6746:8407",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballasts icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-paper.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/fc072.svg",
+      "node": "6746:8413",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-harddrive.svg",
+      "id": "6112938f-1957-47a4-9633-cca1c5d8668f/03f5f.svg",
+      "node": "6746:8419",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drive Destruction icon for the location pages' \"What This Location Accepts\" tiles — white, drawn at 20px in a 44px teal box. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/locations/mat-tv.svg",
+      "id": "36326bc4-4305-4fe9-ad9e-501cdb362265/88ffc.svg",
+      "node": "6746:8860",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "TV Recycling icon for the Wisconsin location page's materials tiles. Pulled 22 Sep 2026; URL expires about 29 Sep."
     }
   ]
 }

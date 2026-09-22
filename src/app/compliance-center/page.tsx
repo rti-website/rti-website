@@ -48,8 +48,13 @@ import { HERO, SEO } from '@/data/compliance-center'
 const H = {
   std:   698, // Figma 776 — one 80px row fewer
   law:   701, // Figma 697
-  cases: 733, // Figma 732
-  dl:    625, // Figma 617 — the "Request Download" link is a real focusable row
+  /* Figma 732. Re-measured 22 Sep 2026: the three case-study cards gained a
+     key-benefits list, a customer quote and a download link when the invented
+     stories were replaced with Asim's real ones, then shrank again when the
+     cards became small PDF-preview tiles the same day: 856, not 733.
+     node scripts/measure-sections.mjs --route compliance-center --port 3200 */
+  cases: 856,
+  dl:    647, // Figma 617 — the "Request Download" link is a real focusable row
 }
 
 const HERO_TOP = 140

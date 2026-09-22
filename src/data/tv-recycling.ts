@@ -29,7 +29,7 @@ export const CONTENT: ServicePageContent = {
       'For a business retiring old televisions from an office, conference room, or facility, working with a recycler that can properly process multiple TV types, rather than just accepting them and hoping for the best, makes the difference between responsible disposal and a liability sitting in a warehouse.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/tv-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -55,7 +55,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Material Recovery:', text: 'Metals, plastics, and other recoverable materials are processed for reuse rather than sent to a landfill.' },
     ],
     outro: 'Recycle Technologies has provided recycling services in the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin that comply with applicable state recycling laws.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/tv-process.jpg',
   },
   faqs: [
     { q: 'Does Recycle Technologies recycle CRT televisions?', a: 'Yes. CRT televisions are accepted and handled with attention to the lead and cadmium content in the tube.' },

@@ -52,11 +52,7 @@ export async function Header() {
         mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }}
         topBar={TOP_BAR}
         quoteHref={QUOTE_HREF}
-        announce={{
-          text: 'It is a long established fact that a reader will be distracted…',
-          cta: 'Learn more',
-          href: TOP_BAR.contact.href,
-        }}
+        announce={TOP_BAR.announce}
       />
 
     {/* overflow="visible" so the menus can hang below the 140px bar. Every other
@@ -64,18 +60,24 @@ export async function Header() {
     <Section top={0} height={HEADER_H} label="6107:2737" overflow="visible" className="z-30 hidden border-b border-line bg-white lg:block">
       {/* Announcement bar */}
       <Box x={0} y={0} w={1920} h={41} className="bg-brand">
-        {/* TODO(content): lorem ipsum in the Figma file. The migration plan
-            flags the live site's placeholder copy as a bug to fix, not port. */}
+        {/* Copy and destination both come from TOP_BAR.announce — the drawer
+            renders this same bar, and two hardcoded copies drift. */}
         <Box x={319} y={0} h={41} className="flex items-center">
           <p className="font-roboto text-[12px] leading-[14px] text-white">
-            It is a long established fact that a reader will be distracted&hellip;
+            {TOP_BAR.announce.text}
           </p>
-          <Link href={TOP_BAR.contact.href} className="ml-[10px] font-roboto text-[12px] capitalize leading-[14px] text-white hover:underline">
-            Learn more
+          <Link href={TOP_BAR.announce.href} className="ml-[10px] font-roboto text-[12px] leading-[14px] text-white underline-offset-2 hover:underline">
+            {TOP_BAR.announce.cta}
           </Link>
         </Box>
 
-        <Box x={998} y={0} h={41} className="flex items-center gap-[30px]">
+        {/* x is 1110, not Figma's 998. The frame drew this group against two
+            buttons on the right; one of them (Get a Quote) came out on 21 Sep,
+            and the 142px hole it left sat between the WI number and Contact Us
+            — Asim, 22 Sep 2026: "remove the gap between numbers and contact
+            button". Moving the group right by 112 closes it to 30px, the same
+            gap that already falls between the three items inside it. */}
+        <Box x={1110} y={0} h={41} className="flex items-center gap-[30px]">
           <Link href={TOP_BAR.dropOff.href} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">
             {TOP_BAR.dropOff.label}
           </Link>
@@ -95,10 +97,18 @@ export async function Header() {
             band all point at it.
             No fixed width: the frame's 93.392 was cut to "Get a quote" and
             would clip the longer label. Padding sets the width instead. */}
-        <Box x={1380} y={0} w={221.4} h={41} className="flex items-center justify-end">
+        {/* `pointer-events-none` on the BOX, `auto` on the button inside.
+            The box is 221.4 wide and right-anchored, so most of it is empty
+            space to the LEFT of the button — and once the number group moved
+            to x1110 (see the note above) that empty space sat on top of the WI
+            phone link. A positioned box paints above static content, so the
+            link was still visible and no longer clickable on every page of the
+            site. Found by scripts/check-clickable.mjs, which is exactly the
+            class of bug it was written for. */}
+        <Box x={1380} y={0} w={221.4} h={41} className="pointer-events-none flex items-center justify-end">
           <Link
             href={TOP_BAR.contact.href}
-            className="flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
+            className="pointer-events-auto flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
           >
             {TOP_BAR.contact.label}
           </Link>

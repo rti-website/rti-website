@@ -46,13 +46,24 @@ export function ServiceSplit({
 }) {
   const text = (
     <div className="flex w-full min-w-px flex-col items-start gap-[20px] lg:w-auto lg:flex-1 lg:gap-[11px]">
-      {/* Figma draws this box 566x63 — one line of its placeholder heading.
-          Real headings wrap, so the width (which controls where the line
-          breaks) is kept and the height becomes a minimum. Clamping it to 63
-          put the second line straight through the paragraph below.
-          Below lg the width would be 566px of heading on a 350px screen, so it
-          and the min-height are `lg:` only. */}
-      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[63px] lg:w-[566px] lg:items-center lg:text-[40px] lg:leading-[1.15]">
+      {/* Figma draws this box 566x63 — one line of its PLACEHOLDER heading,
+          which was shorter than the real ones. Keeping 566 did two bad things:
+
+          1. Real headings wrapped to two lines. "What Is Hard Drive
+             Destruction?" and "How Do We Destroy Hard Drives?" both broke in
+             the middle. Asim asked for single lines, 22 Sep 2026.
+          2. A FIXED width inside a flex row sets that column's min-content, so
+             the row could not shrink to its container. It overflowed, and
+             `justify-center` split the overflow both ways — which is why the
+             photo on the media="left" blocks hung 48px off the LEFT EDGE of
+             the screen. Asim saw that as "give some space on the left side of
+             the image".
+
+          `lg:w-full` lets the column size itself: 731px on the photo-right
+          blocks and 821px on the photo-left ones, both comfortably wider than
+          any heading here, and the row no longer overflows. min-h-63 stays so
+          a short heading still occupies the frame's box. */}
+      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[63px] lg:w-full lg:items-center lg:text-[40px] lg:leading-[1.15]">
         {heading}
       </h2>
       {children}
@@ -67,7 +78,12 @@ export function ServiceSplit({
       </div>
     )
     : (
-      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] lg:h-full lg:min-w-px lg:w-auto lg:flex-1 lg:self-stretch lg:rounded-[20px]">
+      /* `lg:self-stretch` makes the photo exactly as tall as the text column
+         beside it, which is what Asim meant by "make the image ... big so it
+         look the same as text". The row's own `lg:pl-[80px]` is the left
+         breathing space; it only started working once the heading above
+         stopped forcing the row to overflow. */
+      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] lg:h-full lg:w-auto lg:min-w-px lg:flex-1 lg:self-stretch lg:rounded-[20px]">
         <Image src={image} alt={imageAlt} fill sizes="(min-width: 1024px) 710px, 100vw" className="object-cover" />
       </div>
     )
@@ -78,7 +94,15 @@ export function ServiceSplit({
       className={`flex flex-col gap-[20px] bg-mist px-[20px] pb-[8px] pt-[40px] lg:flex-row lg:items-center lg:justify-center ${
         media === 'right'
           ? 'lg:gap-[80px] lg:px-[320px] lg:py-[100px]'
-          : 'lg:gap-[110px] lg:py-[60px] lg:pl-[80px] lg:pr-[310px]'
+          /* pl was 80 and the photo was CUT OFF at the left edge of the
+             screen. `--canvas-inset` is 130px (globals.css): the board is
+             1920 wide but only its middle 1660 is ever shown, so the outer
+             130px of the frame is cropped and any padding smaller than that
+             puts content off-screen. 200 leaves 70px of visible gutter —
+             Asim, 22 Sep 2026: "give some space of left side of the image".
+             The photo-right variant above never had this problem because its
+             320px padding already clears the inset by 190. */
+          : 'lg:gap-[110px] lg:py-[60px] lg:pl-[200px] lg:pr-[310px]'
       }`}
     >
       {/* The anchor lives on an empty span so the section's own layout is

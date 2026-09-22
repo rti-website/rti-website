@@ -34,23 +34,32 @@ import { Picker } from '@/components/client/Picker'
  * deleted.
  */
 /**
- * Four tiles, as the homepage copy doc writes them. It ran three until
- * 21 Sep 2026, because "3 Locations / MNC WI CH" and "R2v3 Ctfd / Recycling"
- * had been folded into one "R2v3 Certified Locations / Minnesota. Wisconsin"
- * tile — which quietly dropped Chicago, even though "Where We Serve" further
- * down the same page names it. Asim asked for the locations tile back.
+ * Three tiles, exactly as Figma 6023:13173 draws them — Asim, 22 Sep 2026:
+ * "see the home hero section, we have to make the numbers like this".
  *
- * The two claims stay separate on purpose. Chicago is NOT an R2v3 facility
- * (/about-us…/ lists it as "Not yet a certified facility"), so a tile that
- * named all three under an "R2v3 Certified" heading would be a false
- * certification claim. Locations are counted in one tile; certification is
- * stated in the other and names nothing.
+ * HISTORY, because this row has now gone back and forth twice:
+ *   - built as the frame's three tiles
+ *   - 21 Sep: Asim asked for a locations tile back, so it ran FOUR — "3
+ *     Locations / Minnesota. Wisconsin. Chicago" and "R2v3 Certified /
+ *     Recycling" as separate claims
+ *   - 22 Sep: Asim pointed at the frame and asked for it as drawn. Three.
+ *
+ * !! TWO FACTS TO KNOW ABOUT THE THIRD TILE, both flagged to Asim 22 Sep:
+ *   1. It drops Chicago, which "Where We Serve" further down this same page
+ *      still names. That was the reason for the 21 Sep change.
+ *   2. It says "R2v3 Certified Locations" over "Minnesota. Wisconsin". The
+ *      site's own copy (src/data/industries.ts CERTIFICATIONS_BODY, and the
+ *      FAQ on every industry page) says the New Berlin, Wisconsin facility is
+ *      PURSUING R2v3 and is PENDING. Only Blaine, Minnesota holds it. So as
+ *      drawn, this tile claims a certification for a facility that does not
+ *      have it yet, on the first screen of the homepage, and the R2v3 badge
+ *      lower down now links to SERI's directory where anyone can check.
+ *      The fix is one word in the label; it is Asim's word to choose.
  */
 const STATS = [
-  { v: '30+ Years',      l: 'Of recycling experience' },
-  { v: '50 States',      l: 'Accessible through our Mail-In Program' },
-  { v: '3 Locations',    l: 'Minnesota. Wisconsin. Chicago' },
-  { v: 'R2v3 Certified', l: 'Recycling' },
+  { v: '30+ Years',                l: 'Of recycling experience' },
+  { v: '50 States',                l: 'Accessible through our Mail-In Program' },
+  { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin' },
 ]
 
 export function Hero() {
@@ -186,16 +195,11 @@ export function Hero() {
           apart, and the figure drops 38.04 -> 26 so "R2v3 Certified" fits a
           350px column without wrapping mid-word.
 
-          !! THE FRAME DRAWS THREE STATS HERE, NOT FOUR, AND THAT IS NOT WHAT
-          SHIPS. Its third row is "R2v3 Certified Locations / Minnesota.
-          Wisconsin" — the exact tile Asim had taken apart on 21 Sep 2026,
-          because it drops Chicago (named under "Where We Serve" on this same
-          page) and because Chicago is NOT an R2v3 facility, so a heading that
-          says "R2v3 Certified Locations" over a list of locations is a
-          certification claim the company cannot make. The mobile frame predates
-          that decision. Four rows here, the same four the desktop shows.
+          Three rows, the same three the desktop shows — the phone frame
+          (6604:5043) and the desktop frame agree again since 22 Sep 2026.
+          See the STATS note above for what the third tile claims.
       */}
-      <Box x={319} y={519} w={1281.335} className="flex flex-col gap-[16px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[10px]">
+      <Box x={319} y={519} w={1281.335} className="flex flex-col gap-[16px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[24.025px]">
         {STATS.map((s, i) => (
           <div
             key={s.v}

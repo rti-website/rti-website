@@ -4,6 +4,8 @@ import { Box } from '@/components/design/Frame'
 import { href } from '@/lib/urls'
 import { FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
+import { socialLinks } from '@/lib/social'
+import { FACILITIES as CONTACT_FACILITIES } from '@/data/contact'
 
 /**
  * Footer — Figma 6044:19944, 1920x681 on #fcfcfc, built at FOOTER_H.
@@ -83,30 +85,37 @@ const COL_2: Group[] = [
 ]
 
 /**
- * NOTE(content): the Figma footer lists "Minnesota Facility" twice with
- * identical details. The second is almost certainly meant to be the Wisconsin
- * facility (New Berlin, WI). Reproduced as drawn — confirm with Aqeel.
+ * The two real facilities, read from the contact page's data — Asim, 22 Sep
+ * 2026: "see the 2nd ss add this in footer, we add same, add this one".
+ *
+ * WHAT WAS HERE BEFORE was Figma's placeholder, and it was wrong in every
+ * field that matters: it listed "Minnesota Facility" TWICE, and both carried
+ * an address that does not exist (1523 99th Ln NE, "Minnesot." 55274 — the
+ * real one is 1525, Minnesota, 55449) over a phone number nobody answers
+ * (+1-786-558-1234; Minnesota's is +1-763-559-5130). A wrong address and a
+ * wrong phone number on the footer of every page is a customer who cannot
+ * reach you, so this is a correction, not a design change. Wisconsin was
+ * missing entirely.
+ *
+ * Imported rather than retyped: FACILITIES in src/data/contact.ts is what the
+ * contact page renders, so the footer cannot drift from it. When a facility
+ * moves, that file is the one place to change.
  */
-const FACILITIES = [
-  { heading: 'Minnesota Facility', address: '1523 99th Ln NE, Blaine, Minnesot. 55274', phone: '+1-786-558-1234', email: 'dispatch@recycletechnologies.com' },
-  { heading: 'Minnesota Facility', address: '1523 99th Ln NE, Blaine, Minnesot. 55274', phone: '+1-786-558-1234', email: 'dispatch@recycletechnologies.com' },
-]
+const FACILITIES = CONTACT_FACILITIES.cards
 
-/* Brand glyphs. The design uses Font Awesome codepoints (f39e / f099 / f167)
-   rather than vector layers, so there is nothing to export — these are the
-   standard marks drawn inline at the same 16-20px box. */
-const SOCIAL = [
-  { label: 'Facebook', href: '#', path: 'M14 8.5h-2V7c0-.6.2-1 1-1h1V3.6C13.6 3.5 13 3.5 12.3 3.5c-2 0-3.3 1.2-3.3 3.4v1.6H7V11h2v7h3v-7h2l.4-2.5Z' },
-  { label: 'Twitter',  href: '#', path: 'M18.2 6.3c-.5.2-1 .4-1.6.5.6-.4 1-.9 1.2-1.6-.5.3-1.1.6-1.8.7a2.8 2.8 0 0 0-4.8 2.6A8 8 0 0 1 5.4 5.5a2.8 2.8 0 0 0 .9 3.8c-.5 0-.9-.1-1.3-.4 0 1.4 1 2.5 2.3 2.8-.4.1-.8.1-1.2 0a2.8 2.8 0 0 0 2.6 2 5.6 5.6 0 0 1-4.1 1.1 7.9 7.9 0 0 0 12.2-7.1c.6-.4 1.1-.9 1.4-1.4Z' },
-  { label: 'YouTube',  href: '#', path: 'M19 8.2a2 2 0 0 0-1.4-1.4C16.4 6.5 11 6.5 11 6.5s-5.4 0-6.6.3A2 2 0 0 0 3 8.2 21 21 0 0 0 2.7 12 21 21 0 0 0 3 15.8a2 2 0 0 0 1.4 1.4c1.2.3 6.6.3 6.6.3s5.4 0 6.6-.3a2 2 0 0 0 1.4-1.4c.2-1.3.3-2.5.3-3.8 0-1.3-.1-2.5-.3-3.8ZM9.3 14.4V9.6l4.5 2.4-4.5 2.4Z' },
-]
+/* Brand glyphs and hrefs both come from src/lib/social.ts, which reads the
+   admin's `social_links` table and falls back to RTI's real accounts. This
+   was a hardcoded array with href: '#' on every row until 22 Sep 2026 —
+   which is why saving a Facebook URL in the admin appeared to do nothing. */
 
 /**
  * `top` is the footer's y offset inside whatever it is placed in. The homepage
  * nests it in the FAQ/CTA/footer section at 1192; /services/ drops it straight
  * onto the canvas at 3830.86.
  */
-export function Footer({ top = 1192 }: { top?: number } = {}) {
+export async function Footer({ top = 1192 }: { top?: number } = {}) {
+  const SOCIAL = await socialLinks()
+
   return (
     /*
      * Mobile 6620:2370 — px20 / pt48 / pb32 / gap28 on #fcfcfc, everything in
@@ -152,10 +161,17 @@ export function Footer({ top = 1192 }: { top?: number } = {}) {
         <Box x={1086} y={70} h={380} w={1} className="hidden bg-line lg:block" />
 
         {/* 6620:5167 / 6620:5179 */}
-        <Box x={1111} y={70} w={200} className="flex flex-col gap-[28px] lg:gap-[26px]">
+        {/* 250 wide, not the frame's 200. "dispatch@recycletechnologies.com"
+            measures ~215px at 13px Roboto, plus a 14px icon and an 8px gap —
+            237 in a 200 box, so the address ran under the divider at 1311 and
+            was clipped mid-word. Asim, 22 Sep 2026. The divider and the
+            Connect column below move right by the same 75 to keep their
+            spacing; the group now ends at 1676, still 114px inside the
+            visible frame (--canvas-inset trims to 1790). */}
+        <Box x={1111} y={70} w={250} className="flex flex-col gap-[28px] lg:gap-[26px]">
           {FACILITIES.map((f, i) => (
             <div key={i}>
-              <h3 className="mb-[14px] font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:mb-[12px] lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">{f.heading}</h3>
+              <h3 className="mb-[14px] font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:mb-[12px] lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">{f.name}</h3>
               {/* gap 0 + py6 per row on the phone keeps the frame's 12px rhythm
                   while giving each tappable row a 33px box instead of 21. */}
               <address className="flex flex-col gap-0 font-roboto text-[14px] not-italic leading-[19px] text-muted lg:gap-[10px] lg:text-[13px]">
@@ -167,7 +183,14 @@ export function Footer({ top = 1192 }: { top?: number } = {}) {
                   <Image src="/images/icons/foot-phone.png" alt="" width={13} height={18} className="mt-[1px] h-[18px] w-[13px] shrink-0" />
                   {f.phone}
                 </a>
-                <a href={`mailto:${f.email}`} className="flex items-start gap-[10px] break-all py-[6px] hover:text-brand lg:gap-[8px] lg:py-0">
+                {/* `break-all` used to be here and split the address across two
+                    lines mid-word ("recycletechnologie / s.com") — Asim, 22 Sep
+                    2026. It measures ~215px at 14px Roboto against 350px of
+                    usable width on a 390 phone, so it fits on one line without
+                    help; `whitespace-nowrap` makes that a guarantee rather than
+                    a coincidence, and `min-w-px` lets the flex row shrink around
+                    it instead of forcing the column wider. */}
+                <a href={`mailto:${f.email}`} className="flex min-w-px items-start gap-[10px] whitespace-nowrap py-[6px] hover:text-brand lg:gap-[8px] lg:py-0">
                   <Image src="/images/icons/foot-email.png" alt="" width={14} height={11} className="mt-[4px] h-[11px] w-[14px] shrink-0" />
                   {f.email}
                 </a>
@@ -175,15 +198,15 @@ export function Footer({ top = 1192 }: { top?: number } = {}) {
             </div>
           ))}
         </Box>
-        <Box x={1311} y={70} h={380} w={1} className="hidden bg-line lg:block" />
+        <Box x={1386} y={70} h={380} w={1} className="hidden bg-line lg:block" />
 
         {/* ------------------------------ connect + chat card / 6620:5191 */}
-        <Box x={1336} y={70} w={265} className="flex flex-col items-center gap-[16px] lg:block">
+        <Box x={1411} y={70} w={265} className="flex flex-col items-center gap-[16px] lg:block">
           <h3 className="font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:mb-[14px] lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">Connect with Us</h3>
           <ul className="flex items-center gap-[20px] lg:gap-[18px]">
             {SOCIAL.map((s) => (
-              <li key={s.label}>
-                <a href={s.href} aria-label={s.label} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
+              <li key={s.platform}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} (opens in a new tab)`} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
                   <svg viewBox="0 0 22 22" className="size-[25px] fill-current lg:size-[22px]" aria-hidden="true"><path d={s.path} /></svg>
                 </a>
               </li>

@@ -25,18 +25,18 @@ import { IndustryCard } from '@/components/ui/IndustryCard'
  * and so leaves the `width` property alone, where `w-full` would fight the
  * `width: var(--bw)` that the lg media query puts on every .design-box.
  *
- * !! THE MOBILE FRAME'S CARD LABELS DISAGREE WITH THE SHIPPED CONTENT in three
- * places — it draws "Logistics", "Automotive" and "Education" where the site
- * says "Distribution & Logistics", "Food Services" and "Education & Government".
- * Automotive is not an industry this site serves at all; it is a different card,
- * not a shortened one. INDUSTRIES in src/data/home.ts is left alone: CLAUDE.md
- * rule 6, and a responsive pass is not where a content change belongs. Flagged
- * for Asim — if the frame is right, the data file is the place to fix it and
- * /industries/ has to agree.
+ * SEVEN CARDS, NOT THE FRAME'S EIGHT, and every one links to its industry
+ * page — Asim, 22 Sep 2026. The frame's eight were marketing categories that
+ * had never been checked against the pages that exist; the list in
+ * src/data/home.ts is now the seven built industries, and the note there has
+ * the reasoning. The mobile frame turns out to have been closer to right than
+ * the desktop one: it drew "Automotive" and "Education", which are real
+ * industry pages, where the desktop drew "Food Services" and "Education &
+ * Government", which are not.
  *
- * Cards are NOT linked: none of these pages exist on the live site yet, and
- * linking to URLs that 404 wastes crawl budget and fails the link-integrity
- * gate. Add hrefs once the industry pages are built.
+ * The grid needs no change to run 4 + 3 — that is what a 4-column grid does
+ * with seven items, and the section height is unchanged because the second row
+ * is still one row. Below lg it is 4 rows of 2 with a single card on the last.
  */
 export function Industries() {
   return (

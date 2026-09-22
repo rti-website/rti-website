@@ -37,7 +37,7 @@ export const CONTENT: ServicePageContent = {
       'That’s why a recycler needs to be able to identify and handle multiple ballast types rather than treating every unit the same way.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/ballasts-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -65,7 +65,7 @@ export const CONTENT: ServicePageContent = {
       'When processing is complete, Recycle Technologies issues a Certificate of Recycling that documents proper disposal, which many businesses need for their own compliance records.',
       'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
     ],
-    image: '/images/services/detail-process.png',
+    image: '/images/services/ballasts-process.jpg',
   },
   // The doc's compliance line ("...recognized industry certification standards
   // for responsible recycling, including R2v3") is the same generic statement

@@ -40,6 +40,14 @@ const COLUMN = 'flex w-full shrink-0 flex-col items-start gap-[24px] px-[20px] p
 export function ContactSection({ top, height }: { top: number; height: number }) {
   return (
     <Section top={top} height={height} label="6369:757" className="bg-white">
+      {/*
+        Scroll target for CONTACT_FORM_HREF — the "Don't See Your Item?" band
+        sends people here. An offset span rather than an id on the section:
+        this is a fixed-canvas layout, so an anchor on the section itself puts
+        its first line under the 120px header. Same trick as the "Read More"
+        targets in ServiceAcceptBand.
+      */}
+      <span id="contact-form" className="absolute -top-[140px]" aria-hidden="true" />
       <Box x={319} y={100} w={1282} className="flex flex-col items-start gap-0 lg:flex-row lg:gap-[80px]">
         <div className={COLUMN} data-figma="6638:8418">
           <div className={HEAD_BLOCK}>

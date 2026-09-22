@@ -19,6 +19,26 @@
  *
  * Without --write it only reports. With --write it rewrites the `layout` prop
  * in each route file, after which you rebuild.
+ *
+ * ===========================================================================
+ * !! MEASURE AT 1660 AND NOWHERE ELSE. The viewport below is load-bearing.
+ * ===========================================================================
+ * The canvas carries `zoom: calc(100cqw / (1920px - 2 * var(--canvas-inset)))`
+ * — see src/styles/globals.css. With the inset at 130 that is viewport / 1660,
+ * so the board renders 1:1 only at a 1660 viewport.
+ *
+ * This matters because the two halves of the sum below are in DIFFERENT UNITS
+ * under any other viewport. getBoundingClientRect() returns ZOOMED pixels;
+ * getComputedStyle().paddingTop returns the AUTHORED value, unzoomed. At the
+ * 1920 viewport this script used until 22 Sep 2026 the zoom is 1.157, so every
+ * measurement read a column 15.7% too tall and added an un-scaled 200px of
+ * padding to it. Every service page was written a prose block roughly 80-90px
+ * taller than its copy needs, and since these sections are `items-center` that
+ * came out as half the excess above the text and half below — the dead space
+ * Asim pointed at on /hard-drive-destruction-services/ on 22 Sep 2026.
+ *
+ * The assertion below fails the run rather than writing numbers in mixed units
+ * if anyone changes the viewport or --canvas-inset.
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -30,6 +50,8 @@ const PORT = process.argv.includes('--port')
   ? process.argv[process.argv.indexOf('--port') + 1]
   : '3200'
 const HEADROOM = 10
+/** The only viewport at which the canvas renders 1:1. See the note above. */
+const MEASURE_WIDTH = 1660
 /** The frame's own heights for the two banded sections. */
 const ACCEPT_DEFAULT = 446.36
 const CERT_DEFAULT = 299.035
@@ -58,7 +80,7 @@ const browser = await chromium.launch({
 
 let changed = 0
 for (const route of ROUTES) {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 900 } })
+  const page = await browser.newPage({ viewport: { width: MEASURE_WIDTH, height: 900 } })
   await page.goto(`http://localhost:${PORT}/${route}/`, { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(2500)
 
@@ -103,7 +125,20 @@ for (const route of ROUTES) {
       faq,
     }
   })
+  const zoom = await page.evaluate(() => {
+    const el = document.querySelector('[data-figma="6197:4463"]')?.closest('[style*="zoom"], .design-canvas')
+      || document.querySelector('.design-canvas')
+    const z = el ? parseFloat(getComputedStyle(el).zoom) : NaN
+    return Number.isFinite(z) ? z : 1
+  })
   await page.close()
+
+  if (Math.abs(zoom - 1) > 0.001) {
+    console.error(`\n  ABORT: the canvas is at zoom ${zoom} on /${route}/, not 1.`)
+    console.error('  Heights measured here would mix zoomed rects with unzoomed padding.')
+    console.error(`  Measure at a ${MEASURE_WIDTH}px viewport, or update MEASURE_WIDTH to match --canvas-inset.`)
+    process.exit(2)
+  }
 
   if (m.intro == null) {
     console.log(`  ${route.padEnd(42)} SKIPPED (sections not found)`)

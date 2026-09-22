@@ -30,7 +30,7 @@ export const CONTENT: ServicePageContent = {
       'Whether you’re clearing out old files during an office move, closing out a fiscal year, or managing an ongoing accumulation of paperwork, having a reliable way to destroy documents securely is part of running a business responsibly.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/paper-shredding-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -52,7 +52,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Recycling',          text: 'Shredded paper is recycled afterward rather than sent to a landfill.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, using equipment and staff dedicated to paper shredding across its Minnesota and Wisconsin service area.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/paper-shredding-process.jpg',
   },
   faqs: [
     { q: 'Is paper shredding available for businesses only, or residential customers too?', a: 'Business pickup is available exclusively for commercial clients; residential customers can use a drop-off location instead.' },

@@ -63,26 +63,77 @@ import type { Logo } from '@/components/ui/LogoMarquee'
  * Only R2v3 (1.png) and RIOS (2.png) are certifications Recycle Technologies
  * actually holds.
  */
+/**
+ * Where the R2v3 mark goes. Asim, 22 Sep 2026: "when user click on R2V3 it
+ * must land on this". SERI's own directory entry for the facility — the only
+ * mark on this strip that can be verified by a third party, which is exactly
+ * why it is the only one carrying a link.
+ *
+ * Long because it is SERI's own deep link, backto parameter and all, given
+ * verbatim. Not built by hand, so CLAUDE.md rule 3 does not reach it — that
+ * rule is about URLs on THIS site.
+ */
+const R2_DIRECTORY =
+  'https://sustainableelectronics.org/find-an-r2-certified-facility/'
+  + '?appids=001UQ00000P5w8DYAR&tab=2'
+  + '&backto=https://sustainableelectronics.org/find-an-r2-certified-facility/'
+  + '?type=byalias&alias=minnesota%2520computers'
+
 export const CERT_LOGOS: Logo[] = [
-  /* 1 — 6695:3630, R2v3 */
-  { src: '/images/certs/1.png', w: 44.601593, h: 46.459991, o: '' },
+  /* 1 — 6695:3630, R2v3. The one mark that links; see R2_DIRECTORY above. */
+  { src: '/images/certs/1.png', w: 44.601593, h: 46.459991, o: '', name: 'R2v3 certified', href: R2_DIRECTORY },
   /* 2 — 6695:3635, RIOS */
-  { src: '/images/certs/2.png', w: 67.619995, h: 31.739996, o: '' },
+  { src: '/images/certs/2.png', w: 67.619995, h: 31.739996, o: '', name: 'RIOS certified' },
   /* 3 — 6695:3646, labelled FACTA; see the note above */
-  { src: '/images/certs/3.png', w: 85.763351, h: 30.288174, o: '' },
+  { src: '/images/certs/3.png', w: 85.763351, h: 30.288174, o: '', name: 'FACTA' },
   /* 4 — 6695:5832, RCRA wordmark. Fourth since 22 Sep 2026; it was sixth.
      The Figma vector export wrapped the paths in the whole clipped page — a
      #2F2F2F backdrop and an opacity group — so the file here is those same
      four paths with the scaffolding stripped. */
-  { src: '/images/certs/6.svg', w: 74,         h: 22, o: '' },
+  { src: '/images/certs/6.svg', w: 74,         h: 22, o: '', name: 'RCRA' },
   /* 5 — 6695:5825, IEEE */
-  { src: '/images/certs/4.png', w: 104.192444, h: 30.561665, o: '' },
-  /* 6 — 6695:5830, NAID AAA; see the note above */
-  { src: '/images/certs/5.png', w: 43.931847,  h: 45.777725, o: '' },
+  { src: '/images/certs/4.png', w: 104.192444, h: 30.561665, o: '', name: 'IEEE' },
+  /* 6 — 6695:5830, NAID AAA. STAYS — Asim, 22 Sep 2026: "do not remove the
+     AAA logo", after a screenshot of it at its drawn 44px had read as
+     something else and it was briefly taken out. The compliance note above
+     still applies: the badge asserts a certification that was removed from
+     the compliance table on 15 Sep, and nothing in the build supports it.
+     At 44x46 the "NAID CERTIFIED" lettering is not legible — it reads as a
+     blue disc, which is what the screenshot showed. The size is the
+     designer's; raising it is her call. */
+  { src: '/images/certs/5.png', w: 43.931847,  h: 45.777725, o: '', name: 'NAID AAA certified' },
   /* 7 — 6695:5838, FCRA wordmark, same treatment as 6.svg */
-  { src: '/images/certs/7.svg', w: 69,         h: 20.699999, o: '' },
-  /* 8 — 6721:5861, GLBA. New on 22 Sep 2026. */
-  { src: '/images/certs/8.png', w: 86,         h: 22, o: '' },
+  { src: '/images/certs/7.svg', w: 69,         h: 20.699999, o: '', name: 'FCRA' },
+  /* 8 — 6721:5861, GLBA. New on 22 Sep 2026.
+     8-black.png, NOT 8.png — Asim, 22 Sep 2026: "make the GLBA colour black".
+     The Figma export is the blue wordmark on an opaque white ground; the
+     -black file is the same pixels with every non-white one turned to #000
+     and the ground made transparent (scripts/recolour-glba.py is the recipe,
+     so a re-export from Figma can be re-blacked in one command). A CSS
+     filter would have been simpler and wrong: brightness(0) on an opaque
+     export paints the white ground black too. */
+  { src: '/images/certs/8-black.png', w: 86,   h: 22, o: '', name: 'GLBA' },
+  /* 9 — 6754:2597, NIST. Added 22 Sep 2026.
+     DRAWN 128x34 IN FIGMA, RENDERED 83x22 — Asim, 22 Sep 2026: "the size of
+     NIST and HIPPA same as other logo". The designer placed these two at
+     their raw export size, half again the height of every other mark on the
+     strip. Set to the wordmark height RCRA and FCRA use (22), aspect kept.
+     The file is unchanged; only the drawn size is. */
+  { src: '/images/certs/9.png', w: 82.82,      h: 22, o: '', name: 'NIST' },
+  /* 10 — 6754:2594, the badge the designer drew as "HIPPA".
+     !! THE ARTWORK IS MISSPELLED. The statute is HIPAA — Health Insurance
+     Portability and Accountability Act. The exported badge reads HIPPA, and
+     that is what will render, because this is a picture of a word and there is
+     no way to correct it in code. It is the same misspelling that is already
+     in the footer of all three case-study PDFs.
+     Shipping it means a misspelled compliance badge on the homepage of a
+     company that recycles hospital equipment. Aqeel has to re-export it; the
+     `name` below is spelt correctly so at least the alt text and the link
+     label are right. Flagged to Asim 22 Sep 2026. */
+  /* Drawn 121.45x50.13, rendered 72.7x30 — same instruction as NIST above.
+     30 is the badge height RIOS and IEEE sit at; a badge is heavier than a
+     wordmark, so it gets the badge height rather than 22. Aspect kept. */
+  { src: '/images/certs/10.svg', w: 72.68,     h: 30, o: '', name: 'HIPAA' },
 ]
 
 /**

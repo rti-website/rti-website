@@ -20,7 +20,21 @@ const GLYPHS = {
 
 export function BarForm({
   width, glyph, iconSize = 20, label, placeholder, button, type = 'text', name, textSize = 15, onSubmit,
+  stacked = false, busy = false, onEscape,
 }: {
+  /**
+   * Below lg, draw the phone frame's shape for the locator (6747:5744): a
+   * 50px bordered input with the full-width button 12px under it, instead of
+   * one 56px bar. The bar shape is kept as the default because the blog
+   * newsletter's phone frame keeps it. This used to be done from OUTSIDE by
+   * the locations finder, with a stack of `max-lg:[&>form]:…!` overrides;
+   * that wrapper is gone now that the form answers the frame itself.
+   */
+  stacked?: boolean
+  /** Disables the button while a lookup is in flight. */
+  busy?: boolean
+  /** Escape in the field — the locator uses it to clear a result. */
+  onEscape?: (form: HTMLFormElement) => void
   width: number
   glyph: keyof typeof GLYPHS
   iconSize?: number
@@ -31,7 +45,13 @@ export function BarForm({
   type?: 'text' | 'search' | 'email'
   name: string
   textSize?: number
-  onSubmit: () => void
+  /**
+   * Handed the field's current value, and the form element so a caller can
+   * reset it. Took no arguments until 22 Sep 2026, when the blog newsletter
+   * needed the address it had just collected — every caller had the value
+   * sitting in an uncontrolled input it could not reach.
+   */
+  onSubmit: (value: string, form: HTMLFormElement) => void
 }) {
   return (
     <form
@@ -40,11 +60,20 @@ export function BarForm({
       // the locations finder, both inside a 350px column on a phone. It is a
       // custom property now, read only at lg, so below lg the bar is as wide
       // as its column. Callers restack the row from their own mobile frames.
-      className="flex h-[56px] w-full items-center justify-between rounded-[10px] border border-field bg-white pl-[20px] pr-[8px] lg:w-[var(--bar-w)]"
+      className={stacked
+        ? 'flex w-full flex-col gap-[12px] lg:h-[56px] lg:flex-row lg:items-center lg:justify-between lg:rounded-[10px] lg:border lg:border-field lg:bg-white lg:pl-[20px] lg:pr-[8px] lg:w-[var(--bar-w)]'
+        : 'flex h-[56px] w-full items-center justify-between rounded-[10px] border border-field bg-white pl-[20px] pr-[8px] lg:w-[var(--bar-w)]'}
       style={{ '--bar-w': `${width}px` } as React.CSSProperties}
-      onSubmit={(e) => { e.preventDefault(); onSubmit() }}
+      onKeyDown={onEscape ? (e) => { if (e.key === 'Escape') onEscape(e.currentTarget) } : undefined}
+      onSubmit={(e) => {
+        e.preventDefault()
+        const form = e.currentTarget
+        onSubmit(String(new FormData(form).get(name) ?? '').trim(), form)
+      }}
     >
-      <div className="flex flex-1 items-center gap-[12px]">
+      <div className={stacked
+        ? 'flex h-[50px] w-full items-center gap-[12px] rounded-[8px] border border-field bg-white px-[16px] lg:h-auto lg:w-auto lg:flex-1 lg:rounded-none lg:border-0 lg:px-0'
+        : 'flex flex-1 items-center gap-[12px]'}>
         <svg viewBox="0 0 20 20" className="shrink-0 fill-muted" style={{ width: iconSize, height: iconSize }} aria-hidden="true">
           <path d={GLYPHS[glyph]} />
         </svg>
@@ -57,7 +86,8 @@ export function BarForm({
       </div>
       <button
         type="submit"
-        className="inline-flex h-[48.05px] shrink-0 items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white"
+        disabled={busy}
+        className={`inline-flex h-[48.05px] shrink-0 items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white disabled:opacity-70 ${stacked ? 'w-full justify-center lg:w-auto' : ''}`}
       >
         <span className="whitespace-nowrap">{button}</span>
         <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

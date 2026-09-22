@@ -29,7 +29,7 @@ export const CONTENT: ServicePageContent = {
       'For businesses, facilities, and property managers, working with a recycler that manages the full process in-house makes it easier to account for where bulbs end up and to keep records tied to a documented recycling program rather than an unverified disposal method.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/light-bulbs-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -49,7 +49,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Step 4: Separation', text: 'During processing, mercury-contaminated phosphor powder and filters, glass, and aluminum end caps are separated from one another so each material can be directed to the right next step.' },
       { label: 'Step 5: Recovery', text: 'Phosphor powder and filters are shipped to a distillation company. Glass is put toward further use in industrial products, and aluminum caps are sent to an aluminum salvage partner.' },
     ],
-    image: '/images/services/detail-process.png',
+    image: '/images/services/light-bulbs-process.jpg',
   },
   faqs: [
     { q: 'What types of light bulbs does Recycle Technologies recycle?', a: 'Fluorescent tubes and CFLs, along with UV, neon, argon, HID, halogen, and incandescent lamps.' },
@@ -61,8 +61,13 @@ export const CONTENT: ServicePageContent = {
   cta: {
     heading: 'Ready to Recycle Your Light Bulbs?',
     body: [
+      // The cross-sell line that used to sit here — "Related service: Ballast
+      // Recycling, for the PCB- and DEHP-containing capacitors often found
+      // alongside fluorescent fixtures" — came out on Asim's instruction,
+      // 22 Sep 2026. It read as a footnote in the middle of a closing CTA.
+      // Ballast Recycling is still reachable from the Services menu and the
+      // /services/ catalogue, so no link is lost.
       'Whether you need a commercial pickup or want to ship bulbs through the mail-in program, Recycle Technologies can get your used or spent lighting into a documented recycling process. Get a quote or schedule a pickup to get started.',
-      'Related service: Ballast Recycling, for the PCB- and DEHP-containing capacitors often found alongside fluorescent fixtures.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },

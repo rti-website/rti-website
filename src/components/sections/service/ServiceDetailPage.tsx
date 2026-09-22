@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { FOOTER_H } from '@/lib/layout'
 import { Canvas } from '@/components/design/Frame'
 import { Header } from '@/components/sections/Header'
@@ -115,14 +114,16 @@ export function ServiceDetailPage({
           heading={intro.heading}
           image={intro.image}
           imageAlt=""
-          footer={intro.more && (
-            <Link
-              href={intro.more.href}
-              className="font-mono text-[14px] font-medium uppercase leading-[15.95px] tracking-[1.32px] text-brand hover:underline"
-            >
-              {intro.more.label}
-            </Link>
-          )}
+          /* READ MORE IS GONE — Asim, 22 Sep 2026: "remove the read more from
+             all the services subpages". It was a jump link to #how-we-recycle,
+             a section already two screens down the same page, so it saved a
+             scroll at the cost of a control that looked like a truncation cue
+             on prose that was not truncated.
+
+             `intro.more` is still in every service data file and on the
+             ServicePageContent type: the INDUSTRY template renders its own
+             Read More (to #services) and shares that shape. Removing the field
+             would mean touching both templates for one page family's change. */
         >
           {intro.body.map((p) => <p key={p} className={PROSE}>{p}</p>)}
         </ServiceSplit>

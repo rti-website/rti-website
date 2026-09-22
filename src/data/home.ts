@@ -44,16 +44,48 @@ export const SERVICE_CARDS: Record<string, Card[]> = Object.fromEntries(
   ]),
 )
 
-/** Industries — Figma 6023:12500. Eight cards, 310x226, two rows of four. */
+/**
+ * Industries — Figma 6023:12500. 310x226 cards; the grid runs 4 + 3.
+ *
+ * ===========================================================================
+ * RECONCILED WITH THE REAL PAGES, 22 Sep 2026
+ * ===========================================================================
+ * This list used to be eight MARKETING categories that nobody had checked
+ * against the seven industry pages that exist. Four of them lined up, and
+ * four did not: Food Services, Construction and Distribution & Logistics had
+ * no page at all, "Education & Government" was one card over two pages, and
+ * Automotive & Fleet had a page with no card. So every card sat unlinked —
+ * half of them would have 404'd.
+ *
+ * Asim asked for Food Services out and the rest linked ("remove the food as
+ * it is not build and land all the other on their respective pages"), then
+ * chose to reconcile the whole list rather than leave two more dead cards on
+ * the page. So this is now exactly the seven built industries, each pointing
+ * at its own page, and INDUSTRIES in src/data/industries.ts is its sibling —
+ * same seven, longer names, written for the /industries/ catalogue.
+ *
+ * !! IF AN INDUSTRY PAGE IS ADDED OR REMOVED, BOTH FILES CHANGE. They are not
+ * derived from one another on purpose: the copy differs (these blurbs are the
+ * homepage's shorter marketing voice) and a shared source would force one of
+ * the two to read wrong.
+ *
+ * TODO(design): Government and Automotive have no photo of their own in the
+ * Figma file and borrow one, exactly as /industries/ does — same industry,
+ * same picture on both pages, so the two cannot look like different things.
+ * Aqeel to supply both. ind-food.png is now unused; leave it in public/ until
+ * the design file drops it too.
+ */
 export const INDUSTRIES = [
-  { t: 'Retail',                  img: '/images/home/ind-retail.png',        b: 'Responsible electronics recycling and secure shredding to help stores manage outdated equipment and sensitive materials.' },
-  { t: 'Manufacturing',           img: '/images/home/ind-manufacturing.png', b: 'Electronics recycling, battery disposal, and material recovery solutions for facilities managing equipment and production waste.' },
-  { t: 'Healthcare',              img: '/images/home/ind-healthcare.png',    b: 'Secure electronics recycling and data destruction for devices and materials containing sensitive information.' },
-  { t: 'Construction',            img: '/images/home/ind-construction.png',  b: 'Responsible recycling for electronics, lighting, batteries, and other materials used across active project sites.' },
-  { t: 'Distribution & Logistics',img: '/images/home/ind-logistics.png',     b: 'Convenient recycling and shredding solutions for outdated electronics, equipment, documents, and other materials.' },
-  { t: 'Banking & Finance',       img: '/images/home/ind-banking.png',       b: 'Secure hard drive destruction and document shredding to protect sensitive financial and customer information.' },
-  { t: 'Food Services',           img: '/images/home/ind-food.png',          b: 'Electronics, lighting, battery recycling, and secure shredding solutions for restaurants and food service facilities.' },
-  { t: 'Education & Government',  img: '/images/home/ind-education.png',     b: 'Reliable electronics recycling, data destruction, and shredding services for schools and public institutions.' },
+  { t: 'Retail',             img: '/images/home/ind-retail.png',        href: href('/industries/retail-corporate-offices/'),   b: 'Responsible electronics recycling and secure shredding to help stores manage outdated equipment and sensitive materials.' },
+  { t: 'Manufacturing',      img: '/images/home/ind-manufacturing.png', href: href('/industries/manufacturing-industrial/'),   b: 'Electronics recycling, battery disposal, and material recovery solutions for facilities managing equipment and production waste.' },
+  { t: 'Healthcare',         img: '/images/home/ind-healthcare.png',    href: href('/industries/healthcare/'),                 b: 'Secure electronics recycling and data destruction for devices and materials containing sensitive information.' },
+  { t: 'Banking & Finance',  img: '/images/home/ind-banking.png',       href: href('/industries/financial-services-banking/'), b: 'Secure hard drive destruction and document shredding to protect sensitive financial and customer information.' },
+  // The old "Education & Government" card, split: two pages, two cards.
+  { t: 'Education',          img: '/images/home/ind-education.png',     href: href('/industries/education/'),                  b: 'Reliable electronics recycling, data destruction, and shredding services for schools, districts, and universities.' },
+  // placeholder art — see the TODO above
+  { t: 'Government',         img: '/images/home/ind-logistics.png',     href: href('/industries/government-municipal/'),       b: 'Electronics recycling, data destruction, and secure shredding for government offices and municipal departments.' },
+  // placeholder art
+  { t: 'Automotive & Fleet', img: '/images/home/ind-construction.png',  href: href('/industries/automotive-fleet/'),           b: 'Airbag recycling, electronics disposal, and battery collection for auto shops, dealerships, and fleet operations.' },
 ]
 
 /** How It Works — Figma 6040:18591. Steps 3 and 4 share a glyph in the design. */

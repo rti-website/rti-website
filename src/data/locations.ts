@@ -41,7 +41,7 @@ export const HERO = {
   lead: 'Recycle Technologies has been providing services to the community since 1993.',
 }
 
-/** Finder — 6377:967. Heading, search bar, illustrative map and facility list. */
+/** Finder — 6377:967. Heading, search bar and the illustrative map. */
 export const FINDER = {
   eyebrow: 'Find a Location',
   heading: 'Find a Recycling Location Near You',
@@ -50,37 +50,39 @@ export const FINDER = {
     label: 'Search for a recycling location by city or zip code',
     placeholder: 'Enter your city or zip code',
     button: 'Search',
+    searching: 'Searching…',
   },
-  /** The panel is explicitly illustrative — the doc marks the map "needs directions". */
+  /** The locator's answer, drawn inside the map panel — see LocationFinder.tsx. */
+  result: {
+    searching: 'Finding the nearest facility…',
+    nearestTo: 'Nearest to',
+    about: 'about',
+    miles: 'miles',
+    also: 'Also:',
+    details: 'View Location Details',
+    directions: 'Get Directions',
+    clear: 'Clear search',
+    notFound: 'We couldn’t find “{q}”. Try a 5-digit ZIP code, or a city and state like “Madison, WI”.',
+    error: 'The locator isn’t responding right now. Call us and we’ll point you to the nearest facility.',
+  },
+  /**
+   * The panel is explicitly illustrative — the doc marks the map "needs
+   * directions". Pin coordinates are on the 1282x380 panel of the updated
+   * frame (6377:7040, 22 Sep 2026); LocationsFinder turns them into
+   * percentages so the phone's 350x220 panel places them proportionally.
+   *
+   * The facility ROWS that used to sit beside the map are gone: the designer
+   * replaced them with two full cards in a section of their own, which read
+   * src/data/facilities.ts — see LocationCards.tsx.
+   */
   map: {
     note: 'Illustrative map — search above for exact directions',
+    noteShort: 'Illustrative map',
     pins: [
-      { label: 'Blaine, MN',     x: 260, y: 110 },
-      { label: 'New Berlin, WI', x: 470, y: 260 },
+      { label: 'Blaine, MN',     x: 420, y: 90 },
+      { label: 'New Berlin, WI', x: 760, y: 220 },
     ],
   },
-  facilities: [
-    {
-      name: 'Minnesota Facility',
-      detail: '1525 99th Ln NE, Blaine, MN 55449',
-      badge: 'R2v3',
-      glyph: 'pin' as const,
-      tone: 'teal' as const,
-    },
-    {
-      name: 'Wisconsin Facility',
-      detail: '2815 South 171st Street, New Berlin, WI 53151',
-      badge: 'Pursuing R2v3',
-      glyph: 'pin' as const,
-      tone: 'teal' as const,
-    },
-    {
-      name: 'Outside MN & WI?',
-      detail: 'Ship in via our Mail-In Program instead.',
-      glyph: 'mail' as const,
-      tone: 'white' as const,
-    },
-  ],
 }
 
 /** Coverage — 6377:968. Same two-column shape as the About Us story section. */
@@ -120,5 +122,5 @@ export const TODO_FOR_DESIGN = [
   'The doc badges the Minnesota row "42mi" and the Outside-MN-&-WI row "Nationwide". A distance is meaningless until the search actually geolocates, so the frame\'s factual badges are used instead: "R2v3", "Pursuing R2v3", and none on the third row.',
   'Coverage paragraph two differs between the doc and the frame; the doc\'s wording is built.',
   'The doc\'s "Where We Operate" list qualifies Chicago with "(not yet a certified facility)", which the frame omits. Built with the qualifier — it matches the Chicago card on the About Us page.',
-  'The search bar has no locator behind it. The doc marks the map "needs directions", so the panel is drawn as the frame\'s illustrative placeholder and the form does nothing on submit, like the two other unwired forms in the build.',
+  'The map panel is still the frame\'s illustrative gradient, but the search in front of it is real since 22 Sep 2026 — see /api/locate. If the team ever wants a true map, the panel is the one thing to replace.',
 ]

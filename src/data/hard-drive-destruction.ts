@@ -28,7 +28,7 @@ export const CONTENT: ServicePageContent = {
       'Destruction is different from simply throwing a drive away or handing it off with the rest of the retired electronics. A drive placed in general e-waste may still hold intact data. Physical destruction addresses that risk directly, and the materials left over from the process are handled through Recycle Technologies’ recycling operations rather than sent to a landfill.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/hard-drive-intro.jpg',
   },
   accept: {
     heading: 'What We Accept',
@@ -49,7 +49,7 @@ export const CONTENT: ServicePageContent = {
       { label: '4. Recycling',   text: 'The shredded material left over from the destruction process is recycled rather than sent to a landfill, which keeps the metal, plastic, and other components in the recycling stream.' },
     ],
     outro: 'For businesses that are also clearing out other retired IT equipment, electronics recycling and IT asset disposition (ITAD) services can be arranged alongside hard drive destruction.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/hard-drive-process.jpg',
   },
   faqs: [
     { q: 'What types of hard drives can Recycle Technologies destroy?', a: 'We destroy hard disk drives (HDDs), solid-state drives (SSDs), and other data-bearing storage devices from computers and IT equipment.' },

@@ -27,7 +27,12 @@ export function ServiceHero({
 }: {
   crumbs: Crumb[]
   h1: string
-  lead: string
+  /**
+   * A string, or two spans for a lead the phone frame shortens — the location
+   * pages hand in `<><span className="lg:hidden">…</span><span className="max-lg:hidden">…</span></>`
+   * so both wordings ship from one DOM. Everything else passes a string.
+   */
+  lead: React.ReactNode
   /** This page's own hero photograph; the shared one when omitted. */
   image?: string
   /**

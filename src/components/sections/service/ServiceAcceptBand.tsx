@@ -81,10 +81,19 @@ export function ServiceAcceptBand({
     >
       {id && <span id={id} className="absolute -top-[140px]" aria-hidden="true" />}
       {/* 75px is Figma's box for a one-line heading; longer ones wrap, so the
-          height is a minimum. Same fix as ServiceSplit's heading. The 829px
-          width and the centring are `lg:` only — the phone frame sets it left
-          and full width at 24px. */}
-      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[75px] lg:w-[829px] lg:items-center lg:justify-center lg:text-center lg:text-[40px] lg:leading-[1.15]">
+          height is a minimum. Same fix as ServiceSplit's heading. The centring
+          is `lg:` only — the phone frame sets it left and full width at 24px.
+
+          !! NOT `lg:w-[829px]`. Figma's 829 is the box drawn around "What We
+          Accept", four words. The industry pages reuse this band for
+          "Recycling Services for <industry>", and at 40px the longer names ran
+          past 829 and wrapped — Asim, 22 Sep 2026: "adjust the heading in one
+          line", on Retail & Corporate Offices. `w-full` hands the heading the
+          section's own measure instead: 1920 less the 340 gutters is 1240,
+          which fits the longest of them (Government & Municipal Organizations)
+          on one line with room to spare. The `text-center` keeps the shorter
+          service-page headings sitting exactly where 829px centred them. */}
+      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[75px] lg:w-full lg:items-center lg:justify-center lg:text-center lg:text-[40px] lg:leading-[1.15]">
         {heading}
       </h2>
 

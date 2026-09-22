@@ -1,9 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FORM } from '@/data/contact'
 import { path } from '@/lib/urls'
+import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 
 /**
  * Contact form — Figma 6370:758, redrawn in 6365:1082.
@@ -50,6 +51,29 @@ type State = 'idle' | 'sending' | 'sent' | 'error'
 export function ContactForm() {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
+
+  /**
+   * Picks up an address typed into the "Don't See Your Item?" band, which
+   * sends people here rather than posting one field on its own.
+   *
+   * Written to the DOM in an effect, not passed as defaultValue: this form is
+   * uncontrolled and prerendered, so a value read from sessionStorage during
+   * render would not match the server's HTML and React would throw a
+   * hydration error. Read once, filled in, then removed — a second visit to
+   * the contact page should not silently repeat it.
+   */
+  useEffect(() => {
+    let saved: string | null = null
+    try {
+      saved = sessionStorage.getItem(CONNECT_EMAIL_KEY)
+      if (saved) sessionStorage.removeItem(CONNECT_EMAIL_KEY)
+    } catch {
+      return
+    }
+    if (!saved) return
+    const field = document.getElementById('contact-email')
+    if (field instanceof HTMLInputElement && field.value === '') field.value = saved
+  }, [])
 
   /**
    * Posts to /api/leads, which saves the enquiry and emails whoever
