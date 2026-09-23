@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { one } from '@/lib/db'
 import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
+import { stateCode } from '@/lib/us-address'
 import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
 import { RESIDENTIAL_REPLY, residentialReplyHtml, residentialReplyText } from '@/data/emails'
@@ -45,7 +46,7 @@ const LIMITS: Record<string, number> = {
  * focuses that field and shows the message.
  */
 function validateSpecForm(p: Payload):
-  | { ok: true; name: string; phone: string; zip: string | null; service: string | null; message: string | null; details: Record<string, string> }
+  | { ok: true; name: string; phone: string; zip: string; service: string; message: string | null; details: Record<string, string> }
   | { ok: false; field: string; error: string } {
   const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
   const first = str(p.firstName)
@@ -56,8 +57,24 @@ function validateSpecForm(p: Payload):
   const phone = toE164(str(p.phone))
   if (!phone) return { ok: false, field: 'phone', error: 'Please enter a US phone number, e.g. (763) 559-5130.' }
 
-  const zip = str(p.zip) || null
-  if (zip && !/^\d{5}$/.test(zip)) return { ok: false, field: 'zip', error: 'Zip code should be 5 digits.' }
+  // Required since 23 Sep 2026 (Asim: "make optional only the address and
+  // message, other things are compulsory"). The messages match ContactForm's.
+  if (!str(p.company)) return { ok: false, field: 'company', error: 'Please enter your company name.' }
+  if (!str(p.city)) return { ok: false, field: 'city', error: 'Please enter your city.' }
+  // Stored as the postal code ("Minnesota" -> "MN"), so every lead reads alike.
+  const state = stateCode(str(p.state))
+  if (!state) return { ok: false, field: 'state', error: 'Please enter a US state, e.g. MN or Minnesota.' }
+  const zip = str(p.zip)
+  if (!/^\d{5}$/.test(zip)) return { ok: false, field: 'zip', error: 'Please enter a 5 digit ZIP code.' }
+  // Whether the ZIP matches the city is NOT checked here. The form points out
+  // a mismatch and offers the fix, but a real enquiry is never refused over
+  // it: the table can be out of date, and towns go by more than one name.
+
+  // One of the listed services — anything else is refused rather than stored,
+  // so the Lead Hub can route on it.
+  const wanted = str(p.service)
+  const service = (SERVICE_INTEREST as readonly string[]).includes(wanted) ? wanted : null
+  if (!service) return { ok: false, field: 'service', error: 'Please choose what you would like to recycle.' }
 
   const message = str(p.message) || null
   if (message && message.length > FORM.messageMax) {
@@ -66,25 +83,21 @@ function validateSpecForm(p: Payload):
 
   if (p.consent !== true) return { ok: false, field: 'consent', error: 'Please tick the box so we can contact you.' }
 
-  // Optional, but only one of the listed services — anything else is dropped
-  // rather than stored, so the Lead Hub can route on it.
-  const wanted = str(p.service)
-  const service = (SERVICE_INTEREST as readonly string[]).includes(wanted) ? wanted : null
-
   const details: Record<string, string> = {
     firstName: first,
     lastName: last,
     consent: FORM.consent,
     consentAt: new Date().toISOString(),
   }
-  if (service) details.service = service
+  details.service = service
   // Address fields and "Is it for?" — back on the form 23 Sep 2026. Stored in
   // `details` with the rest (the leads table has no columns for them).
-  for (const key of ['address', 'city', 'state'] as const) {
+  for (const key of ['address', 'city'] as const) {
     const v = str(p[key]).slice(0, LIMITS[key] ?? 120)
     if (v) details[key] = v
   }
-  if (zip) details.zip = zip
+  details.state = state
+  details.zip = zip
   const audience = str(p.audience)
   if ((FORM.audiences as readonly string[]).includes(audience)) details.audience = audience
   return { ok: true, name: `${first} ${last}`, phone, zip, service, message, details }

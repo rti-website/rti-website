@@ -85,22 +85,27 @@ export const SERVICE_INTEREST = [
  *   Last name    text      required, 2 to 60 chars
  *   Email        email     required, lowercased on save
  *   Phone        tel       required, US format accepted loosely, stored as +1XXXXXXXXXX
- *   Company      text      optional
+ *   Company      text      required
  *   Address      text      optional              } back from the frame
- *   City         text      optional              } (6365:1082) on Asim's
- *   State        text      optional              } instruction, 23 Sep 2026
- *   Zip code     text      optional, 5 digits
- *   What would you like to recycle?  select, SERVICE_INTEREST above (the
- *                          spec's "Service Interest", relabelled as the frame
- *                          draws it; still `service`, so the hero preselect
- *                          keeps working)
+ *   City         text      required              } (6365:1082) on Asim's
+ *   State        text      required, a US state  } instruction, 23 Sep 2026;
+ *                          ("MN" or "Minnesota", stored as "MN")
+ *   Zip code     text      required, 5 digits; filled in from the city, or
+ *                          fills in the city and state (/api/zip)
+ *   What would you like to recycle?  select, required, SERVICE_INTEREST above
+ *                          (the spec's "Service Interest", relabelled as the
+ *                          frame draws it; still `service`, so the hero
+ *                          preselect keeps working)
  *   Is it for?   select    Residential (default) or Commercial
  *   Message      textarea  optional, max 2000 chars
  *   Consent      checkbox  required: "I agree to be contacted by Recycle Technologies"
  *
+ * Only the street address and the message are optional — Asim, 23 Sep 2026:
+ * "make optional only the address and message, other things are compulsory".
+ * That overrides the spec's optional company and ZIP.
+ *
  * No "(optional)" markers on the labels — Asim, 23 Sep 2026: "remove the
- * optional things". Which fields are required is unchanged; the form says so
- * when one is missed.
+ * optional things". The form says which field is missing when one is.
  *
  * The rules are enforced twice: in the browser (ContactForm), and again in
  * /api/leads, which is the one that counts — see validateSpecForm there.

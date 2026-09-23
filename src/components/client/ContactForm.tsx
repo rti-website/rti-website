@@ -1,10 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { path } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
+import { cityKey, stateCode } from '@/lib/us-address'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
 
@@ -24,11 +25,33 @@ import { trackLead } from '@/components/client/track'
  * chevron on the select. Pairs sit side by side at lg and stack on a phone.
  *
  * VALIDATION, IN THE BROWSER — the same rules /api/leads enforces, so most
- * mistakes are caught before a round trip: names 2 to 60 characters, a real
- * email, a US phone number (10 digits, or 11 starting with 1, in any
- * punctuation), a 5-digit zip if one is given, a 2000-character message cap
- * with a counter, and the consent box. The server repeats every check and is
- * the one that decides; a field it rejects gets focus and its message.
+ * mistakes are caught before a round trip. Everything is required except the
+ * street address and the message (Asim, 23 Sep 2026): names 2 to 60
+ * characters, a real email, a US phone number (10 digits, or 11 starting with
+ * 1, in any punctuation), company, city, a US state ("MN" or "Minnesota"), a
+ * 5 digit ZIP, what to recycle, and the consent box; the message is capped at
+ * 2000 characters with a counter. The server repeats every check and is the
+ * one that decides; a field it rejects gets focus and its message.
+ *
+ * ZIP <-> CITY AND STATE (Asim, 23 Sep 2026: "when someone adds the zip code,
+ * automatically fetch the state and city, and vice versa, and give a message
+ * below it: change if not correct"). Asked of /api/zip as the fields are
+ * filled in; the line under City / State / Zip says what happened:
+ *
+ *   ZIP typed, city/state empty   both filled in, "change them if they are
+ *                                 not correct"
+ *   ZIP typed, city/state typed   checked; if they disagree, says where the
+ *                                 ZIP is and offers a button to use that
+ *   city + state typed, no ZIP    one ZIP: filled in. A few: offered as
+ *                                 buttons. Many: "please enter yours"
+ *   ZIP or city not found         says so
+ *
+ * A value we filled in is ours to replace when the other side changes; a
+ * value the visitor typed is never overwritten, only questioned. None of it
+ * blocks sending: towns go by more than one name and the table can be behind
+ * the Postal Service, so a mismatch is pointed out, not refused.
+ * The ZIP data is GeoNames' (CC BY 4.0), credited under every hint that uses
+ * it.
  *
  * THE SERVICE ARRIVES FROM THE HERO. The homepage's "Pick Your Service" posts
  * `?service=<name>` here (Asim, 23 Sep 2026: "when someone selects the service
@@ -53,10 +76,36 @@ function check(v: (k: FieldName) => string, consent: boolean): { field: FieldNam
   if (last.length < 2 || last.length > 60) return { field: 'lastName', message: 'Please enter your last name (2 to 60 characters).' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return { field: 'email', message: 'Please check the email address.' }
   if (!usPhoneDigits(v('phone'))) return { field: 'phone', message: 'Please enter a US phone number, e.g. (763) 559-5130.' }
-  if (v('zip') && !/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Zip code should be 5 digits.' }
+  if (!v('company')) return { field: 'company', message: 'Please enter your company name.' }
+  if (!v('city')) return { field: 'city', message: 'Please enter your city.' }
+  if (!stateCode(v('state'))) return { field: 'state', message: 'Please enter a US state, e.g. MN or Minnesota.' }
+  if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Please enter a 5 digit ZIP code.' }
+  if (!v('service')) return { field: 'service', message: 'Please choose what you would like to recycle.' }
   if (v('message').length > FORM.messageMax) return { field: 'message', message: `Please keep the message under ${FORM.messageMax} characters.` }
   if (!consent) return { field: 'consent', message: 'Please tick the box so we can contact you.' }
   return null
+}
+
+/** The line under City / State / Zip. */
+type Hint = {
+  tone: 'info' | 'warn'
+  text: string
+  /** A few ZIP codes to pick from, as buttons. */
+  zips?: string[]
+  /** "Use Blaine, MN" — replaces what the visitor typed with what the ZIP says. */
+  fix?: { city: string; state: string }
+  /** The text comes from the ZIP table: credit GeoNames (CC BY 4.0). */
+  credit?: boolean
+}
+type ZipInfo = { found: true; zip: string; state: string; city: string; cities: string[] }
+type AddrField = 'city' | 'state' | 'zip'
+
+const addr = (f: AddrField) => document.getElementById(`contact-${f}`) as HTMLInputElement | null
+
+/** "the city and state", "the city", "the state" — for the filled-in note. */
+function filledNote(city: boolean, state: boolean): string {
+  const what = city && state ? 'the city and state' : city ? 'the city' : 'the state'
+  return `We filled in ${what} from your ZIP code. Change ${city && state ? 'them' : 'it'} if ${city && state ? 'they are' : 'it is'} not correct.`
 }
 
 export function ContactForm() {
@@ -94,6 +143,110 @@ export function ContactForm() {
   function focusField(f: FieldName) {
     setBad(f)
     document.getElementById(`contact-${f}`)?.focus()
+  }
+
+  /* ---------------------------------------------- ZIP <-> city and state -- */
+  const [hint, setHint] = useState<Hint | null>(null)
+  /** Which of the three we filled in (ours to replace) vs the visitor typed. */
+  const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
+  /** Only the latest lookup may write: a slow answer to an old ZIP is dropped. */
+  const seq = useRef(0)
+
+  function put(f: AddrField, v: string, ours: boolean) {
+    const input = addr(f)
+    if (input) input.value = v
+    filled.current[f] = ours
+  }
+
+  async function ask<T>(query: string): Promise<T | null> {
+    try {
+      const res = await fetch(`${path('/api/zip/')}?${query}`)
+      return res.ok ? ((await res.json()) as T) : null
+    } catch {
+      return null // offline or the server is down: say nothing, the form still sends
+    }
+  }
+
+  /** A full ZIP was typed: fill in or check the city and state. */
+  async function fromZip(zip: string) {
+    const n = ++seq.current
+    const r = await ask<ZipInfo | { found: false }>(`zip=${zip}`)
+    if (n !== seq.current || !r) return
+    if (!r.found) {
+      setHint({ tone: 'warn', text: `We could not find ZIP code ${zip}. Please check it.` })
+      return
+    }
+    const cityNow = addr('city')?.value.trim() ?? ''
+    const stateNow = addr('state')?.value.trim() ?? ''
+    const cityFree = !cityNow || filled.current.city
+    const stateFree = !stateNow || filled.current.state
+    if (cityFree) put('city', r.city, true)
+    if (stateFree) put('state', r.state, true)
+    const cityOk = cityFree || r.cities.some((c) => cityKey(c) === cityKey(cityNow))
+    const stateOk = stateFree || stateCode(stateNow) === r.state
+    if (cityOk && stateOk) {
+      setHint(cityFree || stateFree ? { tone: 'info', text: filledNote(cityFree, stateFree), credit: true } : null)
+    } else {
+      setHint({
+        tone: 'warn',
+        text: `ZIP code ${zip} is in ${r.city}, ${r.state}. Please check the city, state and ZIP code.`,
+        fix: { city: r.city, state: r.state },
+        credit: true,
+      })
+    }
+  }
+
+  /** City and state are both in: find the ZIP, unless the visitor typed one. */
+  async function fromCity() {
+    const city = addr('city')?.value.trim() ?? ''
+    const stateInput = addr('state')
+    const typed = stateInput?.value.trim() ?? ''
+    const code = stateCode(typed)
+    if (typed && !code) {
+      setHint({ tone: 'warn', text: 'Please enter a US state, e.g. MN or Minnesota.' })
+      return
+    }
+    // "minnesota" -> "MN", so every lead reads alike (the server does the same).
+    if (code && stateInput && stateInput.value !== code) stateInput.value = code
+    if (!city || !code) return
+
+    const zipNow = addr('zip')?.value.trim() ?? ''
+    if (/^\d{5}$/.test(zipNow) && !filled.current.zip) {
+      await fromZip(zipNow) // theirs: check the city against it, change nothing
+      return
+    }
+    const n = ++seq.current
+    const r = await ask<{ zips: string[]; count: number }>(`city=${encodeURIComponent(city)}&state=${code}`)
+    if (n !== seq.current || !r) return
+    const keep = filled.current.zip && r.zips.includes(zipNow)
+    if (filled.current.zip && !keep) put('zip', '', false)
+    if (r.count === 0) {
+      setHint({ tone: 'warn', text: `We could not find ${city}, ${code}. Please check the city and state.` })
+    } else if (r.count === 1) {
+      put('zip', r.zips[0] ?? '', true)
+      setHint({ tone: 'info', text: 'We filled in the ZIP code from your city. Change it if it is not correct.', credit: true })
+    } else if (keep) {
+      setHint(null)
+    } else if (r.count <= 8) {
+      setHint({ tone: 'info', text: `${city}, ${code} has ${r.count} ZIP codes. Pick yours:`, zips: r.zips, credit: true })
+    } else {
+      setHint({ tone: 'info', text: `${city}, ${code} has ${r.count} ZIP codes. Please enter yours.`, credit: true })
+    }
+  }
+
+  function onZipInput(e: React.FormEvent<HTMLInputElement>) {
+    setBad(null)
+    filled.current.zip = false
+    const input = e.currentTarget
+    const digits = input.value.replace(/\D/g, '').slice(0, 5)
+    if (digits !== input.value) input.value = digits
+    if (digits.length === 5) void fromZip(digits)
+    else { seq.current++; setHint(null) }
+  }
+
+  function onCityOrStateInput(f: 'city' | 'state') {
+    setBad(null)
+    filled.current[f] = false
   }
 
   /**
@@ -159,6 +312,8 @@ export function ContactForm() {
       }
       trackLead({ type: 'contact', formId: 'contact_form', service: value('service'), audience: value('audience') })
       form.reset()
+      filled.current = { city: false, state: false, zip: false }
+      setHint(null)
       setCount(0)
       setState('sent')
     } catch {
@@ -193,22 +348,55 @@ export function ContactForm() {
         <Field id="phone" f={F.phone} type="tel" autoComplete="tel" required maxLength={25} invalid={invalid('phone')} onInput={() => setBad(null)} />
       </div>
 
-      <Field id="company" f={F.company} autoComplete="organization" maxLength={160} />
+      <Field id="company" f={F.company} autoComplete="organization" required maxLength={160} invalid={invalid('company')} onInput={() => setBad(null)} />
 
       <Field id="address" f={F.address} autoComplete="street-address" maxLength={200} />
 
-      {/* City / State / Zip — three across at lg, stacked on a phone. */}
-      <div className={ROW}>
-        <Field id="city" f={F.city} autoComplete="address-level2" maxLength={80} />
-        <Field id="state" f={F.state} autoComplete="address-level1" maxLength={80} />
-        <Field id="zip" f={F.zip} inputMode="numeric" autoComplete="postal-code" maxLength={5} pattern="\d{5}" invalid={invalid('zip')} onInput={() => setBad(null)} />
+      {/* City / State / Zip — three across at lg, stacked on a phone — and the
+          ZIP hint under them. The hint's box is empty (no height) until there
+          is something to say, so the fixed-canvas section keeps its layout. */}
+      <div className="flex w-full flex-col">
+        <div className={ROW}>
+          <Field id="city" f={F.city} autoComplete="address-level2" required maxLength={80} invalid={invalid('city')}
+            describedBy="contact-address-hint" onInput={() => onCityOrStateInput('city')} onBlur={() => void fromCity()} />
+          <Field id="state" f={F.state} autoComplete="address-level1" required maxLength={80} invalid={invalid('state')}
+            describedBy="contact-address-hint" onInput={() => onCityOrStateInput('state')} onBlur={() => void fromCity()} />
+          <Field id="zip" f={F.zip} inputMode="numeric" autoComplete="postal-code" required maxLength={5} pattern="\d{5}" invalid={invalid('zip')}
+            describedBy="contact-address-hint" onInput={onZipInput} />
+        </div>
+        <div id="contact-address-hint" aria-live="polite">
+          {hint && (
+            <div className={`flex flex-wrap items-center gap-x-[8px] gap-y-[6px] pt-[8px] font-roboto text-[13px] leading-[20px] ${hint.tone === 'warn' ? 'text-[#b3261e]' : 'text-label'}`}>
+              <span>{hint.text}</span>
+              {hint.fix && (
+                <button type="button" className="font-medium text-brand underline underline-offset-2"
+                  onClick={() => { put('city', hint.fix!.city, true); put('state', hint.fix!.state, true); setHint(null) }}>
+                  Use {hint.fix.city}, {hint.fix.state}
+                </button>
+              )}
+              {hint.zips?.map((z) => (
+                <button key={z} type="button"
+                  className="h-[28px] rounded-[6px] border border-field bg-white px-[10px] font-poppins text-[13px] text-ink transition-colors hover:border-brand focus-visible:border-brand"
+                  onClick={() => { put('zip', z, false); setBad(null); setHint(null) }}>
+                  {z}
+                </button>
+              ))}
+              {hint.credit && (
+                <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer" className="text-[12px] text-muted underline underline-offset-2">
+                  ZIP data: GeoNames
+                </a>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className={ROW}>
         <div className={FIELD}>
           <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
           <div className="relative">
-            <select id="contact-service" name="service" defaultValue="" className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
+            <select id="contact-service" name="service" defaultValue="" required aria-invalid={invalid('service')} onChange={() => setBad(null)}
+              className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
               <option value="">{F.service.placeholder}</option>
               {SERVICE_INTEREST.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
             </select>
@@ -280,7 +468,7 @@ function Chevron() {
 
 /** The input's id is `contact-<name>` and it posts under `<name>`. */
 function Field({
-  id, f, type = 'text', autoComplete, inputMode, required, minLength, maxLength, pattern, invalid, onInput,
+  id, f, type = 'text', autoComplete, inputMode, required, minLength, maxLength, pattern, invalid, describedBy, onInput, onBlur,
 }: {
   id: FieldName
   f: { label: string; placeholder: string }
@@ -292,14 +480,16 @@ function Field({
   maxLength?: number
   pattern?: string
   invalid?: boolean
-  onInput?: () => void
+  describedBy?: string
+  onInput?: (e: React.FormEvent<HTMLInputElement>) => void
+  onBlur?: () => void
 }) {
   return (
     <div className={FIELD}>
       <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}</label>
       <input id={`contact-${id}`} name={id} type={type} inputMode={inputMode} autoComplete={autoComplete}
         required={required} minLength={minLength} maxLength={maxLength} pattern={pattern}
-        aria-invalid={invalid} onInput={onInput}
+        aria-invalid={invalid} aria-describedby={describedBy} onInput={onInput} onBlur={onBlur}
         placeholder={f.placeholder} className={INPUT} />
     </div>
   )

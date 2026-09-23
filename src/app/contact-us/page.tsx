@@ -47,11 +47,18 @@ export const metadata = buildMetadata({
 
 /** Form + facilities — 100 + the form column + 100. The column measured 850
  *  with the frame's ten fields; 754 when the form moved to the lead-form
- *  spec's nine; 934 later on 23 Sep 2026, when address, city, state and
- *  "Is it for?" came back (see FORM in src/data/contact.ts). Re-measure:
- *  `node scripts/measure-sections.mjs --route contact-us`. */
+ *  spec's nine; 1034 later on 23 Sep 2026, when address, city, state and
+ *  "Is it for?" came back (see FORM in src/data/contact.ts).
+ *
+ *  !! measure-sections reports what the content NEEDS (100 + column), not the
+ *  100 below it. 1134 was set from that and left the form's last line flush
+ *  on the FAQ band — and once the ZIP hint could appear under City / State /
+ *  Zip (up to ~55px), it pushed the button under the band, which paints over
+ *  it. 1234 is the frame's 100 below again, and room for the hint.
+ *  Re-measure: `node scripts/measure-sections.mjs --route contact-us`, then
+ *  add the 100. */
 const FORM_TOP = 610
-const FORM_H = 1134
+const FORM_H = 1234
 const FAQ_TOP = FORM_TOP + FORM_H
 const FAQ_H = 715.52
 const CTA_TOP = FAQ_TOP + FAQ_H
