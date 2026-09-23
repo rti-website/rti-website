@@ -4,6 +4,7 @@ import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
 import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
+import { RESIDENTIAL_REPLY, residentialReplyHtml, residentialReplyText } from '@/data/emails'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -235,6 +236,48 @@ export async function POST(req: Request): Promise<Response> {
     console.warn('[leads] saved, but LEAD_NOTIFY_TO is not set — nobody was emailed.')
   } else {
     console.warn('[leads] saved, but SMTP is not configured — nobody was emailed.')
+  }
+
+  // ------------------------------------------------------ residential reply --
+  /*
+   * A household asking for a pickup gets the drop off locations by email
+   * straight away (Asim, 23 Sep 2026; copy in src/data/emails.ts). Pickup is
+   * for business customers only.
+   *
+   * ONCE A DAY PER ADDRESS. An auto reply goes to whatever address was typed
+   * in, so without a limit this form is a way to make the company's mail
+   * server send the same message to a stranger over and over. The per IP
+   * throttle above stops one sender; this stops one recipient being hit from
+   * many. A lead that did get it is marked `autoReply` in details, which is
+   * also what the admin's Enquiries screen shows.
+   *
+   * Never throws and never changes the visitor's answer: the enquiry is saved
+   * and they see a thank you either way.
+   */
+  if (id && details.audience === 'Residential' && mailConfigured()) {
+    try {
+      const recent = await one<{ n: number }>(
+        `SELECT count(*)::int AS n FROM leads
+          WHERE lower(email) = lower($1) AND details ? 'autoReply'
+            AND created_at > now() - interval '24 hours'`, [email])
+      if ((recent?.n ?? 0) === 0) {
+        const first = details.firstName || name?.split(/\s+/)[0] || null
+        const reply = await sendMail({
+          to: email,
+          subject: RESIDENTIAL_REPLY.subject,
+          text: residentialReplyText(first),
+          html: residentialReplyHtml(first),
+          from: process.env.CUSTOMER_MAIL_FROM || undefined,
+          replyTo: notifyAddress() ?? undefined,
+        })
+        if (reply.sent) {
+          await one(`UPDATE leads SET details = details || jsonb_build_object('autoReply', $2::text)
+                      WHERE id = $1 RETURNING id`, [id, new Date().toISOString()])
+        }
+      }
+    } catch (err) {
+      console.error('[leads] residential reply failed:', (err as Error).message)
+    }
   }
 
   // `notified` is for the server log and for QA on staging. The visitor is told

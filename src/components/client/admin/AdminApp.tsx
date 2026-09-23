@@ -867,6 +867,7 @@ const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
   { key: 'source_page', label: 'Sent from page', from: 'col' },
   { key: 'consent', label: 'Consent', from: 'details' },
   { key: 'consentAt', label: 'Consent given', from: 'details' },
+  { key: 'autoReply', label: 'Drop off email sent', from: 'details' },
 ]
 const KNOWN_DETAILS = new Set(LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key))
 const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
@@ -881,7 +882,7 @@ function leadFields(l: LeadRow): [string, string][] {
     if (raw === null || raw === undefined || String(raw).trim() === '') continue
     // Name is already split into first / last when the form sent both.
     if (f.key === 'name' && d.firstName) continue
-    out.push([f.label, f.key === 'consentAt' ? when(String(raw)) : String(raw)])
+    out.push([f.label, f.key === 'consentAt' || f.key === 'autoReply' ? when(String(raw)) : String(raw)])
   }
   for (const [k, v] of Object.entries(d)) if (!KNOWN_DETAILS.has(k) && v) out.push([k, String(v)])
   return out

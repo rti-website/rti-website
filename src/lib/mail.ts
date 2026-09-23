@@ -47,6 +47,10 @@ export type Mail = {
   to: string
   subject: string
   text: string
+  /** Optional HTML body; `text` is always sent too, for clients that want it. */
+  html?: string
+  /** Sender override — mail to customers goes out as the company, not "RTI Website". */
+  from?: string
   /** So a reply from the notification goes to the person who filled the form. */
   replyTo?: string
 }
@@ -64,10 +68,11 @@ export async function sendMail(mail: Mail): Promise<{ sent: boolean; reason?: st
   if (!t) return { sent: false, reason: 'SMTP is not configured' }
   try {
     await t.sendMail({
-      from: process.env.MAIL_FROM ?? process.env.SMTP_USER,
+      from: mail.from ?? process.env.MAIL_FROM ?? process.env.SMTP_USER,
       to: mail.to,
       subject: mail.subject,
       text: mail.text,
+      ...(mail.html ? { html: mail.html } : {}),
       replyTo: mail.replyTo,
     })
     return { sent: true }
