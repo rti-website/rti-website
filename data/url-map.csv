@@ -14,9 +14,9 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /off-site-shredding/,service,0,0,KEEP,/off-site-shredding/,Off-Site Shredding Services | Call (800) 969-5166,"Off-site shredding services for confidential paperwork collected from offices and facilities, securely destroyed at certified locations. Call (800) 969-5166",Off-Site Shredding Services,TRUE,TRUE
 /phone-shredding-service/,service,0,0,KEEP,/phone-shredding-service/,Phone Shredding Services | Call (800) 969-5166,"Phone shredding services providing physical destruction of mobile devices, SIM cards, memory chips, and handheld electronics to prevent data exposure. Call (800) 969-5166",Phone Shredding Services,TRUE,TRUE
 /mobile-shredding-service/,service,0,0,KEEP,/mobile-shredding-service/,,,,FALSE,FALSE
-/dropoff/,page,0,0,KEEP,/dropoff/,Dropoff - Recycle Technologies,Drop off your electronic devices and recyclable materials at our convenient DROP-OFF LOCATIONS. Join us in promoting a greener future across the USA!,drop-off locations,FALSE,FALSE
-/quote/,page,0,0,KEEP,/quote/,Get Quote related to Recycling & Shredding | Recycle Technologies,"Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.",Get A Quote,FALSE,FALSE
-/request-a-pickup/,page,0,0,KEEP,/request-a-pickup/,Request a pickup - Recycle Technologies,Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.,Request a pickup,FALSE,FALSE
+/dropoff/,page,0,0,301,/all-locations/,Dropoff - Recycle Technologies,Drop off your electronic devices and recyclable materials at our convenient DROP-OFF LOCATIONS. Join us in promoting a greener future across the USA!,drop-off locations,FALSE,FALSE
+/quote/,page,0,0,301,/contact-us/,Get Quote related to Recycling & Shredding | Recycle Technologies,"Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.",Get A Quote,FALSE,FALSE
+/request-a-pickup/,page,0,0,301,/contact-us/,Request a pickup - Recycle Technologies,Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.,Request a pickup,FALSE,FALSE
 /contact-us/,page,0,0,KEEP,/contact-us/,Contact Us for inquires about E-Waste | Recycle Technologies,Contact Us- for Recycle Technologies' safe recycling and shredding services in MN & WI. A reliable and eco-friendly waste management solutions.,contact us,TRUE,TRUE
 /certifications/,page,0,0,KEEP,/certifications/,"Certifications & Compliance | R2v3, RIOS, EPA | Recycle Technologies","Recycle Technologies holds R2v3 certification at its Blaine, Minnesota facilities and follows EPA, Minnesota PCA and Wisconsin DNR rules for hazardous and universal waste.",Certifications,TRUE,TRUE
 /why-choose-us/,page,0,0,KEEP,/why-choose-us/,"Why Choose Recycle Technologies | Minority-Owned, R2v3 Certified","A Minority-Owned Midwest recycler since 1993, R2v3 certified in Blaine, Minnesota, issuing a Certificate of Recycling or Shredding on every shipment.",Why Choose Us,TRUE,TRUE
@@ -37,7 +37,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /best-buy-geek-squad-vs-recycle-technologies/,post,0,0,KEEP,/best-buy-geek-squad-vs-recycle-technologies/,,,,FALSE,FALSE
 /about-us,page,90,1,301,/about-us-commercial-recycling-solutions/,,,,FALSE,FALSE
 /about-us-commercial-recycling-solutions/,page,1120,8,KEEP,/about-us-commercial-recycling-solutions/,Commercial recycling | Recycling solution | Recycle technologies,"Recycle Technologies Offering full-service commercial recycling as a recycling solution for e-waste, batteries, and lightbulbs in Minnesota and Wisconsin.",ABOUT US,TRUE,TRUE
-/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/,location,760,2,KEEP,/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/,Bloomington Recycling Center | Recycle Technologies,"Electronics, battery and bulb recycling serving Bloomington, MN.",Bloomington Recycling Center,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/,location,760,2,301,/minnesota-recycling/,Bloomington Recycling Center | Recycle Technologies,"Electronics, battery and bulb recycling serving Bloomington, MN.",Bloomington Recycling Center,FALSE,FALSE
 /page/2/,pagination,0,0,301,/blog/page/2/,,,,FALSE,FALSE
 /mail-in-recycling/,service,0,0,KEEP,/mail-in-recycling/,Mail-In Recycling Program | Recycle Technologies,"Recycle Technologies' Mail-In Program lets you ship eligible materials for recycling from anywhere, without a local drop-off or pickup.",Mail-In Recycling Program,TRUE,TRUE
 /industries/,page,0,0,KEEP,/industries/,Industries We Serve | Recycle Technologies,"Recycle Technologies serves healthcare, finance, education, government, automotive, manufacturing and retail organizations retiring computers, IT equipment and electronics.",Industries,TRUE,TRUE
@@ -56,3 +56,180 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /cookies-and-personal-information/,page,0,0,KEEP,/cookies-and-personal-information/,Cookies and Personal Information - Recycle Technologies,"Discover how Recycle Technologies handles COOKIES and personal information, ensuring your data's safety and compliance with state regulations. Learn more now!",Cookies / Personal Information,TRUE,FALSE
 /minnesota-recycling/,location,0,0,KEEP,/minnesota-recycling/,Recycling Center in Minnesota | Call (800) 969-5166,"Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",Recycling Center in Minnesota,TRUE,TRUE
 /wisconsin-recycling/,location,0,0,KEEP,/wisconsin-recycling/,Recycling in Wisconsin | Call (800) 969-5166,"Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.",Recycling in Wisconsin,TRUE,TRUE
+/ballast-recycling-kits/,legacy,,,301,/ballasts/,,,,FALSE,FALSE
+/battery-recycling-des-moines/,legacy,,,301,/battery-recycling/,,,,FALSE,FALSE
+/battery-recycling-in-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/battery-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/computer-recycle-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/electronic-recycling-chicago/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/electronic-recycling-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/electronic-recycling-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/electronic-recycling-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/electronics-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/electronics-recycling-in-minneapolis/electronic-recycling-in-rochester/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/electronics-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/fort-worth-texas/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/franklin-indiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/greenwood-indiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/https-www-recycletechnologies-com-ballasts/,legacy,,,301,/ballasts/,,,,FALSE,FALSE
+/johnson-city-boggs-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/johnson-city-buffalo-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/kennesaw-georgia/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/lewisburg-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/light-bulb-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/light-bulb-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/locations/,legacy,,,301,/all-locations/,,,,FALSE,FALSE
+/minnesota-recycling/anoka-county-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/battery-recycling-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/battery-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/battery-recycling-st-paul/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/benton-county-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/bulb-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/computer-recycle-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/computer-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/coon-rapids/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/dakota-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/dakota-county/burnsville-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/dakota-county/lakeville-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/east-bethel/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/electronic-recycling-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/electronic-recycling-in-woodbury/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/electronic-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/electronic-recycling-st-paul/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/minneapolis-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/richfield-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/olmsted-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/olmsted-county/rochester-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/blaine/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/electronic-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/roseville/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/scott-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/washington-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/washington-county/oakdale-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/news/,legacy,,,301,/category/news/,,,,FALSE,FALSE
+/ocala-florida/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/ontario-california/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/phoenix-arizona/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/quote-by-location/,legacy,,,301,/contact-us/,,,,FALSE,FALSE
+/recycling-kits-in-alabama/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-alaska/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-arizona/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-arkansas/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-california/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-colorado/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-connecticut/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-delaware/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-florida/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-georgia/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-hawaii/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-idaho/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-illinois/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-indiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-iowa/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-kansas/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-kentucky/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-louisiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-maine/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-maryland/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-massachusetts/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-michigan/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-minnesota/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-mississippi/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-missouri/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-montana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-nebraska/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-nevada/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-new-hampshire/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-new-jersey/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-new-mexico/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-new-york/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-north-carolina/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-north-dakota/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-ohio/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-oklahoma/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-oregon/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-pennsylvania/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-rhode-island/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-south-carolina/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-south-dakota/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-texas/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-utah/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-vermont/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-virginia/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-washington/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-west-virginia/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-wisconsin/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits-in-wyoming/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits/airbag-recycling-kits/,legacy,,,301,/airbag-recycling/,,,,FALSE,FALSE
+/recycling-kits/battery-recycling/,legacy,,,301,/battery-recycling/,,,,FALSE,FALSE
+/recycling-kits/electronics-recycling-kits/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/recycling-kits/light-bulbs-recycling-kits/,legacy,,,301,/light-bulbs/,,,,FALSE,FALSE
+/recycling-kits/mercury-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits/safety-gloves-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits/smoke-detector-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/recycling-kits/tritium-exit-sign-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
+/shredding-minnesota/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-minnesota/des-moines/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-minnesota/duluth/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-minnesota/minneapolis/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-minnesota/rochester/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-minnesota/st-paul/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/appleton/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/green-bay/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/madison/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/milwaukee/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/racine/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/shredding-wisconsin/waukesha/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
+/tv-recycling-des-moines/,legacy,,,301,/tv-recycling/,,,,FALSE,FALSE
+/tv-recycling-in-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/tv-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/appleton-electronic-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/battery-recycling-appleton/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/battery-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/battery-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/battery-recycling-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/battery-recycling-waukesha/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/bulb-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/calumet-county/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/calumet-county/appleton-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/computer-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/computer-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/electronic-recycling-appleton/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/electronic-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/electronic-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/electronics-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/electronics-recycling-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/fluorescent-bulb-recycle-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/fond-du-lac-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/green-bay-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/madison/electronic-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/milwaukee/oak-creek/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/new-berlin-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/oconomowoc-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/racine/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/sheboygan/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/tv-recycling-appleton/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/tv-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/tv-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/tv-recycling-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/tv-recycling-waukesha/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/washington-county-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/washington-county-recycling-center/wood-bury-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/waukesha-electronic-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/waukesha-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE

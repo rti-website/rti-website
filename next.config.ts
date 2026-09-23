@@ -22,6 +22,49 @@ function loadRedirects(): Redirect[] {
   }
 }
 
+type Rewrite = { source: string; destination: string }
+
+/**
+ * THE OLD WORDPRESS IMAGE URLS KEEP WORKING (CLAUDE.md rule 8, 23 Sep 2026).
+ *
+ * ~300 posts, their og:image, Google Images and other sites all point at
+ * /wp-content/uploads/<year>/<month>/<file> on this domain. The import copied
+ * those files into the media library under new names (/uploads/2026/09/...),
+ * and public/wp-content/ was never created, so the day DNS moves every one of
+ * those URLs would 404.
+ *
+ * Rewrites, not redirects: the old URL itself answers 200 with the same image,
+ * so nothing Google has indexed changes (the point of rule 8).
+ *
+ *   data/legacy-media-map.json   old path -> the library copy, one entry per
+ *                                file the import already has (295; from the
+ *                                launch audit's wp-media-manifest.json)
+ *   anything else under          -> /uploads/legacy/<same path>, i.e. MEDIA_DIR/
+ *   /wp-content/uploads/            legacy/. data/legacy-media-download.txt lists
+ *                                the files only WordPress has; they are fetched
+ *                                into that folder before the DNS switch
+ *                                (deploy/PRODUCTION-SAME-VM.md). A file in
+ *                                neither place 404s, exactly as before.
+ *
+ * Read at runtime like redirects.json, so a missing file means "no rewrites"
+ * rather than a config crash.
+ */
+function loadLegacyMedia(): Rewrite[] {
+  const file = path.join(process.cwd(), 'data', 'legacy-media-map.json')
+  let map: Record<string, string> = {}
+  if (fs.existsSync(file)) {
+    try {
+      map = JSON.parse(fs.readFileSync(file, 'utf8')) as Record<string, string>
+    } catch (e) {
+      console.warn(`[next.config] could not parse data/legacy-media-map.json: ${(e as Error).message}`)
+    }
+  }
+  return [
+    ...Object.entries(map).map(([source, destination]) => ({ source, destination })),
+    { source: '/wp-content/uploads/:path*', destination: '/uploads/legacy/:path*' },
+  ]
+}
+
 /**
  * RTI production config.
  *
@@ -49,6 +92,11 @@ const nextConfig: NextConfig = {
     // Never hand-edit data/redirects.json — change data/url-map.csv and run
     // `npm run redirects:build`.
     return loadRedirects()
+  },
+
+  async rewrites() {
+    // The old /wp-content/uploads/ image URLs — see loadLegacyMedia() above.
+    return loadLegacyMedia()
   },
 
   async headers() {

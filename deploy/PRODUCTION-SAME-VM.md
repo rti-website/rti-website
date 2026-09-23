@@ -121,6 +121,35 @@ Then open **http://localhost:8201**. The admin is at http://localhost:8201/admin
 
 A test form sent from here **really emails Usman**, so write TEST in the message.
 
+## Step 6d: redirects and old WordPress images (before the DNS switch)
+
+On 23 Sep 2026 Asim approved the launch audit's redirect list. 181 old WordPress URLs are now 301 rows in `data/url-map.csv`, which gives 184 redirects in total: city pages go to the state hub, kit pages go to Mail-In, and /quote/ and /request-a-pickup/ go to Contact Us.
+
+The old `/wp-content/uploads/...` image URLs are answered by rewrites in `next.config.ts`:
+
+- 295 of them map to the media library copies listed in `data/legacy-media-map.json`.
+- The 11 files that only exist on WordPress are downloaded here **while WordPress is still live**.
+
+```bash
+cd ~/apps/rti-website
+git pull origin main
+
+# the 11 files only WordPress has -> MEDIA_DIR/legacy/<same path>
+while read -r p; do [ -z "$p" ] && continue; d="/home/sj/apps/rti-website-data/uploads/legacy/${p#/wp-content/uploads/}"; mkdir -p "$(dirname "$d")"; curl -fsS "https://www.recycletechnologies.com$p" -o "$d" && echo "ok      $p" || echo "FAILED  $p"; done < data/legacy-media-download.txt
+
+# the 295 library copies the rewrites point at are on disk?
+node -e 'const m=require("./data/legacy-media-map.json"),fs=require("fs"),r="/home/sj/apps/rti-website-data/uploads";const v=Object.values(m);const miss=v.filter(x=>!fs.existsSync(r+x.replace(/^\/uploads/,"")));console.log("legacy images present:",v.length-miss.length,"of",v.length);miss.slice(0,5).forEach(x=>console.log("  missing",x))'
+
+npm ci && npm run build && npm run verify:static && pm2 restart rti-website
+sleep 8
+npm run verify:redirects -- --base http://127.0.0.1:8201
+curl -s -o /dev/null -w "%{http_code} %{content_type}\n" http://127.0.0.1:8201/wp-content/uploads/2010/04/Untitled-design-2024-07-10T172715.655.png
+```
+
+`verify:redirects` must end with `All redirects pass`. The image URL must return `200 image/png`.
+
+The Bloomington location page (760 clicks in 16 months, 2 backlinks) now redirects to the Minnesota hub. It is the strongest of the old city URLs, so it is the first one worth rebuilding as a real page after launch.
+
 ## Step 7: the admin team, on their proxy
 
 - Add `recycletechnologies.com` and `www.recycletechnologies.com`, both forwarding to `192.168.90.152:8201`.
