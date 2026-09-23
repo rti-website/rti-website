@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import { SITE } from './site'
 import { absolute, path } from './urls'
+import { PAGE_SEO } from '@/data/page-seo'
 
 /**
  * Every page's metadata is produced here. No page writes a `metadata` export
  * by hand — that is how a template quietly ships without a canonical.
  *
- * Titles and descriptions are ported VERBATIM from url-map.csv at launch.
- * Rewriting them is second-wave work (see the migration plan, section 8).
+ * Titles and descriptions are ported VERBATIM from url-map.csv at launch —
+ * EXCEPT the pages in src/data/page-seo.ts, where the SEO sheet Asim approved
+ * on 23 Sep 2026 replaces them (and adds a focus keyword). That lookup is by
+ * the page's URL and happens here, so no page file has to change and a page
+ * missing from the sheet simply keeps its old title.
  */
 export type SeoInput = {
   /** Site-relative path, e.g. '/it-asset-disposition/' */
@@ -35,7 +39,9 @@ export type SeoInput = {
   canonicalOverride?: string
 }
 
-export function buildMetadata(input: SeoInput): Metadata {
+export function buildMetadata(raw: SeoInput): Metadata {
+  const sheet = PAGE_SEO[raw.url]
+  const input: SeoInput = sheet ? { ...raw, title: sheet.title, description: sheet.description } : raw
   const canonical = input.canonicalOverride
     ? absolute(input.canonicalOverride)
     : absolute(input.url)
@@ -47,6 +53,7 @@ export function buildMetadata(input: SeoInput): Metadata {
   return {
     title: input.title,
     description: input.description,
+    ...(sheet ? { keywords: [sheet.focusKeyword] } : {}),
     alternates: { canonical },
     robots: blocked
       ? { index: false, follow: false }
