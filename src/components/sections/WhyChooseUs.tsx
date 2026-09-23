@@ -59,13 +59,22 @@ export function WhyChooseUs() {
         </h2>
       </Box>
 
-      <Box x={56} y={146} w={571}>
+      {/* Copy: Asim, 23 Sep 2026 — Chicago is "expanded operations", no
+          longer listed with the R2v3 facilities.
+
+          591 wide, not the frame's 571. The new first paragraph is ~20
+          characters longer and landed exactly on a line break at 571: five
+          lines at some browser widths and six at others (Chrome lays zoomed
+          text out a hair wider), and six left 0.5px above the buttons. 591
+          keeps it five everywhere and still clears the stat grid at x667 by
+          20px. */}
+      <Box x={56} y={146} w={591}>
         <p className="font-roboto text-[15px] leading-[22px] text-white/80 lg:text-[17.018px] lg:leading-[27.654px]">
           With over 30 years of experience, Recycle Technologies provides responsible
           electronics recycling, IT asset recycling, and document shredding across the
           Midwest. We are the region&rsquo;s only minority-owned document destruction and
-          recycling company, backed by R2v3-certified facilities in Minnesota, Wisconsin,
-          and Chicago.
+          recycling company, backed by R2v3-certified facilities in Minnesota and Wisconsin
+          with expanded operations in Chicago.
         </p>
         <p className="pt-[22px] font-roboto text-[15px] leading-[22px] text-white/80 lg:pt-[27.654px] lg:text-[17.018px] lg:leading-[27.654px]">
           Our convenient local and nationwide mail-in recycling options make electronics

@@ -21,7 +21,8 @@ import { FOOTER_CERTS, type FooterCert } from '@/data/certifications'
  * draws eight of the marks 4x2 after the chat card, which is where "place the
  * logos after Connect with Us" puts them. The R2v3 mark links to SERI's
  * directory entry, the same URL as on the Certifications & Standards strip.
- * The marks and their two layouts are FOOTER_CERTS in src/data/certifications.ts.
+ * The same day Asim cut the nine marks to three — R2v3, RIOS and NAID AAA —
+ * so the grid is now one row. See FOOTER_CERTS in src/data/certifications.ts.
  *
  * The frame restyles the board's column type to its own: 16px IBM Plex
  * Medium headings over 14px Poppins links on a 31px pitch, and the chat card
@@ -225,7 +226,7 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
         <Rule />
 
         {/* ------------------------------ connect, chat card, logos / 6778:4025
-            188 wide on the board: heading block, card at +110, logos at +343. */}
+            188 wide on the board: heading block, card at +110, logo row at +343. */}
         <div className="flex flex-col items-center gap-[16px] lg:w-[188px] lg:shrink-0 lg:items-stretch lg:gap-[30px]">
           <div className="flex flex-col items-center gap-[16px] lg:items-start lg:gap-0">
             <h3 className={HEADING}>Connect with Us</h3>
@@ -253,10 +254,10 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
               Hi! How can we help?
             </p>
             <div className="mt-[12px] flex gap-[10px] lg:mt-0 lg:w-full lg:flex-col lg:gap-[10px]">
-              <Link href={href('/contact-us/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
+              <Link href={href('/contact-us/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
                 I have a question
               </Link>
-              <Link href={href('/faqs/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
+              <Link href={href('/faqs/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
                 Tell me more
               </Link>
             </div>
@@ -343,41 +344,29 @@ function LinkColumn({ groups }: { groups: Group[] }) {
 const LINK = 'block py-[5px] font-roboto text-[14px] leading-[20px] text-muted hover:text-brand lg:whitespace-nowrap lg:py-[2px] lg:font-poppins lg:leading-[21px]'
 
 /**
- * The certification marks — 6778:4122 on the board, 6778:9672 on the phone.
- *
- * ONE LIST, TWO GRIDS. The board draws a 188px square, 3x3 on columns of
- * 64.27 · 59.46 · 64.27 at 80% opacity; the phone draws 4x2 across the whole
- * column, 97px rows, RCRA left out. Each mark carries its cell for both (see
- * FOOTER_CERTS) and is placed with `grid-column` / `grid-row` from custom
- * properties, so the DOM is one list and nothing is duplicated.
- *
- * The dividers are grid items too — a left border on a column-spanning item,
- * a top border on a row-spanning one — so they sit exactly on the track
- * edges at any phone width. Only the INNER lines are drawn, as in both frames.
- *
- * Each mark is centred in its cell at its frame size. The frames place them
- * a few px off centre in places (the phone's second row rides ~15px high);
- * centred is what those positions are reaching for.
+ * The certification marks — one row of three since 23 Sep 2026 (see
+ * FOOTER_CERTS). Thirds of the board's 188px column, 64 tall, at the frame's
+ * 80% opacity; thirds of the phone's whole column, 97 tall. The two rules
+ * between the marks are grid items
+ * with a left border, so they land on the track edges at any width.
  */
 function CertGrid() {
   return (
-    <div className="grid w-full grid-cols-4 grid-rows-[97px_97px] lg:w-[188px] lg:grid-cols-[64.27px_59.46px_64.27px] lg:grid-rows-[64.27px_59.46px_64.27px] lg:opacity-80">
-      <span aria-hidden="true" className="col-start-2 row-span-full border-l border-line" />
-      <span aria-hidden="true" className="col-start-3 row-span-full border-l border-line" />
-      <span aria-hidden="true" className="col-start-4 row-span-full border-l border-line lg:hidden" />
-      <span aria-hidden="true" className="col-span-full row-start-2 border-t border-line" />
-      <span aria-hidden="true" className="col-span-full row-start-3 hidden border-t border-line lg:block" />
-      {FOOTER_CERTS.map((c) => <Cert key={c.name} c={c} />)}
+    <div className="grid w-full grid-cols-3 grid-rows-[97px] lg:w-[188px] lg:grid-rows-[64px] lg:opacity-80">
+      <span aria-hidden="true" className="col-start-2 row-start-1 border-l border-line" />
+      <span aria-hidden="true" className="col-start-3 row-start-1 border-l border-line" />
+      {FOOTER_CERTS.map((c, i) => <Cert key={c.name} c={c} col={i + 1} />)}
     </div>
   )
 }
 
-function Cert({ c }: { c: FooterCert }) {
+function Cert({ c, col }: { c: FooterCert; col: number }) {
   const vars = {
-    ...(c.phone && { '--pc': c.phone.at[0], '--pr': c.phone.at[1], '--pw': `${c.phone.w}px`, '--ph': `${c.phone.h}px` }),
-    '--gc': c.board.at[0], '--gr': c.board.at[1], '--gw': `${c.board.w}px`, '--gh': `${c.board.h}px`,
+    '--pw': `${c.phone.w}px`, '--ph': `${c.phone.h}px`,
+    '--gw': `${c.board.w}px`, '--gh': `${c.board.h}px`,
+    gridColumn: col, gridRow: 1,
   } as React.CSSProperties
-  const cell = `grid place-items-center [grid-column:var(--pc)] [grid-row:var(--pr)] lg:[grid-column:var(--gc)] lg:[grid-row:var(--gr)] ${c.phone ? '' : 'max-lg:hidden'}`
+  const cell = 'grid place-items-center'
   const fit = c.fit === 'contain' ? 'object-contain' : c.fit === 'cover' ? 'object-cover' : 'object-fill'
 
   const art = (
@@ -393,7 +382,7 @@ function Cert({ c }: { c: FooterCert }) {
   )
 
   /* The R2v3 mark is the whole cell as a link, so the tap target is the
-     cell (87x97 on a 390 phone), not the 42px mark. */
+     cell (117x97 on a 390 phone), not the 42px mark. */
   return c.href ? (
     <a href={c.href} target="_blank" rel="noopener noreferrer"
       aria-label={`${c.name} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}

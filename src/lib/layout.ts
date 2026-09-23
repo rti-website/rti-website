@@ -22,23 +22,26 @@
 export const HEADER_H = 120
 
 /**
- * Footer — Figma 6778:3897 draws 755, and it is built at 755.
+ * Footer — Figma 6778:3897 draws 755. Built at 715.
  *
  * History: the first footer frame drew 681 with an 84px dead band between the
  * last column and the bottom bar, and on 16 Sep 2026 Asim had that closed,
  * building it at 621 with the bar at y520. On 23 Sep 2026 the designer's new
- * footer (the one with the certification logos under the chat card) replaced
- * that frame: its column block now ends at y621 with the logo grid, and the
- * bar starts 33px below at y654 — a normal gap, not a hole, so the frame's
- * numbers are used as drawn.
+ * footer replaced that frame — 755, with a 3x3 logo grid under the chat card
+ * ending at y621 and the bar 33px below at y654.
+ *
+ * Later that day Asim cut the logos to three, one row, and the Connect column
+ * stopped being the tallest: Resources + Terms & Conditions end at y581 now.
+ * The bar keeps the frame's 33px below that — y614 — and the footer is
+ * 614 + 74 + 27 = 715.
  *
  * Every route sizes its canvas from FOOTER_H, so this one number is the whole
  * change for every page.
  */
-export const FOOTER_H = 755
+export const FOOTER_H = 715
 
 /** Where the footer's bottom bar starts, inside the footer. */
-export const FOOTER_BAR_Y = 654
+export const FOOTER_BAR_Y = 614
 
 /**
  * How far the whole canvas slides up under the shortened header.

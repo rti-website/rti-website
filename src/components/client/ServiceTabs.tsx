@@ -64,47 +64,14 @@ const ROW_GAP = 24
 const BANNER_H = 140
 const PER_ROW = 3
 
-/**
- * How long each tab holds before the next one opens — Asim, 21 Sep 2026.
- * Set to 3s, then to 1s the same day. At 1s the whole set cycles in three
- * seconds, so the four stops below carry more weight than they did: the tabs
- * are different heights and every switch moves the page under this section.
- *
- * Four things stop the timer, and the first is not optional:
- *
- *  1. THE SECTION BEING OFF SCREEN. The tabs are not the same height — a
- *     one-row tab is 398px shorter than a two-row one, which is the whole
- *     point of HOME_SERVICES_DELTA_VAR below. Rotating while the reader is
- *     further down the page would jerk everything under them by 398px every
- *     few seconds, with no idea why. So it only runs while the section is
- *     actually in view.
- *  2. A POINTER OVER THE CARDS — the right-hand panel only, NOT the tab list.
- *     This started as the whole section and that was wrong: the section is
- *     1282 x 1133, so a mouse resting anywhere near it stopped the rotation
- *     and it looked like it had run once and died. Asim reported exactly that
- *     on 21 Sep 2026. The hold still covers the cards, because a card that
- *     swaps out from under a cursor that was about to click it sends someone
- *     to the wrong service — at a one-second beat that is a coin toss, not a
- *     nuisance. Hovering the tabs, or anywhere else, leaves it running.
- *
- *     TOUCH POINTERS ARE EXCLUDED. A finger has no hover state: a tap on the
- *     panel fires pointerenter and then never fires pointerleave, because the
- *     pointer ceases to exist rather than moving away. Left ungated that is
- *     not a hold, it is an off switch — one scroll-flick over the cards and
- *     the rotation is dead for the rest of the visit, on the one layout where
- *     touching the cards to scroll past them is the normal way through. The
- *     hold is what a hover means, so it is limited to pointers that hover.
- *  3. Focus anywhere inside, and a click on any tab. Focus protects the email
- *     field in the banner and anyone driving this from a keyboard; the click
- *     is the deliberate "I have chosen, stop" — and the WCAG 2.2.2 mechanism
- *     for stopping something that moves on its own.
- *  4. prefers-reduced-motion. For some people this kind of movement is not a
- *     matter of taste.
+/*
+ * NO AUTO-ROTATION since 23 Sep 2026 — Asim: "remove the animation from it,
+ * the 3 sec". The tabs used to advance on their own every 3 seconds (1s for a
+ * day on 21 Sep), with four holds bolted on to keep it from misbehaving:
+ * off-screen, pointer over the cards, focus, reduced motion. With the cards
+ * now revealing their blurb on hover, a panel that changes under the pointer
+ * would fight that directly. A tab opens when it is clicked, and only then.
  */
-/* 3000 since 22 Sep 2026. It was 3000, Asim shortened it to 1000 the same
- * week, then asked for 3 seconds back — one second is not long enough to read
- * a tab's five card titles before the panel moves under you. */
-const AUTO_MS = 3000
 
 /** Height of a tab's panel: its rows of cards, the gap, the banner. */
 function panelH(count: number): number {
@@ -122,11 +89,6 @@ export function ServiceTabs() {
   const host = useRef<HTMLDivElement>(null)
   const strip = useRef<HTMLDivElement>(null)
 
-  /** Cleared for good by a click on any tab. */
-  const [auto, setAuto] = useState(true)
-  /** Hovering pointer over the CARDS, or focus anywhere inside the section. */
-  const [held, setHeld] = useState(false)
-  const [onScreen, setOnScreen] = useState(false)
   const [reduced, setReduced] = useState(false)
   /** Below lg the tab list is a horizontal rail, so it says so to a screen reader. */
   const [horizontal, setHorizontal] = useState(false)
@@ -154,47 +116,14 @@ export function ServiceTabs() {
     }
   }, [])
 
-  useEffect(() => {
-    const el = host.current
-    if (!el) return
-    // A third of the section showing counts as watching it. Any less and the
-    // rotation runs while it is only just clipping into view at the bottom.
-    //
-    // That test alone cannot survive the phone. The mobile section is ~1826
-    // tall against a viewport of 600-800, so a THIRD of it is more than the
-    // screen holds and the ratio never reaches 0.34 — the rotation would
-    // simply never start, on every phone shorter than 621px. So half the
-    // viewport filled by the section counts too: the same "the reader is
-    // looking at this" intent, measured from the window instead of from the
-    // element. On the desktop board (1133 tall) the ratio test is the one
-    // that trips first at any sane window height, so nothing changes there.
-    //
-    // Thresholds every 5% because a callback only fires when one is crossed,
-    // and the viewport test needs to be re-evaluated as the section scrolls
-    // through rather than at one fixed ratio.
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry) { setOnScreen(false); return }
-        const vh = entry.rootBounds?.height ?? window.innerHeight
-        setOnScreen(
-          entry.isIntersecting
-          && (entry.intersectionRatio >= 0.34 || entry.intersectionRect.height >= vh / 2),
-        )
-      },
-      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
-    )
-    io.observe(el)
-    return () => { io.disconnect() }
-  }, [])
-
   /**
    * Keep the open chip in the rail. Below lg the tab list scrolls sideways and
-   * the third chip starts past its right edge, so a rotation — or a click on a
-   * half-visible chip — would otherwise leave the selection off screen while
+   * the third chip starts past its right edge, so a click on a half-visible
+   * chip would otherwise leave the selection off screen while
    * the cards under it changed for no visible reason.
    *
    * The rail is scrolled directly rather than with scrollIntoView, which would
-   * be free to scroll the PAGE as well and yank the reader around every second.
+   * be free to scroll the PAGE as well and yank the reader around.
    * Offsets come off getBoundingClientRect so no offsetParent has to be
    * arranged for, and the whole thing no-ops at lg, where the list is a column
    * with nothing to scroll.
@@ -211,26 +140,10 @@ export function ServiceTabs() {
     rail.scrollTo({ left: Math.max(0, left), behavior: reduced ? 'auto' : 'smooth' })
   }, [active, reduced])
 
-  useEffect(() => {
-    if (!auto || held || !onScreen || reduced) return
-    const id = window.setInterval(() => {
-      setActive((current) => {
-        const i = SERVICE_TABS.findIndex((t) => t.id === current)
-        return SERVICE_TABS[(i + 1) % SERVICE_TABS.length]?.id ?? current
-      })
-    }, AUTO_MS)
-    return () => { window.clearInterval(id) }
-  }, [auto, held, onScreen, reduced])
-
   return (
     <div
       ref={host}
       className="flex w-full flex-col gap-[20px] lg:flex-row lg:items-start lg:gap-[32px]"
-      onFocusCapture={() => setHeld(true)}
-      onBlurCapture={(e) => {
-        // Focus moving between two children is not focus leaving the section.
-        if (!e.currentTarget.contains(e.relatedTarget)) setHeld(false)
-      }}
     >
       {/* Chips Scroll 6605:2347 below lg — a 350 window over a 637 track. */}
       <div
@@ -246,7 +159,7 @@ export function ServiceTabs() {
             <button
               key={tab.id} role="tab" type="button" id={`tab-${tab.id}`}
               aria-selected={on} aria-controls={`panel-${tab.id}`}
-              onClick={() => { setActive(tab.id); setAuto(false) }}
+              onClick={() => setActive(tab.id)}
               className={`flex shrink-0 snap-start cursor-pointer items-center gap-[8px] rounded-[12px] py-[10px] pl-[14px] pr-[16px] text-left transition-colors lg:h-[102px] lg:w-full lg:gap-[16px] lg:py-0 lg:pl-[22px] lg:pr-[22px] ${
                 on
                   ? 'bg-gradient-to-r from-navy to-brand text-white'
@@ -271,13 +184,9 @@ export function ServiceTabs() {
         id={`panel-${active}`}
         aria-labelledby={`tab-${active}`}
         className="flex w-full flex-col gap-[20px] lg:w-[833px] lg:shrink-0 lg:gap-[24px]"
-        // The pointer hold lives here, not on the section, and only for a
-        // pointer that can hover — see AUTO_MS.
-        onPointerEnter={(e) => { if (e.pointerType !== 'touch') setHeld(true) }}
-        onPointerLeave={(e) => { if (e.pointerType !== 'touch') setHeld(false) }}
       >
         <div className="flex w-full flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:gap-[24px]">
-          {cards.map((c) => <ServicePhotoCard key={c.href} card={c} />)}
+          {cards.map((c) => <ServicePhotoCard key={c.href} card={c} reveal />)}
         </div>
 
         {/* Ballast Banner Card — 6534:2011, and 6605:2394 on the phone. */}

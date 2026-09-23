@@ -58,7 +58,8 @@ export const HERO = {
     { label: 'Certifications', href: null },
   ],
   h1: 'Certifications',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 23 Sep 2026.
+  lead: 'Our certifications are the proof behind our promises — verified standards our facilities meet for responsible recycling and secure data destruction.',
 }
 
 export const INTRO = {

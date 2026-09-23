@@ -29,6 +29,7 @@ export const CONTENT = industryPage({
   // Government one, so this borrows Education's. Swap it when the real photo
   // lands; the card art on /industries/ borrows too (see src/data/industries.ts).
   heroImage: '/images/industries/hero-education.png',
+  introImage: '/images/industries/intro-education-government.png', // Figma 6734:5897, supplied by Asim 23 Sep 2026
   faqs: [
     { q: 'Does Recycle Technologies work with government and municipal organizations?', a: 'Our electronics recycling, IT asset disposition, and shredding services are set up to handle equipment from businesses and institutions, including offices with larger equipment lists.' },
     { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete.' },

@@ -1,6 +1,7 @@
 import { FACILITIES as CONTACT } from '@/data/contact'
 import type { CtaContent } from '@/components/sections/ClosingCta'
 import { href } from '@/lib/urls'
+import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * The two licensed facilities — ONE record each, read by three surfaces:
@@ -68,6 +69,14 @@ export type Facility = {
   /** Weekday line only, as the quick-info bar draws it. */
   hoursShort: string
   cert: { status: string; badge: string }
+  /**
+   * The mark in the /all-locations/ card header, where the status pill used to
+   * be — Asim, 23 Sep 2026: the R2v3 logo "without bg and make it clickable"
+   * for Minnesota, and the NAID AAA logo for Wisconsin. `disc` sets a mark
+   * that has its own white ground on a white circle, so the ground reads as
+   * part of the badge instead of a white square on the dark header.
+   */
+  badgeLogo: { src: string; alt: string; w: number; h: number; href?: string; disc?: boolean }
   mapLabel: string
   /** Google Maps directions to the street address. External, so rule 3 does not apply. */
   mapsHref: string
@@ -95,6 +104,22 @@ const WI_CONTACT = contact('Wisconsin Facility')
 
 function maps(address: string): string {
   return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`
+}
+
+/**
+ * A real map of the facility — Asim, 23 Sep 2026, pointing at the
+ * illustrative panels: "we have to add [a real] map here". Google's keyless
+ * embed: a live, pannable street map with Google's own pin on the address.
+ * No API key, no script of ours, no dependency — the page just frames
+ * Google's URL. External, so CLAUDE.md rule 3 does not apply.
+ *
+ * If Google ever retires the keyless `output=embed` form, the supported
+ * replacement is the Maps Embed API (free, needs a key):
+ *   https://www.google.com/maps/embed/v1/place?key=KEY&q=ADDRESS
+ * — this one function is the only place to change.
+ */
+export function mapEmbed(address: string, zoom = 15): string {
+  return `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=${zoom}&hl=en&output=embed`
 }
 
 /** Material tiles — icons are Figma exports, see data/figma-assets.json. */
@@ -168,6 +193,9 @@ export const MINNESOTA: Facility = {
   hours: 'Mon–Fri 8:30 AM–4:30 PM · 2nd & 4th Sat 9 AM–1 PM', // FRAME — unconfirmed
   hoursShort: 'Mon–Fri 8:30 AM–4:30 PM',                        // FRAME — unconfirmed
   cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified' },
+  /* stat-r2.png is the R2v3 mark on a transparent ground (the hero stats
+     strip's own file); the certifications page's r2v3.png has a white one. */
+  badgeLogo: { src: '/images/home/stat-r2.png', alt: 'R2v3 certified', w: 38, h: 40, href: R2_DIRECTORY },
   mapLabel: 'Blaine, MN',
   mapsHref: maps(MN_CONTACT.address),
   materialsLead: 'The Blaine, Minnesota facility handles the full range of our electronics and document destruction services.',
@@ -217,6 +245,11 @@ export const WISCONSIN: Facility = {
   /* "Pursuing", not "Certified" — the one fact on these pages the site is
      sure of. See the note in claude/why-choose-us-page.md. */
   cert: { status: 'Pursuing R2v3', badge: 'Pursuing R2v3' },
+  /* !! The card no longer says "Pursuing R2v3" — Asim, 23 Sep 2026, swapped
+     the pill for the NAID AAA badge. The status still shows on the facility
+     page itself (quick-info bar and hero lead). The NAID AAA claim carries
+     the compliance note in src/data/certifications.ts. */
+  badgeLogo: { src: '/images/certifications/naid-aaa.png', alt: 'NAID AAA certified', w: 46, h: 48, disc: true },
   mapLabel: 'New Berlin, WI',
   mapsHref: maps(WI_CONTACT.address),
   materialsLead: 'The New Berlin, Wisconsin facility currently accepts electronics, batteries, TVs, and paper shredding, with more services expanding as R2v3 certification is finalized.',
@@ -247,7 +280,6 @@ export const DETAIL_COPY = {
   quickInfo: { address: 'Address', phone: 'Phone', hours: 'Hours', cert: 'Certification' },
   directions: {
     heading: 'Getting Here',
-    mapNote: 'Illustrative map — tap "Get Directions" for turn-by-turn navigation',
     primary: 'Get Directions',
     secondary: 'Call This Location',
   },

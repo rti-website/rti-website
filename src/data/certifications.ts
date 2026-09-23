@@ -160,37 +160,24 @@ export const CERT_COPY = {
 
 /**
  * ===========================================================================
- * THE FOOTER'S LOGO GRID — Figma 6778:4122 (board) and 6778:9672 (phone)
+ * THE FOOTER'S LOGO ROW — three marks since 23 Sep 2026
  * ===========================================================================
- * Asim, 23 Sep 2026: "we add logo in it", with the board footer at
- * 6778:3897 and, for the phone, "place the logos after Connect with Us".
+ * The footer took the certification marks on 23 Sep 2026 (Figma 6778:3897 on
+ * the board, 6778:9672 on the phone), nine of them 3x3 under the chat card.
+ * The same day Asim cut it to three: "remove the other logo, only leave the
+ * r2v3, rios, and AAA logo". So it is one row of three, in thirds of the
+ * board's 188px column and of the phone's full width, with a rule between.
  *
- * TWO DIFFERENT GRIDS OF THE SAME MARKS. The board draws nine marks 3x3 in a
- * 188px square under the chat card, at 80% opacity; the phone draws eight of
- * them 4x2 across the full 350px column and leaves RCRA out. Each mark below
- * says where it sits in each grid (`[column, row]`, 1-based) and at what size,
- * so one list of nine renders both — the footer places them with CSS grid,
- * RCRA is hidden below lg.
+ * Files are the ones the two frames draw for these three marks. Phone sizes
+ * are the phone frame's; board sizes are about 1.25x the board frame's (30x34,
+ * 50x21, 28x28), which were set for a nine-mark grid and read as specks once
+ * three marks had a row to themselves.
+ * The rasters share their Figma asset hashes with the certifications page
+ * files (4aed2 R2v3, 5cc60 RIOS, d1fc7 NAID), so nothing new is fetched.
+ * `crop` repeats how the frame crops the R2v3 fill inside its box.
  *
- * FILES ARE THE ONES ALREADY IN THE BUILD, NOT NEW EXPORTS. Every raster the
- * two frames reference has the same Figma asset hash as a file the
- * certifications page (public/images/certifications/) or the homepage strip
- * (public/images/certs/) already ships — d1fc7 NAID, 3ba03 GLBA, 003bd NIST,
- * 26064 FACTA, 0cedb IEEE, 5cc60 RIOS, 4aed2 R2v3 — so those are reused
- * byte for byte. The two vectors (HIPPA badge, RCRA wordmark) come back with
- * new hashes only because they are exported at a new size; the artwork and
- * aspect ratio are identical (HIPPA 2.4226 against hipaa.svg's 2.4227; RCRA
- * is the same four paths as certs/6.svg), so the existing files are used and
- * nothing new has to be fetched.
- *
- * Sizes are each frame's own. `fit` and `crop` repeat how the frame draws the
- * image fill, as on the certifications page (see CertLogo there): the R2v3 and
- * FACTA fills are cropped inside their boxes, GLBA's artwork is stored
- * squashed and stretched back out by `fill`.
- *
- * The compliance notes on CERT_LOGOS above apply here unchanged — the same
- * FACTA artwork, the same NAID AAA claim, the same misspelled HIPPA badge.
- * Only R2v3 links, for the same reason as on the strip.
+ * Only R2v3 links, to SERI's directory (R2_DIRECTORY above). The compliance
+ * note on NAID AAA in CERT_LOGOS applies here too.
  */
 export type FooterCert = {
   name: string
@@ -198,10 +185,9 @@ export type FooterCert = {
   href?: string
   fit?: 'contain' | 'cover' | 'fill'
   crop?: { left: number; top: number; w: number; h: number }
-  /** Board grid (3x3, 188px). */
-  board: { at: [number, number]; w: number; h: number }
-  /** Phone grid (4x2, full width). null = not drawn on the phone. */
-  phone: { at: [number, number]; w: number; h: number } | null
+  /** Drawn size on the board (6778:4122) and on the phone (6778:9672). */
+  board: { w: number; h: number }
+  phone: { w: number; h: number }
 }
 
 const C = '/images/certifications'
@@ -209,22 +195,9 @@ const C = '/images/certifications'
 export const FOOTER_CERTS: FooterCert[] = [
   { name: 'R2v3 certified', src: `${C}/r2v3.png`, href: R2_DIRECTORY,
     crop: { left: -1.23, top: 0, w: 104.73, h: 100 },
-    board: { at: [1, 1], w: 30, h: 34 },            phone: { at: [1, 1], w: 41.833, h: 47.41 } },
-  { name: 'RCRA', src: '/images/certs/6.svg', fit: 'contain',
-    board: { at: [2, 1], w: 41.729, h: 12.314 },    phone: null },
-  { name: 'HIPAA', src: `${C}/hipaa.svg`, fit: 'fill',
-    board: { at: [3, 1], w: 44.036, h: 18.177 },    phone: { at: [3, 1], w: 61.405, h: 25.346 } },
-  { name: 'IEEE', src: `${C}/ieee.png`, fit: 'contain',
-    board: { at: [1, 2], w: 50, h: 22 },            phone: { at: [4, 1], w: 69.721, h: 30.677 } },
-  { name: 'NAID AAA certified', src: `${C}/naid-aaa.png`, fit: 'contain',
-    board: { at: [2, 2], w: 27.981, h: 27.981 },    phone: { at: [2, 2], w: 39.018, h: 39.018 } },
+    board: { w: 36, h: 41 },          phone: { w: 41.833, h: 47.41 } },
   { name: 'RIOS certified', src: `${C}/rios.png`, fit: 'contain',
-    board: { at: [3, 2], w: 50, h: 21 },            phone: { at: [3, 2], w: 69.721, h: 29.283 } },
-  { name: 'GLBA', src: `${C}/glba.png`, fit: 'fill',
-    board: { at: [1, 3], w: 48, h: 12 },            phone: { at: [4, 2], w: 66.084, h: 16.951 } },
-  { name: 'FACTA', src: `${C}/facta.png`,
-    crop: { left: -5.76, top: -107.89, w: 111.52, h: 315.79 },
-    board: { at: [2, 3], w: 44.582, h: 15.744 },    phone: { at: [1, 2], w: 62.165, h: 21.954 } },
-  { name: 'NIST', src: '/images/certs/9.png', fit: 'cover',
-    board: { at: [3, 3], w: 41.253, h: 10.915 },    phone: { at: [2, 1], w: 57.524, h: 15.22 } },
+    board: { w: 56, h: 24 },          phone: { w: 69.721, h: 29.283 } },
+  { name: 'NAID AAA certified', src: `${C}/naid-aaa.png`, fit: 'contain',
+    board: { w: 36, h: 36 },          phone: { w: 39.018, h: 39.018 } },
 ]

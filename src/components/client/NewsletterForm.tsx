@@ -119,7 +119,7 @@ export function NewsletterForm() {
           type="submit"
           disabled={state === 'sending'}
           aria-label="Subscribe"
-          className="absolute right-[-1px] top-[-1px] grid h-[49px] w-[46px] place-items-center rounded-r-[4px] bg-brand text-white disabled:opacity-60 lg:h-[47px]"
+          className="btn-pop absolute right-[-1px] top-[-1px] grid h-[49px] w-[46px] place-items-center rounded-r-[4px] bg-brand text-white disabled:opacity-60 lg:h-[47px]"
         >
           &rarr;
         </button>
@@ -142,7 +142,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={state === 'sending'}
-        className="order-3 inline-flex h-[48.05px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand disabled:opacity-60 lg:order-none lg:mt-[20.6px] lg:w-auto"
+        className="btn-pop order-3 inline-flex h-[48.05px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand disabled:opacity-60 lg:order-none lg:mt-[20.6px] lg:w-auto"
       >
         {state === 'sending' ? 'Signing you up…' : 'Yes, Please'}
         <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

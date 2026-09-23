@@ -26,6 +26,7 @@ export const CONTENT = industryPage({
     { label: 'Mail-In Program',        href: L.mailIn,      text: 'Facilities outside the Minnesota and Wisconsin service area can order a recycling kit online for electronics, batteries, or bulbs, pack it, and ship it with a prepaid label, then get a certificate of recycling once it’s processed.' },
   ],
   heroImage: '/images/industries/hero-manufacturing.png',
+  introImage: '/images/industries/intro-manufacturing.png', // Figma 6734:5892, supplied by Asim 23 Sep 2026
   faqs: [
     { q: 'Does Recycle Technologies accept retired computers and IT equipment from manufacturing facilities?', a: 'Yes, our electronics recycling and IT asset disposition services cover retired computers, monitors, and networking equipment.' },
     { q: 'Can manufacturing and industrial facilities recycle batteries and lighting equipment along with their electronics?', a: 'Yes, our battery recycling service accepts lithium-ion, EV, mercury, nickel-cadmium, and zinc batteries, and our light bulb recycling service covers fluorescent, LED, and other bulb types.' },

@@ -1029,6 +1029,62 @@
       "node": "6778:10432",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Homepage hero stats strip, \"R2v3 Certified Locations\" tile icon (R2v3 mark on a transparent ground), drawn 44.6x46.46 on the board and 27x28 on the phone. Not certs/1.png: that export has an opaque white ground, which shows as a white square on the glass tile. Added 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-healthcare.png",
+      "id": "b431b4e5-fe39-431f-b087-c279442c7094/683de.png",
+      "node": "6734:5890",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Healthcare industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-retail.png",
+      "id": "58282030-61a0-47da-90a0-d037570fc08f/e0ddd.png",
+      "node": "6734:5891",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Retail industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-manufacturing.png",
+      "id": "6c266d99-dcaa-4e95-b0a3-fa325cc5255f/9eb09.png",
+      "node": "6734:5892",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Manufacturing industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-construction.png",
+      "id": "b0751c88-0e65-4bc7-ad13-2f02a49031fb/1a88a.png",
+      "node": "6734:5893",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Construction industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep. No industry page uses it yet (there is no construction / logistics page); it is here for when one is built."
+    },
+    {
+      "to": "public/images/industries/intro-logistics.png",
+      "id": "a99263c5-f842-40f3-a194-b031a50115cc/e983c.png",
+      "node": "6734:5894",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Distribution and Logistics industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep. No industry page uses it yet (there is no construction / logistics page); it is here for when one is built."
+    },
+    {
+      "to": "public/images/industries/intro-banking.png",
+      "id": "7de8e0c3-56f3-4541-a2db-c2070371a665/6aaa6.png",
+      "node": "6734:5895",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Banking and Finance industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-automotive.png",
+      "id": "e9a6c35e-f786-41a9-9a99-082cb4d32c18/042ce.png",
+      "node": "6734:5896",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Automotive and Transportation industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/industries/intro-education-government.png",
+      "id": "ac3dc801-c816-4ca7-a2e1-0d336b35ee34/903a7.png",
+      "node": "6734:5897",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Education and Government industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
     }
   ]
 }

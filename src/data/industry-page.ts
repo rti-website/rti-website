@@ -79,6 +79,12 @@ export function industryPage(input: {
    * the shared interior hero.
    */
   heroImage?: string
+  /**
+   * The photo beside "Recycling Challenges in X". One per industry since
+   * 23 Sep 2026 (Figma 6734:5890..5897, supplied by Asim); omit it and the
+   * block falls back to the shared service-detail photo.
+   */
+  introImage?: string
   ctaHeading: string
   ctaBody: string[]
   todo?: string[]
@@ -100,7 +106,7 @@ export function industryPage(input: {
       heading: input.challengesHeading,
       body: input.challenges,
       more: { label: 'Read More', href: '#services' },
-      image: '/images/services/detail-intro.png',
+      image: input.introImage ?? '/images/services/detail-intro.png',
     },
     accept: {
       heading: input.servicesHeading,

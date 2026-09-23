@@ -26,6 +26,7 @@ export const CONTENT = industryPage({
     { label: 'Battery Recycling',      href: L.battery,     text: 'Office equipment and backup systems often rely on batteries, including lithium-ion types, which can be recycled rather than discarded with general waste.' },
   ],
   heroImage: '/images/industries/hero-banking.png',
+  introImage: '/images/industries/intro-banking.png', // Figma 6734:5895, supplied by Asim 23 Sep 2026
   faqs: [
     { q: 'Does Recycle Technologies work with financial services and banking organizations?', a: 'Yes. Our electronics recycling, IT asset disposition, and shredding services are available to businesses retiring computers, IT equipment, and paper records.' },
     { q: 'Can financial institutions recycle retired computers and IT equipment?', a: 'Yes, our electronics recycling and IT asset disposition services accept computers, monitors, and related IT equipment.' },

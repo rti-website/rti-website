@@ -30,7 +30,8 @@ export const HERO = {
     { label: 'Why Choose Us',  href: null },
   ],
   h1: 'Why Choose Us',
-  lead: 'Recycle Technologies has proudly served the community since 1993.',
+  // Asim, 23 Sep 2026.
+  lead: 'Certified processes, documented outcomes, and 32+ years of operating history — here’s what sets Recycle Technologies apart from a typical recycler.',
 }
 
 /** Differentiators — 6379:1033. */

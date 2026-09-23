@@ -39,7 +39,8 @@ export const HERO = {
     { label: 'About Us', href: null },
   ],
   h1: 'About Us',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 23 Sep 2026.
+  lead: 'Founded in 1993, Recycle Technologies has grown into a certified, multi-facility electronics recycling and data destruction company serving the Midwest.',
 }
 
 /** Company story — 6372:841. */

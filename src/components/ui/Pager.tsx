@@ -15,10 +15,10 @@ import { href } from '@/lib/urls'
  * behind JavaScript on a site whose whole reason for existing is that Google
  * can read it.
  */
-const PILL = 'grid h-[44px] min-w-[44px] place-items-center rounded-full px-[16px] font-sans text-[14px] font-medium transition-colors'
+const PILL = 'btn-pop grid h-[44px] min-w-[44px] place-items-center rounded-full px-[16px] font-sans text-[14px] font-medium transition-colors'
 const CURRENT = 'bg-brand text-white'
 const OTHER = 'border border-line text-heading hover:border-brand hover:text-brand'
-const STEP = 'grid h-[44px] items-center rounded-full border border-line px-[20px] font-sans text-[14px] font-medium text-heading transition-colors hover:border-brand hover:text-brand'
+const STEP = 'btn-pop grid h-[44px] items-center rounded-full border border-line px-[20px] font-sans text-[14px] font-medium text-heading transition-colors hover:border-brand hover:text-brand'
 
 /**
  * First, last, and the current page with a neighbour either side; a gap

@@ -6,8 +6,10 @@ import { InteriorHeroArt } from '@/components/ui/InteriorHeroArt'
 import { FOOTER_H } from '@/lib/layout'
 
 /**
- * Page template — plain content pages from content/pages/*.mdx. Today that is
- * one page, /thank-you/, where the contact forms land.
+ * Page template — plain content pages from content/pages/*.mdx: /thank-you/,
+ * where the contact forms land, and since 23 Sep 2026 the three legal pages
+ * the footer links to (/privacy-policy/, /terms-of-services/,
+ * /cookies-and-personal-information/), copied from the live site.
  *
  * Rules for every template in this folder:
  *  - The H1 comes from entry.h1, ported verbatim from url-map.csv. Never
@@ -45,7 +47,10 @@ export function PageTemplate({
         </div>
 
         <section className="bg-white px-[20px] py-[48px] lg:px-0 lg:py-[90px]">
-          <article className="mx-auto flex w-full flex-col gap-[16px] font-roboto text-[16px] leading-[26px] text-muted lg:w-[820px] lg:text-[18px] lg:leading-[30px] [&_a]:text-brand [&_a]:underline [&_strong]:font-medium [&_strong]:text-ink">
+          {/* Prose for whatever the MDX holds — paragraphs, h2/h3, lists,
+              bold and links. Since 23 Sep 2026 that includes the three legal
+              pages copied from the live site (privacy, terms, cookies). */}
+          <article className="mx-auto flex w-full flex-col gap-[16px] font-roboto text-[16px] leading-[26px] text-muted lg:w-[820px] lg:text-[17px] lg:leading-[29px] [&_a]:break-words [&_a]:text-brand [&_a]:underline [&_a]:underline-offset-2 [&_em]:italic [&_h2]:mt-[20px] [&_h2]:font-sans [&_h2]:text-[22px] [&_h2]:font-semibold [&_h2]:leading-[1.3] [&_h2]:text-heading lg:[&_h2]:text-[26px] [&_h3]:mt-[8px] [&_h3]:font-sans [&_h3]:text-[18px] [&_h3]:font-semibold [&_h3]:leading-[1.35] [&_h3]:text-heading lg:[&_h3]:text-[20px] [&_li]:mt-[8px] [&_strong]:font-semibold [&_strong]:text-ink [&_ul]:list-disc [&_ul]:pl-[22px] [&_li]:marker:text-brand">
             {children}
           </article>
         </section>

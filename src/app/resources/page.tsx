@@ -4,6 +4,8 @@ import { buildMetadata } from '@/lib/seo'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
+import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
+import { HOME_CTA } from '@/data/home'
 import { ResourceArticles, ResourceGuides, ResourceSearch } from '@/components/sections/resources/ResourceSections'
 import { HERO, SEO } from '@/data/resources'
 
@@ -28,8 +30,12 @@ import { HERO, SEO } from '@/data/resources'
  *   Popular articles 6375:907    1124       H.articles
  *   Footer           6374:3980   681        FOOTER_H
  *
- * ! NO CLOSING CTA, same as /downloads/. The frame runs the last article row
- * straight into the footer.
+ *   Closing CTA      —           —          CTA_H     (Asim, 23 Sep 2026)
+ *
+ * THE CLOSING CTA IS ASIM'S, NOT THE FRAME'S. The frame runs the last article
+ * row straight into the footer; on 23 Sep 2026 Asim asked for the homepage's
+ * "Ready to Recycle Responsibly?" band here too. It is the shared ClosingCta
+ * with the homepage's own copy (HOME_CTA), so the two cannot drift.
  *
  * Heights are measured, not copied off the frame:
  * `node scripts/measure-sections.mjs --route resources`.
@@ -57,7 +63,8 @@ const HERO_H = 470
 const SEARCH_TOP   = HERO_TOP + HERO_H
 const GUIDES_TOP   = SEARCH_TOP + H.search
 const ARTICLES_TOP = GUIDES_TOP + H.guides
-const FOOTER_TOP   = ARTICLES_TOP + H.articles
+const CTA_TOP      = ARTICLES_TOP + H.articles
+const FOOTER_TOP   = CTA_TOP + CTA_H
 
 export const metadata = buildMetadata({
   url: '/resources/',
@@ -77,6 +84,7 @@ export default function ResourcesPage() {
         <ResourceSearch   top={SEARCH_TOP}   height={H.search} />
         <ResourceGuides   top={GUIDES_TOP}   height={H.guides} />
         <ResourceArticles top={ARTICLES_TOP} height={H.articles} />
+        <ClosingCta       top={CTA_TOP} content={HOME_CTA} />
       </main>
       <Footer top={FOOTER_TOP} />
     </Canvas>

@@ -38,8 +38,15 @@ export function AboutStory({ top, height }: { top: number; height: number }) {
           generates no box at lg, leaving the card a direct flex child of the
           row exactly as before. Delete the overrides if FactsCard ever takes
           responsive widths of its own; they are a no-op then.
+
+          54px down at lg — Asim, 23 Sep 2026: "move the card a little below
+          so it starts from where the heading starts". 54 = the eyebrow pill
+          (34) + the column's 20px gap, so the card's top edge lines up with
+          the top of the H2 rather than the eyebrow. The text column is the
+          taller of the two either way, so the row height does not change.
+          Desktop only: on the phone the card stacks under the prose.
         */}
-        <div className="w-full max-lg:[&>div]:w-full max-lg:[&_li_span:last-child]:w-full lg:contents">
+        <div className="w-full max-lg:[&>div]:w-full max-lg:[&_li_span:last-child]:w-full lg:contents lg:[&>div]:mt-[54px]">
           <FactsCard title={STORY.factsTitle} items={STORY.facts} />
         </div>
       </div>

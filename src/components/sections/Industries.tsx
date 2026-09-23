@@ -34,9 +34,17 @@ import { IndustryCard } from '@/components/ui/IndustryCard'
  * industry pages, where the desktop drew "Food Services" and "Education &
  * Government", which are not.
  *
- * The grid needs no change to run 4 + 3 — that is what a 4-column grid does
- * with seven items, and the section height is unchanged because the second row
- * is still one row. Below lg it is 4 rows of 2 with a single card on the last.
+ * 4 + 3, WITH THE THREE CENTRED — Asim, 23 Sep 2026 ("align the 2nd row in
+ * center"). A 4-column grid left-aligns the short row. So at lg it is an
+ * 8-column grid, 148 wide with 14 gaps, every card spanning two: 148 + 14 +
+ * 148 = 310, the card, and 8x148 + 7x14 = 1282, the box. The fifth card
+ * starts in column 2, one half-card (162px) in, which centres the row of
+ * three exactly. NOT a centred flex-wrap: four 310s and three gaps fill the
+ * 1282 box to the pixel, so a browser that rounds a zoomed width up by a
+ * fraction would wrap the first row to three. A grid cannot wrap.
+ * Below lg it is still the 2-column grid, 4 rows of 2 with one on the last.
+ *
+ * The cards reveal their blurb on hover — see `reveal` in IndustryCard.
  */
 export function Industries() {
   return (
@@ -60,10 +68,10 @@ export function Industries() {
         x={319.33}
         y={312.78}
         w={1282}
-        className="grid grid-cols-2 gap-[12px] self-stretch lg:grid-cols-4 lg:gap-x-[14px]"
+        className="grid grid-cols-2 gap-[12px] self-stretch lg:grid-cols-8 lg:gap-x-[14px] lg:[&>*]:col-span-2 lg:[&>*:nth-child(5)]:col-start-2"
       >
         {INDUSTRIES.map((ind) => (
-          <IndustryCard key={ind.t} ind={ind} />
+          <IndustryCard key={ind.t} ind={ind} reveal />
         ))}
       </Box>
     </Section>

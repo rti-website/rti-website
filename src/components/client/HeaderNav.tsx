@@ -182,7 +182,7 @@ export function HeaderNav({
 
         {/* Mail In Program — 6225:5014, the #1b7a3d pill. */}
         <a href={mailIn.href} target="_blank" rel="noopener noreferrer"
-          className="flex h-[36px] shrink-0 items-center gap-[8.008px] rounded-[8px] bg-accent px-[20px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white">
+          className="btn-pop flex h-[36px] shrink-0 items-center gap-[8.008px] rounded-[8px] bg-accent px-[20px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white">
           {mailIn.label}
           <Image src="/images/mail-in-icon.png" alt="" width={34} height={16} className="h-[16px] w-[34px] object-contain" />
         </a>

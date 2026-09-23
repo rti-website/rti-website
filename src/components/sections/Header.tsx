@@ -108,7 +108,7 @@ export async function Header() {
         <Box x={1380} y={0} w={221.4} h={41} className="pointer-events-none flex items-center justify-end">
           <Link
             href={TOP_BAR.contact.href}
-            className="pointer-events-auto flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
+            className="btn-pop pointer-events-auto flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
           >
             {TOP_BAR.contact.label}
           </Link>

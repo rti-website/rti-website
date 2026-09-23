@@ -17,23 +17,15 @@ import { FINDER } from '@/data/locations'
  *           are now at (420,90) and (760,220) of a 1282x380 board, and the
  *           percentages below are recomputed from THOSE numbers.
  *
- * THE MAP IS NOT A MAP — but the search in front of it is real. The frame
- * draws a gradient panel with two pinned labels and captions itself
- * "Illustrative map"; that is still what is drawn, with no embed and no
- * third-party script. Since 22 Sep 2026 a search turns the panel into the
- * answer: the nearest facility's pin lights up and a result card overlays the
- * panel. All of that is LocationFinder.tsx (client) and /api/locate.
+ * THE MAP IS A REAL MAP since 23 Sep 2026 — Google's, one facility at a time
+ * with a Blaine / New Berlin switch, and a search moves it to the nearest
+ * facility (Asim: "we have to add [a] map here"). Before that it was the
+ * frame's illustrative gradient with two drawn pins. All of it is
+ * LocationFinder.tsx (client) and /api/locate.
  *
  * MOBILE — 6747:5739 (search) and 6747:8865 (map) in the updated
  * "Locations - Mobile" 6747:2557. 390 wide: px20 / py48 on white and a flat
- * 24px gap down the section; the map is 350x220 with the two pins drawn BARE
- * (no label pills) and a short "Illustrative map" tag.
- *
- * !! THE PINS STAY, as percentages of the panel. The phone frame puts them at
- * (90,60) and (210,130) of 350x220 — 25.7%/27.3% and 60%/59% — against the
- * board's (420,90) and (760,220) of 1282x380 — 32.8%/23.7% and 59.3%/57.9%.
- * Close, not identical; the board's fractions are used, since the board is the
- * drawing with labels on it and one rule has to serve both.
+ * 24px gap down the section; the map is 350x220.
  */
 export function LocationsFinder({ top, height }: { top: number; height: number }) {
   return (

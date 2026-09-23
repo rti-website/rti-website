@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead } from '@/components/ui/Bits'
 import { GLYPHS } from '@/components/ui/Glyph'
@@ -67,9 +68,7 @@ function Card({ f }: { f: Facility }) {
           {/* The name sits between the disc and the pill at lg, and under both
               on the phone; `order` moves it without a second copy. */}
           <h3 className="order-3 font-sans text-[20px] font-semibold leading-[25px] text-white lg:order-none lg:ml-[16px] lg:mr-auto lg:text-[22px] lg:leading-normal">{f.name}</h3>
-          <span className="flex h-[24px] shrink-0 items-center rounded-full bg-white/[0.18] px-[10px] font-roboto text-[10px] font-bold uppercase tracking-[0.4px] text-white lg:h-[28px] lg:px-[12px] lg:text-[11px]">
-            {f.cert.badge}
-          </span>
+          <BadgeLogo f={f} />
         </div>
       </div>
 
@@ -108,5 +107,38 @@ function Card({ f }: { f: Facility }) {
         </div>
       </div>
     </article>
+  )
+}
+
+/**
+ * The certification mark in the header's right slot — Asim, 23 Sep 2026: the
+ * R2v3 logo "without bg", clickable, for Minnesota, and the NAID AAA logo for
+ * Wisconsin, where the text pills used to be. R2v3 opens SERI's directory in
+ * a new tab, like every R2v3 mark on the site. The NAID badge brings its own
+ * white ground, so it sits on a white disc (see Facility.badgeLogo); the
+ * disc's edge trims only the export's white corners.
+ */
+function BadgeLogo({ f }: { f: Facility }) {
+  const l = f.badgeLogo
+  const size = { '--lw': `${l.w}px`, '--lh': `${l.h}px` } as React.CSSProperties
+  const img = (
+    <Image src={l.src} alt={l.href ? '' : l.alt} width={l.w * 2} height={l.h * 2} unoptimized
+      className="h-[calc(var(--lh)*0.8)] w-[calc(var(--lw)*0.8)] object-contain lg:h-[var(--lh)] lg:w-[var(--lw)]" style={size} />
+  )
+  /* Both marks sit on a disc the size of the pin disc opposite: NAID's on
+     white (its own ground), R2v3's on the same white/15 glass as the pin —
+     no white behind it, as asked, but enough lift for its green ring to read
+     against the green end of the gradient. */
+  const body = (
+    <span className={`grid size-[44px] place-items-center overflow-hidden rounded-full lg:size-[56px] ${l.disc ? 'bg-white' : 'bg-white/15'}`}>{img}</span>
+  )
+  return l.href ? (
+    <a href={l.href} target="_blank" rel="noopener noreferrer"
+      aria-label={`${l.alt} — see ${f.name} in the R2 certified facility directory (opens in a new tab)`}
+      className="btn-pop grid min-h-[44px] min-w-[44px] shrink-0 place-items-center transition-opacity hover:opacity-80">
+      {body}
+    </a>
+  ) : (
+    <span className="grid shrink-0 place-items-center">{body}</span>
   )
 }

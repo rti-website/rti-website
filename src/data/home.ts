@@ -1,21 +1,7 @@
 import { caseStudyHref, href } from '@/lib/urls'
 import { SERVICE_GROUPS, type ServiceCard } from '@/data/services'
 import { CASE_STUDY_CARDS } from '@/data/case-studies'
-import { ALL_FAQS, type Faq } from '@/data/faqs'
-
-/**
- * Pulls named questions out of the full FAQ set, in the order given.
- *
- * Throws on a question that is not there, on purpose: a silent miss would leave
- * the homepage band one row short and nobody would notice until a screenshot.
- */
-function pickFaqs(questions: string[]): Faq[] {
-  return questions.map((q) => {
-    const found = ALL_FAQS.find((f) => f.q === q)
-    if (!found) throw new Error(`Homepage FAQ not found in src/data/faqs.ts: "${q}"`)
-    return found
-  })
-}
+import type { Faq } from '@/data/faqs'
 
 /* Homepage content, transcribed from the Figma frame 6023:3801.
    Titles keep the design's explicit line breaks. Every href is the LIVE URL. */
@@ -222,30 +208,43 @@ export const CASE_STUDIES_START = 1
 /**
  * The homepage FAQ band — Figma 6044:19905.
  *
- * !! THE SIX QUESTIONS CHANGED ON 17 Sep 2026, AND HERE IS WHY. The frame drew
- * six questions with no answers, so the band opened onto "Answer copy to be
- * supplied." Asim supplied a content document the same day — seventeen groups,
- * 114 questions, every one with a written answer — and asked for answers on the
- * homepage. Four of the frame's six have a near-twin in that document and two
- * ("How do I prepare electronics for recycling?", "Can I recycle electronics
- * that still work?") have none at all.
+ * ASIM'S OWN HOMEPAGE FAQS, 23 Sep 2026 ("Main page FAQs … update these
+ * content in their places"), verbatim. They replace the six that were picked
+ * out of the /faqs/ document on 17 Sep — and they include the two questions
+ * the frame drew that the document never answered ("How do I prepare
+ * electronics for recycling?", "Can I recycle electronics that still work?"),
+ * which now have answers.
  *
- * Rather than write answers to questions nobody has answered, these are six of
- * his, verbatim, chosen for a homepage: broad, high-intent, one per service
- * area. The full set is on /faqs/ and in src/data/faqs.ts, which is the source
- * both draw from — so an answer edited there is edited here too.
- *
- * The two dropped questions are worth asking for: they are good questions and a
- * visitor asks them. Logged in TODO_FOR_CONTENT in src/data/faqs.ts.
+ * Written out here rather than picked from src/data/faqs.ts because these are
+ * homepage wording, not the FAQ page's: several are different answers to the
+ * same question. /faqs/ is unchanged.
  */
-export const FAQS: Faq[] = pickFaqs([
-  'What does Recycle Technologies recycle?',
-  'Does Recycle Technologies offer recycling for businesses?',
-  'What happens to electronics after they are collected?',
-  'How do I safely dispose of an old hard drive?',
-  'Does Recycle Technologies offer recycling pickup?',
-  'How do I get started with Recycle Technologies?',
-])
+export const FAQS: Faq[] = [
+  {
+    q: 'What items does Recycle Technologies accept?',
+    a: 'We accept electronics, televisions, lighting bulbs, batteries, PCB ballasts, hard drives, phones, paper, and other materials for responsible recycling or secure shredding.',
+  },
+  {
+    q: 'How do I prepare electronics for recycling?',
+    a: 'Remove personal data from your devices and separate batteries or accessories when required. Follow the preparation instructions for your specific recycling service.',
+  },
+  {
+    q: 'Can I recycle electronics that still work?',
+    a: 'Yes. We accept working, unwanted, and outdated electronics for responsible recycling.',
+  },
+  {
+    q: 'What happens to my electronics after I drop them off or mail them in?',
+    a: 'Electronics are sorted, safely processed, shredded, and separated to recover valuable materials and keep harmful materials out of landfills.',
+  },
+  {
+    q: 'What happens to my data when I recycle a computer or hard drive?',
+    a: 'Data can remain on devices unless it is securely erased or destroyed. We offer secure hard drive destruction to help protect sensitive information.',
+  },
+  {
+    q: 'How do I get started with electronics recycling?',
+    a: 'Choose the recycling or shredding service you need, review the applicable service area and accepted materials, and contact Recycle Technologies for a quote, pickup, drop-off, or mail-in option.',
+  },
+]
 
 /* ------------------------------------------------------------ closing CTA --
  * The homepage's own closing copy — Asim, 21 Sep 2026.

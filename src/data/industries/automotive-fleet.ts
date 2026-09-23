@@ -25,6 +25,7 @@ export const CONTENT = industryPage({
     { label: 'Mail-In Program',        href: L.mailIn,      text: 'Shops, dealerships, or fleet locations outside the Minnesota and Wisconsin service area can order a recycling kit online, including a dedicated airbag recycling kit, pack it, and ship it with a prepaid label, then get a certificate of recycling once it’s processed.' },
   ],
   heroImage: '/images/industries/hero-automotive.png',
+  introImage: '/images/industries/intro-automotive.png', // Figma 6734:5896, supplied by Asim 23 Sep 2026
   faqs: [
     { q: 'Does Recycle Technologies pick up both airbags and retired shop electronics on the same visit?', a: 'Airbag recycling and electronics recycling are offered as separate services with their own pickup and drop-off options; contact us to coordinate both for a single visit.' },
     { q: 'Can auto dismantlers recycle both deployed and undeployed airbags?', a: 'Yes, our airbag recycling service accepts both deployed and undeployed units through a licensed airbag waste collection facility.' },

@@ -60,7 +60,7 @@ export function ReviewCarousel({
     go(dx < 0 ? 1 : -1)
   }
 
-  const btn = 'grid size-[48px] place-items-center rounded-full border border-[#e2e2e2] bg-white transition-colors hover:border-brand hover:bg-brand-soft disabled:cursor-default disabled:opacity-40 disabled:hover:border-[#e2e2e2] disabled:hover:bg-white'
+  const btn = 'btn-pop grid size-[48px] place-items-center rounded-full border border-[#e2e2e2] bg-white transition-colors hover:border-brand hover:bg-brand-soft disabled:cursor-default disabled:opacity-40 disabled:hover:border-[#e2e2e2] disabled:hover:bg-white'
 
   return (
     <div

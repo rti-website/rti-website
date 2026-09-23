@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow } from '@/components/ui/Bits'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { CONTACT_FORM_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { Picker } from '@/components/client/Picker'
 import { R2_DIRECTORY } from '@/data/certifications'
+import { SERVICE_INTEREST } from '@/data/contact'
 
 /**
  * Hero — Figma 6023:13152, 1920x940.
@@ -125,33 +126,42 @@ export function Hero() {
           74.7px is 224.1 tall, so the top edge is 276.5 - 112 = 164.4. Using
           the centre value as a top offset was what pushed the headline down
           into the paragraph. */}
-      {/* H1 — 6023:13162. Two lines, not three: Asim, 16 Sep 2026. The break
-          is explicit because the line has to clear the quote card at x1203, and
-          the size is set by that same limit — 844px of room between the 319
-          gutter and the card. */}
+      {/* H1 — 6023:13162 AS DRAWN since 23 Sep 2026: three lines, IBM Plex
+          Sans SemiBold 70 / 74.7, tracking -4.03, broken after "Responsibly."
+          and "Build a". Asim sent the frame's own render ("make the hero
+          section text like this"). It had been two lines at 46 since 16 Sep.
+          The widest line is ~740 of the frame's 759 box, well clear of the
+          quote card at x1203; nowrap so a browser that sets zoomed text a
+          hair wider cannot push "a" onto a fourth line. 225 tall, so the lead
+          and the picker row below move down with it. */}
       <Box x={319} y={88} w={860}>
         {/* 6590:2312 sets the phone at 28/38. The forced break is a desktop
             measure — it exists to clear the quote card at x1203, and there is
             no card beside the headline on a phone — so it is switched off
             below lg and the line wraps where the column ends. */}
-        <h1 className="font-sans text-[28px] font-semibold leading-[38px] text-white lg:text-[46px] lg:leading-[54px] lg:tracking-[-1.8px]">
-          {/* The space before the break is load-bearing below lg, where the
-              break is switched off and the two halves become one line. */}
-          Recycle Responsibly. Protect the Planet.{' '}<br className="hidden lg:inline" />Build a Cleaner Tomorrow.
+        <h1 className="font-sans text-[28px] font-semibold leading-[38px] text-white lg:whitespace-nowrap lg:text-[70px] lg:leading-[74.7px] lg:tracking-[-4.0315px]">
+          {/* The spaces before the breaks are load-bearing below lg, where the
+              breaks are switched off and the three lines run as one. */}
+          Recycle Responsibly.{' '}<br className="hidden lg:inline" />Protect the Planet. Build a{' '}<br className="hidden lg:inline" />Cleaner Tomorrow.
         </h1>
       </Box>
 
-      {/* Lead — 6023:13164, moved up with the headline. 6590:2313 on the phone. */}
-      <Box x={319} y={228} w={688}>
-        <p className="font-roboto text-[16px] leading-[24px] text-white/70 lg:text-[18px] lg:leading-[27px]">
+      {/* Lead — 6023:13164, 14px under the headline as in the frame
+          (389 -> 403), and at the frame's Roboto 20 / 30.03: three lines in
+          the 688 column, as Asim's screenshot shows. 6590:2313 on the phone. */}
+      <Box x={319} y={327} w={688}>
+        <p className="font-roboto text-[16px] leading-[24px] text-white/70 lg:text-[20px] lg:leading-[30.031px]">
           Recycle Technologies provides certified e-waste recycling, destruction, and
           shredding solutions that keeps electronics out of landfills and valuable
           materials in circulation.
         </p>
       </Box>
 
-      {/* Location picker — 6199:4848, moved up with the headline. 393x50. */}
-      <Box x={319} y={337} w={393} h={50}>
+      {/* Location picker — 6199:4848. 393x50. y443 puts its bottom edge on the
+          quote card's (~493), so the two columns end together above the stats
+          rule at y519. The frame's 33px lead-to-picker gap does not fit the
+          715 hero with a three-line headline; this is 26. */}
+      <Box x={319} y={443} w={393} h={50}>
         <Picker id="hero-location" placeholder="Select Your Location" srLabel="Select your location"
           options={['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)']} />
       </Box>
@@ -160,7 +170,7 @@ export function Hero() {
           The phone's CTA Row (6590:2314) gaps these two by 12 where the section
           gaps everything else by 20, so this one pulls back the difference
           rather than the section carrying a second gap value. */}
-      <Box x={724} y={337} className="-mt-[8px] lg:mt-0">
+      <Box x={724} y={443} className="-mt-[8px] lg:mt-0">
         <Btn href={QUOTE_HREF} variant="colored" className="w-full justify-center lg:w-auto">Get Started</Btn>
       </Box>
 
@@ -179,23 +189,26 @@ export function Hero() {
             Let&rsquo;s do it quickly!
           </p>
 
-          <div className="flex flex-col gap-[16px] pt-[16px] lg:pt-[24px]">
+          {/* A plain GET form to the contact form: the chosen service rides
+              along as ?service=… and ContactForm selects it on arrival.
+              Asim, 23 Sep 2026: "when someone selects the service it must
+              automatically come to [the] contact form". No script needed — it
+              works before hydration, and a form with no choice just opens
+              the contact form. The options are the contact form's own list
+              (SERVICE_INTEREST), so every choice exists over there. */}
+          <form method="get" action={CONTACT_FORM_HREF} className="flex flex-col gap-[16px] pt-[16px] lg:pt-[24px]">
             <div>
               <label htmlFor="hero-service" className="block pb-[8px] font-inter text-[14px] font-medium leading-[20px] text-white/70">
                 Pick Your Service
               </label>
               <div className="h-[50px]">
-                <Picker id="hero-service" placeholder="Select Service" srLabel="Pick your service" options={[
-                  'Electronics Recycling', 'Battery Recycling', 'Light Bulb & Ballast Recycling',
-                  'TV Recycling', 'Airbag Recycling', 'Paper Shredding', 'Hard Drive Destruction',
-                  'Mobile Shredding', 'Off-Site Shredding', 'IT Asset Disposition (ITAD)',
-                ]} />
+                <Picker id="hero-service" name="service" placeholder="Select Service" srLabel="Pick your service" options={SERVICE_INTEREST} />
               </div>
             </div>
-            <Btn href={QUOTE_HREF} variant="whiteFill" className="w-full justify-center font-bold">
+            <Btn submit variant="whiteFill" className="w-full justify-center font-bold">
               Get a Quote
             </Btn>
-          </div>
+          </form>
 
           <div className="py-[20px]">
             <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />

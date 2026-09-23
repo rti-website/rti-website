@@ -48,6 +48,13 @@ export type ServiceCard = {
   unbuilt?: boolean
   blurb: string
   /**
+   * The line the HOMEPAGE card reveals on hover (Figma 6651:2415) — Asim's
+   * copy, 23 Sep 2026, verbatim. Separate from `blurb`, which is the
+   * /services/ catalogue's and the menu's copy from Figma 6142:784 and does
+   * not change with it. Falls back to `blurb` where unset.
+   */
+  homeBlurb?: string
+  /**
    * The designer's line-art PNG. Exactly one of `icon` and `mark` is set: a
    * service with no Figma artwork names a drawn mark instead — see
    * src/components/ui/ServiceMarks.ts.
@@ -102,7 +109,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     tabIconOn: '/images/icons/tab-recycling-on.svg',
     tabIconOff: '/images/icons/tab-recycling-off.svg',
     cards: [
-      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulb types.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/') },
+      { l1: 'Lighting Bulbs', l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulb types.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/'), homeBlurb: 'Safe recycling of fluorescent, LED, and other bulbs.' },
       /* "Kit" dropped from the label on Asim's instruction, 22 Sep 2026. The
          card points at /electronic-recycle/, whose H1 is "Electronics
          Recycling Services" and whose crumb is "Electronic Recycling" — it is
@@ -111,10 +118,10 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
          ("Mail-in kit for recycling smaller quantities"), and the Recycling
          Programs group below still carries a second "Electronic Recycling Kit"
          row pointing at this same URL. Both need Asim's call. */
-      { l1: 'Electronic',     l2: 'Recycling',         blurb: 'Mail-in kit for recycling smaller quantities of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/') },
-      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/') },
-      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/') },
-      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/') },
+      { l1: 'Electronic',     l2: 'Recycling',         blurb: 'Mail-in kit for recycling smaller quantities of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), homeBlurb: 'Easy collection and recycling of unwanted electronics.' },
+      { l1: 'Batteries',      l2: 'Recycling Service', blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/'), homeBlurb: 'Safe collection and recycling of spent batteries.' },
+      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/'), homeBlurb: 'Proper recycling of PCB and non-PCB ballasts.' },
+      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/'), homeBlurb: 'Responsible recycling of TVs and electronic displays.' },
       // Live and linked from the live /services/ page, but absent from Figma
       // 6142:784 — menu only until a card is designed.
       // No Figma card and no Figma icon, so this row borrowed the TELEVISION
@@ -134,15 +141,15 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     tabIconOn: '/images/icons/tab-destruction-on.svg',
     tabIconOff: '/images/icons/tab-destruction-off.svg',
     cards: [
-      { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/') },
-      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/') },
-      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/') },
+      { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/'), homeBlurb: 'Secure destruction and responsible recycling of hard drives.' },
+      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/'), homeBlurb: 'Secure shredding and recycling of confidential paper.' },
+      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/'), homeBlurb: 'Convenient off-site shredding for documents and materials.' },
       // See the conflict note at the top of this file. Menu only since
       // 21 Sep 2026: the redrawn /services/ frame (6142:1559 in file
       // drzg9BI08Dy8eWZNBfXBzD) draws three Destruction cards, and Asim asked
       // for this one taken off the page ("remove this one"). The page itself
       // stays live and the header menu still links it.
-      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, href: href('/phone-shredding-service/'), menuOnly: true },
+      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, href: href('/phone-shredding-service/'), menuOnly: true, homeBlurb: 'Secure shredding and recycling of unwanted phones.' },
     ],
   },
   {
@@ -160,7 +167,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // homepage tab (6563:2130) and on /services/ (6142:1688), and the kit
       // already has its card under Recycling Services.
       { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), menuOnly: true },
-      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true },
+      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
       // The new /mail-in-recycling/ page. Every existing "Mail In Program" link
       // still goes to ezontheearth.com — repointing them is Asim's call, so for
       // now the page is reachable from the menu only.

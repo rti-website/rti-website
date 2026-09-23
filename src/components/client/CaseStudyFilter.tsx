@@ -53,7 +53,7 @@ export function CaseStudyFilter() {
     return () => window.removeEventListener('hashchange', apply)
   }, [])
 
-  const pill = 'flex h-[38px] shrink-0 items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium transition-colors'
+  const pill = 'btn-pop flex h-[38px] shrink-0 items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium transition-colors'
   const on   = 'bg-brand text-white'
   const off  = 'bg-brand-soft text-brand hover:bg-brand hover:text-white'
 

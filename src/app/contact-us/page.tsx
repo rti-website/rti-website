@@ -45,9 +45,12 @@ export const metadata = buildMetadata({
   description: LIVE_SEO.description,
 })
 
-/** Form + facilities — 100 + the form column (850 with ten fields, measured) + 100. */
+/** Form + facilities — 100 + the form column + 100. The column measured 850
+ *  with the frame's ten fields; 754 since 23 Sep 2026, when the form moved to
+ *  the lead-form spec's nine (see FORM in src/data/contact.ts). Re-measure:
+ *  `node scripts/measure-sections.mjs --route contact-us`. */
 const FORM_TOP = 610
-const FORM_H = 1050
+const FORM_H = 954
 const FAQ_TOP = FORM_TOP + FORM_H
 const FAQ_H = 715.52
 const CTA_TOP = FAQ_TOP + FAQ_H

@@ -50,12 +50,25 @@ export const SEARCH = {
   lead: 'Search our library of recycling guides and articles, or browse by topic below.',
   placeholder: 'Search guides and articles (e.g. "laptop recycling")',
   button: 'Search',
+  /** Where the (presentational) Search button goes: the blog, as before the
+   *  chips were pointed at service pages. */
+  searchHref: href('/blog/'),
+  /**
+   * Each topic opens its service page — Asim, 23 Sep 2026: "when someone
+   * clicks on these buttons land them on that page, for example electronics
+   * on the electronics service page". They all went to /blog/ before.
+   *
+   * !! APPLIANCES HAS NO SERVICE PAGE. It opens the site's appliance guide,
+   * "How to Dispose of a Refrigerator" — the same post the Appliances card in
+   * Popular Articles below links to. A live WordPress post, served from the
+   * database on the laptop and dev (not in the sandbox build).
+   */
   chips: [
-    { label: 'Electronics',      href: href('/blog/') },
-    { label: 'Batteries',        href: href('/blog/') },
-    { label: 'Appliances',       href: href('/blog/') },
-    { label: 'Bulbs & Ballasts', href: href('/blog/') },
-    { label: 'Data Destruction', href: href('/blog/') },
+    { label: 'Electronics',      href: href('/electronic-recycle/') },
+    { label: 'Batteries',        href: href('/battery-recycling/') },
+    { label: 'Appliances',       href: href('/how-to-dispose-of-a-refrigerator/') },
+    { label: 'Bulbs & Ballasts', href: href('/light-bulbs/') },
+    { label: 'Data Destruction', href: href('/hard-drive-destruction-services/') },
   ],
 }
 

@@ -87,7 +87,7 @@ export function BarForm({
       <button
         type="submit"
         disabled={busy}
-        className={`inline-flex h-[48.05px] shrink-0 items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white disabled:opacity-70 ${stacked ? 'w-full justify-center lg:w-auto' : ''}`}
+        className={`btn-pop inline-flex h-[48.05px] shrink-0 items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white disabled:opacity-70 ${stacked ? 'w-full justify-center lg:w-auto' : ''}`}
       >
         <span className="whitespace-nowrap">{button}</span>
         <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

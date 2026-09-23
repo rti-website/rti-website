@@ -24,7 +24,7 @@ export type Chip = { slug: string; name: string; path: string }
  * as one line. 44px tall on the phone (the tap-target minimum) against the
  * board's 38, 10 apart rather than 12.
  */
-const BASE = 'flex h-[38px] items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium leading-[1.3] transition-colors max-lg:h-[44px] max-lg:shrink-0'
+const BASE = 'btn-pop flex h-[38px] items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium leading-[1.3] transition-colors max-lg:h-[44px] max-lg:shrink-0'
 const ON = 'bg-brand text-white'
 const OFF = 'bg-brand-soft text-brand hover:bg-[#dbecee]'
 

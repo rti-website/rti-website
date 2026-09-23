@@ -45,9 +45,12 @@ export function Locations() {
       <CenterBox y={0} w={400} className="flex justify-center"><Eyebrow>Where We Serve</Eyebrow></CenterBox>
       <CenterBox y={52} w={700}><Title className="text-center">Our Strategic National Network</Title></CenterBox>
       <CenterBox y={130} w={819}>
+        {/* Copy: Asim, 23 Sep 2026 — Chicago is "expanded operations", not a
+            licensed facility. */}
         <Lead className="text-center">
-          Recycle Technologies has licensed facilities in Minnesota, Wisconsin, and Chicago.
-          Our mail-in recycling program is available in all 50 states.
+          Recycle Technologies has licensed facilities in Minnesota and Wisconsin, with
+          expanded operations in Chicago. Our mail-in recycling program is available in
+          all 50 states.
         </Lead>
       </CenterBox>
       <CenterBox y={210} w={300} offset={13.78} className="flex justify-center">
@@ -132,7 +135,10 @@ export function Locations() {
           difference we actually make through responsible e-waste recycling
         </p>
         <Box x={57} y={164}>
-          <Btn href={href('/blog/')} variant="whiteFill" className="w-full justify-center lg:w-auto lg:justify-start">Download Resources</Btn>
+          {/* Opens /resources/ — Asim, 23 Sep 2026: "when someone clicks on
+              Download Resources it lands on [the] resource main page". It went
+              to /blog/ before. */}
+          <Btn href={href('/resources/')} variant="whiteFill" className="w-full justify-center lg:w-auto lg:justify-start">Download Resources</Btn>
         </Box>
         {/* Brochure art — 6557:12912, a 566x309 clip at x772 y-22 holding the
             image at 110.91% of its height, top-aligned. It breaks out of the

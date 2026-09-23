@@ -546,3 +546,39 @@ input[type="search"]::-webkit-search-decoration {
   appearance: none;
   display: none;
 }
+
+/* ===========================================================================
+   .btn-pop — every button on the site lifts on hover. 23 Sep 2026.
+
+   Asim: "apply pop up on all button on hover in full website". The button
+   rises 3px and gains a soft shadow, and settles back 2px while it is pressed.
+
+   Unlayered on purpose. Tailwind's utilities live in @layer utilities, and an
+   unlayered rule beats any layered one — so a button that also carries
+   `transition-colors` or `transition-opacity` still animates its lift. The
+   transition list below therefore includes the colour properties those
+   utilities were there for.
+
+   `transform`, not `translate`: Tailwind v4 positions with the separate
+   `translate` property (-translate-y-1/2 on a centred arrow, say), and the two
+   compose — a hover lift never knocks an absolutely-centred button off its
+   centre.
+
+   Only on devices that hover, and not for people who asked for less motion.
+   A disabled button does not move.
+   =========================================================================== */
+.btn-pop {
+  transition-property: transform, box-shadow, background-color, border-color, color, opacity;
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-pop:hover:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px -10px rgba(11, 31, 58, 0.45);
+  }
+  .btn-pop:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px -6px rgba(11, 31, 58, 0.4);
+  }
+}

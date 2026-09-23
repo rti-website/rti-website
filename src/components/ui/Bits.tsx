@@ -65,23 +65,28 @@ const BTN: Record<BtnVariant, { box: string; text: string; arrow: string }> = {
  * which is how it reads in the Figma preview.
  */
 export function Btn({
-  href, children, variant = 'colored', italic = false, className = '', external = false,
+  href, children, variant = 'colored', italic = false, className = '', external = false, submit = false,
 }: {
-  href: string
+  /** Where it goes. Omit it and pass `submit` for a form's submit button. */
+  href?: string
   children: React.ReactNode
   variant?: BtnVariant
   italic?: boolean
   className?: string
   external?: boolean
+  /** Render a `<button type="submit">` in the same look, for a form. */
+  submit?: boolean
 }) {
   const v = BTN[variant]
-  const cls = `inline-flex h-[48.05px] items-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] leading-[22.523px] tracking-[-0.0801px] ${italic ? 'font-light italic' : 'font-medium'} ${v.box} ${v.text} ${className}`
+  // `btn-pop` — the site-wide hover lift, see globals.css.
+  const cls = `btn-pop inline-flex h-[48.05px] items-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] leading-[22.523px] tracking-[-0.0801px] ${italic ? 'font-light italic' : 'font-medium'} ${v.box} ${v.text} ${className}`
   const inner = (
     <>
       <span className="whitespace-nowrap">{children}</span>
       <Image src={v.arrow} alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
     </>
   )
+  if (submit || !href) return <button type="submit" className={cls}>{inner}</button>
   return external
     ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
     : <Link href={href} className={cls}>{inner}</Link>

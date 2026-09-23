@@ -32,7 +32,8 @@ export const HERO = {
   ],
   // Live H1 is "contact us" (lowercase). Built as designed, like every other page.
   h1: 'Contact Us',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 23 Sep 2026.
+  lead: 'Questions about recycling, drop-off, or getting a quote? Reach out to our team and get a quick response to your queries.',
 }
 
 /**
@@ -52,44 +53,66 @@ export const HERO = {
  * draws "--" in the address fields and "Select" in Company name, which are
  * stand-ins, not copy; those say what the field is.
  */
+/**
+ * The services a visitor can pick — ONE list for the contact form's "Service
+ * Interest" and the homepage hero's "Pick Your Service", so a service chosen
+ * in the hero always exists in the form it lands on (Asim, 23 Sep 2026: "when
+ * someone selects the service it must automatically come to [the] contact
+ * form"). The form spec says the options "mirror the Services page", so this
+ * is that page's list, plus Other.
+ */
+export const SERVICE_INTEREST = [
+  'IT Asset Disposition (ITAD)',
+  'Electronics Recycling',
+  'Battery Recycling',
+  'Light Bulb Recycling',
+  'Ballast Recycling',
+  'TV Recycling',
+  'Airbag Recycling',
+  'Hard Drive Destruction',
+  'Paper Shredding',
+  'Off-Site Shredding',
+  'Phone Shredding',
+  'Mail-In Program',
+  'Other',
+] as const
+
+/**
+ * The contact form — rebuilt to the lead-form spec Asim sent on 23 Sep 2026
+ * ("2.1 Visible fields"), which replaces the frame's eleven fields:
+ *
+ *   First name   text      required, 2 to 60 chars
+ *   Last name    text      required, 2 to 60 chars
+ *   Email        email     required, lowercased on save
+ *   Phone        tel       required, US format accepted loosely, stored as +1XXXXXXXXXX
+ *   Company      text      optional
+ *   Service      select    optional, SERVICE_INTEREST above
+ *   Zip code     text      optional, 5 digits
+ *   Message      textarea  optional, max 2000 chars
+ *   Consent      checkbox  required: "I agree to be contacted by Recycle Technologies"
+ *
+ * The rules are enforced twice: in the browser (ContactForm), and again in
+ * /api/leads, which is the one that counts — see validateSpecForm there.
+ */
 export const FORM = {
   eyebrow: 'Get In Touch',
   heading: 'Get a Quote',
   lead: 'Questions about a pickup, drop-off, or your recycling program? Fill out the short form below and our team will get back to you shortly.',
   fields: {
-    name:    { label: 'Full Name',     placeholder: 'John Smith' },
-    email:   { label: 'Email Address', placeholder: 'jamie@company.com' },
-    phone:   { label: 'Phone Number',  placeholder: '(XXX) XXX-XXXX' },
-    company: { label: 'Company name',  placeholder: 'Company name' },
-    address: { label: 'Address',       placeholder: 'Street address' },
-    city:    { label: 'City',          placeholder: 'City' },
-    state:   { label: 'State',         placeholder: 'State' },
-    zip:     { label: 'Zip code',      placeholder: 'Zip code' },
-    item:    { label: 'What would you like to recycle?', placeholder: 'Select' },
-    audience:{ label: 'Is it for?',    placeholder: 'Select' },
-    message: { label: 'Message',       placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
+    firstName: { label: 'First Name',       placeholder: 'John' },
+    lastName:  { label: 'Last Name',        placeholder: 'Smith' },
+    email:     { label: 'Email Address',    placeholder: 'jamie@company.com' },
+    phone:     { label: 'Phone Number',     placeholder: '(XXX) XXX-XXXX' },
+    company:   { label: 'Company Name',     placeholder: 'Company name' },
+    zip:       { label: 'Zip Code',         placeholder: '5-digit zip code' },
+    service:   { label: 'Service Interest', placeholder: 'Select a service' },
+    message:   { label: 'Message',          placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
   },
-  /**
-   * TODO(content): the frame shows the closed select only, so the options are
-   * not designed. These are the services the site offers, in catalogue order,
-   * plus a catch-all; Musaveer should confirm the list.
-   */
-  items: [
-    'Lighting bulbs',
-    'Electronics',
-    'Batteries',
-    'Ballasts',
-    'Televisions',
-    'Hard drives',
-    'Paper',
-    'Off-site shredding',
-    'Cell phones',
-    'Airbags',
-    'Something else',
-  ],
-  /** The frame shows "Residential" in the closed select; the other case is the business one. */
-  audiences: ['Residential', 'Commercial'],
+  optional: '(optional)',
+  consent: 'I agree to be contacted by Recycle Technologies',
+  messageMax: 2000,
   submit: 'Send Message',
+  sent: 'Thanks — your message is with us. We usually reply within one business day.',
 }
 
 /** Right column — Figma 6370:764. Details match the live contact page exactly. */

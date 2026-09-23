@@ -76,14 +76,19 @@ export function ResourceSearch({ top, height }: { top: number; height: number })
         children, so the wrapper simply stops being a bar below lg and the
         border moves onto the input itself.
       */}
-      <div className="flex w-full flex-col gap-[24px] lg:h-[56px] lg:w-[680px] lg:flex-row lg:items-center lg:justify-between lg:gap-0 lg:rounded-[10px] lg:border lg:border-[#e2e2e2] lg:bg-white lg:pl-[20px] lg:pr-[8px]">
+      {/* The button sits FLUSH with the bar's right edge, full height —
+          Asim, 23 Sep 2026: "there is a small gap on right side, remove
+          this". It used to float 8px in from the edge (pr-8), with a sliver
+          of white bar showing past it. Now the bar clips it to its own
+          rounded corner, like the footer's newsletter arrow. */}
+      <div className="flex w-full flex-col gap-[24px] lg:h-[56px] lg:w-[680px] lg:flex-row lg:items-stretch lg:justify-between lg:gap-0 lg:overflow-hidden lg:rounded-[10px] lg:border lg:border-[#e2e2e2] lg:bg-white lg:pl-[20px]">
         <span className="flex items-center gap-[12px] max-lg:h-[50px] max-lg:rounded-[8px] max-lg:border max-lg:border-[#e2e2e2] max-lg:bg-white max-lg:px-[16px]">
           <svg viewBox="0 0 20 20" className="size-[20px] shrink-0 fill-[#7e7e7e]" aria-hidden="true"><path d={SEARCH_MARK} /></svg>
           <span className="font-poppins text-[15px] text-[#7e7e7e]">{SEARCH.placeholder}</span>
         </span>
         <Link
-          href={SEARCH.chips[0]?.href ?? '/blog/'}
-          className="flex h-[48.05px] items-center rounded-[8px] bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium tracking-[-0.0801px] text-white max-lg:w-full max-lg:justify-center"
+          href={SEARCH.searchHref}
+          className="flex h-[48.05px] items-center rounded-[8px] bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium tracking-[-0.0801px] text-white transition-colors hover:bg-[#04737a] max-lg:w-full max-lg:justify-center lg:h-auto lg:rounded-none lg:px-[32px]"
         >
           {SEARCH.button}
         </Link>
@@ -99,7 +104,7 @@ export function ResourceSearch({ top, height }: { top: number; height: number })
           <Link
             key={c.label}
             href={c.href}
-            className="flex h-[38px] shrink-0 items-center rounded-full bg-[#eaf4f5] px-[18px] font-sans text-[13.5px] font-medium text-brand"
+            className="btn-pop flex h-[38px] shrink-0 items-center rounded-full bg-[#eaf4f5] px-[18px] font-sans text-[13.5px] font-medium text-brand"
           >
             {c.label}
           </Link>

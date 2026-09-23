@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { one } from '@/lib/db'
 import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
+import { toE164 } from '@/lib/phone'
+import { FORM, SERVICE_INTEREST } from '@/data/contact'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -26,6 +28,55 @@ import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 const LIMITS: Record<string, number> = {
   name: 120, email: 200, phone: 40, company: 160, message: 5000,
   address: 200, city: 80, state: 80, zip: 20, item: 80, audience: 40, referral: 80,
+  firstName: 60, lastName: 60, service: 80,
+}
+
+/**
+ * The contact form's rules — the lead-form spec Asim sent on 23 Sep 2026
+ * ("2.1 Visible fields"; the table is in src/data/contact.ts above FORM).
+ * Applied when a post carries firstName/lastName, which only that form sends;
+ * the other forms keep the looser checks below. The browser runs the same
+ * rules first (ContactForm), but this is the copy that decides.
+ *
+ * Returns the cleaned values, or the field that failed and why — the form
+ * focuses that field and shows the message.
+ */
+function validateSpecForm(p: Payload):
+  | { ok: true; name: string; phone: string; zip: string | null; service: string | null; message: string | null; details: Record<string, string> }
+  | { ok: false; field: string; error: string } {
+  const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
+  const first = str(p.firstName)
+  const last = str(p.lastName)
+  if (first.length < 2 || first.length > 60) return { ok: false, field: 'firstName', error: 'Please enter your first name (2 to 60 characters).' }
+  if (last.length < 2 || last.length > 60) return { ok: false, field: 'lastName', error: 'Please enter your last name (2 to 60 characters).' }
+
+  const phone = toE164(str(p.phone))
+  if (!phone) return { ok: false, field: 'phone', error: 'Please enter a US phone number, e.g. (763) 559-5130.' }
+
+  const zip = str(p.zip) || null
+  if (zip && !/^\d{5}$/.test(zip)) return { ok: false, field: 'zip', error: 'Zip code should be 5 digits.' }
+
+  const message = str(p.message) || null
+  if (message && message.length > FORM.messageMax) {
+    return { ok: false, field: 'message', error: `Please keep the message under ${FORM.messageMax} characters.` }
+  }
+
+  if (p.consent !== true) return { ok: false, field: 'consent', error: 'Please tick the box so we can contact you.' }
+
+  // Optional, but only one of the listed services — anything else is dropped
+  // rather than stored, so the Lead Hub can route on it.
+  const wanted = str(p.service)
+  const service = (SERVICE_INTEREST as readonly string[]).includes(wanted) ? wanted : null
+
+  const details: Record<string, string> = {
+    firstName: first,
+    lastName: last,
+    consent: FORM.consent,
+    consentAt: new Date().toISOString(),
+  }
+  if (service) details.service = service
+  if (zip) details.zip = zip
+  return { ok: true, name: `${first} ${last}`, phone, zip, service, message, details }
 }
 
 const TYPES = ['contact', 'quote', 'download', 'callback'] as const
@@ -79,31 +130,41 @@ export async function POST(req: Request): Promise<Response> {
     )
   }
 
-  const email = clean(payload.email, LIMITS.email ?? 200)
+  // Lowercased on save (the spec's rule; harmless for every other form).
+  const email = clean(payload.email, LIMITS.email ?? 200)?.toLowerCase() ?? null
   // Deliberately loose. Anything stricter rejects addresses that are perfectly
   // valid, and the cost of a bad address here is one unanswerable enquiry.
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: 'Please check the email address.' }, { status: 400 })
+    return NextResponse.json({ error: 'Please check the email address.', field: 'email' }, { status: 400 })
+  }
+
+  const spec = typeof payload.firstName === 'string' || typeof payload.lastName === 'string'
+    ? validateSpecForm(payload)
+    : null
+  if (spec && !spec.ok) {
+    return NextResponse.json({ error: spec.error, field: spec.field }, { status: 400 })
   }
 
   const type: LeadType = TYPES.includes(payload.type as LeadType)
     ? (payload.type as LeadType)
     : 'contact'
 
-  const name = clean(payload.name, LIMITS.name ?? 120)
-  const phone = clean(payload.phone, LIMITS.phone ?? 40)
+  const name = spec?.ok ? spec.name : clean(payload.name, LIMITS.name ?? 120)
+  const phone = spec?.ok ? spec.phone : clean(payload.phone, LIMITS.phone ?? 40)
   const company = clean(payload.company, LIMITS.company ?? 160)
-  const message = clean(payload.message, LIMITS.message ?? 5000)
+  const message = spec?.ok ? spec.message : clean(payload.message, LIMITS.message ?? 5000)
   const sourcePage = clean(payload.sourcePage, 300)
 
   /* Everything the leads table has no column for. The schema comment on
      `details` asks for exactly this rather than twenty sparse columns. */
-  const details: Record<string, string> = {}
-  // `referral` is the ITAD pickup form's "How did you hear about us?"
-  // (PickupForm, 23 Sep 2026).
-  for (const key of ['address', 'city', 'state', 'zip', 'item', 'audience', 'referral']) {
-    const v = clean(payload[key], LIMITS[key] ?? 120)
-    if (v) details[key] = v
+  const details: Record<string, string> = spec?.ok ? { ...spec.details } : {}
+  if (!spec) {
+    // `referral` is the ITAD pickup form's "How did you hear about us?"
+    // (PickupForm, 23 Sep 2026).
+    for (const key of ['address', 'city', 'state', 'zip', 'item', 'audience', 'referral']) {
+      const v = clean(payload[key], LIMITS[key] ?? 120)
+      if (v) details[key] = v
+    }
   }
 
   let id: number | null = null

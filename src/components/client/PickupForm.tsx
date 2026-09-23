@@ -125,7 +125,7 @@ export function PickupForm() {
       <button
         type="submit"
         disabled={state === 'sending'}
-        className="inline-flex h-[46px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white transition-opacity disabled:opacity-60 lg:h-[48px] lg:w-[200px]"
+        className="btn-pop inline-flex h-[46px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white transition-opacity disabled:opacity-60 lg:h-[48px] lg:w-[200px]"
       >
         {state === 'sending' ? 'Sending…' : PICKUP.submit}
         <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px]" />

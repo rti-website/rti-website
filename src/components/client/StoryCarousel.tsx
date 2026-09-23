@@ -149,18 +149,25 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
                 : 'linear-gradient(to bottom, rgba(10,15,12,0) 40%, rgba(10,15,12,0.6) 100%)' }}
             />
             {s.on ? (
-              /* Tag, title and the one-line summary stack from the bottom, so
-                 a two-line title pushes the tag up instead of running into
-                 the summary. Read Story shares the column's bottom edge. */
+              /* Tag, title and the one-line summary stack from the bottom.
+                 Read Story shares the column's bottom edge.
+
+                 TITLES ARE ONE LINE — Asim, 23 Sep 2026: "fix these headings in
+                 one line". The title had a 440px box and broke "…years of
+                 old / electronics" and "…and waste- / free". It now runs the
+                 card's full inner width (821 - 2 x 38.5 = 744) with nowrap;
+                 the longest of the three (the hospital one) is 512px, so there is room for a
+                 longer one. Only the SUMMARY keeps a 540px measure, because it
+                 is the line that shares the bottom row with Read Story. */
               <>
-                <span className="absolute bottom-[48px] left-[38.5px] flex w-[540px] flex-col items-start gap-[12px]">
+                <span className="absolute bottom-[48px] left-[38.5px] flex w-[744px] flex-col items-start gap-[12px]">
                   <span className="rounded-[5.323px] border-[1.331px] border-white bg-white px-[11.884px] py-[6.602px] font-sans text-[16.103px] capitalize leading-[20.495px] tracking-[1.2776px] text-black">
                     {story.tag}
                   </span>
-                  <span className="w-[440px] font-sans text-[20px] leading-[26.205px] text-white">
+                  <span className="whitespace-nowrap font-sans text-[20px] leading-[26.205px] text-white">
                     {story.title}
                   </span>
-                  <span className="font-roboto text-[15px] leading-[22px] text-white/80">
+                  <span className="w-[540px] font-roboto text-[15px] leading-[22px] text-white/80">
                     {story.blurb}
                   </span>
                 </span>
@@ -170,11 +177,13 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
                 </span>
               </>
             ) : (
-              <span className="absolute bottom-[40px] left-[25px] flex w-[560px] flex-col items-start gap-[10px]">
+              /* Side cards: one line too, across the card's inner width
+                 (671 - 2 x 25 = 621). */
+              <span className="absolute bottom-[40px] left-[25px] flex w-[621px] flex-col items-start gap-[10px]">
                 <span className="rounded-[4.031px] border-[1.008px] border-white bg-white px-[9px] py-[5px] font-sans text-[12.195px] capitalize leading-[15.521px] tracking-[0.9676px] text-black">
                   {story.tag}
                 </span>
-                <span className="font-sans text-[18.746px] leading-[26.205px] text-white">
+                <span className="whitespace-nowrap font-sans text-[18.746px] leading-[26.205px] text-white">
                   {story.title}
                 </span>
                 <span className="flex items-center gap-[8px] font-sans text-[12px] leading-[19.351px] tracking-[0.126px] text-white">
@@ -193,7 +202,7 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
           type="button"
           onClick={() => go(-1)}
           aria-label="Previous story"
-          className="grid size-[66px] place-items-center rounded-full bg-[#ededed] transition-colors hover:bg-[#e2e2e2]"
+          className="btn-pop grid size-[66px] place-items-center rounded-full bg-[#ededed] transition-colors hover:bg-[#e2e2e2]"
         >
           <Image src="/images/icons/chevron-16.svg" alt="" width={36} height={36} className="size-[36px] rotate-90" />
         </button>
@@ -201,7 +210,7 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
           type="button"
           onClick={() => go(1)}
           aria-label="Next story"
-          className="grid size-[66px] place-items-center rounded-full bg-[#ededed] transition-colors hover:bg-[#e2e2e2]"
+          className="btn-pop grid size-[66px] place-items-center rounded-full bg-[#ededed] transition-colors hover:bg-[#e2e2e2]"
         >
           <Image src="/images/icons/chevron-16.svg" alt="" width={36} height={36} className="size-[36px] -rotate-90" />
         </button>

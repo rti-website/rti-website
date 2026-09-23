@@ -133,7 +133,7 @@ export function ConnectForm({
 
       <button
         type="submit"
-        className={`flex h-[50px] w-full items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1 ${t.button}`}
+        className={`btn-pop flex h-[50px] w-full items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1 ${t.button}`}
       >
         <span className="whitespace-nowrap">{cta}</span>
         <Image src={t.arrow} alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

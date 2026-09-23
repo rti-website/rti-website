@@ -2,137 +2,151 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { FORM } from '@/data/contact'
+import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { path } from '@/lib/urls'
+import { usPhoneDigits } from '@/lib/phone'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 
 /**
- * Contact form — Figma 6370:758, redrawn in 6365:1082.
+ * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
+ * 2026 the lead-form spec for the fields (see FORM in src/data/contact.ts):
  *
- * Column gap 24 down to the Fields group, which is gap 20; each field is a
- * label (IBM Plex Sans Medium 14) over a 48px input (white, 1px #e2e2e2, r8,
- * px16). Placeholders are Poppins 14, self-hosted — see globals.css. Selects
- * carry a 16px chevron at the right edge (Figma "Frame", 16 square).
+ *   first / last · email / phone · company / zip · service interest ·
+ *   message · consent · button
  *
- * Rows, top to bottom, exactly as the frame stacks them:
- *   name / email · phone / company · address · city / state / zip ·
- *   what to recycle / who for · message · button
- * See the FORM note in src/data/contact.ts for the pair the frame repeats.
+ * Each field keeps the frame's look: a 14px IBM Plex Sans Medium label over a
+ * 48px input (white, 1px #e2e2e2, r8, px16), Poppins placeholders, a 16px
+ * chevron on the select. Pairs sit side by side at lg and stack on a phone.
  *
- * Client only because it owns a submit handler.
+ * VALIDATION, IN THE BROWSER — the same rules /api/leads enforces, so most
+ * mistakes are caught before a round trip: names 2 to 60 characters, a real
+ * email, a US phone number (10 digits, or 11 starting with 1, in any
+ * punctuation), a 5-digit zip if one is given, a 2000-character message cap
+ * with a counter, and the consent box. The server repeats every check and is
+ * the one that decides; a field it rejects gets focus and its message.
  *
- * MOBILE — Figma 6638:8418 ("Section - Get a Quote" in "Contact Us - Mobile",
- * 6638:2221, file BVtf2AOuUOcYbiMIlcKmbC). The field itself does not change:
- * still a 14px label over a 48px input with a 16px inset and an 8px radius.
- * What changes is the rails and the rows.
+ * THE SERVICE ARRIVES FROM THE HERO. The homepage's "Pick Your Service" posts
+ * `?service=<name>` here (Asim, 23 Sep 2026: "when someone selects the service
+ * it must automatically come to [the] contact form"); the effect below picks
+ * it out of the URL and selects it.
  *
- *   Fields column   gap 20 -> 16
- *   name/email, phone/company, recycle/is-it-for   two-up -> stacked
- *   city / state / zip   STAYS three-up, 16 apart (6653:2443: 106px each)
- *   submit button   still hugs its content (183.28 x 48.05 in the frame)
- *
- * so ROW stacks below lg and ROW_INLINE never does. Nothing here changes what
- * the form POSTs: same eleven names, same honeypot, same handler.
+ * Client only because it owns a submit handler and that state.
  */
-const INPUT = 'h-[48px] w-full rounded-[8px] border border-field bg-white px-[16px] font-poppins text-[14px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand'
+const INPUT = 'h-[48px] w-full rounded-[8px] border border-field bg-white px-[16px] font-poppins text-[14px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand aria-[invalid=true]:border-[#b3261e]'
 const LABEL = 'font-sans text-[14px] font-medium leading-none text-label'
 /** A pair of fields: one under the other on a phone, side by side at lg. */
 const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[20px]'
-/**
- * City / State / Zip. The one row the mobile frame keeps horizontal — three
- * 106px fields with a 16px gap inside the 350px column — because a state
- * abbreviation and a ZIP do not earn a line each.
- */
-const ROW_INLINE = 'flex w-full items-start gap-[16px] lg:gap-[20px]'
 const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
+type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'zip' | 'service' | 'message' | 'consent'
+
+/** The first rule a filled-in form breaks, or null. Mirrors /api/leads. */
+function check(v: (k: FieldName) => string, consent: boolean): { field: FieldName; message: string } | null {
+  const first = v('firstName'), last = v('lastName')
+  if (first.length < 2 || first.length > 60) return { field: 'firstName', message: 'Please enter your first name (2 to 60 characters).' }
+  if (last.length < 2 || last.length > 60) return { field: 'lastName', message: 'Please enter your last name (2 to 60 characters).' }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return { field: 'email', message: 'Please check the email address.' }
+  if (!usPhoneDigits(v('phone'))) return { field: 'phone', message: 'Please enter a US phone number, e.g. (763) 559-5130.' }
+  if (v('zip') && !/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Zip code should be 5 digits.' }
+  if (v('message').length > FORM.messageMax) return { field: 'message', message: `Please keep the message under ${FORM.messageMax} characters.` }
+  if (!consent) return { field: 'consent', message: 'Please tick the box so we can contact you.' }
+  return null
+}
 
 export function ContactForm() {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [bad, setBad] = useState<FieldName | null>(null)
+  const [count, setCount] = useState(0)
 
   /**
-   * Picks up an address typed into the "Don't See Your Item?" band, which
-   * sends people here rather than posting one field on its own.
-   *
-   * Written to the DOM in an effect, not passed as defaultValue: this form is
-   * uncontrolled and prerendered, so a value read from sessionStorage during
-   * render would not match the server's HTML and React would throw a
-   * hydration error. Read once, filled in, then removed — a second visit to
-   * the contact page should not silently repeat it.
+   * Two things arrive from other pages, both written to the DOM in an effect
+   * (the form is uncontrolled and prerendered, so filling them during render
+   * would not match the server's HTML):
+   *   - an email typed into the "Don't See Your Item?" band (sessionStorage),
+   *     read once and removed;
+   *   - a service picked in the homepage hero (`?service=` in the URL).
    */
   useEffect(() => {
-    let saved: string | null = null
     try {
-      saved = sessionStorage.getItem(CONNECT_EMAIL_KEY)
-      if (saved) sessionStorage.removeItem(CONNECT_EMAIL_KEY)
-    } catch {
-      return
+      const saved = sessionStorage.getItem(CONNECT_EMAIL_KEY)
+      if (saved) {
+        sessionStorage.removeItem(CONNECT_EMAIL_KEY)
+        const field = document.getElementById('contact-email')
+        if (field instanceof HTMLInputElement && field.value === '') field.value = saved
+      }
+    } catch { /* storage blocked — nothing to carry over */ }
+
+    const wanted = new URLSearchParams(window.location.search).get('service')?.trim().toLowerCase()
+    if (wanted) {
+      const match = SERVICE_INTEREST.find((o) => o.toLowerCase() === wanted)
+      const select = document.getElementById('contact-service')
+      if (match && select instanceof HTMLSelectElement) select.value = match
     }
-    if (!saved) return
-    const field = document.getElementById('contact-email')
-    if (field instanceof HTMLInputElement && field.value === '') field.value = saved
   }, [])
 
+  function focusField(f: FieldName) {
+    setBad(f)
+    document.getElementById(`contact-${f}`)?.focus()
+  }
+
   /**
-   * Posts to /api/leads, which saves the enquiry and emails whoever
-   * LEAD_NOTIFY_TO names. Until 21 Sep 2026 this handler called
-   * preventDefault() and stopped — every submission on the site was silently
-   * dropped.
-   *
-   * The fields are read off the form rather than held in state: there are
-   * eleven of them, none of them needs to re-render anything as it is typed,
-   * and controlled inputs here would be eleven useState calls that exist only
-   * to be read once on submit.
+   * Posts to /api/leads, which validates, saves the enquiry and emails
+   * whoever LEAD_NOTIFY_TO names. Fields are read off the form rather than
+   * held in state — none of them needs to re-render anything as it is typed.
    */
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (state === 'sending') return
-    setState('sending')
-    setError(null)
 
-    /* Hold the element, do not reach for e.currentTarget after an await.
-       React nulls currentTarget once the handler returns synchronously, so
-       `e.currentTarget.reset()` below the fetch throws — and because it throws
-       inside the try, it surfaces as "could not reach the server" on a
-       submission that in fact arrived, was saved and was emailed. Caught doing
-       exactly that on 21 Sep 2026. */
+    /* Hold the element, do not reach for e.currentTarget after an await —
+       React nulls it once the handler returns (caught 21 Sep 2026). */
     const form = e.currentTarget
     const data = new FormData(form)
-    const value = (k: string) => String(data.get(k) ?? '')
+    const value = (k: string) => String(data.get(k) ?? '').trim()
+    const consent = data.get('consent') === 'yes'
 
+    const problem = check((k) => value(k), consent)
+    if (problem) {
+      setError(problem.message)
+      setState('error')
+      focusField(problem.field)
+      return
+    }
+
+    setState('sending')
+    setError(null)
+    setBad(null)
     try {
-      // path(), not a hand-written string (CLAUDE.md rule 3): trailingSlash is
-      // on, so "/api/leads" answers with a 308 to "/api/leads/" and every
-      // submission would pay for a redirect before it even starts.
+      // path(), not a hand-written string (CLAUDE.md rule 3).
       const res = await fetch(path('/api/leads/'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           type: 'contact',
-          name: value('name'),
+          firstName: value('firstName'),
+          lastName: value('lastName'),
           email: value('email'),
           phone: value('phone'),
           company: value('company'),
-          address: value('address'),
-          city: value('city'),
-          state: value('state'),
           zip: value('zip'),
-          item: value('item'),
-          audience: value('audience'),
+          service: value('service'),
           message: value('message'),
+          consent,
           website: value('website'),
           sourcePage: window.location.pathname,
         }),
       })
-      const out = (await res.json().catch(() => ({}))) as { error?: string }
+      const out = (await res.json().catch(() => ({}))) as { error?: string; field?: FieldName }
       if (!res.ok) {
         setError(out.error ?? 'Something went wrong. Please try again.')
         setState('error')
+        if (out.field) focusField(out.field)
         return
       }
       form.reset()
+      setCount(0)
       setState('sent')
     } catch {
       setError('Could not reach the server. Please check your connection and try again.')
@@ -140,8 +154,11 @@ export function ContactForm() {
     }
   }
 
+  const invalid = (f: FieldName) => (bad === f ? true : undefined)
+  const F = FORM.fields
+
   return (
-    <form className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit}>
+    <form className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit} noValidate>
       {/* Honeypot. Hidden from sight AND from screen readers, and out of the
           tab order, so no person is ever offered it — only a bot that fills
           every input it finds. See the check in /api/leads. */}
@@ -151,60 +168,70 @@ export function ContactForm() {
       </div>
 
       <div className={ROW}>
-        <Field id="contact-name" f={FORM.fields.name} type="text" autoComplete="name" />
-        <Field id="contact-email" f={FORM.fields.email} type="email" autoComplete="email" required />
+        <Field id="firstName" f={F.firstName} autoComplete="given-name" required minLength={2} maxLength={60} invalid={invalid('firstName')} onInput={() => setBad(null)} />
+        <Field id="lastName" f={F.lastName} autoComplete="family-name" required minLength={2} maxLength={60} invalid={invalid('lastName')} onInput={() => setBad(null)} />
       </div>
 
       <div className={ROW}>
-        <Field id="contact-phone" f={FORM.fields.phone} type="tel" autoComplete="tel" />
-        <Field id="contact-company" f={FORM.fields.company} type="text" autoComplete="organization" />
+        <Field id="email" f={F.email} type="email" autoComplete="email" required maxLength={200} invalid={invalid('email')} onInput={() => setBad(null)} />
+        <Field id="phone" f={F.phone} type="tel" autoComplete="tel" required maxLength={25} invalid={invalid('phone')} onInput={() => setBad(null)} />
       </div>
 
       <div className={ROW}>
-        <Field id="contact-address" f={FORM.fields.address} type="text" autoComplete="street-address" />
+        <Field id="company" f={F.company} autoComplete="organization" optional maxLength={160} />
+        <Field id="zip" f={F.zip} inputMode="numeric" autoComplete="postal-code" optional maxLength={5} pattern="\d{5}" invalid={invalid('zip')} onInput={() => setBad(null)} />
       </div>
 
-      <div className={ROW_INLINE}>
-        <Field id="contact-city" f={FORM.fields.city} type="text" autoComplete="address-level2" />
-        <Field id="contact-state" f={FORM.fields.state} type="text" autoComplete="address-level1" />
-        <Field id="contact-zip" f={FORM.fields.zip} type="text" inputMode="numeric" autoComplete="postal-code" />
-      </div>
-
-      <div className={ROW}>
-        <Select id="contact-item" f={FORM.fields.item} options={FORM.items} />
-        <Select id="contact-audience" f={FORM.fields.audience} options={FORM.audiences} />
+      <div className={FIELD}>
+        <label htmlFor="contact-service" className={LABEL}>{F.service.label} <Optional /></label>
+        <div className="relative">
+          <select id="contact-service" name="service" defaultValue="" className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
+            <option value="">{F.service.placeholder}</option>
+            {SERVICE_INTEREST.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
+          </select>
+          <Image src="/images/icons/chevron-16.svg" alt="" width={16} height={16}
+            className="pointer-events-none absolute right-[16px] top-1/2 size-[16px] -translate-y-1/2" />
+        </div>
       </div>
 
       <div className="flex w-full flex-col gap-[8px]">
-        <label htmlFor="contact-message" className={LABEL}>{FORM.fields.message.label}</label>
+        <label htmlFor="contact-message" className={LABEL}>{F.message.label} <Optional /></label>
         <textarea
           id="contact-message"
           name="message"
           rows={4}
-          placeholder={FORM.fields.message.placeholder}
+          maxLength={FORM.messageMax}
+          placeholder={F.message.placeholder}
+          aria-invalid={invalid('message')}
+          aria-describedby="contact-message-count"
+          onInput={(e) => { setCount(e.currentTarget.value.length); setBad(null) }}
           className="h-[110px] w-full resize-none rounded-[8px] border border-field bg-white px-[16px] pt-[14px] font-poppins text-[14px] leading-[22px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand"
         />
+        <span id="contact-message-count" className="self-end font-roboto text-[12px] leading-none text-muted">
+          {count}/{FORM.messageMax}
+        </span>
       </div>
+
+      <label className="flex items-start gap-[10px] font-roboto text-[14px] leading-[20px] text-label">
+        <input id="contact-consent" name="consent" value="yes" type="checkbox" required aria-invalid={invalid('consent')}
+          onChange={() => setBad(null)}
+          className="mt-[1px] size-[18px] shrink-0 accent-brand" />
+        <span>{FORM.consent}</span>
+      </label>
 
       <div className="flex w-full flex-col gap-[12px]">
         <button
           type="submit"
           disabled={state === 'sending'}
-          className="inline-flex h-[48.05px] w-fit items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white transition-opacity disabled:opacity-60"
+          className="btn-pop inline-flex h-[48.05px] w-fit items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white disabled:opacity-60"
         >
           {state === 'sending' ? 'Sending…' : FORM.submit}
           <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px]" />
         </button>
 
-        {/* aria-live so the result is announced, not just drawn. A sighted user
-            sees the line appear; without this a screen reader user submits the
-            form and is told nothing at all. */}
+        {/* aria-live so the result is announced, not just drawn. */}
         <p aria-live="polite" className="min-h-[22px] font-roboto text-[14px] leading-[22px]">
-          {state === 'sent' && (
-            <span className="text-brand">
-              Thanks — your message is with us. We usually reply within one business day.
-            </span>
-          )}
+          {state === 'sent' && <span className="text-brand">{FORM.sent}</span>}
           {state === 'error' && error && <span className="text-[#b3261e]">{error}</span>}
         </p>
       </div>
@@ -212,58 +239,34 @@ export function ContactForm() {
   )
 }
 
-/**
- * The `name` the field posts under is the id minus its "contact-" prefix, so
- * the two can never drift apart — an id renamed without its name is a field
- * that silently stops arriving in the enquiry.
- */
-const fieldName = (id: string) => id.replace(/^contact-/, '')
+function Optional() {
+  return <span className="font-roboto text-[12px] font-normal text-muted">{FORM.optional}</span>
+}
 
+/** The input's id is `contact-<name>` and it posts under `<name>`. */
 function Field({
-  id, f, type, autoComplete, inputMode, required,
+  id, f, type = 'text', autoComplete, inputMode, required, optional, minLength, maxLength, pattern, invalid, onInput,
 }: {
-  id: string
+  id: FieldName
   f: { label: string; placeholder: string }
-  type: string
+  type?: string
   autoComplete?: string
   inputMode?: 'numeric'
   required?: boolean
-}) {
-  return (
-    /* `w-full` rather than `flex-1` below lg: in a stacked ROW the row is a
-       COLUMN there, where flex-1 would be a grow factor on the height. In
-       ROW_INLINE three equal `w-full` siblings shrink to equal thirds, which
-       is the frame's 106px, so the one horizontal row still works. */
-    <div className={FIELD}>
-      <label htmlFor={id} className={LABEL}>{f.label}</label>
-      <input id={id} name={fieldName(id)} type={type} inputMode={inputMode} autoComplete={autoComplete} required={required} placeholder={f.placeholder} className={INPUT} />
-    </div>
-  )
-}
-
-function Select({
-  id, f, options,
-}: {
-  id: string
-  f: { label: string; placeholder: string }
-  options: readonly string[]
+  optional?: boolean
+  minLength?: number
+  maxLength?: number
+  pattern?: string
+  invalid?: boolean
+  onInput?: () => void
 }) {
   return (
     <div className={FIELD}>
-      <label htmlFor={id} className={LABEL}>{f.label}</label>
-      <div className="relative">
-        <select id={id} name={fieldName(id)} defaultValue="" className={`${INPUT} appearance-none pr-[44px] text-muted`}>
-          <option value="" disabled>{f.placeholder}</option>
-          {options.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
-        </select>
-        <Image
-          src="/images/icons/chevron-16.svg"
-          alt=""
-          width={16}
-          height={16}
-          className="pointer-events-none absolute right-[16px] top-1/2 size-[16px] -translate-y-1/2"
-        />
-      </div>
+      <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}{optional && <> <Optional /></>}</label>
+      <input id={`contact-${id}`} name={id} type={type} inputMode={inputMode} autoComplete={autoComplete}
+        required={required} minLength={minLength} maxLength={maxLength} pattern={pattern}
+        aria-invalid={invalid} onInput={onInput}
+        placeholder={f.placeholder} className={INPUT} />
     </div>
   )
 }
