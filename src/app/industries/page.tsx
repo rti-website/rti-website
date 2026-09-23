@@ -2,6 +2,7 @@ import { Canvas } from '@/components/design/Frame'
 import { buildMetadata } from '@/lib/seo'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
+import { FOOTER_H } from '@/lib/layout'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { IndustriesCatalog } from '@/components/sections/IndustriesCatalog'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
@@ -52,9 +53,14 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
+const FOOTER_TOP = 2387.035
+
 export default function IndustriesPage() {
   return (
-    <Canvas height={3008}>
+    /* The page ends where the footer does. This was a literal 3008 (2387 + the
+       old 621 footer) — the one route that did not follow FOOTER_H, so the
+       taller footer of 23 Sep 2026 would have been cut off here. */
+    <Canvas height={FOOTER_TOP + FOOTER_H}>
       <Header />
       <main>
         <ServiceHero
@@ -75,7 +81,7 @@ export default function IndustriesPage() {
 
         <ServicesCta top={1931.035} label="6246:1081" content={CTA} />
       </main>
-      <Footer top={2387.035} />
+      <Footer top={FOOTER_TOP} />
     </Canvas>
   )
 }

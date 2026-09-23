@@ -130,12 +130,18 @@ export function Section({
 
 /** A box inside a section — absolutely positioned at lg and up. */
 export function Box({
-  x, y, w, h, fill = false, className = '', style, children,
+  x, y, w, h, fill = false, as: Tag = 'div', className = '', style, children,
 }: {
   x: number
   y: number
   w?: number
   h?: number
+  /**
+   * The element to render. `footer` is for the site footer, so every page has
+   * a contentinfo landmark (and the QA scripts can find the footer by tag).
+   * Positioning is class-driven, so the tag changes nothing about layout.
+   */
+  as?: 'div' | 'footer'
   /**
    * This box is a LAYER, not content: a full-bleed photo, a tint, a gradient
    * wash. Those keep covering their section below lg instead of joining the
@@ -148,7 +154,7 @@ export function Box({
   children?: React.ReactNode
 }) {
   return (
-    <div
+    <Tag
       className={`design-box ${fill ? 'design-box--fill' : ''} ${className}`}
       style={{
         '--bx': len(x),
@@ -159,7 +165,7 @@ export function Box({
       } as React.CSSProperties}
     >
       {children}
-    </div>
+    </Tag>
   )
 }
 

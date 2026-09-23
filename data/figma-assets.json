@@ -924,6 +924,111 @@
       "node": "6766:2690",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "GLBA wordmark (black), 78x20. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/hero.png",
+      "id": "2872d3f6-5d57-41ea-9aab-3a132e9cae32/69bb8.png",
+      "node": "6778:2951",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD hero photograph — the node's raw IMAGE FILL, not a clipped 1920x470 export; drawn 1920x1081 at y-332 with the node's gradient laid over it (see HeroFill in InteriorHeroArt). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/asset-destruction.png",
+      "id": "0ce9ced8-7c66-4234-b0f0-fe58c14df363/a6349.png",
+      "node": "6778:3327",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD \"Asset Destruction\" card photo, 2048:1152. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/complete-data-removal.png",
+      "id": "0ce9ced8-7c66-4234-b0f0-fe58c14df363/27cd1.png",
+      "node": "6778:3326",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD \"Complete Data Removal\" card photo, 2048:1152. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/hardware-categorization.png",
+      "id": "0ce9ced8-7c66-4234-b0f0-fe58c14df363/a6aab.png",
+      "node": "6778:3328",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD \"Hardware Categorization\" card photo, 2048:1152. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/recycling-it-equipment.png",
+      "id": "0ce9ced8-7c66-4234-b0f0-fe58c14df363/a4b97.png",
+      "node": "6778:3325",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD \"Recycling of IT Equipment\" card photo, 2048:1152. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/step-arrow.svg",
+      "id": "df5f8219-9db1-423b-95b1-78e98560f02f/6c685.svg",
+      "node": "6779:8592",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD process arrow, 20x20, between the four steps. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-eco.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/bf9b7.svg",
+      "node": "6780:2671",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (eco-friendly), 20x20 white in a 44px teal disc. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-return.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/020d2.svg",
+      "node": "6780:2677",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (maximum return), 20x20. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-security.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/bd006.svg",
+      "node": "6780:2684",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (data security), 20x20. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-certificate.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/fa35c.svg",
+      "node": "6780:2690",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (certificate), 20x20. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-waste.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/65107.svg",
+      "node": "6780:2697",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (IT waste), 20x20. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/itad/feature-compliance.svg",
+      "id": "5820465a-8abf-4162-b979-78e8a60a3c5c/8db91.svg",
+      "node": "6780:2703",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD feature icon (legal compliance), 20x20. Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/stat-pin.png",
+      "id": "b4ce2fca-3fe9-4a33-bcd6-d661f49bc27e/89483.png",
+      "node": "6778:10452",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage hero stats strip, \"50 States\" tile icon (green location pin), drawn 31x46 on the board and 19x28 on the phone. Added 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/stat-years.png",
+      "id": "b4ce2fca-3fe9-4a33-bcd6-d661f49bc27e/ae5cd.png",
+      "node": "6778:10455",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage hero stats strip, \"30+ Years\" tile icon (green clock in recycling arrows), drawn 42x42 on the board and 25.5x25.6 on the phone. Added 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/stat-r2.png",
+      "id": "b4ce2fca-3fe9-4a33-bcd6-d661f49bc27e/64751.png",
+      "node": "6778:10432",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage hero stats strip, \"R2v3 Certified Locations\" tile icon (R2v3 mark on a transparent ground), drawn 44.6x46.46 on the board and 27x28 on the phone. Not certs/1.png: that export has an opaque white ground, which shows as a white square on the glass tile. Added 23 Sep 2026; URL expires about 30 Sep."
     }
   ]
 }

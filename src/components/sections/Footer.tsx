@@ -6,20 +6,42 @@ import { FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
 import { socialLinks } from '@/lib/social'
 import { FACILITIES as CONTACT_FACILITIES } from '@/data/contact'
+import { FOOTER_CERTS, type FooterCert } from '@/data/certifications'
 
 /**
- * Footer — Figma 6044:19944, 1920x681 on #fcfcfc, built at FOOTER_H.
+ * Footer — Figma 6778:3897 (board, 1920x755) and 6620:2370 (phone), on #fcfcfc.
  *
- * Figma parks the bottom bar at y580, 84px below the last column content.
- * Asim asked for that band closed on 16 Sep 2026, so the bar position and the
- * footer height both come from src/lib/layout.ts now.
+ * ===========================================================================
+ * THE CERTIFICATION LOGOS, 23 Sep 2026
+ * ===========================================================================
+ * Asim: "we add logo in it". The designer's new footer frame puts a 3x3 grid
+ * of the certification marks under the chat card, and narrows the columns to
+ * make room: the block now starts at x653 and runs 952 wide — 137 · 183 ·
+ * the rest · 188, 16px either side of each rule. The phone frame (6778:9672)
+ * draws eight of the marks 4x2 after the chat card, which is where "place the
+ * logos after Connect with Us" puts them. The R2v3 mark links to SERI's
+ * directory entry, the same URL as on the Certifications & Standards strip.
+ * The marks and their two layouts are FOOTER_CERTS in src/data/certifications.ts.
  *
- * Column groups and their order:
- *   col 1 (x715)  Learn More · News & Blogs · Services
- *   col 2 (x893)  Resources · Terms & Conditions
- *   col 3 (x1086) Minnesota Facility (twice — see note below)
- *   col 4 (x1310) Connect with Us + the chat card
- * Divider rules sit between the columns (Figma lines 64/65/66).
+ * The frame restyles the board's column type to its own: 16px IBM Plex
+ * Medium headings over 14px Poppins links on a 31px pitch, and the chat card
+ * centred. That is followed at lg. The phone is unchanged apart from the logo
+ * grid — Asim: "footer is same design but just place the logos".
+ *
+ * WHAT IS OURS, NOT THE FRAME'S — each one a decision Asim already made:
+ *   - the facilities are the real two (see FACILITIES below), where the frame
+ *     still repeats "Minnesota Facility";
+ *   - "Compliance Center", where the frame says "Computer Center" (a typo for
+ *     the same link — /compliance-center/);
+ *   - the extra links added since the frame was drawn: IT Asset Disposition
+ *     under Services, FAQs, Downloads and the guides under Resources;
+ *   - the social icons are the admin's (src/lib/social.ts), not the frame's
+ *     Facebook / Twitter / YouTube;
+ *   - "I have a question" is teal on white; the frame sets it white on white.
+ *
+ * The first column is at least the frame's 137 but may grow: "IT Asset
+ * Disposition" is wider than anything the frame put in it. The facilities
+ * column is the flexible one and gives the room back.
  *
  * The design draws Resources last in column 1 and Services first in column 2.
  * Asim asked for those two blocks to trade places, 15 Sep 2026 — heading and
@@ -48,7 +70,13 @@ const COL_1: Group[] = [
   },
   {
     heading: 'Services',
-    links: [{ l: 'View all Services', h: href('/services/') }],
+    links: [
+      { l: 'View all Services', h: href('/services/') },
+      // Asim, 23 Sep 2026, when /it-asset-disposition/ was built: "add ITAD
+      // here in services". Its one link from the site chrome — ITAD is not in
+      // the header menu (see the note in src/lib/nav.ts).
+      { l: 'IT Asset Disposition', h: href('/it-asset-disposition/') },
+    ],
   },
 ]
 
@@ -59,7 +87,7 @@ const COL_2: Group[] = [
     // came out of the header bar — this is now the page's link.
     headingHref: href('/resources/'),
     links: [
-      { l: 'Contact US',     h: href('/contact-us/') },
+      { l: 'Contact Us',     h: href('/contact-us/') },
       { l: 'Certifications', h: href('/certifications/') },
       { l: 'Why Choose Us',  h: href('/why-choose-us/') },
       { l: 'Sustainability', h: href('/sustainability/') },
@@ -120,13 +148,14 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
     /*
      * Mobile 6620:2370 — px20 / pt48 / pb32 / gap28 on #fcfcfc, everything in
      * one column. The wrappers below are `lg:contents`, so at lg they vanish
-     * from the box tree entirely and every Box still resolves its absolute
-     * coordinates against this one — the board is byte-for-byte unchanged.
+     * from the box tree and every Box still resolves its absolute coordinates
+     * against this one.
      */
-    <Box x={0} y={top} w={1920} h={FOOTER_H} className="flex flex-col gap-[28px] bg-[#fcfcfc] px-[20px] pb-[32px] pt-[48px] lg:block lg:p-0">
+    <Box as="footer" x={0} y={top} w={1920} h={FOOTER_H} className="flex flex-col gap-[28px] bg-[#fcfcfc] px-[20px] pb-[32px] pt-[48px] lg:block lg:p-0">
       {/* ------------------------------------------- left rail / 6620:2371 */}
       <div className="flex flex-col gap-[16px] lg:contents">
-        <Box x={319} y={78} w={230} h={55}>
+        {/* 6778:4067 */}
+        <Box x={319} y={90} w={230} h={55}>
           {/* Sized on the link rather than the Box: below lg the Box has no
               height, and `size-full` against an auto-height parent collapses. */}
           <Link href="/" aria-label="Recycle Technologies — home" className="block h-[55px] w-[230px] lg:size-full">
@@ -134,14 +163,16 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
           </Link>
         </Box>
 
-        <Box x={319} y={152} w={342}>
-          <p className="font-roboto text-[15px] leading-[22px] text-muted lg:leading-[27px]">
+        {/* 6778:3898 — 17/27.65 in a 296 column, four lines. */}
+        <Box x={319} y={170} w={296}>
+          <p className="font-roboto text-[15px] leading-[22px] text-muted lg:text-[17.018px] lg:leading-[27.654px]">
             Recycle Technologies has been providing services to the community since 1993.
             We are a Midwest-based recycling and shredding company.
           </p>
         </Box>
 
-        <Box x={319} y={272} w={342}>
+        {/* 6778:3900..3906 — input at y317, consent at 384, button at 446. */}
+        <Box x={318} y={317} w={296}>
           <NewsletterForm />
         </Box>
       </div>
@@ -150,105 +181,105 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
           rules the columns off vertically. Decorative, so mobile-only. */}
       <div className="h-px w-full bg-line lg:hidden" />
 
-      {/* ----------------------------------- link columns / 6620:5100 */}
-      <div className="flex flex-col gap-[28px] lg:contents">
+      {/* ----------------------------------- link columns / 6778:3919
+          One flex row at lg: the columns sit 16 either side of a 1px rule that
+          stretches to the tallest of them (the Connect column, 531). */}
+      <Box x={653} y={90} w={952} className="flex flex-col gap-[28px] lg:flex-row lg:items-stretch lg:gap-[16px]">
         {/* 6593:6051 — the phone sets the link groups two-up. */}
         <div className="grid grid-cols-2 items-start gap-[28px] lg:contents">
-          <Box x={715} y={70} w={178} className="min-w-0"><LinkColumn groups={COL_1} /></Box>
-          <Box x={893} y={70} h={380} w={1} className="hidden bg-line lg:block" />
-          <Box x={918} y={70} w={168} className="min-w-0"><LinkColumn groups={COL_2} /></Box>
+          <div className="min-w-0 lg:min-w-[137px] lg:shrink-0"><LinkColumn groups={COL_1} /></div>
+          <Rule />
+          <div className="min-w-0 lg:w-[183px] lg:shrink-0"><LinkColumn groups={COL_2} /></div>
         </div>
-        <Box x={1086} y={70} h={380} w={1} className="hidden bg-line lg:block" />
+        <Rule />
 
-        {/* 6620:5167 / 6620:5179 */}
-        {/* 250 wide, not the frame's 200. "dispatch@recycletechnologies.com"
-            measures ~215px at 13px Roboto, plus a 14px icon and an 8px gap —
-            237 in a 200 box, so the address ran under the divider at 1311 and
-            was clipped mid-word. Asim, 22 Sep 2026. The divider and the
-            Connect column below move right by the same 75 to keep their
-            spacing; the group now ends at 1676, still 114px inside the
-            visible frame (--canvas-inset trims to 1790). */}
-        <Box x={1111} y={70} w={250} className="flex flex-col gap-[28px] lg:gap-[26px]">
+        {/* 6778:3991 / 6620:5167 + 6620:5179 */}
+        <div className="flex flex-col gap-[28px] lg:min-w-px lg:flex-1 lg:gap-[30px]">
           {FACILITIES.map((f, i) => (
             <div key={i}>
-              <h3 className="mb-[14px] font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:mb-[12px] lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">{f.name}</h3>
+              <h3 className={`${HEADING} mb-[14px] lg:mb-0`}>{f.name}</h3>
               {/* gap 0 + py6 per row on the phone keeps the frame's 12px rhythm
-                  while giving each tappable row a 33px box instead of 21. */}
-              <address className="flex flex-col gap-0 font-roboto text-[14px] not-italic leading-[19px] text-muted lg:gap-[10px] lg:text-[13px]">
-                <span className="flex items-start gap-[10px] py-[6px] lg:gap-[8px] lg:py-0">
-                  <Image src="/images/icons/foot-pin.png" alt="" width={13} height={17} className="mt-[2px] h-[17px] w-[13px] shrink-0" />
+                  while giving each tappable row a 33px box instead of 21. The
+                  board's rows are 25 tall on a 16px gap. */}
+              <address className="flex flex-col gap-0 font-roboto text-[14px] not-italic leading-[19px] text-muted lg:gap-[16px] lg:font-poppins lg:leading-[21px]">
+                <span className="flex items-start gap-[10px] py-[6px] lg:items-center lg:py-[2px]">
+                  <Icon src="/images/icons/foot-pin.png" w={15} h={20} />
                   {f.address}
                 </span>
-                <a href={`tel:${f.phone.replace(/[^+\d]/g, '')}`} className="flex items-start gap-[10px] py-[6px] hover:text-brand lg:gap-[8px] lg:py-0">
-                  <Image src="/images/icons/foot-phone.png" alt="" width={13} height={18} className="mt-[1px] h-[18px] w-[13px] shrink-0" />
+                <a href={`tel:${f.phone.replace(/[^+\d]/g, '')}`} className="flex items-start gap-[10px] py-[6px] hover:text-brand lg:items-center lg:py-[2px]">
+                  <Icon src="/images/icons/foot-phone.png" w={15} h={21} />
                   {f.phone}
                 </a>
-                {/* `break-all` used to be here and split the address across two
-                    lines mid-word ("recycletechnologie / s.com") — Asim, 22 Sep
-                    2026. It measures ~215px at 14px Roboto against 350px of
-                    usable width on a 390 phone, so it fits on one line without
-                    help; `whitespace-nowrap` makes that a guarantee rather than
-                    a coincidence, and `min-w-px` lets the flex row shrink around
-                    it instead of forcing the column wider. */}
-                <a href={`mailto:${f.email}`} className="flex min-w-px items-start gap-[10px] whitespace-nowrap py-[6px] hover:text-brand lg:gap-[8px] lg:py-0">
-                  <Image src="/images/icons/foot-email.png" alt="" width={14} height={11} className="mt-[4px] h-[11px] w-[14px] shrink-0" />
+                {/* `whitespace-nowrap` keeps the address on one line — it split
+                    mid-word ("recycletechnologie / s.com") under `break-all`,
+                    Asim, 22 Sep 2026 — and `min-w-px` lets the row shrink
+                    around it instead of forcing the column wider. */}
+                <a href={`mailto:${f.email}`} className="flex min-w-px items-start gap-[10px] whitespace-nowrap py-[6px] hover:text-brand lg:items-center lg:py-[2px]">
+                  <Icon src="/images/icons/foot-email.png" w={20} h={20} />
                   {f.email}
                 </a>
               </address>
             </div>
           ))}
-        </Box>
-        <Box x={1386} y={70} h={380} w={1} className="hidden bg-line lg:block" />
+        </div>
+        <Rule />
 
-        {/* ------------------------------ connect + chat card / 6620:5191 */}
-        <Box x={1411} y={70} w={265} className="flex flex-col items-center gap-[16px] lg:block">
-          <h3 className="font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:mb-[14px] lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">Connect with Us</h3>
-          <ul className="flex items-center gap-[20px] lg:gap-[18px]">
-            {SOCIAL.map((s) => (
-              <li key={s.platform}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} (opens in a new tab)`} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
-                  <svg viewBox="0 0 22 22" className="size-[25px] fill-current lg:size-[22px]" aria-hidden="true"><path d={s.path} /></svg>
-                </a>
-              </li>
-            ))}
-          </ul>
+        {/* ------------------------------ connect, chat card, logos / 6778:4025
+            188 wide on the board: heading block, card at +110, logos at +343. */}
+        <div className="flex flex-col items-center gap-[16px] lg:w-[188px] lg:shrink-0 lg:items-stretch lg:gap-[30px]">
+          <div className="flex flex-col items-center gap-[16px] lg:items-start lg:gap-0">
+            <h3 className={HEADING}>Connect with Us</h3>
+            {/* 6778:4030 — 25px glyphs, 30 apart, in a 45px row. */}
+            <ul className="flex items-center gap-[20px] lg:h-[45px] lg:gap-[30px]">
+              {SOCIAL.map((s) => (
+                <li key={s.platform}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} (opens in a new tab)`} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
+                    <svg viewBox="0 0 22 22" className="size-[25px] fill-current" aria-hidden="true"><path d={s.path} /></svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {/* Chat card — Figma 6107:3082, #eaf4f5, h203, r10; 6620:5197 on the
-              phone, where it is #f5f5f5, r12, centred, and the two buttons sit
-              side by side instead of stacked. */}
-          <div className="w-full rounded-[12px] bg-[#f5f5f5] p-[20px] text-center lg:mt-[22px] lg:rounded-[10px] lg:bg-[#eaf4f5] lg:text-left">
+          {/* Chat card — 6778:4036 on the board: 188x203, #eaf4f5, r10, its
+              contents centred on a 10px gap and the two 30px buttons full
+              width. 6620:5197 on the phone, where it is #f5f5f5, r12 and the
+              buttons sit side by side. */}
+          <div className="w-full rounded-[12px] bg-[#f5f5f5] p-[20px] text-center lg:flex lg:h-[203px] lg:flex-col lg:items-center lg:justify-center lg:gap-[10px] lg:rounded-[10px] lg:bg-brand-soft lg:px-[25px] lg:py-[13px]">
             <span className="mx-auto grid size-[37px] place-items-center rounded-full bg-brand lg:mx-0">
               <Image src="/images/icons/chat-icon.png" alt="" width={18} height={18} className="size-[18px]" />
             </span>
-            <p className="mt-[12px] font-sans text-[14px] font-medium leading-[20px] text-ink">
+            <p className="mt-[12px] font-sans text-[14px] font-medium leading-[20px] text-ink lg:mt-0 lg:font-poppins lg:text-[12px] lg:font-normal lg:leading-[18px] lg:text-[#13220f]">
               Hi! How can we help?
             </p>
-            <div className="mt-[12px] flex gap-[10px] lg:flex-col lg:gap-[8px]">
-              <Link href={href('/contact-us/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:flex-none lg:border-0 lg:px-0">
+            <div className="mt-[12px] flex gap-[10px] lg:mt-0 lg:w-full lg:flex-col lg:gap-[10px]">
+              <Link href={href('/contact-us/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
                 I have a question
               </Link>
-              <Link href={href('/faqs/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:flex-none lg:border-0 lg:px-0">
+              <Link href={href('/faqs/')} className="flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
                 Tell me more
               </Link>
             </div>
           </div>
-        </Box>
-      </div>
+
+          <CertGrid />
+        </div>
+      </Box>
 
       {/* 6621:2427 */}
       <div className="h-px w-full bg-line lg:hidden" />
 
-      {/* ------------------------------ bottom bars / 6620:5209
+      {/* ------------------------------ bottom bars / 6778:3911
           The phone frame carries no grey band and no teal strip: the bar is
           two centred lines straight on the footer's own #fcfcfc. */}
-      <Box x={0} y={FOOTER_BAR_Y} w={1920} h={74} className="flex flex-col items-center gap-[12px] lg:block lg:bg-[#f8f8f8]">
+      <Box x={0} y={FOOTER_BAR_Y} w={1920} h={74} className="flex flex-col items-center gap-[12px] lg:block lg:border-t lg:border-[#e5e5e5] lg:bg-[#f8f8f8]">
         <Box x={321} y={0} h={74} className="flex items-center">
-          <a href="#top" className="py-[6px] font-roboto text-[14px] leading-[14px] text-muted hover:text-brand lg:py-0">
+          <a href="#top" className="py-[6px] font-roboto text-[14px] leading-[14px] text-muted hover:text-brand lg:py-0 lg:font-poppins">
             Back to Top &uarr;
           </a>
         </Box>
         <Box x={1321} y={0} h={74} w={280} className="flex items-center justify-center text-center lg:justify-end lg:text-left">
-          <p className="font-roboto text-[14px] leading-[14px] text-ink lg:text-muted">
+          <p className="font-roboto text-[14px] leading-[14px] text-ink lg:font-poppins lg:text-[#13220f]">
             Copyright@2026. All rights are reserved.
           </p>
         </Box>
@@ -258,27 +289,47 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
   )
 }
 
+/** Column heading — 16px IBM Plex Medium, 0.48 tracking, in the board's 35px heading block (6778:3922). */
+const HEADING = 'font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:h-[35px] lg:leading-[1.3]'
+
+/** The 1px rule between board columns (Figma lines 55-57). Decorative, so board-only. */
+function Rule() {
+  return <div aria-hidden="true" className="hidden w-px shrink-0 self-stretch bg-line lg:block" />
+}
+
+/**
+ * The facility icons are square artwork with their own padding, drawn in the
+ * frame's non-square boxes (15x20, 15x21, 20x20) as a centred crop — which is
+ * `object-cover`. They used to be stretched to 13x17 and 14x11.
+ */
+function Icon({ src, w, h }: { src: string; w: number; h: number }) {
+  return (
+    <Image src={src} alt="" width={w} height={h} className="mt-[1px] shrink-0 object-cover lg:mt-0"
+      style={{ width: w, height: h }} />
+  )
+}
+
 function LinkColumn({ groups }: { groups: Group[] }) {
   return (
-    /* 6620:5101 — heading 16/medium/0.48 tracking over a 14px list on the
-       phone, the board's 15/semibold over 13.5 at lg. The chevron is a board
-       detail; the phone frame draws the links bare. */
-    <div className="flex flex-col gap-[28px] lg:gap-[24px]">
+    /* 6620:5101 on the phone: 16px headings over bare 14px Roboto links.
+       6778:3920 on the board: groups 30 apart, each a 35px heading block over
+       14px Poppins rows (py2, gap 6 — a 31px pitch) led by a chevron. */
+    <div className="flex flex-col gap-[28px] lg:gap-[30px]">
       {groups.map((g) => (
         <nav key={g.heading} aria-label={g.heading}>
-          <h3 className="mb-[12px] font-sans text-[16px] font-medium leading-[20px] tracking-[0.48px] text-black lg:text-[15px] lg:font-semibold lg:tracking-normal lg:text-ink">
+          <h3 className={`${HEADING} mb-[12px] lg:mb-0`}>
             {g.headingHref ? <Link href={g.headingHref} className="hover:text-brand">{g.heading}</Link> : g.heading}
           </h3>
           {/* gap 0 + py5 on the phone reproduces the frame's 10px pitch while
               turning a 20px link into a 30px tap box. */}
-          <ul className="flex flex-col gap-0 lg:gap-[9px]">
+          <ul className="flex flex-col gap-0 lg:gap-[6px]">
             {g.links.map((l) => (
-              <li key={l.l} className="flex items-center gap-[7px]">
-                <span className="hidden font-roboto text-[11px] leading-none text-brand lg:block">&rsaquo;</span>
+              <li key={l.l} className="flex items-center gap-[10px]">
+                <span aria-hidden="true" className="hidden font-roboto text-[12px] leading-none text-muted lg:block">&rsaquo;</span>
                 {l.external ? (
-                  <a href={l.h} target="_blank" rel="noopener noreferrer" className="block py-[5px] font-roboto text-[14px] leading-[20px] text-muted hover:text-brand lg:py-0 lg:text-[13.5px]">{l.l}</a>
+                  <a href={l.h} target="_blank" rel="noopener noreferrer" className={LINK}>{l.l}</a>
                 ) : (
-                  <Link href={l.h} className="block py-[5px] font-roboto text-[14px] leading-[20px] text-muted hover:text-brand lg:py-0 lg:text-[13.5px]">{l.l}</Link>
+                  <Link href={l.h} className={LINK}>{l.l}</Link>
                 )}
               </li>
             ))}
@@ -286,5 +337,70 @@ function LinkColumn({ groups }: { groups: Group[] }) {
         </nav>
       ))}
     </div>
+  )
+}
+
+const LINK = 'block py-[5px] font-roboto text-[14px] leading-[20px] text-muted hover:text-brand lg:whitespace-nowrap lg:py-[2px] lg:font-poppins lg:leading-[21px]'
+
+/**
+ * The certification marks — 6778:4122 on the board, 6778:9672 on the phone.
+ *
+ * ONE LIST, TWO GRIDS. The board draws a 188px square, 3x3 on columns of
+ * 64.27 · 59.46 · 64.27 at 80% opacity; the phone draws 4x2 across the whole
+ * column, 97px rows, RCRA left out. Each mark carries its cell for both (see
+ * FOOTER_CERTS) and is placed with `grid-column` / `grid-row` from custom
+ * properties, so the DOM is one list and nothing is duplicated.
+ *
+ * The dividers are grid items too — a left border on a column-spanning item,
+ * a top border on a row-spanning one — so they sit exactly on the track
+ * edges at any phone width. Only the INNER lines are drawn, as in both frames.
+ *
+ * Each mark is centred in its cell at its frame size. The frames place them
+ * a few px off centre in places (the phone's second row rides ~15px high);
+ * centred is what those positions are reaching for.
+ */
+function CertGrid() {
+  return (
+    <div className="grid w-full grid-cols-4 grid-rows-[97px_97px] lg:w-[188px] lg:grid-cols-[64.27px_59.46px_64.27px] lg:grid-rows-[64.27px_59.46px_64.27px] lg:opacity-80">
+      <span aria-hidden="true" className="col-start-2 row-span-full border-l border-line" />
+      <span aria-hidden="true" className="col-start-3 row-span-full border-l border-line" />
+      <span aria-hidden="true" className="col-start-4 row-span-full border-l border-line lg:hidden" />
+      <span aria-hidden="true" className="col-span-full row-start-2 border-t border-line" />
+      <span aria-hidden="true" className="col-span-full row-start-3 hidden border-t border-line lg:block" />
+      {FOOTER_CERTS.map((c) => <Cert key={c.name} c={c} />)}
+    </div>
+  )
+}
+
+function Cert({ c }: { c: FooterCert }) {
+  const vars = {
+    ...(c.phone && { '--pc': c.phone.at[0], '--pr': c.phone.at[1], '--pw': `${c.phone.w}px`, '--ph': `${c.phone.h}px` }),
+    '--gc': c.board.at[0], '--gr': c.board.at[1], '--gw': `${c.board.w}px`, '--gh': `${c.board.h}px`,
+  } as React.CSSProperties
+  const cell = `grid place-items-center [grid-column:var(--pc)] [grid-row:var(--pr)] lg:[grid-column:var(--gc)] lg:[grid-row:var(--gr)] ${c.phone ? '' : 'max-lg:hidden'}`
+  const fit = c.fit === 'contain' ? 'object-contain' : c.fit === 'cover' ? 'object-cover' : 'object-fill'
+
+  const art = (
+    <span className="relative block h-[var(--ph)] w-[var(--pw)] shrink-0 overflow-hidden lg:h-[var(--gh)] lg:w-[var(--gw)]">
+      {c.crop ? (
+        <span className="absolute block" style={{ left: `${c.crop.left}%`, top: `${c.crop.top}%`, width: `${c.crop.w}%`, height: `${c.crop.h}%` }}>
+          <Image src={c.src} alt={c.href ? '' : c.name} fill unoptimized sizes="72px" className="object-fill" />
+        </span>
+      ) : (
+        <Image src={c.src} alt={c.href ? '' : c.name} fill unoptimized sizes="72px" className={fit} />
+      )}
+    </span>
+  )
+
+  /* The R2v3 mark is the whole cell as a link, so the tap target is the
+     cell (87x97 on a 390 phone), not the 42px mark. */
+  return c.href ? (
+    <a href={c.href} target="_blank" rel="noopener noreferrer"
+      aria-label={`${c.name} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+      className={`${cell} transition-opacity hover:opacity-70`} style={vars}>
+      {art}
+    </a>
+  ) : (
+    <span className={cell} style={vars}>{art}</span>
   )
 }

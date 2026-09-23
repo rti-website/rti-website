@@ -80,8 +80,9 @@ export default function NotFound() {
         </section>
       </main>
 
-      {/* lg-only: the footer is 681 design px on the board and about 1486 on a
-          phone, so a fixed box would end long before the footer does. */}
+      {/* lg-only: the footer is FOOTER_H design px on the board and about
+          twice that on a phone, so a fixed box would end long before the
+          footer does. */}
       <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
         <Footer top={0} />
       </div>

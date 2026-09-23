@@ -4,6 +4,7 @@ import { Btn, Eyebrow } from '@/components/ui/Bits'
 import { QUOTE_HREF, href } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { Picker } from '@/components/client/Picker'
+import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * Hero — Figma 6023:13152, 1920x940.
@@ -37,14 +38,29 @@ import { Picker } from '@/components/client/Picker'
  * Three tiles, exactly as Figma 6023:13173 draws them — Asim, 22 Sep 2026:
  * "see the home hero section, we have to make the numbers like this".
  *
- * HISTORY, because this row has now gone back and forth twice:
+ * ICON TILES AND ORDER, 23 Sep 2026 — Asim: "we have to make the hero sec
+ * like this", with a screenshot of the frame's new strip. The designer gave
+ * each figure a 64x66 glass tile (white/30, r10) holding its icon, and the
+ * row now reads R2v3 · 50 States · 30+ Years, left to right — the reverse of
+ * what was built. The phone frame (6604:5043) got the same tiles at 43px.
+ *
+ * Icons: all three are the frame's own fills, in data/figma-assets.json as
+ * stat-r2.png, stat-pin.png and stat-years.png (nodes 6778:10432 / 10452 /
+ * 10455) — run `node scripts/fetch-figma-assets.mjs --missing` to pull them.
+ * Not the certifications strip's certs/1.png for the R2v3 mark: that export
+ * sits on an opaque white ground, which reads as a white square on the glass.
+ *
+ * `board` / `phone` are each icon's drawn size in that frame.
+ *
+ * HISTORY, because this row has gone back and forth:
  *   - built as the frame's three tiles
  *   - 21 Sep: Asim asked for a locations tile back, so it ran FOUR — "3
  *     Locations / Minnesota. Wisconsin. Chicago" and "R2v3 Certified /
  *     Recycling" as separate claims
  *   - 22 Sep: Asim pointed at the frame and asked for it as drawn. Three.
+ *   - 23 Sep: icon tiles and the frame's order.
  *
- * !! TWO FACTS TO KNOW ABOUT THE THIRD TILE, both flagged to Asim 22 Sep:
+ * !! TWO FACTS TO KNOW ABOUT THE R2v3 TILE, both flagged to Asim 22 Sep:
  *   1. It drops Chicago, which "Where We Serve" further down this same page
  *      still names. That was the reason for the 21 Sep change.
  *   2. It says "R2v3 Certified Locations" over "Minnesota. Wisconsin". The
@@ -53,13 +69,24 @@ import { Picker } from '@/components/client/Picker'
  *      PURSUING R2v3 and is PENDING. Only Blaine, Minnesota holds it. So as
  *      drawn, this tile claims a certification for a facility that does not
  *      have it yet, on the first screen of the homepage, and the R2v3 badge
- *      lower down now links to SERI's directory where anyone can check.
+ *      lower down links to SERI's directory where anyone can check.
  *      The fix is one word in the label; it is Asim's word to choose.
  */
-const STATS = [
-  { v: '30+ Years',                l: 'Of recycling experience' },
-  { v: '50 States',                l: 'Accessible through our Mail-In Program' },
-  { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin' },
+/*
+ * The R2v3 tile is a link — Asim, 23 Sep 2026: "also make the r2v3 clickable".
+ * It goes where every other R2v3 mark on the site goes: SERI's directory entry
+ * (R2_DIRECTORY, shared with the certifications strip and the footer), in a
+ * new tab. The whole tile is the link, icon and text together.
+ */
+type Stat = { v: string; l: string; icon: string; href?: string; board: { w: number; h: number }; phone: { w: number; h: number } }
+
+const STATS: Stat[] = [
+  { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin', icon: '/images/home/stat-r2.png', href: R2_DIRECTORY,
+    board: { w: 44.602, h: 46.46 }, phone: { w: 27, h: 28 } },
+  { v: '50 States', l: 'Accessible through our Mail-In Program', icon: '/images/home/stat-pin.png',
+    board: { w: 31, h: 46 }, phone: { w: 19, h: 28 } },
+  { v: '30+ Years', l: 'Of recycling experience', icon: '/images/home/stat-years.png',
+    board: { w: 42, h: 42 }, phone: { w: 25.496, h: 25.63 } },
 ]
 
 export function Hero() {
@@ -191,26 +218,52 @@ export function Hero() {
           nothing — the strip moves with it. */}
       {/*
           ON THE PHONE (6604:5043) the row becomes a column: no top rule, no
-          vertical rules, a 1px white/15 divider between rows instead, 16px
-          apart, and the figure drops 38.04 -> 26 so "R2v3 Certified" fits a
-          350px column without wrapping mid-word.
+          vertical rules, a 1px white/15 divider between rows instead, 8px
+          either side of it, each row a 43px icon tile 12px from its text, and
+          the figure drops 38.04 -> 26 so "R2v3 Certified Locations" fits the
+          295px text column on one line.
 
-          Three rows, the same three the desktop shows — the phone frame
-          (6604:5043) and the desktop frame agree again since 22 Sep 2026.
-          See the STATS note above for what the third tile claims.
+          Three rows, the same three the desktop shows, in the same order.
+          See the STATS note above for what the R2v3 tile claims.
       */}
-      <Box x={319} y={519} w={1281.335} className="flex flex-col gap-[16px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[24.025px]">
-        {STATS.map((s, i) => (
-          <div
-            key={s.v}
-            className={`flex flex-col gap-[2px] lg:flex-1 lg:gap-0 lg:px-[28.029px] lg:py-[20.021px] ${
-              i < STATS.length - 1 ? 'border-b border-white/15 pb-[16px] lg:border-b-0 lg:border-r-[1.001px] lg:border-white/40 lg:pb-0' : ''
-            }`}
-          >
-            <p className="font-sans text-[26px] font-semibold leading-[38.04px] tracking-[-1.1512px] text-white lg:whitespace-nowrap lg:text-[38.04px] lg:leading-[38.04px]">{s.v}</p>
-            <p className="font-roboto text-[14px] font-medium leading-[19.52px] tracking-[-0.0801px] text-white/80 lg:pt-[4.004px]">{s.l}</p>
-          </div>
-        ))}
+      {/* The three columns are the frame's widths, not equal thirds: the
+          R2v3 column is as wide as its one-line figure (547.66), the middle
+          one is 417, the last takes the rest. With a 64px tile in front of
+          each figure, equal thirds would push "R2v3 Certified Locations"
+          120px past its rule. */}
+      <Box x={319} y={519} w={1281.335} className="flex flex-col gap-[8px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[24.025px]">
+        {STATS.map((s, i) => {
+          const cls = `flex items-center gap-[12px] lg:gap-[20px] lg:px-[28.029px] lg:py-[20.021px] ${
+            i === 0 ? 'lg:shrink-0' : i === 1 ? 'lg:w-[417px] lg:shrink-0' : 'lg:min-w-px lg:flex-1'
+          } ${
+            i < STATS.length - 1 ? 'border-b border-white/15 pb-[8px] lg:border-b-0 lg:border-r-[1.001px] lg:border-white/40' : ''
+          }`
+          const body = (
+            <>
+              {/* Icon tile — 6778:10435 (64.6x66.46, r10) / 6778:10478 (43, r9). */}
+              <span className="grid size-[43px] shrink-0 place-items-center rounded-[8.978px] bg-white/30 lg:h-[66.46px] lg:w-[64.602px] lg:rounded-[10px]">
+                <Image
+                  src={s.icon} alt="" width={Math.round(s.board.w * 2)} height={Math.round(s.board.h * 2)} unoptimized
+                  className="h-[var(--ph)] w-[var(--pw)] object-cover lg:h-[var(--bh2)] lg:w-[var(--bw2)]"
+                  style={{ '--pw': `${s.phone.w}px`, '--ph': `${s.phone.h}px`, '--bw2': `${s.board.w}px`, '--bh2': `${s.board.h}px` } as React.CSSProperties}
+                />
+              </span>
+              <span className="flex min-w-px flex-1 flex-col gap-[2px] lg:flex-none lg:gap-0">
+                <span className="block font-sans text-[26px] font-semibold leading-[38.04px] tracking-[-1.1512px] text-white lg:whitespace-nowrap lg:text-[38.04px] lg:leading-[38.04px]">{s.v}</span>
+                <span className="block font-roboto text-[14px] font-medium leading-[19.52px] tracking-[-0.0801px] text-white/80 lg:whitespace-nowrap lg:pt-[4.004px]">{s.l}</span>
+              </span>
+            </>
+          )
+          return s.href ? (
+            <a key={s.v} href={s.href} target="_blank" rel="noopener noreferrer"
+              aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+              className={`${cls} transition-opacity hover:opacity-80`}>
+              {body}
+            </a>
+          ) : (
+            <div key={s.v} className={cls}>{body}</div>
+          )
+        })}
       </Box>
     </Section>
   )

@@ -98,8 +98,10 @@ export function NewsletterForm() {
         <input id="newsletter-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {/* 6620:2375 — full width and 48 tall on the phone, the board's 329x46. */}
-      <div className="relative order-2 h-[48px] w-full rounded-[4px] bg-white ring-1 ring-line lg:order-none lg:h-[46px] lg:w-[329px]">
+      {/* 6620:2375 — full width and 48 tall on the phone; 285x46 on the board
+          since the footer frame of 23 Sep 2026 (6778:3900), which narrowed it
+          from 329 to sit under the 296px intro above it. */}
+      <div className="relative order-2 h-[48px] w-full rounded-[4px] bg-white ring-1 ring-line lg:order-none lg:h-[46px] lg:w-[285px]">
         <Image src="/images/icons/foot-mail.png" alt="" width={25} height={18} className="absolute left-[15px] top-1/2 h-[18px] w-[25px] -translate-y-1/2" />
         <label htmlFor="newsletter-email" className="sr-only">Email Address</label>
         <input
@@ -108,7 +110,7 @@ export function NewsletterForm() {
           type="email"
           required
           placeholder="Email Address"
-          className="size-full rounded-[4px] bg-transparent pl-[53px] pr-[56px] font-roboto text-[15px] text-ink outline-none placeholder:text-muted"
+          className="size-full rounded-[4px] bg-transparent pl-[53px] pr-[56px] font-roboto text-[15px] text-ink outline-none placeholder:text-muted lg:font-poppins lg:text-[14px]"
         />
         {/* 46 wide and a pixel proud of the box top and bottom, so it is 49 on
             the phone's 48px input and 47 on the board's 46 — over the 44px
@@ -123,8 +125,9 @@ export function NewsletterForm() {
         </button>
       </div>
 
-      {/* 6620:2374 — 14/20.7 on the phone, 13/19 on the board. */}
-      <label className="order-1 flex items-start gap-[10px] font-roboto text-[14px] leading-[20.7px] text-muted lg:order-none lg:mt-[16px] lg:max-w-[300px] lg:text-[13px] lg:leading-[19px]">
+      {/* 6620:2374 — 14/20.7 on the phone, and on the board too since
+          6778:3899: the checkbox at y386, the 260px line 7px after it. */}
+      <label className="order-1 flex items-start gap-[10px] font-roboto text-[14px] leading-[20.7px] text-muted lg:order-none lg:mt-[21px] lg:max-w-[284px] lg:gap-[7px]">
         <input type="checkbox" required className="mt-[2px] size-[17px] shrink-0 rounded-[4px] border border-line bg-white" />
         Send the latest news or something new crops up to my mail box directly.
       </label>
@@ -139,7 +142,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={state === 'sending'}
-        className="order-3 inline-flex h-[48.05px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand disabled:opacity-60 lg:order-none lg:mt-[18px] lg:w-auto"
+        className="order-3 inline-flex h-[48.05px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand disabled:opacity-60 lg:order-none lg:mt-[20.6px] lg:w-auto"
       >
         {state === 'sending' ? 'Signing you up…' : 'Yes, Please'}
         <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

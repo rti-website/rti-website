@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
+import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
 import { buildMetadata } from '@/lib/seo'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
@@ -46,7 +46,10 @@ export const metadata = buildMetadata({
 
 export default function HomePage() {
   return (
-    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - 60} grow={HOME_SERVICES_DELTA_VAR}>
+    /* 10391 is the frame's height with its 681px footer; `681 - FOOTER_H`
+       trades that for the built footer. It was a literal 60 (681 - 621) until
+       the footer grew to 755 on 23 Sep 2026. */
+    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - (681 - FOOTER_H)} grow={HOME_SERVICES_DELTA_VAR}>
       <Header />
       <main>
         <Hero />

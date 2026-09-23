@@ -4,7 +4,7 @@ import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { STEPS } from '@/data/home'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 
 /**
  * How It Works — Figma 6040:18591 (desktop, 1920x559) and 6607:2322 (mobile,
@@ -97,9 +97,16 @@ export function HowItWorks() {
         ))}
       </div>
 
-      <CenterBox y={511} w={700} offset={13.78} className="flex flex-col gap-[12px] lg:flex-row lg:items-center lg:justify-center">
-        <Btn href={href('/it-asset-disposition/')} variant="colored" className="w-full justify-center lg:w-auto">Learn Complete Process</Btn>
-        <Btn href={QUOTE_HREF} variant="coloredWhite" className="w-full justify-center lg:w-auto">Get a Free Quote</Btn>
+      {/* ONE BUTTON, CENTRED — Asim, 23 Sep 2026: "remove the learn complete
+          process text and in that button add the text of get a free quote and
+          central aligned it from left and right". The frame's pair was a filled
+          "Learn Complete Process" (to /it-asset-disposition/, which has no page
+          in this build and 404'd) beside a text-style "Get a Free Quote". Now
+          the quote link wears the filled button, alone. The frame's +13.78
+          offset centred the PAIR; one button centres on the page axis, the
+          same line as the title and the lead above it. */}
+      <CenterBox y={511} w={700} className="flex flex-col lg:flex-row lg:items-center lg:justify-center">
+        <Btn href={QUOTE_HREF} variant="colored" className="w-full justify-center lg:w-auto">Get a Free Quote</Btn>
       </CenterBox>
     </Section>
   )

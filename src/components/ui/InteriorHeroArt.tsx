@@ -54,19 +54,36 @@ import { Box } from '@/components/design/Frame'
  */
 const SHARED_HERO = '/images/services/hero-bg.png'
 
+/**
+ * A photograph that arrives as the raw IMAGE FILL rather than as a clipped
+ * 1920x470 node export — the ITAD hero, 23 Sep 2026, and anything pulled the
+ * same way since. The Figma MCP now hands back the fill itself, which is the
+ * full picture with no gradient baked in, so it is drawn the way the frame
+ * draws it: in its own box (6778:2951: 1920x1081 at y-332, object-cover) with
+ * the node's gradient laid over it.
+ */
+export type HeroFill = { y: number; h: number; overlay: string }
+
+/** Where the two washes sit, when a frame moves them off the default. */
+export type HeroWashes = { navy: { x: number; w: number }; green: { x: number; w: number } }
+
 export function InteriorHeroArt({
-  src,
+  src, fill: fillBox, washes,
 }: {
-  /** The page's own hero photograph, exported 1920x470. */
+  /** The page's own hero photograph, exported 1920x470 — or a raw fill, see `fill`. */
   src?: string
+  fill?: HeroFill
+  washes?: HeroWashes
 } = {}) {
   const photo = src ?? SHARED_HERO
+  const navy = washes?.navy ?? { x: 0, w: 1920 }
+  const green = washes?.green ?? { x: 0, w: 1935 }
   return (
     <>
       {/* All three take `fill` — they are layers, not content. Without it they
           join the flow below lg, the picture's wrapper collapses to nothing and
           every interior hero on the site goes flat navy. Added 22 Sep 2026. */}
-      <Box x={0} y={0} w={1920} h={470} fill>
+      <Box x={0} y={fillBox?.y ?? 0} w={1920} h={fillBox?.h ?? 470} fill>
         <Image
           src={photo}
           alt=""
@@ -75,17 +92,18 @@ export function InteriorHeroArt({
           sizes="(width < 64rem) 100vw, 1920px"
           className="object-cover"
         />
+        {fillBox && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
       </Box>
 
       {/* Navy wash, bottom to top — 6472:3968. The green wash is its child. */}
       <Box
-        x={0} y={0} w={1920} h={470} fill
+        x={navy.x} y={0} w={navy.w} h={470} fill
         style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
       >
         {/* 6472:3969. Figma draws it 1935 wide inside a 1920 frame; kept as
             drawn because the section clips and the extra 15px never shows. */}
         <Box
-          x={0} y={0} w={1935} h={470} fill
+          x={green.x} y={0} w={green.w} h={470} fill
           style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
         />
       </Box>

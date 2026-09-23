@@ -117,7 +117,12 @@ export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
         <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[var(--cat-col)]">
           <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-left)] lg:shrink-0 lg:gap-[var(--cat-block)]">
             <GroupHeading group={DESTRUCTION} />
-            <div className="flex flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:gap-[var(--cat-card)]">
+            {/* A three-column grid at lg rather than a wrapping row, for the
+                Firefox reason given in CaseStudyFilter: 3 x CARD_W + 2 x
+                LEFT_GAP is exactly LEFT_W, so a flex-wrap row had 0.01px of
+                slack and a browser that rounds differently wraps the third
+                card. LEFT_PER_ROW is the 3. */}
+            <div className="flex flex-col gap-[16px] lg:grid lg:grid-cols-3 lg:gap-[var(--cat-card)]">
               {visible(DESTRUCTION).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
             </div>
           </div>

@@ -74,7 +74,17 @@ export function CaseStudyFilter() {
       </div>
 
       {/* Grid — 6391:1547 */}
-      <div className="flex w-[1278px] flex-wrap items-stretch gap-[24px]">
+      {/* A GRID AT lg, NOT A WRAPPING ROW — Asim, 23 Sep 2026: "in Firefox the
+          3rd case study is coming to the next line but in Chrome it is one
+          line". Three 410px cards and two 24px gaps are EXACTLY 1278, and a
+          wrapping flex row that fits to the pixel is at the mercy of how each
+          browser rounds under the canvas zoom: Firefox lays out in 1/60px
+          units and scales each length separately, so the three cards can sum
+          a hair wider than the row, and the third one wraps. A grid places
+          its three columns explicitly; there is nothing to wrap. Below lg,
+          CaseStudyGrid's descendant rules still turn this into a column.
+          scripts/check-wrap-slack.mjs finds rows like this across the site. */}
+      <div className="flex w-[1278px] flex-wrap items-stretch gap-[24px] lg:grid lg:grid-cols-[repeat(3,410px)]">
         {CASE_STUDY_CARDS.map((c) => (
           <div key={c.id} hidden={active !== null && c.industry !== active} className="relative flex">
             {/* Scroll target for caseStudyHref(). An offset span, not an id

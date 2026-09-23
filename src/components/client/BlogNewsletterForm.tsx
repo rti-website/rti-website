@@ -33,7 +33,15 @@ export function BlogNewsletterForm() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-[8px]">
+    /* `items-center` is load-bearing — Asim, 23 Sep 2026, a Firefox
+       screenshot of /blog/ with the bar pinned to the left edge and its field
+       cut off. Not a Firefox bug: this wrapper went in on 22 Sep to hold the
+       error line under the bar, and a column flexbox left at its default puts
+       a fixed-width child (the bar is 560 at lg) at the START of the row, so
+       it sat at x0 of the 1920 board — under the 130px the canvas crops — in
+       every browser. Centring it here puts it back where the section's own
+       `items-center` had it. Below lg the bar is full width either way. */
+    <div className="flex w-full flex-col items-center gap-[8px]">
       <BarForm
         width={560}
         glyph="mail"
@@ -75,7 +83,7 @@ export function BlogNewsletterForm() {
         }}
       />
       {error && (
-        <p role="alert" className="font-roboto text-[13px] leading-[19px] text-[#b42318]">{error}</p>
+        <p role="alert" className="text-center font-roboto text-[13px] leading-[19px] text-[#b42318]">{error}</p>
       )}
     </div>
   )

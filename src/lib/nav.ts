@@ -42,10 +42,11 @@ export const MAIN_NAV: NavItem[] = [
 
 /*
  * ITAD was removed from this list on Asim's instruction, 15 Sep 2026.
- * /it-asset-disposition/ is NOT orphaned by that: the homepage's "Learn
- * Complete Process" button (HowItWorks.tsx) and the Healthcare and Financial
- * Services pages' service lists still link it. Restore the item here if that
- * stops being true.
+ * /it-asset-disposition/ is NOT orphaned by that: it is built (23 Sep 2026)
+ * and linked from the footer's Services column, from the IT Asset Disposition
+ * row on all seven industry pages, and from /itad-recycling-guides/. (The
+ * homepage's "Learn Complete Process" button that used to link it was removed
+ * the same day.) Restore the item here if those links ever go.
  */
 
 /** Live site sends this to ezontheearth.com, not to an internal page. */

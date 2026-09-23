@@ -26,7 +26,9 @@
     "user:add": "node scripts/make-user.mjs",
     "check:admin": "node scripts/check-admin.mjs",
     "wp:import": "node scripts/wp-import.mjs",
-    "check:clickable": "node scripts/check-clickable.mjs"
+    "check:clickable": "node scripts/check-clickable.mjs",
+    "check:wrap": "node scripts/check-wrap-slack.mjs",
+    "check:edges": "node scripts/check-edges.mjs"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.3.0",

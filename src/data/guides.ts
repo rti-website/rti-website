@@ -20,9 +20,8 @@ import { href } from '@/lib/urls'
  * reader on a service page rather than on an article. Replace each `href` the
  * moment Rizwan writes the actual guide — nothing else on the page changes.
  *
- * `/it-asset-disposition/` is a KEEP row that this app does not serve yet
- * (built=FALSE), so that one 404s until the page migration reaches it. Same
- * situation as every guide card on /resources/.
+ * `/it-asset-disposition/` was a KEEP row this app did not serve until
+ * 23 Sep 2026; it is built now, so the ITAD row lands on a real page.
  */
 
 export const SEO = {

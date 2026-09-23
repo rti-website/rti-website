@@ -22,16 +22,23 @@
 export const HEADER_H = 120
 
 /**
- * Footer — Figma draws 681. Built at 621.
+ * Footer — Figma 6778:3897 draws 755, and it is built at 755.
  *
- * The column block ends at y496 and the bottom bar began at y580, leaving 84px
- * of nothing. The bar now starts at y520, which keeps a normal 24px of breathing
- * room under the last content instead of a visible hole.
+ * History: the first footer frame drew 681 with an 84px dead band between the
+ * last column and the bottom bar, and on 16 Sep 2026 Asim had that closed,
+ * building it at 621 with the bar at y520. On 23 Sep 2026 the designer's new
+ * footer (the one with the certification logos under the chat card) replaced
+ * that frame: its column block now ends at y621 with the logo grid, and the
+ * bar starts 33px below at y654 — a normal gap, not a hole, so the frame's
+ * numbers are used as drawn.
+ *
+ * Every route sizes its canvas from FOOTER_H, so this one number is the whole
+ * change for every page.
  */
-export const FOOTER_H = 621
+export const FOOTER_H = 755
 
 /** Where the footer's bottom bar starts, inside the footer. */
-export const FOOTER_BAR_Y = 520
+export const FOOTER_BAR_Y = 654
 
 /**
  * How far the whole canvas slides up under the shortened header.

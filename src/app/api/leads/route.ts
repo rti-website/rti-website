@@ -25,7 +25,7 @@ import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 /** Cap every field. A form post is untrusted input, not a document store. */
 const LIMITS: Record<string, number> = {
   name: 120, email: 200, phone: 40, company: 160, message: 5000,
-  address: 200, city: 80, state: 80, zip: 20, item: 80, audience: 40,
+  address: 200, city: 80, state: 80, zip: 20, item: 80, audience: 40, referral: 80,
 }
 
 const TYPES = ['contact', 'quote', 'download', 'callback'] as const
@@ -99,7 +99,9 @@ export async function POST(req: Request): Promise<Response> {
   /* Everything the leads table has no column for. The schema comment on
      `details` asks for exactly this rather than twenty sparse columns. */
   const details: Record<string, string> = {}
-  for (const key of ['address', 'city', 'state', 'zip', 'item', 'audience']) {
+  // `referral` is the ITAD pickup form's "How did you hear about us?"
+  // (PickupForm, 23 Sep 2026).
+  for (const key of ['address', 'city', 'state', 'zip', 'item', 'audience', 'referral']) {
     const v = clean(payload[key], LIMITS[key] ?? 120)
     if (v) details[key] = v
   }
