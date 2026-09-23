@@ -5,6 +5,7 @@ import { toE164 } from '@/lib/phone'
 import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
 import { RESIDENTIAL_REPLY, residentialReplyHtml, residentialReplyText } from '@/data/emails'
+import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -205,6 +206,33 @@ export async function POST(req: Request): Promise<Response> {
     return fail(body, 'We could not save that just now. Please call us instead.', 500)
   }
 
+  // ---------------------------------------------------------- attribution --
+  /*
+   * How this person found us, from the rti_attr cookie the tracking bootstrap
+   * wrote when they arrived (src/lib/tracking.ts) — possibly days ago, on
+   * another page. The browser sends it with this request, so it works for a
+   * script-less form post too. Plus the page the form was sent from and the
+   * browser. Its own table (lead_attribution, db/006); a failure here is
+   * logged and never costs the lead.
+   */
+  const attr = readAttribution(req.headers.get('cookie'))
+  const submitPage = clean(payload.submitPage, 500) ?? (body.from ? body.from : sourcePage)
+  if (id) {
+    try {
+      const cols = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer'] as const
+      await one(
+        `INSERT INTO lead_attribution (lead_id, ${cols.join(', ')}, submit_page, user_agent, captured_at)
+         VALUES ($1, ${cols.map((_, i) => `$${i + 2}`).join(', ')}, $${cols.length + 2}, $${cols.length + 3}, $${cols.length + 4})
+         ON CONFLICT (lead_id) DO NOTHING RETURNING lead_id`,
+        [id, ...cols.map((k) => attr?.[k] ?? null), submitPage,
+          clean(req.headers.get('user-agent'), 500),
+          attr?.captured_at && !Number.isNaN(Date.parse(attr.captured_at)) ? attr.captured_at : null],
+      )
+    } catch (err) {
+      console.error('[leads] attribution not saved:', (err as Error).message)
+    }
+  }
+
   // --------------------------------------------------------------- notify --
   const to = notifyAddress()
   let notified = false
@@ -222,6 +250,10 @@ export async function POST(req: Request): Promise<Response> {
       message ?? '(none)',
       '',
       `Page:     ${sourcePage ?? '(unknown)'}`,
+      `Source:   ${attr?.utm_source ?? (attr?.gclid ? 'google (gclid)' : attr?.referrer ?? '(direct)')}${attr?.utm_medium ? ` / ${attr.utm_medium}` : ''}`,
+      ...(attr?.utm_campaign ? [`Campaign: ${attr.utm_campaign}`] : []),
+      ...(attr?.utm_term || attr?.keyword ? [`Keyword:  ${attr.utm_term ?? attr.keyword}`] : []),
+      ...(attr?.landing_page ? [`Landed:   ${attr.landing_page}`] : []),
       `Lead ID:  ${id ?? '(unknown)'}`,
     ]
     const result = await sendMail({

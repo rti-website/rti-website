@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache as perRequest } from 'react'
 import { q } from '@/lib/db'
 import type { ContentMeta } from '@/lib/content'
 
@@ -32,6 +33,8 @@ export type DbPost = ContentMeta & {
   categoryPath: string | null
   author: string | null
   words: number
+  /** The post editor's tracking switches (db/006) — see src/lib/tracking.ts. */
+  tracking: { disabled: boolean; excluded: boolean; dataLayer: Record<string, unknown> | null; trackingId: string | null }
 }
 
 export type DbCategory = {
@@ -121,6 +124,13 @@ function toPost(r: Row): DbPost {
     categoryPath: str(r.category_path),
     author: str(r.author_name),
     words: Number(r.word_count ?? 0),
+    tracking: {
+      disabled: r.tracking_disabled === 'true' || r.tracking_disabled === true,
+      excluded: r.analytics_excluded === 'true' || r.analytics_excluded === true,
+      dataLayer: r.custom_datalayer && typeof r.custom_datalayer === 'object' && !Array.isArray(r.custom_datalayer)
+        ? r.custom_datalayer as Record<string, unknown> : null,
+      trackingId: str(r.custom_tracking_id),
+    },
   }
 }
 
@@ -129,26 +139,52 @@ const SELECT = `
          p.canonical_url, p.robots_index, p.in_sitemap, p.og_image_url,
          p.word_count, p.reading_minutes, p.published_at, p.updated_at,
          c.name AS category_name, c.slug AS category_slug, c.archive_path AS category_path,
-         u.name AS author_name
+         u.name AS author_name,
+         -- db/006 tracking switches, read through to_jsonb so a database that
+         -- has not run 006 yet reads NULL instead of failing the build.
+         (to_jsonb(p) ->> 'tracking_disabled')  AS tracking_disabled,
+         (to_jsonb(p) ->> 'analytics_excluded') AS analytics_excluded,
+         (to_jsonb(p) ->  'custom_datalayer')   AS custom_datalayer,
+         (to_jsonb(p) ->> 'custom_tracking_id') AS custom_tracking_id
     FROM posts p
     LEFT JOIN categories c ON c.id = p.category_id
     LEFT JOIN users u      ON u.id = p.author_id
    WHERE p.status = 'published'
 `
 
-let cache: DbPost[] | null = null
+/*
+ * !! CACHED FOR THE WHOLE PROCESS DURING A BUILD, AND PER REQUEST AFTER IT.
+ *
+ * A build prerenders ~430 pages in a handful of workers, and every page reads
+ * these lists (the header's Blogs menu alone is on all of them), so each worker
+ * keeps one copy for the whole build. That was the only mode until 23 Sep 2026
+ * and at run time it was wrong: after the build, `next start` regenerates a page
+ * on demand when the admin calls revalidatePath(), and a process-wide copy
+ * handed that regeneration the rows read BEFORE the save. The admin said
+ * "saved", the page never changed, and nothing logged a thing. Found testing
+ * the per-post tracking switches; it applied to every post edit.
+ *
+ * So the long copy is build-only (NEXT_PHASE is set by `next build` before its
+ * workers start). At run time React's cache() shares one read between
+ * generateMetadata, the page and the header of a single request, and the next
+ * request reads again.
+ */
+const BUILD = process.env.NEXT_PHASE === 'phase-production-build'
 
-export async function allDbPosts(): Promise<DbPost[]> {
-  if (cache) return cache
+function buildOnce<T>(load: () => Promise<T>): () => Promise<T> {
+  const once = perRequest(load)
+  let kept: Promise<T> | null = null
+  return () => (BUILD ? (kept ??= once()) : once())
+}
+
+export const allDbPosts = buildOnce(async (): Promise<DbPost[]> => {
   try {
     const rows = await q<Row>(`${SELECT} ORDER BY p.published_at DESC NULLS LAST, p.id DESC`)
-    cache = rows.map(toPost)
-    return cache
+    return rows.map(toPost)
   } catch (err) {
-    cache = noDatabase(err)
-    return cache
+    return noDatabase(err)
   }
-}
+})
 
 export async function dbPostBySlug(slug: string): Promise<DbPost | null> {
   const all = await allDbPosts()
@@ -161,10 +197,7 @@ export async function dbPostBySlug(slug: string): Promise<DbPost | null> {
  * build prerenders. Uncached that is 380 round trips to Postgres to render the
  * same six rows.
  */
-let catCache: DbCategory[] | null = null
-
-export async function dbCategories(): Promise<DbCategory[]> {
-  if (catCache) return catCache
+export const dbCategories = buildOnce(async (): Promise<DbCategory[]> => {
   try {
     const rows = await q<Row>(`
       SELECT c.slug, c.name, c.description, c.archive_path, c.source,
@@ -175,7 +208,7 @@ export async function dbCategories(): Promise<DbCategory[]> {
         FROM categories c
        WHERE c.archive_path IS NOT NULL
        ORDER BY c.sort_order, c.name`)
-    catCache = rows.map((r) => ({
+    return rows.map((r) => ({
       slug: String(r.slug),
       name: String(r.name),
       description: str(r.description),
@@ -183,12 +216,10 @@ export async function dbCategories(): Promise<DbCategory[]> {
       source: r.source === 'wordpress' ? 'wordpress' : 'planned',
       count: Number(r.n ?? 0),
     }))
-    return catCache
   } catch (err) {
-    catCache = noDatabase(err)
-    return catCache
+    return noDatabase(err)
   }
-}
+})
 
 /** The categories that actually have posts and therefore deserve an archive. */
 export async function liveDbCategories(): Promise<DbCategory[]> {
@@ -221,10 +252,7 @@ export async function liveDbCategories(): Promise<DbCategory[]> {
  * Order is preserved: allDbPosts() is sorted the way the old query was, and a
  * filter does not reorder.
  */
-let membership: Map<string, Set<string>> | null = null
-
-async function categoryMembership(): Promise<Map<string, Set<string>>> {
-  if (membership) return membership
+const categoryMembership = buildOnce(async (): Promise<Map<string, Set<string>>> => {
   try {
     const rows = await q<{ cat: string; post: string }>(`
       SELECT cc.slug AS cat, p.slug AS post
@@ -238,14 +266,12 @@ async function categoryMembership(): Promise<Map<string, Set<string>>> {
       if (!set) { set = new Set(); m.set(r.cat, set) }
       set.add(r.post)
     }
-    membership = m
     return m
   } catch (err) {
     noDatabase(err)            // throws when DATABASE_URL is set; warns otherwise
-    membership = new Map()
-    return membership
+    return new Map()
   }
-}
+})
 
 export async function dbPostsInCategory(slug: string): Promise<DbPost[]> {
   const [all, m] = await Promise.all([allDbPosts(), categoryMembership()])

@@ -24,7 +24,7 @@ import { api, getJSON, sendJSON } from './api'
  * behind a login where server rendering buys nothing anyway.
  */
 
-type Role = 'administrator' | 'editor' | 'author'
+type Role = 'administrator' | 'editor' | 'author' | 'seo'
 type User = { id: number; email: string; name: string; role: Role }
 type Category = {
   id: number; name: string; slug: string; landing_built: boolean
@@ -219,7 +219,9 @@ export function AdminApp() {
         {view === 'subs' && <Subscribers />}
         {view === 'leads' && <Leads onToast={say} />}
         {view === 'settings' && <Settings social={boot.social}
-          canEdit={boot.user.role === 'administrator'} onToast={say} onGoSeo={() => show('seo')} />}
+          canEdit={boot.user.role === 'administrator'}
+          canTrack={boot.user.role === 'administrator' || boot.user.role === 'seo'}
+          onToast={say} onGoSeo={() => show('seo')} />}
       </div>
 
       {asking === 'post' && (
@@ -840,6 +842,30 @@ type LeadRow = {
   id: number; type: string; name: string | null; email: string | null; phone: string | null
   company: string | null; message: string | null; details: Record<string, string> | null
   source_page: string | null; status: string; notes: string | null; created_at: string
+  /** lead_attribution (db/006): UTM tags, click IDs, landing page… or null. */
+  attribution?: Record<string, string | null> | null
+}
+
+/** How they found us — the attribution fields, in the order the brief lists them. */
+const ATTR_FIELDS: [string, string][] = [
+  ['utm_source', 'Source (utm_source)'], ['utm_medium', 'Medium (utm_medium)'], ['utm_campaign', 'Campaign (utm_campaign)'],
+  ['utm_term', 'Term (utm_term)'], ['utm_content', 'Content (utm_content)'],
+  ['gclid', 'Google click ID (gclid)'], ['gbraid', 'gbraid'], ['wbraid', 'wbraid'], ['fbclid', 'Facebook click ID (fbclid)'],
+  ['msclkid', 'Microsoft click ID (msclkid)'], ['campaign_id', 'Campaign ID'], ['adgroup_id', 'Ad group ID'],
+  ['keyword', 'Keyword'], ['matchtype', 'Match type'], ['device', 'Device'],
+  ['landing_page', 'Landing page'], ['referrer', 'Referrer'], ['submit_page', 'Submitted from'],
+  ['captured_at', 'First seen (click time)'], ['user_agent', 'Browser'],
+]
+
+/** One-word answer to "where did this lead come from?" for the list. */
+function leadSource(l: LeadRow): string {
+  const a = l.attribution ?? {}
+  if (a.utm_source) return a.utm_medium ? `${a.utm_source} / ${a.utm_medium}` : a.utm_source
+  if (a.gclid || a.gbraid || a.wbraid) return 'google / cpc'
+  if (a.fbclid) return 'facebook'
+  if (a.msclkid) return 'bing / cpc'
+  if (a.referrer) { try { return new URL(a.referrer).hostname.replace(/^www\./, '') } catch { return 'referral' } }
+  return l.attribution ? '(direct)' : '—'
 }
 
 /**
@@ -891,7 +917,8 @@ function leadFields(l: LeadRow): [string, string][] {
 /** CSV of the rows on screen, every field, for a spreadsheet. */
 function leadsCsv(rows: LeadRow[]): string {
   const extra = [...new Set(rows.flatMap((l) => Object.keys(l.details ?? {}).filter((k) => !KNOWN_DETAILS.has(k))))]
-  const head = ['ID', 'Received', 'Type', 'Status', ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes']
+  const head = ['ID', 'Received', 'Type', 'Status', ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes',
+    ...ATTR_FIELDS.map(([, label]) => label)]
   const cell = (v: unknown) => {
     const s = v === null || v === undefined ? '' : String(v)
     return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
@@ -901,7 +928,8 @@ function leadsCsv(rows: LeadRow[]): string {
     const r = l as unknown as Record<string, unknown>
     return [l.id, l.created_at, l.type, l.status,
       ...LEAD_FIELDS.map((f) => (f.from === 'col' ? r[f.key] : d[f.key])),
-      ...extra.map((k) => d[k]), l.notes].map(cell).join(',')
+      ...extra.map((k) => d[k]), l.notes,
+      ...ATTR_FIELDS.map(([k]) => l.attribution?.[k] ?? '')].map(cell).join(',')
   })
   return [head.map(cell).join(','), ...lines].join('\r\n')
 }
@@ -937,7 +965,8 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
   const needle = q.trim().toLowerCase()
   const shown = rows.filter((l) =>
     (!status || l.status === status)
-    && (!needle || leadFields(l).some(([, v]) => v.toLowerCase().includes(needle))))
+    && (!needle || [...leadFields(l).map(([, v]) => v), leadSource(l), l.attribution?.utm_campaign ?? '']
+      .some((v) => v.toLowerCase().includes(needle))))
 
   function download() {
     const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
@@ -959,7 +988,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
     <main className="a-sheet">
       <div className="a-note"><span>
         <b>Every submission from the contact and pickup forms lands here, with every field it was sent with.</b>{' '}
-        Click <b>View</b> to see the whole enquiry. It is saved even if the notification email fails.
+        Click <b>View</b> to see the whole enquiry and how they found us (campaign, keyword, landing page). It is saved even if the notification email fails.
       </span></div>
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 16 }}>
         <span className="a-search">
@@ -974,7 +1003,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
         <span style={{ color: 'var(--a-muted)', fontSize: 13 }}>{shown.length} of {rows.length}</span>
         <button className="a-btn sm" style={{ marginLeft: 'auto' }} disabled={shown.length === 0} onClick={download}>Download CSV</button>
       </div>
-      <Table head={['From', 'Contact', 'Type', 'What they want', 'Received', 'Status', '']}>
+      <Table head={['From', 'Contact', 'Type', 'What they want', 'Source', 'Received', 'Status', '']}>
         {loaded && rows.length === 0 && <Empty>No enquiries yet. They arrive here from the contact and pickup forms.</Empty>}
         {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches that search.</Empty>}
         {shown.map((l) => (
@@ -988,6 +1017,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
               </td>
               <td>{LEAD_TYPES[l.type] ?? l.type}</td>
               <td>{wants(l)}</td>
+              <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-slug">{l.attribution.utm_campaign}</div>}</td>
               <td>{when(l.created_at)}</td>
               <td>
                 <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }}
@@ -1003,7 +1033,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
             </tr>
             {open === l.id && (
               <tr>
-                <td colSpan={7} style={{ background: 'var(--panel, #f7f8fa)' }}>
+                <td colSpan={8} style={{ background: 'var(--panel, #f7f8fa)' }}>
                   <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '8px 4px' }}>
                     {leadFields(l).map(([k, v]) => (
                       <Fragment key={k}>
@@ -1014,6 +1044,21 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
                     <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>Enquiry #</dt>
                     <dd style={{ margin: 0 }} className="a-mono">{l.id}</dd>
                   </dl>
+                  <p style={{ margin: '14px 4px 6px', fontWeight: 600 }}>How they found us</p>
+                  {l.attribution ? (
+                    <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '0 4px 8px' }}>
+                      {ATTR_FIELDS.filter(([k]) => l.attribution?.[k]).map(([k, label]) => (
+                        <Fragment key={k}>
+                          <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>{label}</dt>
+                          <dd style={{ margin: 0, wordBreak: 'break-all' }}>{k === 'captured_at' ? when(String(l.attribution?.[k])) : l.attribution?.[k]}</dd>
+                        </Fragment>
+                      ))}
+                    </dl>
+                  ) : (
+                    <p style={{ margin: '0 4px 8px', color: 'var(--a-muted)', fontSize: 13 }}>
+                      Nothing recorded — this enquiry came in before tracking was switched on.
+                    </p>
+                  )}
                 </td>
               </tr>
             )}
@@ -1033,8 +1078,83 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
  * template is how a site ends up with two title templates, so they are not
  * mirrored here — this screen links there instead.
  */
-function Settings({ social, canEdit, onToast, onGoSeo }: {
-  social: SocialLink[]; canEdit: boolean; onToast: (m: string) => void; onGoSeo: () => void
+type TrackingForm = {
+  gtmEnabled: boolean; gtmId: string; ga4Id: string
+  adsConversionId: string; adsConversionLabel: string; loadOnStaging: boolean
+}
+
+/**
+ * Analytics & Tracking — the SEO brief's "CMS -> Settings -> Analytics &
+ * Tracking", 23 Sep 2026. GTM goes onto every public page from the site's
+ * root layout; nobody pastes a tag into a page. Saving reaches the live
+ * pages without a rebuild. See src/lib/tracking.ts.
+ */
+function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast: (m: string) => void }) {
+  const [t, setT] = useState<TrackingForm | null>(null)
+  const [busy, setBusy] = useState(false)
+  useEffect(() => {
+    void getJSON<{ tracking: TrackingForm }>('/tracking').then((r) => { if (r.ok) setT(r.data.tracking) })
+  }, [])
+  if (!t) return null
+  const up = (k: keyof TrackingForm, v: string | boolean) => setT({ ...t, [k]: v })
+  const field = (k: 'gtmId' | 'ga4Id' | 'adsConversionId' | 'adsConversionLabel', label: string, ph: string) => (
+    <div className="a-field">
+      <label htmlFor={`trk-${k}`}>{label}</label>
+      <input id={`trk-${k}`} className="a-inp a-mono" value={t[k]} placeholder={ph} disabled={!canEdit}
+        onChange={(e) => up(k, e.target.value)} />
+    </div>
+  )
+
+  async function save() {
+    setBusy(true)
+    const r = await sendJSON('/tracking', 'PUT', t)
+    setBusy(false)
+    onToast(r.ok ? 'Tracking saved. Pages pick it up as they are next visited.' : r.error)
+  }
+
+  return (
+    <section className="a-card" style={{ marginBottom: 22 }}>
+      <h3>Analytics &amp; Tracking</h3>
+      <p className="a-hint" style={{ marginTop: 0 }}>
+        Google Tag Manager loads on every public page from here, including pages created later. It loads on the
+        live site only; the dev server and local copies stay out of your reports unless the last box is ticked.
+        Visitors&rsquo; UTM tags and ad click IDs are captured automatically and attached to every enquiry.
+      </p>
+
+      <h4 style={{ margin: '16px 0 8px' }}>Google Tag Manager</h4>
+      <label className="a-check">
+        <input type="checkbox" checked={t.gtmEnabled} disabled={!canEdit} onChange={(e) => up('gtmEnabled', e.target.checked)} />
+        <span>Enable GTM</span>
+      </label>
+      <div style={{ maxWidth: 360, marginTop: 10 }}>{field('gtmId', 'GTM Container ID', 'GTM-XXXXXXX')}</div>
+
+      <h4 style={{ margin: '18px 0 8px' }}>Google Analytics 4</h4>
+      <div style={{ maxWidth: 360 }}>{field('ga4Id', 'GA4 Measurement ID', 'G-XXXXXXXXXX')}</div>
+
+      <h4 style={{ margin: '18px 0 8px' }}>Google Ads</h4>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, maxWidth: 740 }}>
+        {field('adsConversionId', 'Conversion ID', 'AW-XXXXXXXXX')}
+        {field('adsConversionLabel', 'Conversion Label', 'XXXXXXXXXXXX')}
+      </div>
+      <p className="a-hint">
+        With GTM on, these IDs are handed to GTM in the dataLayer (<span className="a-mono">rti_ga4_id</span>,{' '}
+        <span className="a-mono">rti_ads_conversion_id</span>, <span className="a-mono">rti_ads_conversion_label</span>) for its
+        tags to use. With GTM off, the site loads Google&rsquo;s tag itself with them. A successful enquiry always fires{' '}
+        <span className="a-mono">generate_lead</span>.
+      </p>
+
+      <label className="a-check" style={{ marginTop: 12 }}>
+        <input type="checkbox" checked={t.loadOnStaging} disabled={!canEdit} onChange={(e) => up('loadOnStaging', e.target.checked)} />
+        <span>Also load on the dev server <small style={{ color: 'var(--a-muted)' }}>(only while testing in GTM Preview; untick after)</small></span>
+      </label>
+
+      {canEdit && <div style={{ marginTop: 16 }}><button className="a-btn p" disabled={busy} onClick={() => void save()}>{busy ? 'Saving…' : 'Save tracking'}</button></div>}
+    </section>
+  )
+}
+
+function Settings({ social, canEdit, canTrack, onToast, onGoSeo }: {
+  social: SocialLink[]; canEdit: boolean; canTrack: boolean; onToast: (m: string) => void; onGoSeo: () => void
 }) {
   const [links, setLinks] = useState(social)
 
@@ -1051,6 +1171,8 @@ function Settings({ social, canEdit, onToast, onGoSeo }: {
         <button className="a-link" onClick={onGoSeo}>SEO</button> now — the whole set, on one screen,
         for whoever owns it.
       </span></div>
+
+      <TrackingSettingsCard canEdit={canTrack} onToast={onToast} />
 
       <div className="a-note"><span>
         <b>Whatever you put here is what the footer and header icons point at.</b>{' '}

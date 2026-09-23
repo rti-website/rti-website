@@ -12,6 +12,8 @@ type PostPatch = {
   source: 'editor' | 'wordpress'
   content_json: PostJSON
   scheduled_for: string | null
+  tracking_disabled: boolean; analytics_excluded: boolean
+  custom_datalayer: Record<string, unknown> | null; custom_tracking_id: string | null
 }
 
 const idOf = (req: Request) => Number(new URL(req.url).pathname.split('/').filter(Boolean).at(-1))
@@ -50,6 +52,21 @@ export const PATCH = guard(async ({ user, req }) => {
     if (input[col] !== undefined) set(col, input[col])
   }
   if (input.canonical_url !== undefined) set('canonical_url', input.canonical_url || null)
+  // SEO & Tracking (db/006) — see src/lib/tracking.ts.
+  if (input.tracking_disabled !== undefined) set('tracking_disabled', input.tracking_disabled === true)
+  if (input.analytics_excluded !== undefined) set('analytics_excluded', input.analytics_excluded === true)
+  if (input.custom_tracking_id !== undefined) {
+    set('custom_tracking_id', String(input.custom_tracking_id ?? '').trim().slice(0, 100) || null)
+  }
+  if (input.custom_datalayer !== undefined) {
+    const dl = input.custom_datalayer
+    if (dl !== null && (typeof dl !== 'object' || Array.isArray(dl))) {
+      return json({ error: 'Custom data layer must be a JSON object.' }, 400)
+    }
+    const text = dl ? JSON.stringify(dl) : null
+    if (text && text.length > 2000) return json({ error: 'Custom data layer is too long (2,000 characters at most).' }, 400)
+    set('custom_datalayer', text)
+  }
   if (input.category_id !== undefined) set('category_id', input.category_id || null)
   if (input.featured_media_id !== undefined) set('featured_media_id', input.featured_media_id || null)
   if (input.featured_alt !== undefined) set('featured_alt', input.featured_alt || null)

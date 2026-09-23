@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { PICKUP } from '@/data/itad'
 import { path } from '@/lib/urls'
+import { trackLead } from '@/components/client/track'
 
 /**
  * "Book a Pickup Today" — the ITAD page's form, Figma 6780:2712 (desktop) and
@@ -67,6 +68,7 @@ export function PickupForm() {
           message: value('message'),
           website: value('website'),
           sourcePage: window.location.pathname,
+          submitPage: window.location.href,
         }),
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string }
@@ -75,6 +77,7 @@ export function PickupForm() {
         setState('error')
         return
       }
+      trackLead({ type: 'quote', formId: 'itad_pickup_form', audience: value('audience') })
       form.reset()
       setState('sent')
     } catch {

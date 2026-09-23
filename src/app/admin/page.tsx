@@ -18,6 +18,8 @@ export const metadata = buildMetadata({
   title: 'RTI Publisher',
   description: 'Content administration for recycletechnologies.com.',
   noindex: true,
+  // Staff using the CMS are not visitors: no GTM here, ever.
+  tracking: { disabled: true, excluded: true },
 })
 
 export default function AdminPage() {

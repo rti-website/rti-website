@@ -14,11 +14,25 @@ import { guard, json, body } from '@/lib/admin-route'
  * number.
  */
 export const GET = guard(async () => {
-  const rows = await q(`
-    SELECT id, type, name, email, phone, company, message, details,
-           source_page, status, notes, created_at
-      FROM leads ORDER BY created_at DESC LIMIT 2000`)
-  return json({ leads: rows })
+  /* With its attribution (db/006, the SEO brief of 23 Sep 2026): how each
+     person found us — UTM tags, ad click IDs, landing page, referrer, the page
+     they submitted from. A database that has not run 006 yet has no
+     lead_attribution table; the list still loads, without that column. */
+  try {
+    const rows = await q(`
+      SELECT l.id, l.type, l.name, l.email, l.phone, l.company, l.message, l.details,
+             l.source_page, l.status, l.notes, l.created_at,
+             to_jsonb(a) - 'lead_id' - 'created_at' AS attribution
+        FROM leads l LEFT JOIN lead_attribution a ON a.lead_id = l.id
+       ORDER BY l.created_at DESC LIMIT 2000`)
+    return json({ leads: rows })
+  } catch {
+    const rows = await q(`
+      SELECT id, type, name, email, phone, company, message, details,
+             source_page, status, notes, created_at
+        FROM leads ORDER BY created_at DESC LIMIT 2000`)
+    return json({ leads: rows })
+  }
 })
 
 export const PATCH = guard(async ({ req }) => {

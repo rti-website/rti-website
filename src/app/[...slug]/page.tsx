@@ -85,6 +85,8 @@ export async function generateMetadata({ params }: Props) {
     modifiedTime: post.updated,
     canonicalOverride: post.canonical ?? undefined,
     noindex: post.noindex,
+    category: post.category,
+    tracking: post.tracking,
   })
 }
 

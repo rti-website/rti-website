@@ -6,6 +6,7 @@ import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { path } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
+import { trackLead } from '@/components/client/track'
 
 /**
  * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
@@ -144,6 +145,9 @@ export function ContactForm() {
           consent,
           website: value('website'),
           sourcePage: window.location.pathname,
+          // Full URL, query included — the "submit_page" of the lead's
+          // attribution (the campaign itself comes from the rti_attr cookie).
+          submitPage: window.location.href,
         }),
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string; field?: FieldName }
@@ -153,6 +157,7 @@ export function ContactForm() {
         if (out.field) focusField(out.field)
         return
       }
+      trackLead({ type: 'contact', formId: 'contact_form', service: value('service'), audience: value('audience') })
       form.reset()
       setCount(0)
       setState('sent')

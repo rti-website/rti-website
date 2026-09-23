@@ -40,6 +40,12 @@ type Post = {
   robots_follow: boolean
   allow_ai_answers: boolean
   in_sitemap: boolean
+  /* SEO & Tracking (db/006). Absent on a database that has not run 006, in
+     which case they are simply not sent back. */
+  tracking_disabled?: boolean
+  analytics_excluded?: boolean
+  custom_datalayer?: Record<string, unknown> | null
+  custom_tracking_id?: string | null
   status: 'draft' | 'scheduled' | 'published'
   category_id: number | null
   author_id: number | null
@@ -255,6 +261,10 @@ export function PostEditor({
       robots_follow: now.robots_follow,
       allow_ai_answers: now.allow_ai_answers,
       in_sitemap: now.in_sitemap,
+      tracking_disabled: now.tracking_disabled,
+      analytics_excluded: now.analytics_excluded,
+      custom_datalayer: now.custom_datalayer,
+      custom_tracking_id: now.custom_tracking_id,
       category_id: now.category_id,
       author_id: now.author_id,
       featured_media_id: now.featured_media_id,
@@ -973,6 +983,13 @@ export function PostEditor({
           <Switch on={post.allow_ai_answers} label="Allow AI answer engines" note="ChatGPT, Perplexity, Claude search"
             onToggle={() => field('allow_ai_answers', !post.allow_ai_answers)} />
         </div>
+
+        {post.tracking_disabled !== undefined && (
+          <TrackingCard
+            post={post}
+            onField={(k, v) => field(k, v as never)}
+          />
+        )}
       </aside>
 
       {inserting === 'link' && (
@@ -1401,6 +1418,50 @@ function Meter({ label, value, limit }: { label: string; value: number; limit: n
     <div>
       <div className={`a-meter${cls}`}><i style={{ width: `${pct}%` }} /></div>
       <div className="a-counter"><span>{label}</span><span className="a-tnum">{value} / {limit} px</span></div>
+    </div>
+  )
+}
+
+/**
+ * SEO & Tracking — the page-level controls from the SEO brief (23 Sep 2026).
+ * None of these puts a script in the post: the site's one tracking bootstrap
+ * reads them (src/lib/tracking.ts). GTM itself is set once, in Settings.
+ */
+function TrackingCard({ post, onField }: {
+  post: Post
+  onField: (k: 'tracking_disabled' | 'analytics_excluded' | 'custom_datalayer' | 'custom_tracking_id', v: unknown) => void
+}) {
+  const [text, setText] = useState(post.custom_datalayer ? JSON.stringify(post.custom_datalayer, null, 2) : '')
+  const [bad, setBad] = useState(false)
+  function commit(v: string) {
+    if (!v.trim()) { setBad(false); onField('custom_datalayer', null); return }
+    try {
+      const o = JSON.parse(v)
+      if (!o || typeof o !== 'object' || Array.isArray(o)) throw new Error('not an object')
+      setBad(false); onField('custom_datalayer', o)
+    } catch { setBad(true) }
+  }
+  return (
+    <div className="a-card">
+      <h3>Tracking</h3>
+      <Switch on={!post.tracking_disabled} label="Google Tag Manager" note="Untick to disable tracking on this page"
+        onToggle={() => onField('tracking_disabled', !post.tracking_disabled)} />
+      <Switch on={!post.analytics_excluded} label="Include in analytics" note="Untick to exclude this page from analytics"
+        onToggle={() => onField('analytics_excluded', !post.analytics_excluded)} />
+      <div className="a-field" style={{ marginTop: 10 }}>
+        <label htmlFor="trk-dl">Custom data layer</label>
+        <textarea id="trk-dl" className="a-inp a-mono" rows={3} value={text} placeholder='{"content_group": "guides"}'
+          style={{ height: 'auto', paddingTop: 8, resize: 'vertical' }}
+          onChange={(e) => setText(e.target.value)} onBlur={(e) => commit(e.target.value)} />
+        <small style={{ color: bad ? 'var(--a-stop)' : 'var(--a-muted)' }}>
+          {bad ? 'Not saved: this must be a JSON object, e.g. {"content_group": "guides"}.' : 'Extra values sent with this page\u2019s page view.'}
+        </small>
+      </div>
+      <div className="a-field" style={{ marginTop: 10 }}>
+        <label htmlFor="trk-id">Custom tracking ID</label>
+        <input id="trk-id" className="a-inp a-mono" value={post.custom_tracking_id ?? ''} maxLength={100}
+          onChange={(e) => onField('custom_tracking_id', e.target.value || null)} />
+      </div>
     </div>
   )
 }
