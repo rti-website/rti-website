@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
+import type { Story } from '@/data/home'
 
 /**
  * Client's Stories carousel — Figma 6557:12824 (the track) and 6557:12876
@@ -67,9 +67,14 @@ const PAGER_Y = 583
  */
 const SWIPE_PX = 44
 
-export function StoryCarousel() {
-  const n = CASE_STUDIES.length
-  const [active, setActive] = useState(CASE_STUDIES_START)
+/**
+ * The stories arrive as props from CaseStudies (a server component) rather
+ * than being imported from src/data/home.ts here: that module also builds the
+ * FAQ, services and step data, none of which belongs in this client bundle.
+ */
+export function StoryCarousel({ stories, start }: { stories: Story[]; start: number }) {
+  const n = stories.length
+  const [active, setActive] = useState(start)
   const go = (d: number) => setActive((i) => (i + d + n) % n)
 
   /** Where the current touch started, and whether it ended up a swipe. */
@@ -116,7 +121,7 @@ export function StoryCarousel() {
       onPointerCancel={() => { from.current = null }}
       onClickCapture={onClickCapture}
     >
-      {CASE_STUDIES.map((story, i) => {
+      {stories.map((story, i) => {
         // -1, 0, +1 for the three visible positions; anything else is parked
         // off-canvas so a fourth story, if one is added, has somewhere to be.
         const rel = ((i - active + n + 1) % n) - 1
@@ -132,38 +137,51 @@ export function StoryCarousel() {
             style={{ left: s.x, top: s.y, width: s.w, height: s.h, zIndex: s.on ? 2 : 1 }}
           >
             <Image src={story.img} alt="" fill sizes="821px" className="object-cover" />
-            {s.on && (
-              <div
-                className="absolute bottom-0 left-0 w-full"
-                style={{ height: 843, backgroundImage: 'linear-gradient(to bottom, rgba(10,15,12,0) 35%, rgba(10,15,12,0.88) 100%)' }}
-              />
-            )}
+            {/* The centre card keeps the frame's 35%→88% gradient. The side
+                cards had none in the frame, which left white type sitting on
+                the brightest part of a daylight photo (Asim's 4th screenshot,
+                23 Sep 2026: the left card's title was barely readable); they
+                get a lighter one of the same shape. */}
+            <div
+              className="absolute inset-0"
+              style={{ backgroundImage: s.on
+                ? 'linear-gradient(to bottom, rgba(10,15,12,0) 35%, rgba(10,15,12,0.88) 100%)'
+                : 'linear-gradient(to bottom, rgba(10,15,12,0) 40%, rgba(10,15,12,0.6) 100%)' }}
+            />
             {s.on ? (
+              /* Tag, title and the one-line summary stack from the bottom, so
+                 a two-line title pushes the tag up instead of running into
+                 the summary. Read Story shares the column's bottom edge. */
               <>
-                <span className="absolute bottom-[159px] left-[38.5px] rounded-[5.323px] border-[1.331px] border-white bg-white px-[11.884px] py-[6.602px] font-sans text-[16.103px] capitalize leading-[20.495px] tracking-[1.2776px] text-black">
-                  {story.tag}
+                <span className="absolute bottom-[48px] left-[38.5px] flex w-[540px] flex-col items-start gap-[12px]">
+                  <span className="rounded-[5.323px] border-[1.331px] border-white bg-white px-[11.884px] py-[6.602px] font-sans text-[16.103px] capitalize leading-[20.495px] tracking-[1.2776px] text-black">
+                    {story.tag}
+                  </span>
+                  <span className="w-[440px] font-sans text-[20px] leading-[26.205px] text-white">
+                    {story.title}
+                  </span>
+                  <span className="font-roboto text-[15px] leading-[22px] text-white/80">
+                    {story.blurb}
+                  </span>
                 </span>
-                <span className="absolute left-[38.5px] top-[384px] w-[420px] font-sans text-[20px] leading-[26.205px] text-white">
-                  {story.title}
-                </span>
-                <span className="absolute bottom-[81px] right-[50px] flex items-center gap-[10px] font-sans text-[16px] leading-[19.351px] tracking-[0.126px] text-white">
+                <span className="absolute bottom-[48px] right-[44px] flex items-center gap-[10px] font-sans text-[16px] leading-[22px] tracking-[0.126px] text-white">
                   Read Story
                   <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14px] w-[18px]" />
                 </span>
               </>
             ) : (
-              <>
-                <span className="absolute bottom-[140px] left-[25px] rounded-[4.031px] border-[1.008px] border-white bg-white px-[9px] py-[5px] font-sans text-[12.195px] capitalize leading-[15.521px] tracking-[0.9676px] text-black">
+              <span className="absolute bottom-[40px] left-[25px] flex w-[560px] flex-col items-start gap-[10px]">
+                <span className="rounded-[4.031px] border-[1.008px] border-white bg-white px-[9px] py-[5px] font-sans text-[12.195px] capitalize leading-[15.521px] tracking-[0.9676px] text-black">
                   {story.tag}
                 </span>
-                <span className="absolute left-[25px] top-[298px] w-[592px] font-sans text-[18.746px] leading-[26.205px] text-white">
+                <span className="font-sans text-[18.746px] leading-[26.205px] text-white">
                   {story.title}
                 </span>
-                <span className="absolute bottom-[50px] left-[25px] flex items-center gap-[8px] font-sans text-[12px] leading-[19.351px] tracking-[0.126px] text-white">
+                <span className="flex items-center gap-[8px] font-sans text-[12px] leading-[19.351px] tracking-[0.126px] text-white">
                   Read Story
                   <Image src="/images/icons/arrow-white.svg" alt="" width={14} height={11} className="h-[11px] w-[14px]" />
                 </span>
-              </>
+              </span>
             )}
           </Link>
         )

@@ -120,7 +120,10 @@ export const HOME_SERVICES_DELTA_VAR = '--home-svc-delta'
  * became four cards over a stats strip (6024:14149 in file L79HFCNBww8pW6pPGfQi3e,
  * 826). Client's Stories and everything under it move down by this much.
  */
-export const HOME_TESTIMONIALS_GROWTH = 826 - 594
+export const HOME_TESTIMONIALS_GROWTH = 904 - 594
+/* 904, not the frame's 826, since 23 Sep 2026: the reviews became a rail with
+   a rating line and Previous / Next under it. Keep in step with TESTIMONIALS_H
+   in src/components/sections/Testimonials.tsx. */
 
 /** What Client's Stories subtracts from its Figma y. */
 export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_SERVICES_SHIFT - HOME_TESTIMONIALS_GROWTH

@@ -32,9 +32,8 @@ import { CTA, HERO, SEO } from '@/data/sustainability'
  * Heights are measured, not copied off the frame:
  * `node scripts/measure-sections.mjs --route sustainability`.
  *
- * !! Three blocks of copy differ from the content doc, and in each case the
- * reason is a factual or compliance claim rather than a design preference.
- * Read the notes in src/data/sustainability.ts before changing them.
+ * Copy is Asim's revised content of 23 Sep 2026, set word for word — see
+ * src/data/sustainability.ts.
  *
  * MOBILE — "Sustainability & Environmental Impact - Mobile" 6638:8275 in file
  * BVtf2AOuUOcYbiMIlcKmbC. The heights and tops above are lg-only custom
@@ -50,9 +49,9 @@ import { CTA, HERO, SEO } from '@/data/sustainability'
  */
 const H = {
   circ:   523,   // Figma 521 — the doc's two paragraphs run two lines longer
-  zero:   639,   // Figma 637
+  zero:   663,   // Figma 637 — the revised copy of 23 Sep 2026 runs a line longer
   report: 490,   // Figma 490 exactly
-  goals:  635,   // Figma 614 — the doc's goal bodies are longer than the frame's
+  goals:  656,   // Figma 614 — the revised goal bodies are longer than the frame's
   cta:    CTA_H,  // the shared closing band; this frame drew 399.05 before the 16 Sep redesign
 }
 

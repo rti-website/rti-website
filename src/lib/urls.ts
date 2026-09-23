@@ -66,3 +66,19 @@ export const QUOTE_HREF = path('/contact-us/')
  * moves, this and QUOTE_HREF are the two lines that change.
  */
 export const CONTACT_FORM_HREF = `${path('/contact-us/')}#contact-form`
+
+/**
+ * One case study on /case-studies/, rather than the top of the page.
+ *
+ * The homepage and service-page story carousel links each story here — Asim,
+ * 23 Sep 2026: "when user click on it land on their respective case study
+ * page". There is no page per case study (each one is a PDF, opened from its
+ * card), so the destination is that card: CaseStudyFilter renders an offset
+ * anchor per card and, on arrival, sets the industry filter to match, so the
+ * visitor lands looking at the story they clicked.
+ *
+ * `id` is a CaseStudyCard id from src/data/case-studies.ts.
+ */
+export function caseStudyHref(id: string): string {
+  return `${path('/case-studies/')}#${id}`
+}

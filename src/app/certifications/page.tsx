@@ -19,7 +19,7 @@ import { CTA, HERO, SEO } from '@/data/certifications-page'
  *   Section          Node        Figma h    built h   why
  *   Header           —           140        140
  *   Hero             6374:4888   470        470
- *   Certifications   6380:1097   901        H.certs   status line on each card
+ *   Certifications   6380:1097   1392       H.certs   ten logo cards, full names
  *   Accountability   6380:1098   762        H.acct
  *   Closing CTA      6380:1099   399.05     H.cta
  *   Footer           6374:4994   681        681
@@ -27,12 +27,13 @@ import { CTA, HERO, SEO } from '@/data/certifications-page'
  * Heights are measured, not copied off the frame:
  * `node scripts/measure-sections.mjs --route certifications`.
  *
- * !! The card list differs from the frame, and the reason is a compliance
- * claim, not a design preference. Read the note at the top of
- * src/data/certifications-page.ts before changing it.
+ * The card grid is the designer's ten logo cards (6774:2592) since 23 Sep
+ * 2026, with full names as titles and three bodies corrected on the facts.
+ * Read the note at the top of src/data/certifications-page.ts before
+ * changing it.
  */
 const H = {
-  certs: 1046,   // Figma 901 — plus the status line the doc gives every card
+  certs: 1537,   // Figma 1392 — ten logo cards since 23 Sep 2026; the full names run to two lines
   acct:  693,    // Figma 762 — the doc's bullets are shorter than the frame's
   cta:   CTA_H,  // the shared closing band; this frame drew 399.05 before the 16 Sep redesign
 }

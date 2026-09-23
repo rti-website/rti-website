@@ -1,5 +1,6 @@
-import { href } from '@/lib/urls'
+import { caseStudyHref, href } from '@/lib/urls'
 import { SERVICE_GROUPS, type ServiceCard } from '@/data/services'
+import { CASE_STUDY_CARDS } from '@/data/case-studies'
 import { ALL_FAQS, type Faq } from '@/data/faqs'
 
 /**
@@ -104,30 +105,63 @@ export const LOCATION_CARDS = [
 ]
 
 /**
- * Client's Testimonials — Figma 6024:14149 in L79HFCNBww8pW6pPGfQi3e, the
- * four-card version of 21 Sep 2026. The frame repeats one review four times.
+ * Client's Testimonials — Figma 6024:14149 in L79HFCNBww8pW6pPGfQi3e.
  *
- * TODO(content): the designer's note on the earlier frame still stands — "the
- * current homepage's testimonial section contains placeholder Lorem Ipsum, so
- * you should not use those testimonials." Replace with four real Google
- * reviews before launch; the shape below is what each one needs.
+ * ===========================================================================
+ * REAL GOOGLE REVIEWS — Asim, 23 Sep 2026
+ * ===========================================================================
+ * The frame repeated one placeholder ("No more guessing where your e-waste
+ * ends up…", John Dev, Local Guide 123 Reviews) four times. These are the six
+ * reviews Asim screenshotted from Recycle Technologies' Google reviews widget,
+ * newest first as the widget orders them, copied VERBATIM — punctuation and
+ * all, including Maia Holm's missing full stop. Do not tidy them: they are
+ * other people's words under their names.
+ *
+ * The frame's second line under the name ("Local Guide · 123 Reviews") is a
+ * reviewer statistic the screenshots do not show, so it is the review's date
+ * instead, which they do.
+ *
+ * !! iDental Wisconsin's review is TRUNCATED. The widget cuts it at "All the
+ * work was done…" behind a Read more, and the full text was not in the
+ * screenshot — so it stops at the last whole sentence and `truncated` adds
+ * the ellipsis. Paste the full text in and drop the flag when it is to hand.
+ * Note what it says, too: "my initial review was more critical of them due to
+ * unannounced charges". It is a five-star review and it is real, but it is the
+ * one review here a reader will read twice. Shown because Asim included it.
  */
 export type Testimonial = {
   quote: string
   name: string
-  /** "Local Guide", or whatever Google shows under the reviewer. */
-  role: string
-  reviews: string
+  /** ISO date of the review, as the widget shows it. */
+  date: string
+  /** Every review here is five stars; kept as data so a four is not a code change. */
+  stars: number
+  /** The quote is cut short; the card appends an ellipsis. See the note above. */
+  truncated?: boolean
 }
 
-const REVIEW: Testimonial = {
-  quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof.',
-  name: 'John Dev',
-  role: 'Local Guide',
-  reviews: '123 Reviews',
-}
+export const TESTIMONIALS: Testimonial[] = [
+  { name: 'Dan Kane', date: '2023-04-03', stars: 5,
+    quote: 'Absolutely the best. Bar none. Quick, clean, prompt and always outstanding customer service. Soerens Ford appreciates your service!' },
+  { name: 'Debbie Clark', date: '2023-03-08', stars: 5,
+    quote: 'Courteous, friendly and very easy.' },
+  { name: 'Maia Holm', date: '2021-10-21', stars: 5,
+    quote: 'They are very friendly and the service was quick and easy' },
+  { name: 'Robb Syverson', date: '2021-06-18', stars: 5,
+    quote: 'Very easy to work with.' },
+  { name: 'iDental Wisconsin', date: '2020-12-21', stars: 5, truncated: true,
+    quote: 'My initial review was more critical of them due to unannounced charges however they have made the corrections now and we have settled.' },
+  { name: 'Lydia Keith', date: '2020-12-18', stars: 5,
+    quote: 'Efficient, friendly and knowledgeable.' },
+]
 
-export const TESTIMONIALS: Testimonial[] = [REVIEW, REVIEW, REVIEW, REVIEW]
+/**
+ * The widget's own summary line, verbatim: "Google rating score: 4.9 of 5,
+ * based on 13 reviews". A SNAPSHOT from Asim's screenshot of 23 Sep 2026 —
+ * the widget on the live site reads it live, this does not. Update both
+ * numbers when the Google profile moves, or this line starts to lie.
+ */
+export const GOOGLE_RATING = { score: '4.9', outOf: 5, count: 13 }
 
 /** The stats strip under the reviews — 6554:2121. Agrees with the hero's strip. */
 export const TESTIMONIAL_STATS = [
@@ -139,18 +173,49 @@ export const TESTIMONIAL_STATS = [
 
 /**
  * Case studies — Figma 6557:12903, the carousel that replaced the three-up row
- * (6026:14726) on 21 Sep 2026. Same three photos, same placeholder copy on all
- * three cards, as drawn. The frame opens with the server-rack story in the
- * middle, which is why `CASE_STUDIES_START` is 1.
+ * (6026:14726) on 21 Sep 2026.
  *
- * TODO(content): the copy is the frame's placeholder. /case-studies/ now has
- * five written stories (src/data/case-studies.ts) — swap these for three of
- * them, with matching photos, once Asim picks which.
+ * ===========================================================================
+ * THE THREE REAL CASE STUDIES — Asim, 23 Sep 2026
+ * ===========================================================================
+ * Until today these were three copies of the frame's placeholder ("SaaS
+ * Company Completes Data Center Migration…", tagged Technology) over stock
+ * photos. They are now the three stories on /case-studies/, each with the
+ * photo the designer drew for it:
+ *
+ *   Automotive          6766:2600  671x428  drawn in the LEFT slot
+ *   Healthcare          6766:2601  821x524  drawn in the CENTRE slot
+ *   Corporate Offices   6766:2607  671x428  drawn in the RIGHT slot
+ *
+ * which is the order below, and why `CASE_STUDIES_START` stays 1 — the
+ * hospital story opens in the middle, as drawn. All three are in
+ * BVtf2AOuUOcYbiMIlcKmbC and in data/figma-assets.json; new file names, not
+ * case-1..3 overwritten, so Next's image cache cannot serve the old photos.
+ *
+ * The tag, title and one-line "See how…" summary come FROM the case study
+ * itself (src/data/case-studies.ts) rather than being typed again here, so the
+ * carousel and the /case-studies/ card cannot disagree. Asim asked for "one or
+ * 2 liner" of detail under the title — the summary is exactly that line on
+ * the case studies page. Each story links to its own card there.
  */
-export const CASE_STUDIES = [
-  { img: '/images/home/case-1.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
-  { img: '/images/home/case-2.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
-  { img: '/images/home/case-3.png', tag: 'Technology', title: 'SaaS Company Completes Data Center Migration with Zero Downtime and Full Asset Transparency', href: href('/case-studies/') },
+export type Story = {
+  img: string
+  tag: string
+  title: string
+  blurb: string
+  href: string
+}
+
+function story(id: string, img: string): Story {
+  const c = CASE_STUDY_CARDS.find((x) => x.id === id)
+  if (!c) throw new Error(`home.ts: no case study with id "${id}" in src/data/case-studies.ts`)
+  return { img, tag: c.industry, title: c.title, blurb: c.blurb, href: caseStudyHref(c.id) }
+}
+
+export const CASE_STUDIES: Story[] = [
+  story('auto-repair-shop', '/images/home/case-auto-repair.png'),
+  story('hospital-system', '/images/home/case-healthcare.png'),
+  story('midwest-business', '/images/home/case-midwest-business.png'),
 ]
 export const CASE_STUDIES_START = 1
 

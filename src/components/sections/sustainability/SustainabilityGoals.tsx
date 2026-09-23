@@ -7,9 +7,11 @@ import { GOALS } from '@/data/sustainability'
  * Where we're headed — Figma 6383:1164. py 100 on white, gap 50: a 780px
  * heading block, then four 302px cards on a 24px gutter (1280, x320).
  *
- * The four goals are the content doc's, not the frame's — the frame names a
- * different four. See the note above GOALS in src/data/sustainability.ts; the
- * geometry is identical either way if the frame's set is the newer thinking.
+ * The four goals are Asim's revised copy (23 Sep 2026), not the frame's — the
+ * frame names a different four; the geometry is identical either way.
+ *
+ * EQUAL HEIGHTS — Asim, 23 Sep 2026: "make the size of all cards equal". The
+ * row is `lg:items-stretch`, so all four take the tallest one's height.
  *
  * MOBILE — Figma 6638:10515. 390 wide: px20 / py48 on white, a flat 24px gap,
  * heading block left-aligned, and the four cards stacked full width 16 apart on
@@ -33,7 +35,7 @@ export function SustainabilityGoals({ top, height }: { top: number; height: numb
       </div>
 
       {/* Cards — 6383:1241 / 6638:10520 */}
-      <div className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-start lg:gap-[24px]">
+      <div className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-stretch lg:gap-[24px]">
         {GOALS.cards.map((c) => (
           <article key={c.title}
             className="flex w-full flex-col items-start gap-[16px] rounded-[16px] bg-card p-[24px] lg:w-[302px] lg:shrink-0 lg:gap-[14px] lg:rounded-[12px] lg:bg-brand-soft lg:p-[28px]">

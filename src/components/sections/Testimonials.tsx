@@ -2,7 +2,8 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Title } from '@/components/ui/Bits'
-import { TESTIMONIALS, TESTIMONIAL_STATS } from '@/data/home'
+import { ReviewCarousel } from '@/components/client/ReviewCarousel'
+import { GOOGLE_RATING, TESTIMONIALS, TESTIMONIAL_STATS, type Testimonial } from '@/data/home'
 
 /**
  * Client's Testimonials — Figma 6024:14149 in file L79HFCNBww8pW6pPGfQi3e,
@@ -36,11 +37,23 @@ import { TESTIMONIALS, TESTIMONIAL_STATS } from '@/data/home'
  *           still 34px teal over a 13.5px label on a 6 gap. NO vertical rules —
  *           `border-r` is now `lg:border-r`, so below lg the width is 0.
  *
- * !! THE FRAME DRAWS THREE CARDS, THIS RENDERS FOUR. The desktop row is four
- * and `TESTIMONIALS` is four copies of one placeholder review, so the frame's
- * third-vs-fourth card is not a content decision anybody made — hiding one at
- * random would quietly drop a real Google review the day the TODO(content) in
- * src/data/home.ts is closed. Flagged rather than followed.
+ * ===========================================================================
+ * SIX REAL REVIEWS ON A RAIL — Asim, 23 Sep 2026
+ * ===========================================================================
+ * "add these real review in our website … make it movable, 4 on screen and
+ * one appear when move". The placeholder cards are now the six Google reviews
+ * in src/data/home.ts, and the row is ReviewCarousel: the frame's four cards
+ * in view, Previous / Next moving one card at a time. Under the row, a line
+ * the frame does not have: the widget's own "Google rating score: 4.9 of 5,
+ * based on 13 reviews" on the left and the two buttons on the right, 48 tall,
+ * 30 below the cards. That row is why the section is 78 taller than the frame
+ * (826 → 904) and why the stats strip moved from y635 to y713 — the same 50px
+ * above it as before. HOME_TESTIMONIALS_GROWTH in lib/layout.ts follows
+ * TESTIMONIALS_H, so everything below moves with it.
+ *
+ * On a phone the stacked cards (6613:2334) became a swipe rail, because six
+ * full-width cards one under another is ~1,500px of scrolling past reviews.
+ * The rating line sits under the rail, centred; there are no buttons.
  *
  * `grad-card` stays on the card. :hover and :focus-within never fire on a
  * touch device and nothing in the mobile layout depends on them: every colour
@@ -48,7 +61,7 @@ import { TESTIMONIALS, TESTIMONIAL_STATS } from '@/data/home'
  * teal disc) is set explicitly in the base classes, so the untouched state is
  * the designed state.
  */
-export const TESTIMONIALS_H = 826
+export const TESTIMONIALS_H = 904
 
 export function Testimonials() {
   return (
@@ -66,43 +79,16 @@ export function Testimonials() {
         <Title className="text-center leading-[44.7px] max-lg:leading-[32px]">Client&rsquo;s Testimonials</Title>
       </CenterBox>
 
-      {/* Cards Row — 6554:2055 desktop, 6593:5951 et al on the phone. */}
-      <Box x={327} y={235} w={1266} h={350} className="flex items-start gap-[22px] max-lg:w-full max-lg:flex-col max-lg:gap-[24px]">
-        {TESTIMONIALS.map((t, i) => (
-          <article key={i} className="grad-card flex h-[350px] w-[300px] shrink-0 flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px] max-lg:h-auto max-lg:w-full max-lg:gap-[20px]">
-            <div className="flex flex-col gap-[22px] max-lg:items-center">
-              <div className="flex h-[23px] w-[112px] items-center gap-[0.5px]" aria-label="Five stars">
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <Image key={s} src="/images/icons/star.svg" alt="" width={22} height={22} className="size-[22px]" />
-                ))}
-              </div>
-              <p className="w-[244px] font-roboto text-[17.018px] leading-[24.7px] text-[rgba(126,126,126,0.8)] max-lg:w-full max-lg:text-center">
-                {t.quote}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-[16px]">
-              <div className="grad-card__rule h-px w-[244px] bg-[#e6e6e6] transition-colors max-lg:w-full" />
-              <div className="flex w-[244px] items-start gap-[12px] max-lg:w-full">
-                <span className="grad-card__disc mt-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold leading-none text-white transition-colors">
-                  {t.name.charAt(0)}
-                </span>
-                <div className="flex flex-col gap-[2px]">
-                  <p className="font-sans text-[16px] font-semibold leading-normal text-muted">{t.name}</p>
-                  <p className="font-roboto text-[12.5px] leading-[1.3] text-[#b9b9b9]">{t.role} {t.reviews}</p>
-                  <span className="mt-[2px] flex items-center gap-[10px]">
-                    <Image src="/images/icons/google.svg" alt="" width={11} height={11} className="size-[11px]" />
-                    <span className="font-sans text-[10px] font-semibold leading-normal text-[#505050]">Google Review</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </article>
-        ))}
+      {/* Cards Row — 6554:2055 desktop, 6593:5951 et al on the phone — now a
+          rail with the rating line and the buttons under it. */}
+      <Box x={327} y={235} w={1266} h={428} className="max-lg:w-full">
+        <ReviewCarousel count={TESTIMONIALS.length} summary={<RatingLine />}>
+          {TESTIMONIALS.map((t, i) => <ReviewCard key={t.name} t={t} n={i + 1} of={TESTIMONIALS.length} />)}
+        </ReviewCarousel>
       </Box>
 
       {/* Footer Stats — 6554:2121 desktop, 6613:2406 on the phone. */}
-      <Box x={327} y={635} w={1266} h={121} className="flex flex-col items-center gap-[30px] max-lg:w-full max-lg:gap-[24px]">
+      <Box x={327} y={713} w={1266} h={121} className="flex flex-col items-center gap-[30px] max-lg:w-full max-lg:gap-[24px]">
         <div className="h-px w-full bg-black/15" />
         <dl className="flex w-full items-start text-center max-lg:grid max-lg:grid-cols-2 max-lg:gap-x-[16px] max-lg:gap-y-[28px]">
           {TESTIMONIAL_STATS.map((s, i) => (
@@ -114,5 +100,75 @@ export function Testimonials() {
         </dl>
       </Box>
     </Section>
+  )
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+/** "2023-04-03" → "Apr 3, 2023". By hand, not Intl/Date: a Date parsed from an
+ *  ISO day is UTC midnight, and formatting it in a US timezone prints the day
+ *  before. */
+function reviewDate(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number) as [number, number, number]
+  return `${MONTHS[m - 1]} ${d}, ${y}`
+}
+
+/**
+ * One review card — the frame's card, unchanged in shape: 300 x 350, r14,
+ * px28 py32, stars and quote on top, a rule and the reviewer at the bottom.
+ * Its second line is the review date rather than the frame's "Local Guide ·
+ * 123 Reviews" (see the note in src/data/home.ts).
+ */
+function ReviewCard({ t, n, of }: { t: Testimonial; n: number; of: number }) {
+  return (
+    <article
+      aria-roledescription="slide"
+      aria-label={`Review ${n} of ${of}`}
+      className="grad-card flex h-[350px] w-[300px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px] max-lg:h-auto max-lg:gap-[20px]"
+    >
+      <div className="flex flex-col gap-[22px] max-lg:items-center">
+        <div className="flex h-[23px] w-[112px] items-center gap-[0.5px]" role="img" aria-label={`Rated ${t.stars} out of 5`}>
+          {Array.from({ length: t.stars }).map((_, s) => (
+            <Image key={s} src="/images/icons/star.svg" alt="" width={22} height={22} className="size-[22px]" />
+          ))}
+        </div>
+        <p className="w-[244px] font-roboto text-[17.018px] leading-[24.7px] text-[rgba(126,126,126,0.8)] max-lg:w-full max-lg:text-center">
+          {t.quote}{t.truncated ? ' …' : ''}
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-[16px]">
+        <div className="grad-card__rule h-px w-[244px] bg-[#e6e6e6] transition-colors max-lg:w-full" />
+        <div className="flex w-[244px] items-start gap-[12px] max-lg:w-full">
+          <span className="grad-card__disc mt-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold uppercase leading-none text-white transition-colors" aria-hidden="true">
+            {t.name.charAt(0)}
+          </span>
+          <div className="flex flex-col gap-[2px]">
+            <p className="font-sans text-[16px] font-semibold leading-normal text-muted">{t.name}</p>
+            <p className="font-roboto text-[12.5px] leading-[1.3] text-[#b9b9b9]">
+              <time dateTime={t.date}>{reviewDate(t.date)}</time>
+            </p>
+            <span className="mt-[2px] flex items-center gap-[10px]">
+              <Image src="/images/icons/google.svg" alt="" width={11} height={11} className="size-[11px]" />
+              <span className="font-sans text-[10px] font-semibold leading-normal text-[#505050]">Google Review</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+/** The widget's summary line, verbatim in wording — see GOOGLE_RATING. */
+function RatingLine() {
+  return (
+    <p className="flex items-center gap-[10px] font-roboto text-[14px] leading-[1.4] text-[#505050] max-lg:text-center lg:text-[15px]">
+      <Image src="/images/icons/google.svg" alt="" width={18} height={18} className="size-[18px] shrink-0" />
+      <span>
+        <strong className="font-semibold text-heading">Google</strong> rating score:{' '}
+        <strong className="font-semibold text-heading">{GOOGLE_RATING.score}</strong> of {GOOGLE_RATING.outOf}, based on{' '}
+        <strong className="font-semibold text-heading">{GOOGLE_RATING.count} reviews</strong>
+      </span>
+    </p>
   )
 }

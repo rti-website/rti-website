@@ -26,6 +26,13 @@ export function ServiceHero({
   crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, label, image,
 }: {
   crumbs: Crumb[]
+  /**
+   * Plain text. A `\n` marks a forced line break — Asim, 23 Sep 2026, on
+   * /sustainability/: "move the environmental to 2nd line of heading". Each
+   * break renders as a space then <br />, so the heading's text (what a
+   * crawler and a screen reader get) still reads as one sentence with a
+   * space in it. No other page uses it.
+   */
   h1: string
   /**
    * A string, or two spans for a lead the phone frame shortens — the location
@@ -80,7 +87,11 @@ export function ServiceHero({
         </nav>
 
         <h1 className="w-full text-center font-sans text-[28px] font-semibold leading-[1.18] text-white lg:w-auto lg:text-left lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]">
-          {h1}
+          {h1.includes('\n')
+            ? h1.split('\n').map((line, i, all) => (
+              <span key={i}>{line}{i < all.length - 1 && <>{' '}<br /></>}</span>
+            ))
+            : h1}
         </h1>
 
         <p className="w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:w-auto lg:text-left lg:text-[18px] lg:leading-[27px]">

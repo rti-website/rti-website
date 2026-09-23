@@ -1,34 +1,43 @@
 import { QUOTE_HREF, href } from '@/lib/urls'
 
 /**
- * /certifications/ — copy from the "Certifications" doc, geometry from Figma
- * 6374:4886. A new URL: /certifications/ does not resolve on the live site
- * (it soft-404s to the homepage), so there is no live SEO to preserve.
+ * /certifications/ — geometry from Figma 6374:4886 (mobile 6703:2373), both in
+ * BVtf2AOuUOcYbiMIlcKmbC.
  *
- * ====================================================================
- * READ THIS BEFORE CHANGING THE CARD LIST — IT IS A COMPLIANCE CLAIM
- * ====================================================================
- * The frame and the doc do not list the same standards:
+ * NEW URL. /certifications/ does not resolve on the live site (it soft-404s
+ * to the homepage), so there is no live SEO to preserve.
  *
- *   frame (6381:1144)   R2v3 · NAID AAA · e-Stewards · EPA Compliance
- *   doc                 R2v3 · RIOS · EPA Compliance · DOT & EPA Airbag
+ * ===========================================================================
+ * THE GRID WAS REDRAWN — Asim, 23 Sep 2026
+ * ===========================================================================
+ * The designer replaced the four glyph cards (R2v3 · RIOS · EPA Compliance ·
+ * DOT & EPA Airbag) with ten LOGO cards, 6774:2592: R2v3 · NAID AAA · RIOS /
+ * RCRA · IEEE 2883 · FCRA / HIPAA · FACTA · NIST / GLBA. That is the list
+ * built below, in the frame's order, with the frame's badges.
  *
- * The doc's list is built, for one reason: nothing supports the frame's
- * "NAID AAA — Certified" card. The live homepage's only NAID/e-Stewards
- * sentence is about a different company — "ERI holds the highest level of
- * certifications … the only provider to have all eight US facilities certified
- * by NAID and e-Stewards" — which looks like copy pasted in from elsewhere, and
- * is almost certainly where both the frame's card and the stray "certified R2v3
- * and NAID AAA facility" description in url-map.csv came from. Publishing a
- * certification a company does not hold is not a design decision.
+ * TITLES ARE THE FULL NAMES — Asim: "below icon we add name but we have to
+ * add the full name". The frame's titles are the bare acronyms ("R2v3",
+ * "NAID AAA", …); each is now "Full Name (ACRONYM)". The acronym alone stays
+ * as `name`, for the logo's alt text.
  *
- * What the live site does support, checked 15 Sep 2026: R2v3 active at the two
- * Blaine, Minnesota facilities, Wisconsin pursuing. (It also shows a REVOKED
- * R2v3 listing for a Minneapolis address — not published here, but the team
- * should know it is visible on their own homepage.)
+ * !! THREE BODIES ARE CORRECTED, NOT COPIED. The frame's text for these is
+ * wrong on the facts, and this is a compliance page:
+ *   HIPAA  The frame says HIPAA protects "consumers' financial information
+ *          handled by covered institutions" — that is the GLBA card's
+ *          sentence pasted in. HIPAA is about protected HEALTH information.
+ *   NIST   The frame's "NIST Disposal Rule … consumer report information" is
+ *          the FACTA card's sentence with the name swapped. NIST's relevant
+ *          publication is SP 800-88, Guidelines for Media Sanitization.
+ *   RIOS   "ISRI's" — ISRI renamed itself ReMA (Recycled Materials
+ *          Association) in 2024; RIOS is ReMA's now.
+ * The frame also spells HIPAA "HIPPA" in the title and on the badge artwork.
+ * The title is spelt correctly here; the artwork cannot be fixed in code.
  *
- * ASIM TO CONFIRM with the team before launch: does RTI hold NAID AAA? Is the
- * RIOS certificate current? Both are one-line changes here either way.
+ * !! STILL TO CONFIRM BEFORE LAUNCH (flagged since 15 Sep 2026): the NAID AAA
+ * card says "Certified". Nothing in the build or on the live site backs that
+ * claim. Built as the frame draws it, on Asim's instruction; confirm the
+ * certificate is current. And the FACTA artwork is another company's logo
+ * (see src/data/certifications.ts, slot 3) — FACTA is a statute and has none.
  */
 
 export const SEO = {
@@ -58,52 +67,108 @@ export const INTRO = {
   lead: 'What each standard means, and where our facilities currently stand.',
 }
 
-export type CertCard = {
-  glyph: 'shield' | 'rosette' | 'doc' | 'truck'
-  badge: string
-  title: string
-  body: string
-  /**
-   * The doc gives every standard a status sentence that the frame's card has no
-   * room for — the badge is only a two-word summary of it. Rather than drop the
-   * sentence, each card carries it on its own line and the cards are taller
-   * than the frame draws them.
-   */
-  status: string
+/**
+ * How one logo sits in its 120x48 slot, as the frame draws it. Every number is
+ * the frame's (6774:2592). Most are a box with the picture contained or
+ * filled; two are image fills the designer CROPPED inside their box (R2v3,
+ * FACTA), and `crop` repeats that crop as percentages of the box, exactly as
+ * Figma exports it.
+ */
+export type CertLogo = {
+  src: string
+  w: number
+  h: number
+  fit?: 'contain' | 'cover' | 'fill'
+  crop?: { left: number; top: number; w: number; h: number }
 }
 
-/** Cards — 6381:1144, the frame's layout with the doc's four standards. */
+export type CertCard = {
+  logo: CertLogo
+  badge: string
+  /** The acronym — the frame's title, and the logo's alt text. */
+  name: string
+  /** The full name, shown under the logo. */
+  title: string
+  body: string
+}
+
+const L = '/images/certifications'
+
+/** Cards — 6774:2592 desktop, 6766:2854 phone. In the frame's order. */
 export const CERTS: CertCard[] = [
   {
-    glyph: 'shield',
+    logo: { src: `${L}/r2v3.png`, w: 44, h: 48, crop: { left: -1.23, top: 0, w: 104.73, h: 100 } },
     badge: 'Blaine, MN Certified',
-    title: 'R2v3',
-    body: 'The Responsible Recycling standard for electronics, covering downstream vendor management, data sanitization, and material recovery.',
-    status: 'Certified at our Blaine, Minnesota facilities. Our New Berlin, Wisconsin facility is currently pursuing R2v3 certification.',
+    name: 'R2v3',
+    title: 'Responsible Recycling Standard (R2v3)',
+    body: 'Responsible Recycling standard covering downstream vendor management, data sanitization, and materials recovery.',
   },
   {
-    glyph: 'rosette',
+    logo: { src: `${L}/naid-aaa.png`, w: 48, h: 48, fit: 'contain' },
     badge: 'Certified',
-    title: 'RIOS',
-    body: 'The Recycling Industry Operating Standard, a combined quality, environmental, and health & safety management system built specifically for the recycling industry.',
-    status: 'Recycle Technologies is certified by RIOS.',
+    name: 'NAID AAA',
+    title: 'National Association for Information Destruction (NAID AAA)',
+    body: 'The data destruction industry’s highest certification for secure, DOD-compliant destruction of sensitive data.',
   },
   {
-    glyph: 'doc',
+    logo: { src: `${L}/rios.png`, w: 90, h: 40, fit: 'contain' },
+    badge: 'Certified',
+    name: 'RIOS',
+    title: 'Recycling Industry Operating Standard (RIOS)',
+    body: 'ReMA’s (formerly ISRI) Recycling Industry Operating Standard, combining quality, environmental, and health & safety management systems in one certification.',
+  },
+  {
+    logo: { src: `${L}/rcra.svg`, w: 120, h: 48, fit: 'fill' },
     badge: 'In Compliance',
-    title: 'EPA Compliance',
-    body: 'Our facilities follow federal regulations set by the EPA, along with Minnesota PCA and Wisconsin DNR guidelines, for the handling of hazardous and universal waste.',
-    status: 'Recycle Technologies is referenced as an EPA and State Contracted recycler.',
+    name: 'RCRA',
+    title: 'Resource Conservation and Recovery Act (RCRA)',
+    body: 'The Resource Conservation and Recovery Act governs how hazardous waste — including certain electronics and batteries — must be handled and disposed of.',
   },
   {
-    glyph: 'truck',
-    // The doc gives no two-word status for this one. "Service-Specific" is the
-    // badge because the doc's own note says the compliance is scoped to the
-    // airbag service rather than to the facilities.
-    badge: 'Service-Specific',
-    title: 'DOT & EPA Airbag Compliance',
-    body: 'We offer certified airbag disposal for both deployed and undeployed units, fully compliant with DOT and EPA standards, a trusted option for auto shops and fleet managers.',
-    status: 'This certification applies specifically to our airbag disposal service, not facility-wide operations.',
+    logo: { src: `${L}/ieee.png`, w: 90, h: 40, fit: 'contain' },
+    badge: 'Practices Aligned',
+    name: 'IEEE 2883',
+    title: 'IEEE Standard for Sanitizing Storage (IEEE 2883)',
+    body: 'The IEEE standard for sanitizing storage devices, defining verified methods for clearing, purging, and destroying data-bearing media.',
+  },
+  {
+    logo: { src: `${L}/fcra.svg`, w: 120, h: 48, fit: 'fill' },
+    badge: 'In Compliance',
+    name: 'FCRA',
+    title: 'Fair Credit Reporting Act (FCRA)',
+    body: 'The Fair Credit Reporting Act requires proper disposal of consumer report information — directly relevant to our shredding and hard drive destruction services.',
+  },
+  {
+    // The badge artwork reads "HIPPA" — see the note at the top of this file.
+    logo: { src: `${L}/hipaa.svg`, w: 80.97, h: 33.42, fit: 'fill' },
+    badge: 'In Compliance',
+    name: 'HIPAA',
+    title: 'Health Insurance Portability and Accountability Act (HIPAA)',
+    // Corrected — the frame's sentence was the GLBA card's.
+    body: 'The Health Insurance Portability and Accountability Act requires healthcare organizations to safeguard patients’ health information, including when the records and devices holding it are disposed of.',
+  },
+  {
+    logo: { src: `${L}/facta.png`, w: 72, h: 26, crop: { left: -5.76, top: -107.89, w: 111.52, h: 315.79 } },
+    badge: 'In Compliance',
+    name: 'FACTA',
+    title: 'Fair and Accurate Credit Transactions Act (FACTA)',
+    body: 'The FACTA Disposal Rule requires businesses to take reasonable measures when disposing of consumer report information.',
+  },
+  {
+    // Same artwork as the certifications strip's NIST mark (same Figma image).
+    logo: { src: '/images/certs/9.png', w: 77, h: 20, fit: 'cover' },
+    badge: 'In Compliance',
+    name: 'NIST',
+    title: 'National Institute of Standards and Technology (NIST)',
+    // Corrected — the frame's sentence was the FACTA card's with the name swapped.
+    body: 'NIST Special Publication 800-88, Guidelines for Media Sanitization, is the federal reference for clearing, purging, and destroying data on storage media.',
+  },
+  {
+    logo: { src: `${L}/glba.png`, w: 78, h: 20, fit: 'fill' },
+    badge: 'In Compliance',
+    name: 'GLBA',
+    title: 'Gramm-Leach-Bliley Act (GLBA)',
+    body: 'The Gramm-Leach-Bliley Act requires safeguarding and secure disposal of consumers’ financial information handled by covered institutions.',
   },
 ]
 
@@ -142,10 +207,10 @@ export const CTA = {
   secondary: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
-/** Gaps between Figma 6374:4886, the doc and the live site. */
+/** Gaps between Figma 6374:4886, the facts and the live site. */
 export const TODO_FOR_DESIGN = [
-  'THE CARD LIST DIFFERS. The frame draws NAID AAA ("Certified") and e-Stewards ("Not Currently Held"); the doc lists RIOS and DOT & EPA Airbag Compliance instead. The doc is built — see the note at the top of this file. Aqeel and Musaveer need to agree one list, and someone needs to confirm the NAID AAA and RIOS positions with whoever holds the certificates.',
-  'The doc heads the hero "Certifications & Standards"; the frame\'s H1 is "Certifications", which is what fits on one line at 70px. The frame is built.',
-  'Every card carries a status sentence from the doc that the frame has no room for, so the cards run taller than 239px.',
+  'CONFIRM: the NAID AAA card says "Certified". Nothing in the build or on the live site backs it; confirm the certificate is current before launch.',
+  'ARTWORK: the HIPAA badge reads "HIPPA" (6766:2698), and the FACTA logo (6766:2693) is another company\'s mark. FACTA is a statute with no logo. Aqeel to re-export / replace.',
+  'COPY FIXED IN BUILD: the frame\'s HIPAA body is the GLBA sentence and its NIST body is the FACTA sentence; RIOS is credited to ISRI, now ReMA. Corrected here; Musaveer to carry the fixes back to the doc.',
   'The live homepage shows a REVOKED R2v3 listing for a Minneapolis address alongside the two active Blaine ones. Not published here, but worth someone\'s attention.',
 ]

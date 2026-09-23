@@ -7,17 +7,15 @@ import { ZERO_LANDFILL } from '@/data/sustainability'
  * Zero-landfill commitment — Figma 6383:1162. py 100 on #fcfcfc, gap 50:
  * an 820px heading block, then three 410px cards on a 24px gutter (1278, x321).
  *
- * The copy here overrules the content doc on a factual claim, not on phrasing.
- * Read the note above ZERO_LANDFILL in src/data/sustainability.ts before
- * changing any of these three cards.
+ * Copy is Asim's revised content of 23 Sep 2026 (src/data/sustainability.ts).
+ *
+ * EQUAL HEIGHTS — Asim, 23 Sep 2026: "make the size of all cards equal". The
+ * row is `lg:items-stretch`, so the three cards take the tallest one's height
+ * instead of each ending where its own copy does.
  *
  * MOBILE — Figma 6638:10228. 390 wide: px20 / py48 on the same #fcfcfc, a flat
  * 24px gap, heading block left-aligned at 26/32 over 16/24, and the three
  * bordered white cards stacked full width 16 apart at r16 / p24.
- *
- * The mobile frame carries the SAME softened copy the board does — "processed
- * for recovery, not sent straight to a dump", and the PCB-capacitor
- * incineration exception intact. Nothing here needed defending.
  */
 export function ZeroLandfill({ top, height }: { top: number; height: number }) {
   return (
@@ -33,7 +31,7 @@ export function ZeroLandfill({ top, height }: { top: number; height: number }) {
       </div>
 
       {/* Cards — 6383:1196 / 6638:10233 */}
-      <div className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-start lg:gap-[24px]">
+      <div className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-stretch lg:gap-[24px]">
         {ZERO_LANDFILL.cards.map((c) => (
           <article key={c.title}
             className="flex w-full flex-col items-start gap-[16px] rounded-[16px] border border-line bg-white p-[24px] lg:w-[410px] lg:shrink-0 lg:rounded-[12px] lg:p-[32px]">

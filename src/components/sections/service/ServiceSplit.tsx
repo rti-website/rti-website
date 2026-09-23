@@ -61,9 +61,16 @@ export function ServiceSplit({
 
           `lg:w-full` lets the column size itself: 731px on the photo-right
           blocks and 821px on the photo-left ones, both comfortably wider than
-          any heading here, and the row no longer overflows. min-h-63 stays so
-          a short heading still occupies the frame's box. */}
-      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[63px] lg:w-full lg:items-center lg:text-[40px] lg:leading-[1.15]">
+          any heading here, and the row no longer overflows.
+
+          NO min-h-63 ANY MORE — 23 Sep 2026. It centred a one-line heading in
+          the frame's 63px box, which put 8.5px of empty box ABOVE the words.
+          Now that the photo starts where the column starts (see `art` below),
+          that 8.5px would show as the photo sitting higher than the heading.
+          The 8.5px it left BELOW the words is kept as `lg:mb-[8.5px]`, so the
+          heading-to-prose spacing on a one-line heading is exactly what it
+          was (8.5 + the column's 11 gap). */}
+      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:mb-[8.5px] lg:w-full lg:text-[40px] lg:leading-[1.15]">
         {heading}
       </h2>
       {children}
@@ -71,19 +78,37 @@ export function ServiceSplit({
     </div>
   )
 
+  /*
+   * THE PHOTO IS EXACTLY AS TALL AS THE TEXT — Asim, 23 Sep 2026: "the image
+   * start from the start of the text and end where the text end", for both
+   * photos on every service page and the one on every industry page.
+   *
+   * Before this the photo-right one was a fixed 295px, centred against a text
+   * column of 450-530px, so it floated in the middle with ~100px of prose
+   * hanging above and below it. The photo-left one already stretched, but to
+   * the SECTION, whose height carries the measure script's 10px of headroom —
+   * so it overhung the text by 5px at each end.
+   *
+   * So the two columns now sit in their own row (below), and the row is as
+   * tall as the text column, because the photo contributes no height of its
+   * own: `fill` makes the <img> absolutely positioned, and at lg the wrapper
+   * drops its 220px for `h-auto`. `items-stretch` then gives the photo the
+   * row's height — heading top to last line, to the pixel, whatever the copy.
+   * The section still centres the row, so the headroom is shared above and
+   * below where nobody sees it. Below lg nothing changes: the phone frame's
+   * 220-tall photo above the text.
+   */
   const art = media === 'right'
     ? (
-      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] max-lg:order-first lg:h-[295px] lg:w-[568px] lg:shrink-0 lg:rounded-[20px]">
+      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] max-lg:order-first lg:h-auto lg:w-[568px] lg:shrink-0 lg:rounded-[20px]">
         <Image src={image} alt={imageAlt} fill sizes="(min-width: 1024px) 568px, 100vw" className="object-cover" />
       </div>
     )
     : (
-      /* `lg:self-stretch` makes the photo exactly as tall as the text column
-         beside it, which is what Asim meant by "make the image ... big so it
-         look the same as text". The row's own `lg:pl-[80px]` is the left
-         breathing space; it only started working once the heading above
-         stopped forcing the row to overflow. */
-      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] lg:h-full lg:w-auto lg:min-w-px lg:flex-1 lg:self-stretch lg:rounded-[20px]">
+      /* The row's own `lg:pl-[200px]` is the left breathing space; it only
+         started working once the heading above stopped forcing the row to
+         overflow. */
+      <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] lg:h-auto lg:w-auto lg:min-w-px lg:flex-1 lg:rounded-[20px]">
         <Image src={image} alt={imageAlt} fill sizes="(min-width: 1024px) 710px, 100vw" className="object-cover" />
       </div>
     )
@@ -91,9 +116,9 @@ export function ServiceSplit({
   return (
     <Section
       top={top} height={height} label={label}
-      className={`flex flex-col gap-[20px] bg-mist px-[20px] pb-[8px] pt-[40px] lg:flex-row lg:items-center lg:justify-center ${
+      className={`bg-mist px-[20px] pb-[8px] pt-[40px] lg:flex lg:items-center ${
         media === 'right'
-          ? 'lg:gap-[80px] lg:px-[320px] lg:py-[100px]'
+          ? 'lg:px-[320px] lg:py-[100px]'
           /* pl was 80 and the photo was CUT OFF at the left edge of the
              screen. `--canvas-inset` is 130px (globals.css): the board is
              1920 wide but only its middle 1660 is ever shown, so the outer
@@ -102,14 +127,21 @@ export function ServiceSplit({
              Asim, 22 Sep 2026: "give some space of left side of the image".
              The photo-right variant above never had this problem because its
              320px padding already clears the inset by 190. */
-          : 'lg:gap-[110px] lg:py-[60px] lg:pl-[200px] lg:pr-[310px]'
+          : 'lg:py-[60px] lg:pl-[200px] lg:pr-[310px]'
       }`}
     >
       {/* The anchor lives on an empty span so the section's own layout is
           untouched; the header is 140 tall, hence scroll-mt. */}
       {id && <span id={id} className="absolute -top-[140px] scroll-mt-[140px]" aria-hidden="true" />}
-      {media === 'left' ? art : text}
-      {media === 'left' ? text : art}
+      {/* The row that makes the photo match the text — see `art` above. The
+          gaps are the frame's: 80 photo-right (6197:4463), 110 photo-left
+          (6173:4386). scripts/measure-service-pages.mjs measures the section
+          child that holds the h2, which is now this row; the row is exactly
+          the text column's height, so its numbers mean what they did. */}
+      <div className={`flex w-full flex-col gap-[20px] lg:flex-row lg:items-stretch ${media === 'right' ? 'lg:gap-[80px]' : 'lg:gap-[110px]'}`}>
+        {media === 'left' ? art : text}
+        {media === 'left' ? text : art}
+      </div>
     </Section>
   )
 }

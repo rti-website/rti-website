@@ -840,6 +840,90 @@
       "node": "6746:8860",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "TV Recycling icon for the Wisconsin location page's materials tiles. Pulled 22 Sep 2026; URL expires about 29 Sep."
+    },
+    {
+      "to": "public/images/home/case-auto-repair.png",
+      "id": "0d42697e-30a1-469d-b5c6-ae05cdf2579a/e9033.png",
+      "node": "6766:2600",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Case study carousel photo — Automotive (auto repair shop), 671x428, drawn in the left slot. Supplied by Asim 23 Sep 2026; pulled that day, so the URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/case-healthcare.png",
+      "id": "a67c650d-8deb-46e6-87a6-a31f8b81eb69/8b0d0.png",
+      "node": "6766:2601",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Case study carousel photo — Healthcare (hospital system), 821x524, drawn in the centre slot. The image fill of the Container node only; its gradient and arrow vector are drawn by StoryCarousel. Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/case-midwest-business.png",
+      "id": "f2f91009-2ab7-4bb7-be26-42e0a79e6005/fdaf6.png",
+      "node": "6766:2607",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Case study carousel photo — Corporate Offices (Midwest business), 671x428, drawn in the right slot. Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/r2v3.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/4aed2.png",
+      "node": "6774:2598",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "R2v3 logo — an image fill the frame crops inside a 44x48 box (see CertLogo.crop). Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/naid-aaa.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/d1fc7.png",
+      "node": "6774:2614",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "NAID AAA logo, 48x48, contained. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/rios.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/5cc60.png",
+      "node": "6766:2653",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "RIOS Certified Recycler logo, 90x40, contained. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/rcra.svg",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/43aaf.svg",
+      "node": "6774:2621",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "RCRA wordmark — the whole 120x48 logo slot exported as one SVG. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/ieee.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/0cedb.png",
+      "node": "6766:2635",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "IEEE logo, 90x40, contained. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/fcra.svg",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/93dd2.svg",
+      "node": "6766:2642",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "FCRA wordmark — the whole 120x48 logo slot exported as one SVG. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/hipaa.svg",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/6ecc6.svg",
+      "node": "6766:2699",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "The badge the designer drew as HIPPA (misspelled; the statute is HIPAA), 80.97x33.42. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/facta.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/26064.png",
+      "node": "6766:2693",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "The logo drawn in the FACTA slot — an image fill the frame crops inside a 72x26 box. It is another company's mark; see src/data/certifications.ts. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/certifications/glba.png",
+      "id": "49b44975-58b6-496a-8235-eb585b0c6737/3ba03.png",
+      "node": "6766:2690",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "GLBA wordmark (black), 78x20. Certifications page logo card (6774:2592). Pulled 23 Sep 2026; URL expires about 30 Sep."
     }
   ]
 }

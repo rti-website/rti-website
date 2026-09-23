@@ -3,6 +3,7 @@ import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { StoryCarousel } from '@/components/client/StoryCarousel'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
 
 /**
  * Client's Stories — Figma 6557:12903 on the homepage. 1920 x 934.
@@ -26,7 +27,7 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  * !! THE FRAME HAS NO STORY CARDS. 446px against the desktop 934 is the
  * heading and the buttons and nothing else, so the carousel is `max-lg:hidden`
  * below lg — hidden, not removed, so the three story titles and their links to
- * /case-studies/ stay in the one DOM exactly as on desktop. "View All Stories"
+ * their cards on /case-studies/ stay in the one DOM exactly as on desktop. "View All Stories"
  * still reaches the same destination on a phone.
  *
  * !! AND IT STILL DRAWS A PAGER. The frame's last child (6617:5090) is a 56x8
@@ -66,7 +67,7 @@ export function CaseStudies({ top = 7483 - HOME_BELOW_TESTIMONIALS_SHIFT, label 
       {/* Track — 6557:12824 at y284.96, with the pager 583 below its top.
           Desktop only: the mobile frame drops the cards (see the note above). */}
       <Box x={0} y={284.96} w={1920} h={649} className="max-lg:hidden">
-        <StoryCarousel />
+        <StoryCarousel stories={CASE_STUDIES} start={CASE_STUDIES_START} />
       </Box>
     </Section>
   )
