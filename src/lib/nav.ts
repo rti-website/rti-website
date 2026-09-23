@@ -57,17 +57,16 @@ export const MAIL_IN: NavItem = {
 }
 
 /**
- * !! THE WISCONSIN NUMBER IS DISPUTED, AND THIS IS THE OUTLIER !!
- * phoneWi below is (800) 205-3040, ported verbatim from the live site's header.
- * But the live /contact-us/ page lists the general Wisconsin line as
- * (800) 305-3040, and so does every one of the eight content docs written so
- * far. The live site contradicts itself and the header is almost certainly the
- * typo — eight sources against one.
+ * THE TOP-BAR NUMBERS ARE THE FACILITY LINES since 23 Sep 2026 — Asim: "add
+ * this numbers in navbar for their respective locations", pointing at the
+ * facility cards (src/data/contact.ts FACILITIES): Blaine, MN +1-763-559-5130
+ * and New Berlin, WI +1-262-798-3040.
  *
- * Nothing has been changed on inference: the header still says what the live
- * header says, and the industry pages' closing copy still says 205-3040 for the
- * same reason. Confirm with Asim, then fix BOTH in one pass — this line and the
- * `ctaBody` strings in src/data/industries/*.ts.
+ * They were the toll-free lines ported from the live header, MN (800)
+ * 969-5166 and WI (800) 205-3040, and the WI one was disputed: the live
+ * /contact-us/ page and the content docs say (800) 305-3040. That dispute no
+ * longer touches the header, but it still stands in the industry pages'
+ * closing copy (`ctaBody` in src/data/industries/*.ts), which says 205-3040.
  */
 export const TOP_BAR = {
   /**
@@ -97,8 +96,8 @@ export const TOP_BAR = {
    * Locations" CTAs in the service page data, for the same reason.
    */
   dropOff: { label: 'Drop Off Locations', href: href('/all-locations/') },
-  phoneMn: { label: 'MN:(800)969-5166', tel: 'tel:+18009695166' },
-  phoneWi: { label: 'WI:(800)205-3040', tel: 'tel:+18002053040' },
+  phoneMn: { label: 'MN:+1-763-559-5130', tel: 'tel:+17635595130' },
+  phoneWi: { label: 'WI:+1-262-798-3040', tel: 'tel:+12627983040' },
   contact: { label: 'Contact Us', href: href('/contact-us/') },
   // `quote` was here until 21 Sep 2026. Asim removed the second button from
   // the announcement bar and gave Contact Us its filled style; nothing else

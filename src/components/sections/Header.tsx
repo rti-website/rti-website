@@ -71,48 +71,37 @@ export async function Header() {
           </Link>
         </Box>
 
-        {/* x is 1110, not Figma's 998. The frame drew this group against two
-            buttons on the right; one of them (Get a Quote) came out on 21 Sep,
-            and the 142px hole it left sat between the WI number and Contact Us
-            — Asim, 22 Sep 2026: "remove the gap between numbers and contact
-            button". Moving the group right by 112 closes it to 30px, the same
-            gap that already falls between the three items inside it. */}
-        <Box x={1110} y={0} h={41} className="flex items-center gap-[30px]">
+        {/* Right-hand group: Drop Off Locations, the two numbers and Contact
+            Us, in ONE flex row anchored to the 1601 gutter, 30px apart.
+
+            It was two boxes — the links pinned at x1110 (Figma's 998, moved
+            right on 22 Sep to close the hole Get a Quote left) and the button
+            right-anchored in a 221px box at x1380. That only held while the
+            numbers were the short toll-free ones. On 23 Sep 2026 Asim swapped
+            them for the facility lines ("add this numbers in navbar for their
+            respective locations"), which are two characters longer each, and
+            the WI number ran into Contact Us with 1px between them at 1920.
+            One right-anchored row cannot collide with itself, whatever the
+            labels say, and it retires the pointer-events workaround the old
+            overlapping box needed.
+
+            The frame drew two buttons here; Asim dropped Get a Quote on
+            21 Sep 2026 and gave Contact Us its filled style. The quote is one
+            click away from the hero and every section CTA. No fixed button
+            width — padding sets it. */}
+        <div className="absolute right-[319px] top-0 flex h-[41px] items-center gap-[30px]">
           <Link href={TOP_BAR.dropOff.href} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">
             {TOP_BAR.dropOff.label}
           </Link>
           <a href={TOP_BAR.phoneMn.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneMn.label}</a>
           <a href={TOP_BAR.phoneWi.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneWi.label}</a>
-        </Box>
-
-        {/* One button, right-anchored on the 1601 gutter.
-            The frame draws two — an outlined Contact Us beside a white-filled
-            Get a Quote — and pins each to its own x, which only works at the
-            exact text width it was drawn with: as rendered, Contact Us ran to
-            1510.6 and Get a Quote began at 1508, so the white button sat 2.6px
-            on top of the bordered one. Asim dropped Get a Quote on 21 Sep 2026
-            and moved its filled style onto Contact Us, so the bar carries one
-            button and the overlap has nothing left to happen to. The quote is
-            still one click away — the hero, every section CTA and the closing
-            band all point at it.
-            No fixed width: the frame's 93.392 was cut to "Get a quote" and
-            would clip the longer label. Padding sets the width instead. */}
-        {/* `pointer-events-none` on the BOX, `auto` on the button inside.
-            The box is 221.4 wide and right-anchored, so most of it is empty
-            space to the LEFT of the button — and once the number group moved
-            to x1110 (see the note above) that empty space sat on top of the WI
-            phone link. A positioned box paints above static content, so the
-            link was still visible and no longer clickable on every page of the
-            site. Found by scripts/check-clickable.mjs, which is exactly the
-            class of bug it was written for. */}
-        <Box x={1380} y={0} w={221.4} h={41} className="pointer-events-none flex items-center justify-end">
           <Link
             href={TOP_BAR.contact.href}
-            className="btn-pop pointer-events-auto flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
+            className="btn-pop flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
           >
             {TOP_BAR.contact.label}
           </Link>
-        </Box>
+        </div>
       </Box>
 
       {/* Logo — Figma 6107:1841 at x319, 194x46, centred in the white bar, whose

@@ -175,21 +175,9 @@ export function MobileNav({
           </button>
         </div>
 
-        {/* Search Wrap — px-16 pb-16, 48px bordered box.
-            Inert, exactly like the desktop panel's field: there is no site
-            search yet. TODO(phase-2): wire both at once. */}
-        <div className="shrink-0 px-[16px] pb-[16px]">
-          <form
-            onSubmit={(e) => { e.preventDefault() }}
-            className="flex h-[48px] items-center rounded-[8px] border-[1.001px] border-muted px-[28.029px] backdrop-blur-[4.004px]"
-          >
-            <label htmlFor="mobile-site-search" className="sr-only">Search the site</label>
-            <input
-              id="mobile-site-search" name="q" type="search" placeholder="Search Here"
-              className="w-full bg-transparent font-roboto text-[16px] font-medium leading-[22.523px] tracking-[-0.0801px] text-ink outline-none placeholder:text-[#c8c8c8]"
-            />
-          </form>
-        </div>
+        {/* No search field — removed with the desktop search icon, 23 Sep 2026
+            (Asim: "remove this search from navbar"). It was inert: there is
+            no site search yet. */}
 
         {/* Nav Accordion List */}
         <nav aria-label="Main" className="shrink-0">

@@ -11,6 +11,12 @@ import { HEADER_H } from '@/lib/layout'
  * variants: the bare bar (6107:1812), the Services mega-menu open (6107:1619)
  * and the search panel open (6107:1701).
  *
+ * The search icon was REMOVED on 23 Sep 2026 — Asim: "remove this search
+ * from navbar". It opened a panel whose field did nothing (there is no site
+ * search to send it to), so the icon, the panel and its sentinel key are
+ * gone. The mobile drawer's inert search field went with it. If site search
+ * is ever built, 6107:1701 is the frame to rebuild the panel from.
+ *
  * That component set lives in a DIFFERENT Figma file from the page frames this
  * site is otherwise built from. It is the canonical header, per Asim on
  * 16 Sep 2026 — "make the drop down and navbar and search like this".
@@ -80,14 +86,6 @@ export type NavEntry = {
   menu?: { columns: MenuColumn[] }
 }
 
-/* Sentinel for the search panel, kept distinct from every nav label. It was
-   a literal NUL byte until 22 Sep 2026, which was clever and unmatchable but
-   made this file BINARY to every tool that reads it: git showed no diffs,
-   grep skipped it, and Tailwind's scanner tripped over the byte and emitted
-   junk rules like `.gap-[I\1 !]`, which surfaced as a CSS warning on every
-   build. A double-underscore name is just as unmatchable and is plain text. */
-const SEARCH = '__search__'
-
 export function HeaderNav({
   nav, mailIn,
 }: {
@@ -132,7 +130,10 @@ export function HeaderNav({
    * parked bar invisible, exactly as `overflow-clip` does in the frame.
    */
   const itemCls = 'group relative flex h-[28px] shrink-0 items-center gap-[3px] overflow-hidden font-sans text-[16px] font-medium capitalize leading-[20px] tracking-[0.32px] text-ink'
-  const bar = <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-full -translate-x-full bg-brand transition-transform duration-300 ease-out group-hover:translate-x-0 group-focus-visible:translate-x-0" />
+  // Parked 2px further than its own width: at a fractional canvas zoom a
+  // plain -100% can round to leave a 1px green sliver under the first letter
+  // of every item (visible under "About" and "Services", 23 Sep 2026).
+  const bar = <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-full -translate-x-[calc(100%+2px)] bg-brand transition-transform duration-300 ease-out group-hover:translate-x-0 group-focus-visible:translate-x-0" />
 
   return (
     <>
@@ -141,8 +142,15 @@ export function HeaderNav({
           that gutter instead so the row can never run past it, whatever the nav
           comes to hold — the failure the old x869 pin produced once Industries
           was added. */}
+      {/* VERTICALLY CENTRED ON THE WHITE BAND — Asim, 23 Sep 2026 ("center
+          align this place in heading"). The row used to be pinned at
+          41 + (79 - 28) / 2, which centres a 28px row — the height of a nav
+          item — but the Mail In button makes the row 36 tall, so its centre
+          sat 4px below the band's and the whole row read low next to the
+          logo. Now the row IS the band (top 41, 79 tall) and items-center
+          does the centring, whatever the tallest thing in it is. */}
       <div className="absolute right-[319px] z-40 flex items-center gap-[30px]"
-        style={{ top: 41 + (HEADER_H - 41 - 28) / 2 }}>
+        style={{ top: 41, height: HEADER_H - 41 }}>
         {nav.map((item) => (
           item.menu
             ? (
@@ -167,19 +175,6 @@ export function HeaderNav({
             )
         ))}
 
-        {/* Search — 6029:15680. A bare 23px ion:search-outline, not a field.
-            The field lives in the panel below. */}
-        <button type="button"
-          onClick={() => setOpen(open === SEARCH ? null : SEARCH)}
-          aria-expanded={open === SEARCH}
-          aria-label="Search the site"
-          className="group relative flex size-[28px] shrink-0 items-center overflow-hidden text-ink">
-          <svg viewBox="0 0 23 23" className="size-[23px] fill-current" aria-hidden="true">
-            <path d="M10.06 1.92a8.14 8.14 0 1 0 4.92 14.63l4.24 4.24a1.08 1.08 0 0 0 1.53-1.53l-4.24-4.24a8.14 8.14 0 0 0-6.45-13.1Zm0 2.17a5.97 5.97 0 1 1 0 11.94 5.97 5.97 0 0 1 0-11.94Z" />
-          </svg>
-          {bar}
-        </button>
-
         {/* Mail In Program — 6225:5014, the #1b7a3d pill. */}
         <a href={mailIn.href} target="_blank" rel="noopener noreferrer"
           className="btn-pop flex h-[36px] shrink-0 items-center gap-[8.008px] rounded-[8px] bg-accent px-[20px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white">
@@ -197,27 +192,6 @@ export function HeaderNav({
         </Panel>
       ))}
 
-      {/* Search panel — 6107:1701. */}
-      <Panel on={open === SEARCH} white onEnter={() => show(SEARCH)} onLeave={() => { /* click, not hover */ }}>
-        <div className="relative h-[279px]">
-          <p className="absolute left-[319px] top-[52px] whitespace-nowrap font-sans text-[20px] font-semibold capitalize text-ink">
-            Search by Keyword
-          </p>
-          {/* 6107:1741 — 1282x57, 1px #7e7e7e, r8, px 28.029. */}
-          <form
-            className="absolute left-[319px] top-[99px] flex h-[57px] w-[1282px] items-center rounded-[8px] border-[1.001px] border-muted px-[28.029px] focus-within:border-brand"
-            onSubmit={(e) => {
-              e.preventDefault()
-              // TODO(phase-2): wire to site search once there is one. Inert
-              // rather than navigating somewhere that cannot answer the query.
-            }}
-          >
-            <label htmlFor="site-search" className="sr-only">Search the site</label>
-            <input id="site-search" name="q" type="search" placeholder="Search Here"
-              className="w-full bg-transparent font-roboto text-[16px] font-medium leading-[22.523px] tracking-[-0.0801px] text-ink outline-none placeholder:text-[#c8c8c8]" />
-          </form>
-        </div>
-      </Panel>
     </>
   )
 }
