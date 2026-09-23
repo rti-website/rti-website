@@ -1085,6 +1085,34 @@
       "node": "6734:5897",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Education and Government industry recycling — the photo in the industry page's \"Recycling Challenges\" block (568x295 in the frame, r20). Supplied by Asim 23 Sep 2026; URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/how-order-online.svg",
+      "id": "3e670094-4715-4f9c-99ee-e831c67db901/0ab21.svg",
+      "node": "6814:2671",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Order Online — How It Works step icon (homepage 6040:18591), drawn in the dashed square. Replaces the old step glyphs, Asim 23 Sep 2026. URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/how-pack-securely.svg",
+      "id": "d7f9f2aa-c731-4071-9ca5-daff6c28b0e4/e815d.svg",
+      "node": "6814:2680",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Pack Securely — How It Works step icon (homepage 6040:18591), drawn in the dashed square. Replaces the old step glyphs, Asim 23 Sep 2026. URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/how-drop-off.svg",
+      "id": "47123259-505b-42d0-b73d-189c1d586236/e690e.svg",
+      "node": "6814:2685",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Drop Off — How It Works step icon (homepage 6040:18591), drawn in the dashed square. Replaces the old step glyphs, Asim 23 Sep 2026. URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/how-certificate.svg",
+      "id": "a1884b43-5cc5-4bfc-b338-9d27947c91cd/1699c.svg",
+      "node": "6814:2689",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Get Your Certificate — How It Works step icon (homepage 6040:18591), drawn in the dashed square. Replaces the old step glyphs, Asim 23 Sep 2026. URL expires about 30 Sep."
     }
   ]
 }

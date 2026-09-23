@@ -1,5 +1,6 @@
 import { CERTIFICATIONS, FACILITIES, SITE } from './site'
 import { absolute } from './urls'
+import { SOCIAL_PROFILE_URLS } from './social'
 
 /**
  * JSON-LD. One consolidated @graph per page with @id cross-references, rather
@@ -24,7 +25,8 @@ export function organizationNode(): Node {
     legalName: SITE.legalName,
     url: SITE.origin,
     logo: absolute('/logo.png'),
-    sameAs: [], // real profile URLs — the plan flags bare facebook.com links as a bug
+    // The company's Facebook, LinkedIn and YouTube — the footer's links (RTI-13).
+    sameAs: SOCIAL_PROFILE_URLS,
     hasCredential: CERTIFICATIONS.map((c) => ({
       '@type': 'EducationalOccupationalCredential',
       credentialCategory: 'certification',

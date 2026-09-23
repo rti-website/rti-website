@@ -85,9 +85,13 @@ export function PickupForm() {
 
   return (
     <form
+      // Posts here if it is submitted before hydration (RTI-10, src/lib/form-post.ts).
+      method="post"
+      action={path('/api/leads/')}
       onSubmit={submit}
       className="relative flex w-full flex-col items-start gap-[16px] rounded-[16px] border border-line bg-white px-[24px] py-[28px] lg:w-[900px] lg:items-center lg:gap-[20px] lg:p-[40px]"
     >
+      <input type="hidden" name="type" value="quote" />
       {/* Honeypot — see /api/leads. Out of sight, out of the tab order. */}
       <div aria-hidden="true" className="absolute size-px overflow-hidden opacity-0">
         <label htmlFor="pickup-website">Leave this empty</label>

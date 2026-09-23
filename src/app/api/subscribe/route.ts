@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { one } from '@/lib/db'
+import { fail, formDone, readBody } from '@/lib/form-post'
 
 /**
  * Newsletter sign-ups — the footer form and the blog inline form.
@@ -60,29 +61,31 @@ function tooMany(ip: string): boolean {
 }
 
 export async function POST(req: Request): Promise<Response> {
-  let payload: Payload
-  try {
-    payload = (await req.json()) as Payload
-  } catch {
-    return NextResponse.json({ error: 'Could not read that.' }, { status: 400 })
+  const body = await readBody(req)
+  if (!body) return NextResponse.json({ error: 'Could not read that.' }, { status: 400 })
+  const payload = body.payload as Payload
+  if (body.isForm) {
+    // A plain form post (src/lib/form-post.ts). The blog bar names its input
+    // `blog-newsletter-email` (it doubles as the element id), so take that
+    // when there is no `email`; and record the page it came from.
+    const raw = body.payload as Record<string, unknown>
+    if (payload.email === undefined) payload.email = raw['blog-newsletter-email']
+    if (payload.sourcePage === undefined && body.from) payload.sourcePage = body.from
   }
 
   // Honeypot — answer 200 so the bot thinks it worked. See /api/leads.
   if (typeof payload.website === 'string' && payload.website.trim() !== '') {
-    return NextResponse.json({ ok: true })
+    return body.isForm ? formDone() : NextResponse.json({ ok: true })
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null
   if (ip && tooMany(ip)) {
-    return NextResponse.json(
-      { error: 'That is a lot of sign-ups. Give it a few minutes.' },
-      { status: 429 },
-    )
+    return fail(body, 'That is a lot of sign-ups. Give it a few minutes.', 429)
   }
 
   const email = clean(payload.email, 200)
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: 'Please check the email address.' }, { status: 400 })
+    return fail(body, 'Please check the email address.', 400)
   }
 
   const source: Source = SOURCES.includes(payload.source as Source)
@@ -118,10 +121,7 @@ export async function POST(req: Request): Promise<Response> {
     )
   } catch (err) {
     console.error('[subscribe] insert failed:', (err as Error).message)
-    return NextResponse.json(
-      { error: 'We could not sign you up just now. Please try again shortly.' },
-      { status: 500 },
-    )
+    return fail(body, 'We could not sign you up just now. Please try again shortly.', 500)
   }
 
   /*
@@ -135,5 +135,5 @@ export async function POST(req: Request): Promise<Response> {
    * add the unsubscribe route the token was designed for. Until that ships,
    * nothing should bulk-send to a 'pending' row.
    */
-  return NextResponse.json({ ok: true })
+  return body.isForm ? formDone() : NextResponse.json({ ok: true })
 }

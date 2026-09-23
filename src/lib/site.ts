@@ -11,7 +11,14 @@ export const SITE = {
   noindex: process.env.NEXT_PUBLIC_NOINDEX === 'true',
 } as const
 
-/** Facilities. Used for LocalBusiness schema and the locations pages. */
+/**
+ * Facilities. Used for LocalBusiness schema and the locations pages.
+ *
+ * Two, as the site shows them. A third, "Blaine (Davenport St), 10040
+ * Davenport St NE", was listed here and published as a LocalBusiness on every
+ * page while no page on the site mentioned it; Asim had it removed on
+ * 23 Sep 2026. Phone numbers are the facility lines the header shows.
+ */
 export const FACILITIES = [
   {
     id: 'blaine-99th',
@@ -21,20 +28,8 @@ export const FACILITIES = [
     region: 'MN',
     postalCode: '55449',
     country: 'US',
-    telephone: '',          // fill from tracking-inventory.md (Phase 0)
+    telephone: '+1-763-559-5130',
     geo: { lat: 0, lng: 0 }, // 5+ decimal places required
-    hours: [] as OpeningHours[],
-  },
-  {
-    id: 'blaine-davenport',
-    name: 'Recycle Technologies — Blaine (Davenport St)',
-    street: '10040 Davenport St NE',
-    locality: 'Blaine',
-    region: 'MN',
-    postalCode: '55449',
-    country: 'US',
-    telephone: '',
-    geo: { lat: 0, lng: 0 },
     hours: [] as OpeningHours[],
   },
   {
@@ -45,7 +40,7 @@ export const FACILITIES = [
     region: 'WI',
     postalCode: '53151',
     country: 'US',
-    telephone: '',
+    telephone: '+1-262-798-3040',
     geo: { lat: 0, lng: 0 },
     hours: [] as OpeningHours[],
   },
@@ -66,7 +61,13 @@ export type OpeningHours = {
  * reproduced here. Verify every entry before it ships.
  */
 export const CERTIFICATIONS = [
+  /* Confirmed by Asim, 23 Sep 2026: Blaine, Minnesota holds R2v3; New Berlin,
+     Wisconsin holds NAID AAA; the company holds RIOS. ISO 14001 was listed
+     here and is NOT held, so it came out — this array is published as
+     `hasCredential` on every page of the site. RIOS is the Recycling Industry
+     Operating Standard, run by ReMA (the Recycled Materials Association,
+     formerly ISRI) — the same three marks the footer shows. */
   { name: 'R2v3', issuer: 'SERI', verifyUrl: 'https://sustainableelectronics.org/' },
   { name: 'NAID AAA', issuer: 'i-SIGMA', verifyUrl: '' },
-  { name: 'ISO 14001', issuer: '', verifyUrl: '' },
+  { name: 'RIOS', issuer: 'ReMA', verifyUrl: '' },
 ] as const

@@ -66,6 +66,13 @@ const DEFAULTS: SocialLink[] = [
 ]
 
 /**
+ * The profile URLs for the Organization schema's `sameAs` (RTI-13). The
+ * defaults, not the admin table: schema is built synchronously for every page
+ * and these are the company's real accounts either way.
+ */
+export const SOCIAL_PROFILE_URLS: string[] = DEFAULTS.map((d) => d.url)
+
+/**
  * Cached for the life of the process — but ONLY in a production build.
  *
  * A build renders hundreds of pages and every one has this footer, so without

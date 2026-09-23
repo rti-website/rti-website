@@ -75,12 +75,21 @@ export const INDUSTRIES = [
   { t: 'Automotive & Fleet', img: '/images/home/ind-construction.png',  href: href('/industries/automotive-fleet/'),           b: 'Airbag recycling, electronics disposal, and battery collection for auto shops, dealerships, and fleet operations.' },
 ]
 
-/** How It Works — Figma 6040:18591. Steps 3 and 4 share a glyph in the design. */
+/**
+ * How It Works — Figma 6040:18591.
+ *
+ * Icons redrawn 23 Sep 2026 (Asim: "change the logos in this section") —
+ * one per step now, nodes 6814:2671 / 2680 / 2685 / 2689, where the old set
+ * had steps 3 and 4 sharing a glyph. `gw` x `gh` is each icon's drawn size;
+ * they differ, and each sits centred in the 89.4px dashed square exactly as
+ * the frame places it. Registered in data/figma-assets.json — run
+ * `node scripts/fetch-figma-assets.mjs --missing` to pull them.
+ */
 export const STEPS = [
-  { n: 1, glyph: '/images/home/step-1.svg', t: 'Order Online',        b: 'Select the recycling kit that matches your recycling needs.' },
-  { n: 2, glyph: '/images/home/step-2.svg', t: 'Pack Securely',       b: 'Place your materials inside the recycling kit while keeping the provided safety packaging intact.' },
-  { n: 3, glyph: '/images/home/step-3.svg', t: 'Drop Off',            b: 'Attach the prepaid return shipping label and drop the package at your nearest FedEx location.' },
-  { n: 4, glyph: '/images/home/step-3.svg', t: 'Get Your Certificate',b: 'Use the documentation included with your kit to obtain your recycling certificate online.' },
+  { n: 1, glyph: '/images/home/how-order-online.svg',  gw: 52.762, gh: 52.731, t: 'Order Online',        b: 'Select the recycling kit that matches your recycling needs.' },
+  { n: 2, glyph: '/images/home/how-pack-securely.svg', gw: 47.573, gh: 54.451, t: 'Pack Securely',       b: 'Place your materials inside the recycling kit while keeping the provided safety packaging intact.' },
+  { n: 3, glyph: '/images/home/how-drop-off.svg',      gw: 49.595, gh: 49.595, t: 'Drop Off',            b: 'Attach the prepaid return shipping label and drop the package at your nearest FedEx location.' },
+  { n: 4, glyph: '/images/home/how-certificate.svg',   gw: 49.595, gh: 49.595, t: 'Get Your Certificate',b: 'Use the documentation included with your kit to obtain your recycling certificate online.' },
 ]
 
 /** Locations — Figma 6024:14077. Cards and pins are hand-placed on the map. */

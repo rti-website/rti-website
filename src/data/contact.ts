@@ -86,10 +86,21 @@ export const SERVICE_INTEREST = [
  *   Email        email     required, lowercased on save
  *   Phone        tel       required, US format accepted loosely, stored as +1XXXXXXXXXX
  *   Company      text      optional
- *   Service      select    optional, SERVICE_INTEREST above
+ *   Address      text      optional              } back from the frame
+ *   City         text      optional              } (6365:1082) on Asim's
+ *   State        text      optional              } instruction, 23 Sep 2026
  *   Zip code     text      optional, 5 digits
+ *   What would you like to recycle?  select, SERVICE_INTEREST above (the
+ *                          spec's "Service Interest", relabelled as the frame
+ *                          draws it; still `service`, so the hero preselect
+ *                          keeps working)
+ *   Is it for?   select    Residential (default) or Commercial
  *   Message      textarea  optional, max 2000 chars
  *   Consent      checkbox  required: "I agree to be contacted by Recycle Technologies"
+ *
+ * No "(optional)" markers on the labels — Asim, 23 Sep 2026: "remove the
+ * optional things". Which fields are required is unchanged; the form says so
+ * when one is missed.
  *
  * The rules are enforced twice: in the browser (ContactForm), and again in
  * /api/leads, which is the one that counts — see validateSpecForm there.
@@ -104,11 +115,17 @@ export const FORM = {
     email:     { label: 'Email Address',    placeholder: 'jamie@company.com' },
     phone:     { label: 'Phone Number',     placeholder: '(XXX) XXX-XXXX' },
     company:   { label: 'Company Name',     placeholder: 'Company name' },
-    zip:       { label: 'Zip Code',         placeholder: '5-digit zip code' },
-    service:   { label: 'Service Interest', placeholder: 'Select a service' },
+    // "--" is the frame's placeholder for the four address fields.
+    address:   { label: 'Address',          placeholder: '--' },
+    city:      { label: 'City',             placeholder: '--' },
+    state:     { label: 'State',            placeholder: '--' },
+    zip:       { label: 'Zip code',         placeholder: '--' },
+    service:   { label: 'What would you like to recycle?', placeholder: 'Select' },
+    audience:  { label: 'Is it for?',       placeholder: '' },
     message:   { label: 'Message',          placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
   },
-  optional: '(optional)',
+  /** "Is it for?" — the first is the default, as the frame draws it. */
+  audiences: ['Residential', 'Commercial'] as const,
   consent: 'I agree to be contacted by Recycle Technologies',
   messageMax: 2000,
   submit: 'Send Message',

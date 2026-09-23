@@ -59,9 +59,22 @@ const nextConfig: NextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          /* ONE year, and NO includeSubDomains / preload — RTI-12, 23 Sep 2026.
+             Once a browser has seen includeSubDomains it refuses plain HTTP on
+             EVERY *.recycletechnologies.com host for the whole max-age, and
+             preload bakes that into the browsers themselves, where removing it
+             takes months. Add both back only after every subdomain (dev, mail,
+             anything a vendor runs) is confirmed on HTTPS.
+
+             These headers are set HERE, not in nginx. nginx on the dev server
+             was adding its own copies, so every response carried two HSTS
+             headers with different values. Next already sends these on every
+             route, public/ files included, so the server block must NOT add
+             Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options
+             or Referrer-Policy — see deploy/nginx/recycletechnologies.com.conf. */
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
+            value: 'max-age=31536000',
           },
           /* Nothing on this site asks for a camera, a microphone or a location,
              so nothing embedded in it should be able to either. Named here

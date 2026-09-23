@@ -65,7 +65,7 @@ export function HowItWorks() {
             <Box x={X[i] ?? 319} y={218.81} w={240} className="flex items-center gap-[20px] lg:flex-col lg:gap-[30px]">
               <div className="relative h-[95.72px] w-[94px] shrink-0 max-lg:[zoom:0.6809]">
                 <div className="absolute left-[4.59px] top-[6.3px] grid size-[89.415px] place-items-center rounded-[5.732px] border border-dashed border-black">
-                  <Image src={s.glyph} alt="" width={53} height={53} className="size-[52.732px]" />
+                  <Image src={s.glyph} alt="" width={Math.round(s.gw)} height={Math.round(s.gh)} style={{ width: s.gw, height: s.gh }} />
                 </div>
                 <div className="absolute left-0 top-0 size-[25.793px]">
                   <Image src="/images/icons/step-badge.svg" alt="" fill className="object-contain" />

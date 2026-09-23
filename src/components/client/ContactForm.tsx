@@ -11,8 +11,12 @@ import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
  * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
  * 2026 the lead-form spec for the fields (see FORM in src/data/contact.ts):
  *
- *   first / last · email / phone · company / zip · service interest ·
- *   message · consent · button
+ *   first / last · email / phone · company · address · city / state / zip ·
+ *   what to recycle / is it for · message · consent · button
+ *
+ * Address, city, state and "Is it for?" came back from the frame on
+ * 23 Sep 2026 (Asim), and "Service Interest" took the frame's label, "What
+ * would you like to recycle?". No "(optional)" markers on any label.
  *
  * Each field keeps the frame's look: a 14px IBM Plex Sans Medium label over a
  * 48px input (white, 1px #e2e2e2, r8, px16), Poppins placeholders, a 16px
@@ -39,7 +43,7 @@ const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[
 const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
-type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'zip' | 'service' | 'message' | 'consent'
+type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'address' | 'city' | 'state' | 'zip' | 'service' | 'audience' | 'message' | 'consent'
 
 /** The first rule a filled-in form breaks, or null. Mirrors /api/leads. */
 function check(v: (k: FieldName) => string, consent: boolean): { field: FieldName; message: string } | null {
@@ -130,8 +134,12 @@ export function ContactForm() {
           email: value('email'),
           phone: value('phone'),
           company: value('company'),
+          address: value('address'),
+          city: value('city'),
+          state: value('state'),
           zip: value('zip'),
           service: value('service'),
+          audience: value('audience'),
           message: value('message'),
           consent,
           website: value('website'),
@@ -158,7 +166,10 @@ export function ContactForm() {
   const F = FORM.fields
 
   return (
-    <form className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit} noValidate>
+    /* method + action: a submit before hydration posts here instead of
+       GETting the fields into the address bar (RTI-10, src/lib/form-post.ts). */
+    <form method="post" action={path('/api/leads/')} className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit} noValidate>
+      <input type="hidden" name="type" value="contact" />
       {/* Honeypot. Hidden from sight AND from screen readers, and out of the
           tab order, so no person is ever offered it — only a bot that fills
           every input it finds. See the check in /api/leads. */}
@@ -177,25 +188,41 @@ export function ContactForm() {
         <Field id="phone" f={F.phone} type="tel" autoComplete="tel" required maxLength={25} invalid={invalid('phone')} onInput={() => setBad(null)} />
       </div>
 
+      <Field id="company" f={F.company} autoComplete="organization" maxLength={160} />
+
+      <Field id="address" f={F.address} autoComplete="street-address" maxLength={200} />
+
+      {/* City / State / Zip — three across at lg, stacked on a phone. */}
       <div className={ROW}>
-        <Field id="company" f={F.company} autoComplete="organization" optional maxLength={160} />
-        <Field id="zip" f={F.zip} inputMode="numeric" autoComplete="postal-code" optional maxLength={5} pattern="\d{5}" invalid={invalid('zip')} onInput={() => setBad(null)} />
+        <Field id="city" f={F.city} autoComplete="address-level2" maxLength={80} />
+        <Field id="state" f={F.state} autoComplete="address-level1" maxLength={80} />
+        <Field id="zip" f={F.zip} inputMode="numeric" autoComplete="postal-code" maxLength={5} pattern="\d{5}" invalid={invalid('zip')} onInput={() => setBad(null)} />
       </div>
 
-      <div className={FIELD}>
-        <label htmlFor="contact-service" className={LABEL}>{F.service.label} <Optional /></label>
-        <div className="relative">
-          <select id="contact-service" name="service" defaultValue="" className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
-            <option value="">{F.service.placeholder}</option>
-            {SERVICE_INTEREST.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
-          </select>
-          <Image src="/images/icons/chevron-16.svg" alt="" width={16} height={16}
-            className="pointer-events-none absolute right-[16px] top-1/2 size-[16px] -translate-y-1/2" />
+      <div className={ROW}>
+        <div className={FIELD}>
+          <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
+          <div className="relative">
+            <select id="contact-service" name="service" defaultValue="" className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
+              <option value="">{F.service.placeholder}</option>
+              {SERVICE_INTEREST.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
+            </select>
+            <Chevron />
+          </div>
+        </div>
+        <div className={FIELD}>
+          <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}</label>
+          <div className="relative">
+            <select id="contact-audience" name="audience" defaultValue={FORM.audiences[0]} className={`${INPUT} appearance-none pr-[44px]`}>
+              {FORM.audiences.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+            <Chevron />
+          </div>
         </div>
       </div>
 
       <div className="flex w-full flex-col gap-[8px]">
-        <label htmlFor="contact-message" className={LABEL}>{F.message.label} <Optional /></label>
+        <label htmlFor="contact-message" className={LABEL}>{F.message.label}</label>
         <textarea
           id="contact-message"
           name="message"
@@ -239,13 +266,16 @@ export function ContactForm() {
   )
 }
 
-function Optional() {
-  return <span className="font-roboto text-[12px] font-normal text-muted">{FORM.optional}</span>
+function Chevron() {
+  return (
+    <Image src="/images/icons/chevron-16.svg" alt="" width={16} height={16}
+      className="pointer-events-none absolute right-[16px] top-1/2 size-[16px] -translate-y-1/2" />
+  )
 }
 
 /** The input's id is `contact-<name>` and it posts under `<name>`. */
 function Field({
-  id, f, type = 'text', autoComplete, inputMode, required, optional, minLength, maxLength, pattern, invalid, onInput,
+  id, f, type = 'text', autoComplete, inputMode, required, minLength, maxLength, pattern, invalid, onInput,
 }: {
   id: FieldName
   f: { label: string; placeholder: string }
@@ -253,7 +283,6 @@ function Field({
   autoComplete?: string
   inputMode?: 'numeric'
   required?: boolean
-  optional?: boolean
   minLength?: number
   maxLength?: number
   pattern?: string
@@ -262,7 +291,7 @@ function Field({
 }) {
   return (
     <div className={FIELD}>
-      <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}{optional && <> <Optional /></>}</label>
+      <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}</label>
       <input id={`contact-${id}`} name={id} type={type} inputMode={inputMode} autoComplete={autoComplete}
         required={required} minLength={minLength} maxLength={maxLength} pattern={pattern}
         aria-invalid={invalid} onInput={onInput}

@@ -76,6 +76,11 @@ export function ConnectForm({
   const router = useRouter()
   return (
     <form
+      /* Before hydration this still lands on the contact form, as a POST so
+         the address does not ride along in the URL (RTI-10). The static page
+         ignores the body; the visitor just retypes it there. */
+      method="post"
+      action={CONTACT_FORM_HREF}
       className="flex w-full flex-col gap-[12px] lg:flex-row lg:items-start lg:gap-[10px]"
       style={{ '--connect-input-w': `${inputWidth}px` } as React.CSSProperties}
       /*

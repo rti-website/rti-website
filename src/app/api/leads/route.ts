@@ -3,6 +3,7 @@ import { one } from '@/lib/db'
 import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
 import { FORM, SERVICE_INTEREST } from '@/data/contact'
+import { fail, formDone, readBody } from '@/lib/form-post'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -75,7 +76,15 @@ function validateSpecForm(p: Payload):
     consentAt: new Date().toISOString(),
   }
   if (service) details.service = service
+  // Address fields and "Is it for?" — back on the form 23 Sep 2026. Stored in
+  // `details` with the rest (the leads table has no columns for them).
+  for (const key of ['address', 'city', 'state'] as const) {
+    const v = str(p[key]).slice(0, LIMITS[key] ?? 120)
+    if (v) details[key] = v
+  }
   if (zip) details.zip = zip
+  const audience = str(p.audience)
+  if ((FORM.audiences as readonly string[]).includes(audience)) details.audience = audience
   return { ok: true, name: `${first} ${last}`, phone, zip, service, message, details }
 }
 
@@ -107,27 +116,42 @@ function tooMany(ip: string): boolean {
   return recent.length > MAX_IN_WINDOW
 }
 
-export async function POST(req: Request): Promise<Response> {
-  let payload: Payload
-  try {
-    payload = (await req.json()) as Payload
-  } catch {
-    return NextResponse.json({ error: 'Could not read that.' }, { status: 400 })
+/**
+ * A plain form post (no script yet — see src/lib/form-post.ts) carries the raw
+ * fields, where the script sends them already shaped. Shape them the same way
+ * so the rules below see one payload whichever way it arrived.
+ */
+function fromForm(p: Payload, from: string | null): Payload {
+  const out: Payload = { ...p }
+  // A ticked checkbox posts its value ("yes"); an unticked one posts nothing.
+  out.consent = p.consent === 'yes' || p.consent === 'on'
+  // The ITAD pickup form (type=quote) asks for first and last name but posts
+  // one `name`, and calls "How did you hear about us?" `heard`.
+  if (p.type === 'quote') {
+    out.name = [p.firstName, p.lastName].filter((v) => typeof v === 'string' && v.trim()).join(' ')
+    delete out.firstName
+    delete out.lastName
+    if (typeof p.heard === 'string') out.referral = p.heard
   }
+  if (typeof out.sourcePage !== 'string' && from) out.sourcePage = from
+  return out
+}
+
+export async function POST(req: Request): Promise<Response> {
+  const body = await readBody(req)
+  if (!body) return NextResponse.json({ error: 'Could not read that.' }, { status: 400 })
+  const payload: Payload = body.isForm ? fromForm(body.payload as Payload, body.from) : (body.payload as Payload)
 
   /* Honeypot. A real person never fills a field they cannot see; most bots
      fill every input they find. Answer 200 so the bot believes it worked and
      does not come back to try a different shape. */
   if (typeof payload.website === 'string' && payload.website.trim() !== '') {
-    return NextResponse.json({ ok: true })
+    return body.isForm ? formDone() : NextResponse.json({ ok: true })
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null
   if (ip && tooMany(ip)) {
-    return NextResponse.json(
-      { error: 'That is a lot of messages. Give it a few minutes, or call us.' },
-      { status: 429 },
-    )
+    return fail(body, 'That is a lot of messages. Give it a few minutes, or call us.', 429)
   }
 
   // Lowercased on save (the spec's rule; harmless for every other form).
@@ -135,14 +159,14 @@ export async function POST(req: Request): Promise<Response> {
   // Deliberately loose. Anything stricter rejects addresses that are perfectly
   // valid, and the cost of a bad address here is one unanswerable enquiry.
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: 'Please check the email address.', field: 'email' }, { status: 400 })
+    return fail(body, 'Please check the email address.', 400, { field: 'email' })
   }
 
   const spec = typeof payload.firstName === 'string' || typeof payload.lastName === 'string'
     ? validateSpecForm(payload)
     : null
   if (spec && !spec.ok) {
-    return NextResponse.json({ error: spec.error, field: spec.field }, { status: 400 })
+    return fail(body, spec.error, 400, { field: spec.field })
   }
 
   const type: LeadType = TYPES.includes(payload.type as LeadType)
@@ -177,10 +201,7 @@ export async function POST(req: Request): Promise<Response> {
     id = row?.id ?? null
   } catch (err) {
     console.error('[leads] insert failed:', (err as Error).message)
-    return NextResponse.json(
-      { error: 'We could not save that just now. Please call us instead.' },
-      { status: 500 },
-    )
+    return fail(body, 'We could not save that just now. Please call us instead.', 500)
   }
 
   // --------------------------------------------------------------- notify --
@@ -219,5 +240,5 @@ export async function POST(req: Request): Promise<Response> {
   // `notified` is for the server log and for QA on staging. The visitor is told
   // their message arrived, which it did — whether an inbox pinged is our
   // problem, not theirs.
-  return NextResponse.json({ ok: true, notified })
+  return body.isForm ? formDone() : NextResponse.json({ ok: true, notified })
 }

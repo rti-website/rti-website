@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { PostEditor } from './PostEditor'
 import { AskDialog, ConfirmDialog, Dialog } from './Dialog'
 import { MediaLibrary } from './MediaLibrary'
@@ -836,39 +836,187 @@ function Subscribers() {
   )
 }
 
-type LeadRow = { id: number; type: string; name: string | null; email: string | null; company: string | null; message: string | null; status: string; created_at: string }
+type LeadRow = {
+  id: number; type: string; name: string | null; email: string | null; phone: string | null
+  company: string | null; message: string | null; details: Record<string, string> | null
+  source_page: string | null; status: string; notes: string | null; created_at: string
+}
 
+/**
+ * Every field a lead can carry, in the order a person reads a form, with the
+ * label the Enquiries screen shows. Columns first, then the `details` keys.
+ * Any details key NOT listed here is still shown, under its own name, so a
+ * field added to a form later is never silently hidden.
+ */
+const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
+  { key: 'firstName', label: 'First name', from: 'details' },
+  { key: 'lastName', label: 'Last name', from: 'details' },
+  { key: 'name', label: 'Name', from: 'col' },
+  { key: 'email', label: 'Email', from: 'col' },
+  { key: 'phone', label: 'Phone', from: 'col' },
+  { key: 'company', label: 'Company', from: 'col' },
+  { key: 'address', label: 'Address', from: 'details' },
+  { key: 'city', label: 'City', from: 'details' },
+  { key: 'state', label: 'State', from: 'details' },
+  { key: 'zip', label: 'Zip code', from: 'details' },
+  { key: 'service', label: 'What they want to recycle', from: 'details' },
+  { key: 'item', label: 'Item', from: 'details' },
+  { key: 'audience', label: 'Is it for', from: 'details' },
+  { key: 'referral', label: 'How they heard about us', from: 'details' },
+  { key: 'message', label: 'Message', from: 'col' },
+  { key: 'source_page', label: 'Sent from page', from: 'col' },
+  { key: 'consent', label: 'Consent', from: 'details' },
+  { key: 'consentAt', label: 'Consent given', from: 'details' },
+]
+const KNOWN_DETAILS = new Set(LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key))
+const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
+const LEAD_TYPES: Record<string, string> = { contact: 'Contact form', quote: 'Pickup / quote', download: 'Download', callback: 'Callback' }
+
+/** Every field of one lead as label/value pairs, empty ones left out. */
+function leadFields(l: LeadRow): [string, string][] {
+  const d = l.details ?? {}
+  const out: [string, string][] = []
+  for (const f of LEAD_FIELDS) {
+    const raw = f.from === 'col' ? (l as unknown as Record<string, unknown>)[f.key] : d[f.key]
+    if (raw === null || raw === undefined || String(raw).trim() === '') continue
+    // Name is already split into first / last when the form sent both.
+    if (f.key === 'name' && d.firstName) continue
+    out.push([f.label, f.key === 'consentAt' ? when(String(raw)) : String(raw)])
+  }
+  for (const [k, v] of Object.entries(d)) if (!KNOWN_DETAILS.has(k) && v) out.push([k, String(v)])
+  return out
+}
+
+/** CSV of the rows on screen, every field, for a spreadsheet. */
+function leadsCsv(rows: LeadRow[]): string {
+  const extra = [...new Set(rows.flatMap((l) => Object.keys(l.details ?? {}).filter((k) => !KNOWN_DETAILS.has(k))))]
+  const head = ['ID', 'Received', 'Type', 'Status', ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes']
+  const cell = (v: unknown) => {
+    const s = v === null || v === undefined ? '' : String(v)
+    return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
+  }
+  const lines = rows.map((l) => {
+    const d = l.details ?? {}
+    const r = l as unknown as Record<string, unknown>
+    return [l.id, l.created_at, l.type, l.status,
+      ...LEAD_FIELDS.map((f) => (f.from === 'col' ? r[f.key] : d[f.key])),
+      ...extra.map((k) => d[k]), l.notes].map(cell).join(',')
+  })
+  return [head.map(cell).join(','), ...lines].join('\r\n')
+}
+
+/**
+ * Enquiries — every contact form, pickup/quote form and download lead, with
+ * EVERY field it arrived with. Asim, 23 Sep 2026: "when someone submits the
+ * form it must show on [the] admin side … all the entries that are
+ * available". The table shows who, how to reach them and what they want at a
+ * glance; "View" opens the whole submission under its row. Search and the
+ * status filter narrow the list; "Download CSV" exports what is on screen.
+ */
 function Leads({ onToast }: { onToast: (m: string) => void }) {
   const [rows, setRows] = useState<LeadRow[]>([])
+  const [loaded, setLoaded] = useState(false)
+  const [open, setOpen] = useState<number | null>(null)
+  const [q, setQ] = useState('')
+  const [status, setStatusFilter] = useState('')
   const reload = useCallback(() => {
-    void getJSON<{ leads: LeadRow[] }>('/leads').then((r) => { if (r.ok) setRows(r.data.leads ?? []) })
+    void getJSON<{ leads: LeadRow[] }>('/leads').then((r) => {
+      if (r.ok) setRows(r.data.leads ?? [])
+      setLoaded(true)
+    })
   }, [])
   useEffect(reload, [reload])
 
-  async function setStatus(id: number, status: string) {
-    const r = await sendJSON('/leads', 'PATCH', { id, status })
+  async function setStatus(id: number, next: string) {
+    const r = await sendJSON('/leads', 'PATCH', { id, status: next })
     onToast(r.ok ? 'Enquiry updated' : r.error)
     reload()
   }
 
+  const needle = q.trim().toLowerCase()
+  const shown = rows.filter((l) =>
+    (!status || l.status === status)
+    && (!needle || leadFields(l).some(([, v]) => v.toLowerCase().includes(needle))))
+
+  function download() {
+    const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `enquiries-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const wants = (l: LeadRow) => {
+    const d = l.details ?? {}
+    const bits = [d.service ?? d.item, d.audience].filter(Boolean)
+    return bits.length ? bits.join(' · ') : (l.message ? (l.message.length > 90 ? `${l.message.slice(0, 90)}…` : l.message) : '—')
+  }
+
   return (
     <main className="a-sheet">
-      <Table head={['From', 'Type', 'What they want', 'Received', 'Status']}>
-        {rows.length === 0 && <Empty>No enquiries yet. They arrive here from the contact and quote forms.</Empty>}
-        {rows.map((l) => (
-          <tr key={l.id}>
-            <td><span className="a-ttl">{l.name ?? l.email ?? 'Anonymous'}</span>
-              {l.company && <span className="a-slug">{l.company}</span>}</td>
-            <td>{l.type}</td>
-            <td>{l.message ?? '—'}</td>
-            <td>{when(l.created_at)}</td>
-            <td>
-              <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }}
-                value={l.status} onChange={(e) => void setStatus(l.id, e.target.value)} aria-label="Status">
-                {['new', 'contacted', 'qualified', 'won', 'lost', 'spam'].map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </td>
-          </tr>
+      <div className="a-note"><span>
+        <b>Every submission from the contact and pickup forms lands here, with every field it was sent with.</b>{' '}
+        Click <b>View</b> to see the whole enquiry. It is saved even if the notification email fails.
+      </span></div>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 16 }}>
+        <span className="a-search">
+          <Icon d="M11 4a7 7 0 1 1-.01 0M20 20l-3.5-3.5" />
+          <input className="a-inp" type="search" placeholder="Search name, email, phone, city…" aria-label="Search enquiries"
+            value={q} onChange={(e) => setQ(e.target.value)} />
+        </span>
+        <select className="a-inp" style={{ width: 'auto' }} value={status} onChange={(e) => setStatusFilter(e.target.value)} aria-label="Filter by status">
+          <option value="">All statuses</option>
+          {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+        <span style={{ color: 'var(--a-muted)', fontSize: 13 }}>{shown.length} of {rows.length}</span>
+        <button className="a-btn sm" style={{ marginLeft: 'auto' }} disabled={shown.length === 0} onClick={download}>Download CSV</button>
+      </div>
+      <Table head={['From', 'Contact', 'Type', 'What they want', 'Received', 'Status', '']}>
+        {loaded && rows.length === 0 && <Empty>No enquiries yet. They arrive here from the contact and pickup forms.</Empty>}
+        {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches that search.</Empty>}
+        {shown.map((l) => (
+          <Fragment key={l.id}>
+            <tr>
+              <td><span className="a-ttl">{l.name ?? l.email ?? 'Anonymous'}</span>
+                {l.company && <span className="a-slug">{l.company}</span>}</td>
+              <td>
+                {l.email && <div><a className="a-link" href={`mailto:${l.email}`}>{l.email}</a></div>}
+                {l.phone && <div style={{ marginTop: 2 }}><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
+              </td>
+              <td>{LEAD_TYPES[l.type] ?? l.type}</td>
+              <td>{wants(l)}</td>
+              <td>{when(l.created_at)}</td>
+              <td>
+                <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }}
+                  value={l.status} onChange={(e) => void setStatus(l.id, e.target.value)} aria-label="Status">
+                  {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </td>
+              <td>
+                <button className="a-btn sm" aria-expanded={open === l.id} onClick={() => setOpen(open === l.id ? null : l.id)}>
+                  {open === l.id ? 'Hide' : 'View'}
+                </button>
+              </td>
+            </tr>
+            {open === l.id && (
+              <tr>
+                <td colSpan={7} style={{ background: 'var(--panel, #f7f8fa)' }}>
+                  <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '8px 4px' }}>
+                    {leadFields(l).map(([k, v]) => (
+                      <Fragment key={k}>
+                        <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>{k}</dt>
+                        <dd style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{v}</dd>
+                      </Fragment>
+                    ))}
+                    <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>Enquiry #</dt>
+                    <dd style={{ margin: 0 }} className="a-mono">{l.id}</dd>
+                  </dl>
+                </td>
+              </tr>
+            )}
+          </Fragment>
         ))}
       </Table>
     </main>

@@ -52,6 +52,8 @@ export function BlogNewsletterForm() {
         button={NEWSLETTER.button}
         type="email"
         name="blog-newsletter-email"
+        post={path('/api/subscribe/')}
+        hidden={{ source: 'blog_inline' }}
         onSubmit={(email, form) => {
           if (state === 'sending') return
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {

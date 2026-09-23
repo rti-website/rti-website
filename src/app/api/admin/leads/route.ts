@@ -1,12 +1,23 @@
 import { q, one } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
 
-/** Contact, quote and gated-download submissions — business records, not a list. */
+/**
+ * Contact, quote and gated-download submissions — business records, not a list.
+ *
+ * Every field the forms collect comes back: the columns, plus `details`, which
+ * holds everything the table has no column for (first / last name, address,
+ * city, state, zip, what they want to recycle, "Is it for?", how they heard,
+ * consent and when it was given). The Enquiries screen shows all of it —
+ * Asim, 23 Sep 2026: "when someone submits the form it must show on [the]
+ * admin side … all the entries that are available". 2000 rows is years of
+ * enquiries at this site's volume; past that it wants paging, not a bigger
+ * number.
+ */
 export const GET = guard(async () => {
   const rows = await q(`
     SELECT id, type, name, email, phone, company, message, details,
-           source_page, status, created_at
-      FROM leads ORDER BY created_at DESC LIMIT 300`)
+           source_page, status, notes, created_at
+      FROM leads ORDER BY created_at DESC LIMIT 2000`)
   return json({ leads: rows })
 })
 

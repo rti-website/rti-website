@@ -85,7 +85,10 @@ export function NewsletterForm() {
   }
 
   return (
-    <form className="flex w-full flex-col gap-[16px] lg:block" onSubmit={submit}>
+    /* method + action: a submit before hydration posts here instead of
+       GETting the address into the URL (RTI-10, src/lib/form-post.ts). */
+    <form method="post" action={path('/api/subscribe/')} className="flex w-full flex-col gap-[16px] lg:block" onSubmit={submit}>
+      <input type="hidden" name="source" value="footer" />
       {/* Honeypot. Hidden from people, irresistible to bots — see /api/leads.
           Same recipe as ContactForm's, and NOT `left:-9999px`: an element
           parked off-canvas still has text rects at -9999, and

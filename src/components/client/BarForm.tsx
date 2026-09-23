@@ -20,8 +20,17 @@ const GLYPHS = {
 
 export function BarForm({
   width, glyph, iconSize = 20, label, placeholder, button, type = 'text', name, textSize = 15, onSubmit,
-  stacked = false, busy = false, onEscape,
+  stacked = false, busy = false, onEscape, post, hidden,
 }: {
+  /**
+   * Where the form posts if it is submitted before hydration — RTI-10,
+   * src/lib/form-post.ts. Set it for anything that collects personal data
+   * (the blog newsletter); leave it off for the ZIP/city locator, whose GET
+   * fallback carries nothing personal.
+   */
+  post?: string
+  /** Hidden fields sent with that fallback post, e.g. { source: 'blog_inline' }. */
+  hidden?: Record<string, string>
   /**
    * Below lg, draw the phone frame's shape for the locator (6747:5744): a
    * 50px bordered input with the full-width button 12px under it, instead of
@@ -55,6 +64,8 @@ export function BarForm({
 }) {
   return (
     <form
+      method={post ? 'post' : undefined}
+      action={post}
       // The width was an inline `style={{ width }}` until 22 Sep 2026, which
       // applied at EVERY viewport: 560px on the blog newsletter and 680px on
       // the locations finder, both inside a 350px column on a phone. It is a
@@ -71,6 +82,7 @@ export function BarForm({
         onSubmit(String(new FormData(form).get(name) ?? '').trim(), form)
       }}
     >
+      {hidden && Object.entries(hidden).map(([k, v]) => <input key={k} type="hidden" name={k} value={v} />)}
       <div className={stacked
         ? 'flex h-[50px] w-full items-center gap-[12px] rounded-[8px] border border-field bg-white px-[16px] lg:h-auto lg:w-auto lg:flex-1 lg:rounded-none lg:border-0 lg:px-0'
         : 'flex flex-1 items-center gap-[12px]'}>
