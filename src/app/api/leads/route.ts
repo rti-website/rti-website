@@ -61,7 +61,9 @@ function validateSpecForm(p: Payload):
 
   // Required since 23 Sep 2026 (Asim: "make optional only the address and
   // message, other things are compulsory"). The messages match ContactForm's.
-  if (!str(p.company)) return { ok: false, field: 'company', error: 'Please enter your company name.' }
+  // Business only since 24 Sep 2026: the form does not show Company Name for
+  // a Residential enquiry, so it is only required for the rest.
+  if (str(p.audience) !== 'Residential' && !str(p.company)) return { ok: false, field: 'company', error: 'Please enter your company name.' }
   if (!str(p.city)) return { ok: false, field: 'city', error: 'Please enter your city.' }
   // Stored as the postal code ("Minnesota" -> "MN"), so every lead reads alike.
   const state = stateCode(str(p.state))

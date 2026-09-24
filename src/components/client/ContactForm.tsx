@@ -8,6 +8,7 @@ import { usPhoneDigits } from '@/lib/phone'
 import { cityKey, stateCode } from '@/lib/us-address'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
+import { SuccessDialog } from '@/components/client/SuccessDialog'
 
 /**
  * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
@@ -81,7 +82,9 @@ function check(v: (k: FieldName) => string, consent: boolean): { field: FieldNam
   if (last.length < 2 || last.length > 60) return { field: 'lastName', message: 'Please enter your last name (2 to 60 characters).' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return { field: 'email', message: 'Please check the email address.' }
   if (!usPhoneDigits(v('phone'))) return { field: 'phone', message: 'Please enter a US phone number, e.g. (763) 559-5130.' }
-  if (!v('company')) return { field: 'company', message: 'Please enter your company name.' }
+  // Business only since 24 Sep 2026: a Residential enquiry has no company
+  // field on screen, so nothing to require.
+  if (v('audience') !== 'Residential' && !v('company')) return { field: 'company', message: 'Please enter your company name.' }
   if (!v('city')) return { field: 'city', message: 'Please enter your city.' }
   if (!stateCode(v('state'))) return { field: 'state', message: 'Please enter a US state, e.g. MN or Minnesota.' }
   if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Please enter a 5 digit ZIP code.' }
@@ -120,6 +123,16 @@ export function ContactForm() {
   const [count, setCount] = useState(0)
 
   const [hint, setHint] = useState<Hint | null>(null)
+  /** The success pop-up, and the first name it greets (read before the reset). */
+  const [popup, setPopup] = useState<{ name: string } | null>(null)
+  /**
+   * "Is it for?" — held here only to show or hide Company Name. Asim,
+   * 24 Sep 2026: "when someone selects Residential remove the company from the
+   * form". The select itself stays uncontrolled; this follows its onChange and
+   * goes back to the default when the form resets.
+   */
+  const [audience, setAudience] = useState<string>(FORM.audiences[0])
+  const business = audience !== 'Residential'
   /** Which of the three we filled in (ours to replace) vs the visitor typed. */
   const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
   /** Only the latest lookup may write: a slow answer to an old ZIP is dropped. */
@@ -338,11 +351,14 @@ export function ContactForm() {
         return
       }
       trackLead({ type: 'contact', formId: 'contact_form', service: value('service'), audience: value('audience') })
+      const firstName = value('firstName')
       form.reset()
       filled.current = { city: false, state: false, zip: false }
       setHint(null)
       setCount(0)
+      setAudience(FORM.audiences[0])
       setState('sent')
+      setPopup({ name: firstName })
     } catch {
       setError('Could not reach the server. Please check your connection and try again.')
       setState('error')
@@ -375,7 +391,11 @@ export function ContactForm() {
         <Field id="phone" f={F.phone} type="tel" autoComplete="tel" required maxLength={25} invalid={invalid('phone')} onInput={() => setBad(null)} />
       </div>
 
-      <Field id="company" f={F.company} autoComplete="organization" required maxLength={160} invalid={invalid('company')} onInput={() => setBad(null)} />
+      {/* Business only: not rendered for a Residential enquiry, so it is
+          neither shown nor posted. /api/leads applies the same rule. */}
+      {business && (
+        <Field id="company" f={F.company} autoComplete="organization" required maxLength={160} invalid={invalid('company')} onInput={() => setBad(null)} />
+      )}
 
       <Field id="address" f={F.address} autoComplete="street-address" maxLength={200} />
 
@@ -441,7 +461,7 @@ export function ContactForm() {
         <div className={FIELD}>
           <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}</label>
           <div className="relative">
-            <select id="contact-audience" name="audience" defaultValue={FORM.audiences[0]} className={`${INPUT} appearance-none pr-[44px]`}>
+            <select id="contact-audience" name="audience" defaultValue={FORM.audiences[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
               {FORM.audiences.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>
             <Chevron />
@@ -490,6 +510,13 @@ export function ContactForm() {
           {state === 'error' && error && <span className="text-[#b3261e]">{error}</span>}
         </p>
       </div>
+
+      <SuccessDialog
+        open={popup !== null}
+        onClose={() => setPopup(null)}
+        title={popup?.name ? `${FORM.popup.title}, ${popup.name}!` : `${FORM.popup.title}!`}
+        message={FORM.popup.body}
+      />
     </form>
   )
 }

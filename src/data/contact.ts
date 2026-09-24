@@ -135,7 +135,9 @@ export const FORM = {
     lastName:  { label: 'Last Name',        placeholder: 'Smith' },
     email:     { label: 'Email Address',    placeholder: 'jamie@company.com' },
     phone:     { label: 'Phone Number',     placeholder: '(XXX) XXX-XXXX' },
-    company:   { label: 'Company Name',     placeholder: 'Company name' },
+    // "(for business only)": Asim, 24 Sep 2026. The field is not shown at all
+    // when "Is it for?" is Residential (ContactForm).
+    company:   { label: 'Company Name',     placeholder: 'Company name (for business only)' },
     // "--" is the frame's placeholder for the four address fields.
     address:   { label: 'Address',          placeholder: '--' },
     city:      { label: 'City',             placeholder: '--' },
@@ -153,6 +155,12 @@ export const FORM = {
   messageMax: 2000,
   submit: 'Send Message',
   sent: 'Thanks — your message is with us. We usually reply within one business day.',
+  /** The pop-up a sent form opens (SuccessDialog), 24 Sep 2026. The title
+   *  gets the visitor's first name when they gave one: "Thank you, Jane!" */
+  popup: {
+    title: 'Thank you',
+    body: 'Your message has been sent. Our team usually replies within one business day.',
+  },
 }
 
 /** Right column — Figma 6370:764. Details match the live contact page exactly. */

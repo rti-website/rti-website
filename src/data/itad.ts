@@ -167,4 +167,9 @@ export const PICKUP = {
   audiences: ['Residential', 'Business'],
   submit: 'Submit',
   sent: 'Thanks — your request is with us. We usually reply within one business day.',
+  /** The pop-up a sent request opens (SuccessDialog), 24 Sep 2026. */
+  popup: {
+    title: 'Thank you',
+    body: 'Your pickup request has been sent. Our team usually replies within one business day.',
+  },
 }

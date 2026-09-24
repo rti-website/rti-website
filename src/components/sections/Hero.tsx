@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { Box, Section } from '@/components/design/Frame'
-import { Btn, Eyebrow } from '@/components/ui/Bits'
+import { Btn } from '@/components/ui/Bits'
 import { CONTACT_FORM_HREF, href } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { Picker } from '@/components/client/Picker'
 import { R2_DIRECTORY } from '@/data/certifications'
 import { HERO_LOCATIONS, SERVICE_INTEREST } from '@/data/contact'
+import { TOP_BAR } from '@/lib/nav'
 
 /**
  * Hero — Figma 6023:13152, 1920x940.
@@ -94,12 +95,36 @@ export function Hero() {
   return (
     <Section
       top={140} height={HERO_H} label="6023:13152"
-      className="flex flex-col gap-[20px] bg-navy px-[20px] pb-[32px] pt-[40px] lg:block lg:p-0"
+      /* Phone padding: 80 above the heading, not the frame's 40 — Asim,
+         24 Sep 2026, twice: "give some space to heading from top", then
+         "give some space between heading and above nav". 40 below. Phone
+         only: lg:p-0 resets it on the board. */
+      className="flex flex-col gap-[20px] bg-navy px-[20px] pb-[40px] pt-[80px] lg:block lg:p-0"
     >
-      {/* Photo — 6023:13153 flattened, full-bleed, full opacity. See note above. */}
-      <Box x={0} y={0} w={1920} h={HERO_H} fill>
-        <Image src="/images/home/hero-photo.png" alt="" fill priority sizes="(width < 64rem) 100vw, 1920px" className="object-cover" />
+      {/* Photo — 6023:13153 flattened, full-bleed, full opacity. See note above.
+          Board only since 24 Sep 2026; the phone has its own photo below. */}
+      <Box x={0} y={0} w={1920} h={HERO_H} fill className="max-lg:hidden">
+        {/* `sizes` says 1px below lg because the picture is not shown there.
+            Both hero photos are `priority`, so both are preloaded at every
+            width whether shown or not; this makes the unused one a few bytes
+            instead of a second full photo. Same trick on the phone photo. */}
+        <Image src="/images/home/hero-photo.png" alt="" fill priority sizes="(width < 64rem) 1px, 1920px" className="object-cover" />
       </Box>
+      {/* PHONE PHOTO — 6595:2313, the frame's own picture (green foliage and a
+          truck), not the board's e-waste shot. The frame draws it 2028x1142,
+          centred, 53px above the hero's top, inside a 55% opacity layer over
+          the navy base; the same geometry here, so the phone shows the same
+          centre slice as the frame. public/images/home/hero-photo-phone.png,
+          registered in data/figma-assets.json (fetch with
+          `node scripts/fetch-figma-assets.mjs --missing`). It is a soft,
+          out-of-focus picture at 55%, so it is served at 640 CSS px rather
+          than its drawn 2028: a phone downloads a fraction of the bytes and
+          the picture looks the same. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-55 lg:hidden" aria-hidden="true">
+        <div className="absolute left-1/2 top-[-53px] h-[1142px] w-[2028px] -translate-x-1/2">
+          <Image src="/images/home/hero-photo-phone.png" alt="" fill priority sizes="(width >= 64rem) 1px, 640px" className="object-cover" />
+        </div>
+      </div>
       {/* Green wash — 6023:13154 */}
       <Box x={0} y={0} w={1920} h={974.39} fill
         style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }} />
@@ -107,20 +132,16 @@ export function Hero() {
       <Box x={0} y={0} w={1920} h={HERO_H} fill
         style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 100%)' }} />
 
-      {/* The "Responsible Recycling & ITAD" pill (6062:21416, x323 y119) was
-          removed from the DESKTOP hero on Asim's instruction, 16 Sep 2026, and
-          everything below it moved up into the space it left.
-
-          The mobile frame (6590:2309) draws it, so it is here and hidden at lg.
-          That leaves one line of copy on the phone that is not on the desktop —
-          deliberate, and worth a second look: Google indexes the mobile page. */}
-      {/* The shared Eyebrow, not a hand-rolled pill: it is the same 34px
-          flex row the frame draws (6590:2309 -> 6590:2310 -> 6590:2311), so
-          the label centres on both axes instead of sitting on the baseline of
-          a box with padding on one axis only. Asim, 22 Sep 2026. */}
-      <Box x={0} y={0} className="self-start lg:hidden">
-        <Eyebrow tone="glass">Responsible Recycling &amp; ITAD</Eyebrow>
-      </Box>
+      {/* ===================================================================
+          THE PHONE HERO, REDRAWN 24 Sep 2026 — Asim: "in mobile only change
+          the hero sec like this" (Figma 6590:2308 in 6588:2308). Top to
+          bottom: the heading, centred, on two lines; "Get a Quick Quote" and
+          the Minnesota phone number as two full-width buttons; the three
+          stats, smaller. The "Responsible Recycling & ITAD" pill, the lead
+          paragraph and the glass quote card are gone from the phone (the
+          card is hidden below lg, not removed: the board still has it).
+          Nothing at lg changes.
+          =================================================================== */}
 
       {/* H1 — 6023:13162. Figma centres the text box on y=276.5; three lines at
           74.7px is 224.1 tall, so the top edge is 276.5 - 112 = 164.4. Using
@@ -139,17 +160,25 @@ export function Hero() {
             measure — it exists to clear the quote card at x1203, and there is
             no card beside the headline on a phone — so it is switched off
             below lg and the line wraps where the column ends. */}
-        <h1 className="font-sans text-[28px] font-semibold leading-[38px] text-white lg:whitespace-nowrap lg:text-[70px] lg:leading-[74.7px] lg:tracking-[-4.0315px]">
-          {/* The spaces before the breaks are load-bearing below lg, where the
-              breaks are switched off and the three lines run as one. */}
-          Recycle Responsibly.{' '}<br className="hidden lg:inline" />Protect the Planet. Build a{' '}<br className="hidden lg:inline" />Cleaner Tomorrow.
+        {/* !! ONE <h1>, TWO WORDINGS — and Google reads the phone one.
+            The phone frame (6590:2312) sets "Certified E-Waste Recycling and
+            ITAD", centred, 28/38, on two lines; the board keeps its three-line
+            headline. Each wording is display:none at the other width, so a
+            screen reader and a crawler rendering the page each get only the
+            visible one. Google indexes mobile-first, so the homepage's H1 as
+            far as search is concerned is now the phone wording. Flagged to
+            Asim for the SEO team on 24 Sep 2026. */}
+        <h1 className="text-center font-sans text-[28px] font-semibold leading-[38px] text-white lg:whitespace-nowrap lg:text-left lg:text-[70px] lg:leading-[74.7px] lg:tracking-[-4.0315px]">
+          <span className="lg:hidden">Certified E-Waste{' '}<br />Recycling and ITAD</span>
+          <span className="max-lg:hidden">Recycle Responsibly.{' '}<br />Protect the Planet. Build a{' '}<br />Cleaner Tomorrow.</span>
         </h1>
       </Box>
 
       {/* Lead — 6023:13164, 14px under the headline as in the frame
           (389 -> 403), and at the frame's Roboto 20 / 30.03: three lines in
           the 688 column, as Asim's screenshot shows. 6590:2313 on the phone. */}
-      <Box x={319} y={327} w={688}>
+      {/* Board only since 24 Sep 2026: the phone frame has no lead. */}
+      <Box x={319} y={327} w={688} className="max-lg:hidden">
         <p className="font-roboto text-[16px] leading-[24px] text-white/70 lg:text-[20px] lg:leading-[30.031px]">
           Recycle Technologies provides certified e-waste recycling, destruction, and
           shredding solutions that keeps electronics out of landfills and valuable
@@ -162,8 +191,9 @@ export function Hero() {
           the quote card, above Pick Your Service, so one form carries both to
           the contact form. See HERO_LOCATIONS in src/data/contact.ts. */}
 
-      {/* Glass quote card — 6098:518, moved up with the headline. w398. */}
-      <Box x={1203} y={88} w={398}>
+      {/* Glass quote card — 6098:518, moved up with the headline. w398.
+          Board only since 24 Sep 2026: the phone has the two buttons below. */}
+      <Box x={1203} y={88} w={398} className="max-lg:hidden">
         {/* Padding and gaps are tighter than Figma's on purpose. This card is the
             tallest thing in the band, so its height is what sets how far down the
             stats strip has to sit — at the drawn 457 it left a 190px hole under
@@ -219,6 +249,28 @@ export function Hero() {
         </div>
       </Box>
 
+      {/* PHONE ONLY — 6861:12956: two full-width 48px buttons, 10 apart.
+          "Get a Quick Quote" is the site's teal button (arrow and all) and
+          goes where the board's quote card sends people, the contact form.
+          The second is a call button for the Minnesota line (6861:12950):
+          white, teal text, and the frame's own phone glyph (image 450,
+          6861:12954, 17px) — public/images/home/hero-phone.png, registered in
+          data/figma-assets.json; fetch it with
+          `node scripts/fetch-figma-assets.mjs --missing`. The frame sets that
+          label white on white; it is teal here, as its own preview shows. */}
+      <div className="flex w-full flex-col gap-[10px] lg:hidden">
+        <Btn href={CONTACT_FORM_HREF} variant="colored" className="w-full justify-center backdrop-blur-[4.004px]">
+          Get a Quick Quote
+        </Btn>
+        <a
+          href={TOP_BAR.phoneMn.tel}
+          className="btn-pop flex h-[48px] w-full items-center justify-center gap-[8.008px] rounded-[8px] bg-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand backdrop-blur-[4.004px]"
+        >
+          <span className="whitespace-nowrap">+1-763-559-5130</span>
+          <Image src="/images/home/hero-phone.png" alt="" width={34} height={34} className="size-[17px] shrink-0 object-cover" />
+        </a>
+      </div>
+
       {/* Stats strip — 6023:13173, lifted off the bottom of the band so the
           figures are on screen when the page opens. Asim, 16 Sep 2026.
 
@@ -236,8 +288,7 @@ export function Hero() {
           ON THE PHONE (6604:5043) the row becomes a column: no top rule, no
           vertical rules, a 1px white/15 divider between rows instead, 8px
           either side of it, each row a 43px icon tile 12px from its text, and
-          the figure drops 38.04 -> 26 so "R2v3 Certified Locations" fits the
-          295px text column on one line.
+          the figure drops 38.04 -> 16 (the 24 Sep 2026 frame; it was 26).
 
           Three rows, the same three the desktop shows, in the same order.
           See the STATS note above for what the R2v3 tile claims.
@@ -264,9 +315,12 @@ export function Hero() {
                   style={{ '--pw': `${s.phone.w}px`, '--ph': `${s.phone.h}px`, '--bw2': `${s.board.w}px`, '--bh2': `${s.board.h}px` } as React.CSSProperties}
                 />
               </span>
-              <span className="flex min-w-px flex-1 flex-col gap-[2px] lg:flex-none lg:gap-0">
-                <span className="block font-sans text-[26px] font-semibold leading-[38.04px] tracking-[-1.1512px] text-white lg:whitespace-nowrap lg:text-[38.04px] lg:leading-[38.04px]">{s.v}</span>
-                <span className="block font-roboto text-[14px] font-medium leading-[19.52px] tracking-[-0.0801px] text-white/80 lg:whitespace-nowrap lg:pt-[4.004px]">{s.l}</span>
+              {/* Phone sizes from the 24 Sep 2026 frame (6778:10481/10482):
+                  the figure 16/27 with no tracking, the line under it 10/19.5,
+                  no gap. The board keeps 38.04 and 14. */}
+              <span className="flex min-w-px flex-1 flex-col lg:flex-none">
+                <span className="block font-sans text-[16px] font-semibold leading-[27px] text-white lg:whitespace-nowrap lg:text-[38.04px] lg:leading-[38.04px] lg:tracking-[-1.1512px]">{s.v}</span>
+                <span className="block font-roboto text-[10px] font-medium leading-[19.52px] tracking-[-0.0801px] text-white/80 lg:whitespace-nowrap lg:pt-[4.004px] lg:text-[14px]">{s.l}</span>
               </span>
             </>
           )

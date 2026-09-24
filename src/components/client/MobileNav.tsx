@@ -117,8 +117,12 @@ export function MobileNav({
         </Link>
       </div>
 
-      {/* ---- Header Row — 6588:2309, 390 x 69 ----------------------------- */}
-      <div className="flex h-[69px] items-center justify-between border-b border-line bg-white py-[12px] pl-[20px] pr-[16px]">
+      {/* ---- Header Row — 6588:2309, 390 x 69 in the frame, 56 here ------
+          Asim, 24 Sep 2026: "make the gap less inside above and below". The
+          row is 56 with 6 above and below: the 44px menu button (the touch
+          target) is what sets the minimum. Phone only; this whole bar is
+          lg:hidden. */}
+      <div className="flex h-[56px] items-center justify-between border-b border-line bg-white py-[6px] pl-[20px] pr-[16px]">
         <Link href="/" aria-label="Recycle Technologies — home" className="block h-[34px] w-[143.39px]">
           <Image src="/images/logo.png" alt="Recycle Technologies" width={287} height={68} priority className="size-full object-contain object-left" />
         </Link>

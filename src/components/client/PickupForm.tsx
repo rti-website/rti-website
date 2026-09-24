@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { PICKUP } from '@/data/itad'
 import { path } from '@/lib/urls'
 import { trackLead } from '@/components/client/track'
+import { SuccessDialog } from '@/components/client/SuccessDialog'
 
 /**
  * "Book a Pickup Today" — the ITAD page's form, Figma 6780:2712 (desktop) and
@@ -40,6 +41,8 @@ const F = PICKUP.fields
 export function PickupForm() {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
+  /** The success pop-up, and the first name it greets (read before the reset). */
+  const [popup, setPopup] = useState<{ name: string } | null>(null)
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -78,8 +81,10 @@ export function PickupForm() {
         return
       }
       trackLead({ type: 'quote', formId: 'itad_pickup_form', audience: value('audience') })
+      const firstName = value('firstName')
       form.reset()
       setState('sent')
+      setPopup({ name: firstName })
     } catch {
       setError('Could not reach the server. Please check your connection and try again.')
       setState('error')
@@ -144,6 +149,13 @@ export function PickupForm() {
         {state === 'sent' && <span className="text-brand">{PICKUP.sent}</span>}
         {state === 'error' && error && <span className="text-[#b3261e]">{error}</span>}
       </p>
+
+      <SuccessDialog
+        open={popup !== null}
+        onClose={() => setPopup(null)}
+        title={popup?.name ? `${PICKUP.popup.title}, ${popup.name}!` : `${PICKUP.popup.title}!`}
+        message={PICKUP.popup.body}
+      />
     </form>
   )
 }

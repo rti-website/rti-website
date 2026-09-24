@@ -1113,6 +1113,20 @@
       "node": "6814:2689",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Get Your Certificate — How It Works step icon (homepage 6040:18591), drawn in the dashed square. Replaces the old step glyphs, Asim 23 Sep 2026. URL expires about 30 Sep."
+    },
+    {
+      "to": "public/images/home/hero-phone.png",
+      "id": "8a35212c-f4b6-4e17-848a-b1606357835b/25eea.png",
+      "node": "6861:12954",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage phone hero, call button glyph (image 450, teal phone with waves), drawn 17x17 beside +1-763-559-5130. Added 24 Sep 2026; URL expires about 1 Oct."
+    },
+    {
+      "to": "public/images/home/hero-photo-phone.png",
+      "id": "8a35212c-f4b6-4e17-848a-b1606357835b/13122.png",
+      "node": "6595:2313",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage PHONE hero photo (\"ChatGPT Image Aug 28, 2026\", green foliage and a truck), drawn 2028x1142 centred at y-53 inside a 55% opacity layer, frame 6590:2308. The board keeps hero-photo.png. Added 24 Sep 2026; URL expires about 1 Oct."
     }
   ]
 }
