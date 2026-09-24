@@ -1,6 +1,6 @@
 import 'server-only'
 import { cache as perRequest } from 'react'
-import { q } from '@/lib/db'
+import { q, tx } from '@/lib/db'
 import { milesBetween, type LatLng } from '@/lib/geo'
 import { zipPoint } from '@/lib/zips'
 import { path } from '@/lib/urls'
@@ -121,23 +121,35 @@ function fromSeeds(): Locations {
 let seeded = false
 /**
  * Create any site or page row that does not exist yet, from the starters.
- * Never overwrites: ON CONFLICT DO NOTHING. Minnesota and Wisconsin start
- * "published" because their hubs are the existing facility pages.
+ * Never overwrites. Minnesota and Wisconsin start "published" because their
+ * hubs are the existing facility pages.
+ *
+ * !! ONE TRANSACTION BEHIND AN ADVISORY LOCK, AND `ON CONFLICT DO NOTHING`
+ * WITH NO TARGET. `next build` collects pages in several worker processes at
+ * once and each one seeds on its first read. On the dev server's first build
+ * (24 Sep 2026) two workers inserted the same site together and one failed on
+ * the hub_path index: "duplicate key value violates unique constraint
+ * service_sites_hub_path_key". `ON CONFLICT (slug)` only covered the slug
+ * index. Now the lock queues the workers (the second finds every row there
+ * and inserts nothing), and a conflict on any unique index is skipped.
  */
 export async function ensureSeeded(): Promise<void> {
   if (seeded) return
-  for (const s of SITE_SEEDS) {
-    await q(
-      `INSERT INTO service_sites (slug, hub_path, published, sort_order, data)
-       VALUES ($1, $2, $3, $4, $5::jsonb) ON CONFLICT (slug) DO NOTHING`,
-      [s.slug, s.hubPath, s.data.operator === 'rti', s.sort, JSON.stringify(s.data)])
-    for (const svc of SERVICE_SLUGS) {
-      await q(
-        `INSERT INTO site_services (site_slug, service, offered, data)
-         VALUES ($1, $2, $3, $4::jsonb) ON CONFLICT (site_slug, service) DO NOTHING`,
-        [s.slug, svc, s.offered[svc], JSON.stringify(STARTERS[svc])])
+  await tx(async (run) => {
+    await run(`SELECT pg_advisory_xact_lock(hashtext('rti.service_locations.seed'))`)
+    for (const s of SITE_SEEDS) {
+      await run(
+        `INSERT INTO service_sites (slug, hub_path, published, sort_order, data)
+         VALUES ($1, $2, $3, $4, $5::jsonb) ON CONFLICT DO NOTHING`,
+        [s.slug, s.hubPath, s.data.operator === 'rti', s.sort, JSON.stringify(s.data)])
+      for (const svc of SERVICE_SLUGS) {
+        await run(
+          `INSERT INTO site_services (site_slug, service, offered, data)
+           VALUES ($1, $2, $3, $4::jsonb) ON CONFLICT DO NOTHING`,
+          [s.slug, svc, s.offered[svc], JSON.stringify(STARTERS[svc])])
+      }
     }
-  }
+  })
   seeded = true
 }
 

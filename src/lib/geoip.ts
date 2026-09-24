@@ -31,21 +31,28 @@ let loadedMtime = 0
 let timer: NodeJS.Timeout | null = null
 
 export function geoipPath(): string {
-  return process.env.GEOIP_DB || path.join(process.cwd(), 'var', 'geoip', 'dbip-city-lite.mmdb')
+  return process.env.GEOIP_DB || path.join(/* turbopackIgnore: true */ process.cwd(), 'var', 'geoip', 'dbip-city-lite.mmdb')
 }
 
+/*
+ * !! THE turbopackIgnore COMMENTS ON THE fs CALLS BELOW ARE NOT COSMETIC.
+ * The path comes from GEOIP_DB, so Turbopack cannot work out which file is
+ * read, warns "Dynamic filesystem access causes tracing of the whole project"
+ * (the dev build, 24 Sep 2026) and traces everything, public/ included, into
+ * the server output. Same opt-out, same reason, as ROOT_ABS in media-store.ts.
+ */
 export function geoipAvailable(): boolean {
-  try { return fs.statSync(geoipPath()).size > 0 } catch { return false }
+  try { return fs.statSync(/* turbopackIgnore: true */ geoipPath()).size > 0 } catch { return false }
 }
 
 function open(): Reader<CityResponse> | null {
   const file = geoipPath()
   let mtime = 0
-  try { mtime = fs.statSync(file).mtimeMs } catch { return null }
+  try { mtime = fs.statSync(/* turbopackIgnore: true */ file).mtimeMs } catch { return null }
   // A monthly update swaps the file in place; notice it without a restart.
   if (!reader || loadedFrom !== file || loadedMtime !== mtime) {
     try {
-      reader = new Reader<CityResponse>(fs.readFileSync(file))
+      reader = new Reader<CityResponse>(fs.readFileSync(/* turbopackIgnore: true */ file))
       loadedFrom = file
       loadedMtime = mtime
     } catch (err) {
