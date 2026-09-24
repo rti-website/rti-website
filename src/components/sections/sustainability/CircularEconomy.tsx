@@ -26,7 +26,7 @@ export function CircularEconomy({ top, height }: { top: number; height: number }
           items in the section's own 24px column. */}
       <div className="flex items-start gap-[80px] max-lg:contents">
         {/* Prose column — 6383:1167 / 6638:10159..10163 */}
-        <div className="flex w-full flex-col items-start gap-[24px] lg:w-[700px] lg:gap-[20px]">
+        <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[700px] lg:items-start lg:gap-[20px] lg:text-left">
           <Eyebrow>{CIRCULAR.eyebrow}</Eyebrow>
           <h2 className="w-full font-sans text-[28px] font-semibold leading-[35px] text-heading lg:w-[700px] lg:text-[36px] lg:leading-[1.2]">
             {CIRCULAR.heading}

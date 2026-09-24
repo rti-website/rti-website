@@ -11,8 +11,8 @@
  */
 
 export type PageType =
-  | 'home' | 'service_hub' | 'service' | 'industry_hub' | 'industry'
-  | 'location_hub' | 'location' | 'resource' | 'blog' | 'blog_category' | 'blog_post'
+  | 'home' | 'service_hub' | 'service' | 'service_state' | 'industry_hub' | 'industry'
+  | 'location_hub' | 'location' | 'location_service' | 'resource' | 'blog' | 'blog_category' | 'blog_post'
   | 'company' | 'contact' | 'legal' | 'utility' | 'page'
 
 const SERVICES = new Set([
@@ -29,8 +29,8 @@ const COMPANY = new Set([
 const LEGAL = new Set(['/privacy-policy/', '/terms-of-services/', '/cookies-and-personal-information/'])
 
 const CATEGORY: Record<PageType, string> = {
-  home: 'Home', service_hub: 'Services', service: 'Services', industry_hub: 'Industries', industry: 'Industries',
-  location_hub: 'Locations', location: 'Locations', resource: 'Resources', blog: 'Blog', blog_category: 'Blog',
+  home: 'Home', service_hub: 'Services', service: 'Services', service_state: 'Services', industry_hub: 'Industries', industry: 'Industries',
+  location_hub: 'Locations', location: 'Locations', location_service: 'Locations', resource: 'Resources', blog: 'Blog', blog_category: 'Blog',
   blog_post: 'Blog', company: 'Company', contact: 'Contact', legal: 'Legal', utility: 'Utility', page: 'Other',
 }
 
@@ -39,9 +39,15 @@ export function pageType(url: string, isPost: boolean): PageType {
   if (url === '/') return 'home'
   if (url === '/services/') return 'service_hub'
   if (SERVICES.has(url)) return 'service'
+  // The Google Ads state pages, /light-bulbs/Minnesota/ and the like.
+  if (/^\/(light-bulbs|electronic-recycle|battery-recycling)\/(Minnesota|Wisconsin)\/$/.test(url)) return 'service_state'
   if (url === '/industries/') return 'industry_hub'
   if (url.startsWith('/industries/')) return 'industry'
   if (url === '/all-locations/') return 'location_hub'
+  // The location based service pages (SEO brief, 24 Sep 2026), before the
+  // facility rule below would call the Minnesota and Wisconsin ones 'location'.
+  if (/^\/(locations\/[^/]+|minnesota-recycling|wisconsin-recycling)\/(light-bulb|electronic|battery)-recycling\/$/.test(url)) return 'location_service'
+  if (/^\/locations\/[^/]+\/$/.test(url)) return 'location'
   if (url.startsWith('/minnesota-recycling/') || url.startsWith('/wisconsin-recycling/')) return 'location'
   if (url === '/blog/') return 'blog'
   if (url.startsWith('/category/')) return 'blog_category'

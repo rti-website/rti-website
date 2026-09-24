@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { SITE } from '@/lib/site'
+import { absolute } from '@/lib/urls'
 
 export default function robots(): MetadataRoute.Robots {
   // Staging blocks everything. Production allows everything, including the AI
@@ -17,7 +18,8 @@ export default function robots(): MetadataRoute.Robots {
       // crawler, which shows up as a wall of errors in Search Console.
       disallow: ['/admin/', '/api/'],
     }],
-    sitemap: `${SITE.origin}/sitemap.xml`,
+    // The location pages have their own file (SEO brief, 24 Sep 2026).
+    sitemap: [absolute('/sitemap.xml'), absolute('/sitemap-locations.xml')],
     host: SITE.origin,
   }
 }

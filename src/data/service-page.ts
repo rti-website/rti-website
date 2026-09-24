@@ -37,6 +37,12 @@ export type ServicePageContent = {
     image?: string
     /** The service frames carry a picker + button; the industry frames do not. */
     cta?: Cta
+    /**
+     * A second button beside `cta`, in place of the location picker. The state
+     * landing pages (/light-bulbs/Minnesota/ and friends, 24 Sep 2026) already
+     * know the location, so they show [Get a Quote] [Schedule a Pickup].
+     */
+    secondaryCta?: Cta
   }
 
   /** Prose block one — text left, photo right. */
@@ -54,7 +60,14 @@ export type ServicePageContent = {
    */
   accept: {
     heading: string
-    intro?: string
+    /** One paragraph, or several (the mail-in doc writes two, 24 Sep 2026). */
+    intro?: string | string[]
+    /**
+     * A small heading over the rows, when the doc titles its list — the
+     * mail-in page's "Commonly Processed Recycling Operations:".
+     */
+    itemsHeading?: string
+    /** `text` may be empty for a bare list item (the mail-in page's bullets). */
     items: { label: string; text: string; href?: string; external?: boolean }[]
     outro?: string
   }
@@ -69,6 +82,12 @@ export type ServicePageContent = {
     steps: { label: string; text: string }[]
     /** One closing paragraph, or several when the doc writes several. */
     outro?: string | string[]
+    /**
+     * Sub-sections after the steps, each under its own small heading — the
+     * battery state pages' "Battery Recycling Pickup in Minnesota" (with a
+     * Schedule a Pickup button) and "Mail-In & Drop-Off Battery Recycling".
+     */
+    extra?: { heading: string; body?: string[]; items?: { label: string; text: string }[]; cta?: Cta }[]
     image: string
   }
 

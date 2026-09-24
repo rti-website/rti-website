@@ -33,7 +33,7 @@ import { InfoRow } from '@/components/ui/Glyph'
 const HEADING = 'font-sans text-[28px] font-semibold leading-[34px] tracking-[-0.5px] text-heading lg:text-[36px] lg:leading-[1.2] lg:tracking-normal'
 const LEAD = 'font-roboto text-[15px] leading-[22px] text-muted lg:text-[16px] lg:leading-[1.6]'
 /** 6638:8419 / 6638:8871 — the mobile-only 12-gap heading group. */
-const HEAD_BLOCK = 'flex w-full flex-col items-start gap-[12px] lg:contents'
+const HEAD_BLOCK = 'flex w-full flex-col items-center gap-[12px] text-center lg:contents lg:text-left'
 /** A column: full bleed and self-padding on a phone, 601px on the board. */
 const COLUMN = 'flex w-full shrink-0 flex-col items-start gap-[24px] px-[20px] py-[48px] lg:w-[601px] lg:p-0'
 

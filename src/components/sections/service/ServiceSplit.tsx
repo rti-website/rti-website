@@ -70,7 +70,7 @@ export function ServiceSplit({
           The 8.5px it left BELOW the words is kept as `lg:mb-[8.5px]`, so the
           heading-to-prose spacing on a one-line heading is exactly what it
           was (8.5 + the column's 11 gap). */}
-      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:mb-[8.5px] lg:w-full lg:text-[40px] lg:leading-[1.15]">
+      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black max-lg:text-center lg:mb-[8.5px] lg:w-full lg:text-[40px] lg:leading-[1.15]">
         {heading}
       </h2>
       {children}

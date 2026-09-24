@@ -60,6 +60,8 @@ export const CONTENT: ServicePageContent = {
   ],
   cta: {
     heading: 'Ready to Retire Your Old Equipment Responsibly?',
+    // One line on the board (Asim, 24 Sep 2026): the default 723 box wraps it.
+    headingWidth: 1084,
     body: [
       'Recycle Technologies handles hard drive destruction, as well as electronics, battery, light bulb, ballast, TV, and airbag recycling for businesses in Minnesota and Wisconsin. Request a pickup or get a quote today to get started.',
     ],

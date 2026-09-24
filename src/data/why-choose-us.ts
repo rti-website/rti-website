@@ -30,8 +30,9 @@ export const HERO = {
     { label: 'Why Choose Us',  href: null },
   ],
   h1: 'Why Choose Us',
-  // Asim, 23 Sep 2026.
-  lead: 'Certified processes, documented outcomes, and 32+ years of operating history — here’s what sets Recycle Technologies apart from a typical recycler.',
+  // Asim, 23 Sep 2026. The dash became a comma and the line breaks after
+  // "history," on the board (24 Sep 2026); `\n` is that break.
+  lead: 'Certified processes, documented outcomes, and 32+ years of operating history,\nhere’s what sets Recycle Technologies apart from a typical recycler.',
 }
 
 /** Differentiators — 6379:1033. */

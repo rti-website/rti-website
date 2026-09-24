@@ -62,9 +62,11 @@ export function ServicesHero() {
         </h1>
       </Box>
 
-      {/* Lead — 6142:793 at x319 y243, w504; 6640:2313 caps it at 273 on a phone. */}
-      <Box x={319} y={243} w={504} className="max-lg:max-w-[273px]">
-        <p className="text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:text-left lg:text-[18px] lg:leading-[27px]">
+      {/* Lead — 6142:793 at x319 y243; 6640:2313 caps it at 273 on a phone.
+          946 wide, not the frame's 504, and balanced — Asim, 24 Sep 2026: two
+          even lines under the H1, the same as every other interior hero. */}
+      <Box x={319} y={243} w={946} className="max-lg:max-w-[273px]">
+        <p className="text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:text-left lg:text-[18px] lg:leading-[27px] lg:text-balance">
           {SERVICES_HERO.lead}
         </p>
       </Box>

@@ -38,7 +38,10 @@ function findRoutes(dir, prefix = '') {
   }
   return out
 }
-const ROUTES = ['', ...findRoutes(path.join(process.cwd(), 'src', 'app')).sort()]
+// Plus a sample of the location pages, whose folders are [site]/[service]
+// and so are not found by the walk (24 Sep 2026).
+const ROUTES = ['', ...findRoutes(path.join(process.cwd(), 'src', 'app')).sort(),
+  'locations/phoenix-az', 'locations/phoenix-az/battery-recycling', 'minnesota-recycling/battery-recycling']
 
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH || undefined,

@@ -12,6 +12,16 @@ export const SITE = {
 } as const
 
 /**
+ * Tawk.to live chat (src/components/client/TawkChat.tsx) — the property and
+ * widget from management's embed code, 24 Sep 2026, the same chat the
+ * WordPress site ran. Set either to '' to switch the chat off site-wide.
+ */
+export const TAWK = {
+  propertyId: '68ffb662d6c35b19500f03a4',
+  widgetId: '1j8je0sef',
+} as const
+
+/**
  * Facilities. Used for LocalBusiness schema and the locations pages.
  *
  * Two, as the site shows them. A third, "Blaine (Davenport St), 10040

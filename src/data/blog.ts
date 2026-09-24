@@ -32,7 +32,7 @@ export const HERO = {
      Rizwan's content sheet — the generic line said nothing about what this
      page actually holds, and it is the one hero whose subject is the blog
      rather than the company. The other twelve heroes keep the 1993 line. */
-  lead: 'In-depth insights, researched information, practical guides — straight from our regularly updated blogs.',
+  lead: 'In-depth insights, researched information, practical guides, straight from our regularly updated blogs.',
 }
 
 export const INTRO = {

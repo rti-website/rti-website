@@ -33,6 +33,8 @@ const ROUTES = [
   '/industries/education/', '/industries/financial-services-banking/',
   '/industries/government-municipal/', '/industries/manufacturing-industrial/',
   '/industries/retail-corporate-offices/', '/nope-404/', '/quote/',
+  // The location pages (24 Sep 2026): a partner hub, a partner service page, a MN one.
+  '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota-recycling/battery-recycling/',
 ]
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium' })

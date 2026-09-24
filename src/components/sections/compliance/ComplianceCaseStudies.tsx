@@ -39,7 +39,7 @@ export function ComplianceCaseStudies({ top, height }: { top: number; height: nu
     <Section top={top} height={height} label="6389:1529"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6390:1527 */}
-      <div className="flex w-full flex-col items-start gap-[24px] text-left lg:w-[820px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[820px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{CASE_STUDIES.eyebrow}</Eyebrow>
         <h2 className="w-[820px] font-sans text-[40px] font-semibold leading-[1.3] text-black max-lg:w-full max-lg:text-[26px] max-lg:leading-[32px]">
           {CASE_STUDIES.heading}

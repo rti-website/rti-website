@@ -41,12 +41,12 @@ const ROW_MARKS: Record<GuideRow['glyph'], string> = {
 
 function BandHeader({ eyebrow, heading, lead }: { eyebrow: string; heading: string; lead: string }) {
   return (
-    <div className="flex w-full flex-col items-start gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px]">
+    <div className="flex w-full flex-col items-center gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px]">
       <span className="flex h-[34px] shrink-0 items-center rounded-full bg-[#e8f5ec] px-[20px] font-roboto text-[11px] font-bold tracking-[0.89px] text-[#1b7a3d] max-lg:h-[29px] max-lg:px-[16px]">
         {eyebrow}
       </span>
-      <h2 className="text-center font-sans text-[40px] font-semibold leading-[52px] text-black max-lg:w-full max-lg:text-left max-lg:text-[26px] max-lg:leading-[32px]">{heading}</h2>
-      <p className="text-center font-roboto text-[17px] leading-[20px] text-[#7e7e7e] max-lg:w-full max-lg:text-left max-lg:text-[16px] max-lg:leading-[24px]">{lead}</p>
+      <h2 className="text-center font-sans text-[40px] font-semibold leading-[52px] text-black max-lg:w-full max-lg:text-[26px] max-lg:leading-[32px]">{heading}</h2>
+      <p className="text-center font-roboto text-[17px] leading-[20px] text-[#7e7e7e] max-lg:w-full max-lg:text-[16px] max-lg:leading-[24px]">{lead}</p>
     </div>
   )
 }

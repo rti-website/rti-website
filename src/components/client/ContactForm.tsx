@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { FORM, SERVICE_INTEREST } from '@/data/contact'
+import { FORM, HERO_LOCATIONS, SERVICE_INTEREST } from '@/data/contact'
 import { path } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
 import { cityKey, stateCode } from '@/lib/us-address'
@@ -62,6 +62,11 @@ import { trackLead } from '@/components/client/track'
  */
 const INPUT = 'h-[48px] w-full rounded-[8px] border border-field bg-white px-[16px] font-poppins text-[14px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand aria-[invalid=true]:border-[#b3261e]'
 const LABEL = 'font-sans text-[14px] font-medium leading-none text-label'
+/** Chrome and Safari draw their own arrow on an input with a datalist. It is
+ *  made invisible and stretched over the right 44px, where our 16px chevron
+ *  sits, so the chevron looks like the design and a click on it still opens
+ *  the list. */
+const LIST_ARROW = '[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:top-0 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-[44px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0'
 /** A pair of fields: one under the other on a phone, side by side at lg. */
 const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[20px]'
 const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
@@ -80,7 +85,7 @@ function check(v: (k: FieldName) => string, consent: boolean): { field: FieldNam
   if (!v('city')) return { field: 'city', message: 'Please enter your city.' }
   if (!stateCode(v('state'))) return { field: 'state', message: 'Please enter a US state, e.g. MN or Minnesota.' }
   if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Please enter a 5 digit ZIP code.' }
-  if (!v('service')) return { field: 'service', message: 'Please choose what you would like to recycle.' }
+  if (!v('service')) return { field: 'service', message: 'Please choose or type what you would like to recycle.' }
   if (v('message').length > FORM.messageMax) return { field: 'message', message: `Please keep the message under ${FORM.messageMax} characters.` }
   if (!consent) return { field: 'consent', message: 'Please tick the box so we can contact you.' }
   return null
@@ -114,13 +119,20 @@ export function ContactForm() {
   const [bad, setBad] = useState<FieldName | null>(null)
   const [count, setCount] = useState(0)
 
+  const [hint, setHint] = useState<Hint | null>(null)
+  /** Which of the three we filled in (ours to replace) vs the visitor typed. */
+  const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
+  /** Only the latest lookup may write: a slow answer to an old ZIP is dropped. */
+  const seq = useRef(0)
+
   /**
    * Two things arrive from other pages, both written to the DOM in an effect
    * (the form is uncontrolled and prerendered, so filling them during render
    * would not match the server's HTML):
    *   - an email typed into the "Don't See Your Item?" band (sessionStorage),
    *     read once and removed;
-   *   - a service picked in the homepage hero (`?service=` in the URL).
+   *   - a service and a location picked in the homepage hero (`?service=`
+   *     and `?location=` in the URL).
    */
   useEffect(() => {
     try {
@@ -132,12 +144,32 @@ export function ContactForm() {
       }
     } catch { /* storage blocked — nothing to carry over */ }
 
-    const wanted = new URLSearchParams(window.location.search).get('service')?.trim().toLowerCase()
+    const params = new URLSearchParams(window.location.search)
+    const select = document.getElementById('contact-service')
+    const wanted = params.get('service')?.trim().toLowerCase()
     if (wanted) {
       const match = SERVICE_INTEREST.find((o) => o.toLowerCase() === wanted)
-      const select = document.getElementById('contact-service')
-      if (match && select instanceof HTMLSelectElement) select.value = match
+      if (match && select instanceof HTMLInputElement) select.value = match
     }
+
+    /* The hero's "Select Your Location" (24 Sep 2026): a facility state fills
+       State, as if the ZIP lookup had — so a ZIP typed later may still replace
+       it — and Nationwide picks the Mail-In service if none was chosen. */
+    const place = params.get('location')?.trim().toLowerCase()
+    const loc = place ? HERO_LOCATIONS.find((l) => l.label.toLowerCase() === place) : undefined
+    /* A location page (24 Sep 2026) sends its place as "Phoenix, AZ": the
+       state after the comma fills State the same way. The city is the drop-off
+       site's, not necessarily the visitor's, so it is left for them. */
+    const fromPage = place?.match(/,\s*([a-z]{2})$/)?.[1]
+    const prefillState = loc?.state ?? (fromPage ? stateCode(fromPage) : null)
+    if (prefillState) {
+      const state = document.getElementById('contact-state')
+      if (state instanceof HTMLInputElement && state.value === '') {
+        state.value = prefillState
+        filled.current.state = true
+      }
+    }
+    if (loc?.service && select instanceof HTMLInputElement && select.value === '') select.value = loc.service
   }, [])
 
   function focusField(f: FieldName) {
@@ -146,11 +178,6 @@ export function ContactForm() {
   }
 
   /* ---------------------------------------------- ZIP <-> city and state -- */
-  const [hint, setHint] = useState<Hint | null>(null)
-  /** Which of the three we filled in (ours to replace) vs the visitor typed. */
-  const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
-  /** Only the latest lookup may write: a slow answer to an old ZIP is dropped. */
-  const seq = useRef(0)
 
   function put(f: AddrField, v: string, ours: boolean) {
     const input = addr(f)
@@ -394,12 +421,20 @@ export function ContactForm() {
       <div className={ROW}>
         <div className={FIELD}>
           <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
+          {/* Pick from the list OR type anything (Asim, 24 Sep 2026: "make it
+              editable, the user can write in it if they want"). A text input
+              with a <datalist>: the browser offers the services as the
+              visitor clicks or types, and any other wording is kept as
+              written. No script and no new dependency; it works before
+              hydration and on every phone. autoComplete off so the list is
+              the services, not the browser's history of this box. */}
           <div className="relative">
-            <select id="contact-service" name="service" defaultValue="" required aria-invalid={invalid('service')} onChange={() => setBad(null)}
-              className={`${INPUT} appearance-none pr-[44px] has-[option[value='']:checked]:text-muted`}>
-              <option value="">{F.service.placeholder}</option>
-              {SERVICE_INTEREST.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
-            </select>
+            <input id="contact-service" name="service" type="text" list="contact-service-options" required maxLength={80}
+              autoComplete="off" placeholder={F.service.placeholder} aria-invalid={invalid('service')}
+              onInput={() => setBad(null)} className={`${INPUT} ${LIST_ARROW} relative pr-[44px]`} />
+            <datalist id="contact-service-options">
+              {SERVICE_INTEREST.map((o) => <option key={o} value={o} />)}
+            </datalist>
             <Chevron />
           </div>
         </div>

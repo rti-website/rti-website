@@ -71,8 +71,13 @@ export const CHROME_SHIFT = 140 - HEADER_H
  * It is a fixed number rather than a viewport unit because every section below
  * is pinned to an absolute y — a hero that changed height with the window would
  * drag the whole page with it.
+ *
+ * 752 since 24 Sep 2026 (+37): the location picker moved into the quote card
+ * (Asim), the card grew, and the stats strip moved down with it (y519 -> 556).
+ * The strip still ends on screen: 556 + 131 + the 120 header is 807 design px,
+ * ~934px in a browser at 1920 wide.
  */
-export const HERO_H = 715
+export const HERO_H = 752
 
 /**
  * The extra distance every homepage section BELOW the hero moves up, on top of

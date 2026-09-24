@@ -178,6 +178,56 @@ crontab -l
 
 This keeps 14 days of backups. Ask the admins to copy `~/backups/rti-live` and `/home/sj/apps/rti-website-data/uploads` off the server as well.
 
+## Step 10: where each enquiry is from (added 24 Sep 2026)
+
+Admin -> Enquiries shows, for every enquiry:
+
+- the place and county of the ZIP code they typed;
+- the nearer facility, and whether it is inside the 100 mile pickup area;
+- where the connection came from (IP location);
+- a map.
+
+**1. Database.** Run once on each database. It is safe to run twice.
+
+```bash
+cd ~/apps/rti-website && psql "$(grep -E '^DATABASE_URL=' .env.local | cut -d= -f2- | tr -d '"')" -f db/007_lead_location.sql
+cd ~/apps/rti-website-dev && psql "$(grep -E '^DATABASE_URL=' .env.local | cut -d= -f2- | tr -d '"')" -f db/007_lead_location.sql
+```
+
+**2. IP location file.** This is the free DB-IP City Lite database: about 120 MB, with a new version each month. One copy serves both dev and live.
+
+```bash
+mkdir -p /home/sj/apps/rti-website-data/geoip
+for d in ~/apps/rti-website ~/apps/rti-website-dev; do grep -q '^GEOIP_DB=' $d/.env.local || echo 'GEOIP_DB=/home/sj/apps/rti-website-data/geoip/dbip-city-lite.mmdb' >> $d/.env.local; done
+cd ~/apps/rti-website && npm run geoip:update
+( crontab -l 2>/dev/null; echo "0 4 3 * * cd /home/sj/apps/rti-website && $(command -v node) scripts/geoip-update.mjs >> \$HOME/geoip-update.log 2>&1" ) | crontab -
+crontab -l
+```
+
+- The cron line refreshes the file at 04:00 on the 3rd of each month.
+- The site notices the new file on its own; no restart is needed.
+- Without the file, everything else in the location block still works, and Enquiries says the IP location is not set up.
+
+**3. Maps key.** Paste the key in Admin -> Google & Tracking -> Google Maps, on dev and on live. Each database keeps its own copy.
+
+- The key given on 24 Sep 2026 is a website key. It only works on recycletechnologies.com pages, so it cannot be tested from a laptop.
+- In Google Cloud, keep its website restriction set to `*.recycletechnologies.com/*`.
+- If nothing else uses this key, you can also limit it to the Maps Embed API, which is all the site needs from it.
+
+## Step 11: location pages (added 24 Sep 2026)
+
+These are the SEO brief's 30 service pages at 10 sites, edited in Admin -> Locations. Run this on each database once. It is safe to run twice.
+
+```bash
+cd ~/apps/rti-website && psql "$(grep -E '^DATABASE_URL=' .env.local | cut -d= -f2- | tr -d '"')" -f db/008_service_locations.sql
+cd ~/apps/rti-website-dev && psql "$(grep -E '^DATABASE_URL=' .env.local | cut -d= -f2- | tr -d '"')" -f db/008_service_locations.sql
+```
+
+- The rows fill themselves in from `src/data/service-locations.ts` on the next build, or when Admin -> Locations is first opened.
+- Every page starts as a draft.
+- Dev and live keep separate content, like the posts. Write and check each page on dev first, then enter the final version on live.
+- When `/minnesota-recycling/battery-recycling/` goes live, repoint the old Minnesota battery URLs in `data/url-map.csv` to it. Those URLs are `/minnesota-recycling/battery-recycling-in-minneapolis/`, `-st-paul/` and `-duluth/`. They currently 301 to `/minnesota-recycling/`. Do the same for the old electronics and bulb URLs once those pages are live.
+
 ## Updating the live site later
 
 ```bash

@@ -33,7 +33,8 @@ export const HERO = {
     { label: 'Compliance Center', href: null },
   ],
   h1: 'Compliance Center',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 24 Sep 2026.
+  lead: 'A clear view of the certifications, regulations, and standards that govern how Recycle Technologies handles your electronics, data, and materials, so compliance is never something you have to take on faith.',
 }
 
 type StatusTone = 'ok' | 'warn'

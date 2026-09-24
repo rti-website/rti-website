@@ -1,7 +1,8 @@
 /**
  * Distance on the ground between two points, and where the two facilities are.
  *
- * Shared by the locator route (/api/locate) and nothing else yet. No `server-only`
+ * Shared by the locator route (/api/locate) and, since 24 Sep 2026, the
+ * enquiry location in the admin (src/lib/lead-location.ts). No `server-only`
  * on purpose: the numbers here are public — they are the facilities' own
  * addresses — and a client that wanted to draw a distance could use it too.
  */

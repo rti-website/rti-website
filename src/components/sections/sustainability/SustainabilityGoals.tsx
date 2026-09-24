@@ -28,7 +28,7 @@ export function SustainabilityGoals({ top, height }: { top: number; height: numb
     <Section top={top} height={height} label="6383:1164"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6383:1236 / 6638:10516..10519 */}
-      <div className="flex w-full flex-col items-start gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{GOALS.eyebrow}</Eyebrow>
         <h2 className="w-full font-sans text-[26px] font-semibold leading-[32px] text-black lg:w-[780px] lg:text-[40px] lg:leading-[1.3]">{GOALS.heading}</h2>
         <p className="w-full font-roboto text-[16px] leading-[24px] text-muted lg:w-[780px] lg:text-[17px] lg:leading-[1.175]">{GOALS.lead}</p>

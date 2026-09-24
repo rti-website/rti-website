@@ -17,13 +17,12 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * Mobile: a plain column — px20 / py48 / gap16 — and the section's four
  * children in the frame's order.
  *
- * !! THE LEAD PARAGRAPH SITS ABOVE THE LOGO STRIP IN THE SOURCE, which is the
- * reverse of how the desktop board reads top-to-bottom (heading 150, logos 282,
- * lead 372). The mobile frame puts the paragraph second and the strip last, and
- * below lg the children stack in SOURCE ORDER — so source order is the only
- * lever there is. It costs the desktop nothing: at lg all three are absolutely
- * positioned at y offsets that do not overlap, so the paint order change is not
- * observable. Do not "fix" this back into visual order.
+ * The lead paragraph sits ABOVE the logo strip, on the board as well as the
+ * phone — Asim, 24 Sep 2026: "move the text above the icons below the
+ * heading in all the places". The frame drew heading 150, logos 282, lead 372;
+ * it is now heading 150 (87 tall), lead 280 (one line), logos 352 (46 tall),
+ * keeping the frame's ~44px between each and ~50 under the strip. Below lg the
+ * children stack in source order, which was already heading, lead, strip.
  */
 export function Certifications() {
   return (
@@ -42,7 +41,9 @@ export function Certifications() {
         <Title className="text-center">{CERT_COPY.title}</Title>
       </CenterBox>
 
-      <CenterBox y={372 - CERT_TRIM} w={830}>
+      {/* 1084, not 830: the one-sentence compliance line (24 Sep 2026) sits
+          on one line instead of leaving "R2v3." on a second. */}
+      <CenterBox y={280 - CERT_TRIM} w={1084}>
         <Lead className="text-center">{CERT_COPY.body}</Lead>
       </CenterBox>
 
@@ -55,7 +56,7 @@ export function Certifications() {
         leaves the `width` property alone, so there is nothing to fight the
         `width: var(--bw)` the lg media query puts on .design-box.
       */}
-      <Box x={330} y={282 - CERT_TRIM} w={1260} className="self-stretch">
+      <Box x={330} y={352 - CERT_TRIM} w={1260} className="self-stretch">
         <LogoMarquee logos={CERT_LOGOS} speed={45} />
       </Box>
     </Section>

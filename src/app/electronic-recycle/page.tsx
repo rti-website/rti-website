@@ -1,5 +1,6 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
+import { loadLocations, servicePlaces } from '@/lib/service-locations'
 import { CONTENT } from '@/data/electronics-recycling'
 
 /**
@@ -17,6 +18,9 @@ export const metadata = buildMetadata({
   description: CONTENT.liveSeo.description,
 })
 
-export default function Page() {
-  return <ServiceDetailPage content={CONTENT} layout={{ intro: 724, process: 625, accept: 759 }} />
+// Async since 24 Sep 2026: the "Near You" band lists this service's published
+// location pages (Admin -> Locations), read at build and revalidated on save.
+export default async function Page() {
+  const places = servicePlaces(await loadLocations(), 'electronic-recycling')
+  return <ServiceDetailPage content={CONTENT} layout={{ intro: 724, process: 625, accept: 759 }} places={places} placesTitle="Electronic Recycling Near You" />
 }

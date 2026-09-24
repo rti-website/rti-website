@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import '@/styles/globals.css'
-import { SITE } from '@/lib/site'
+import { SITE, TAWK } from '@/lib/site'
 import { Suspense } from 'react'
 import { graph, organizationNode, facilityNodes, websiteNode } from '@/lib/schema'
 import { trackingBootstrap, trackingRuntime } from '@/lib/tracking'
 import { PageViewTracker } from '@/components/client/PageViewTracker'
+import { TawkChat } from '@/components/client/TawkChat'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -49,6 +50,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
         {/* useSearchParams needs a Suspense boundary to stay static. */}
         <Suspense fallback={null}><PageViewTracker /></Suspense>
+        {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
+        <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
       </body>
     </html>
   )

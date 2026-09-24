@@ -35,7 +35,7 @@ export function CaseStudyGrid({ top, height }: { top: number; height: number }) 
     <Section top={top} height={height} label="6391:1527"
       className="flex flex-col items-start gap-[20px] bg-white px-[20px] py-[48px] max-lg:[&>div[role=group]]:w-full max-lg:[&>div[role=group]]:gap-[10px] max-lg:[&>div[role=group]]:overflow-x-auto max-lg:[&>div[role=group]]:[-ms-overflow-style:none] max-lg:[&>div[role=group]]:[scrollbar-width:none] max-lg:[&>div[role=group]::-webkit-scrollbar]:hidden max-lg:[&>div[role=group]>button]:h-[44px] max-lg:[&>div:last-child]:w-full max-lg:[&>div:last-child]:flex-col max-lg:[&>div:last-child]:gap-[16px] max-lg:[&>div:last-child>div]:w-full lg:items-center lg:gap-[44px] lg:px-0 lg:pb-[100px] lg:pt-[90px]">
       {/* Heading block — 6391:1529 / 6638:8852 */}
-      <div className="flex w-full flex-col items-start gap-[20px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[20px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{GRID.eyebrow}</Eyebrow>
         <h2 className="w-full text-center font-sans text-[26px] font-semibold leading-[1.3] text-black lg:w-[780px] lg:text-[40px]">{GRID.heading}</h2>
         <p className="w-full text-center font-roboto text-[14px] leading-[1.175] text-muted lg:w-[780px] lg:text-[17px]">{GRID.lead}</p>

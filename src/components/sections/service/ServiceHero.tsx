@@ -11,7 +11,7 @@ export type Crumb = { label: string; href: string | null }
  *
  * Same art as /services/ — see InteriorHeroArt — but the content is one
  * auto-layout column at x319 y113, gap 20: breadcrumb, H1, lead, then the
- * location picker and Get Started button side by side with a 12px gap.
+ * location picker and Get a Quote button side by side with a 12px gap.
  *
  * Written generic because every other service page uses this same frame, and
  * /industries/ uses it too with the button row omitted.
@@ -23,7 +23,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, label, image, imageFill, washes,
+  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, top = 140,
 }: {
   crumbs: Crumb[]
   /**
@@ -40,6 +40,9 @@ export function ServiceHero({
    * so both wordings ship from one DOM. Everything else passes a string.
    */
   lead: React.ReactNode
+  /* A `\n` in a string lead is a desktop line break, as in `h1` but switched
+     off below lg: Why Choose Us breaks after "operating history," because
+     Asim asked for exactly that split, which balancing alone does not pick. */
   /** This page's own hero photograph; the shared one when omitted. */
   image?: string
   /** Draw `image` as a raw Figma image fill — see HeroFill in InteriorHeroArt. */
@@ -54,11 +57,19 @@ export function ServiceHero({
   pickerPlaceholder?: string
   pickerOptions?: string[]
   cta?: { label: string; href: string; external?: boolean }
+  /** A second, outlined button after `cta` (state landing pages, 24 Sep 2026). */
+  secondaryCta?: { label: string; href: string; external?: boolean }
   label?: string
+  /**
+   * 140 under the header on a fixed canvas page. The location pages
+   * (24 Sep 2026) lay out in flow and put the hero in its own 470 tall box,
+   * so they pass 0.
+   */
+  top?: number
 }) {
   return (
     <Section
-      top={140} height={470} label={label}
+      top={top} height={470} label={label}
       className="flex flex-col justify-center bg-navy px-[20px] py-[48px] max-lg:min-h-[360px] lg:block lg:p-0"
     >
       {/*
@@ -98,8 +109,22 @@ export function ServiceHero({
             : h1}
         </h1>
 
-        <p className="w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:w-auto lg:text-left lg:text-[18px] lg:leading-[27px]">
-          {lead}
+        {/* `text-balance` — Asim, 24 Sep 2026: the lead as two lines of about
+            equal length under the H1 on every page ("keep till history in one
+            line, after that move it to 2nd line so both the lines look equal"),
+            rather than a full first line and a short second one. The browser
+            evens the lines out itself, so no page needs a hand-placed break.
+            A lead of more than about 200 characters needs three lines at the
+            column's 946, so it gets 1100 (to x1419) and fits in two; nothing
+            that long can collapse to one line at that width. The two longest
+            (Hard Drive Destruction, the Wisconsin electronics ad page) still
+            need three, balanced. */}
+        <p className={`w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:text-left lg:text-[18px] lg:leading-[27px] lg:text-balance ${typeof lead === 'string' && lead.length > 200 ? 'lg:w-[1100px] lg:max-w-none' : 'lg:w-auto'}`}>
+          {typeof lead === 'string' && lead.includes('\n')
+            ? lead.split('\n').map((line, i, all) => (
+              <span key={i}>{line}{i < all.length - 1 && <>{' '}<br className="max-lg:hidden" /></>}</span>
+            ))
+            : lead}
         </p>
 
         {(cta || pickerOptions) && (
@@ -122,6 +147,17 @@ export function ServiceHero({
                 className="max-lg:w-full max-lg:justify-center"
               >
                 {cta.label}
+              </Btn>
+            )}
+            {secondaryCta && (
+              /* Outlined white on the navy hero, beside the teal primary. */
+              <Btn
+                href={secondaryCta.href}
+                variant="white"
+                external={secondaryCta.external}
+                className="border border-white/60 max-lg:w-full max-lg:justify-center"
+              >
+                {secondaryCta.label}
               </Btn>
             )}
           </div>

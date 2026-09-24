@@ -54,7 +54,7 @@ export function WhyChooseUs() {
         style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 100%)' }} />
 
       <Box x={56} y={37} w={501}>
-        <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-white lg:text-[40px] lg:leading-[44.7px]">
+        <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-white max-lg:text-center lg:text-[40px] lg:leading-[44.7px]">
           Why Choose<br />Recycle Technologies?
         </h2>
       </Box>

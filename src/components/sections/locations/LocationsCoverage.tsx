@@ -19,7 +19,7 @@ export function LocationsCoverage({ top, height }: { top: number; height: number
       className="flex flex-col items-start gap-[32px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-0 lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">
       {/* One row at lg, two items in the section's own column below it. */}
       <div className="flex w-[1282px] items-start gap-[80px] max-lg:contents">
-        <div className="flex w-full flex-col items-start gap-[16px] lg:w-[700px] lg:shrink-0 lg:gap-[20px]">
+        <div className="flex w-full flex-col items-center gap-[16px] text-center lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[20px] lg:text-left">
           <Eyebrow>{COVERAGE.eyebrow}</Eyebrow>
           <h2 className="font-sans text-[28px] font-semibold leading-[34px] text-heading lg:text-[36px] lg:leading-[1.2]">{COVERAGE.heading}</h2>
           {COVERAGE.body.map((p) => (

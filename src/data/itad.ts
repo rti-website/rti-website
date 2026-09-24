@@ -45,7 +45,8 @@ export const HERO = {
     { label: 'ITAD', href: null },
   ],
   h1: 'IT Asset Disposition',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 24 Sep 2026 (the doc's dash as a comma, like every other hero).
+  lead: 'Secure, documented, and fully compliant IT asset disposition, from decommissioning to certified data destruction. Every device is tracked, every outcome is recorded, and nothing leaves your control until it’s verifiably handled.',
   image: '/images/itad/hero.png',
   /* The photo is the node's raw IMAGE FILL (the MCP no longer returns a
      clipped 1920x470 export), so it is drawn as the frame draws it: 1920x1081

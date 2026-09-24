@@ -78,6 +78,20 @@ export const SERVICE_INTEREST = [
 ] as const
 
 /**
+ * The homepage hero's "Select Your Location" — moved into the quote card on
+ * 24 Sep 2026 (Asim: "move the location to the form above Pick Your Service;
+ * when a user fills it, it must already be filled in the form"). It posts as
+ * `?location=` with the service, and ContactForm turns it into the field it
+ * means: a facility state fills State, Nationwide picks the Mail-In service
+ * when no service was chosen.
+ */
+export const HERO_LOCATIONS: readonly { label: string; state?: string; service?: (typeof SERVICE_INTEREST)[number] }[] = [
+  { label: 'Minnesota', state: 'MN' },
+  { label: 'Wisconsin', state: 'WI' },
+  { label: 'Nationwide (Mail-In)', service: 'Mail-In Program' },
+]
+
+/**
  * The contact form — rebuilt to the lead-form spec Asim sent on 23 Sep 2026
  * ("2.1 Visible fields"), which replaces the frame's eleven fields:
  *
@@ -92,11 +106,13 @@ export const SERVICE_INTEREST = [
  *                          ("MN" or "Minnesota", stored as "MN")
  *   Zip code     text      required, 5 digits; filled in from the city, or
  *                          fills in the city and state (/api/zip)
- *   What would you like to recycle?  select, required, SERVICE_INTEREST above
- *                          (the spec's "Service Interest", relabelled as the
- *                          frame draws it; still `service`, so the hero
- *                          preselect keeps working)
- *   Is it for?   select    Residential (default) or Commercial
+ *   What would you like to recycle?  required; pick from SERVICE_INTEREST
+ *                          above OR type anything (editable since 24 Sep 2026;
+ *                          a typed value matching a listed service is saved as
+ *                          that service). The spec's "Service Interest",
+ *                          relabelled as the frame draws it; still `service`,
+ *                          so the hero preselect keeps working.
+ *   Is it for?   select    Commercial (default since 24 Sep 2026) or Residential
  *   Message      textarea  optional, max 2000 chars
  *   Consent      checkbox  required: "I agree to be contacted by Recycle Technologies"
  *
@@ -125,12 +141,14 @@ export const FORM = {
     city:      { label: 'City',             placeholder: '--' },
     state:     { label: 'State',            placeholder: '--' },
     zip:       { label: 'Zip code',         placeholder: '--' },
-    service:   { label: 'What would you like to recycle?', placeholder: 'Select' },
+    service:   { label: 'What would you like to recycle?', placeholder: 'Select or type' },
     audience:  { label: 'Is it for?',       placeholder: '' },
     message:   { label: 'Message',          placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
   },
-  /** "Is it for?" — the first is the default, as the frame draws it. */
-  audiences: ['Residential', 'Commercial'] as const,
+  /** "Is it for?" — the first is the default. Commercial since 24 Sep 2026
+   *  (Asim: "by default place Commercial in the form, not Residential"); the
+   *  frame drew Residential first. */
+  audiences: ['Commercial', 'Residential'] as const,
   consent: 'I agree to be contacted by Recycle Technologies',
   messageMax: 2000,
   submit: 'Send Message',

@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow } from '@/components/ui/Bits'
-import { CONTACT_FORM_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { CONTACT_FORM_HREF, href } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { Picker } from '@/components/client/Picker'
 import { R2_DIRECTORY } from '@/data/certifications'
-import { SERVICE_INTEREST } from '@/data/contact'
+import { HERO_LOCATIONS, SERVICE_INTEREST } from '@/data/contact'
 
 /**
  * Hero — Figma 6023:13152, 1920x940.
@@ -157,22 +157,10 @@ export function Hero() {
         </p>
       </Box>
 
-      {/* Location picker — 6199:4848. 393x50. y443 puts its bottom edge on the
-          quote card's (~493), so the two columns end together above the stats
-          rule at y519. The frame's 33px lead-to-picker gap does not fit the
-          715 hero with a three-line headline; this is 26. */}
-      <Box x={319} y={443} w={393} h={50}>
-        <Picker id="hero-location" placeholder="Select Your Location" srLabel="Select your location"
-          options={['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)']} />
-      </Box>
-
-      {/* Get Started — 6032:16992, moved up with the headline.
-          The phone's CTA Row (6590:2314) gaps these two by 12 where the section
-          gaps everything else by 20, so this one pulls back the difference
-          rather than the section carrying a second gap value. */}
-      <Box x={724} y={443} className="-mt-[8px] lg:mt-0">
-        <Btn href={QUOTE_HREF} variant="colored" className="w-full justify-center lg:w-auto">Get Started</Btn>
-      </Box>
+      {/* The location picker and "Get Started" that sat here (6199:4848,
+          6032:16992) are gone since 24 Sep 2026: Asim moved the location into
+          the quote card, above Pick Your Service, so one form carries both to
+          the contact form. See HERO_LOCATIONS in src/data/contact.ts. */}
 
       {/* Glass quote card — 6098:518, moved up with the headline. w398. */}
       <Box x={1203} y={88} w={398}>
@@ -196,7 +184,18 @@ export function Hero() {
               works before hydration, and a form with no choice just opens
               the contact form. The options are the contact form's own list
               (SERVICE_INTEREST), so every choice exists over there. */}
-          <form method="get" action={CONTACT_FORM_HREF} className="flex flex-col gap-[16px] pt-[16px] lg:pt-[24px]">
+          <form method="get" action={CONTACT_FORM_HREF} className="flex flex-col gap-[12px] pt-[16px] lg:pt-[18px]">
+            {/* Location, above the service (Asim, 24 Sep 2026). Posts as
+                ?location=; ContactForm fills State from it (see HERO_LOCATIONS). */}
+            <div>
+              <label htmlFor="hero-location" className="block pb-[8px] font-inter text-[14px] font-medium leading-[20px] text-white/70">
+                Your Location
+              </label>
+              <div className="h-[50px]">
+                <Picker id="hero-location" name="location" placeholder="Select Your Location" srLabel="Select your location"
+                  options={HERO_LOCATIONS.map((l) => l.label)} />
+              </div>
+            </div>
             <div>
               <label htmlFor="hero-service" className="block pb-[8px] font-inter text-[14px] font-medium leading-[20px] text-white/70">
                 Pick Your Service
@@ -210,7 +209,7 @@ export function Hero() {
             </Btn>
           </form>
 
-          <div className="py-[20px]">
+          <div className="py-[16px] lg:py-[14px]">
             <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
 
@@ -222,6 +221,10 @@ export function Hero() {
 
       {/* Stats strip — 6023:13173, lifted off the bottom of the band so the
           figures are on screen when the page opens. Asim, 16 Sep 2026.
+
+          y556 since 24 Sep 2026 (was 519): the quote card grew by the location
+          picker to ~441 tall, ending at ~529, and the strip keeps ~27 clear of
+          it. HERO_H grew by the same 37 (src/lib/layout.ts).
           
           The gap above it is set by the QUOTE CARD, not by the left column: the
           card is 457 tall against the column's ~290, so the card is what holds
@@ -244,7 +247,7 @@ export function Hero() {
           one is 417, the last takes the rest. With a 64px tile in front of
           each figure, equal thirds would push "R2v3 Certified Locations"
           120px past its rule. */}
-      <Box x={319} y={519} w={1281.335} className="flex flex-col gap-[8px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[24.025px]">
+      <Box x={319} y={556} w={1281.335} className="flex flex-col gap-[8px] lg:flex-row lg:gap-0 lg:border-t-[1.001px] lg:border-white/40 lg:pt-[24.025px]">
         {STATS.map((s, i) => {
           const cls = `flex items-center gap-[12px] lg:gap-[20px] lg:px-[28.029px] lg:py-[20.021px] ${
             i === 0 ? 'lg:shrink-0' : i === 1 ? 'lg:w-[417px] lg:shrink-0' : 'lg:min-w-px lg:flex-1'

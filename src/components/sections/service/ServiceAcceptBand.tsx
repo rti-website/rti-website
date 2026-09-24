@@ -61,7 +61,7 @@ function Tick() {
 }
 
 export function ServiceAcceptBand({
-  top, height = 446.36, label, heading, intro, items, outro, id,
+  top, height = 446.36, label, heading, intro, itemsHeading, items, outro, id,
 }: {
   top: number
   /** Anchor target for the preceding block's "Read More" link. */
@@ -69,8 +69,11 @@ export function ServiceAcceptBand({
   height?: number
   label?: string
   heading: string
-  intro?: string
-  /** May be empty: the mail-in doc has no published eligibility list yet. */
+  /** One paragraph or several. */
+  intro?: string | string[]
+  /** A small heading over the rows (the mail-in list's title). */
+  itemsHeading?: string
+  /** May be empty. A row's `text` may be empty too, for a bare list item. */
   items: { label: string; text: string; href?: string; external?: boolean }[]
   outro?: string
 }) {
@@ -93,15 +96,16 @@ export function ServiceAcceptBand({
           which fits the longest of them (Government & Municipal Organizations)
           on one line with room to spare. The `text-center` keeps the shorter
           service-page headings sitting exactly where 829px centred them. */}
-      <h2 className="w-full font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[75px] lg:w-full lg:items-center lg:justify-center lg:text-center lg:text-[40px] lg:leading-[1.15]">
+      <h2 className="w-full text-center font-sans text-[24px] font-semibold leading-[1.2] text-black lg:flex lg:min-h-[75px] lg:w-full lg:items-center lg:justify-center lg:text-center lg:text-[40px] lg:leading-[1.15]">
         {heading}
       </h2>
 
-      {intro && (
-        <p className="w-full font-roboto text-[15px] leading-[1.5] text-muted lg:w-[942px] lg:text-center lg:text-[17.018px] lg:leading-[27.654px]">
-          {intro}
+      {(Array.isArray(intro) ? intro : intro ? [intro] : []).map((p) => (
+        <p key={p} className="w-full text-center font-roboto text-[15px] leading-[1.5] text-muted lg:w-[942px] lg:text-center lg:text-[17.018px] lg:leading-[27.654px]">
+          {p}
         </p>
-      )}
+      ))}
+
 
       {/* A plain div rather than ul/li: the hairline is a flex ITEM, not a
           border, so the gap falls either side of it the way Figma stacks them.
@@ -115,6 +119,13 @@ export function ServiceAcceptBand({
           row and the next, this puts 25. */}
       {items.length > 0 && (
         <div className="flex w-full flex-col gap-[12px] max-lg:mt-[8px]">
+          {/* The list's own title, inside the column so it sits 12 above the
+              first row rather than the section's 30. */}
+          {itemsHeading && (
+            <h3 className="w-full font-sans text-[18px] font-semibold leading-[1.3] text-heading lg:px-[24px] lg:text-[22px]">
+              {itemsHeading}
+            </h3>
+          )}
           {items.map((item, i) => (
             <Fragment key={item.label}>
               <Row item={item} />
@@ -126,7 +137,7 @@ export function ServiceAcceptBand({
       )}
 
       {outro && (
-        <p className="w-full font-roboto text-[15px] leading-[1.5] text-muted lg:w-[942px] lg:text-center lg:text-[17.018px] lg:leading-[27.654px]">
+        <p className="w-full text-center font-roboto text-[15px] leading-[1.5] text-muted lg:w-[942px] lg:text-center lg:text-[17.018px] lg:leading-[27.654px]">
           {outro}
         </p>
       )}
@@ -152,9 +163,11 @@ function Row({ item }: { item: { label: string; text: string; href?: string; ext
         <span className="font-sans text-[14px] font-semibold leading-[1.22] text-heading lg:text-[18px]">
           {item.label}
         </span>
-        <span className="font-roboto text-[15px] leading-[1.4] text-muted lg:text-[16px] lg:leading-[27.654px]">
-          {item.text}
-        </span>
+        {item.text && (
+          <span className="font-roboto text-[15px] leading-[1.4] text-muted lg:text-[16px] lg:leading-[27.654px]">
+            {item.text}
+          </span>
+        )}
       </span>
     </>
   )

@@ -22,7 +22,7 @@ export function ZeroLandfill({ top, height }: { top: number; height: number }) {
     <Section top={top} height={height} label="6383:1162"
       className="flex flex-col items-start gap-[24px] bg-[#fcfcfc] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6383:1191 / 6638:10229..10232 */}
-      <div className="flex w-full flex-col items-start gap-[24px] lg:w-[820px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[820px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{ZERO_LANDFILL.eyebrow}</Eyebrow>
         <h2 className="w-full font-sans text-[26px] font-semibold leading-[32px] text-black lg:w-[820px] lg:text-[40px] lg:leading-[1.3]">
           {ZERO_LANDFILL.heading}

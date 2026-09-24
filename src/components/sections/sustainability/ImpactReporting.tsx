@@ -27,7 +27,7 @@ export function ImpactReporting({ top, height }: { top: number; height: number }
       className="flex flex-col items-start gap-[32px] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[90px]"
       style={{ backgroundImage: 'linear-gradient(90deg, #0b1f3a 0%, #0c4e5a 100%)' }}>
       {/* Heading block — 6383:1218 / 6638:10309..10310 */}
-      <div className="flex w-full flex-col items-start gap-[32px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[32px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <h2 className="w-full font-sans text-[26px] font-semibold leading-[32px] text-white lg:w-[780px] lg:text-[36px] lg:leading-[1.3]">
           {REPORTING.heading}
         </h2>

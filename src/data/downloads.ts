@@ -29,7 +29,8 @@ export const HERO = {
     { label: 'Downloads', href: null },
   ],
   h1: 'Downloads',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 24 Sep 2026.
+  lead: 'Guides on certificates, compliance documents, service brochures, and other recycling guides, all in one place, ready whenever you need a quick reference.',
 }
 
 /** A card. `glyph` picks one of the marks in DownloadMarks. */

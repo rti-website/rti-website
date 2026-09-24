@@ -33,18 +33,20 @@ export type FaqGroup = {
   items: Faq[]
 }
 
-/** Hero — the same 470px interior hero every other page uses. */
+/**
+ * Hero — the same 470px interior hero every other page uses.
+ *
+ * Asim, 24 Sep 2026: the H1 and the line under it are the doc's page heading
+ * and opening sentence ("Frequently Asked Questions" and "Find answers to…"),
+ * which until then sat in a separate block under a "FAQs" hero carrying the
+ * site-wide 1993 line. That block is gone; the hero says it once.
+ */
 export const FAQ_HERO = {
   crumbs: [
     { label: 'Home', href: href('/') },
     { label: 'FAQs', href: null },
   ],
-  h1: 'FAQs',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
-}
-
-export const FAQ_INTRO = {
-  heading: 'Frequently Asked Questions',
+  h1: 'Frequently Asked Questions',
   lead: 'Find answers to common questions about electronics recycling, e-waste recycling, battery '
     + 'recycling, light bulb recycling, hard drive destruction, shredding, mail-in recycling, '
     + 'pickups, drop-offs, and responsible recycling services.',

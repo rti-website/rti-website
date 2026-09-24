@@ -1,4 +1,5 @@
 import { FOOTER_H } from '@/lib/layout'
+import { ServiceLocationsBand, placesBandHeight, type Place } from '@/components/sections/service/ServiceLocationsBand'
 import { Canvas } from '@/components/design/Frame'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
@@ -11,6 +12,7 @@ import { ServiceAcceptBand } from '@/components/sections/service/ServiceAcceptBa
 import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
 import { href } from '@/lib/urls'
+import { Btn } from '@/components/ui/Bits'
 
 /**
  * Every service detail page — Figma frame 6142:2048 "Service Details".
@@ -66,10 +68,17 @@ function toParagraphs(v: string | string[] | undefined): string[] {
 }
 
 export function ServiceDetailPage({
-  content, layout,
+  content, layout, places = [], placesTitle = '',
 }: {
   content: ServicePageContent
   layout: ServicePageLayout
+  /**
+   * Published location pages of this service (Admin -> Locations, 24 Sep
+   * 2026), for the "Near You" band. Only the three service hubs pass these;
+   * with none, the band and its height are not there at all.
+   */
+  places?: Place[]
+  placesTitle?: string
 }) {
   const acceptH    = layout.accept ?? ACCEPT_H_DEFAULT
   const faqH       = layout.faq ?? FAQ_H_DEFAULT
@@ -84,7 +93,9 @@ export function ServiceDetailPage({
     ? processTop + (layout.process ?? 0) + GAP
     : afterAccept + GAP
   const caseTop    = certTop + certH + GAP
-  const faqTop     = caseTop + CASE_H + GAP
+  const placesH    = placesBandHeight(places.length)
+  const placesTop  = caseTop + CASE_H + GAP
+  const faqTop     = placesTop + placesH
   const ctaTop     = faqTop + faqH
   const footerTop  = ctaTop + CTA_H
 
@@ -103,9 +114,10 @@ export function ServiceDetailPage({
           ]}
           h1={hero.h1}
           lead={hero.lead}
-          pickerPlaceholder={hero.cta ? 'Select Your Location' : undefined}
-          pickerOptions={hero.cta ? ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'] : undefined}
+          pickerPlaceholder={hero.cta && !hero.secondaryCta ? 'Select Your Location' : undefined}
+          pickerOptions={hero.cta && !hero.secondaryCta ? ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'] : undefined}
           cta={hero.cta}
+          secondaryCta={hero.secondaryCta}
           image={hero.image}
         />
 
@@ -132,6 +144,7 @@ export function ServiceDetailPage({
           top={acceptTop} height={acceptH} label="6142:2067" id="services"
           heading={accept.heading}
           intro={accept.intro}
+          itemsHeading={accept.itemsHeading}
           items={accept.items}
           outro={accept.outro}
         />
@@ -155,12 +168,36 @@ export function ServiceDetailPage({
               </ul>
             )}
             {toParagraphs(content.process.outro).map((p) => <p key={p} className={STEP}>{p}</p>)}
+            {content.process.extra?.map((x) => (
+              <div key={x.heading} className="flex flex-col gap-[8px] pt-[6px]">
+                <h3 className="font-sans text-[18px] font-semibold leading-[1.3] text-heading lg:text-[20px]">{x.heading}</h3>
+                {x.body?.map((p) => <p key={p} className={STEP}>{p}</p>)}
+                {x.items && x.items.length > 0 && (
+                  <ul className="flex flex-col gap-[2px]">
+                    {x.items.map((it) => (
+                      <li key={it.label} className={STEP}>
+                        <strong className="font-medium text-ink">{it.label}</strong> {it.text}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {x.cta && (
+                  <div className="pt-[4px]">
+                    <Btn href={x.cta.href} variant="colored" external={x.cta.external} className="max-lg:w-full max-lg:justify-center">
+                      {x.cta.label}
+                    </Btn>
+                  </div>
+                )}
+              </div>
+            ))}
           </ServiceSplit>
         )}
 
         <CertificationsBand top={certTop} height={certH} label="6173:2828" body={content.certifications?.body} />
 
         <CaseStudies top={caseTop} label="6146:2403" />
+
+        <ServiceLocationsBand top={placesTop} height={placesH} title={placesTitle} places={places} />
 
         <ServiceFaq
           top={faqTop} height={faqH} label="6146:2417"

@@ -59,7 +59,7 @@ export const HERO = {
   ],
   h1: 'Certifications',
   // Asim, 23 Sep 2026.
-  lead: 'Our certifications are the proof behind our promises — verified standards our facilities meet for responsible recycling and secure data destruction.',
+  lead: 'Our certifications are the proof behind our promises, verified standards our facilities meet for responsible recycling and secure data destruction.',
 }
 
 export const INTRO = {

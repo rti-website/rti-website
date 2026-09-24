@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import { href } from '@/lib/urls'
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { DETAIL_COPY, type Facility } from '@/data/facilities'
@@ -21,8 +23,17 @@ import { DETAIL_COPY, type Facility } from '@/data/facilities'
  *
  * MOBILE — 6751:2591. A two-column grid of 169x107 tiles, 12 apart, icon box
  * 40 with an 18px glyph, label 14; the lead is not drawn.
+ *
+ * LINKS (24 Sep 2026): a tile whose service has a published location page
+ * (/minnesota-recycling/battery-recycling/ and so on, Admin -> Locations)
+ * links to it, so the facility page is the hub the SEO brief asks for. Tiles
+ * without one stay plain, as before.
  */
-export function LocationMaterials({ top, height, f }: { top: number; height: number; f: Facility }) {
+export function LocationMaterials({ top, height, f, links = {} }: {
+  top: number; height: number; f: Facility
+  /** Material label -> published service page. */
+  links?: Record<string, string>
+}) {
   return (
     <Section top={top} height={height} label="6744:8796" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">
@@ -32,14 +43,26 @@ export function LocationMaterials({ top, height, f }: { top: number; height: num
       </div>
 
       <ul className="grid w-full grid-cols-2 gap-[12px] lg:flex lg:w-auto lg:gap-[20px]">
-        {f.materials.map((m) => (
-          <li key={m.label} className="flex flex-col gap-[10px] rounded-[12px] bg-[#eaf4f5] px-[16px] py-[20px] lg:w-[196px] lg:gap-[12px] lg:px-[20px] lg:py-[24px]">
-            <span className="grid size-[40px] place-items-center rounded-[12px] bg-brand lg:size-[44px]">
-              <Image src={m.icon} alt="" width={20} height={20} unoptimized className="size-[18px] lg:size-[20px]" />
-            </span>
-            <span className="font-sans text-[14px] font-medium leading-[1.3] text-heading lg:text-[14.5px]">{m.label}</span>
-          </li>
-        ))}
+        {f.materials.map((m) => {
+          const tile = 'flex flex-col gap-[10px] rounded-[12px] bg-[#eaf4f5] px-[16px] py-[20px] lg:w-[196px] lg:gap-[12px] lg:px-[20px] lg:py-[24px]'
+          const inner = (
+            <>
+              <span className="grid size-[40px] place-items-center rounded-[12px] bg-brand lg:size-[44px]">
+                <Image src={m.icon} alt="" width={20} height={20} unoptimized className="size-[18px] lg:size-[20px]" />
+              </span>
+              <span className="font-sans text-[14px] font-medium leading-[1.3] text-heading lg:text-[14.5px]">
+                {m.label}{links[m.label] && <span aria-hidden="true" className="text-brand"> &rarr;</span>}
+              </span>
+            </>
+          )
+          return (
+            <li key={m.label} className="flex">
+              {links[m.label]
+                ? <Link href={href(links[m.label]!)} className={`${tile} w-full transition-colors hover:bg-[#dcefef]`}>{inner}</Link>
+                : <span className={`${tile} w-full`}>{inner}</span>}
+            </li>
+          )
+        })}
       </ul>
     </Section>
   )

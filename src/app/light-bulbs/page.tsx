@@ -1,5 +1,6 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
+import { loadLocations, servicePlaces } from '@/lib/service-locations'
 import { CONTENT } from '@/data/light-bulbs'
 
 /**
@@ -17,6 +18,9 @@ export const metadata = buildMetadata({
   description: CONTENT.liveSeo.description,
 })
 
-export default function Page() {
-  return <ServiceDetailPage content={CONTENT} layout={{ intro: 724, process: 682 }} />
+// Async since 24 Sep 2026: the "Near You" band lists this service's published
+// location pages (Admin -> Locations), read at build and revalidated on save.
+export default async function Page() {
+  const places = servicePlaces(await loadLocations(), 'light-bulb-recycling')
+  return <ServiceDetailPage content={CONTENT} layout={{ intro: 724, process: 682 }} places={places} placesTitle="Light Bulb Recycling Near You" />
 }

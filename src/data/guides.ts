@@ -37,7 +37,8 @@ export const HERO = {
     { label: 'ITAD & Recycling Guides',  href: null },
   ],
   h1: 'ITAD & Recycling Guides',
-  lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  // Asim, 24 Sep 2026.
+  lead: 'Clear, expert guidance on ITAD and recycling processes, so you know exactly what to expect before your equipment leaves your hands.',
 }
 
 /** A guide row. `glyph` picks a mark; see GuideSections for the two sets. */

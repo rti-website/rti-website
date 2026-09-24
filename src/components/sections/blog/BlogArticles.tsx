@@ -75,7 +75,7 @@ export function BlogArticles({
      */
     <Section top={top} height={height} label="6384:1225"
       className="flex flex-col items-start gap-[12px] bg-white px-[20px] py-[40px] lg:items-center lg:gap-[44px] lg:px-0 lg:pb-[100px] lg:pt-[90px]">
-      <div className="flex w-full flex-col items-start gap-[12px] text-left lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[12px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{INTRO.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[26px] font-semibold leading-[1.3] text-black lg:text-[40px]">
           {heading ?? INTRO.heading}

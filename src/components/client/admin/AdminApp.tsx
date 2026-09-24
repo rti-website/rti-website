@@ -6,6 +6,9 @@ import { AskDialog, ConfirmDialog, Dialog } from './Dialog'
 import { MediaLibrary } from './MediaLibrary'
 import { SeoDesk } from './SeoDesk'
 import { Users } from './Users'
+import { GoogleTracking, SocialLinks, type SocialLink } from './SiteSettings'
+import { Locations } from './Locations'
+import { LOCATION_CSV_HEAD, LocationBlock, LocationCell, locationCsv, locationText, type LeadGeo } from './LeadLocation'
 import { slugify } from '@/lib/slug'
 import { api, getJSON, sendJSON } from './api'
 
@@ -34,19 +37,20 @@ type CategoryRow = Category & {
   description: string | null; sort_order: number; post_count: number; published_count: number
 }
 type Counts = { published: number; draft: number; scheduled: number; subscribers: number; leads: number; media: number }
-type SocialLink = { id: number; platform: string; url: string }
 type Boot = {
   user: User; counts: Counts; categories: Category[]
   authors: { id: number; name: string }[]; social: SocialLink[]
   settings: Record<string, unknown>
 }
 
-type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'subs' | 'leads' | 'users' | 'settings'
+/* 'settings' was split in two on 24 Sep 2026: 'tracking' (Google & Tracking)
+   and 'social' (Social Links). See SiteSettings.tsx. */
+type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'locations' | 'subs' | 'leads' | 'users' | 'tracking' | 'social'
 
 const TITLES: Record<View, string> = {
   dash: 'Overview', posts: 'All Posts', editor: 'Edit post', cats: 'Categories',
-  media: 'Media library', seo: 'SEO', subs: 'Subscribers', leads: 'Enquiries',
-  users: 'People & access', settings: 'Settings',
+  media: 'Media library', seo: 'SEO', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries',
+  users: 'People & access', tracking: 'Google & Tracking', social: 'Social Links',
 }
 
 const LOGO = '/images/logo.png'
@@ -96,6 +100,7 @@ export function AdminApp() {
   if (state === 'out' || !boot) return <Login onDone={load} />
 
   const canPublish = boot.user.role !== 'author'
+  const canTrack = boot.user.role === 'administrator' || boot.user.role === 'seo'
 
   /* Switching screens starts at the top. Without this, opening a post from
      halfway down the list leaves the editor scrolled past its own title, with
@@ -137,6 +142,9 @@ export function AdminApp() {
             half the job. */}
         <NavBtn on={view === 'seo'} go={() => show('seo')} label="SEO"
           icon="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.3-4.3M8.5 11.5l2 2 4-4.5" />
+        {/* The location based service pages (SEO brief, 24 Sep 2026). */}
+        <NavBtn on={view === 'locations'} go={() => show('locations')} label="Locations"
+          icon="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21ZM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
 
         <p className="a-navlabel">People</p>
         <NavBtn on={view === 'subs'} go={() => show('subs')} label="Subscribers"
@@ -149,8 +157,15 @@ export function AdminApp() {
           <NavBtn on={view === 'users'} go={() => show('users')} label="People & access"
             icon="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8" />
         )}
-        <NavBtn on={view === 'settings'} go={() => show('settings')} label="Settings"
-          icon="M12 9a3 3 0 1 1-.01 0M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
+        {/* Two screens where "Settings" was (Asim, 24 Sep 2026). Google &
+            Tracking is for the people who can change it; Social Links is
+            open to everyone, read only unless an administrator. */}
+        {canTrack && (
+          <NavBtn on={view === 'tracking'} go={() => show('tracking')} label="Google & Tracking"
+            icon="M3 3v18h18M7 15l4-4 3 3 5-6" />
+        )}
+        <NavBtn on={view === 'social'} go={() => show('social')} label="Social Links"
+          icon="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19.5" />
 
         <div className="a-railfoot">
           <div className="a-who">
@@ -177,7 +192,7 @@ export function AdminApp() {
           {/* The primary action follows the screen. A "New post" button on the
               Categories page is how people end up with a post called
               "Universal Waste" instead of the category they came to add. */}
-          {view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && (
+          {view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && (
             <button className="a-btn p" onClick={() => setAsking('post')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> New post
             </button>
@@ -218,10 +233,10 @@ export function AdminApp() {
         {view === 'users' && <Users meId={boot.user.id} onToast={say} />}
         {view === 'subs' && <Subscribers />}
         {view === 'leads' && <Leads onToast={say} />}
-        {view === 'settings' && <Settings social={boot.social}
-          canEdit={boot.user.role === 'administrator'}
-          canTrack={boot.user.role === 'administrator' || boot.user.role === 'seo'}
-          onToast={say} onGoSeo={() => show('seo')} />}
+        {view === 'locations' && <Locations canEdit={canPublish} onToast={say} />}
+        {view === 'tracking' && <GoogleTracking canEdit={canTrack} onToast={say} onGoSeo={() => show('seo')} />}
+        {view === 'social' && <SocialLinks social={boot.social}
+          canEdit={boot.user.role === 'administrator'} onToast={(m) => { say(m); void load() }} />}
       </div>
 
       {asking === 'post' && (
@@ -844,6 +859,8 @@ type LeadRow = {
   source_page: string | null; status: string; notes: string | null; created_at: string
   /** lead_attribution (db/006): UTM tags, click IDs, landing page… or null. */
   attribution?: Record<string, string | null> | null
+  /** Where they are (db/007, src/lib/lead-location.ts), or null before it ran. */
+  geo?: LeadGeo | null
 }
 
 /** How they found us — the attribution fields, in the order the brief lists them. */
@@ -918,7 +935,7 @@ function leadFields(l: LeadRow): [string, string][] {
 function leadsCsv(rows: LeadRow[]): string {
   const extra = [...new Set(rows.flatMap((l) => Object.keys(l.details ?? {}).filter((k) => !KNOWN_DETAILS.has(k))))]
   const head = ['ID', 'Received', 'Type', 'Status', ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes',
-    ...ATTR_FIELDS.map(([, label]) => label)]
+    ...LOCATION_CSV_HEAD, ...ATTR_FIELDS.map(([, label]) => label)]
   const cell = (v: unknown) => {
     const s = v === null || v === undefined ? '' : String(v)
     return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
@@ -928,7 +945,7 @@ function leadsCsv(rows: LeadRow[]): string {
     const r = l as unknown as Record<string, unknown>
     return [l.id, l.created_at, l.type, l.status,
       ...LEAD_FIELDS.map((f) => (f.from === 'col' ? r[f.key] : d[f.key])),
-      ...extra.map((k) => d[k]), l.notes,
+      ...extra.map((k) => d[k]), l.notes, ...locationCsv(l.geo),
       ...ATTR_FIELDS.map(([k]) => l.attribution?.[k] ?? '')].map(cell).join(',')
   })
   return [head.map(cell).join(','), ...lines].join('\r\n')
@@ -939,18 +956,38 @@ function leadsCsv(rows: LeadRow[]): string {
  * EVERY field it arrived with. Asim, 23 Sep 2026: "when someone submits the
  * form it must show on [the] admin side … all the entries that are
  * available". The table shows who, how to reach them and what they want at a
- * glance; "View" opens the whole submission under its row. Search and the
- * status filter narrow the list; "Download CSV" exports what is on screen.
+ * glance; "View" opens the whole submission under its row. The global search,
+ * the status filter and the date range (24 Sep 2026) narrow the list;
+ * "Download CSV" exports what is on screen.
  */
 function Leads({ onToast }: { onToast: (m: string) => void }) {
   const [rows, setRows] = useState<LeadRow[]>([])
+  const [mapsKey, setMapsKey] = useState('')
   const [loaded, setLoaded] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
   const [q, setQ] = useState('')
   const [status, setStatusFilter] = useState('')
+  // Date range — management's request, 24 Sep 2026 ("date-range filters and
+  // a global search bar"). Same choices as the Posts list.
+  const [range, setRange] = useState('')
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  /* The cut-off for the preset ranges, worked out when the range is picked
+     (reading the clock during render is not allowed; it would change under
+     React). "Today" is local midnight; the others count back whole days. */
+  const [since, setSince] = useState<number | null>(null)
+  function pickRange(next: string) {
+    setRange(next)
+    const now = new Date()
+    if (next === 'today') { now.setHours(0, 0, 0, 0); setSince(now.getTime()) }
+    else {
+      const days = ({ '7d': 7, '30d': 30, '90d': 90, '365d': 365 } as Record<string, number>)[next]
+      setSince(days ? now.getTime() - days * 86_400_000 : null)
+    }
+  }
   const reload = useCallback(() => {
-    void getJSON<{ leads: LeadRow[] }>('/leads').then((r) => {
-      if (r.ok) setRows(r.data.leads ?? [])
+    void getJSON<{ leads: LeadRow[]; mapsKey?: string }>('/leads').then((r) => {
+      if (r.ok) { setRows(r.data.leads ?? []); setMapsKey(r.data.mapsKey ?? '') }
       setLoaded(true)
     })
   }, [])
@@ -962,11 +999,36 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
     reload()
   }
 
-  const needle = q.trim().toLowerCase()
+  /* GLOBAL SEARCH: every word typed must appear somewhere in the enquiry —
+     any form field, the message, notes, status, type, enquiry number, the
+     date, and every "How they found us" value (source, campaign, keyword,
+     landing page…). "bing light bulb" finds Bing leads about light bulbs. */
+  const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean)
+  const haystack = (l: LeadRow) => [
+    ...leadFields(l).map(([, v]) => v), leadSource(l), l.status, LEAD_TYPES[l.type] ?? l.type,
+    l.notes ?? '', `#${l.id}`, String(l.id), new Date(l.created_at).toLocaleDateString(), when(l.created_at),
+    ...Object.values(l.attribution ?? {}).map((v) => v ?? ''), locationText(l.geo),
+  ].join('\n').toLowerCase()
+
+  /* DATE RANGE on when the enquiry arrived, in the admin's own time zone:
+     "Today" starts at local midnight; "Between" includes both whole days. */
+  const inRange = (iso: string) => {
+    if (!range) return true
+    const t = new Date(iso).getTime()
+    if (Number.isNaN(t)) return true
+    if (range === 'custom') {
+      if (from && t < new Date(`${from}T00:00:00`).getTime()) return false
+      if (to && t > new Date(`${to}T23:59:59.999`).getTime()) return false
+      return true
+    }
+    return since === null || t >= since
+  }
+
   const shown = rows.filter((l) =>
     (!status || l.status === status)
-    && (!needle || [...leadFields(l).map(([, v]) => v), leadSource(l), l.attribution?.utm_campaign ?? '']
-      .some((v) => v.toLowerCase().includes(needle))))
+    && inRange(l.created_at)
+    && (words.length === 0 || ((h) => words.every((w) => h.includes(w)))(haystack(l))))
+  const filtering = Boolean(q || status || range)
 
   function download() {
     const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
@@ -988,24 +1050,51 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
     <main className="a-sheet">
       <div className="a-note"><span>
         <b>Every submission from the contact and pickup forms lands here, with every field it was sent with.</b>{' '}
-        Click <b>View</b> to see the whole enquiry and how they found us (campaign, keyword, landing page). It is saved even if the notification email fails.
+        Click <b>View</b> to see the whole enquiry, where they are on a map, and how they found us (campaign, keyword, landing page).
+        The <b>mi</b> under Location is the distance to the nearer facility: green is inside the 100 mile pickup area.
+        It is saved even if the notification email fails.
       </span></div>
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 16 }}>
-        <span className="a-search">
+        <span className="a-search" style={{ flex: '1 1 320px', maxWidth: 520 }}>
           <Icon d="M11 4a7 7 0 1 1-.01 0M20 20l-3.5-3.5" />
-          <input className="a-inp" type="search" placeholder="Search name, email, phone, city…" aria-label="Search enquiries"
-            value={q} onChange={(e) => setQ(e.target.value)} />
+          <input className="a-inp" type="search" style={{ width: '100%' }}
+            placeholder="Search everything: name, email, phone, company, city, county, ZIP, message, source, campaign…"
+            aria-label="Search all enquiries" value={q} onChange={(e) => setQ(e.target.value)} />
         </span>
         <select className="a-inp" style={{ width: 'auto' }} value={status} onChange={(e) => setStatusFilter(e.target.value)} aria-label="Filter by status">
           <option value="">All statuses</option>
           {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
+        <select className="a-inp" style={{ width: 'auto' }} aria-label="Filter by date received"
+          value={range} onChange={(e) => pickRange(e.target.value)}>
+          <option value="">Any date</option>
+          <option value="today">Today</option>
+          <option value="7d">Last 7 days</option>
+          <option value="30d">Last 30 days</option>
+          <option value="90d">Last 3 months</option>
+          <option value="365d">Last 12 months</option>
+          <option value="custom">Between…</option>
+        </select>
+        {range === 'custom' && (
+          <span className="a-daterange">
+            <input className="a-inp" type="date" aria-label="From" value={from} max={to || undefined}
+              onChange={(e) => setFrom(e.target.value)} />
+            <span className="a-hint">to</span>
+            <input className="a-inp" type="date" aria-label="To" value={to} min={from || undefined}
+              onChange={(e) => setTo(e.target.value)} />
+          </span>
+        )}
+        {filtering && (
+          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); pickRange(''); setFrom(''); setTo('') }}>
+            Clear filters
+          </button>
+        )}
         <span style={{ color: 'var(--a-muted)', fontSize: 13 }}>{shown.length} of {rows.length}</span>
         <button className="a-btn sm" style={{ marginLeft: 'auto' }} disabled={shown.length === 0} onClick={download}>Download CSV</button>
       </div>
-      <Table head={['From', 'Contact', 'Type', 'What they want', 'Source', 'Received', 'Status', '']}>
+      <Table head={['From', 'Contact', 'Location', 'Type', 'What they want', 'Source', 'Received', 'Status', '']}>
         {loaded && rows.length === 0 && <Empty>No enquiries yet. They arrive here from the contact and pickup forms.</Empty>}
-        {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches that search.</Empty>}
+        {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches those filters.</Empty>}
         {shown.map((l) => (
           <Fragment key={l.id}>
             <tr>
@@ -1015,6 +1104,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
                 {l.email && <div><a className="a-link" href={`mailto:${l.email}`}>{l.email}</a></div>}
                 {l.phone && <div style={{ marginTop: 2 }}><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
               </td>
+              <td><LocationCell geo={l.geo} /></td>
               <td>{LEAD_TYPES[l.type] ?? l.type}</td>
               <td>{wants(l)}</td>
               <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-slug">{l.attribution.utm_campaign}</div>}</td>
@@ -1033,7 +1123,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
             </tr>
             {open === l.id && (
               <tr>
-                <td colSpan={8} style={{ background: 'var(--panel, #f7f8fa)' }}>
+                <td colSpan={9} style={{ background: 'var(--panel, #f7f8fa)' }}>
                   <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '8px 4px' }}>
                     {leadFields(l).map(([k, v]) => (
                       <Fragment key={k}>
@@ -1044,6 +1134,7 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
                     <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>Enquiry #</dt>
                     <dd style={{ margin: 0 }} className="a-mono">{l.id}</dd>
                   </dl>
+                  <LocationBlock geo={l.geo} details={l.details} mapsKey={mapsKey} />
                   <p style={{ margin: '14px 4px 6px', fontWeight: 600 }}>How they found us</p>
                   {l.attribution ? (
                     <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '0 4px 8px' }}>
@@ -1065,134 +1156,6 @@ function Leads({ onToast }: { onToast: (m: string) => void }) {
           </Fragment>
         ))}
       </Table>
-    </main>
-  )
-}
-
-/**
- * Settings is now the social links and nothing else.
- *
- * !! EVERYTHING SEO MOVED TO THE SEO SECTION on Asim's instruction, 17 Sep 2026:
- * site name, title template, the AI crawler switches and the redirect table are
- * all under SEO -> Defaults and SEO -> Redirects. Two places to set a title
- * template is how a site ends up with two title templates, so they are not
- * mirrored here — this screen links there instead.
- */
-type TrackingForm = {
-  gtmEnabled: boolean; gtmId: string; ga4Id: string
-  adsConversionId: string; adsConversionLabel: string; loadOnStaging: boolean
-}
-
-/**
- * Analytics & Tracking — the SEO brief's "CMS -> Settings -> Analytics &
- * Tracking", 23 Sep 2026. GTM goes onto every public page from the site's
- * root layout; nobody pastes a tag into a page. Saving reaches the live
- * pages without a rebuild. See src/lib/tracking.ts.
- */
-function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast: (m: string) => void }) {
-  const [t, setT] = useState<TrackingForm | null>(null)
-  const [busy, setBusy] = useState(false)
-  useEffect(() => {
-    void getJSON<{ tracking: TrackingForm }>('/tracking').then((r) => { if (r.ok) setT(r.data.tracking) })
-  }, [])
-  if (!t) return null
-  const up = (k: keyof TrackingForm, v: string | boolean) => setT({ ...t, [k]: v })
-  const field = (k: 'gtmId' | 'ga4Id' | 'adsConversionId' | 'adsConversionLabel', label: string, ph: string) => (
-    <div className="a-field">
-      <label htmlFor={`trk-${k}`}>{label}</label>
-      <input id={`trk-${k}`} className="a-inp a-mono" value={t[k]} placeholder={ph} disabled={!canEdit}
-        onChange={(e) => up(k, e.target.value)} />
-    </div>
-  )
-
-  async function save() {
-    setBusy(true)
-    const r = await sendJSON('/tracking', 'PUT', t)
-    setBusy(false)
-    onToast(r.ok ? 'Tracking saved. Pages pick it up as they are next visited.' : r.error)
-  }
-
-  return (
-    <section className="a-card" style={{ marginBottom: 22 }}>
-      <h3>Analytics &amp; Tracking</h3>
-      <p className="a-hint" style={{ marginTop: 0 }}>
-        Google Tag Manager loads on every public page from here, including pages created later. It loads on the
-        live site only; the dev server and local copies stay out of your reports unless the last box is ticked.
-        Visitors&rsquo; UTM tags and ad click IDs are captured automatically and attached to every enquiry.
-      </p>
-
-      <h4 style={{ margin: '16px 0 8px' }}>Google Tag Manager</h4>
-      <label className="a-check">
-        <input type="checkbox" checked={t.gtmEnabled} disabled={!canEdit} onChange={(e) => up('gtmEnabled', e.target.checked)} />
-        <span>Enable GTM</span>
-      </label>
-      <div style={{ maxWidth: 360, marginTop: 10 }}>{field('gtmId', 'GTM Container ID', 'GTM-XXXXXXX')}</div>
-
-      <h4 style={{ margin: '18px 0 8px' }}>Google Analytics 4</h4>
-      <div style={{ maxWidth: 360 }}>{field('ga4Id', 'GA4 Measurement ID', 'G-XXXXXXXXXX')}</div>
-
-      <h4 style={{ margin: '18px 0 8px' }}>Google Ads</h4>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, maxWidth: 740 }}>
-        {field('adsConversionId', 'Conversion ID', 'AW-XXXXXXXXX')}
-        {field('adsConversionLabel', 'Conversion Label', 'XXXXXXXXXXXX')}
-      </div>
-      <p className="a-hint">
-        With GTM on, these IDs are handed to GTM in the dataLayer (<span className="a-mono">rti_ga4_id</span>,{' '}
-        <span className="a-mono">rti_ads_conversion_id</span>, <span className="a-mono">rti_ads_conversion_label</span>) for its
-        tags to use. With GTM off, the site loads Google&rsquo;s tag itself with them. A successful enquiry always fires{' '}
-        <span className="a-mono">generate_lead</span>.
-      </p>
-
-      <label className="a-check" style={{ marginTop: 12 }}>
-        <input type="checkbox" checked={t.loadOnStaging} disabled={!canEdit} onChange={(e) => up('loadOnStaging', e.target.checked)} />
-        <span>Also load on the dev server <small style={{ color: 'var(--a-muted)' }}>(only while testing in GTM Preview; untick after)</small></span>
-      </label>
-
-      {canEdit && <div style={{ marginTop: 16 }}><button className="a-btn p" disabled={busy} onClick={() => void save()}>{busy ? 'Saving…' : 'Save tracking'}</button></div>}
-    </section>
-  )
-}
-
-function Settings({ social, canEdit, canTrack, onToast, onGoSeo }: {
-  social: SocialLink[]; canEdit: boolean; canTrack: boolean; onToast: (m: string) => void; onGoSeo: () => void
-}) {
-  const [links, setLinks] = useState(social)
-
-  async function save() {
-    const r = await sendJSON('/settings', 'PUT',
-      { settings: {}, social: links.map((l) => ({ id: l.id, url: l.url })) })
-    onToast(r.ok ? 'Settings saved' : r.error)
-  }
-
-  return (
-    <main className="a-sheet">
-      <div className="a-note"><span>
-        <b>Looking for titles, descriptions, robots or redirects?</b> They are in{' '}
-        <button className="a-link" onClick={onGoSeo}>SEO</button> now — the whole set, on one screen,
-        for whoever owns it.
-      </span></div>
-
-      <TrackingSettingsCard canEdit={canTrack} onToast={onToast} />
-
-      <div className="a-note"><span>
-        <b>Whatever you put here is what the footer and header icons point at.</b>{' '}
-        Leave a link empty and that icon disappears from the site rather than linking nowhere.
-      </span></div>
-      <div className="a-social">
-        {links.map((l) => (
-          <div className="a-socialrow" key={l.id}>
-            <span className="plat"><span className="ic">
-              <Icon d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19.5" />
-            </span>{l.platform}</span>
-            <input className="a-inp a-mono" value={l.url} aria-label={`${l.platform} link`}
-              placeholder={`https://…/recycletechnologies`} disabled={!canEdit}
-              onChange={(e) => setLinks((ls) => ls.map((x) => (x.id === l.id ? { ...x, url: e.target.value } : x)))} />
-            <button className="a-btn sm" disabled={!canEdit}
-              onClick={() => setLinks((ls) => ls.map((x) => (x.id === l.id ? { ...x, url: '' } : x)))}>Clear</button>
-          </div>
-        ))}
-      </div>
-      {canEdit && <div style={{ marginTop: 16 }}><button className="a-btn p" onClick={() => void save()}>Save links</button></div>}
     </main>
   )
 }

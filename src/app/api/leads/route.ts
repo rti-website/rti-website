@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, after } from 'next/server'
 import { one } from '@/lib/db'
 import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
@@ -7,6 +7,8 @@ import { FORM, SERVICE_INTEREST } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
 import { RESIDENTIAL_REPLY, residentialReplyHtml, residentialReplyText } from '@/data/emails'
 import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
+import { leadNotification } from '@/lib/lead-email'
+import { locateLead } from '@/lib/lead-location'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -70,11 +72,13 @@ function validateSpecForm(p: Payload):
   // a mismatch and offers the fix, but a real enquiry is never refused over
   // it: the table can be out of date, and towns go by more than one name.
 
-  // One of the listed services — anything else is refused rather than stored,
-  // so the Lead Hub can route on it.
-  const wanted = str(p.service)
-  const service = (SERVICE_INTEREST as readonly string[]).includes(wanted) ? wanted : null
-  if (!service) return { ok: false, field: 'service', error: 'Please choose what you would like to recycle.' }
+  // Picked from the list or typed (editable since 24 Sep 2026, Asim). A typed
+  // value that is one of the listed services, in any capitalisation, is saved
+  // as that service so the Lead Hub can still route on it; anything else is
+  // kept as the visitor wrote it.
+  const wanted = str(p.service).replace(/\s+/g, ' ').slice(0, 80)
+  const service = SERVICE_INTEREST.find((o) => o.toLowerCase() === wanted.toLowerCase()) ?? wanted
+  if (!service) return { ok: false, field: 'service', error: 'Please choose or type what you would like to recycle.' }
 
   const message = str(p.message) || null
   if (message && message.length > FORM.messageMax) {
@@ -246,33 +250,30 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
+  // ------------------------------------------------------------- location --
+  /*
+   * Where the enquiry is from (db/007, src/lib/lead-location.ts): the ZIP's
+   * point and county, the nearest facility and whether it is inside the 100
+   * mile pickup area, and where the connection came from. After the answer
+   * has gone back, so the visitor never waits on it; it never throws, and
+   * Admin -> Enquiries fills in any row it missed.
+   */
+  if (id) {
+    const leadId = id
+    after(() => locateLead(leadId))
+  }
+
   // --------------------------------------------------------------- notify --
   const to = notifyAddress()
   let notified = false
   if (to && mailConfigured()) {
-    const lines = [
-      `A new ${type} enquiry came in from the website.`,
-      '',
-      `Name:     ${name ?? '(not given)'}`,
-      `Email:    ${email}`,
-      `Phone:    ${phone ?? '(not given)'}`,
-      `Company:  ${company ?? '(not given)'}`,
-      ...Object.entries(details).map(([k, v]) => `${(k[0]!.toUpperCase() + k.slice(1) + ':').padEnd(10)}${v}`),
-      '',
-      'Message:',
-      message ?? '(none)',
-      '',
-      `Page:     ${sourcePage ?? '(unknown)'}`,
-      `Source:   ${attr?.utm_source ?? (attr?.gclid ? 'google (gclid)' : attr?.referrer ?? '(direct)')}${attr?.utm_medium ? ` / ${attr.utm_medium}` : ''}`,
-      ...(attr?.utm_campaign ? [`Campaign: ${attr.utm_campaign}`] : []),
-      ...(attr?.utm_term || attr?.keyword ? [`Keyword:  ${attr.utm_term ?? attr.keyword}`] : []),
-      ...(attr?.landing_page ? [`Landed:   ${attr.landing_page}`] : []),
-      `Lead ID:  ${id ?? '(unknown)'}`,
-    ]
+    // The table layout Asim sent on 24 Sep 2026 — see src/lib/lead-email.ts.
+    const mail = leadNotification({ type, name, email, phone, company, message, details })
     const result = await sendMail({
       to,
-      subject: `Website enquiry — ${name ?? email}`,
-      text: lines.join('\n'),
+      subject: mail.subject,
+      text: mail.text,
+      html: mail.html,
       // Replying to the notification replies to the person who wrote in.
       replyTo: email,
     })

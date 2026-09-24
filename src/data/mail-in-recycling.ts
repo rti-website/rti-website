@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { href, QUOTE_HREF } from '@/lib/urls'
 
 /**
  * /mail-in-recycling/ — copy from the "Mail-In Recycling Program" doc.
@@ -35,55 +35,62 @@ export const CONTENT: ServicePageContent = {
     crumb: 'Mail-In Recycling Program',
     h1: 'Mail-In Recycling Program',
     lead: 'Recycle Technologies’ Mail-In Program gives customers outside its local drop-off and pickup areas a way to send eligible materials for recycling, including items purchased online and shipped in when a nearby option isn’t available.',
-    cta: { label: 'Get Started', href: 'https://ezontheearth.com/', external: true },
+    // The doc's "Get Quote" (24 Sep 2026), worded like every other quote button.
+    cta: { label: 'Get a Quote', href: QUOTE_HREF },
     image: '/images/services/hero-mail-in.png',
   },
   intro: {
     heading: 'What Is the Mail-In Recycling Program?',
     body: [
-      'The Mail-In Program exists for a straightforward reason: not everyone lives near a Recycle Technologies drop-off location, and not everyone qualifies for scheduled business pickup. This program is built to reach those customers by mail instead.',
-      'Recycle Technologies describes the program as a nationwide option for anyone whose local search for recycling services doesn’t return a nearby result. Rather than requiring a trip to a facility or a scheduled pickup, customers order recycling materials online and ship their items in once ready.',
-      'This makes the Mail-In Program the option to use when you’re outside Recycle Technologies’ Minnesota and Wisconsin service area, or when your situation doesn’t fit neatly into local drop-off or commercial pickup. It’s described as open to anyone, distinguishing it from the pickup service, which is limited to commercial clients.',
-      'Once received, materials sent through the Mail-In Program enter the same recycling operation that Recycle Technologies has run out of its licensed Minnesota and Wisconsin facilities since 1993.',
+      'Not everyone lives near a Recycle Technologies drop-off location, and not everyone qualifies for scheduled business pickup. The Mail-In Program exists to reach those customers anyway.',
+      'If a local search for “electronics recycling near me” doesn’t turn up a nearby option, the Mail-In Program fills that gap. Instead of a trip to a facility or a scheduled pickup, you order what you need online and ship your items back on your own timeline.',
+      'This makes it the right option when you’re outside our Minnesota and Wisconsin service area, or when your situation simply doesn’t fit local drop-off or commercial pickup. Unlike our pickup service, which is limited to commercial clients, the Mail-In Program is open to individuals and businesses alike.',
+      'Once received, materials sent through the Mail-In Program enter the same recycling process Recycle Technologies has run out of its licensed Minnesota and Wisconsin facilities since 1993.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
     image: '/images/services/mail-in-intro.jpg',
   },
   accept: {
     heading: 'What Can I Send Through the Mail-In Program?',
-    // No grid: the doc has no itemised eligibility list to show.
-    intro: 'Recycle Technologies’ broader recycling operations cover a range of materials, including electronics, light bulbs, batteries, ballasts, and other items, which gives a general sense of what the company processes. Whether a given item is specifically eligible for the Mail-In Program, as opposed to local drop-off or pickup, should be confirmed before shipping.',
-    items: [],
+    intro: [
+      'Recycle Technologies’ recycling operations commonly process electronics, light bulbs and CFLs, batteries, and ballasts, along with a range of other e-waste and hazardous-component items. This gives a general sense of what we handle, but not every item accepted at our facilities is automatically eligible for mail-in shipping, since some materials carry shipping restrictions under federal transportation rules.',
+      'Before placing an order, confirm your specific item is eligible for the Mail-In Program, as opposed to local drop-off or pickup, by selecting your materials through our kit ordering tool or contacting our team directly.',
+    ],
+    itemsHeading: 'Commonly Processed Recycling Operations:',
+    items: [
+      { label: 'Computers, laptops, and monitors',              text: '' },
+      { label: 'Phones, tablets, and small electronics',        text: '' },
+      { label: 'Batteries (alkaline, lithium, and lead-acid)',  text: '' },
+      { label: 'Fluorescent lamps, bulbs, and CFLs',            text: '' },
+      { label: 'Ballasts and other lighting components',        text: '' },
+    ],
+    outro: 'Looking to send over something else? Reach out to our operations team to seek instant help.',
   },
   process: {
     heading: 'How Does the Mail-In Program Work?',
-    intro: 'The Mail-In Program is designed around ordering, shipping, and processing, rather than a facility visit or scheduled pickup.',
+    intro: 'The Mail-In Program is built around ordering, shipping, and processing, not a facility visit or a scheduled pickup.',
     steps: [
-      { label: 'Order online:',           text: 'Purchase what you need through Recycle Technologies’ Mail-In Program to get started.' },
-      { label: 'Receipt and Recycling:',  text: 'Once your shipment arrives, it’s processed through Recycle Technologies’ recycling operations at its licensed facilities in Minnesota and Wisconsin.' },
+      { label: 'Order Online:',          text: 'Select your location and choose the recycling kit that matches what you need to send. Purchase it directly through Recycle Technologies’ Mail-In Program.' },
+      { label: 'Pack and Ship:',         text: 'Once your kit arrives, pack your eligible items and send the kit back using the return method included with your order.' },
+      { label: 'Receipt and Recycling:', text: 'Once your shipment arrives, it’s processed through Recycle Technologies’ recycling operations at our licensed Minnesota and Wisconsin facilities, the same standard applied to every material we handle, regardless of how it reaches us.' },
     ],
     image: '/images/services/mail-in-process.jpg',
   },
   faqs: [
-    { q: 'Can I use the Mail-In Program if I live outside Minnesota or Wisconsin?', a: 'Yes. The program is described as countrywide, built for customers without a nearby drop-off or pickup option.' },
-    { q: 'Is the Mail-In Program available to individuals or only businesses?', a: 'Individuals can use it. This is different from Recycle Technologies’ pickup service, which is limited to commercial clients.' },
-    { q: 'What happens to my materials after they’re received?', a: 'They’re processed through Recycle Technologies’ recycling operations, the same system used across its other services.' },
+    { q: 'Can I use the Mail-In Program if I live outside Minnesota or Wisconsin?', a: 'Yes, that’s exactly who it’s for. The Mail-In Program was built for customers outside our Minnesota and Wisconsin drop-off and pickup areas, so you can ship eligible materials to us from anywhere in the country.' },
+    { q: 'Is the Mail-In Program available to individuals or only businesses?', a: 'It’s open to anyone. Unlike our pickup service, which is limited to commercial clients, the Mail-In Program is available to both individuals and businesses.' },
+    { q: 'What happens to my materials after they’re received?', a: 'Your shipment enters the same recycling process as materials received at our facilities directly. Items are sorted, dismantled into base materials, and directed toward reuse, refurbishment, or recovery, never sent straight to a landfill.' },
   ],
   cta: {
     heading: 'Ready to Recycle by Mail?',
     body: [
-      'If a local drop-off or pickup option isn’t available to you, get started with the Mail-In Program to send in your eligible materials. Business pickup service is available exclusively to commercial clients; the Mail-In Program is described as open to anyone.',
+      'If a local drop-off or pickup option isn’t available to you, get started with the Mail-In Program to send in your eligible materials. Business pickup service is available exclusively to commercial clients; the Mail-In Program is open to anyone.',
     ],
-    primary:   { label: 'Get Started',    href: 'https://ezontheearth.com/', external: true },
+    primary:   { label: 'Get a Quote',    href: QUOTE_HREF },
     secondary: { label: 'Find Locations', href: href('/all-locations/') },
   },
   todo: [
-    'What Can I Send: no itemised eligibility list published. Section renders the general paragraph only, with no grid.',
-    'Process step "Determine Eligibility": eligibility requirements not published. Omitted.',
-    'Process step "Prepare Your Materials": packaging and labelling instructions not published. Omitted.',
-    'Process step "Ship to Recycle Technologies": shipping instructions, carrier and cost not published. Omitted.',
-    'FAQ "Who pays for shipping through the Mail-In Program?": answer not published. Question omitted.',
-    'FAQ "Does the Mail-In Program provide recycling documentation?": answer not published. Question omitted.',
-    'URL /mail-in-recycling/ is new. Every existing "Mail In Program" link still points to ezontheearth.com — confirm with Asim before repointing them.',
+    'Doc of 24 Sep 2026 replaced the placeholder sections: the eligibility list, the three process steps and the three FAQs are now its copy. Still unpublished: who pays for shipping, and whether mail-in orders get recycling documentation.',
+    'URL /mail-in-recycling/ is new. Every existing "Mail In Program" link still points to ezontheearth.com. Confirm with Asim before repointing them.',
   ],
 }

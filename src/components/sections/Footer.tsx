@@ -67,6 +67,8 @@ const COL_1: Group[] = [
     links: [
       { l: 'Blogs', h: href('/blog/') },
       { l: 'News',  h: href('/category/news/') },
+      // Moved here from Resources — Asim, 24 Sep 2026.
+      { l: 'ITAD & Recycling Guides', h: href('/itad-recycling-guides/') },
     ],
   },
   {
@@ -96,8 +98,7 @@ const COL_2: Group[] = [
       { l: 'Case Studies',      h: href('/case-studies/') },
       // Asim, 16 Sep 2026: Downloads goes under this heading. Figma 6382:7043.
       { l: 'Downloads',         h: href('/downloads/') },
-      // Asim, same day, same place. Figma 6382:5883.
-      { l: 'ITAD & Recycling Guides', h: href('/itad-recycling-guides/') },
+      // ITAD & Recycling Guides sat here until 24 Sep 2026; now under News & Blogs.
       // Asim, 17 Sep 2026, when the FAQ page was built.
       { l: 'FAQs', h: href('/faqs/') },
     ],

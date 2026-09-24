@@ -39,7 +39,7 @@ export const HERO = {
   ],
   h1: 'Locations',
   // Asim, 23 Sep 2026.
-  lead: 'Two licensed facilities, nationwide Mail-In reach, and pickup and drop-off options across Minnesota and Wisconsin — find the option that works for you.',
+  lead: 'Two licensed facilities, nationwide Mail-In reach, and pickup and drop-off options across Minnesota and Wisconsin, find the option that works for you.',
 }
 
 /** Finder — 6377:967. Heading, search bar and the map. */

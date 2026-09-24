@@ -47,8 +47,8 @@ export function LocationDirections({ top, height, f }: { top: number; height: nu
 
         {/* Getting here — 6746:2537 */}
         <div className="flex w-full flex-col gap-[16px] lg:w-[550px] lg:gap-[20px]">
-          <h2 className="font-sans text-[24px] font-semibold leading-[29px] text-heading lg:text-[28px] lg:leading-normal">{DETAIL_COPY.directions.heading}</h2>
-          <p className="font-roboto text-[15px] leading-[22px] text-muted lg:hidden">{f.directions.introShort}</p>
+          <h2 className="font-sans text-[24px] font-semibold leading-[29px] text-heading max-lg:text-center lg:text-[28px] lg:leading-normal">{DETAIL_COPY.directions.heading}</h2>
+          <p className="font-roboto text-[15px] leading-[22px] text-muted max-lg:text-center lg:hidden">{f.directions.introShort}</p>
           <p className="font-roboto text-[15.5px] leading-[1.65] text-muted max-lg:hidden">{f.directions.intro}</p>
 
           <dl className="flex flex-col gap-[12px] rounded-[12px] bg-[#eaf4f5] p-[24px] text-[14px] max-lg:hidden">

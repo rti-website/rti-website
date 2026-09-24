@@ -27,7 +27,7 @@ export function ComplianceDownloads({ top, height }: { top: number; height: numb
     <Section top={top} height={height} label="6389:1530"
       className="flex flex-col items-start gap-[24px] bg-[#fcfcfc] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6390:1559 */}
-      <div className="flex w-full flex-col items-start gap-[24px] text-left lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{DOWNLOADS.eyebrow}</Eyebrow>
         <h2 className="w-[780px] font-sans text-[40px] font-semibold leading-[1.3] text-black max-lg:w-full max-lg:text-[26px] max-lg:leading-[32px]">
           {DOWNLOADS.heading}

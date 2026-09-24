@@ -155,7 +155,7 @@ function GroupHeading({ group }: { group: ServiceGroup }) {
       style={{ '--gh-h': `${group.headingH}px`, '--gh-w': `${group.headingW}px` } as React.CSSProperties}
     >
       <span aria-hidden="true" className="hidden h-px flex-1 bg-line lg:block" />
-      <h2 className="block w-full font-inter text-[20px] font-bold leading-normal text-black lg:flex lg:h-[var(--gh-h)] lg:w-[var(--gh-w)] lg:shrink-0 lg:items-center lg:justify-center lg:text-center lg:font-sans lg:text-[35px] lg:font-normal lg:leading-none lg:text-accent">
+      <h2 className="block w-full text-center font-inter text-[20px] font-bold leading-normal text-black lg:flex lg:h-[var(--gh-h)] lg:w-[var(--gh-w)] lg:shrink-0 lg:items-center lg:justify-center lg:text-center lg:font-sans lg:text-[35px] lg:font-normal lg:leading-none lg:text-accent">
         {group.heading}
       </h2>
       <span aria-hidden="true" className="hidden h-px flex-1 bg-line lg:block" />

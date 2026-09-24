@@ -28,7 +28,8 @@
     "wp:import": "node scripts/wp-import.mjs",
     "check:clickable": "node scripts/check-clickable.mjs",
     "check:wrap": "node scripts/check-wrap-slack.mjs",
-    "check:edges": "node scripts/check-edges.mjs"
+    "check:edges": "node scripts/check-edges.mjs",
+    "geoip:update": "node scripts/geoip-update.mjs"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.3.0",
@@ -51,6 +52,7 @@
     "@tiptap/react": "^3.31.3",
     "@tiptap/starter-kit": "^3.31.3",
     "@tiptap/static-renderer": "^3.31.3",
+    "mmdb-lib": "3.0.3",
     "next": "16.3.5",
     "nodemailer": "^10.0.10",
     "pg": "^8.23.0",

@@ -26,8 +26,18 @@ export function RelatedArticles({ current }: { current: string }) {
      * is what says "this scrolls". The heading is left aligned and 24px there
      * against the board's centred 34.
      */
-    <section data-figma="6494:1750" className="bg-[#fcfcfc] py-[48px] pl-[20px] lg:px-0 lg:py-[80px]">
-      <h2 className="font-sans text-[24px] font-semibold text-black lg:text-center lg:text-[34px]">Related Articles</h2>
+    /*
+     * BOTTOM RULE — Asim, 24 Sep 2026: "there is no breaker between it and
+     * footer add some line between it so it look seperate". This band and the
+     * footer are both #fcfcfc, so the related cards ran straight into the
+     * footer's logo. A 1px line in the site's hairline colour (the one the
+     * footer's own bottom bar uses) marks the edge.
+     */
+    <section data-figma="6494:1750" className="border-b border-line bg-[#fcfcfc] py-[48px] pl-[20px] lg:px-0 lg:py-[80px]">
+      {/* Centred on the phone too since 24 Sep 2026 (Asim: centre every section
+          heading on mobile). The section has left padding only, for the rail,
+          so the heading carries its own right padding to centre on the screen. */}
+      <h2 className="pr-[20px] text-center font-sans text-[24px] font-semibold text-black lg:pr-0 lg:text-[34px]">Related Articles</h2>
       {/* No `items-start`: flex stretches the four cards to the tallest of them,
           so a one-line title and a three-line title give the same box. Asim
           asked for that on 17 Sep 2026 — "the size of article must be same" —

@@ -45,11 +45,11 @@ export const HERO = {
   h1: 'Battery Recycling Services',
   lead:
     'Recycle Technologies collects and recycles batteries for businesses and organizations, '
-    + 'so spent batteries are sorted and processed instead of sitting in storage or ending '
-    + 'up in the trash.',
+    + 'ensuring spent batteries are sorted and processed rather than sitting in storage or '
+    + 'ending up in the trash.',
   pickerPlaceholder: 'Select Your Location',
   pickerOptions: ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'],
-  cta: { label: 'Get Started', href: QUOTE_HREF },
+  cta: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
 /* ------------------------------------------------- what's battery recycling --
@@ -149,10 +149,10 @@ export const FAQ_INTRO = {
 export const CTA = {
   heading: 'Ready to Recycle Responsibly?',
   body: [
-    'Whether you’re a business clearing out spent battery inventory or an individual with '
-    + 'a few old batteries to dispose of, Recycle Technologies can help you recycle them '
-    + 'properly. Businesses can schedule a pickup or get a quote; individuals can find a '
-    + 'drop-off location or start a mail-in kit.',
+    'Whether you’re a business retiring old IT equipment or an individual clearing out a '
+    + 'closet, Recycle Technologies can help you recycle it properly. Businesses can schedule '
+    + 'a pickup or get a quote; individuals can find a drop-off location or order a mail-in '
+    + 'recycling kit.',
   ],
   primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },

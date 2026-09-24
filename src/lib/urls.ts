@@ -68,6 +68,20 @@ export const QUOTE_HREF = path('/contact-us/')
 export const CONTACT_FORM_HREF = `${path('/contact-us/')}#contact-form`
 
 /**
+ * The contact form with its service and/or location already chosen — what the
+ * homepage hero's quote card submits, as a plain link. ContactForm reads both
+ * (`?service=` selects the service, `?location=` fills State; see
+ * HERO_LOCATIONS). Used by the state landing pages, 24 Sep 2026.
+ */
+export function quoteHref(q: { service?: string; location?: string }): string {
+  const params = new URLSearchParams()
+  if (q.service) params.set('service', q.service)
+  if (q.location) params.set('location', q.location)
+  const qs = params.toString()
+  return `${path('/contact-us/')}${qs ? `?${qs}` : ''}#contact-form`
+}
+
+/**
  * One case study on /case-studies/, rather than the top of the page.
  *
  * The homepage and service-page story carousel links each story here — Asim,

@@ -20,7 +20,7 @@ export function WhyDifferentiators({ top, height }: { top: number; height: numbe
     <Section top={top} height={height} label="6379:1033"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6379:1037 / 6638:8762..8765. */}
-      <div className="flex w-full flex-col items-start gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{DIFFERENTIATORS.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-black lg:text-[40px] lg:leading-[1.3]">{DIFFERENTIATORS.heading}</h2>
         <p className="font-roboto text-[16px] leading-[24px] text-muted lg:text-[17px] lg:leading-[1.175]">{DIFFERENTIATORS.lead}</p>

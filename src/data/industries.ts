@@ -79,10 +79,10 @@ export const INDUSTRIES: Industry[] = [
   { t: 'Retail & Corporate Offices',    img: '/images/home/ind-retail.png',        b: 'Retailers and offices can recycle retired computers, batteries, and IT equipment through our licensed services.', href: href('/industries/retail-corporate-offices/') },
 ]
 
-/** Overrides the shared certifications paragraph — the doc writes its own. */
+/** The certifications paragraph on /industries/. The shared compliance line since 24 Sep 2026 (Asim). */
 export const CERTIFICATIONS_BODY =
-  'Recycle Technologies’ Blaine, Minnesota facilities hold active R2v3 certification, and the '
-  + 'New Berlin, Wisconsin facility is currently pursuing R2v3 certification, which is pending approval.'
+  'Recycle Technologies follows recognized industry certification standards for '
+  + 'responsible recycling, including R2v3.'
 
 /* ------------------------------------------------------------ closing CTA --
  * !! PHONE NUMBER CONFLICT !! The doc gives the Wisconsin line as

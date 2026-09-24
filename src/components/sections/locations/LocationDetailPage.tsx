@@ -53,7 +53,11 @@ export type LocationLayout = { info: number; map: number; mat: number; steps: nu
 const HERO_TOP = 140
 const HERO_H = 470
 
-export function LocationDetailPage({ f, layout: L }: { f: Facility; layout: LocationLayout }) {
+export function LocationDetailPage({ f, layout: L, links }: {
+  f: Facility; layout: LocationLayout
+  /** Material label -> this facility's published service page (Admin -> Locations). */
+  links?: Record<string, string>
+}) {
   const INFO_TOP   = HERO_TOP + HERO_H
   const MAP_TOP    = INFO_TOP + L.info
   const MAT_TOP    = MAP_TOP + L.map
@@ -80,7 +84,7 @@ export function LocationDetailPage({ f, layout: L }: { f: Facility; layout: Loca
         />
         <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
         <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />
-        <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} />
+        <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />
         <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />
         <LocationFaq        top={FAQ_TOP}   height={L.faq}   f={f} />
         <ClosingCta top={CTA_TOP} label="6744:8799" content={f.cta} />

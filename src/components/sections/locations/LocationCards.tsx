@@ -16,8 +16,8 @@ import { FACILITIES, HUB_CARDS, type Facility } from '@/data/facilities'
  * Google Maps directions, in a new tab, because it is not this site.
  *
  * MOBILE — 6750:2563 in "Locations - Mobile" (6747:2557). The cards stack at
- * 350 wide; the header drops to 96 and puts the disc and the pill on one row
- * with the name UNDER them rather than beside; detail-row glyphs go 18 → 16,
+ * 350 wide; the header is one row like the desktop's — pin disc left, name,
+ * R2v3 mark right (24 Sep 2026; the frame put the name under them); detail-row glyphs go 18 → 16,
  * chips 28 → 26, and the two buttons stack full width at 44 tall. Same DOM,
  * two flows.
  *
@@ -65,9 +65,12 @@ function Card({ f }: { f: Facility }) {
           <span className="grid size-[40px] shrink-0 place-items-center rounded-full bg-white/15 lg:size-[48px]">
             <svg viewBox="0 0 16 16" className="size-[18px] fill-white lg:size-[21.6px]" aria-hidden="true"><path d={GLYPHS.pin} /></svg>
           </span>
-          {/* The name sits between the disc and the pill at lg, and under both
-              on the phone; `order` moves it without a second copy. */}
-          <h3 className="order-3 font-sans text-[20px] font-semibold leading-[25px] text-white lg:order-none lg:ml-[16px] lg:mr-auto lg:text-[22px] lg:leading-normal">{f.name}</h3>
+          {/* The name sits between the pin disc and the certification mark at
+              every width: pin on the left, R2v3 on the right. On the phone it
+              used to drop under both; Asim, 24 Sep 2026: "in the mobile
+              version move the icons to the right side … place this [pin]
+              icon on the left as it is and move the R2v3 to the right". */}
+          <h3 className="ml-[12px] mr-auto min-w-px font-sans text-[20px] font-semibold leading-[25px] text-white lg:ml-[16px] lg:text-[22px] lg:leading-normal">{f.name}</h3>
           <BadgeLogo f={f} />
         </div>
       </div>
@@ -113,7 +116,9 @@ function Card({ f }: { f: Facility }) {
 /**
  * The certification mark in the header's right slot — Asim, 23 Sep 2026: the
  * R2v3 logo "without bg", clickable, for Minnesota, and the NAID AAA logo for
- * Wisconsin, where the text pills used to be. R2v3 opens SERI's directory in
+ * Wisconsin, where the text pills used to be. Since 24 Sep 2026 both cards
+ * carry R2v3 (Asim: "in Wisconsin add the R2v3 and remove the AAA logo"); the
+ * white-disc branch stays for any mark that brings its own white ground. R2v3 opens SERI's directory in
  * a new tab, like every R2v3 mark on the site. The NAID badge brings its own
  * white ground, so it sits on a white disc (see Facility.badgeLogo); the
  * disc's edge trims only the export's white corners.

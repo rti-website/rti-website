@@ -152,10 +152,11 @@ export const CERT_LOGOS: Logo[] = [
 export const CERT_COPY = {
   eyebrow: 'Environmental Compliances',
   title: 'Certifications & Standards',
+  /* Asim, 24 Sep 2026: this line everywhere the band appears (the doc's
+     compliance line, the same one the industry pages already used). */
   body:
-    'Recycle Technologies follows recognized environmental standards and holds leading '
-    + 'industry certifications, ensuring e-waste is handled responsibly from collection '
-    + 'through final processing.',
+    'Recycle Technologies follows recognized industry certification standards for '
+    + 'responsible recycling, including R2v3.',
 }
 
 /**

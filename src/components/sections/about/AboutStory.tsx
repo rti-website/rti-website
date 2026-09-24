@@ -21,7 +21,7 @@ export function AboutStory({ top, height }: { top: number; height: number }) {
     <Section top={top} height={height} label="6372:841"
       className="flex flex-col items-center bg-white px-[20px] py-[48px] lg:px-0 lg:py-[100px]">
       <div className="flex w-full flex-col items-start gap-[32px] lg:w-[1282px] lg:flex-row lg:items-start lg:gap-[80px]">
-        <div className="flex w-full shrink-0 flex-col items-start gap-[16px] lg:w-[700px] lg:gap-[20px]">
+        <div className="flex w-full shrink-0 flex-col items-center gap-[16px] text-center lg:w-[700px] lg:items-start lg:gap-[20px] lg:text-left">
           <Eyebrow>{STORY.eyebrow}</Eyebrow>
           <h2 className="font-sans text-[28px] font-semibold leading-[34px] tracking-[-0.5px] text-heading lg:text-[36px] lg:leading-[1.2] lg:tracking-normal">{STORY.heading}</h2>
           {STORY.body.map((p) => (

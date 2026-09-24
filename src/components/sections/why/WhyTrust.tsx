@@ -19,7 +19,7 @@ export function WhyTrust({ top, height }: { top: number; height: number }) {
     <Section top={top} height={height} label="6379:1035"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">
       {/* Heading block — 6379:1060 / 6638:9115..9118. */}
-      <div className="flex w-full flex-col items-start gap-[24px] lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
+      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:items-center lg:gap-[10px] lg:text-center">
         <Eyebrow>{TRUST.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-black lg:text-[40px] lg:leading-[1.3]">{TRUST.heading}</h2>
         <p className="font-roboto text-[16px] leading-[24px] text-muted lg:text-[17px] lg:leading-[1.175]">{TRUST.lead}</p>

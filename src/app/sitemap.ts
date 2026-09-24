@@ -87,7 +87,10 @@ function explicitRoutes(): string[] {
       if (!d.isDirectory() || d.name.startsWith('[') || d.name.startsWith('_')) continue
       if (prefix === '' && (d.name === 'admin' || d.name === 'api')) continue
       const route = `${prefix}/${d.name}`
-      if (fs.existsSync(path.join(dir, d.name, 'page.tsx'))) out.push(`${route}/`)
+      const page = path.join(dir, d.name, 'page.tsx')
+      // A page that sets `noindex: true` (the Google Ads state pages, e.g.
+      // /light-bulbs/Minnesota/) stays out: never list a noindexed URL.
+      if (fs.existsSync(page) && !/\bnoindex:\s*true\b/.test(fs.readFileSync(page, 'utf8'))) out.push(`${route}/`)
       walk(path.join(dir, d.name), route)
     }
   }

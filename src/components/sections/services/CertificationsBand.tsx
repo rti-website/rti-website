@@ -24,12 +24,11 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * handed 660px of padding and the section overflowed the window. It is
  * `lg:px-[330px]` now — the one place this band could break the page.
  *
- * !! THE PARAGRAPH IS REORDERED WITH `order`, NOT IN THE SOURCE. Unlike the
- * homepage's Certifications — whose children are absolutely placed boxes, so
- * moving them in the source costs the desktop nothing — this band is a real
- * auto-layout column at every width. Re-ordering the markup would re-order the
- * board too. `max-lg:order-*` exists only below lg, so the desktop column is
- * untouched and the phone gets the frame's order.
+ * The paragraph sits under the heading and ABOVE the logo strip at every
+ * width — Asim, 24 Sep 2026: "move the text above the icons below the heading
+ * in all the places". (The board used to follow the frame, logos first, and
+ * only the phone moved the paragraph up with `max-lg:order-*`.) The column's
+ * 30px gaps and justify-center are unchanged, so the band keeps its height.
  */
 export function CertificationsBand({
   top = 2925.83, label = '6142:1622', body, height = 299.035,
@@ -57,11 +56,14 @@ export function CertificationsBand({
           at the TOP of it, so all 25px of slack fell BELOW them and the strip
           still hugged the paragraph above. Below lg the box is its contents now
           and LogoMarquee owns the breathing room — Asim, 22 Sep 2026. */}
-      <div className="w-full max-lg:order-2 lg:h-[68px]">
+      <div className="order-2 w-full lg:h-[68px]">
         <LogoMarquee logos={CERT_LOGOS} speed={45} />
       </div>
 
-      <p className="w-full text-center font-roboto text-[15px] leading-[22px] text-muted max-lg:order-1 lg:w-[830px] lg:text-[17.018px] lg:leading-[27.654px]">
+      {/* 1084 for the one-sentence compliance line (24 Sep 2026), which at
+          830 left "R2v3." alone on a second line; a page's own longer
+          paragraph (airbags) keeps the frame's 830 and its measured height. */}
+      <p className={`w-full text-center font-roboto text-[15px] leading-[22px] text-muted order-1 lg:text-[17.018px] lg:leading-[27.654px] ${(body ?? CERT_COPY.body).length <= 140 ? 'lg:w-[1084px]' : 'lg:w-[830px]'}`}>
         {body ?? CERT_COPY.body}
       </p>
     </Section>

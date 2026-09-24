@@ -1,5 +1,8 @@
 import { q, one } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
+import { fillMissingLocations } from '@/lib/lead-location'
+import { geoipAvailable } from '@/lib/geoip'
+import { getMaps } from '@/lib/maps'
 
 /**
  * Contact, quote and gated-download submissions — business records, not a list.
@@ -14,6 +17,13 @@ import { guard, json, body } from '@/lib/admin-route'
  * number.
  */
 export const GET = guard(async () => {
+  /* Where each enquiry is from (db/007, 24 Sep 2026). Rows from before it,
+     or any the after-submit step missed, are filled in here first. The Maps
+     key goes with the list: the detail view draws its map with it. */
+  await fillMissingLocations()
+  const maps = await getMaps()
+  const extra = { mapsKey: maps.browserKey, ipDatabase: geoipAvailable() }
+
   /* With its attribution (db/006, the SEO brief of 23 Sep 2026): how each
      person found us — UTM tags, ad click IDs, landing page, referrer, the page
      they submitted from. A database that has not run 006 yet has no
@@ -21,17 +31,17 @@ export const GET = guard(async () => {
   try {
     const rows = await q(`
       SELECT l.id, l.type, l.name, l.email, l.phone, l.company, l.message, l.details,
-             l.source_page, l.status, l.notes, l.created_at,
+             l.source_page, l.status, l.notes, l.created_at, to_jsonb(l)->'geo' AS geo,
              to_jsonb(a) - 'lead_id' - 'created_at' AS attribution
         FROM leads l LEFT JOIN lead_attribution a ON a.lead_id = l.id
        ORDER BY l.created_at DESC LIMIT 2000`)
-    return json({ leads: rows })
+    return json({ leads: rows, ...extra })
   } catch {
     const rows = await q(`
       SELECT id, type, name, email, phone, company, message, details,
              source_page, status, notes, created_at
         FROM leads ORDER BY created_at DESC LIMIT 2000`)
-    return json({ leads: rows })
+    return json({ leads: rows, ...extra })
   }
 })
 

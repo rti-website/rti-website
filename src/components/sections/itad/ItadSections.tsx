@@ -52,7 +52,7 @@ export function ItadIntro({ top, height }: { top: number; height: number }) {
     <Section top={top} height={height} label="6779:2661"
       className="flex flex-col bg-white px-[20px] pb-[40px] pt-[44px] lg:items-center lg:px-0 lg:py-[100px]">
       <div className="flex w-full flex-col gap-[18px] lg:w-[1282px] lg:flex-row lg:items-start lg:gap-[80px]">
-        <div className="flex w-full flex-col items-start gap-[18px] lg:w-[700px] lg:shrink-0 lg:gap-[20px]">
+        <div className="flex w-full flex-col items-center gap-[18px] text-center lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[20px] lg:text-left">
           <Eyebrow>{INTRO.eyebrow}</Eyebrow>
           <h2 className="font-sans text-[26px] font-semibold leading-[1.25] text-heading lg:text-[36px] lg:leading-[1.2]">{INTRO.heading}</h2>
           {INTRO.paragraphs.map((p) => (

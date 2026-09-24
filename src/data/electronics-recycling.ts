@@ -52,7 +52,7 @@ export const HERO = {
     + 'sending them to a landfill.',
   pickerPlaceholder: 'Select Your Location',
   pickerOptions: ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'],
-  cta: { label: 'Get Started', href: QUOTE_HREF },
+  cta: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
 /* ---------------------------------------------------- what's electronics --
@@ -103,7 +103,7 @@ export const ACCEPT = {
     { label: 'Computers & Laptops',       text: 'Desktops, laptops, and servers.' },
     { label: 'Monitors & Displays',       text: 'Monitors, including CRT units.' },
     { label: 'Office & Imaging Equipment',text: 'Fax machines, printers, scanners, and copiers.' },
-    { label: 'Phones & Small Electronics',text: 'Cell phones, keyboards, cables, mice, microwaves, and televisions (no restrictions).' },
+    { label: 'Phones',                    text: 'Cell phones and related mobile devices.' },
   ],
   outro:
     'Recycle Technologies also handles related electronic scrap on a case-by-case basis, so if '
@@ -158,7 +158,7 @@ export const FAQS = [
   },
   {
     q: 'Is Recycle Technologies certified?',
-    a: 'Its Blaine, Minnesota facilities hold active R2v3 certification. The New Berlin, Wisconsin facility has R2v3 certification pending.',
+    a: 'Its Blaine, Minnesota and New Berlin, Wisconsin, facilities hold active R2v3 certification.',
   },
 ]
 
@@ -177,7 +177,7 @@ export const CTA = {
   body: [
     'Whether you’re a business retiring old IT equipment or an individual clearing out a '
     + 'closet, Recycle Technologies can help you recycle it properly. Businesses can schedule '
-    + 'a pickup or get a quote; individuals can find a drop-off location or start a mail-in kit.',
+    + 'a pickup or get a quote; individuals can find a drop-off location or order a mail-in recycling kit.',
   ],
   primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },

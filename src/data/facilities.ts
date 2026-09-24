@@ -183,8 +183,8 @@ export const MINNESOTA: Facility = {
   liveH1: 'Recycling Center in Minnesota',
   hero: {
     h1: 'Minnesota Facility',
-    lead: '1525 99th Ln NE, Blaine, Minnesota 55449 — R2v3 Certified',
-    leadShort: '1525 99th Ln NE, Blaine, MN — R2v3 Certified',
+    lead: '1525 99th Ln NE, Blaine, Minnesota 55449, R2v3 Certified',
+    leadShort: '1525 99th Ln NE, Blaine, MN, R2v3 Certified',
   },
   address: MN_CONTACT.address,
   addressShort: '1525 99th Ln NE, Blaine, MN',
@@ -233,8 +233,8 @@ export const WISCONSIN: Facility = {
   liveH1: 'Recycling in Wisconsin',
   hero: {
     h1: 'Wisconsin Facility',
-    lead: '2815 South 171st Street, New Berlin, WI 53151 — Pursuing R2v3',
-    leadShort: '2815 South 171st Street, New Berlin, WI — Pursuing R2v3',
+    lead: '2815 South 171st Street, New Berlin, WI 53151, Pursuing R2v3',
+    leadShort: '2815 South 171st Street, New Berlin, WI, Pursuing R2v3',
   },
   address: WI_CONTACT.address,
   addressShort: '2815 South 171st Street, New Berlin, WI',
@@ -249,7 +249,8 @@ export const WISCONSIN: Facility = {
      the pill for the NAID AAA badge. The status still shows on the facility
      page itself (quick-info bar and hero lead). The NAID AAA claim carries
      the compliance note in src/data/certifications.ts. */
-  badgeLogo: { src: '/images/certifications/naid-aaa.png', alt: 'NAID AAA certified', w: 46, h: 48, disc: true },
+  // R2v3 on the Wisconsin card too, NAID AAA logo removed (Asim, 24 Sep 2026).
+  badgeLogo: { src: '/images/home/stat-r2.png', alt: 'R2v3 certified', w: 38, h: 40, href: R2_DIRECTORY },
   mapLabel: 'New Berlin, WI',
   mapsHref: maps(WI_CONTACT.address),
   materialsLead: 'The New Berlin, Wisconsin facility currently accepts electronics, batteries, TVs, and paper shredding, with more services expanding as R2v3 certification is finalized.',
@@ -296,4 +297,45 @@ export const HUB_CARDS = {
   materialsLabel: 'Materials Accepted',
   primary: 'View Location Details',
   secondary: 'Get Directions',
+}
+
+/**
+ * "Additional Facilities Nationwide" — Figma 6831:2663 on /all-locations/
+ * (mobile 6833:3043), added by the designer and built on 24 Sep 2026.
+ *
+ * Nine partner drop-off sites outside Minnesota and Wisconsin. They have no
+ * pages of their own yet, so the cards link nowhere (Asim, 24 Sep 2026: "only
+ * make the cards for it and make it unclickable for now"), and they carry no
+ * LocalBusiness schema: RTI does not run these sites itself, and a schema
+ * block claiming an address Google cannot tie to RTI does more harm than good.
+ * Copy is the frame's, word for word. The mobile frame shortens the lead.
+ */
+export type NationwideFacility = {
+  name: string; address: string; phone: string; hours: string; materials: string[]
+  /** Its site in Admin -> Locations (src/data/service-locations.ts); the card links there once published. */
+  slug?: string
+}
+
+const NATIONWIDE_MATERIALS = ['Electronics', 'Batteries', 'Light Bulbs', 'Ballasts']
+const nationwide = (name: string, address: string, slug?: string): NationwideFacility => ({
+  name, address, slug, phone: '+1-800-969-5166', hours: 'Call to confirm hours', materials: NATIONWIDE_MATERIALS,
+})
+
+export const NATIONWIDE = {
+  eyebrow: 'Expanding Network',
+  heading: 'Additional Facilities Nationwide',
+  lead: 'Our network is growing beyond Minnesota and Wisconsin — drop off electronics, batteries, and bulbs at any of these locations.',
+  leadMobile: 'Our network is growing beyond Minnesota and Wisconsin.',
+  materialsLabel: 'Materials Accepted',
+  facilities: [
+    nationwide('Ontario, CA', '805 E. Francis Street, Ontario, CA 91761', 'ontario-ca'),
+    nationwide('Phoenix, AZ', '1545 E. Victory St, Phoenix, AZ 85040', 'phoenix-az'),
+    nationwide('Greenwood, IN', '498 Park 800 Drive, Greenwood, IN 46143', 'greenwood-in'),
+    nationwide('Ocala, FL', '1007 SW 16th Lane, Ocala, FL 34471', 'ocala-fl'),
+    nationwide('Fort Worth, TX', '101 E Bowie Street, Fort Worth, TX 76110', 'fort-worth-tx'),
+    nationwide('Fort Worth, TX (RTI)', 'Fort Worth, TX — contact us for exact address'),
+    nationwide('Johnson City, TN', '2212 Buffalo Road #210, Johnson City, TN 37604', 'johnson-city-tn'),
+    nationwide('Atlanta, GA', '2260 Moon Station Court NW Ste 140, Kennesaw, GA 30144', 'atlanta-ga'),
+    nationwide('Lewisburg, TN', '1580 Old Columbia Road, Lewisburg, TN 37091', 'lewisburg-tn'),
+  ],
 }

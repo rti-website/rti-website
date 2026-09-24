@@ -27,15 +27,21 @@
  * and could never find a ZIP for their town. The Census file knows 55449 is
  * almost all Blaine. So each ZIP gets:
  *
- *   the city to fill in   the incorporated city covering at least half of the
- *                         ZIP's land, else the Postal Service's name
+ *   the city to fill in   the Postal Service's name when it is a town inside
+ *                         the ZIP; otherwise the incorporated city covering at
+ *                         least half of the ZIP's land; else the Postal
+ *                         Service's name (24 Sep 2026: 55304 fills "Andover",
+ *                         as addressed on letters, not "Ham Lake")
  *   the names to accept   that, the Postal Service's name, and every city,
  *                         town or census-designated place with a real share
  *                         of the ZIP (at least 5% of the ZIP's land or of the
  *                         place's own), in the same state
  *
- * Output, one ZIP per line, tab separated, names joined with "|":
- *   55449	MN	Blaine|Minneapolis
+ * Output, one ZIP per line, tab separated, names joined with "|", then the
+ * ZIP's centre point and county from GeoNames (added 24 Sep 2026 for the
+ * enquiry location in the admin, src/lib/lead-location.ts; blank for the few
+ * Census-only ZIPs GeoNames does not list):
+ *   55449	MN	Blaine|Minneapolis	45.1697	-93.1889	Anoka
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -68,11 +74,18 @@ function placeName(namelsad) {
 }
 
 // ------------------------------------------------------------------ GeoNames --
-const zips = new Map() // zip -> { state, usps, places: [{ name, inc, part, zShare, pShare }] }
+const zips = new Map() // zip -> { state, usps, lat, lng, county, places: [{ name, inc, part, zShare, pShare }] }
 for (const line of fs.readFileSync(path.join(dir, 'US.txt'), 'utf8').split('\n')) {
   const f = line.split('\t')
   if (f.length < 5 || !/^\d{5}$/.test(f[1]) || !STATES.has(f[4])) continue
-  zips.set(f[1], { state: f[4], usps: f[2].trim(), places: [] })
+  // Columns 5, 9 and 10: county, latitude, longitude.
+  const lat = Number(f[9]), lng = Number(f[10])
+  zips.set(f[1], {
+    state: f[4], usps: f[2].trim(), places: [],
+    county: (f[5] ?? '').trim(),
+    lat: Number.isFinite(lat) && f[9] !== '' ? lat.toFixed(4) : '',
+    lng: Number.isFinite(lng) && f[10] !== '' ? lng.toFixed(4) : '',
+  })
 }
 
 // -------------------------------------------------------------------- Census --
@@ -86,7 +99,7 @@ for (const line of rel.split('\n').slice(1)) {
   if (!['A', 'S'].includes(f[15])) continue // active places and CDPs only
   const zLand = Number(f[3]) || 0, pLand = Number(f[11]) || 0, part = Number(f[16]) || 0
   let z = zips.get(zip)
-  if (!z) { z = { state, usps: '', places: [] }; zips.set(zip, z) }
+  if (!z) { z = { state, usps: '', places: [], county: '', lat: '', lng: '' }; zips.set(zip, z) }
   if (z.state !== state) continue // a ZIP across a state line keeps its own state's places
   z.places.push({
     name: placeName(f[10]),
@@ -106,20 +119,25 @@ for (const zip of [...zips.keys()].sort()) {
     .filter((p) => p.zShare >= 0.05 || p.pShare >= 0.05)
     .sort((a, b) => b.part - a.part)
   const bigInc = real.find((p) => p.inc && p.zShare >= 0.5)
-  const primary = bigInc?.name || z.usps || real[0]?.name
+  // The Postal Service's own name wins when it is a real town inside this ZIP
+  // (55304 is "Andover" on letters even though Ham Lake covers more of it).
+  // Only when that name is a big city elsewhere (55449 "Minneapolis") does
+  // the town that actually covers the ZIP take over.
+  const uspsIsHere = z.usps && real.some((p) => p.name.toLowerCase().replace(/^saint /, 'st. ') === z.usps.toLowerCase().replace(/^saint /, 'st. '))
+  const primary = (uspsIsHere ? z.usps : bigInc?.name) || z.usps || real[0]?.name
   if (!primary) continue
-  if (bigInc && bigInc.name !== z.usps) fromCensus++
+  if (z.usps && primary !== z.usps) fromCensus++
   const names = []
   for (const n of [primary, z.usps, ...real.filter((p) => p.inc).map((p) => p.name), ...real.filter((p) => !p.inc).map((p) => p.name)]) {
     if (n && !names.some((m) => m.toLowerCase() === n.toLowerCase())) names.push(n)
   }
-  out.push(`${zip}\t${z.state}\t${names.join('|')}`)
+  out.push(`${zip}\t${z.state}\t${names.join('|')}\t${z.lat}\t${z.lng}\t${z.county}`)
 }
 
 const header = [
   '# US ZIP codes -> state and city names. Built by scripts/build-us-zips.mjs; do not edit by hand.',
   '# Sources: GeoNames postal codes (CC BY 4.0, www.geonames.org) and the US Census Bureau 2020 ZCTA to place relationship file.',
-  `# Built ${new Date().toISOString().slice(0, 10)}. Columns: zip, state, names (first = the one to fill in).`,
+  `# Built ${new Date().toISOString().slice(0, 10)}. Columns: zip, state, names (first = the one to fill in), latitude, longitude, county.`,
 ]
 const file = path.join(process.cwd(), 'data', 'us-zips.tsv')
 fs.writeFileSync(file, header.concat(out).join('\n') + '\n')
