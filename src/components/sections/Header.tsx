@@ -7,7 +7,7 @@ import { SERVICE_MARKS } from '@/components/ui/ServiceMarks'
 import { SERVICE_GROUPS } from '@/data/services'
 import { HeaderNav, type NavEntry } from '@/components/client/HeaderNav'
 import { MobileNav } from '@/components/client/MobileNav'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { CONTACT_FORM_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { blogMenuColumns } from '@/lib/blog-index'
 import { HEADER_H } from '@/lib/layout'
 
@@ -52,6 +52,7 @@ export async function Header() {
         mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }}
         topBar={TOP_BAR}
         quoteHref={QUOTE_HREF}
+        pickupHref={CONTACT_FORM_HREF}
         announce={TOP_BAR.announce}
       />
 

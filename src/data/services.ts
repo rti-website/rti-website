@@ -1,4 +1,5 @@
 import { href } from '@/lib/urls'
+import { CERT_COPY } from '@/data/certifications'
 import type { ServiceMark } from '@/components/ui/ServiceMarks'
 
 /**
@@ -168,9 +169,10 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     cards: [
       // In the Services menu's Recycling Programs column, but no card: the
       // 21 Sep 2026 frames draw this group with Mail In Program alone, on the
-      // homepage tab (6563:2130) and on /services/ (6142:1688), and the kit
-      // already has its card under Recycling Services.
-      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), menuOnly: true },
+      // homepage tab (6563:2130) and on /services/ (6142:1688).
+      // Its own page since 24 Sep 2026 (the kit doc); it opened the
+      // /electronic-recycle/ service page until then.
+      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronics-recycling-kit/'), menuOnly: true },
       { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
       // The new /mail-in-recycling/ page. Every existing "Mail In Program" link
       // still goes to ezontheearth.com — repointing them is Asim's call, so for
@@ -197,9 +199,7 @@ export const SERVICES_HERO = {
  * as a separate constant so the page can diverge again without touching the
  * shared copy.
  */
-export const SERVICES_CERT_BODY =
-  'Recycle Technologies follows recognized industry certification standards for '
-  + 'responsible recycling, including R2v3.'
+export const SERVICES_CERT_BODY = CERT_COPY.body
 
 /** "Don't See Your Item?" teal panel — Figma 6166:2746. */
 export const SERVICES_ENQUIRY = {

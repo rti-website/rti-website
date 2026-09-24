@@ -1,5 +1,6 @@
 import type { Industry } from '@/components/ui/IndustryCard'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { CERT_COPY } from '@/data/certifications'
 
 /**
  * /industries/ — copy from the "Industries We Serve" doc, geometry from
@@ -80,9 +81,7 @@ export const INDUSTRIES: Industry[] = [
 ]
 
 /** The certifications paragraph on /industries/. The shared compliance line since 24 Sep 2026 (Asim). */
-export const CERTIFICATIONS_BODY =
-  'Recycle Technologies follows recognized industry certification standards for '
-  + 'responsible recycling, including R2v3.'
+export const CERTIFICATIONS_BODY = CERT_COPY.body
 
 /* ------------------------------------------------------------ closing CTA --
  * !! PHONE NUMBER CONFLICT !! The doc gives the Wisconsin line as

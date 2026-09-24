@@ -68,7 +68,7 @@ function GroupArrow() {
 }
 
 export function MobileNav({
-  nav, mailIn, topBar, announce, quoteHref,
+  nav, mailIn, topBar, announce, quoteHref, pickupHref,
 }: {
   nav: NavEntry[]
   mailIn: { label: string; href: string }
@@ -80,6 +80,8 @@ export function MobileNav({
   }
   announce: { text: string; cta: string; href: string }
   quoteHref: string
+  /** The header row's Arrange Pickup button — the contact form. */
+  pickupHref: string
 }) {
   const [drawer, setDrawer] = useState(false)
   const [open, setOpen] = useState<string | null>(null)
@@ -116,9 +118,23 @@ export function MobileNav({
       </div>
 
       {/* ---- Header Row — 6588:2309, 390 x 69 ----------------------------- */}
-      <div className="flex h-[69px] items-center justify-between border-b border-line bg-white px-[16px] py-[12px]">
+      <div className="flex h-[69px] items-center justify-between border-b border-line bg-white py-[12px] pl-[20px] pr-[16px]">
         <Link href="/" aria-label="Recycle Technologies — home" className="block h-[34px] w-[143.39px]">
           <Image src="/images/logo.png" alt="Recycle Technologies" width={287} height={68} priority className="size-full object-contain object-left" />
+        </Link>
+        {/* Frame 1000007602 — the Arrange Pickup button and the menu button,
+            side by side with no gap. Asim, 24 Sep 2026: on the phone only
+            (this whole bar is lg:hidden), and it lands on the contact form.
+            "Button Bordered colored" 6857:12139: 93 x 24, #05838b fill and
+            1px border, r4, Roboto Medium 10 in white. The 1px word-spacing
+            is ours: at 10px Roboto's space all but vanished and it read
+            "ArrangePickup". */}
+        <div className="flex shrink-0 items-center">
+        <Link
+          href={pickupHref}
+          className="btn-pop flex h-[24px] w-[93px] shrink-0 items-center justify-center whitespace-nowrap rounded-[4px] border border-brand bg-brand font-roboto text-[10px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4.004px] [word-spacing:1px]"
+        >
+          Arrange Pickup
         </Link>
         <button
           type="button"
@@ -136,6 +152,7 @@ export function MobileNav({
             <span className="block h-[2px] w-full rounded-full bg-ink" />
           </span>
         </button>
+        </div>
       </div>
 
       {/* ---- Scrim ------------------------------------------------------- */}

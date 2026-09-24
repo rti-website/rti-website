@@ -38,6 +38,13 @@ export type ServicePageContent = {
     /** The service frames carry a picker + button; the industry frames do not. */
     cta?: Cta
     /**
+     * The button without the location picker beside it. The Electronics
+     * Recycling Kit (24 Sep 2026) is a nationwide mail-in product, so a
+     * "Select Your Location" field would ask a question the page has no use
+     * for; its doc gives the button alone.
+     */
+    noPicker?: boolean
+    /**
      * A second button beside `cta`, in place of the location picker. The state
      * landing pages (/light-bulbs/Minnesota/ and friends, 24 Sep 2026) already
      * know the location, so they show [Get a Quote] [Schedule a Pickup].
@@ -91,6 +98,19 @@ export type ServicePageContent = {
     image: string
   }
 
+  /**
+   * A second tick-row band after the process block — the Electronics
+   * Recycling Kit doc's "Who Is the Program For?" (24 Sep 2026). Same shape
+   * and look as `accept`. Absent everywhere else, and then it takes no space.
+   */
+  audience?: {
+    heading: string
+    intro?: string | string[]
+    itemsHeading?: string
+    items: { label: string; text: string; href?: string; external?: boolean }[]
+    outro?: string
+  }
+
   /** Overrides the shared certifications paragraph when a doc supplies its own. */
   certifications?: { body?: string }
 
@@ -133,6 +153,8 @@ export type ServicePageLayout = {
    * compliance paragraph. Set only when the default is too small.
    */
   accept?: number
+  /** The `audience` band. Required when the page has one; measured like `accept`. */
+  audience?: number
   certifications?: number
   /**
    * The FAQ band is fixed-height too, and overflows when questions wrap to two

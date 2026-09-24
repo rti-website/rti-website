@@ -214,19 +214,22 @@ export const ABOUT_NAV: IntroMenu = {
     + 'businesses manage electronics, lighting, batteries, documents, and other materials through '
     + 'reliable, environmentally responsible programs. Our certified processes make recycling '
     + 'simple, secure, compliant, and accessible.',
+  // Row descriptions: Asim, 24 Sep 2026. They were leftovers (a cut-off
+  // sentence and three service blurbs). The Certifications dash is a comma,
+  // the site's style.
   columns: [
     [
       { title: 'Why Choose Us', href: href('/why-choose-us/'),
-        desc: 'As one of the first fluorescent lamp recyclers in the US, Recycle Technologies has' },
+        desc: 'Certified processes and 32+ years of experience set us apart from typical recyclers.' },
       { title: 'Certifications', href: href('/certifications/'),
-        desc: 'Easy collection and recycling of unwanted electronics.' },
+        desc: 'R2v3 and RIOS certified, see the standards that back every service we provide.' },
     ],
     [
       { title: 'Sustainability & Environmental Impact', href: href('/sustainability/'),
-        desc: 'Secure destruction and responsible recycling of hard drives.' },
+        desc: 'Our zero-landfill commitment and the real numbers behind it, from collection to final processing.' },
       // No page, no agreed URL. Inert until there is one.
       { title: 'Leadership Team', href: '#',
-        desc: 'Secure shredding and recycling of unwanted phones.' },
+        desc: 'Meet the people guiding Recycle Technologies’ operations, compliance, and growth since 1993.' },
     ],
   ],
 }

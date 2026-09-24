@@ -3,6 +3,7 @@ import { CONTENT as LIGHT_BULBS } from '@/data/light-bulbs'
 import { CONTENT as ELECTRONICS } from '@/data/electronics-recycling'
 import { CONTENT as BATTERIES } from '@/data/battery-recycling'
 import { href, quoteHref } from '@/lib/urls'
+import { CERT_COPY } from '@/data/certifications'
 
 /**
  * State landing pages for ads — Asim, 24 Sep 2026: "we have to build subpages
@@ -94,7 +95,7 @@ function lightBulbs(state: StateName, intro: string[], recoveryGlass: string): S
         ],
         image: LIGHT_BULBS.process!.image,
       },
-      certifications: { body: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.' },
+      certifications: { body: CERT_COPY.body },
       faqs: [
         { q: `What types of light bulbs can I recycle in ${state}?`, a: 'We accept fluorescent tubes, CFLs, HID lamps, incandescent and halogen bulbs, and several other lamp types. Contact us about specific bulbs.' },
         { q: `Does Recycle Technologies offer commercial light bulb pickup in ${state}?`, a: `Yes. Commercial customers in ${state} can schedule a pickup for their spent light bulbs.` },
@@ -187,7 +188,7 @@ function electronics(state: StateName, city: string, v: {
         outro: 'Because equipment types vary, not every device follows exactly the same processing path.',
         image: ELECTRONICS.process!.image,
       },
-      certifications: { body: `Recycle Technologies follows recognized industry certification standards for responsible electronics recycling, including R2v3. Our ${city}, ${state} facility holds active R2v3 certification.` },
+      certifications: { body: `${CERT_COPY.body} Our ${city}, ${state} facility holds active R2v3 certification.` },
       faqs: [
         { q: `What electronics can I recycle in ${state}?`, a: 'We accept computers, laptops, servers, monitors, printers, copiers, phones, and a range of general electronics. Contact us if you’re unsure about a specific item.' },
         { q: 'Does Recycle Technologies offer electronics pickup for businesses?', a: `Yes. Business pickup is available for ${state} companies looking to recycle office electronics and IT equipment.` },
@@ -285,7 +286,7 @@ function batteries(state: StateName): StatePage {
         ],
         image: BATTERIES.process!.image,
       },
-      certifications: { body: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.' },
+      certifications: { body: CERT_COPY.body },
       faqs: [
         { q: `What types of batteries can I recycle in ${state}?`, a: 'We accept alkaline, lithium-ion, lead-acid, nickel-cadmium, button-cell, EV, power tool, and backup batteries. Contact us about other battery types.' },
         { q: `Does Recycle Technologies offer battery pickup in ${state}?`, a: `Yes. Commercial pickup is available within a 100-mile radius of our ${state} facility.` },

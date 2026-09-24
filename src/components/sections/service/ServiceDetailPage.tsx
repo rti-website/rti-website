@@ -89,9 +89,14 @@ export function ServiceDetailPage({
   // gap after it drop out of the stack entirely.
   const processTop = acceptTop + acceptH + GAP
   const afterAccept = acceptTop + acceptH
-  const certTop    = content.process
-    ? processTop + (layout.process ?? 0) + GAP
-    : afterAccept + GAP
+  const afterProcess = content.process ? processTop + (layout.process ?? 0) : afterAccept
+  // The optional second tick-row band (the kit page's "Who Is the Program
+  // For?") sits between the process block and certifications, GAP either side.
+  const audienceH  = content.audience ? (layout.audience ?? ACCEPT_H_DEFAULT) : 0
+  const audienceTop = afterProcess + GAP
+  const certTop    = content.audience
+    ? audienceTop + audienceH + GAP
+    : afterProcess + GAP
   const caseTop    = certTop + certH + GAP
   const placesH    = placesBandHeight(places.length)
   const placesTop  = caseTop + CASE_H + GAP
@@ -114,8 +119,8 @@ export function ServiceDetailPage({
           ]}
           h1={hero.h1}
           lead={hero.lead}
-          pickerPlaceholder={hero.cta && !hero.secondaryCta ? 'Select Your Location' : undefined}
-          pickerOptions={hero.cta && !hero.secondaryCta ? ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'] : undefined}
+          pickerPlaceholder={hero.cta && !hero.secondaryCta && !hero.noPicker ? 'Select Your Location' : undefined}
+          pickerOptions={hero.cta && !hero.secondaryCta && !hero.noPicker ? ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'] : undefined}
           cta={hero.cta}
           secondaryCta={hero.secondaryCta}
           image={hero.image}
@@ -191,6 +196,20 @@ export function ServiceDetailPage({
               </div>
             ))}
           </ServiceSplit>
+        )}
+
+        {content.audience && (
+          /* No Figma node: the kit doc's extra section, drawn as the accept
+             band's twin. `audience-band` is what measure-service-pages.mjs
+             looks for. */
+          <ServiceAcceptBand
+            top={audienceTop} height={audienceH} label="audience-band"
+            heading={content.audience.heading}
+            intro={content.audience.intro}
+            itemsHeading={content.audience.itemsHeading}
+            items={content.audience.items}
+            outro={content.audience.outro}
+          />
         )}
 
         <CertificationsBand top={certTop} height={certH} label="6173:2828" body={content.certifications?.body} />

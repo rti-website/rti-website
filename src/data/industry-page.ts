@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { CERT_COPY } from '@/data/certifications'
 
 /**
  * Shared scaffolding for the seven industry detail pages — Figma 6246:1390.
@@ -53,10 +54,8 @@ export const CTA_BUTTONS = {
   secondary: { label: 'Contact Us',  href: href('/contact-us/') },
 }
 
-/** Every industry doc uses this compliance line verbatim. */
-export const CERT_BODY =
-  'Recycle Technologies follows recognized industry certification standards for responsible '
-  + 'recycling, including R2v3.'
+/** The site-wide compliance line (it was the industry docs' own line until 24 Sep 2026). */
+export const CERT_BODY = CERT_COPY.body
 
 /**
  * Builds the parts of a ServicePageContent that never vary between industries,

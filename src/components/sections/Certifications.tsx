@@ -20,9 +20,10 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * The lead paragraph sits ABOVE the logo strip, on the board as well as the
  * phone — Asim, 24 Sep 2026: "move the text above the icons below the
  * heading in all the places". The frame drew heading 150, logos 282, lead 372;
- * it is now heading 150 (87 tall), lead 280 (one line), logos 352 (46 tall),
- * keeping the frame's ~44px between each and ~50 under the strip. Below lg the
- * children stack in source order, which was already heading, lead, strip.
+ * it is now heading 150 (87 tall), lead 280 (two balanced lines, 55 tall, since
+ * the second 24 Sep wording), logos 379 (46 tall), keeping the frame's ~44px
+ * between each and ~24 under the strip. Below lg the children stack in source
+ * order, which was already heading, lead, strip.
  */
 export function Certifications() {
   return (
@@ -41,10 +42,10 @@ export function Certifications() {
         <Title className="text-center">{CERT_COPY.title}</Title>
       </CenterBox>
 
-      {/* 1084, not 830: the one-sentence compliance line (24 Sep 2026) sits
-          on one line instead of leaving "R2v3." on a second. */}
-      <CenterBox y={280 - CERT_TRIM} w={1084}>
-        <Lead className="text-center">{CERT_COPY.body}</Lead>
+      {/* The frame's 830, balanced: always two even lines (see the same note
+          in CertificationsBand), so the strip below can sit at a fixed y. */}
+      <CenterBox y={280 - CERT_TRIM} w={830}>
+        <Lead className="text-center lg:text-balance">{CERT_COPY.body}</Lead>
       </CenterBox>
 
       {/*
@@ -56,7 +57,7 @@ export function Certifications() {
         leaves the `width` property alone, so there is nothing to fight the
         `width: var(--bw)` the lg media query puts on .design-box.
       */}
-      <Box x={330} y={352 - CERT_TRIM} w={1260} className="self-stretch">
+      <Box x={330} y={379 - CERT_TRIM} w={1260} className="self-stretch">
         <LogoMarquee logos={CERT_LOGOS} speed={45} />
       </Box>
     </Section>

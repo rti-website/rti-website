@@ -60,10 +60,13 @@ export function CertificationsBand({
         <LogoMarquee logos={CERT_LOGOS} speed={45} />
       </div>
 
-      {/* 1084 for the one-sentence compliance line (24 Sep 2026), which at
-          830 left "R2v3." alone on a second line; a page's own longer
-          paragraph (airbags) keeps the frame's 830 and its measured height. */}
-      <p className={`w-full text-center font-roboto text-[15px] leading-[22px] text-muted order-1 lg:text-[17.018px] lg:leading-[27.654px] ${(body ?? CERT_COPY.body).length <= 140 ? 'lg:w-[1084px]' : 'lg:w-[830px]'}`}>
+      {/* The frame's 830, balanced. The compliance line (24 Sep 2026, second
+          wording) is about 1,060px of text: at 1084 it only just fitted one
+          line here and would break on Windows' wider Roboto with one word
+          left over. At 830 it is always two even lines, which is what the
+          frame's paragraph was and what the band's 299 height is sized for.
+          The airbag page's own long paragraph keeps its measured height. */}
+      <p className="w-full text-center font-roboto text-[15px] leading-[22px] text-muted order-1 lg:w-[830px] lg:text-balance lg:text-[17.018px] lg:leading-[27.654px]">
         {body ?? CERT_COPY.body}
       </p>
     </Section>

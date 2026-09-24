@@ -121,6 +121,7 @@ for (const route of ROUTES) {
       intro: col('6197:4463'),
       process: col('6173:4386'),
       accept: band('6142:2067', 30),
+      audience: band('audience-band', 30),
       certifications: band('6173:2828', 30),
       faq,
     }
@@ -153,6 +154,9 @@ for (const route of ROUTES) {
   // against a 676.93 design height does not need an override, and writing one
   // would push fourteen pages 10px off the design for nothing.
   if (m.accept > ACCEPT_DEFAULT + TOLERANCE) parts.push(`accept: ${m.accept + HEADROOM}`)
+  // The optional second tick-row band has no design height to fall back on,
+  // so a page that has one always gets its measured number.
+  if (m.audience != null) parts.push(`audience: ${m.audience + HEADROOM}`)
   if (m.certifications > CERT_DEFAULT + TOLERANCE) parts.push(`certifications: ${m.certifications + HEADROOM}`)
   if (m.faq > FAQ_DEFAULT + TOLERANCE) parts.push(`faq: ${m.faq + HEADROOM}`)
   const layout = `layout={{ ${parts.join(', ')} }}`

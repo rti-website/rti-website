@@ -631,7 +631,7 @@
   },
   {
     "source": "/recycling-kits/electronics-recycling-kits/",
-    "destination": "/electronic-recycle/",
+    "destination": "/electronics-recycling-kit/",
     "statusCode": 301
   },
   {

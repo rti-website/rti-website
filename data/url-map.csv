@@ -40,6 +40,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/,location,760,2,301,/minnesota-recycling/,Bloomington Recycling Center | Recycle Technologies,"Electronics, battery and bulb recycling serving Bloomington, MN.",Bloomington Recycling Center,FALSE,FALSE
 /page/2/,pagination,0,0,301,/blog/page/2/,,,,FALSE,FALSE
 /mail-in-recycling/,service,0,0,KEEP,/mail-in-recycling/,Mail-In Recycling Program | Recycle Technologies,"Recycle Technologies' Mail-In Program lets you ship eligible materials for recycling from anywhere, without a local drop-off or pickup.",Mail-In Recycling Program,TRUE,TRUE
+/electronics-recycling-kit/,service,0,0,KEEP,/electronics-recycling-kit/,Electronics Recycling Kit | Mail-In E-Waste Program,"Recycle electronics from anywhere with Recycle Technologies' mail-in Electronics Recycling Kit. No local drop-off needed; open to individuals and businesses.",Electronics Recycling Kit,TRUE,TRUE
 /industries/,page,0,0,KEEP,/industries/,Industries We Serve | Recycle Technologies,"Recycle Technologies serves healthcare, finance, education, government, automotive, manufacturing and retail organizations retiring computers, IT equipment and electronics.",Industries,TRUE,TRUE
 /industries/healthcare/,industry,0,0,KEEP,/industries/healthcare/,Healthcare Recycling Services | Recycle Technologies,"Healthcare organizations can recycle retired computers, IT equipment, and electronics with documented, licensed recycling services.",Healthcare Recycling,TRUE,TRUE
 /industries/financial-services-banking/,industry,0,0,KEEP,/industries/financial-services-banking/,Financial Services Recycling | Recycle Technologies,"Banks and financial services organizations can recycle retired computers, IT equipment, and records with documented, licensed recycling services.",Financial Services & Banking,TRUE,TRUE
@@ -175,7 +176,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /recycling-kits/airbag-recycling-kits/,legacy,,,301,/airbag-recycling/,,,,FALSE,FALSE
 /recycling-kits/battery-recycling/,legacy,,,301,/battery-recycling/,,,,FALSE,FALSE
-/recycling-kits/electronics-recycling-kits/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/recycling-kits/electronics-recycling-kits/,legacy,,,301,/electronics-recycling-kit/,,,,FALSE,FALSE
 /recycling-kits/light-bulbs-recycling-kits/,legacy,,,301,/light-bulbs/,,,,FALSE,FALSE
 /recycling-kits/mercury-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /recycling-kits/safety-gloves-recycling-kits/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE

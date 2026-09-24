@@ -152,11 +152,14 @@ export const CERT_LOGOS: Logo[] = [
 export const CERT_COPY = {
   eyebrow: 'Environmental Compliances',
   title: 'Certifications & Standards',
-  /* Asim, 24 Sep 2026: this line everywhere the band appears (the doc's
-     compliance line, the same one the industry pages already used). */
+  /* The line under the heading, everywhere the band appears. Asim,
+     24 Sep 2026 (second version that day; the doc's dash is a comma, as in
+     every hero). /services/, /industries/, the industry pages and the state
+     ad pages all read this constant rather than keeping their own copy.
+     Only the airbag page, whose doc writes a paragraph of its own, differs. */
   body:
-    'Recycle Technologies follows recognized industry certification standards for '
-    + 'responsible recycling, including R2v3.',
+    'Recycle Technologies is R2v3 and RIOS certified, held to independently audited '
+    + 'standards for responsible recycling, not just self-declared ones.',
 }
 
 /**
