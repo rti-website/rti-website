@@ -41,13 +41,20 @@ export function ContactSection({ top, height }: { top: number; height: number })
   return (
     <Section top={top} height={height} label="6369:757" className="bg-white">
       {/*
-        Scroll target for CONTACT_FORM_HREF — the "Don't See Your Item?" band
-        sends people here. An offset span rather than an id on the section:
-        this is a fixed-canvas layout, so an anchor on the section itself puts
-        its first line under the 120px header. Same trick as the "Read More"
-        targets in ServiceAcceptBand.
+        Scroll target for CONTACT_FORM_HREF, QUOTE_HREF and quoteHref():
+        every "Get a Quote" button on the site, the hero's quote card and the
+        "Don't See Your Item?" band land here. An offset span rather than an
+        id on the section, so the offset can differ by width:
+          phone: 92 above the section, the height of the sticky bar (36px
+                 strip + 56px header row, MobileNav), so the section starts
+                 just under it;
+          board: the section's own top edge. The desktop header is not
+                 sticky, so nothing covers it, and the "Get in Touch" pill
+                 lands 100 below the window's top with no hero showing
+                 (Asim, 25 Sep 2026, with a screenshot of exactly that view;
+                 the old 140 offset left a band of the hero above it).
       */}
-      <span id="contact-form" className="absolute -top-[140px]" aria-hidden="true" />
+      <span id="contact-form" className="absolute -top-[92px] lg:top-0" aria-hidden="true" />
       <Box x={319} y={100} w={1282} className="flex flex-col items-start gap-0 lg:flex-row lg:gap-[80px]">
         <div className={COLUMN} data-figma="6638:8418">
           <div className={HEAD_BLOCK}>

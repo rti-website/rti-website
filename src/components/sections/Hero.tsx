@@ -176,7 +176,9 @@ export function Hero() {
           contact form. The second is a call button for the Minnesota line:
           white, teal text, and the frames' own phone glyph (image 450,
           hero-phone.png). The frames set that label white on white; it is
-          teal here, as their previews show. */}
+          teal here, as their previews show. The glyph sits BEFORE the number
+          (Asim, 25 Sep 2026: "move the phone icon to before the number"); the
+          frames draw it after. */}
       <Box x={319} y={401} w={681} className="flex flex-col gap-[10px] lg:flex-row">
         <Btn href={CONTACT_FORM_HREF} variant="colored" className="w-full justify-center backdrop-blur-[4.004px] lg:h-[48px] lg:w-auto lg:min-w-px lg:flex-1">
           Get a Quick Quote
@@ -185,8 +187,8 @@ export function Hero() {
           href={TOP_BAR.phoneMn.tel}
           className="btn-pop flex h-[48px] w-full items-center justify-center gap-[8.008px] rounded-[8px] bg-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1"
         >
-          <span className="whitespace-nowrap">+1-763-559-5130</span>
           <Image src="/images/home/hero-phone.png" alt="" width={34} height={34} className="size-[17px] shrink-0 object-cover" />
+          <span className="whitespace-nowrap">+1-763-559-5130</span>
         </a>
       </Box>
 

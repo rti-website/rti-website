@@ -17,12 +17,18 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  * The mobile frame repeats the same placeholder (92% four times, star icons
  * back above each figure). It is the SAME stale draw as the desktop frame, not
  * new direction, so the real figures and the starless cards stand.
+ *
+ * 25 Sep 2026 (Asim): two cards now carry the same figures, in the same
+ * words, as the impact strip under Our Services (IMPACT_STATS in
+ * src/data/home.ts): "5,000+ Tons / E-Waste Processed" became "18M+ / Lbs of
+ * E-Waste Recycled", and "100,000+ / Devices Securely Destroyed" became
+ * "2.3M+ / Devices Destroyed". One set of numbers on the page, not two.
  */
 const STATS = [
-  { x: 0,      y: 0,     v: '5,000+ Tons', l: 'E-Waste Processed' },
-  { x: 288.94, y: 0,     v: '95%',         l: 'Diversion Rate' },
-  { x: 0,      y: 177.4, v: '1,500+',      l: 'Businesses Served' },
-  { x: 288.94, y: 177.4, v: '100,000+',    l: 'Devices Securely Destroyed' },
+  { x: 0,      y: 0,     v: '18M+',   l: 'Lbs of E-Waste Recycled' },
+  { x: 288.94, y: 0,     v: '95%',    l: 'Diversion Rate' },
+  { x: 0,      y: 177.4, v: '1,500+', l: 'Businesses Served' },
+  { x: 288.94, y: 177.4, v: '2.3M+',  l: 'Devices Destroyed' },
 ]
 
 export function WhyChooseUs() {
@@ -118,7 +124,7 @@ export function WhyChooseUs() {
                 The mobile frame redraws the star, so it also redraws the
                 pre-Asim 23.37. That figure is kept at 390 for a reason the
                 desktop did not have: a half-width card is ~169 wide, and
-                "5,000+ Tons" at 30px does not fit across it. min-h rather than
+                the old "5,000+ Tons" at 30px did not fit across it. min-h rather than
                 h on the card so a figure that does wrap stays centred instead
                 of spilling. */}
             <p className="font-sans text-[23.37px] font-bold leading-[35.055px] tracking-[-0.4674px] text-white lg:text-[30px] lg:leading-[45px] lg:tracking-[-0.6px]">{s.v}</p>

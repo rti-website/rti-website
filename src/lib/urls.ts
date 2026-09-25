@@ -51,8 +51,14 @@ export function isExternal(input: string): boolean {
  * ONE constant rather than thirty edits: when /quote/ gets built, or gets a
  * 301 to /contact-us/ in url-map.csv, this line is the only thing to change.
  * /quote/ still needs one of those two before launch — it ranks today.
+ *
+ * Since 25 Sep 2026 it lands ON THE FORM, not at the top of /contact-us/
+ * (Asim: "when someone click on get a quote land them here directly in form
+ * not on top of the page, do this in all get a quote places"). Same anchor as
+ * CONTACT_FORM_HREF and quoteHref() below, so every quote button on the site,
+ * with or without a preselected service, arrives at the same place.
  */
-export const QUOTE_HREF = path('/contact-us/')
+export const QUOTE_HREF = `${path('/contact-us/')}#contact-form`
 
 /**
  * The contact form itself, rather than the top of the page it sits on.
