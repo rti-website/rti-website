@@ -70,24 +70,11 @@ if (isProd && ENV.ADMIN_ALLOW_HTTP === 'true') {
   )
 }
 
-// --- 1c. the Figma's sample testimonials must never reach production --------
-// They show on `next dev` and the dev server only (DESIGN_SAMPLE_TESTIMONIALS
-// in src/data/home.ts). If a production homepage contains any of the names,
-// the staging switches leaked into a live build.
-{
-  const home = path.join(ROOT, '.next', 'server', 'app', 'index.html')
-  const SAMPLE_NAMES = ['Rachel Simmons', 'Marcus Chen', 'Sarah Okonkwo', 'David Hartwell']
-  if (isProd && fs.existsSync(home)) {
-    const html = fs.readFileSync(home, 'utf8')
-    const hit = SAMPLE_NAMES.filter((n) => html.includes(n))
-    if (hit.length) {
-      fail(
-        `The homepage of a production build shows the Figma's sample testimonials (${hit.join(', ')}).\n` +
-          '  These are design placeholders, not real customers. Check DEPLOY_ENV and NEXT_PUBLIC_NOINDEX.',
-      )
-    }
-  }
-}
+// --- 1c. (retired 25 Sep 2026) ------------------------------------------------
+// This used to fail a production build whose homepage showed the Figma's four
+// testimonial names, while they were a design preview only. Asim confirmed
+// they are new RTI clients who approved their words and agreed to be named,
+// so they are now the live testimonials (TESTIMONIALS in src/data/home.ts).
 
 // --- 2 & 3. everything declared must be prerendered -------------------------
 const manifestPath = path.join(ROOT, '.next', 'prerender-manifest.json')

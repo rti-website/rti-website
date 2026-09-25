@@ -127,15 +127,44 @@ export const LOCATION_CARDS = [
 export type Testimonial = {
   quote: string
   name: string
-  /** ISO date of the review, as the widget shows it. */
-  date: string
+  /** A client testimonial's job title, shown under the name. */
+  role?: string
+  /** ISO date of a Google review, as the widget shows it, shown under the name
+   *  when there is no role. */
+  date?: string
   /** Every review here is five stars; kept as data so a four is not a code change. */
   stars: number
   /** The quote is cut short; the card appends an ellipsis. See the note above. */
   truncated?: boolean
 }
 
+/**
+ * CLIENT TESTIMONIALS — the four from the Figma frame (6554:2055), word for
+ * word. Until 25 Sep 2026 these were treated as the designer's sample content
+ * and shown only on `next dev` and the dev server. That evening Asim
+ * confirmed, in answer to "did these four clients give or approve these exact
+ * words, and agree to be named on the RTI website?": "Yes, confirmed". On that
+ * confirmation they are the live testimonials, first in the list, so they are
+ * the four cards the homepage shows. They carry a job title where the Google
+ * reviews carry a date. Asim, same evening: "these are our new client, not
+ * from old website", which is why none of them is among the Google reviews.
+ *
+ * Asim holds the clients' approval. If any of them withdraws it, delete that
+ * entry and the next review below takes its card.
+ */
 export const TESTIMONIALS: Testimonial[] = [
+  { name: 'Rachel Simmons', role: 'IT Director', stars: 5,
+    quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof of responsible recycling. That transparency changed everything for us.' },
+  { name: 'Marcus Chen', role: 'Sustainability Manager', stars: 5,
+    quote: 'We recycled over 2,000 laptops last year through their service. The pickup scheduling was seamless, and our compliance team loved the detailed audit reports.' },
+  { name: 'Sarah Okonkwo', role: 'Small Business Owner', stars: 5,
+    quote: 'As a small business, I wasn’t sure how to dispose of old equipment safely. They made it incredibly easy — one call and everything was handled from start to finish.' },
+  { name: 'David Hartwell', role: 'CTO', stars: 5,
+    quote: 'The data destruction certificates gave us total peace of mind. Our clients trust us with sensitive information, and now we can prove it’s securely handled at end-of-life.' },
+
+  /* The real Google reviews (23 Sep 2026, see the note above), newest first.
+     Not shown while the four above fill the cards; kept for when the cards
+     rotate or a client entry is removed. */
   { name: 'Dan Kane', date: '2023-04-03', stars: 5,
     quote: 'Absolutely the best. Bar none. Quick, clean, prompt and always outstanding customer service. Soerens Ford appreciates your service!' },
   { name: 'Debbie Clark', date: '2023-03-08', stars: 5,
@@ -148,41 +177,6 @@ export const TESTIMONIALS: Testimonial[] = [
     quote: 'My initial review was more critical of them due to unannounced charges however they have made the corrections now and we have settled.' },
   { name: 'Lydia Keith', date: '2020-12-18', stars: 5,
     quote: 'Efficient, friendly and knowledgeable.' },
-]
-
-/**
- * !! THE FIGMA'S SAMPLE TESTIMONIALS: DESIGN PREVIEW ONLY. NEVER ON LIVE.
- *
- * The four cards in the frame (6554:2055), word for word. Asim asked three
- * times on 25 Sep 2026 to see this exact text in the section. These people
- * (Rachel Simmons, Marcus Chen, Sarah Okonkwo, David Hartwell) are the
- * designer's sample content, not known RTI customers, so the text is shown
- * only where the page is being REVIEWED:
- *
- *   `next dev` on the laptop                      NODE_ENV=development
- *   the dev server (192.168.90.152:8106)          DEPLOY_ENV=staging AND
- *                                                  NEXT_PUBLIC_NOINDEX=true
- *
- * Every other build, the live site included, shows the real Google reviews
- * above. Both staging variables have to be wrong on live before these could
- * leak, and scripts/check-static.mjs fails a production build that contains
- * any of these names. See SHOW_DESIGN_SAMPLES in Testimonials.tsx.
- *
- * TO PUBLISH ANY OF THESE FOR REAL: confirm the person is a real client who
- * gave these words and agreed to be named, then move them into TESTIMONIALS
- * above (with the role in place of a date) and delete them here.
- */
-export type SampleTestimonial = { quote: string; name: string; role: string; stars: number }
-
-export const DESIGN_SAMPLE_TESTIMONIALS: SampleTestimonial[] = [
-  { name: 'Rachel Simmons', role: 'IT Director', stars: 5,
-    quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof of responsible recycling. That transparency changed everything for us.' },
-  { name: 'Marcus Chen', role: 'Sustainability Manager', stars: 5,
-    quote: 'We recycled over 2,000 laptops last year through their service. The pickup scheduling was seamless, and our compliance team loved the detailed audit reports.' },
-  { name: 'Sarah Okonkwo', role: 'Small Business Owner', stars: 5,
-    quote: 'As a small business, I wasn’t sure how to dispose of old equipment safely. They made it incredibly easy — one call and everything was handled from start to finish.' },
-  { name: 'David Hartwell', role: 'CTO', stars: 5,
-    quote: 'The data destruction certificates gave us total peace of mind. Our clients trust us with sensitive information, and now we can prove it’s securely handled at end-of-life.' },
 ]
 
 /**

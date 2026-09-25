@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Title } from '@/components/ui/Bits'
-import { DESIGN_SAMPLE_TESTIMONIALS, TESTIMONIALS } from '@/data/home'
+import { TESTIMONIALS } from '@/data/home'
 
 /**
  * Client's Testimonials — Figma 6024:14149 in BVtf2AOuUOcYbiMIlcKmbC as
@@ -21,17 +21,14 @@ import { DESIGN_SAMPLE_TESTIMONIALS, TESTIMONIALS } from '@/data/home'
  * see ImpactStats). The section went 904 -> 698 and everything below moved up
  * with HOME_TESTIMONIALS_GROWTH.
  *
- * !! ON LIVE THE CARDS ARE THE REAL GOOGLE REVIEWS, NOT THE FRAME'S PEOPLE.
- * The frame fills its four cards with sample reviewers (names, job titles,
- * quotes). Live shows the real reviews Asim supplied on 23 Sep 2026
- * (src/data/home.ts), the newest four, with the review date where the frame
- * has a job title. Invented testimonials must never ship as if they were
- * customers' words.
- *
- * DESIGN PREVIEW (25 Sep 2026): on `next dev` and on the dev server the cards
- * show the frame's own sample text instead, word for word, so the section can
- * be reviewed exactly as designed, with a one-line note saying so. See
- * SHOW_DESIGN_SAMPLES below and DESIGN_SAMPLE_TESTIMONIALS in home.ts.
+ * THE CARDS: the first four entries of TESTIMONIALS (src/data/home.ts). Since
+ * 25 Sep 2026 those are the four clients in the frame (Rachel Simmons, Marcus
+ * Chen, Sarah Okonkwo, David Hartwell), word for word with their job titles,
+ * on every build. Until then they showed only on `next dev` and the dev server
+ * as a design preview; Asim confirmed they are new RTI clients who gave or
+ * approved these words and agreed to be named, so the preview switch and its
+ * note came out. The real Google reviews follow them in the data and show
+ * with their date if a client entry is removed.
  *
  * MOBILE: the heading stacks over a sideways swipe row of the same cards
  * (CSS scroll-snap; there are no buttons and no script).
@@ -39,35 +36,22 @@ import { DESIGN_SAMPLE_TESTIMONIALS, TESTIMONIALS } from '@/data/home'
 export const TESTIMONIALS_H = 698
 
 /**
- * How many reviews the section shows: the frame's four cards, no rail.
- * TESTIMONIALS in src/data/home.ts is newest first, so these are the four
- * newest; the other two stay in the data for when the cards rotate again.
+ * How many testimonials the section shows: the frame's four cards, no rail.
+ * The first four of TESTIMONIALS in src/data/home.ts; the rest stay in the
+ * data for when the cards rotate again.
  */
 const SHOWN = 4
 
-/**
- * True only where the page is being reviewed: `next dev`, or the dev server,
- * which is built with DEPLOY_ENV=staging AND NEXT_PUBLIC_NOINDEX=true. Live
- * has neither, and a build with DEPLOY_ENV unset counts as live, so the
- * default is always the real reviews. Read at build time (this is a server
- * component, prerendered).
- */
-const SHOW_DESIGN_SAMPLES =
-  process.env.NODE_ENV === 'development'
-  || (process.env.DEPLOY_ENV === 'staging' && process.env.NEXT_PUBLIC_NOINDEX === 'true')
-
-/** What a card draws: the real reviews carry a date, the samples a job title. */
+/** What a card draws: a client's job title, or a Google review's date. */
 type Card = { quote: string; name: string; sub: React.ReactNode; stars: number; truncated?: boolean }
 
 /** A function, not a module constant: reviewDate() reads MONTHS, which is
  *  declared further down the file. */
 function cards(): Card[] {
-  return SHOW_DESIGN_SAMPLES
-    ? DESIGN_SAMPLE_TESTIMONIALS.map((t) => ({ quote: t.quote, name: t.name, sub: t.role, stars: t.stars }))
-    : TESTIMONIALS.slice(0, SHOWN).map((t) => ({
-        quote: t.quote, name: t.name, stars: t.stars, truncated: t.truncated,
-        sub: <time dateTime={t.date}>{reviewDate(t.date)}</time>,
-      }))
+  return TESTIMONIALS.slice(0, SHOWN).map((t) => ({
+    quote: t.quote, name: t.name, stars: t.stars, truncated: t.truncated,
+    sub: t.role ?? (t.date ? <time dateTime={t.date}>{reviewDate(t.date)}</time> : null),
+  }))
 }
 
 export function Testimonials() {
@@ -85,17 +69,6 @@ export function Testimonials() {
             rather than by touching the desktop value. */}
         <Title className="text-center leading-[44.7px] max-lg:leading-[32px]">Client&rsquo;s Testimonials</Title>
       </CenterBox>
-
-      {/* Design preview only (local and the dev server): one quiet line so
-          nobody reviewing the page takes the sample people for real clients.
-          Sits in the 50px between the heading and the cards. */}
-      {SHOW_DESIGN_SAMPLES && (
-        <CenterBox y={196} w={900}>
-          <p className="text-center font-roboto text-[12px] leading-[16px] text-[#9a9a9a]">
-            Design preview: sample testimonials from the Figma file. The live site shows real Google reviews.
-          </p>
-        </CenterBox>
-      )}
 
       {/* Cards Row — 6554:2055: four 300 x 393 cards, 22 apart, 1266 wide at
           x327, 50 under the heading. On a phone it is a sideways swipe row
@@ -123,8 +96,7 @@ function reviewDate(iso: string): string {
  * One review card — 6554:2056: 300 x 393, r14, px28 py32, the three parts
  * top and bottom: stars and quote above, a 244 rule over the reviewer below (a 40px
  * teal initial disc, 12 from the name over a 12.5 line). The frame's second
- * line is a job title; on live these are Google reviews, so it is the
- * review's date (the design preview shows the sample job titles). The text
+ * line is a job title, as drawn; a Google review shows its date there. The text
  * fades with the hover gradient (220ms, the .grad-card timing) so the two
  * never disagree mid-transition.
  * The "Google Review" mark and the rating line under the row came out on
