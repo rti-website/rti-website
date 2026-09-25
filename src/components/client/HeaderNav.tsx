@@ -87,10 +87,11 @@ export type NavEntry = {
 }
 
 export function HeaderNav({
-  nav, mailIn,
+  nav, cta,
 }: {
   nav: NavEntry[]
-  mailIn: { label: string; href: string }
+  /** The button at the end of the nav row (Get a Quote since 25 Sep 2026). */
+  cta: { label: string; href: string }
 }) {
   const [open, setOpen] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -175,12 +176,14 @@ export function HeaderNav({
             )
         ))}
 
-        {/* Mail In Program — 6225:5014, the #1b7a3d pill. */}
-        <a href={mailIn.href} target="_blank" rel="noopener noreferrer"
-          className="btn-pop flex h-[36px] shrink-0 items-center gap-[8.008px] rounded-[8px] bg-accent px-[20px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white">
-          {mailIn.label}
-          <Image src="/images/mail-in-icon.png" alt="" width={34} height={16} className="h-[16px] w-[34px] object-contain" />
-        </a>
+        {/* Get a Quote — 6225:5014 in the 25 Sep 2026 frame: the teal
+            "Button Bordered colored", h36 px20 r8, Roboto Medium 15, no mark.
+            It was the green Mail In Program pill to ezontheearth.com; Asim:
+            "remove the mail in program button and make it get a quote". */}
+        <Link href={cta.href}
+          className="btn-pop flex h-[36px] shrink-0 items-center rounded-[8px] bg-brand px-[20px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4.004px]">
+          {cta.label}
+        </Link>
       </div>
 
       {/* Panels — 6107:2234. Full-bleed, flush under the 140px bar. Positioned

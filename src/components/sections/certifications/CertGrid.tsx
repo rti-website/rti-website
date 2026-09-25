@@ -12,8 +12,10 @@ import { CERTS, INTRO, type CertLogo } from '@/data/certifications-page'
  * ===========================================================================
  * The four glyph cards became ten cards that each carry the standard's own
  * logo, three to a row on a 1278 grid (x321): 410 wide, p30, gap 16, a 48-tall
- * row with the logo in a 120x48 slot on the left and the status pill on the
- * right, then the name at 19 and the body at 14.5/1.6. The last row holds
+ * row with the logo in a 120x48 slot on the left (the status pill that sat
+ * on the right was removed on 25 Sep 2026, Asim), then the name at 19 and
+ * the body at 14.5/1.6. A card with an `href` (R2v3) links its logo and its
+ * title to SERI's directory, in a new tab. The last row holds
  * GLBA alone, on the left, as drawn.
  *
  * The title under each logo is the FULL name — Asim: "we have to add the full
@@ -27,8 +29,8 @@ import { CERTS, INTRO, type CertLogo } from '@/data/certifications-page'
  *
  * MOBILE — 6766:2854. The same card at 350 wide, which the designer drew as
  * the desktop card scaled by 0.854: p26, gap 14, r10, a 41-tall top row with
- * every logo at 0.854 of its desktop size, a 22-tall pill at 9px, the name at
- * 16 and the body at 14/1.6. Stacked 20 apart.
+ * every logo at 0.854 of its desktop size (no pill since 25 Sep 2026), the
+ * name at 16 and the body at 14/1.6. Stacked 20 apart.
  *
  * Logos render `unoptimized`, for the reason given in LogoMarquee: they are a
  * few KB each, and the optimizer caches by URL, so a re-exported logo would
@@ -47,15 +49,29 @@ export function CertGrid({ top, height }: { top: number; height: number }) {
       <ul className="grid w-full grid-cols-1 items-stretch gap-[20px] lg:w-[1278px] lg:grid-cols-3 lg:gap-[24px]">
         {CERTS.map((c) => (
           <li key={c.name} className="flex w-full flex-col items-start gap-[14px] rounded-[10px] border border-line bg-white p-[26px] lg:gap-[16px] lg:rounded-[12px] lg:p-[30px]">
-            <div className="flex h-[41px] w-full items-center justify-between lg:h-[48px]">
-              <span className="flex h-full w-[102px] items-center lg:w-[120px]">
-                <Logo logo={c.logo} alt={c.name} />
-              </span>
-              <span className="flex h-[22px] items-center whitespace-nowrap rounded-full bg-accent-soft px-[10px] font-roboto text-[9px] font-bold uppercase leading-normal tracking-[0.34px] text-accent lg:h-[26px] lg:px-[12px] lg:text-[10.5px] lg:tracking-[0.4px]">
-                {c.badge}
-              </span>
+            <div className="flex h-[41px] w-full items-center lg:h-[48px]">
+              {c.href ? (
+                /* The logo repeats the title's link, so it is skipped by
+                   keyboard and screen reader: one tab stop per card. */
+                <a href={c.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true"
+                  className="flex h-full w-[102px] items-center transition-opacity hover:opacity-80 lg:w-[120px]">
+                  <Logo logo={c.logo} alt="" />
+                </a>
+              ) : (
+                <span className="flex h-full w-[102px] items-center lg:w-[120px]">
+                  <Logo logo={c.logo} alt={c.name} />
+                </span>
+              )}
             </div>
-            <h3 className="w-full font-sans text-[16px] font-medium leading-[1.3] text-heading lg:text-[19px]">{c.title}</h3>
+            <h3 className="w-full font-sans text-[16px] font-medium leading-[1.3] text-heading lg:text-[19px]">
+              {c.href ? (
+                <a href={c.href} target="_blank" rel="noopener noreferrer"
+                  aria-label={`${c.title}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+                  className="transition-colors hover:text-brand">
+                  {c.title}
+                </a>
+              ) : c.title}
+            </h3>
             <p className="w-full font-roboto text-[14px] leading-[1.6] text-muted lg:text-[14.5px]">{c.body}</p>
           </li>
         ))}

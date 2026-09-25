@@ -5,6 +5,7 @@ import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
 import { Certifications } from '@/components/sections/Certifications'
 import { OurServices } from '@/components/sections/OurServices'
+import { ImpactStats } from '@/components/sections/ImpactStats'
 import { Industries } from '@/components/sections/Industries'
 import { HowItWorks } from '@/components/sections/HowItWorks'
 import { WhyChooseUs } from '@/components/sections/WhyChooseUs'
@@ -20,12 +21,13 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  *   Header          6107:2737      y0      h140
  *   Hero            6023:13152     y140    h940
  *   Certifications  6044:19732     y1080   h449
- *   Our Services    6532:2049      y1679   h1133  (x319, w1282) — was 6107:1552, 860; below moves +273
+ *   Our Services    6532:2049      y1679   h969   (x319, w1282) — the enquiry card in the tab column since 25 Sep 2026
+ *   Impact figures  6873:13941     y2798   h154   (x319, w1282) — new 25 Sep 2026; below moves +413 in all
  *   Industries      6023:12500     y2689   h887
  *   How It Works    6040:18591     y3726   h559
  *   Why Choose Us   6065:21652     y4435   h532   (x320, w1280)
  *   Locations       6024:14077     y5117   h1472
- *   Testimonials    6024:14149     y6739   h826   — four cards + stats (file L79…); was 594; below moves +232 more
+ *   Testimonials    6024:14149     y6739   h698   — four cards (25 Sep 2026); was 594; below moves +104 more
  *   Case Studies    6557:12903     y7483   h934   — was 6026:14726, 885; below moves +49 more
  *   FAQ/CTA/Footer  6044:20133     y8518   h1873
  *
@@ -67,6 +69,9 @@ export default function HomePage() {
           className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0"
           style={{ top: `var(${HOME_SERVICES_DELTA_VAR}, 0px)` }}
         >
+          {/* The impact figures (6873:13941), 150 under Our Services since
+              25 Sep 2026 — moved up from under the reviews. */}
+          <ImpactStats />
           <Industries />
           <HowItWorks />
           <WhyChooseUs />

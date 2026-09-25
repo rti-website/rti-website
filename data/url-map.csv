@@ -62,7 +62,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /battery-recycling-in-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /battery-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /computer-recycle-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
-/electronic-recycling-chicago/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
+/electronic-recycling-chicago/,location,,,KEEP,/electronic-recycling-chicago/,"Electronics Recycling in Chicago, Illinois | Recycle Technologies","Commercial electronics and e-waste recycling for Chicago businesses, with pickup, drop-off, ITAD and hard drive destruction through our certified process.","Recycling in Chicago, Illinois",TRUE,TRUE
 /electronic-recycling-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
 /electronic-recycling-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /electronic-recycling-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE

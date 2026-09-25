@@ -77,6 +77,18 @@ export type CtaContent = {
   body: string | string[]
   primary: { label: string; href: string; external?: boolean }
   secondary: { label: string; href: string; external?: boolean }
+  /**
+   * The /all-locations/ band as its own frames draw it (6491:6580 board,
+   * 6750:8507 phone; Asim, 25 Sep 2026: "make it exactly like the figma").
+   * Board: the heading at 38/1.18 and the body at 17/1.6 in a 686 column,
+   * 20 apart, the buttons 12 below and 16 apart, the second one outlined in
+   * white. Phone: a navy to green gradient in place of the watermark, py56,
+   * 18 apart, the heading at 26/1.25, `bodyMobile` at 14.5/1.55, and 46 tall
+   * buttons. Nothing else sets it, so every other page is unchanged.
+   */
+  narrow?: boolean
+  /** A shorter body for the phone (narrow only). */
+  bodyMobile?: string
 }
 
 /**
@@ -87,6 +99,8 @@ export type CtaContent = {
  * needs the innards without another <Section> around them.
  */
 export function ClosingCtaBand({ content }: { content: CtaContent }) {
+  const n = content.narrow === true
+  const body = (Array.isArray(content.body) ? content.body : [content.body]).join(' ')
   return (
     /*
      * Below lg this is an ordinary block in flow carrying the mobile frame's own
@@ -94,12 +108,16 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
      * the watermark's `fill` box still has something to cover. At lg it goes
      * back to `absolute inset-0`, filling whatever Box or Section holds it.
      */
-    <div className="relative flex flex-col items-center gap-[20px] overflow-hidden bg-[#0c4e5a] px-[20px] py-[48px] lg:absolute lg:inset-0 lg:justify-center lg:gap-[22px] lg:p-0">
+    <div
+      className={`relative flex flex-col items-center overflow-hidden bg-[#0c4e5a] px-[20px] lg:absolute lg:inset-0 lg:justify-center lg:p-0 ${n
+        ? 'gap-[18px] py-[56px] max-lg:bg-[linear-gradient(125.81deg,#0b1f3a_7.25%,#1b7a3d_79.71%)] lg:gap-[20px]'
+        : 'gap-[20px] py-[48px] lg:gap-[22px]'}`}
+    >
       {/* Watermark — 6107:3979, 1920x1081 at y-312.02, 10% opacity, flipped;
           6619:2366 on the phone, where it covers the band at 390x462. `fill`
           is what keeps it covering below lg — without it the wrapper collapses
           to zero height in flow and the picture is simply not there. */}
-      <Box x={0} y={-312.02} w={1920} h={1081} fill className="pointer-events-none opacity-10">
+      <Box x={0} y={-312.02} w={1920} h={1081} fill className={`pointer-events-none opacity-10 ${n ? 'max-lg:hidden' : ''}`}>
         <Image src="/images/home/cta-bg.png" alt="" fill sizes="(min-width: 1024px) 1920px, 100vw" className="-scale-x-100 object-cover" />
       </Box>
 
@@ -118,8 +136,10 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           `width`, because an inline width applies at every viewport: at 390 a
           723px heading is 333px of horizontal overflow. */}
       <h2
-        className="relative w-full text-center font-sans text-[26px] font-semibold leading-[32px] text-white lg:w-[var(--cta-hw)] lg:text-[40px] lg:leading-[53.7px]"
-        style={{ '--cta-hw': `${content.headingWidth ?? 723}px` } as React.CSSProperties}
+        className={`relative w-full text-center font-sans text-[26px] font-semibold text-white lg:w-[var(--cta-hw)] ${n
+          ? 'leading-[1.25] lg:text-[38px] lg:leading-[1.18]'
+          : 'leading-[32px] lg:text-[40px] lg:leading-[53.7px]'}`}
+        style={{ '--cta-hw': `${content.headingWidth ?? (n ? 686 : 723)}px` } as React.CSSProperties}
       >
         {content.heading}
       </h2>
@@ -128,20 +148,28 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           sentence carries on along the first's last line — three lines at 1084
           wide, not four. Pages that supply a list get it joined rather than
           stacked, or the block sets to a different shape than the frame. */}
-      <p className="relative w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
-        {(Array.isArray(content.body) ? content.body : [content.body]).join(' ')}
-      </p>
+      {n ? (
+        <p className="relative w-full text-center font-roboto text-[14.5px] leading-[1.55] text-white/80 lg:w-[686px] lg:text-[17px] lg:leading-[1.6]">
+          {content.bodyMobile
+            ? <><span className="lg:hidden">{content.bodyMobile}</span><span className="max-lg:hidden">{body}</span></>
+            : body}
+        </p>
+      ) : (
+        <p className="relative w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
+          {body}
+        </p>
+      )}
 
       {/* 6491:6403 — 449.279 wide: a 210 filled button, 6px, then the bordered
           one at its own width. `min-w` rather than `w` so a page with a longer
           primary label gets a wider button instead of a clipped one.
           6619:2359 stacks them full-width at 12px apart on the phone. */}
-      <div className="relative flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start lg:gap-[6px]">
+      <div className={`relative flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start ${n ? 'pt-[8px] lg:gap-[16px] lg:pt-[12px]' : 'lg:gap-[6px]'}`}>
         <Btn
           href={content.primary.href}
           variant="whiteFill"
           external={content.primary.external}
-          className="w-full justify-center lg:w-auto lg:min-w-[210px]"
+          className={`w-full justify-center lg:w-auto ${n ? 'max-lg:h-[46px]' : 'lg:min-w-[210px]'}`}
         >
           {content.primary.label}
         </Btn>
@@ -149,7 +177,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           href={content.secondary.href}
           variant="white"
           external={content.secondary.external}
-          className="w-full justify-center lg:w-auto"
+          className={`w-full justify-center lg:w-auto ${n ? 'border border-white max-lg:h-[46px]' : ''}`}
         >
           {content.secondary.label}
         </Btn>

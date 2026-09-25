@@ -70,7 +70,13 @@ export function StandardsTable({ top, height }: { top: number; height: number })
               className="items-center max-lg:grid max-lg:grid-cols-[1fr_auto] max-lg:gap-x-[12px] max-lg:gap-y-[12px] max-lg:rounded-[16px] max-lg:bg-card max-lg:px-[20px] max-lg:py-[20px] lg:h-[80px] lg:bg-white">
               <th scope="row"
                 className={`text-left align-middle font-sans font-medium text-heading max-lg:col-start-1 max-lg:row-start-1 max-lg:text-[18px] max-lg:leading-[24px] lg:w-[316px] lg:pl-[32px] lg:pr-[24px] lg:text-[17px] lg:leading-[1.3] ${rule}`}>
-                {r.name}
+                {r.href ? (
+                  <a href={r.href} target="_blank" rel="noopener noreferrer"
+                    aria-label={`${r.name}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+                    className="underline decoration-brand/40 underline-offset-4 transition-colors hover:text-brand">
+                    {r.name}
+                  </a>
+                ) : r.name}
               </th>
               <td className={`align-middle max-lg:col-span-2 max-lg:col-start-1 max-lg:row-start-2 lg:pr-[24px] ${rule}`}>
                 <p className="w-[760px] font-roboto text-[14.5px] leading-[1.45] text-muted max-lg:w-full max-lg:text-[14px] max-lg:leading-[21px]">{r.detail}</p>

@@ -60,11 +60,6 @@
     "statusCode": 301
   },
   {
-    "source": "/electronic-recycling-chicago/",
-    "destination": "/electronic-recycle/",
-    "statusCode": 301
-  },
-  {
     "source": "/electronic-recycling-des-moines/",
     "destination": "/electronic-recycle/",
     "statusCode": 301

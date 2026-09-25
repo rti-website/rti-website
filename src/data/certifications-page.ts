@@ -1,4 +1,5 @@
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * /certifications/ — geometry from Figma 6374:4886 (mobile 6703:2373), both in
@@ -13,7 +14,8 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  * The designer replaced the four glyph cards (R2v3 · RIOS · EPA Compliance ·
  * DOT & EPA Airbag) with ten LOGO cards, 6774:2592: R2v3 · NAID AAA · RIOS /
  * RCRA · IEEE 2883 · FCRA / HIPAA · FACTA · NIST / GLBA. That is the list
- * built below, in the frame's order, with the frame's badges.
+ * built below, in the frame's order (the frame's status badges were removed
+ * on 25 Sep 2026, see CertCard).
  *
  * TITLES ARE THE FULL NAMES — Asim: "below icon we add name but we have to
  * add the full name". The frame's titles are the bare acronyms ("R2v3",
@@ -83,9 +85,20 @@ export type CertLogo = {
   crop?: { left: number; top: number; w: number; h: number }
 }
 
+/**
+ * NO STATUS PILLS since 25 Sep 2026 — Asim: "remove this green things from
+ * all the certifications cards both from web and mobile". The frame's
+ * "Blaine, MN Certified" / "Certified" / "In Compliance" / "Practices
+ * Aligned" pills are gone from every card, at both widths.
+ *
+ * `href` makes a card's logo and title a link (new tab). Only R2v3 has one:
+ * SERI's directory listing, R2_DIRECTORY, the same link as every other R2v3
+ * mark on the site ("make the r2v3 clickable in this place and in all the
+ * places", same day).
+ */
 export type CertCard = {
   logo: CertLogo
-  badge: string
+  href?: string
   /** The acronym — the frame's title, and the logo's alt text. */
   name: string
   /** The full name, shown under the logo. */
@@ -99,42 +112,37 @@ const L = '/images/certifications'
 export const CERTS: CertCard[] = [
   {
     logo: { src: `${L}/r2v3.png`, w: 44, h: 48, crop: { left: -1.23, top: 0, w: 104.73, h: 100 } },
-    badge: 'Blaine, MN Certified',
+    href: R2_DIRECTORY,
     name: 'R2v3',
     title: 'Responsible Recycling Standard (R2v3)',
     body: 'Responsible Recycling standard covering downstream vendor management, data sanitization, and materials recovery.',
   },
   {
     logo: { src: `${L}/naid-aaa.png`, w: 48, h: 48, fit: 'contain' },
-    badge: 'Certified',
     name: 'NAID AAA',
     title: 'National Association for Information Destruction (NAID AAA)',
     body: 'The data destruction industry’s highest certification for secure, DOD-compliant destruction of sensitive data.',
   },
   {
     logo: { src: `${L}/rios.png`, w: 90, h: 40, fit: 'contain' },
-    badge: 'Certified',
     name: 'RIOS',
     title: 'Recycling Industry Operating Standard (RIOS)',
     body: 'ReMA’s (formerly ISRI) Recycling Industry Operating Standard, combining quality, environmental, and health & safety management systems in one certification.',
   },
   {
     logo: { src: `${L}/rcra.svg`, w: 120, h: 48, fit: 'fill' },
-    badge: 'In Compliance',
     name: 'RCRA',
     title: 'Resource Conservation and Recovery Act (RCRA)',
     body: 'The Resource Conservation and Recovery Act governs how hazardous waste — including certain electronics and batteries — must be handled and disposed of.',
   },
   {
     logo: { src: `${L}/ieee.png`, w: 90, h: 40, fit: 'contain' },
-    badge: 'Practices Aligned',
     name: 'IEEE 2883',
     title: 'IEEE Standard for Sanitizing Storage (IEEE 2883)',
     body: 'The IEEE standard for sanitizing storage devices, defining verified methods for clearing, purging, and destroying data-bearing media.',
   },
   {
     logo: { src: `${L}/fcra.svg`, w: 120, h: 48, fit: 'fill' },
-    badge: 'In Compliance',
     name: 'FCRA',
     title: 'Fair Credit Reporting Act (FCRA)',
     body: 'The Fair Credit Reporting Act requires proper disposal of consumer report information — directly relevant to our shredding and hard drive destruction services.',
@@ -142,7 +150,6 @@ export const CERTS: CertCard[] = [
   {
     // The badge artwork reads "HIPPA" — see the note at the top of this file.
     logo: { src: `${L}/hipaa.svg`, w: 80.97, h: 33.42, fit: 'fill' },
-    badge: 'In Compliance',
     name: 'HIPAA',
     title: 'Health Insurance Portability and Accountability Act (HIPAA)',
     // Corrected — the frame's sentence was the GLBA card's.
@@ -150,7 +157,6 @@ export const CERTS: CertCard[] = [
   },
   {
     logo: { src: `${L}/facta.png`, w: 72, h: 26, crop: { left: -5.76, top: -107.89, w: 111.52, h: 315.79 } },
-    badge: 'In Compliance',
     name: 'FACTA',
     title: 'Fair and Accurate Credit Transactions Act (FACTA)',
     body: 'The FACTA Disposal Rule requires businesses to take reasonable measures when disposing of consumer report information.',
@@ -158,7 +164,6 @@ export const CERTS: CertCard[] = [
   {
     // Same artwork as the certifications strip's NIST mark (same Figma image).
     logo: { src: '/images/certs/9.png', w: 77, h: 20, fit: 'cover' },
-    badge: 'In Compliance',
     name: 'NIST',
     title: 'National Institute of Standards and Technology (NIST)',
     // Corrected — the frame's sentence was the FACTA card's with the name swapped.
@@ -166,7 +171,6 @@ export const CERTS: CertCard[] = [
   },
   {
     logo: { src: `${L}/glba.png`, w: 78, h: 20, fit: 'fill' },
-    badge: 'In Compliance',
     name: 'GLBA',
     title: 'Gramm-Leach-Bliley Act (GLBA)',
     body: 'The Gramm-Leach-Bliley Act requires safeguarding and secure disposal of consumers’ financial information handled by covered institutions.',

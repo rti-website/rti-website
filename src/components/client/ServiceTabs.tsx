@@ -61,8 +61,17 @@ import { ConnectForm } from '@/components/client/ConnectForm'
  */
 const CARD_H = 374
 const ROW_GAP = 24
-const BANNER_H = 140
 const PER_ROW = 3
+/**
+ * The tab column at lg since 25 Sep 2026: the three 102 tabs 12 apart, then
+ * the 270 "Don't See Your Item?" card 12 under the last one, 612 in all. The
+ * frame (6533:1968) draws the card between the second and third tabs; Asim
+ * moved Recycling Programs back above it the same day ("move the recycle
+ * program button above the reach out us"). The column sets the panel's
+ * floor: a one-row tab is 374 of cards but still 612 tall, because the
+ * column is.
+ */
+const COLUMN_H = 3 * 102 + 3 * 12 + 270
 
 /*
  * NO AUTO-ROTATION since 23 Sep 2026 — Asim: "remove the animation from it,
@@ -73,10 +82,14 @@ const PER_ROW = 3
  * would fight that directly. A tab opens when it is clicked, and only then.
  */
 
-/** Height of a tab's panel: its rows of cards, the gap, the banner. */
+/**
+ * Height of the tabs-and-cards block with this tab open: its rows of cards,
+ * or the tab column, whichever is taller. The banner is no longer under the
+ * cards (25 Sep 2026), so it adds nothing here.
+ */
 function panelH(count: number): number {
   const rows = Math.max(1, Math.ceil(count / PER_ROW))
-  return rows * CARD_H + (rows - 1) * ROW_GAP + ROW_GAP + BANNER_H
+  return Math.max(COLUMN_H, rows * CARD_H + (rows - 1) * ROW_GAP)
 }
 
 const TALLEST = Math.max(...SERVICE_TABS.map((t) => panelH((SERVICE_CARDS[t.id] ?? []).length)))
@@ -145,6 +158,10 @@ export function ServiceTabs() {
       ref={host}
       className="flex w-full flex-col gap-[20px] lg:flex-row lg:items-start lg:gap-[32px]"
     >
+      {/* The tab column. At lg it also carries the "Don't See Your Item?"
+          card, under all three tabs (see COLUMN_H). Below lg the card comes
+          after the cards instead, in the panel. */}
+      <div className="relative w-full lg:w-[417px] lg:shrink-0">
       {/* Chips Scroll 6605:2347 below lg — a 350 window over a 637 track. */}
       <div
         ref={strip}
@@ -178,6 +195,10 @@ export function ServiceTabs() {
           )
         })}
       </div>
+        <div className="max-lg:hidden lg:mt-[12px] lg:h-[270px] lg:w-[417px]">
+          <EnquiryCard id="home-services-email" />
+        </div>
+      </div>
 
       <div
         role="tabpanel"
@@ -189,34 +210,34 @@ export function ServiceTabs() {
           {cards.map((c) => <ServicePhotoCard key={c.href} card={c} reveal />)}
         </div>
 
-        {/* Ballast Banner Card — 6534:2011, and 6605:2394 on the phone. */}
-        <div className="flex w-full items-center rounded-[16px] bg-brand-soft p-[24px] lg:h-[140px] lg:px-[36px] lg:py-0">
-          <div className="flex w-full flex-col gap-[16px] lg:gap-[6px]">
-            <p className="font-roboto text-[11px] font-bold leading-normal tracking-[0.7px] text-brand">{SERVICES_ENQUIRY.sub}</p>
-            <p className="font-sans text-[21px] font-semibold leading-normal text-heading">{SERVICES_ENQUIRY.heading}</p>
-            {/*
-             * The form stacks below lg (frame 6605:2397: input then button,
-             * both full width, gap 12). That used to be forced from out here
-             * with `max-lg:[&_form]:…` overrides, because ConnectForm pinned
-             * its input to an inline `inputWidth` — 588px against a 302px
-             * column. ConnectForm answers its own frame now (the width is a
-             * custom property only an `lg:` utility reads), so the overrides
-             * were deleted on 22 Sep 2026 rather than left to rot. One of them
-             * had never matched anyway: `[&>div]` looked for a div where
-             * ConnectForm's root is a form.
-             */}
-            <div>
-              <ConnectForm
-                tone="light"
-                inputWidth={588}
-                id="home-services-email"
-                placeholder={SERVICES_ENQUIRY.placeholder}
-                cta={SERVICES_ENQUIRY.cta}
-              />
-            </div>
-          </div>
+        {/* The same card on the phone (6605:2394), after the cards: the tab
+            column is a sideways chip rail down here, with no room in it. */}
+        <div className="lg:hidden">
+          <EnquiryCard id="home-services-email-phone" />
         </div>
       </div>
+    </div>
+  )
+}
+
+/**
+ * "Don't See Your Item?" — 6873:13908 (board, 417 x 270 in the tab column)
+ * and 6605:2394 (phone). #eaf4f5, r16, px36 py30 on the board and p24 on the
+ * phone: the "Reach out to Us!" eyebrow (10 bold teal), the 16px heading and
+ * a 14/19.7 line, 6 apart; then the email field over the Let's Connect
+ * button (stacked, 10 apart). Rendered twice, one per width, with its own
+ * input id each, because the board puts it in the tab column and the phone
+ * after the cards.
+ */
+function EnquiryCard({ id }: { id: string }) {
+  return (
+    <div className="flex size-full flex-col justify-center gap-[15px] overflow-hidden rounded-[16px] bg-brand-soft p-[24px] lg:px-[36px] lg:py-[30px]">
+      <div className="flex flex-col gap-[6px]">
+        <p className="font-roboto text-[10px] font-bold leading-normal tracking-[0.7px] text-brand">{SERVICES_ENQUIRY.sub}</p>
+        <p className="font-sans text-[16px] font-semibold leading-normal text-heading">{SERVICES_ENQUIRY.heading}</p>
+        <p className="font-roboto text-[14px] leading-[19.7px] text-muted">{SERVICES_ENQUIRY.body}</p>
+      </div>
+      <ConnectForm tone="light" stacked id={id} placeholder={SERVICES_ENQUIRY.placeholder} cta={SERVICES_ENQUIRY.cta} />
     </div>
   )
 }

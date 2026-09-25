@@ -65,6 +65,9 @@ export type Facility = {
   phone: string
   email: string
   /** Full line, as the hub card draws it. */
+  /** The address as the /all-locations/ card prints it, when that differs
+   *  from `address` (Minnesota: the frame abbreviates the state). */
+  cardAddress?: string
   hours: string
   /** Weekday line only, as the quick-info bar draws it. */
   hoursShort: string
@@ -188,6 +191,7 @@ export const MINNESOTA: Facility = {
   },
   address: MN_CONTACT.address,
   addressShort: '1525 99th Ln NE, Blaine, MN',
+  cardAddress: '1525 99th Ln NE, Blaine, MN 55449', // 6744:2472, 25 Sep 2026
   phone: MN_CONTACT.phone,
   email: MN_CONTACT.email,
   hours: 'Mon–Fri 8:30 AM–4:30 PM · 2nd & 4th Sat 9 AM–1 PM', // FRAME — unconfirmed
@@ -294,7 +298,6 @@ export const HUB_CARDS = {
   eyebrow: 'Our Locations',
   heading: 'Licensed Facilities Ready to Serve You',
   lead: 'Every location is licensed, staffed, and ready for scheduled drop-offs. Select a facility to see hours, accepted materials, and directions.',
-  materialsLabel: 'Materials Accepted',
   primary: 'View Location Details',
   secondary: 'Get Directions',
 }
@@ -303,7 +306,8 @@ export const HUB_CARDS = {
  * "Additional Facilities Nationwide" — Figma 6831:2663 on /all-locations/
  * (mobile 6833:3043), added by the designer and built on 24 Sep 2026.
  *
- * Nine partner drop-off sites outside Minnesota and Wisconsin. They have no
+ * Nine partner drop-off sites outside Minnesota and Wisconsin, and since
+ * 25 Sep 2026 Chicago, RTI's own service area, which links to its page. They have no
  * pages of their own yet, so the cards link nowhere (Asim, 24 Sep 2026: "only
  * make the cards for it and make it unclickable for now"), and they carry no
  * LocalBusiness schema: RTI does not run these sites itself, and a schema
@@ -311,31 +315,50 @@ export const HUB_CARDS = {
  * Copy is the frame's, word for word. The mobile frame shortens the lead.
  */
 export type NationwideFacility = {
-  name: string; address: string; phone: string; hours: string; materials: string[]
+  name: string; address: string; phone: string
   /** Its site in Admin -> Locations (src/data/service-locations.ts); the card links there once published. */
   slug?: string
+  /** A page of its own outside Admin -> Locations; the whole card links there. Chicago only. */
+  href?: string
+  /** The small label at the right of the card header ("Drop-off Location"). */
+  tag?: string
+  /** Its place in the PHONE frame's order, which differs from the board's. */
+  phoneOrder: number
 }
 
-const NATIONWIDE_MATERIALS = ['Electronics', 'Batteries', 'Light Bulbs', 'Ballasts']
-const nationwide = (name: string, address: string, slug?: string): NationwideFacility => ({
-  name, address, slug, phone: '+1-800-969-5166', hours: 'Call to confirm hours', materials: NATIONWIDE_MATERIALS,
-})
+/* 25 Sep 2026, the redrawn frame (6831:2663 / 6833:3043): every partner card
+   is now the partner's own name, street address and phone, and the hours row
+   and "Materials Accepted" chips are gone. The card list is in the BOARD's
+   order; `phoneOrder` is the phone frame's. */
+const nationwide = (
+  name: string, address: string, phone: string, phoneOrder: number, slug?: string,
+): NationwideFacility => ({ name, address, phone, phoneOrder, slug })
 
 export const NATIONWIDE = {
   eyebrow: 'Expanding Network',
   heading: 'Additional Facilities Nationwide',
   lead: 'Our network is growing beyond Minnesota and Wisconsin — drop off electronics, batteries, and bulbs at any of these locations.',
   leadMobile: 'Our network is growing beyond Minnesota and Wisconsin.',
-  materialsLabel: 'Materials Accepted',
+  /* The board's order (6833:2668), two to a row: Chicago · Lewisburg /
+     Greenwood · Ocala / Johnson City · Atlanta / Ontario · Phoenix / Fort
+     Worth. Fort Worth (RTI) left the frame on 25 Sep 2026.
+
+     !! ONTARIO: the board frame's Ontario card repeats Ocala's address and
+     phone (a copy and paste slip). The phone frame (6834:2668) has Ontario's
+     own, and that is what is used here. */
   facilities: [
-    nationwide('Ontario, CA', '805 E. Francis Street, Ontario, CA 91761', 'ontario-ca'),
-    nationwide('Phoenix, AZ', '1545 E. Victory St, Phoenix, AZ 85040', 'phoenix-az'),
-    nationwide('Greenwood, IN', '498 Park 800 Drive, Greenwood, IN 46143', 'greenwood-in'),
-    nationwide('Ocala, FL', '1007 SW 16th Lane, Ocala, FL 34471', 'ocala-fl'),
-    nationwide('Fort Worth, TX', '101 E Bowie Street, Fort Worth, TX 76110', 'fort-worth-tx'),
-    nationwide('Fort Worth, TX (RTI)', 'Fort Worth, TX — contact us for exact address'),
-    nationwide('Johnson City, TN', '2212 Buffalo Road #210, Johnson City, TN 37604', 'johnson-city-tn'),
-    nationwide('Atlanta, GA', '2260 Moon Station Court NW Ste 140, Kennesaw, GA 30144', 'atlanta-ga'),
-    nationwide('Lewisburg, TN', '1580 Old Columbia Road, Lewisburg, TN 37091', 'lewisburg-tn'),
+    /* Chicago, Illinois — 6896:15675. RTI's own service area, not a partner
+       site and not a facility, so its address is the city; the card opens its
+       page, /electronic-recycling-chicago/ (src/data/chicago.ts). */
+    { ...nationwide('Chicago, Illinois', 'Chicago, Illinois', '(800)969-5166 | (800)305-3040', 0),
+      href: href('/electronic-recycling-chicago/'), tag: 'Drop-off Location' },
+    nationwide('Lewisburg, TN',    'Lighting Resources, 1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'),
+    nationwide('Greenwood, IN',    'Lighting Resources, 498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'),
+    nationwide('Ocala, FL',        'Lighting Resources, 1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),
+    nationwide('Johnson City, TN', 'Lighting Resources, 300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'),
+    nationwide('Atlanta, GA',      'Lighting Resources, 3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'),
+    nationwide('Ontario, CA',      'Lighting Resources, 805 East Francis Street, Ontario, CA 91761',          '(888) 923-7252', 1, 'ontario-ca'),
+    nationwide('Phoenix, AZ',      'Lighting Resources, 1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'),
+    nationwide('Fort Worth, TX',   'Lighting Resources, 101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'),
   ],
 }

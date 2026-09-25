@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
-import { ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, MAIL_IN, MAIN_NAV, TOP_BAR, type IntroMenu, type NavItem } from '@/lib/nav'
+import { ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, MAIN_NAV, TOP_BAR, type IntroMenu, type NavItem } from '@/lib/nav'
 import { INDUSTRY_MARKS } from '@/components/ui/IndustryMarks'
 import { SERVICE_MARKS } from '@/components/ui/ServiceMarks'
 import { SERVICE_GROUPS } from '@/data/services'
@@ -49,7 +49,6 @@ export async function Header() {
           why the header is the one place this build renders two trees. */}
       <MobileNav
         nav={NAV}
-        mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }}
         topBar={TOP_BAR}
         quoteHref={QUOTE_HREF}
         pickupHref={CONTACT_FORM_HREF}
@@ -113,7 +112,7 @@ export async function Header() {
         </Link>
       </Box>
 
-      <HeaderNav nav={NAV} mailIn={{ label: MAIL_IN.label, href: MAIL_IN.href }} />
+      <HeaderNav nav={NAV} cta={{ label: 'Get a Quote', href: QUOTE_HREF }} />
     </Section>
     </>
   )

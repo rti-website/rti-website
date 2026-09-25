@@ -2,66 +2,73 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Title } from '@/components/ui/Bits'
-import { ReviewCarousel } from '@/components/client/ReviewCarousel'
-import { GOOGLE_RATING, TESTIMONIALS, TESTIMONIAL_STATS, type Testimonial } from '@/data/home'
+import { DESIGN_SAMPLE_TESTIMONIALS, TESTIMONIALS } from '@/data/home'
 
 /**
- * Client's Testimonials — Figma 6024:14149 in file L79HFCNBww8pW6pPGfQi3e,
- * the four-card version of 21 Sep 2026. 1920 x 826 on #f5f5f5.
+ * Client's Testimonials — Figma 6024:14149 in BVtf2AOuUOcYbiMIlcKmbC as
+ * redrawn by 25 Sep 2026. 1920 x 698 on #f5f5f5.
  *
- * Auto-layout in the frame: 90 above, then the heading block (95), 50, the
- * cards row (350), 50, the stats strip (121), 70 below. Built to those y's.
+ * Auto-layout in the frame: 90 above, the heading block (95), 50, the cards
+ * row (393), 70 below.
  *
  *   heading   eyebrow "Why Enterprises Choose Us", 16, the 40px title
- *   cards     four 300 x 350 white cards, r14, gap 22, in a 1266 row at x327.
- *             px28 py32, space-between: stars + quote on top, a rule and the
- *             reviewer at the bottom.
- *   stats     a rule, 30, four 316-wide columns of a 34px teal number over a
- *             13.5px label, rules between them.
+ *   cards     four 300 x 393 white cards, r14, gap 22, in a 1266 row at x327.
  *
- * The three-card row with a pager (594 tall) is gone with it; the section is
- * 232 taller, and Client's Stories moves down by that (HOME_TESTIMONIALS_GROWTH).
+ * WHAT CAME OUT, 25 Sep 2026 — Asim: "make the testimonial section like this,
+ * remove the extra things from it". The review rail's Previous / Next, the
+ * "Google rating score" line, the "Google Review" mark on each card, and the
+ * four figures under the row (the frame moved figures up under Our Services;
+ * see ImpactStats). The section went 904 -> 698 and everything below moved up
+ * with HOME_TESTIMONIALS_GROWTH.
  *
- * ===========================================================================
- * MOBILE — Figma 6613:2334 in BVtf2AOuUOcYbiMIlcKmbC, 390 x 1319
- * ===========================================================================
- * Below lg the section is px20 py48 with ONE 24px gap between every child:
- * eyebrow, title, the cards stacked full width, a rule, the stats.
+ * !! ON LIVE THE CARDS ARE THE REAL GOOGLE REVIEWS, NOT THE FRAME'S PEOPLE.
+ * The frame fills its four cards with sample reviewers (names, job titles,
+ * quotes). Live shows the real reviews Asim supplied on 23 Sep 2026
+ * (src/data/home.ts), the newest four, with the review date where the frame
+ * has a job title. Invented testimonials must never ship as if they were
+ * customers' words.
  *
- *   card    350 wide, auto height, the same r14 / px28 / py32 and the same
- *           17.018/24.7 quote as desktop — but the stars and the quote are
- *           CENTRED and the two halves sit on a 20 gap instead of being pushed
- *           apart by a fixed 350 height. The reviewer block is byte-identical
- *           to the desktop one (40 disc, 12 gap, 16/12.5/10 type).
- *   stats   a 2 x 2 grid of 167-wide columns, 16 across and 28 down, number
- *           still 34px teal over a 13.5px label on a 6 gap. NO vertical rules —
- *           `border-r` is now `lg:border-r`, so below lg the width is 0.
+ * DESIGN PREVIEW (25 Sep 2026): on `next dev` and on the dev server the cards
+ * show the frame's own sample text instead, word for word, so the section can
+ * be reviewed exactly as designed, with a one-line note saying so. See
+ * SHOW_DESIGN_SAMPLES below and DESIGN_SAMPLE_TESTIMONIALS in home.ts.
  *
- * ===========================================================================
- * SIX REAL REVIEWS ON A RAIL — Asim, 23 Sep 2026
- * ===========================================================================
- * "add these real review in our website … make it movable, 4 on screen and
- * one appear when move". The placeholder cards are now the six Google reviews
- * in src/data/home.ts, and the row is ReviewCarousel: the frame's four cards
- * in view, Previous / Next moving one card at a time. Under the row, a line
- * the frame does not have: the widget's own "Google rating score: 4.9 of 5,
- * based on 13 reviews" on the left and the two buttons on the right, 48 tall,
- * 30 below the cards. That row is why the section is 78 taller than the frame
- * (826 → 904) and why the stats strip moved from y635 to y713 — the same 50px
- * above it as before. HOME_TESTIMONIALS_GROWTH in lib/layout.ts follows
- * TESTIMONIALS_H, so everything below moves with it.
- *
- * On a phone the stacked cards (6613:2334) became a swipe rail, because six
- * full-width cards one under another is ~1,500px of scrolling past reviews.
- * The rating line sits under the rail, centred; there are no buttons.
- *
- * `grad-card` stays on the card. :hover and :focus-within never fire on a
- * touch device and nothing in the mobile layout depends on them: every colour
- * the hover state overrides (bg-white, the quote grey, the #e6e6e6 rule, the
- * teal disc) is set explicitly in the base classes, so the untouched state is
- * the designed state.
+ * MOBILE: the heading stacks over a sideways swipe row of the same cards
+ * (CSS scroll-snap; there are no buttons and no script).
  */
-export const TESTIMONIALS_H = 904
+export const TESTIMONIALS_H = 698
+
+/**
+ * How many reviews the section shows: the frame's four cards, no rail.
+ * TESTIMONIALS in src/data/home.ts is newest first, so these are the four
+ * newest; the other two stay in the data for when the cards rotate again.
+ */
+const SHOWN = 4
+
+/**
+ * True only where the page is being reviewed: `next dev`, or the dev server,
+ * which is built with DEPLOY_ENV=staging AND NEXT_PUBLIC_NOINDEX=true. Live
+ * has neither, and a build with DEPLOY_ENV unset counts as live, so the
+ * default is always the real reviews. Read at build time (this is a server
+ * component, prerendered).
+ */
+const SHOW_DESIGN_SAMPLES =
+  process.env.NODE_ENV === 'development'
+  || (process.env.DEPLOY_ENV === 'staging' && process.env.NEXT_PUBLIC_NOINDEX === 'true')
+
+/** What a card draws: the real reviews carry a date, the samples a job title. */
+type Card = { quote: string; name: string; sub: React.ReactNode; stars: number; truncated?: boolean }
+
+/** A function, not a module constant: reviewDate() reads MONTHS, which is
+ *  declared further down the file. */
+function cards(): Card[] {
+  return SHOW_DESIGN_SAMPLES
+    ? DESIGN_SAMPLE_TESTIMONIALS.map((t) => ({ quote: t.quote, name: t.name, sub: t.role, stars: t.stars }))
+    : TESTIMONIALS.slice(0, SHOWN).map((t) => ({
+        quote: t.quote, name: t.name, stars: t.stars, truncated: t.truncated,
+        sub: <time dateTime={t.date}>{reviewDate(t.date)}</time>,
+      }))
+}
 
 export function Testimonials() {
   return (
@@ -79,25 +86,24 @@ export function Testimonials() {
         <Title className="text-center leading-[44.7px] max-lg:leading-[32px]">Client&rsquo;s Testimonials</Title>
       </CenterBox>
 
-      {/* Cards Row — 6554:2055 desktop, 6593:5951 et al on the phone — now a
-          rail with the rating line and the buttons under it. */}
-      <Box x={327} y={235} w={1266} h={428} className="max-lg:w-full">
-        <ReviewCarousel count={TESTIMONIALS.length} summary={<RatingLine />}>
-          {TESTIMONIALS.map((t, i) => <ReviewCard key={t.name} t={t} n={i + 1} of={TESTIMONIALS.length} />)}
-        </ReviewCarousel>
-      </Box>
+      {/* Design preview only (local and the dev server): one quiet line so
+          nobody reviewing the page takes the sample people for real clients.
+          Sits in the 50px between the heading and the cards. */}
+      {SHOW_DESIGN_SAMPLES && (
+        <CenterBox y={196} w={900}>
+          <p className="text-center font-roboto text-[12px] leading-[16px] text-[#9a9a9a]">
+            Design preview: sample testimonials from the Figma file. The live site shows real Google reviews.
+          </p>
+        </CenterBox>
+      )}
 
-      {/* Footer Stats — 6554:2121 desktop, 6613:2406 on the phone. */}
-      <Box x={327} y={713} w={1266} h={121} className="flex flex-col items-center gap-[30px] max-lg:w-full max-lg:gap-[24px]">
-        <div className="h-px w-full bg-black/15" />
-        <dl className="flex w-full items-start text-center max-lg:grid max-lg:grid-cols-2 max-lg:gap-x-[16px] max-lg:gap-y-[28px]">
-          {TESTIMONIAL_STATS.map((s, i) => (
-            <div key={s.l} className={`flex h-[90px] w-[316px] flex-col items-center gap-[8px] max-lg:h-auto max-lg:w-full max-lg:gap-[6px] ${i < TESTIMONIAL_STATS.length - 1 ? 'border-black/15 lg:border-r' : ''}`}>
-              <dt className="order-2 w-[260px] font-roboto text-[13.5px] leading-normal text-black/65 max-lg:w-full">{s.l}</dt>
-              <dd className="order-1 whitespace-nowrap font-sans text-[34px] font-semibold leading-normal text-brand">{s.n}</dd>
-            </div>
-          ))}
-        </dl>
+      {/* Cards Row — 6554:2055: four 300 x 393 cards, 22 apart, 1266 wide at
+          x327, 50 under the heading. On a phone it is a sideways swipe row
+          (CSS scroll-snap, no script), one card and a bit in view. */}
+      <Box x={327} y={235} w={1266} h={393} className="max-lg:w-full">
+        <div className="flex gap-[22px] max-lg:-mx-[20px] max-lg:snap-x max-lg:snap-mandatory max-lg:overflow-x-auto max-lg:px-[20px] max-lg:[scrollbar-width:none] max-lg:[&::-webkit-scrollbar]:hidden lg:h-full">
+          {cards().map((t) => <ReviewCard key={t.name} t={t} />)}
+        </div>
       </Box>
     </Section>
   )
@@ -114,61 +120,49 @@ function reviewDate(iso: string): string {
 }
 
 /**
- * One review card — the frame's card, unchanged in shape: 300 x 350, r14,
- * px28 py32, stars and quote on top, a rule and the reviewer at the bottom.
- * Its second line is the review date rather than the frame's "Local Guide ·
- * 123 Reviews" (see the note in src/data/home.ts).
+ * One review card — 6554:2056: 300 x 393, r14, px28 py32, the three parts
+ * top and bottom: stars and quote above, a 244 rule over the reviewer below (a 40px
+ * teal initial disc, 12 from the name over a 12.5 line). The frame's second
+ * line is a job title; on live these are Google reviews, so it is the
+ * review's date (the design preview shows the sample job titles). The text
+ * fades with the hover gradient (220ms, the .grad-card timing) so the two
+ * never disagree mid-transition.
+ * The "Google Review" mark and the rating line under the row came out on
+ * 25 Sep 2026 (Asim: "remove the extra things from it as you see the figma").
  */
-function ReviewCard({ t, n, of }: { t: Testimonial; n: number; of: number }) {
+function ReviewCard({ t }: { t: Card }) {
   return (
-    <article
-      aria-roledescription="slide"
-      aria-label={`Review ${n} of ${of}`}
-      className="grad-card flex h-[350px] w-[300px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px] max-lg:h-auto max-lg:gap-[20px]"
-    >
-      <div className="flex flex-col gap-[22px] max-lg:items-center">
+    <article className="grad-card flex h-[393px] w-[300px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-[14px] bg-white px-[28px] py-[32px] max-lg:h-auto max-lg:gap-[20px]">
+      <div className="flex flex-col gap-[22px]">
         <div className="flex h-[23px] w-[112px] items-center gap-[0.5px]" role="img" aria-label={`Rated ${t.stars} out of 5`}>
           {Array.from({ length: t.stars }).map((_, s) => (
             <Image key={s} src="/images/icons/star.svg" alt="" width={22} height={22} className="size-[22px]" />
           ))}
         </div>
-        <p className="w-[244px] font-roboto text-[17.018px] leading-[24.7px] text-[rgba(126,126,126,0.8)] max-lg:w-full max-lg:text-center">
+        <p className="w-[244px] font-roboto text-[17.018px] leading-[24.7px] text-[rgba(126,126,126,0.8)] transition-colors duration-[220ms]">
           {t.quote}{t.truncated ? ' …' : ''}
         </p>
       </div>
 
-      <div className="flex flex-col gap-[16px]">
-        <div className="grad-card__rule h-px w-[244px] bg-[#e6e6e6] transition-colors max-lg:w-full" />
-        <div className="flex w-[244px] items-start gap-[12px] max-lg:w-full">
-          <span className="grad-card__disc mt-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold uppercase leading-none text-white transition-colors" aria-hidden="true">
-            {t.name.charAt(0)}
-          </span>
-          <div className="flex flex-col gap-[2px]">
-            <p className="font-sans text-[16px] font-semibold leading-normal text-muted">{t.name}</p>
-            <p className="font-roboto text-[12.5px] leading-[1.3] text-[#b9b9b9]">
-              <time dateTime={t.date}>{reviewDate(t.date)}</time>
-            </p>
-            <span className="mt-[2px] flex items-center gap-[10px]">
-              <Image src="/images/icons/google.svg" alt="" width={11} height={11} className="size-[11px]" />
-              <span className="font-sans text-[10px] font-semibold leading-normal text-[#505050]">Google Review</span>
-            </span>
-          </div>
+      {/* Rule and reviewer travel together, the rule 24 above the reviewer, so
+          the rules line up across the row. The frame spreads three parts
+          (rule in the middle) because its sample quotes fill the card; the
+          real reviews are short, and a floating rule sat at a different
+          height in each card. At 393 tall this puts the rule at y273, where
+          the frame's first card has it. */}
+      <div className="flex flex-col gap-[24px]">
+      <div className="grad-card__rule h-px w-[244px] bg-[#e6e6e6] transition-colors" />
+
+      <div className="flex w-[244px] items-center gap-[12px]">
+        <span className="grad-card__disc my-[7px] grid size-[40px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[24px] font-semibold uppercase leading-none text-white transition-colors" aria-hidden="true">
+          {t.name.charAt(0)}
+        </span>
+        <div className="flex flex-col gap-[2px]">
+          <p className="font-sans text-[16px] font-semibold leading-normal text-muted transition-colors duration-[220ms]">{t.name}</p>
+          <p className="font-roboto text-[12.5px] leading-[1.3] text-[#b9b9b9] transition-colors duration-[220ms]">{t.sub}</p>
         </div>
       </div>
+      </div>
     </article>
-  )
-}
-
-/** The widget's summary line, verbatim in wording — see GOOGLE_RATING. */
-function RatingLine() {
-  return (
-    <p className="flex items-center gap-[10px] font-roboto text-[14px] leading-[1.4] text-[#505050] max-lg:text-center lg:text-[15px]">
-      <Image src="/images/icons/google.svg" alt="" width={18} height={18} className="size-[18px] shrink-0" />
-      <span>
-        <strong className="font-semibold text-heading">Google</strong> rating score:{' '}
-        <strong className="font-semibold text-heading">{GOOGLE_RATING.score}</strong> of {GOOGLE_RATING.outOf}, based on{' '}
-        <strong className="font-semibold text-heading">{GOOGLE_RATING.count} reviews</strong>
-      </span>
-    </p>
   )
 }

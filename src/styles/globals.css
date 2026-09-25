@@ -229,8 +229,15 @@ body {
      standard way to divide lengths in CSS, and it has worked in Firefox since
      118, Chrome since 111 and Safari since 15.4 — three years wider than the
      division it replaces. Same number, same layout, in every browser that
-     has `zoom` at all (Firefox 126+; Tailwind v4 needs 128 anyway). */
-  zoom: tan(atan2(100cqw, 1920px - 2 * var(--canvas-inset)));
+     has `zoom` at all (Firefox 126+; Tailwind v4 needs 128 anyway).
+
+     !! --canvas-zoom FIRST — 25 Sep 2026, Safari on a 24 inch screen.
+     Safari left this expression at zoom 1 (a white strip down the right side
+     on a 1920 window). A script in <head> now measures the same width and
+     sets the ratio as a plain number, which Safari accepts; the expression
+     above is the fallback for when that script has not run. Same value in
+     every other browser. See src/lib/canvas-zoom.ts. */
+  zoom: var(--canvas-zoom, tan(atan2(100cqw, 1920px - 2 * var(--canvas-inset))));
 
   /* Written by Canvas as a custom property rather than as a height, so the
      media query below can ignore it without an !important. See Frame.tsx. */

@@ -38,8 +38,12 @@ export const HERO = {
     { label: 'Locations', href: null },
   ],
   h1: 'Locations',
-  // Asim, 23 Sep 2026.
-  lead: 'Two licensed facilities, nationwide Mail-In reach, and pickup and drop-off options across Minnesota and Wisconsin, find the option that works for you.',
+  /* The frame's lead since 25 Sep 2026 (6472:3926 / 6747:2576) — Asim: "make
+     it exactly like the figma". It replaces his own 23 Sep line, "Two
+     licensed facilities, nationwide Mail-In reach, and pickup and drop-off
+     options across Minnesota and Wisconsin, find the option that works for
+     you." Put that back here if he prefers it. */
+  lead: 'Recycle Technologies has been providing services to the community since 1993.',
 }
 
 /** Finder — 6377:967. Heading, search bar and the map. */
@@ -47,6 +51,8 @@ export const FINDER = {
   eyebrow: 'Find a Location',
   heading: 'Find a Recycling Location Near You',
   lead: 'Search by city or zip code to find the closest drop-off, or browse our licensed facilities below.',
+  /** The phone frame's shorter lead — 6747:5743. */
+  leadMobile: 'Search by city or zip, or browse our licensed facilities below.',
   search: {
     label: 'Search for a recycling location by city or zip code',
     placeholder: 'Enter your city or zip code',
@@ -86,15 +92,22 @@ export const FINDER = {
 export const COVERAGE = {
   eyebrow: 'Coverage',
   heading: 'Growing Coverage, Wherever You Are',
+  /* The frame's wording since 25 Sep 2026 (6377:7088 / 7089), word for
+     word; the phone frame (6750:8491 / 8492) shortens both. */
   body: [
-    'We currently offer in-person recycling and shredding services throughout Minnesota and Wisconsin, with expanded operations in the greater Chicago area. If you’re searching for a location and don’t see one nearby, that means we haven’t opened a facility in your area yet.',
-    'That’s exactly why our Mail-In Program exists: the same secure, certified recycling and data destruction you’d get in person, using recycling kits you order online and drop off at the nearest FedEx.',
+    'We currently offer in-person recycling and shredding services throughout Minnesota and Wisconsin, with expanded operations in the greater Chicago area. If you’re searching for a location and don’t see one nearby, that just means we haven’t opened a facility in your area yet.',
+    'That’s exactly why our Mail-In Program exists: it extends the same secure, certified recycling and data destruction to all 50 states, using recycling kits you order online and drop off at the nearest FedEx.',
+  ],
+  bodyMobile: [
+    'We currently offer in-person recycling and shredding throughout Minnesota and Wisconsin, with expanded operations in the greater Chicago area.',
+    'That’s why our Mail-In Program exists: certified recycling and data destruction in all 50 states.',
   ],
   cardTitle: 'Where We Operate',
   card: [
     'In-person service across Minnesota',
     'In-person service across Wisconsin',
-    'Expanded operations in the Chicago area (not yet a certified facility)',
+    // The frame drops the old "(not yet a certified facility)" qualifier.
+    'Expanded operations in the Chicago area',
     'All 50 states covered via Mail-In Program',
   ],
 }
@@ -109,6 +122,10 @@ export const COVERAGE = {
 export const CTA = {
   heading: 'Don’t See Your City Listed?',
   body: 'Our Mail-In Program brings the same certified recycling and shredding to all 50 states — order a kit, pack it up, and drop it at the nearest FedEx.',
+  /** 6750:8509 — the phone frame's shorter line. */
+  bodyMobile: 'Our Mail-In Program brings certified recycling and shredding to all 50 states.',
+  /** This page's own band (6491:6580 / 6750:8507) — see `narrow` in ClosingCta. */
+  narrow: true,
   primary:   { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
   secondary: { label: 'Get a Quote',             href: QUOTE_HREF },
 }
@@ -117,7 +134,6 @@ export const CTA = {
 export const TODO_FOR_DESIGN = [
   'Hero breadcrumb in the frame reads "Home / Resources". Built as "Home / Locations".',
   'The doc badges the Minnesota row "42mi" and the Outside-MN-&-WI row "Nationwide". A distance is meaningless until the search actually geolocates, so the frame\'s factual badges are used instead: "R2v3", "Pursuing R2v3", and none on the third row.',
-  'Coverage paragraph two differs between the doc and the frame; the doc\'s wording is built.',
-  'The doc\'s "Where We Operate" list qualifies Chicago with "(not yet a certified facility)", which the frame omits. Built with the qualifier — it matches the Chicago card on the About Us page.',
+  'Coverage copy and the "Where We Operate" list follow the frame since 25 Sep 2026 (Asim: "make it exactly like the figma"): paragraph two is the frame\'s, and the Chicago line lost its "(not yet a certified facility)" qualifier.',
   'The map panel is Google\'s map since 23 Sep 2026 (keyless embed, one facility at a time with a switch). Showing both facilities on one map needs the Maps JavaScript API and a key.',
 ]

@@ -1,4 +1,5 @@
 import { href } from '@/lib/urls'
+import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * /compliance-center/ — a 1:1 build of Figma frame 6382:6227.
@@ -81,6 +82,8 @@ export const STANDARDS = {
   rows: [
     {
       name:   'R2v3',
+      // SERI's directory listing, as on every other R2v3 mark (25 Sep 2026).
+      href:   R2_DIRECTORY,
       detail: 'Responsible Recycling standard covering downstream vendor management, data sanitization, and materials recovery.',
       status: 'Blaine, MN Certified',
       tone:   'ok' as StatusTone,

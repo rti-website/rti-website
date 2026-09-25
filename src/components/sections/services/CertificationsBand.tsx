@@ -24,11 +24,13 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * handed 660px of padding and the section overflowed the window. It is
  * `lg:px-[330px]` now — the one place this band could break the page.
  *
- * The paragraph sits under the heading and ABOVE the logo strip at every
- * width — Asim, 24 Sep 2026: "move the text above the icons below the heading
- * in all the places". (The board used to follow the frame, logos first, and
- * only the phone moved the paragraph up with `max-lg:order-*`.) The column's
- * 30px gaps and justify-center are unchanged, so the band keeps its height.
+ * ORDER, 25 Sep 2026 — Asim: "move the text below the moving icons", with
+ * the homepage frame. Heading, logos, then the paragraph, as the frame draws
+ * it (it was paragraph-above-logos for a day, 24 Sep). On the phone the
+ * shared compliance line is not shown ("remove the text in mobile version",
+ * homepage 6605:2326); a page's OWN paragraph (airbags, the electronics ad
+ * pages' facility sentence) still shows there, because it says something
+ * the logos do not.
  */
 export function CertificationsBand({
   top = 2925.83, label = '6142:1622', body, height = 299.035,
@@ -56,7 +58,7 @@ export function CertificationsBand({
           at the TOP of it, so all 25px of slack fell BELOW them and the strip
           still hugged the paragraph above. Below lg the box is its contents now
           and LogoMarquee owns the breathing room — Asim, 22 Sep 2026. */}
-      <div className="order-2 w-full lg:h-[68px]">
+      <div className="order-1 w-full lg:h-[68px]">
         <LogoMarquee logos={CERT_LOGOS} speed={45} />
       </div>
 
@@ -66,7 +68,7 @@ export function CertificationsBand({
           left over. At 830 it is always two even lines, which is what the
           frame's paragraph was and what the band's 299 height is sized for.
           The airbag page's own long paragraph keeps its measured height. */}
-      <p className="w-full text-center font-roboto text-[15px] leading-[22px] text-muted order-1 lg:w-[830px] lg:text-balance lg:text-[17.018px] lg:leading-[27.654px]">
+      <p className={`w-full text-center font-roboto text-[15px] leading-[22px] text-muted order-2 lg:w-[830px] lg:text-balance lg:text-[17.018px] lg:leading-[27.654px] ${!body || body === CERT_COPY.body ? 'max-lg:hidden' : ''}`}>
         {body ?? CERT_COPY.body}
       </p>
     </Section>

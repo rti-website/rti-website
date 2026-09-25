@@ -113,7 +113,11 @@ export const HOME_BELOW_CERT_SHIFT = HOME_HERO_SHIFT + CERT_TRIM
  * which is exactly where the new frame draws them (Industries 6023:12500 sits
  * at 2962 there, and 2689 + 273 = 2962).
  */
-export const HOME_SERVICES_GROWTH = 1133 - 860
+export const HOME_SERVICES_GROWTH = 969 + 150 + 154 - 860
+/* 25 Sep 2026: Our Services is 969 (the enquiry card moved into the tab
+   column) and the impact band (ImpactStats, 154) follows it 150 below, so the
+   sections under them move down by 969 + 150 + 154 against the original 860.
+   That is the new frame's spacing: Industries 150 under the impact band. */
 
 /**
  * What every homepage section BELOW Our Services subtracts from its Figma y:
@@ -135,10 +139,10 @@ export const HOME_SERVICES_DELTA_VAR = '--home-svc-delta'
  * became four cards over a stats strip (6024:14149 in file L79HFCNBww8pW6pPGfQi3e,
  * 826). Client's Stories and everything under it move down by this much.
  */
-export const HOME_TESTIMONIALS_GROWTH = 904 - 594
-/* 904, not the frame's 826, since 23 Sep 2026: the reviews became a rail with
-   a rating line and Previous / Next under it. Keep in step with TESTIMONIALS_H
-   in src/components/sections/Testimonials.tsx. */
+export const HOME_TESTIMONIALS_GROWTH = 698 - 594
+/* 698 since 25 Sep 2026 — the frame's (6024:14149): four cards, no rail
+   controls, no rating line, and no figures under them (those moved up under
+   Our Services). Keep in step with TESTIMONIALS_H in Testimonials.tsx. */
 
 /** What Client's Stories subtracts from its Figma y. */
 export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_SERVICES_SHIFT - HOME_TESTIMONIALS_GROWTH

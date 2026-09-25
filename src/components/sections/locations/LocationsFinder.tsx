@@ -30,13 +30,17 @@ import { FINDER } from '@/data/locations'
 export function LocationsFinder({ top, height }: { top: number; height: number }) {
   return (
     <Section top={top} height={height} label="6377:967"
-      className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[48px] lg:gap-[40px] lg:px-0 lg:py-[90px]">
+      className="flex flex-col items-center gap-[20px] bg-white px-[20px] pb-[40px] pt-[48px] lg:gap-[40px] lg:px-0 lg:py-[90px]">
       {/* Heading block — 6377:970 / 6669:2421..2424. The phone runs the same
           24px gap the section does, so the block reads as part of the rhythm. */}
-      <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:gap-[10px]">
+      <div className="flex w-full flex-col items-center gap-[20px] text-center lg:w-[780px] lg:gap-[10px]">
         <Eyebrow>{FINDER.eyebrow}</Eyebrow>
-        <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-black lg:text-[40px] lg:leading-[1.3]">{FINDER.heading}</h2>
-        <p className="font-roboto text-[15px] leading-[22px] text-muted lg:text-[17px] lg:leading-[1.175]">{FINDER.lead}</p>
+        <h2 className="font-sans text-[26px] font-semibold leading-[1.25] text-black lg:text-[40px] lg:leading-[1.3]">{FINDER.heading}</h2>
+        {/* The phone frame's shorter lead at 296 wide (6747:5743, 25 Sep 2026). */}
+        <p className="max-w-[296px] font-roboto text-[14.5px] leading-normal text-muted lg:max-w-none lg:text-[17px] lg:leading-[1.175]">
+          <span className="lg:hidden">{FINDER.leadMobile}</span>
+          <span className="max-lg:hidden">{FINDER.lead}</span>
+        </p>
       </div>
 
       {/* The search bar AND the map panel, together — a search lights up a

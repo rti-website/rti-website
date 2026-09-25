@@ -10,6 +10,14 @@ type Redirect = { source: string; destination: string; statusCode: 301 }
  * scripts/build-redirects.mjs, so it may legitimately not exist yet on a fresh
  * clone. Read it at runtime rather than importing it, so a missing file means
  * "no redirects yet" instead of a config crash.
+ *
+ * !! READ ONCE, WHEN THE SERVER STARTS. `next dev` watches this file and
+ * restarts itself when it changes, but it does not watch redirects.json: a
+ * regenerated redirects.json does nothing to a dev server that is already
+ * running until it is restarted. Seen 25 Sep 2026, when the Chicago page took
+ * back /electronic-recycling-chicago/ (it used to 301 to /electronic-recycle/)
+ * and a dev server started before the change kept sending the Chicago card to
+ * the old destination. `npm run build` always reads the current file.
  */
 function loadRedirects(): Redirect[] {
   const file = path.join(process.cwd(), 'data', 'redirects.json')

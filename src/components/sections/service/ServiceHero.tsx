@@ -23,7 +23,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, top = 140,
+  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -66,11 +66,20 @@ export function ServiceHero({
    * so they pass 0.
    */
   top?: number
+  /**
+   * 'large' — the redrawn Locations hero (6472:3919 / 6747:2569, 25 Sep 2026),
+   * the same block the Chicago page draws: H1 at 70/84.7 with -2.03 tracking,
+   * the lead at 20/30.03 in a 504 column, the block at y139 (crumbs, 21, H1,
+   * 8, lead). On the phone the band is 276 tall with the H1 at 32/1.2 and the
+   * lead at 15/1.5 in 273, 10 apart. Every other page leaves it unset.
+   */
+  size?: 'large'
 }) {
+  const large = size === 'large'
   return (
     <Section
       top={top} height={470} label={label}
-      className="flex flex-col justify-center bg-navy px-[20px] py-[48px] max-lg:min-h-[360px] lg:block lg:p-0"
+      className={`flex flex-col justify-center bg-navy px-[20px] lg:block lg:p-0 ${large ? 'py-[40px] max-lg:min-h-[276px]' : 'py-[48px] max-lg:min-h-[360px]'}`}
     >
       {/*
         See the same wrapper in ServicesHero: InteriorHeroArt still builds its
@@ -87,8 +96,8 @@ export function ServiceHero({
 
       {/* Content column — 6199:4945 at x319 y113, w946, gap 20; 6638:10147..
           on the phone, where the column is centred and the crumbs are gone. */}
-      <Box x={319} y={113} w={946} className="flex flex-col items-start gap-[20px] max-lg:items-center">
-        <nav aria-label="Breadcrumb" className="max-lg:hidden">
+      <Box x={319} y={large ? 139 : 113} w={946} className={`flex flex-col items-start max-lg:items-center ${large ? 'gap-[10px] lg:gap-0' : 'gap-[20px]'}`}>
+        <nav aria-label="Breadcrumb" className={`max-lg:hidden ${large ? 'lg:mb-[21px] lg:pl-[3px]' : ''}`}>
           <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
             {crumbs.map((c, i) => (
               <li key={c.label} className="flex items-center gap-[13px]">
@@ -101,7 +110,9 @@ export function ServiceHero({
           </ol>
         </nav>
 
-        <h1 className="w-full text-center font-sans text-[28px] font-semibold leading-[1.18] text-white lg:w-auto lg:text-left lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]">
+        <h1 className={`w-full text-center font-sans font-semibold text-white lg:w-auto lg:text-left ${large
+          ? 'text-[32px] leading-[1.2] lg:mb-[8px] lg:text-[70px] lg:leading-[84.7px] lg:tracking-[-2.03px]'
+          : 'text-[28px] leading-[1.18] lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]'}`}>
           {h1.includes('\n')
             ? h1.split('\n').map((line, i, all) => (
               <span key={i}>{line}{i < all.length - 1 && <>{' '}<br /></>}</span>
@@ -119,7 +130,9 @@ export function ServiceHero({
             that long can collapse to one line at that width. The two longest
             (Hard Drive Destruction, the Wisconsin electronics ad page) still
             need three, balanced. */}
-        <p className={`w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:text-left lg:text-[18px] lg:leading-[27px] lg:text-balance ${typeof lead === 'string' && lead.length > 200 ? 'lg:w-[1100px] lg:max-w-none' : 'lg:w-auto'}`}>
+        <p className={large
+          ? 'w-full max-w-[273px] text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:w-[504px] lg:max-w-none lg:text-left lg:text-[20px] lg:leading-[30.031px]'
+          : `w-full text-center font-roboto text-[15px] leading-[1.5] text-white/70 lg:text-left lg:text-[18px] lg:leading-[27px] lg:text-balance ${typeof lead === 'string' && lead.length > 200 ? 'lg:w-[1100px] lg:max-w-none' : 'lg:w-auto'}`}>
           {typeof lead === 'string' && lead.includes('\n')
             ? lead.split('\n').map((line, i, all) => (
               <span key={i}>{line}{i < all.length - 1 && <>{' '}<br className="max-lg:hidden" /></>}</span>

@@ -23,8 +23,8 @@ import { CTA, HERO, LIVE_SEO } from '@/data/locations'
  *   Header         —           140        140
  *   Hero           6374:4196   470        470
  *   Finder         6377:967    822        H.finder  map now full width, list gone
- *   Cards          6743:2450   852.05     H.cards   NEW 22 Sep 2026 — two facility cards
- *   Nationwide     6831:2663   2308       H.nation  NEW 24 Sep 2026 — nine partner sites, not clickable
+ *   Cards          6743:2450   696.05     H.cards   NEW 22 Sep 2026 — two facility cards (redrawn 25 Sep)
+ *   Nationwide     6831:2663   1634       H.nation  NEW 24 Sep 2026 — Chicago and eight partner sites (redrawn 25 Sep)
  *   Coverage       6377:968    493        H.cover   doc paragraphs differ
  *   Closing CTA    6491:6580   456        H.cta
  *   Footer         6374:4353   681        681
@@ -53,8 +53,8 @@ import { CTA, HERO, LIVE_SEO } from '@/data/locations'
  */
 const H = {
   finder: 822,    // Figma 822 — the revised frame, map at full width
-  cards:  861,    // Figma 852.05 — measured; the lead sets a line longer than drawn
-  nation: 2327,   // Figma 2308 — measured; the site's lead sets its two lines at 27.65 against the frame's 20
+  cards:  712,    // Figma 696.05 (redrawn 25 Sep 2026: no hours, no chips) — measured; the lead sets a line longer than drawn
+  nation: 1627,   // Figma 1634 (redrawn 25 Sep 2026: two-row cards, nine of them) — measured; the frame's Greenwood row carries a stray empty line
   cover:  491,    // Figma 493 — the doc's second paragraph is two pixels shorter
   cta:    CTA_H,  // the shared closing band
 }
@@ -87,9 +87,14 @@ export default async function LocationsPage() {
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
       <main>
+        {/* Redrawn 25 Sep 2026 (6472:3919 / 6747:2569): the warehouse photo at
+            1920x1081 from y-372 under its navy-to-clear overlay, and the
+            larger H1 and lead ('large'). Crumbs stay "Home / Locations"; the
+            frame's "Resources" is a slip. */}
         <ServiceHero
-          label="6374:4196" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-locations.png"
+          label="6374:4196" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} size="large"
+          image="/images/pages/hero-locations-warehouse.png"
+          imageFill={{ y: -372, h: 1081, overlay: 'linear-gradient(89.28deg, #0b1f3a 10.212%, rgba(30,86,160,0) 99.651%)' }}
         />
         <LocationsFinder   top={FINDER_TOP} height={H.finder} />
         <LocationCards     top={CARDS_TOP}  height={H.cards} />

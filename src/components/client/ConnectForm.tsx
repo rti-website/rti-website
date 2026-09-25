@@ -60,7 +60,7 @@ const TONE = {
 } as const
 
 export function ConnectForm({
-  placeholder, cta, tone = 'dark', inputWidth = 971, id = 'services-email',
+  placeholder, cta, tone = 'dark', inputWidth = 971, id = 'services-email', stacked = false,
 }: {
   placeholder: string
   cta: string
@@ -71,6 +71,13 @@ export function ConnectForm({
    */
   inputWidth?: number
   id?: string
+  /**
+   * Input over button at every width, the button at its own width from lg —
+   * the homepage's "Don't See Your Item?" card in the tab column (6873:13908,
+   * 25 Sep 2026), which is 417 wide and has no room for a row. `inputWidth`
+   * is ignored.
+   */
+  stacked?: boolean
 }) {
   const t = TONE[tone]
   const router = useRouter()
@@ -81,7 +88,9 @@ export function ConnectForm({
          ignores the body; the visitor just retypes it there. */
       method="post"
       action={CONTACT_FORM_HREF}
-      className="flex w-full flex-col gap-[12px] lg:flex-row lg:items-start lg:gap-[10px]"
+      className={stacked
+        ? 'flex w-full flex-col items-stretch gap-[12px] lg:items-start lg:gap-[10px]'
+        : 'flex w-full flex-col gap-[12px] lg:flex-row lg:items-start lg:gap-[10px]'}
       style={{ '--connect-input-w': `${inputWidth}px` } as React.CSSProperties}
       /*
        * noValidate, and the field is no longer `required`.
@@ -117,7 +126,7 @@ export function ConnectForm({
       }}
     >
       <div
-        className={`relative h-[50px] w-full overflow-hidden rounded-[8px] border backdrop-blur-[24px] lg:w-[var(--connect-input-w)] lg:shrink-0 ${t.input}`}
+        className={`relative h-[50px] w-full overflow-hidden rounded-[8px] border backdrop-blur-[24px] ${stacked ? '' : 'lg:w-[var(--connect-input-w)] lg:shrink-0'} ${t.input}`}
       >
         <label htmlFor={id} className="sr-only">Email address</label>
         <input
@@ -138,7 +147,7 @@ export function ConnectForm({
 
       <button
         type="submit"
-        className={`btn-pop flex h-[50px] w-full items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1 ${t.button}`}
+        className={`btn-pop flex h-[50px] w-full items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4.004px] lg:w-auto ${stacked ? '' : 'lg:min-w-px lg:flex-1'} ${t.button}`}
       >
         <span className="whitespace-nowrap">{cta}</span>
         <Image src={t.arrow} alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />

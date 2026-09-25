@@ -1127,6 +1127,139 @@
       "node": "6595:2313",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Homepage PHONE hero photo (\"ChatGPT Image Aug 28, 2026\", green foliage and a truck), drawn 2028x1142 centred at y-53 inside a 55% opacity layer, frame 6590:2308. The board keeps hero-photo.png. Added 24 Sep 2026; URL expires about 1 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/hero.png",
+      "id": "923bf923-d1b8-4255-bfab-c04f6263675a/f8f84.png",
+      "node": "6873:14201",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo: Chicago skyline behind a warehouse roof (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil; the phone frame draws the same image (6896:15673). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-computers.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/7af8f.svg",
+      "node": "6880:2751",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Computers & IT Equipment (20px white monitor). The phone frame draws the same glyph at 18. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-laptops.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/d9f72.svg",
+      "node": "6880:2758",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Laptops. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-monitors.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/d6dbc.svg",
+      "node": "6880:2765",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Monitors & Displays. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-tv.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/bd87f.svg",
+      "node": "6880:2773",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Televisions. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-office.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/6006b.svg",
+      "node": "6880:2780",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Office & Networking Equipment (printer). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-small.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/e14bc.svg",
+      "node": "6880:2788",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Small Electronics (keyboard). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/accept-batteries.svg",
+      "id": "8d1f4643-a013-4dfd-bb86-ef4beb45c046/de8b4.svg",
+      "node": "6880:2796",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept icon, Batteries banner. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/step-arrow.svg",
+      "id": "8e425f0d-62c3-460e-acac-1f14e7c4de4e/4e815.svg",
+      "node": "6880:2845",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "How It Works arrow between the step cards (18px teal). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-years.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/db592.svg",
+      "node": "6880:2874",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, 30 years (clock). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-certified.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/7af17.svg",
+      "node": "6880:2880",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, certified standards (shield with tick), board. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-pickup.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/ab477.svg",
+      "node": "6880:2887",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, commercial pickup and drop-off (three lines), board. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-security.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/2cd68.svg",
+      "node": "6880:2892",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, data security (padlock). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-minority.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/f1634.svg",
+      "node": "6880:2899",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, minority owned (award ribbon). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-law.svg",
+      "id": "f99f1523-4091-4d48-8735-ae877014c841/86fae.svg",
+      "node": "6880:2904",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI, Illinois law note icon (22px teal scales), board only. Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-certified-phone.svg",
+      "id": "231ac8dc-029b-41cc-ba24-6c5f42d46521/227cb.svg",
+      "node": "6897:2926",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, certified standards, PHONE frame (plain shield). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/why-pickup-phone.svg",
+      "id": "231ac8dc-029b-41cc-ba24-6c5f42d46521/2f904.svg",
+      "node": "6897:2931",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why RTI icon, commercial pickup, PHONE frame (truck). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/chip-arrow.svg",
+      "id": "33a7c583-e088-4da9-98ca-f504602f24f6/d67e5.svg",
+      "node": "6883:5527",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Related Recycling Services chip arrow (14px teal). Chicago page (/electronic-recycling-chicago/), added 25 Sep 2026; URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-locations-warehouse.png",
+      "id": "3826659d-f3d3-4978-9328-d716d1b9dd24/d3941.png",
+      "node": "6472:3922",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Locations hero photo as redrawn 25 Sep 2026 (aerial warehouse with trucks, \"Recycling locations network hero\"), drawn 1920x1081 at y-372 under a navy-to-clear 89deg overlay; the phone frame (6816:11018) draws the same image. Replaces hero-locations.png on /all-locations/ only; the MN and WI facility pages keep hero-locations.png. URL expires about 2 Oct."
     }
   ]
 }

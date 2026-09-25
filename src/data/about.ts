@@ -1,4 +1,5 @@
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * /about-us-commercial-recycling-solutions/ — copy from the "About Us" doc,
@@ -92,7 +93,8 @@ export const IMPACT = {
     { v: '32+',  l: 'Years in Business' },
     { v: '2',    l: 'Licensed Facilities' },
     { v: '50',   l: 'States Served via Mail-In Program' },
-    { v: 'R2v3', l: 'Certified Recycling Operations' },
+    // Links to SERI's directory, like every other R2v3 mark (25 Sep 2026).
+    { v: 'R2v3', l: 'Certified Recycling Operations', href: R2_DIRECTORY },
   ],
 }
 

@@ -8,22 +8,26 @@ import { COVERAGE } from '@/data/locations'
  * story section: a 700px prose column and the 502px teal facts card with an
  * 80px gutter, inside 100px of section padding.
  *
- * MOBILE — Figma 6670:2383. 390 wide: px20 / py48, the two columns stacked 32
- * apart, prose left-aligned at 28/34 over 15/22, and the facts card full width
- * with its 32px padding and 20px gap unchanged. The frame draws the section on
- * white rather than the board's #fcfcfc.
+ * MOBILE — Figma 6750:8487 (redrawn; 25 Sep 2026). 390 wide: px20 / py44,
+ * everything centred and 24 apart, the heading at 24/1.28, the frame's two
+ * SHORTER paragraphs at 14.5/1.6, and the facts card full width at p24 with
+ * its title at 17 and 13.5/1.5 bullets 14 apart. On white, where the board
+ * is #fcfcfc.
  */
 export function LocationsCoverage({ top, height }: { top: number; height: number }) {
   return (
     <Section top={top} height={height} label="6377:968"
-      className="flex flex-col items-start gap-[32px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-0 lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">
+      className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[44px] lg:items-center lg:gap-0 lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">
       {/* One row at lg, two items in the section's own column below it. */}
       <div className="flex w-[1282px] items-start gap-[80px] max-lg:contents">
-        <div className="flex w-full flex-col items-center gap-[16px] text-center lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[20px] lg:text-left">
+        <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[20px] lg:text-left">
           <Eyebrow>{COVERAGE.eyebrow}</Eyebrow>
-          <h2 className="font-sans text-[28px] font-semibold leading-[34px] text-heading lg:text-[36px] lg:leading-[1.2]">{COVERAGE.heading}</h2>
+          <h2 className="font-sans text-[24px] font-semibold leading-[1.28] text-heading lg:text-[36px] lg:leading-[1.2]">{COVERAGE.heading}</h2>
           {COVERAGE.body.map((p) => (
-            <p key={p} className="font-roboto text-[15px] leading-[22px] text-muted lg:text-[16px] lg:leading-[1.6]">{p}</p>
+            <p key={p} className="font-roboto text-[16px] leading-[1.6] text-muted max-lg:hidden">{p}</p>
+          ))}
+          {COVERAGE.bodyMobile.map((p) => (
+            <p key={p} className="font-roboto text-[14.5px] leading-[1.6] text-muted lg:hidden">{p}</p>
           ))}
         </div>
         {/*
@@ -34,7 +38,9 @@ export function LocationsCoverage({ top, height }: { top: number; height: number
           as before. Delete these utilities once FactsCard answers the frame.
         */}
         <div className="w-full lg:contents
-          max-lg:[&>div]:w-full! max-lg:[&_li>span:last-child]:w-auto! max-lg:[&_li>span:last-child]:min-w-0! max-lg:[&_li>span:last-child]:flex-1!">
+          max-lg:[&>div]:w-full! max-lg:[&>div]:gap-[14px]! max-lg:[&>div>p]:text-[17px]! max-lg:[&_ul]:gap-[14px]!
+          max-lg:[&_li]:items-start! max-lg:[&_li]:gap-[10px]! max-lg:[&_li>span:first-child]:mt-[7px]! max-lg:[&_li>span:first-child]:size-[6px]!
+          max-lg:[&_li>span:last-child]:w-auto! max-lg:[&_li>span:last-child]:min-w-0! max-lg:[&_li>span:last-child]:flex-1! max-lg:[&_li>span:last-child]:text-[13.5px]! max-lg:[&_li>span:last-child]:leading-[1.5]!">
           <FactsCard title={COVERAGE.cardTitle} items={COVERAGE.card} />
         </div>
       </div>

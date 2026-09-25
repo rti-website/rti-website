@@ -39,7 +39,16 @@ export function AboutImpact({ top, height }: { top: number; height: number }) {
             key={s.l}
             className="flex w-full flex-col items-start gap-[4px] border-b border-white/15 py-[20px] first:pt-0 last:border-b-0 lg:w-[240px] lg:shrink-0 lg:items-center lg:gap-[6px] lg:border-b-0 lg:py-0"
           >
-            <dt className="font-sans text-[32px] font-semibold leading-[38px] text-white lg:text-[44px] lg:leading-[1.3]">{s.v}</dt>
+            <dt className="font-sans text-[32px] font-semibold leading-[38px] text-white lg:text-[44px] lg:leading-[1.3]">
+              {/* R2v3 opens SERI's directory listing, as every R2v3 mark does. */}
+              {'href' in s && s.href ? (
+                <a href={s.href} target="_blank" rel="noopener noreferrer"
+                  aria-label={`${s.v}, ${s.l}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+                  className="underline decoration-white/40 underline-offset-[6px] transition-opacity hover:opacity-80">
+                  {s.v}
+                </a>
+              ) : s.v}
+            </dt>
             <dd className="font-roboto text-[14px] font-medium leading-[19.5px] text-white/80 lg:text-[14.5px] lg:font-normal lg:leading-[1.175] lg:text-white/75">{s.l}</dd>
           </div>
         ))}

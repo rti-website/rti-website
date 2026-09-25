@@ -38,9 +38,16 @@ export function OurServices() {
   return (
     <Section
       top={1679 - HOME_BELOW_CERT_SHIFT} left={319} width={1282}
-      height={`calc(1133px + var(${HOME_SERVICES_DELTA_VAR}, 0px))`}
+      height={`calc(969px + var(${HOME_SERVICES_DELTA_VAR}, 0px))`}
       label="6532:2049"
-      className="flex flex-col bg-white px-[20px] py-[48px] lg:block lg:p-0 lg:transition-[height] lg:duration-300 lg:ease-out"
+      /* 969 since 25 Sep 2026 (was 1133): the "Don't See Your Item?" card
+         moved from under the cards into the tab column, so the block is the
+         two card rows (772) under the heading (149 + 48). The phone ends at
+         20, not 48: the impact band follows 20 under the card (6873:14158).
+         And it starts at 0: in the phone frame (6605:2341) the eyebrow sits
+         right on the certifications band's own 48 bottom padding, now that
+         the phone certifications band has no lead under its logos. */
+      className="flex flex-col bg-white px-[20px] pb-[20px] pt-0 lg:block lg:p-0 lg:transition-[height] lg:duration-300 lg:ease-out"
     >
       <div className="flex w-full flex-col items-center gap-[20px] lg:gap-[48px]">
         <div className="flex w-full flex-col items-center gap-[20px] lg:w-[829px] lg:gap-[6px]">

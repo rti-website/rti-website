@@ -68,10 +68,9 @@ function GroupArrow() {
 }
 
 export function MobileNav({
-  nav, mailIn, topBar, announce, quoteHref, pickupHref,
+  nav, topBar, announce, quoteHref, pickupHref,
 }: {
   nav: NavEntry[]
-  mailIn: { label: string; href: string }
   topBar: {
     dropOff: { label: string; href: string }
     phoneMn: { label: string; tel: string }
@@ -353,15 +352,9 @@ export function MobileNav({
 
         {/* CTA Wrap — px-16 py-20, gap-12 */}
         <div className="flex shrink-0 flex-col gap-[12px] px-[16px] py-[20px]">
-          <a
-            href={mailIn.href} target="_blank" rel="noopener noreferrer"
-            // justify-center is Asim's (22 Sep 2026); the frame draws the label
-            // and mark hugging the left edge, and he asked for them centred.
-            className="flex h-[48px] items-center justify-center gap-[8.008px] rounded-[8px] bg-accent px-[20px] backdrop-blur-[4.004px]"
-          >
-            <span className="font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white">{mailIn.label}</span>
-            <Image src="/images/mail-in-icon.png" alt="" width={34} height={16} className="h-[16px] w-[34px] object-contain" />
-          </a>
+          {/* The green Mail In Program button that led this block came out
+              on 25 Sep 2026 (Asim: "also remove the mail in program from the
+              mobile side drop down"), with the desktop one. */}
 
           {/* Utility Buttons — 6630:8011. TWO buttons here, which is NOT a
               regression of 21 Sep 2026. Asim dropped Get a Quote from the

@@ -174,10 +174,10 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // /electronic-recycle/ service page until then.
       { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronics-recycling-kit/'), menuOnly: true },
       { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
-      // The new /mail-in-recycling/ page. Every existing "Mail In Program" link
-      // still goes to ezontheearth.com — repointing them is Asim's call, so for
-      // now the page is reachable from the menu only.
-      { l1: 'About the',  l2: 'Mail-In Program', blurb: 'How the nationwide mail-in recycling program works.',   icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, href: href('/mail-in-recycling/'), menuOnly: true },
+      // "About the Mail-In Program" (/mail-in-recycling/) came out of the
+      // menu on 25 Sep 2026 — Asim: "remove the about mail in program from
+      // here, just keep the page". The page stays, and the industry pages'
+      // Mail-In Program rows still link it.
     ],
   },
 ]
@@ -205,6 +205,8 @@ export const SERVICES_CERT_BODY = CERT_COPY.body
 export const SERVICES_ENQUIRY = {
   heading: 'Don’t See Your Item?',
   sub: 'Reach out to Us!',
+  /** The homepage card's line under the heading (6873:13938, 25 Sep 2026). */
+  body: 'Our teams can help if you couldn’t find what you were looking for.',
   placeholder: 'Enter your email',
   cta: 'Let’s Connect',
 }

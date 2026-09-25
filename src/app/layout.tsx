@@ -6,6 +6,7 @@ import { graph, organizationNode, facilityNodes, websiteNode } from '@/lib/schem
 import { trackingBootstrap, trackingRuntime } from '@/lib/tracking'
 import { PageViewTracker } from '@/components/client/PageViewTracker'
 import { TawkChat } from '@/components/client/TawkChat'
+import { canvasZoomScript } from '@/lib/canvas-zoom'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -33,6 +34,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     // still surface.
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Sets --canvas-zoom before the body paints, so the desktop board is
+            scaled right in Safari too. See src/lib/canvas-zoom.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: canvasZoomScript }} />
         <script dangerouslySetInnerHTML={{ __html: trackingBootstrap(tracking) }} />
         <script
           type="application/ld+json"

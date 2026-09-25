@@ -49,6 +49,9 @@ export function pageType(url: string, isPost: boolean): PageType {
   // facility rule below would call the Minnesota and Wisconsin ones 'location'.
   if (/^\/(locations\/[^/]+|minnesota-recycling|wisconsin-recycling)\/(light-bulb|electronic|battery)-recycling\/$/.test(url)) return 'location_service'
   if (/^\/locations\/[^/]+\/$/.test(url)) return 'location'
+  // The Chicago service area page (25 Sep 2026) lives at the old WordPress
+  // Chicago URL, outside /locations/, so it is named here.
+  if (url === '/electronic-recycling-chicago/') return 'location'
   if (url.startsWith('/minnesota-recycling/') || url.startsWith('/wisconsin-recycling/')) return 'location'
   if (url === '/blog/') return 'blog'
   if (url.startsWith('/category/')) return 'blog_category'

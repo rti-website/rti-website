@@ -151,6 +151,41 @@ export const TESTIMONIALS: Testimonial[] = [
 ]
 
 /**
+ * !! THE FIGMA'S SAMPLE TESTIMONIALS: DESIGN PREVIEW ONLY. NEVER ON LIVE.
+ *
+ * The four cards in the frame (6554:2055), word for word. Asim asked three
+ * times on 25 Sep 2026 to see this exact text in the section. These people
+ * (Rachel Simmons, Marcus Chen, Sarah Okonkwo, David Hartwell) are the
+ * designer's sample content, not known RTI customers, so the text is shown
+ * only where the page is being REVIEWED:
+ *
+ *   `next dev` on the laptop                      NODE_ENV=development
+ *   the dev server (192.168.90.152:8106)          DEPLOY_ENV=staging AND
+ *                                                  NEXT_PUBLIC_NOINDEX=true
+ *
+ * Every other build, the live site included, shows the real Google reviews
+ * above. Both staging variables have to be wrong on live before these could
+ * leak, and scripts/check-static.mjs fails a production build that contains
+ * any of these names. See SHOW_DESIGN_SAMPLES in Testimonials.tsx.
+ *
+ * TO PUBLISH ANY OF THESE FOR REAL: confirm the person is a real client who
+ * gave these words and agreed to be named, then move them into TESTIMONIALS
+ * above (with the role in place of a date) and delete them here.
+ */
+export type SampleTestimonial = { quote: string; name: string; role: string; stars: number }
+
+export const DESIGN_SAMPLE_TESTIMONIALS: SampleTestimonial[] = [
+  { name: 'Rachel Simmons', role: 'IT Director', stars: 5,
+    quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof of responsible recycling. That transparency changed everything for us.' },
+  { name: 'Marcus Chen', role: 'Sustainability Manager', stars: 5,
+    quote: 'We recycled over 2,000 laptops last year through their service. The pickup scheduling was seamless, and our compliance team loved the detailed audit reports.' },
+  { name: 'Sarah Okonkwo', role: 'Small Business Owner', stars: 5,
+    quote: 'As a small business, I wasn’t sure how to dispose of old equipment safely. They made it incredibly easy — one call and everything was handled from start to finish.' },
+  { name: 'David Hartwell', role: 'CTO', stars: 5,
+    quote: 'The data destruction certificates gave us total peace of mind. Our clients trust us with sensitive information, and now we can prove it’s securely handled at end-of-life.' },
+]
+
+/**
  * The widget's own summary line, verbatim: "Google rating score: 4.9 of 5,
  * based on 13 reviews". A SNAPSHOT from Asim's screenshot of 23 Sep 2026 —
  * the widget on the live site reads it live, this does not. Update both
@@ -158,12 +193,22 @@ export const TESTIMONIALS: Testimonial[] = [
  */
 export const GOOGLE_RATING = { score: '4.9', outOf: 5, count: 13 }
 
-/** The stats strip under the reviews — 6554:2121. Agrees with the hero's strip. */
-export const TESTIMONIAL_STATS = [
-  { n: '30+',  l: 'Years serving the Midwest' },
-  { n: '2',    l: 'R2v3-certified facilities' },
-  { n: '50',   l: 'States reached nationwide' },
-  { n: '100%', l: 'Shipments documented' },
+/**
+ * The impact figures under Our Services — 6873:13941 (board) and 6873:14158
+ * (phone), 25 Sep 2026. They replace the four figures that sat under the
+ * reviews (30+ years, 2 facilities, 50 states, 100% documented), which the
+ * new frames drop.
+ *
+ * !! THESE ARE THE DESIGN FILE'S NUMBERS, NOT A SOURCE WE HAVE SEEN. Four
+ * specific claims on the homepage (2.3M devices destroyed, 950,000 wiped,
+ * 18M lbs recycled, 4,200 tons CO2 avoided). Flagged to Asim to confirm
+ * against RTI's own records before they go live.
+ */
+export const IMPACT_STATS = [
+  { n: '2.3M+',    l: 'Devices Destroyed' },
+  { n: '950,000+', l: 'Data-Bearing Devices Securely Wiped' },
+  { n: '18M+',     l: 'Lbs of E-Waste Recycled' },
+  { n: '4,200+',   l: 'Tons of CO2 Emissions Avoided' },
 ]
 
 /**
