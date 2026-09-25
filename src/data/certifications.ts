@@ -77,12 +77,17 @@ import type { Logo } from '@/components/ui/LogoMarquee'
  * R2v3 mark there had to land on the same page — Asim: "on r2v3 add the url
  * that we add in Certifications & Standards". One constant, two links, so
  * they cannot drift apart.
+ *
+ * 26 Sep 2026: replaced with the Recycle Technologies entry (appids
+ * 001UQ000007F0JtYAK), verbatim as Asim gave it, in place of the Minnesota
+ * Computers entry it pointed at before. Every R2v3 link on the site reads
+ * this constant, and site.ts uses it for the structured data.
  */
 export const R2_DIRECTORY =
   'https://sustainableelectronics.org/find-an-r2-certified-facility/'
-  + '?appids=001UQ00000P5w8DYAR&tab=2'
+  + '?appids=001UQ000007F0JtYAK&tab=2'
   + '&backto=https://sustainableelectronics.org/find-an-r2-certified-facility/'
-  + '?type=byalias&alias=minnesota%2520computers'
+  + '?type=byalias&alias=Recycle%20tEchnologies'
 
 export const CERT_LOGOS: Logo[] = [
   /* 1 — 6695:3630, R2v3. The one mark that links; see R2_DIRECTORY above. */

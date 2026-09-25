@@ -2,6 +2,8 @@
  * Site-wide constants. Single source of truth — nothing here is duplicated
  * anywhere else in the repo.
  */
+import { R2_DIRECTORY } from '@/data/certifications'
+
 export const SITE = {
   /** Canonical origin. No trailing slash. Every absolute URL is built from this. */
   origin: 'https://www.recycletechnologies.com',
@@ -77,7 +79,7 @@ export const CERTIFICATIONS = [
      `hasCredential` on every page of the site. RIOS is the Recycling Industry
      Operating Standard, run by ReMA (the Recycled Materials Association,
      formerly ISRI) — the same three marks the footer shows. */
-  { name: 'R2v3', issuer: 'SERI', verifyUrl: 'https://sustainableelectronics.org/' },
+  { name: 'R2v3', issuer: 'SERI', verifyUrl: R2_DIRECTORY },
   { name: 'NAID AAA', issuer: 'i-SIGMA', verifyUrl: '' },
   { name: 'RIOS', issuer: 'ReMA', verifyUrl: '' },
 ] as const
