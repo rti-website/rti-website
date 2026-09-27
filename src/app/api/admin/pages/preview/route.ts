@@ -17,7 +17,7 @@ export const GET = guard(async ({ req }) => {
   if (!to) return json({ error: 'Nothing to preview' }, 400)
   ;(await draftMode()).enable()
   return new Response(null, { status: 307, headers: { Location: to, 'Cache-Control': 'no-store' } })
-}, { role: ['administrator', 'editor'] })
+}, { role: ['administrator', 'editor', 'ads'] })
 
 /** A path on this site, never another host ("//evil.com", "https://…"). */
 function safePath(raw: string | null): string | null {

@@ -46,12 +46,12 @@
   },
   {
     "source": "/battery-recycling-in-minnesota/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/battery-recycling/",
     "statusCode": 301
   },
   {
     "source": "/battery-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/",
+    "destination": "/wisconsin-recycling/battery-recycling/",
     "statusCode": 301
   },
   {
@@ -71,7 +71,7 @@
   },
   {
     "source": "/electronic-recycling-wisconsin/",
-    "destination": "/wisconsin-recycling/",
+    "destination": "/wisconsin-recycling/electronic-recycling/",
     "statusCode": 301
   },
   {
@@ -86,7 +86,7 @@
   },
   {
     "source": "/electronics-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/",
+    "destination": "/wisconsin-recycling/electronic-recycling/",
     "statusCode": 301
   },
   {
@@ -131,7 +131,7 @@
   },
   {
     "source": "/light-bulb-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/",
+    "destination": "/wisconsin-recycling/light-bulb-recycling/",
     "statusCode": 301
   },
   {

@@ -17,6 +17,24 @@ import { currentUser, type AdminUser } from '@/lib/auth'
  */
 export type Handler = (ctx: { user: AdminUser; req: Request }) => Promise<Response>
 
+/**
+ * Roles that may only CHANGE things in part of the admin (28 Sep 2026).
+ * Any request other than GET or HEAD from one of these roles, to an endpoint
+ * outside its list, is refused here, whatever the endpoint itself allows:
+ *
+ *   ads    the Ads manager: enquiries (and the lead workflow, same endpoint),
+ *          Google & Tracking (tracking, maps), subscribers. Everything else
+ *          it may only look at.
+ *   agent  the Sales agent: enquiries. (Its own screens never wrote anywhere
+ *          else; this makes the server say so too.)
+ *
+ * Reading is still decided by each endpoint's `role` list.
+ */
+const WRITES: Partial<Record<AdminUser['role'], RegExp>> = {
+  ads: /^\/api\/admin\/(leads|tracking|maps|subscribers|session)(\/|$)/,
+  agent: /^\/api\/admin\/(leads|session)(\/|$)/,
+}
+
 export function guard(handler: Handler, opts: { role?: AdminUser['role'][] } = {}) {
   return async (req: Request): Promise<Response> => {
     let user: AdminUser | null = null
@@ -30,6 +48,10 @@ export function guard(handler: Handler, opts: { role?: AdminUser['role'][] } = {
     if (!user) return NextResponse.json({ error: 'Not signed in' }, { status: 401 })
     if (opts.role && !opts.role.includes(user.role)) {
       return NextResponse.json({ error: 'Your account cannot do that' }, { status: 403 })
+    }
+    const writes = WRITES[user.role]
+    if (writes && req.method !== 'GET' && req.method !== 'HEAD' && !writes.test(new URL(req.url).pathname)) {
+      return NextResponse.json({ error: 'Your account can look at this but not change it.' }, { status: 403 })
     }
     try {
       return await handler({ user, req })

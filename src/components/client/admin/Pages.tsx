@@ -63,8 +63,10 @@ type Json = string | number | boolean | null | Json[] | { [k: string]: Json }
 
 const when = (s: string | null) => (s ? new Date(s).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '')
 
-export function Pages({ onToast, onFocusChange, onManage }: {
+export function Pages({ onToast, onFocusChange, onManage, readOnly = false }: {
   onToast: (m: string) => void; onFocusChange?: (on: boolean) => void
+  /** Look, do not touch (the Ads manager, 28 Sep 2026). The server refuses the writes too. */
+  readOnly?: boolean
   /** Opens the screen that edits a page Pages only lists (a post, a location…). */
   onManage?: (where: Manage, id: number | null) => void
 }) {
@@ -76,8 +78,8 @@ export function Pages({ onToast, onFocusChange, onManage }: {
     onFocusChange?.(open !== null)
     return () => onFocusChange?.(false)
   }, [open, onFocusChange])
-  if (open) return <main className="a-sheet a-pgsheet"><PageEditor docKey={open} onClose={() => setOpen(null)} onToast={onToast} /></main>
-  return <main className="a-sheet"><PageList onOpen={setOpen} onManage={onManage} /></main>
+  if (open) return <main className="a-sheet a-pgsheet"><PageEditor docKey={open} onClose={() => setOpen(null)} onToast={onToast} readOnly={readOnly} /></main>
+  return <main className="a-sheet"><PageList onOpen={setOpen} onManage={onManage} readOnly={readOnly} /></main>
 }
 
 /* ================================================================== list == */
@@ -100,7 +102,7 @@ const fromOther = (o: Other): DocSummary => ({
   manage: o.manage, id: o.id, live: o.live, updatedAt: o.updatedAt,
 })
 
-function PageList({ onOpen, onManage }: { onOpen: (key: string) => void; onManage?: (where: Manage, id: number | null) => void }) {
+function PageList({ onOpen, onManage, readOnly = false }: { onOpen: (key: string) => void; onManage?: (where: Manage, id: number | null) => void; readOnly?: boolean }) {
   const [docs, setDocs] = useState<DocSummary[] | null>(null)
   const [migrated, setMigrated] = useState(true)
   const [error, setError] = useState('')
@@ -196,7 +198,7 @@ function PageList({ onOpen, onManage }: { onOpen: (key: string) => void; onManag
                   )}
                   {actionable && (
                     <button className="a-btn sm" style={{ marginLeft: 6 }} onClick={(e) => { e.stopPropagation(); act(d) }}>
-                      {other ? MANAGE[d.manage ?? 'code'].button : 'Edit'}
+                      {other ? (readOnly && d.manage === 'posts' ? 'Open post' : MANAGE[d.manage ?? 'code'].button) : readOnly ? 'Open' : 'Edit'}
                     </button>
                   )}
                 </td>
@@ -283,7 +285,7 @@ function StatusPill({ d }: { d: DocSummary }) {
 
 /* ================================================================ editor == */
 
-function PageEditor({ docKey, onClose, onToast }: { docKey: string; onClose: () => void; onToast: (m: string) => void }) {
+function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: string; onClose: () => void; onToast: (m: string) => void; readOnly?: boolean }) {
   const [doc, setDoc] = useState<DocState | null>(null)
   const [data, setData] = useState<Json | null>(null)
   const [saved, setSaved] = useState('')
@@ -383,9 +385,11 @@ function PageEditor({ docKey, onClose, onToast }: { docKey: string; onClose: () 
         </div>
         <span className="a-spacer" />
         <button className="a-btn sm" onClick={() => setAsk('history')}>History ({doc.revisions.length})</button>
-        {doc.hasDraft && <button className="a-btn sm stop" disabled={!!busy} onClick={() => setAsk('discard')}>Discard draft</button>}
-        <button className="a-btn" disabled={!dirty || !!busy} onClick={() => void save()}>{busy === 'save' ? 'Saving…' : 'Save draft'}</button>
-        <button className="a-btn go" disabled={(!dirty && !doc.hasDraft) || !!busy} onClick={() => setAsk('publish')}>{busy === 'publish' ? 'Publishing…' : 'Publish'}</button>
+        {readOnly ? <span className="a-pill off">View only</span> : <>
+          {doc.hasDraft && <button className="a-btn sm stop" disabled={!!busy} onClick={() => setAsk('discard')}>Discard draft</button>}
+          <button className="a-btn" disabled={!dirty || !!busy} onClick={() => void save()}>{busy === 'save' ? 'Saving…' : 'Save draft'}</button>
+          <button className="a-btn go" disabled={(!dirty && !doc.hasDraft) || !!busy} onClick={() => setAsk('publish')}>{busy === 'publish' ? 'Publishing…' : 'Publish'}</button>
+        </>}
       </div>
 
       <div ref={splitRef} className={`a-pggrid${splitDragging ? ' dragging' : ''}`} style={splitStyle}>
@@ -398,6 +402,8 @@ function PageEditor({ docKey, onClose, onToast }: { docKey: string; onClose: () 
           <input className="a-inp" type="search" placeholder="Filter fields (e.g. heading, faq, phone)" value={filter}
             onChange={(e) => setFilter(e.target.value)} style={{ marginBottom: 14 }} aria-label="Filter fields" />
           {!isObjDoc && <p className="a-hint">This document has no editable fields.</p>}
+          {/* disabled: every box, list button and picture picker at once. */}
+          <fieldset disabled={readOnly} style={{ border: 0, padding: 0, margin: 0, minWidth: 0, display: 'contents' }}>
           {sections.map(([k, v]) => (
             <details key={k} className="a-card a-pgsec" open={sections.length <= 3 || !!f}>
               <summary>{sectionTitle(k, sections.map(([x]) => x))}</summary>
@@ -405,9 +411,12 @@ function PageEditor({ docKey, onClose, onToast }: { docKey: string; onClose: () 
                 path={k} name={k} depth={0} rendered={rendered} filter={f} set={setAt} onPick={setPicking} />
             </details>
           ))}
-          <div style={{ display: 'flex', gap: 8, marginTop: 18, flexWrap: 'wrap' }}>
-            <button className="a-btn sm" disabled={!!busy} onClick={() => setAsk('original')}>Back to the original copy…</button>
-          </div>
+          </fieldset>
+          {!readOnly && (
+            <div style={{ display: 'flex', gap: 8, marginTop: 18, flexWrap: 'wrap' }}>
+              <button className="a-btn sm" disabled={!!busy} onClick={() => setAsk('original')}>Back to the original copy…</button>
+            </div>
+          )}
         </div>
 
         <SplitGrip label="Preview width" {...splitGrip} />
@@ -488,7 +497,7 @@ function PageEditor({ docKey, onClose, onToast }: { docKey: string; onClose: () 
                 <li key={r.id}>
                   <span><strong>{when(r.published_at)}</strong>{r.by ? ` by ${r.by}` : ''}{i === 0 ? ' (live now)' : ''}
                     <span className="a-hint"> · {r.edits === 0 ? 'original copy' : `${r.edits} change${r.edits === 1 ? '' : 's'} from the original`}</span></span>
-                  <button className="a-btn sm" disabled={!!busy} onClick={() => act('restore', { revision: r.id }, 'That version is now the draft. Check it, then Publish.')}>Restore as draft</button>
+                  {!readOnly && <button className="a-btn sm" disabled={!!busy} onClick={() => act('restore', { revision: r.id }, 'That version is now the draft. Check it, then Publish.')}>Restore as draft</button>}
                 </li>
               ))}
             </ul>

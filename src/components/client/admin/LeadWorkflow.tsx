@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Empty, Table } from './Bits'
 import { getJSON, sendJSON } from './api'
-import { CHANNELS, LEAD_STATUSES, LeadDialog, LeadFormDialog, exactTime, leadSource, when, type Agent, type LeadRow, type Me } from './Leads'
+import { CHANNELS, LEAD_STATUSES, LeadDialog, LeadFormDialog, exactTime, leadSource, recent, when, type Activity, type Agent, type LeadRow, type Me } from './Leads'
 
 /**
  * Lead workflow — the management view (Asim, 26 Sep 2026: "another place,
@@ -18,6 +18,15 @@ import { CHANNELS, LEAD_STATUSES, LeadDialog, LeadFormDialog, exactTime, leadSou
  * Same data and same endpoint as the Enquiries screen; this one is arranged
  * around WHO rather than WHAT.
  */
+/** The last thing that happened to an enquiry, as a short sentence. */
+function lastText(a: Activity): string {
+  const body = (a.body ?? '').trim()
+  if (a.kind === 'assigned') return body ? `Assigned to ${body}` : 'Unassigned'
+  if (a.kind === 'status') return `Status: ${body}`
+  if (a.kind === 'created') return body || 'Logged'
+  return body
+}
+
 export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string) => void; adding: boolean; onAdded: () => void }) {
   const [rows, setRows] = useState<LeadRow[]>([])
   const [agents, setAgents] = useState<Agent[]>([])
@@ -86,7 +95,7 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
         {cards.map((c) => (
           <button key={c.id} className="a-tile" style={{ textAlign: 'left', cursor: 'pointer', outline: who === c.id ? '2px solid var(--brand, #05838b)' : undefined }}
             onClick={() => setWho(who === c.id ? '' : c.id)} aria-pressed={who === c.id}>
-            <div className="k">{c.name}{c.role && c.role !== 'agent' ? ` · ${c.role}` : ''}</div>
+            <div className="k">{c.name}{c.role && c.role !== 'agent' ? ` · ${c.role === 'ads' ? 'ads manager' : c.role}` : ''}</div>
             <div className="v a-tnum">{(c.t.new ?? 0) + (c.t.contacted ?? 0) + (c.t.qualified ?? 0)}</div>
             <div className="n" style={{ fontSize: 12, color: 'var(--a-muted)', marginTop: 6 }}>
               open · {c.t.new ?? 0} new, {c.t.contacted ?? 0} contacted, {c.t.qualified ?? 0} qualified
@@ -141,14 +150,14 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
           return (
             <tr key={l.id}>
               <td><input type="checkbox" checked={picked.has(l.id)} onChange={() => togglePick(l.id)} aria-label={`Select enquiry ${l.id}`} /></td>
-              <td><span className="a-ttl">{l.name ?? l.email ?? 'Anonymous'}</span>{l.company && <span className="a-slug">{l.company}</span>}</td>
+              <td><span className="a-ttl">{l.name ?? l.email ?? 'Anonymous'}</span>{l.company && <span className="a-meta">{l.company}</span>}</td>
               <td>
                 {l.phone && <div><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
                 {l.email && <div style={{ marginTop: 2 }}><a className="a-link" href={`mailto:${l.email}`}>{l.email}</a></div>}
               </td>
               <td>{[d.service ?? d.item, d.audience].filter(Boolean).join(' · ') || (l.message ? `${l.message.slice(0, 70)}…` : '—')}</td>
               <td>{l.channel && l.channel !== 'website' ? leadSource(l) : (CHANNELS.website ?? 'Website form')}</td>
-              <td><div style={{ whiteSpace: 'nowrap' }}>{exactTime(l.created_at)}</div><div className="a-slug">{when(l.created_at)}</div></td>
+              <td><div style={{ whiteSpace: 'nowrap' }}>{exactTime(l.created_at)}</div>{recent(l.created_at) && <div className="a-meta">{when(l.created_at)}</div>}</td>
               <td>
                 <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }} value={l.status} aria-label="Status"
                   onChange={async (e) => { const r = await sendJSON('/leads', 'PATCH', { id: l.id, status: e.target.value }); onToast(r.ok ? 'Status updated' : r.error); reload() }}>
@@ -161,10 +170,13 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
                   <option value="">Unassigned</option>
                   {agents.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
                 </select>
-                {l.assigned_at && <div className="a-slug">since {exactTime(l.assigned_at)}</div>}
+                {l.assigned_at && <div className="a-meta" style={{ whiteSpace: 'nowrap' }}>Since {exactTime(l.assigned_at)}</div>}
               </td>
-              <td style={{ fontSize: 12, maxWidth: 260 }}>
-                {last ? <><span style={{ color: 'var(--a-muted)' }}>{when(last.at)}{last.who ? ` · ${last.who}` : ''}</span><br />{last.kind === 'note' ? last.body : last.kind === 'assigned' ? (last.body ? `assigned to ${last.body}` : 'unassigned') : `${last.kind}: ${last.body ?? ''}`}</> : <span className="a-hint">—</span>}
+              <td style={{ minWidth: 180, maxWidth: 260 }}>
+                {last ? <>
+                  <div className="a-lastact" title={lastText(last)}>{lastText(last)}</div>
+                  <div className="a-meta">{when(last.at)}{last.who ? ` · ${last.who}` : ''}</div>
+                </> : <span className="a-hint">—</span>}
               </td>
               <td><button className="a-btn sm" style={{ whiteSpace: 'nowrap' }} onClick={() => setFormFor(l)}>View form</button></td>
             </tr>

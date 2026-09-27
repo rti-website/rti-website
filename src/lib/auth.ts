@@ -32,7 +32,7 @@ const N = 16384, r = 8, p = 1, KEYLEN = 64
 const COOKIE = 'rti_admin_session'
 const DAYS = 14
 
-export type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent'
+export type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent' | 'ads'
 export type AdminUser = { id: number; email: string; name: string; role: Role }
 
 /**
@@ -57,6 +57,11 @@ export const ROLES = [
      enquiries assigned to them, updates their status, adds notes and logs
      the phone enquiries they take. No posts, no settings. */
   { id: 'agent', label: 'Sales agent', blurb: 'Works the enquiries assigned to them and logs phone enquiries. Nothing else.' },
+  /* 28 Sep 2026 (db/012): runs the ads side. Full use of Subscribers,
+     Enquiries, Lead workflow and Google & Tracking; can look at the content
+     screens but not change them; no People & access, no Social Links. The
+     server enforces it in src/lib/admin-route.ts. */
+  { id: 'ads', label: 'Ads manager', blurb: 'Enquiries, lead workflow, subscribers and Google & Tracking. Can view the content screens, not change them.' },
 ] as const satisfies ReadonlyArray<{ id: Role; label: string; blurb: string }>
 
 export const roleLabel = (r: string) => ROLES.find((x) => x.id === r)?.label ?? r

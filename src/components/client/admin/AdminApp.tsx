@@ -30,7 +30,10 @@ import { api, getJSON, sendJSON } from './api'
  * behind a login where server rendering buys nothing anyway.
  */
 
-type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent'
+type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent' | 'ads'
+const ROLE_LABEL: Record<Role, string> = {
+  administrator: 'Administrator', editor: 'Editor', author: 'Content writer', seo: 'SEO', agent: 'Sales agent', ads: 'Ads manager',
+}
 type User = { id: number; email: string; name: string; role: Role }
 type Category = {
   id: number; name: string; slug: string; landing_built: boolean
@@ -115,9 +118,15 @@ export function AdminApp() {
   if (state === 'out' || !boot) return <Login onDone={load} />
 
   const agent = boot.user.role === 'agent'
-  const canPublish = boot.user.role !== 'author' && !agent
-  const canTrack = boot.user.role === 'administrator' || boot.user.role === 'seo'
-  const canAssign = boot.user.role === 'administrator' || boot.user.role === 'editor'
+  /* The Ads manager (28 Sep 2026): full use of Subscribers, Enquiries, Lead
+     workflow and Google & Tracking; the content screens view only; no People
+     & access or Social Links. The server enforces the same in
+     src/lib/admin-route.ts; these only decide what is shown. */
+  const ads = boot.user.role === 'ads'
+  const canPublish = boot.user.role !== 'author' && !agent && !ads
+  const canTrack = boot.user.role === 'administrator' || boot.user.role === 'seo' || ads
+  const canAssign = boot.user.role === 'administrator' || boot.user.role === 'editor' || ads
+  const canSeePages = canAssign
 
   /* Switching screens starts at the top. Without this, opening a post from
      halfway down the list leaves the editor scrolled past its own title, with
@@ -162,7 +171,7 @@ export function AdminApp() {
           icon="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.3-4.3M8.5 11.5l2 2 4-4.5" />
         {/* Every page's words and pictures (Asim, 27 Sep 2026). Administrators
             and editors, as he chose. */}
-        {canAssign && (
+        {canSeePages && (
           <NavBtn on={view === 'pages'} go={() => show('pages')} label="Pages"
             icon="M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h8M9 9h3" />
         )}
@@ -198,14 +207,16 @@ export function AdminApp() {
           <NavBtn on={view === 'tracking'} go={() => show('tracking')} label="Google & Tracking"
             icon="M3 3v18h18M7 15l4-4 3 3 5-6" />
         )}
-        <NavBtn on={view === 'social'} go={() => show('social')} label="Social Links"
-          icon="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19.5" />
+        {!ads && (
+          <NavBtn on={view === 'social'} go={() => show('social')} label="Social Links"
+            icon="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19.5" />
+        )}
         </>}
 
         <div className="a-railfoot">
           <div className="a-who">
             <span className="a-av">{boot.user.name.split(' ').map((w) => w[0]).slice(0, 2).join('')}</span>
-            <span><strong>{boot.user.name}</strong><small>{boot.user.role}</small></span>
+            <span><strong>{boot.user.name}</strong><small>{ROLE_LABEL[boot.user.role] ?? boot.user.role}</small></span>
           </div>
           <button className="a-nav" onClick={async () => {
             await fetch(api('/session'), { method: 'DELETE' })
@@ -231,7 +242,7 @@ export function AdminApp() {
             <button className="a-btn p" onClick={() => setAsking('lead')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> Add enquiry
             </button>
-          ) : !agent && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && view !== 'pages' && (
+          ) : !agent && !ads && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && view !== 'pages' && (
             <button className="a-btn p" onClick={() => setAsking('post')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> New post
             </button>
@@ -243,7 +254,7 @@ export function AdminApp() {
           userId={boot.user.id} onToast={say} onChanged={load} />}
         {view === 'editor' && editing !== null && (
           <PostEditor postId={editing} categories={boot.categories} authors={boot.authors}
-            canPublish={canPublish} onClose={() => { show('posts'); void load() }} onToast={say}
+            canPublish={canPublish} readOnly={ads} onClose={() => { show('posts'); void load() }} onToast={say}
             onFocusChange={setFocus}
             onAuthorAdded={(a) => setBoot((b) => (b ? { ...b, authors: [...b.authors, a].sort((x, y) => x.name.localeCompare(y.name)) } : b))} />
         )}
@@ -255,7 +266,7 @@ export function AdminApp() {
             media screen quietly lost its margins and ran to both edges. */}
         {view === 'media' && (
           <main className="a-sheet">
-            <MediaLibrary mode="manage" canDelete={canPublish} onToast={say}
+            <MediaLibrary mode="manage" canDelete={canPublish} readOnly={ads} onToast={say}
               /* Keeps the count in the rail honest after an upload or a delete,
                  without refetching the whole bootstrap payload for one number. */
               onCount={(n) => setBoot((b) => (b ? { ...b, counts: { ...b.counts, media: n } } : b))} />
@@ -266,18 +277,18 @@ export function AdminApp() {
             /* A writer can look; the SEO desk, editors and administrators can
                save. The endpoint enforces the same thing — this only decides
                whether the inputs are greyed out. */
-            canEdit={boot.user.role !== 'author'}
+            canEdit={boot.user.role !== 'author' && !ads}
             onToast={say} />
         )}
         {view === 'users' && <Users meId={boot.user.id} onToast={say} />}
         {view === 'subs' && <Subscribers />}
         {view === 'leads' && <Leads onToast={say} openId={deepLead} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
         {view === 'workflow' && canAssign && <LeadWorkflow onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
-        {view === 'pages' && canAssign && <Pages onToast={say} onFocusChange={setFocus}
+        {view === 'pages' && canSeePages && <Pages onToast={say} onFocusChange={setFocus} readOnly={ads}
           onManage={(where, id) => { if (where === 'posts' && id) open(id); else if (where !== 'code') show(where) }} />}
         {view === 'locations' && <Locations canEdit={canPublish} onToast={say} />}
         {view === 'tracking' && <GoogleTracking canEdit={canTrack} onToast={say} onGoSeo={() => show('seo')} />}
-        {view === 'social' && <SocialLinks social={boot.social}
+        {view === 'social' && !ads && <SocialLinks social={boot.social}
           canEdit={boot.user.role === 'administrator'} onToast={(m) => { say(m); void load() }} />}
       </div>
 

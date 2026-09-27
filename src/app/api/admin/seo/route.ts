@@ -53,7 +53,7 @@ export const GET = guard(async () => {
     redirects,
     duplicateKeywords: Object.fromEntries(dupes.map((d) => [d.focus_keyword, d.n])),
   })
-}, { role: ['administrator', 'editor', 'seo'] })
+}, { role: ['administrator', 'editor', 'seo', 'ads'] })
 
 /** Site-wide SEO defaults. Administrators and the SEO desk; not writers. */
 export const PUT = guard(async ({ req, user }) => {

@@ -103,42 +103,55 @@ function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast:
         <span className="a-mono">generate_lead</span>.
       </p>
 
-      <h4 style={{ margin: '18px 0 4px' }}>Call tracking numbers</h4>
-      <p className="a-hint" style={{ marginTop: 0 }}>
-        For Google Ads &ldquo;calls from website&rdquo; conversions. For each number, type it <b>exactly as the site shows it</b>{' '}
-        (for example <span className="a-mono">763-559-5130</span>) and the label of its call conversion action in Google Ads.
-        Google then shows ad visitors a forwarding number in its place and counts their calls. Each row is added after the Ads tag as{' '}
-        <span className="a-mono">gtag(&apos;config&apos;, &apos;{t.adsConversionId || 'AW-…'}/LABEL&apos;, {'{'} phone_conversion_number: &apos;NUMBER&apos; {'}'})</span>.
-        Leave a row empty to skip it.
-      </p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 740 }}>
-        {t.callNumbers.map((c, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(180px, 1fr) minmax(180px, 1fr) auto', gap: 12, alignItems: 'end' }}>
-            <div className="a-field">
-              <label htmlFor={`call-num-${i}`}>Display number {i + 1}</label>
-              <input id={`call-num-${i}`} className="a-inp a-mono" value={c.number} placeholder="763-559-5130" disabled={!canEdit}
-                inputMode="tel" onChange={(e) => setCall(i, 'number', e.target.value)} />
+      {/* Laid out 28 Sep 2026 (Asim: the one long line of help did not read
+          well). A short lead, three steps, the rows as cards that stack on a
+          narrow screen, and the tag the site writes folded away. */}
+      <div className="a-calltrack">
+        <h4>Call tracking numbers</h4>
+        <p className="a-calltrack-lead">
+          For Google Ads &ldquo;calls from website&rdquo; conversions. People who arrive from an ad see a Google forwarding
+          number in place of the one below, and Google counts their calls.
+        </p>
+        <ol className="a-calltrack-steps">
+          <li>Type the number <b>exactly as the site shows it</b>, for example <code className="a-code">763-559-5130</code>.</li>
+          <li>Paste the label of its call conversion action from Google Ads.</li>
+          <li>Leave a row empty to skip it, then <b>Save tracking</b>.</li>
+        </ol>
+        <div className="a-callrows">
+          {t.callNumbers.map((c, i) => (
+            <div key={i} className="a-callrow">
+              <div className="a-field">
+                <label htmlFor={`call-num-${i}`}>Display number {i + 1}</label>
+                <input id={`call-num-${i}`} className="a-inp a-mono" value={c.number} placeholder="763-559-5130" disabled={!canEdit}
+                  inputMode="tel" onChange={(e) => setCall(i, 'number', e.target.value)} />
+              </div>
+              <div className="a-field">
+                <label htmlFor={`call-lbl-${i}`}>Call conversion label {i + 1}</label>
+                <input id={`call-lbl-${i}`} className="a-inp a-mono" value={c.label} placeholder="XXXXXXXXXXXX" disabled={!canEdit}
+                  spellCheck={false} onChange={(e) => setCall(i, 'label', e.target.value.trim())} />
+              </div>
+              {canEdit && (
+                <button type="button" className="a-btn" aria-label={`Remove tracked number ${i + 1}`}
+                  onClick={() => setT({ ...t, callNumbers: t.callNumbers.filter((_, j) => j !== i) })}>Remove</button>
+              )}
             </div>
-            <div className="a-field">
-              <label htmlFor={`call-lbl-${i}`}>Call conversion label {i + 1}</label>
-              <input id={`call-lbl-${i}`} className="a-inp a-mono" value={c.label} placeholder="XXXXXXXXXXXX" disabled={!canEdit}
-                spellCheck={false} onChange={(e) => setCall(i, 'label', e.target.value.trim())} />
-            </div>
-            {canEdit && (
-              <button type="button" className="a-btn" style={{ marginBottom: 2 }} aria-label={`Remove tracked number ${i + 1}`}
-                onClick={() => setT({ ...t, callNumbers: t.callNumbers.filter((_, j) => j !== i) })}>Remove</button>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
+        {canEdit && t.callNumbers.length < MAX_CALLS && (
+          <button type="button" className="a-btn sm" style={{ marginTop: 10 }}
+            onClick={() => setT({ ...t, callNumbers: [...t.callNumbers, { number: '', label: '' }] })}>+ Add tracked number</button>
+        )}
+        <details className="a-calltrack-code">
+          <summary>What the site adds for each row</summary>
+          <code className="a-code">gtag(&apos;config&apos;, &apos;{t.adsConversionId || 'AW-…'}/LABEL&apos;, {'{'} phone_conversion_number: &apos;NUMBER&apos; {'}'})</code>
+          <span className="a-hint">Added after the Google Ads tag, one line per filled row.</span>
+        </details>
       </div>
-      {canEdit && t.callNumbers.length < MAX_CALLS && (
-        <button type="button" className="a-btn sm" style={{ marginTop: 10 }}
-          onClick={() => setT({ ...t, callNumbers: [...t.callNumbers, { number: '', label: '' }] })}>+ Add tracked number</button>
-      )}
 
-      <label className="a-check" style={{ marginTop: 12 }}>
+      <label className="a-check" style={{ marginTop: 14 }}>
         <input type="checkbox" checked={t.loadOnStaging} disabled={!canEdit} onChange={(e) => up('loadOnStaging', e.target.checked)} />
-        <span>Also load on the dev server <small style={{ color: 'var(--a-muted)' }}>(only while testing in GTM Preview; untick after)</small></span>
+        <span>Also load on the dev server
+          <small style={{ display: 'block', color: 'var(--a-muted)', marginTop: 2 }}>Only while testing in GTM Preview. Untick it after.</small></span>
       </label>
 
       {canEdit && <div style={{ marginTop: 16 }}><button className="a-btn p" disabled={busy} onClick={() => void save()}>{busy ? 'Saving…' : 'Save tracking'}</button></div>}

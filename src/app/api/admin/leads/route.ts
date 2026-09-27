@@ -42,14 +42,15 @@ const CHANNELS = ['website', 'phone', 'email', 'walk_in', 'referral', 'other']
 const TYPES = ['contact', 'quote', 'download', 'callback']
 
 const isAgent = (u: AdminUser) => u.role === 'agent'
-const canAssign = (u: AdminUser) => u.role === 'administrator' || u.role === 'editor'
+/** Managers of the enquiries: administrators, editors and (28 Sep 2026) the Ads manager. */
+const canAssign = (u: AdminUser) => u.role === 'administrator' || u.role === 'editor' || u.role === 'ads'
 const canWork = (u: AdminUser) => canAssign(u) || isAgent(u)
 
 /** The people an enquiry can be assigned to: agents first, then the managers. */
 async function agents() {
   return q<{ id: number; name: string; role: string }>(`
     SELECT id, name, role FROM users
-     WHERE active AND role IN ('agent', 'administrator', 'editor') AND password_hash <> ''
+     WHERE active AND role IN ('agent', 'administrator', 'editor', 'ads') AND password_hash <> ''
      ORDER BY (role <> 'agent'), name`)
 }
 
@@ -117,7 +118,7 @@ export const PATCH = guard(async ({ req, user }) => {
   if (!cur) return json({ error: 'That enquiry does not exist.' }, 404)
   // An agent works their own list and nobody else's.
   if (isAgent(user) && cur.assigned_to !== user.id) return json({ error: 'That enquiry is not assigned to you.' }, 403)
-  if (assigned_to !== undefined && !canAssign(user)) return json({ error: 'Only an administrator or editor can assign enquiries.' }, 403)
+  if (assigned_to !== undefined && !canAssign(user)) return json({ error: 'Only an administrator, editor or ads manager can assign enquiries.' }, 403)
 
   if (status && status !== cur.status) {
     await q('UPDATE leads SET status = $2 WHERE id = $1', [id, status])

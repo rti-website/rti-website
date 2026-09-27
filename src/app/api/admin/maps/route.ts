@@ -15,7 +15,7 @@ import { MAPS_KEY_FORMAT, cleanMaps, getMaps, maskKey, type MapsSettings } from 
  */
 const shape = (m: MapsSettings) => ({ set: Boolean(m.browserKey), masked: maskKey(m.browserKey) })
 
-export const GET = guard(async () => json({ maps: shape(await getMaps()) }), { role: ['administrator', 'seo'] })
+export const GET = guard(async () => json({ maps: shape(await getMaps()) }), { role: ['administrator', 'seo', 'ads'] })
 
 export const PUT = guard(async ({ req }) => {
   const input = await body<MapsSettings>(req)
@@ -30,4 +30,4 @@ export const PUT = guard(async ({ req }) => {
     [JSON.stringify(value)],
   )
   return json({ ok: true, maps: shape(value) })
-}, { role: ['administrator', 'seo'] })
+}, { role: ['administrator', 'seo', 'ads'] })

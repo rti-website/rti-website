@@ -125,9 +125,12 @@ function pixels(text: string, font: string): number {
 }
 
 export function PostEditor({
-  postId, categories, authors, canPublish, onClose, onToast, onAuthorAdded, onFocusChange,
+  postId, categories, authors, canPublish, readOnly = false, onClose, onToast, onAuthorAdded, onFocusChange,
 }: {
   postId: number
+  /** Look, do not touch (the Ads manager, 28 Sep 2026): nothing is editable
+      and nothing is ever saved. The server refuses the writes as well. */
+  readOnly?: boolean
   categories: { id: number; name: string; parent_id?: number | null }[]
   authors: Named[]
   canPublish: boolean
@@ -247,7 +250,7 @@ export function PostEditor({
 
   const save = useCallback(async (extra: Partial<Post> = {}) => {
     const now = live.current
-    if (!now) return
+    if (!now || readOnly) return
     setSaving('saving')
     const payload: Record<string, unknown> = {
       title: now.title,
@@ -284,7 +287,8 @@ export function PostEditor({
     if (data.bodyLocked) onToast('Title and settings saved. The article itself is still the WordPress original — press Convert to edit it.')
     dirty.current = false
     setSaving('saved')
-  }, [editor, onToast])
+  }, [editor, onToast, readOnly])
+  useEffect(() => { editor?.setEditable(!readOnly) }, [editor, readOnly])
 
   const queueSave = useCallback(() => {
     clearTimeout(saveTimer.current)
@@ -520,27 +524,27 @@ export function PostEditor({
           </div>
           <input
             id="articleTitle"
-            className="a-title" value={post.title} placeholder="Article title"
+            className="a-title" value={post.title} placeholder="Article title" readOnly={readOnly}
             onChange={(e) => field('title', e.target.value)}
             onBlur={() => { if (!post.slug && post.title) field('slug', slugify(post.title)) }}
           />
           <div className="a-metarow">
             <div className="a-field">
               <label htmlFor="metaTitle">Meta title</label>
-              <input id="metaTitle" className="a-inp" value={post.meta_title}
+              <input id="metaTitle" className="a-inp" value={post.meta_title} readOnly={readOnly}
                 placeholder={post.title || 'Falls back to the article title'}
                 onChange={(e) => field('meta_title', e.target.value)} />
             </div>
             <div className="a-field">
               <label htmlFor="metaDesc">Meta description</label>
-              <input id="metaDesc" className="a-inp" value={post.meta_description}
+              <input id="metaDesc" className="a-inp" value={post.meta_description} readOnly={readOnly}
                 placeholder="One or two sentences for the search result"
                 onChange={(e) => field('meta_description', e.target.value)} />
             </div>
           </div>
         </div>
 
-        <div className="a-toolbar" role="toolbar" aria-label="Formatting">
+        <div className="a-toolbar" role="toolbar" aria-label="Formatting" style={readOnly ? { display: 'none' } : undefined}>
           <select className="a-tbsel" aria-label="Paragraph style" value={toolbar?.block ?? 'p'}
             onChange={(e) => {
               const v = e.target.value
@@ -708,7 +712,7 @@ export function PostEditor({
                 editor&rsquo;s format, which is the only way to edit it here.
               </span>
               <span className="a-spacer" />
-              <button className="a-btn p" onClick={() => setConverting(true)}>Convert to edit</button>
+              {!readOnly && <button className="a-btn p" onClick={() => setConverting(true)}>Convert to edit</button>}
             </div>
             {/* Read-only, and the same markup the public page serves — see
                 ImportedArticle for why this string is safe to render. */}
@@ -791,12 +795,14 @@ export function PostEditor({
 
         <div className="a-actionbar">
           <button className="a-btn" onClick={onClose}>Back to posts</button>
-          <button className="a-btn" onClick={() => void save()}>Save now</button>
+          {!readOnly && <button className="a-btn" onClick={() => void save()}>Save now</button>}
           <span className="a-spacer" />
           <span className={`a-pill ${post.status === 'published' ? 'live' : post.status === 'scheduled' ? 'sched' : 'draft'}`}>
             {post.status === 'published' ? 'Published' : post.status === 'scheduled' ? 'Scheduled' : 'Draft'}
           </span>
-          {canPublish ? (
+          {readOnly ? (
+            <span className="a-hint">View only: your account cannot change posts.</span>
+          ) : canPublish ? (
             post.status === 'published'
               ? <button className="a-btn" onClick={() => void publish('unpublish')}>Move to draft</button>
               : <button className="a-btn go" onClick={() => void publish('publish')}>Publish</button>
@@ -810,6 +816,8 @@ export function PostEditor({
 
       {/* ---- search appearance and publishing ---- */}
       <aside className="a-edside">
+        {/* disabled: every field, picker and button in the panel, in one place. */}
+        <fieldset disabled={readOnly} style={{ border: 0, padding: 0, margin: 0, minWidth: 0, display: 'contents' }}>
         <div className="a-card">
           <h3>Search appearance</h3>
           <div className="a-serp">
@@ -990,6 +998,7 @@ export function PostEditor({
             onField={(k, v) => field(k, v as never)}
           />
         )}
+        </fieldset>
       </aside>
 
       {inserting === 'link' && (

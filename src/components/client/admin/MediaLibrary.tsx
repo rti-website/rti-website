@@ -22,9 +22,11 @@ export type MediaRow = {
   created_at?: string
 }
 
-export function MediaLibrary({ mode, canDelete, onPick, onToast, onCount }: {
+export function MediaLibrary({ mode, canDelete, readOnly = false, onPick, onToast, onCount }: {
   mode: 'manage' | 'pick'
   canDelete: boolean
+  /** Look, do not touch (the Ads manager, 28 Sep 2026): no upload, no alt text. */
+  readOnly?: boolean
   onPick?: (m: MediaRow) => void
   onToast: (msg: string) => void
   onCount?: (n: number) => void
@@ -123,7 +125,7 @@ export function MediaLibrary({ mode, canDelete, onPick, onToast, onCount }: {
 
   return (
     <>
-      <div
+      {readOnly ? <p className="a-hint" style={{ margin: '0 0 12px' }}>View only: your account can look at the library but not add to it or change it.</p> : <div
         className={`a-drop${over ? ' over' : ''}${busy ? ' busy' : ''}`}
         onDragOver={(e) => { e.preventDefault(); setOver(true) }}
         onDragLeave={() => setOver(false)}
@@ -137,7 +139,7 @@ export function MediaLibrary({ mode, canDelete, onPick, onToast, onCount }: {
         <p className="a-hint">PNG, JPG, WebP, GIF and PDF · up to {MAX_BYTES / 1024 / 1024} MB each</p>
         <input ref={input} type="file" multiple accept={ACCEPT} hidden
           onChange={(e) => { void upload(e.target.files ?? []); e.target.value = '' }} />
-      </div>
+      </div>}
 
       {failed && (
         <div className="a-err" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -161,7 +163,7 @@ export function MediaLibrary({ mode, canDelete, onPick, onToast, onCount }: {
                   {isImage(m.mime) && !m.alt && <div className="mt"><span className="a-pill draft">No alt text</span></div>}
                   <div className="acts">
                     {mode === 'pick' && <button className="a-btn sm p" onClick={() => onPick?.(m)}>Insert</button>}
-                    <button className="a-btn sm" onClick={() => setEditing(m)}>{isImage(m.mime) ? 'Alt text' : 'Label'}</button>
+                    {!readOnly && <button className="a-btn sm" onClick={() => setEditing(m)}>{isImage(m.mime) ? 'Alt text' : 'Label'}</button>}
                     {canDelete && <button className="a-btn sm stop" onClick={() => { setUsedBy([]); setRemoving(m) }}>Delete</button>}
                   </div>
                 </figcaption>

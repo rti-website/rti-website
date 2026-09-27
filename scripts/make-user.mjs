@@ -68,7 +68,7 @@ function sql(url, text) {
   }
 }
 
-const ROLES = ['administrator', 'editor', 'author', 'seo']
+const ROLES = ['administrator', 'editor', 'author', 'seo', 'agent', 'ads']
 
 const login = String(opt('login', 'admin')).trim().toLowerCase()
 const password = String(opt('password', 'admin123'))

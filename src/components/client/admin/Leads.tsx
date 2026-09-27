@@ -103,6 +103,8 @@ const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
   { key: 'autoReply', label: 'Drop off email sent', from: 'details' },
 ]
 const KNOWN_DETAILS = new Set(LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key))
+/** Who hands enquiries out: administrators, editors and the Ads manager (28 Sep 2026). */
+export const isLeadManager = (role: string) => role === 'administrator' || role === 'editor' || role === 'ads'
 export const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
 export const CHANNELS: Record<string, string> = {
   website: 'Website form', phone: 'Phone call', email: 'Email', walk_in: 'Walk in', referral: 'Referral', other: 'Other',
@@ -232,7 +234,7 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
     onToast(r.ok ? 'Note added' : r.error)
     reload()
   }
-  const canAssign = me.role === 'administrator' || me.role === 'editor'
+  const canAssign = isLeadManager(me.role)
   const agent = me.role === 'agent'
 
   /* GLOBAL SEARCH: every word typed must appear somewhere in the enquiry —
@@ -354,8 +356,8 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           <Fragment key={l.id}>
             <tr id={`lead-${l.id}`} style={{ scrollMarginTop: 80 }}>
               <td><span className="a-ttl">{l.name ?? l.email ?? (isCallClick(l) ? 'Unknown caller' : 'Anonymous')}</span>
-                {l.company && <span className="a-slug">{l.company}</span>}
-                {isCallClick(l) && !l.name && <span className="a-slug">tap to call · fill in below</span>}</td>
+                {l.company && <span className="a-meta">{l.company}</span>}
+                {isCallClick(l) && !l.name && <span className="a-meta">Tap to call · fill in below</span>}</td>
               <td>
                 {l.email && <div><a className="a-link" href={`mailto:${l.email}`}>{l.email}</a></div>}
                 {l.phone && <div style={{ marginTop: 2 }}><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
@@ -363,10 +365,10 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
               <td><LocationCell geo={l.geo} /></td>
               <td>{isCallClick(l) ? 'Tapped to call' : l.channel && l.channel !== 'website' && l.type === 'contact' ? 'Enquiry' : (LEAD_TYPES[l.type] ?? l.type)}</td>
               <td>{wants(l)}</td>
-              <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-slug">{l.attribution.utm_campaign}</div>}</td>
+              <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-meta">{l.attribution.utm_campaign}</div>}</td>
               {/* The exact moment, for management; the "3 days ago" under it
                   is for the eye. Local time of whoever is looking. */}
-              <td><div style={{ whiteSpace: 'nowrap' }}>{exactTime(l.created_at)}</div><div className="a-slug">{when(l.created_at)}</div></td>
+              <td><div style={{ whiteSpace: 'nowrap' }}>{exactTime(l.created_at)}</div>{recent(l.created_at) && <div className="a-meta">{when(l.created_at)}</div>}</td>
               <td>
                 {canAssign ? (
                   <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto', maxWidth: 160 }}
@@ -590,7 +592,7 @@ export function LeadDialog({ agents, me, onClose, onSaved }: {
   const [busy, setBusy] = useState(false)
   const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setV((o) => ({ ...o, [k]: e.target.value }))
-  const canAssign = me.role === 'administrator' || me.role === 'editor'
+  const canAssign = isLeadManager(me.role)
   const two = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 } as const
 
   return (
@@ -687,8 +689,12 @@ export function LeadDialog({ agents, me, onClose, onSaved }: {
 export function exactTime(iso: string): string {
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return '—'
-  return d.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  // en-GB prints "Sept"; the rest of the admin says "Sep".
+  return d.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace('Sept', 'Sep')
 }
+
+/** Under a date, "3 days ago" says something; after a week when() prints the date again, so it is left out. */
+export const recent = (iso: string) => Date.now() - new Date(iso).getTime() < 7 * 86_400_000
 
 export function when(iso: string): string {
   const d = new Date(iso)
@@ -698,5 +704,5 @@ export function when(iso: string): string {
   if (mins < 60) return `${mins} min ago`
   if (mins < 60 * 24) return `${Math.round(mins / 60)} hours ago`
   if (mins < 60 * 24 * 7) return `${Math.round(mins / (60 * 24))} days ago`
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace('Sept', 'Sep')
 }

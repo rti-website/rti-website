@@ -111,4 +111,4 @@ export const GET = guard(async () => {
     }
   })
   return json({ docs, others: await others(), migrated })
-}, { role: ['administrator', 'editor'] })
+}, { role: ['administrator', 'editor', 'ads'] })

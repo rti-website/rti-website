@@ -59,16 +59,16 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /wisconsin-recycling/,location,0,0,KEEP,/wisconsin-recycling/,Recycling in Wisconsin | Call (800) 969-5166,"Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.",Recycling in Wisconsin,TRUE,TRUE
 /ballast-recycling-kits/,legacy,,,301,/ballasts/,,,,FALSE,FALSE
 /battery-recycling-des-moines/,legacy,,,301,/battery-recycling/,,,,FALSE,FALSE
-/battery-recycling-in-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/battery-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/battery-recycling-in-minnesota/,legacy,,,301,/minnesota-recycling/battery-recycling/,,,,FALSE,FALSE
+/battery-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/battery-recycling/,,,,FALSE,FALSE
 /computer-recycle-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
 /electronic-recycling-chicago/,location,,,KEEP,/electronic-recycling-chicago/,"Electronics Recycling in Chicago, Illinois | Recycle Technologies","Commercial electronics and e-waste recycling for Chicago businesses, with pickup, drop-off, ITAD and hard drive destruction through our certified process.","Electronics Recycling in Chicago, Illinois",TRUE,TRUE
 /electronic-recycling-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
 /electronic-recycling-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/electronic-recycling-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/electronic-recycling-wisconsin/,legacy,,,301,/wisconsin-recycling/electronic-recycling/,,,,FALSE,FALSE
 /electronics-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /electronics-recycling-in-minneapolis/electronic-recycling-in-rochester/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/electronics-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/electronics-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/electronic-recycling/,,,,FALSE,FALSE
 /fort-worth-texas/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /franklin-indiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /greenwood-indiana/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
@@ -77,7 +77,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /johnson-city-buffalo-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /kennesaw-georgia/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /lewisburg-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
-/light-bulb-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/light-bulb-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/light-bulb-recycling/,,,,FALSE,FALSE
 /light-bulb-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /locations/,legacy,,,301,/all-locations/,,,,FALSE,FALSE
 /minnesota-recycling/anoka-county-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE

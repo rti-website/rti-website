@@ -16,7 +16,7 @@ import {
 export const GET = guard(async () => {
   const row = await one<{ value: unknown }>(`SELECT value FROM settings WHERE key = 'tracking'`)
   return json({ tracking: row ? cleanTracking(row.value) : TRACKING_DEFAULTS })
-}, { role: ['administrator', 'seo'] })
+}, { role: ['administrator', 'seo', 'ads'] })
 
 export const PUT = guard(async ({ req }) => {
   const input = await body<TrackingSettings>(req)
@@ -56,4 +56,4 @@ export const PUT = guard(async ({ req }) => {
   )
   revalidatePath('/', 'layout')
   return json({ ok: true, tracking: value })
-}, { role: ['administrator', 'seo'] })
+}, { role: ['administrator', 'seo', 'ads'] })

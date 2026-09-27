@@ -60,7 +60,7 @@ export const GET = guard(async ({ req }) => {
     : []
 
   return json({ post: p, keywordUsedBy: usedBy })
-}, { role: ['administrator', 'editor', 'seo'] })
+}, { role: ['administrator', 'editor', 'seo', 'ads'] })
 
 export const PUT = guard(async ({ req }) => {
   const id = idFrom(req)

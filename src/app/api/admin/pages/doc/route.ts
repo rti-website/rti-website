@@ -23,6 +23,8 @@ type Row = {
 }
 
 const ROLES = { role: ['administrator', 'editor'] as ('administrator' | 'editor')[] }
+/** The Ads manager can open a page and its preview, not change it (28 Sep 2026). */
+const READ = { role: ['administrator', 'editor', 'ads'] as ('administrator' | 'editor' | 'ads')[] }
 /** A document's patch may not be larger than this (the biggest page is ~60 KB). */
 const MAX_BYTES = 400_000
 
@@ -67,7 +69,7 @@ export const GET = guard(async ({ req }) => {
   const key = keyOf(req)
   if (!key) return json({ error: 'No such page' }, 404)
   return json(await state(key))
-}, ROLES)
+}, READ)
 
 /** Save draft. Body: { data } — the whole edited document. */
 export const PUT = guard(async ({ req, user }) => {
