@@ -1,10 +1,12 @@
 import type { MetadataRoute } from 'next'
 import fs from 'node:fs'
 import path from 'node:path'
+import { execFileSync } from 'node:child_process'
 import { allContent } from '@/lib/content'
 import { sitemapEntry } from '@/lib/seo'
-import { allDbPosts, liveDbCategories } from '@/lib/posts-db'
-import { blogPagePath, categoryPagePath, pageCount } from '@/lib/blog-index'
+import { allDbPosts, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
+import { blogPagePath, categoryPagePath, pageCount, pageSlice } from '@/lib/blog-index'
+import { FIXED_FACILITY_URLS } from '@/data/city-pages'
 
 /**
  * Only KEEP URLs. Never a redirected URL, never a noindexed URL — a sitemap
@@ -47,24 +49,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
    * request-time, and rule 2 is untouched). /admin and /api are not pages;
    * the catch-all is covered by allContent() below.
    */
-  const staticPages = ['/', ...explicitRoutes()]
+  /* The six fixed city service pages under /minnesota-recycling/ and
+     /wisconsin-recycling/ (27 Sep 2026) live in [service] folders, which the
+     walk below skips, so they are listed by name. Indexed by Asim's choice
+     ("yes, index them"), though nothing in the menus links to them. */
+  const staticPages = ['/', ...explicitRoutes(), ...FIXED_FACILITY_URLS]
   const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
+  const listed = posts.filter((p) => p.inSitemap && !p.noindex)
+
+  /*
+   * EVERY URL CARRIES A <lastmod> — 26 Sep 2026. The SEO team's audit found
+   * 41 static pages and every category and pagination URL without one (the
+   * posts and the MDX pages already had theirs). Three sources, none of
+   * them invented:
+   *
+   *   static page   the last git commit that touched the page and the data
+   *                 and section files it renders (pageLastModified below);
+   *   /blog/ and    the newest post's date, because that is what changed on
+   *   /blog/page/N  the page: the posts it lists;
+   *   category      the newest post in that category, same reasoning.
+   *
+   * This file prerenders at build time, so every `npm run build` (every
+   * deploy) regenerates the whole sitemap with today's dates for whatever
+   * changed, and publishing from the admin revalidates it in between. There
+   * is no separate step to run.
+   */
+  const newest = (ps: { updated?: string; date?: string }[]): string | undefined =>
+    ps.map((p) => p.updated ?? p.date).filter((x): x is string => Boolean(x)).sort().at(-1)
+  const inCategory = new Map(await Promise.all(
+    categories.map(async (c) => [c.slug, (await dbPostsInCategory(c.slug)).filter((p) => p.inSitemap && !p.noindex)] as const),
+  ))
 
   const entries = [
-    ...staticPages.map((u) => sitemapEntry(u)),
+    ...staticPages.map((u) => sitemapEntry(u, u === '/blog/' ? newest(listed) : pageLastModified(u))),
     ...allContent().map((e) => sitemapEntry(e.url, e.updated ?? e.date)),
-    ...posts
-      .filter((p) => p.inSitemap && !p.noindex)
-      .map((p) => sitemapEntry(p.url, p.updated ?? p.date)),
-    ...categories.map((c) => sitemapEntry(c.path)),
+    ...listed.map((p) => sitemapEntry(p.url, p.updated ?? p.date)),
+    ...categories.map((c) => sitemapEntry(c.path, newest(inCategory.get(c.slug) ?? []))),
     // Pagination, for /blog/ and for each archive. Deep posts are otherwise
     // several clicks from anything Google has a reason to crawl.
-    ...Array.from({ length: pageCount(posts.length) - 1 }, (_, i) => sitemapEntry(blogPagePath(i + 2))),
+    ...Array.from({ length: pageCount(posts.length) - 1 }, (_, i) =>
+      sitemapEntry(blogPagePath(i + 2), newest(pageSlice(listed, i + 2)))),
     ...categories.flatMap((c) =>
       // c.count is counted through post_categories, which is the same set the
       // archive route lists — see dbPostsInCategory().
-      Array.from({ length: pageCount(c.count) - 1 }, (_, i) => sitemapEntry(categoryPagePath(c.slug, i + 2)))),
-  ]
+      Array.from({ length: pageCount(c.count) - 1 }, (_, i) =>
+        sitemapEntry(categoryPagePath(c.slug, i + 2), newest(pageSlice(inCategory.get(c.slug) ?? [], i + 2))))),
+  ].map((e) => ({ ...e, lastModified: e.lastModified ?? BUILD_TIME }))
 
   /* A slug can arrive twice — content/posts/recycle-symbol.mdx and the imported
      row for the same URL both exist while the migration is half done. First
@@ -96,4 +126,62 @@ function explicitRoutes(): string[] {
   }
   walk(APP, '')
   return out.sort()
+}
+
+/** The build's own time, the honest fallback for a page nothing else dates. */
+const BUILD_TIME = new Date().toISOString()
+
+/**
+ * When a static page last changed: the newest git commit touching its
+ * page.tsx OR any file it renders from — the src/data/ file that holds its
+ * copy, and the section components under src/app/<route>/ and
+ * src/components/sections/ (not the shared header, footer and ui pieces,
+ * which would move every page's date whenever the footer is edited).
+ *
+ * `git log -1 -- <files>` gives the latest commit across the whole set in
+ * one call, so this is one git invocation per page, about fifty at build
+ * time. On a checkout without git history (a tarball, a sandbox) it falls
+ * back to the newest mtime of those files, and if even that fails, to the
+ * build time. Never throws: a sitemap date is not worth a failed build.
+ */
+function pageLastModified(route: string): string | undefined {
+  const APP = path.join(process.cwd(), 'src', 'app')
+  const parts = route.split('/').filter(Boolean)
+  let page = path.join(APP, ...parts, 'page.tsx')
+  // The fixed city service pages render from a [service] folder.
+  if (!fs.existsSync(page)) page = path.join(APP, ...parts.slice(0, -1), '[service]', 'page.tsx')
+  if (!fs.existsSync(page)) return undefined
+  const files = renderedFiles(page)
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', ...files], {
+      cwd: process.cwd(), encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 5000,
+    }).trim()
+    if (out) return new Date(out).toISOString()
+  } catch { /* no git, or not a repository */ }
+  try {
+    const t = Math.max(...files.map((f) => fs.statSync(f).mtimeMs))
+    if (Number.isFinite(t)) return new Date(t).toISOString()
+  } catch { /* fall through */ }
+  return undefined
+}
+
+/** page.tsx plus the data and section files it imports, three levels deep. */
+function renderedFiles(page: string): string[] {
+  const SRC = path.join(process.cwd(), 'src')
+  const seen = new Set<string>()
+  const walk = (file: string, depth: number) => {
+    if (seen.has(file) || depth > 3) return
+    seen.add(file)
+    let text = ''
+    try { text = fs.readFileSync(file, 'utf8') } catch { return }
+    for (const m of text.matchAll(/from\s+['"](@\/(?:data|components\/sections)\/[^'"]+|\.\.?\/[^'"]+)['"]/g)) {
+      const spec = m[1]!
+      if (/\/sections\/(Header|Footer|TopBar)\b/.test(spec)) continue
+      const base = spec.startsWith('@/') ? path.join(SRC, spec.slice(2)) : path.resolve(path.dirname(file), spec)
+      const hit = ['', '.ts', '.tsx', '/index.ts', '/index.tsx'].map((x) => base + x).find((f) => fs.existsSync(f) && fs.statSync(f).isFile())
+      if (hit && hit.startsWith(SRC)) walk(hit, depth + 1)
+    }
+  }
+  walk(page, 0)
+  return [...seen]
 }

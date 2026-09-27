@@ -41,7 +41,10 @@ function findRoutes(dir, prefix = '') {
 // Plus a sample of the location pages, whose folders are [site]/[service]
 // and so are not found by the walk (24 Sep 2026).
 const ROUTES = ['', ...findRoutes(path.join(process.cwd(), 'src', 'app')).sort(),
-  'locations/phoenix-az', 'locations/phoenix-az/battery-recycling', 'minnesota-recycling/battery-recycling']
+  'locations/phoenix-az', 'locations/phoenix-az/battery-recycling', 'minnesota-recycling/battery-recycling',
+  // The fixed city service pages of 27 Sep 2026 (src/data/city-pages/).
+  'minnesota-recycling/light-bulb-recycling', 'minnesota-recycling/electronic-recycling',
+  'wisconsin-recycling/battery-recycling', 'wisconsin-recycling/light-bulb-recycling', 'wisconsin-recycling/electronic-recycling']
 
 const browser = await chromium.launch({
   executablePath: process.env.CHROMIUM_PATH || undefined,

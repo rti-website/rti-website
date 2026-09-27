@@ -18,7 +18,7 @@ export type LeadGeo = {
   v: 1
   at: string
   given: null | { from: 'zip' | 'city'; zip: string; city: string; state: string; county: string; lat: number; lng: number }
-  nearest: null | { facility: string; miles: number; inPickupArea: boolean }
+  nearest: null | { facility: string; miles: number; inPickupArea: boolean; /** measured from the IP, not an address */ approx?: boolean }
   ip: null | { city: string; region: string; country: string; countryCode: string; lat: number | null; lng: number | null }
   ipLookup: 'found' | 'not-found' | 'private' | 'no-ip' | 'no-database'
   ipCheck: null | 'same-state' | 'other-state' | 'outside-us'
@@ -89,6 +89,26 @@ export function locationCsv(g: LeadGeo | null | undefined): string[] {
 
 /** The list's Location cell. */
 export function LocationCell({ geo }: { geo: LeadGeo | null | undefined }) {
+  /* No address given (a tap on a phone number): the IP's city, marked as
+     roughly where they are, so the row still says which side of the map the
+     caller is on. */
+  if (!geo?.given && geo?.ip && geo.ipLookup === 'found') {
+    const st = geo.ip.countryCode === 'US' ? geo.ip.region : geo.ip.country
+    return (
+      <>
+        <div style={{ whiteSpace: 'nowrap' }} title="From the connection, not an address they gave">
+          {[geo.ip.city, st].filter(Boolean).join(', ')} <span className="a-hint">≈</span>
+        </div>
+        {geo.nearest && (
+          <div className="a-slug" style={{ marginTop: 3 }}>
+            <span className={`a-pill ${geo.nearest.inPickupArea ? 'live' : 'off'}`} title={`About ${geo.nearest.miles} miles from ${geo.nearest.facility}, going by the connection`}>
+              ~{geo.nearest.miles} mi
+            </span>
+          </div>
+        )}
+      </>
+    )
+  }
   if (!geo?.given) return <span style={{ color: 'var(--a-muted)' }}>—</span>
   return (
     <>
@@ -118,21 +138,25 @@ function mapQuery(geo: LeadGeo | null | undefined, d: Details): { q: string; exa
   const zip = d?.zip?.trim() || geo?.given?.zip || ''
   if (street) return { q: [street, city, [state, zip].filter(Boolean).join(' ')].filter(Boolean).join(', '), exact: true }
   if (zip || (city && state)) return { q: [city, [state, zip].filter(Boolean).join(' ')].filter(Boolean).join(', '), exact: false }
+  // Nothing typed (a tap to call): the IP's city, at a wide zoom.
+  if (geo?.ip?.city && geo.ipLookup === 'found') return { q: [geo.ip.city, geo.ip.region, geo.ip.country].filter(Boolean).join(', '), exact: false }
   return null
 }
 
 /**
- * The map. With the Maps key and on our own domain, Google's Maps Embed API
- * (free, no per view charge); the key is a website key restricted to
- * recycletechnologies.com, so on a laptop (localhost) Google would refuse it
- * and the keyless embed the public location pages use is shown instead.
+ * The map. With a Maps key and on our own domain, Google's Maps Embed API
+ * (free, no per view charge) through /api/admin/maps/embed/, which adds the
+ * key on the server so it is never in this page (management, 27 Sep 2026).
+ * The key is a website key restricted to recycletechnologies.com, so on a
+ * laptop (localhost) Google would refuse it and the keyless embed the public
+ * location pages use is shown instead.
  */
-function LeadMap({ q, exact, mapsKey }: { q: string; exact: boolean; mapsKey: string }) {
+function LeadMap({ q, exact, hasMapsKey }: { q: string; exact: boolean; hasMapsKey: boolean }) {
   const [onOurDomain] = useState(() =>
     typeof window !== 'undefined' && /(^|\.)recycletechnologies\.com$/i.test(window.location.hostname))
   const zoom = exact ? 14 : 11
-  const src = mapsKey && onOurDomain
-    ? `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(mapsKey)}&q=${encodeURIComponent(q)}&zoom=${zoom}`
+  const src = hasMapsKey && onOurDomain
+    ? `/api/admin/maps/embed/?q=${encodeURIComponent(q)}&zoom=${zoom}`
     : `https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=${zoom}&hl=en&output=embed`
   return (
     <iframe
@@ -146,7 +170,7 @@ const DT = { color: 'var(--a-muted)', fontSize: 13 } as const
 const GRID = { display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '0 4px 8px' } as const
 
 /** The "Where they are" block in an opened enquiry. */
-export function LocationBlock({ geo, details, mapsKey }: { geo: LeadGeo | null | undefined; details: Details; mapsKey: string }) {
+export function LocationBlock({ geo, details, hasMapsKey }: { geo: LeadGeo | null | undefined; details: Details; hasMapsKey: boolean }) {
   const map = mapQuery(geo, details)
   const rows: [string, React.ReactNode][] = []
   if (geo?.given) {
@@ -157,7 +181,7 @@ export function LocationBlock({ geo, details, mapsKey }: { geo: LeadGeo | null |
   }
   if (geo?.nearest) {
     rows.push(['Nearest facility', <Fragment key="nearest">
-      {geo.nearest.facility}, {geo.nearest.miles < 1 ? 'under a mile' : `${geo.nearest.miles} miles`} in a straight line{' '}
+      {geo.nearest.facility}, {geo.nearest.approx ? 'about ' : ''}{geo.nearest.miles < 1 ? 'under a mile' : `${geo.nearest.miles} miles`} in a straight line{geo.nearest.approx ? ' from where the connection came from' : ''}{' '}
       <span className={`a-pill ${geo.nearest.inPickupArea ? 'live' : 'off'}`} style={{ marginLeft: 6 }}>
         {geo.nearest.inPickupArea ? `Inside the ${PICKUP_MILES} mile pickup area` : `Outside the ${PICKUP_MILES} mile pickup area`}
       </span>
@@ -198,7 +222,7 @@ export function LocationBlock({ geo, details, mapsKey }: { geo: LeadGeo | null |
       )}
       {map && (
         <div style={{ padding: '4px 4px 10px', maxWidth: 760 }}>
-          <LeadMap q={map.q} exact={map.exact} mapsKey={mapsKey} />
+          <LeadMap q={map.q} exact={map.exact} hasMapsKey={hasMapsKey} />
           <div style={{ fontSize: 12, marginTop: 6, color: 'var(--a-muted)' }}>
             {map.exact ? 'Pinned on the street address they typed.' : 'Centred on their ZIP code; they did not give a street address.'}{' '}
             <a className="a-link" target="_blank" rel="noopener noreferrer"

@@ -1,7 +1,9 @@
 import { revalidatePath } from 'next/cache'
 import { one } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
-import { TRACKING_DEFAULTS, TRACKING_FORMATS, cleanTracking, type TrackingSettings } from '@/lib/tracking'
+import {
+  MAX_CALL_NUMBERS, TRACKING_DEFAULTS, TRACKING_FORMATS, cleanTracking, normaliseTrackingValue, validCallNumber, type TrackingSettings,
+} from '@/lib/tracking'
 
 /**
  * Admin -> Settings -> Analytics & Tracking (the SEO brief, 23 Sep 2026).
@@ -22,15 +24,27 @@ export const PUT = guard(async ({ req }) => {
   const labels: Record<keyof typeof TRACKING_FORMATS, string> = {
     gtmId: 'GTM Container ID (GTM-XXXXXXX)',
     ga4Id: 'GA4 Measurement ID (G-XXXXXXXXXX)',
-    adsConversionId: 'Google Ads Conversion ID (AW-XXXXXXXXX)',
+    adsConversionId: 'Google Ads Conversion ID (AW-XXXXXXXXXXX, or just the number)',
     adsConversionLabel: 'Google Ads Conversion Label',
   }
   for (const k of Object.keys(labels) as (keyof typeof TRACKING_FORMATS)[]) {
-    const v = typeof input[k] === 'string' ? (input[k] as string).trim() : ''
-    const check = k === 'adsConversionLabel' ? v : v.toUpperCase()
-    if (v && !TRACKING_FORMATS[k].test(check)) return json({ error: `That ${labels[k]} does not look right.` }, 400)
+    const check = normaliseTrackingValue(k, input[k])
+    if (check && !TRACKING_FORMATS[k].test(check)) return json({ error: `That ${labels[k]} does not look right.` }, 400)
+  }
+  /* Call numbers (27 Sep 2026): a row with anything in it needs both a
+     number and a label that look right; a fully empty row is ignored. */
+  const calls = Array.isArray(input.callNumbers) ? input.callNumbers : []
+  const filled = calls.filter((c) => c && (String(c.number ?? '').trim() || String(c.label ?? '').trim()))
+  if (filled.length > MAX_CALL_NUMBERS) return json({ error: `Up to ${MAX_CALL_NUMBERS} tracked numbers.` }, 400)
+  for (const [i, c] of filled.entries()) {
+    const n = String(c.number ?? '').trim(), l = String(c.label ?? '').trim()
+    if (!validCallNumber(n)) return json({ error: `Tracked number ${i + 1}: "${n || '(empty)'}" does not look like a US phone number. Type it exactly as the site shows it, e.g. 763-559-5130.` }, 400)
+    if (!TRACKING_FORMATS.adsConversionLabel.test(l)) return json({ error: `Tracked number ${i + 1}: enter the call conversion label from Google Ads.` }, 400)
   }
   const value = cleanTracking(input)
+  if (value.callNumbers.length && !value.adsConversionId) {
+    return json({ error: 'Tracked call numbers need the Google Ads Conversion ID above.' }, 400)
+  }
   if (value.gtmEnabled && !value.gtmId) return json({ error: 'Enter a GTM Container ID, or untick "Enable GTM".' }, 400)
   if (Boolean(value.adsConversionId) !== Boolean(value.adsConversionLabel)) {
     return json({ error: 'Google Ads needs both the Conversion ID and the Conversion Label, or neither.' }, 400)

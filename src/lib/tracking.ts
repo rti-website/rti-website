@@ -43,12 +43,22 @@ export type AttributionKey = (typeof ATTRIBUTION_KEYS)[number]
 export const ATTR_COOKIE = 'rti_attr'
 export const ATTR_MAX_AGE = 90 * 24 * 60 * 60
 
+/**
+ * A number Google Ads swaps for a Google forwarding number, so calls from ad
+ * visitors count as conversions (Google Ads "calls from website", 27 Sep
+ * 2026). `number` is the number AS THE SITE SHOWS IT, `label` the call
+ * conversion action's label. Each becomes, after the Ads tag:
+ *   gtag('config', 'AW-11155126235/<label>', { phone_conversion_number: '<number>' })
+ */
+export type CallNumber = { number: string; label: string }
+
 export type TrackingSettings = {
   gtmEnabled: boolean
   gtmId: string
   ga4Id: string
   adsConversionId: string
   adsConversionLabel: string
+  callNumbers: CallNumber[]
   loadOnStaging: boolean
 }
 
@@ -58,7 +68,32 @@ export const TRACKING_DEFAULTS: TrackingSettings = {
   ga4Id: '',
   adsConversionId: '',
   adsConversionLabel: '',
+  callNumbers: [],
   loadOnStaging: false,
+}
+
+/** How many call numbers the admin takes. The site shows two (MN, WI). */
+export const MAX_CALL_NUMBERS = 6
+
+/** A phone number as a page shows it: digits and + ( ) - . spaces, 10 or 11 digits. */
+export function validCallNumber(v: string): boolean {
+  const digits = v.replace(/\D/g, '')
+  return /^[+()\d.\s-]{10,24}$/.test(v) && (digits.length === 10 || (digits.length === 11 && digits.startsWith('1')))
+}
+
+/** The saved rows: trimmed, fully empty rows dropped, invalid rows dropped, at most MAX_CALL_NUMBERS. */
+export function cleanCallNumbers(raw: unknown): CallNumber[] {
+  if (!Array.isArray(raw)) return []
+  const out: CallNumber[] = []
+  for (const r of raw) {
+    if (!r || typeof r !== 'object') continue
+    const o = r as Record<string, unknown>
+    const number = typeof o.number === 'string' ? o.number.trim().replace(/\s+/g, ' ') : ''
+    const label = typeof o.label === 'string' ? o.label.trim() : ''
+    if (validCallNumber(number) && TRACKING_FORMATS.adsConversionLabel.test(label)) out.push({ number, label })
+    if (out.length >= MAX_CALL_NUMBERS) break
+  }
+  return out
 }
 
 /** Format checks, shared by the admin route and the reader. Empty is allowed. */
@@ -69,11 +104,25 @@ export const TRACKING_FORMATS = {
   adsConversionLabel: /^[A-Za-z0-9_-]{4,40}$/,
 } as const
 
+/**
+ * A value as it will be stored: trimmed, upper case for the IDs, and the
+ * Google Ads conversion ID given its "AW-" prefix when it is missing. Google
+ * Ads shows the ID as a bare number on the conversion action's own page
+ * ("Conversion ID: 11155126235") and only as AW-11155126235 in the tag
+ * snippet, so both are taken (Asim, 27 Sep 2026: "why this id is not
+ * working" after pasting the number).
+ */
+export function normaliseTrackingValue(k: keyof typeof TRACKING_FORMATS, raw: unknown): string {
+  const v = typeof raw === 'string' ? raw.trim() : ''
+  if (k === 'adsConversionLabel') return v
+  const up = v.toUpperCase()
+  return k === 'adsConversionId' && /^\d{6,15}$/.test(up) ? `AW-${up}` : up
+}
+
 export function cleanTracking(raw: unknown): TrackingSettings {
   const r = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>
   const s = (k: keyof typeof TRACKING_FORMATS) => {
-    const v = typeof r[k] === 'string' ? (r[k] as string).trim() : ''
-    const up = k === 'adsConversionLabel' ? v : v.toUpperCase()
+    const up = normaliseTrackingValue(k, r[k])
     return TRACKING_FORMATS[k].test(up) ? up : ''
   }
   return {
@@ -82,6 +131,7 @@ export function cleanTracking(raw: unknown): TrackingSettings {
     ga4Id: s('ga4Id'),
     adsConversionId: s('adsConversionId'),
     adsConversionLabel: s('adsConversionLabel'),
+    callNumbers: cleanCallNumbers(r.callNumbers),
     loadOnStaging: r.loadOnStaging === true,
   }
 }
@@ -121,6 +171,8 @@ export type TrackingRuntime = {
   ga4Id: string
   adsId: string
   adsLabel: string
+  /** Call numbers to hand to Google Ads, only when there is an Ads ID to go with them. */
+  calls: CallNumber[]
 }
 
 export async function trackingRuntime(): Promise<TrackingRuntime> {
@@ -136,6 +188,7 @@ export async function trackingRuntime(): Promise<TrackingRuntime> {
     ga4Id: t.ga4Id,
     adsId: t.adsConversionId,
     adsLabel: t.adsConversionLabel,
+    calls: t.adsConversionId ? t.callNumbers : [],
   }
 }
 
@@ -158,10 +211,28 @@ export async function trackingRuntime(): Promise<TrackingRuntime> {
  *
  * window.__rtiPageView is exposed so the client component can repeat step 4's
  * page view on in-app navigations, which do not re-run this script.
+ *
+ * TAP TO CALL (27 Sep 2026): one delegated click listener on the document,
+ * in the capture phase so it runs before the phone app takes over. A tap on
+ * any tel: link pushes `click_to_call` to the data layer and sends the number,
+ * page and link text to /api/call-click/ with sendBeacon, which survives the
+ * page being left. See src/app/api/call-click/route.ts for what is kept.
+ *
+ * CALLS FROM WEBSITE (27 Sep 2026). After the Ads tag, one
+ *   gtag('config', 'AW-…/<label>', { phone_conversion_number: '<number>' })
+ * per number set under Google & Tracking. With GTM off they follow the site's
+ * own `gtag('config', AW-…)`. With GTM on they go through the same standard
+ * gtag shim (window.gtag pushes `arguments` onto the dataLayer) and are read
+ * by the Google tag GTM loads for the Ads account (the live container has one
+ * for AW-11155126235, checked 27 Sep 2026). Google then swaps the number on
+ * the page for a forwarding number for visitors who came from an ad, and
+ * counts their calls. Only where the tags load at all (the live site, or dev
+ * with "Also load on the dev server" ticked), and not on pages with tracking
+ * switched off.
  */
 export function trackingBootstrap(rt: TrackingRuntime): string {
   const C = JSON.stringify({
-    gtm: rt.gtm, gtag: rt.gtag, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel,
+    gtm: rt.gtm, gtag: rt.gtag, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel, calls: rt.calls,
     keys: ATTRIBUTION_KEYS, cookie: ATTR_COOKIE, maxAge: ATTR_MAX_AGE,
   }).replace(/</g, '\\u003c')
   return `(function(){var C=${C},w=window,d=document;w.dataLayer=w.dataLayer||[];w.__rtiTracking=C;
@@ -172,6 +243,8 @@ if(r){try{if(new URL(r).host!==location.host)a.referrer=r.slice(0,500)}catch(e){
 d.cookie=C.cookie+'='+encodeURIComponent(JSON.stringify(a))+';max-age='+C.maxAge+';path=/;SameSite=Lax'+(location.protocol==='https:'?';Secure':'');cur=a}
 w.__rtiAttr=cur}catch(e){}
 w.dataLayer.push({rti_ga4_id:C.ga4,rti_ads_conversion_id:C.ads,rti_ads_conversion_number:(C.ads||'').replace(/^AW-/,''),rti_ads_conversion_label:C.label});
+d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!t)return;var n=t.getAttribute('href').slice(4),b=JSON.stringify({number:n,page:location.href,label:(t.textContent||'').trim().slice(0,80)});
+w.dataLayer.push({event:'click_to_call',phone_number:n,page_url:location.href});try{if(navigator.sendBeacon)navigator.sendBeacon('/api/call-click/',new Blob([b],{type:'application/json'}));else fetch('/api/call-click/',{method:'POST',headers:{'content-type':'application/json'},body:b,keepalive:true})}catch(x){}},true);
 function meta(n){var e=d.querySelector('meta[name="'+n+'"]');return e?e.getAttribute('content'):null}
 w.__rtiPageView=function(){var ev={event:'page_view_custom',page_type:meta('rti:page-type')||'page',page_name:meta('rti:page-name')||d.title,
 page_category:meta('rti:page-category')||'',page_url:location.href,analytics_excluded:meta('rti:analytics')==='exclude',tracking_disabled:meta('rti:tracking')==='off'};
@@ -182,7 +255,9 @@ if(C.gtm){w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});va
 j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(C.gtm);d.head.appendChild(j)}
 else if(C.gtag){w.gtag=function(){w.dataLayer.push(arguments)};var g=d.createElement('script');g.async=true;
 g.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(C.ga4||C.ads);d.head.appendChild(g);w.gtag('js',new Date());
-if(C.ga4)w.gtag('config',C.ga4);if(C.ads)w.gtag('config',C.ads)}}
+if(C.ga4)w.gtag('config',C.ga4);if(C.ads)w.gtag('config',C.ads)}
+if((C.gtm||C.gtag)&&C.ads&&C.calls.length){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};
+C.calls.forEach(function(c){w.gtag('config',C.ads+'/'+c.label,{phone_conversion_number:c.number})})}}
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else start()})();`
 }
 

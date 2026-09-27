@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { getJSON, sendJSON } from './api'
-import { Empty, Icon, Retry, Table } from './Bits'
+import { Empty, Icon, PasswordInput, Retry, Table } from './Bits'
 import { ConfirmDialog, Dialog } from './Dialog'
 
 /**
@@ -225,8 +225,7 @@ function PersonDialog({ roles, title, person, onClose, onSave }: {
 
         <div className="a-field">
           <label htmlFor="u-pass">{person ? 'New password' : 'Password'}</label>
-          <input id="u-pass" className="a-inp" type="password" autoComplete="new-password"
-            value={password} onChange={(e) => setPassword(e.target.value)} />
+          <PasswordInput id="u-pass" autoComplete="new-password" value={password} onChange={setPassword} />
           <p className="a-hint">
             {person
               ? 'Leave empty to keep the current one.'

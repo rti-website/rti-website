@@ -5,6 +5,9 @@ import { guard, json } from '@/lib/admin-route'
  * Everything the admin needs the moment it loads, in one request: the signed-in
  * user, the counts behind the navigation, the category list and the site
  * settings. Six round trips on a cold open would be six spinners.
+ *
+ * The Enquiries badge counts new enquiries; for an agent (db/010) only the
+ * ones assigned to them, which is all they can see.
  */
 export const GET = guard(async ({ user }) => {
   const [counts] = await q<{ published: string; draft: string; scheduled: string; subs: string; leads: string; media: string }>(`
@@ -12,9 +15,9 @@ export const GET = guard(async ({ user }) => {
            (SELECT count(*) FROM posts WHERE status = 'draft')      AS draft,
            (SELECT count(*) FROM posts WHERE status = 'scheduled')  AS scheduled,
            (SELECT count(*) FROM subscribers WHERE status <> 'unsubscribed') AS subs,
-           (SELECT count(*) FROM leads WHERE status = 'new')        AS leads,
+           (SELECT count(*) FROM leads WHERE status = 'new' ${user.role === 'agent' ? 'AND assigned_to = $1' : ''}) AS leads,
            (SELECT count(*) FROM media)                             AS media
-  `)
+  `, user.role === 'agent' ? [user.id] : [])
   /* Ordered so a sub-category always follows its parent — the editor's Category
      dropdown renders that order straight through as optgroups. */
   const categories = await q(`

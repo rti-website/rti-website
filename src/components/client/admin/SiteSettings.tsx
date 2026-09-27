@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Icon } from './Bits'
+import { Icon, PasswordInput } from './Bits'
 import { getJSON, sendJSON } from './api'
 
 /**
@@ -27,10 +27,14 @@ import { getJSON, sendJSON } from './api'
 
 export type SocialLink = { id: number; platform: string; url: string }
 
+type CallRow = { number: string; label: string }
 type TrackingForm = {
   gtmEnabled: boolean; gtmId: string; ga4Id: string
-  adsConversionId: string; adsConversionLabel: string; loadOnStaging: boolean
+  adsConversionId: string; adsConversionLabel: string; callNumbers: CallRow[]; loadOnStaging: boolean
 }
+
+/** Mirrors MAX_CALL_NUMBERS in src/lib/tracking.ts. */
+const MAX_CALLS = 6
 
 /**
  * Analytics & Tracking — the SEO brief's "CMS -> Settings -> Analytics &
@@ -42,10 +46,17 @@ function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast:
   const [t, setT] = useState<TrackingForm | null>(null)
   const [busy, setBusy] = useState(false)
   useEffect(() => {
-    void getJSON<{ tracking: TrackingForm }>('/tracking').then((r) => { if (r.ok) setT(r.data.tracking) })
+    void getJSON<{ tracking: TrackingForm }>('/tracking').then((r) => {
+      if (!r.ok) return
+      /* Two empty rows to start with, one per facility number (MN, WI). */
+      const calls = r.data.tracking.callNumbers ?? []
+      setT({ ...r.data.tracking, callNumbers: calls.length ? calls : [{ number: '', label: '' }, { number: '', label: '' }] })
+    })
   }, [])
   if (!t) return null
   const up = (k: keyof TrackingForm, v: string | boolean) => setT({ ...t, [k]: v })
+  const setCall = (i: number, k: keyof CallRow, v: string) =>
+    setT({ ...t, callNumbers: t.callNumbers.map((c, j) => (j === i ? { ...c, [k]: v } : c)) })
   const field = (k: 'gtmId' | 'ga4Id' | 'adsConversionId' | 'adsConversionLabel', label: string, ph: string) => (
     <div className="a-field">
       <label htmlFor={`trk-${k}`}>{label}</label>
@@ -82,7 +93,7 @@ function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast:
 
       <h4 style={{ margin: '18px 0 8px' }}>Google Ads</h4>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, maxWidth: 740 }}>
-        {field('adsConversionId', 'Conversion ID', 'AW-XXXXXXXXX')}
+        {field('adsConversionId', 'Conversion ID', 'AW-XXXXXXXXXXX or the number')}
         {field('adsConversionLabel', 'Conversion Label', 'XXXXXXXXXXXX')}
       </div>
       <p className="a-hint">
@@ -91,6 +102,39 @@ function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast:
         tags to use. With GTM off, the site loads Google&rsquo;s tag itself with them. A successful enquiry always fires{' '}
         <span className="a-mono">generate_lead</span>.
       </p>
+
+      <h4 style={{ margin: '18px 0 4px' }}>Call tracking numbers</h4>
+      <p className="a-hint" style={{ marginTop: 0 }}>
+        For Google Ads &ldquo;calls from website&rdquo; conversions. For each number, type it <b>exactly as the site shows it</b>{' '}
+        (for example <span className="a-mono">763-559-5130</span>) and the label of its call conversion action in Google Ads.
+        Google then shows ad visitors a forwarding number in its place and counts their calls. Each row is added after the Ads tag as{' '}
+        <span className="a-mono">gtag(&apos;config&apos;, &apos;{t.adsConversionId || 'AW-…'}/LABEL&apos;, {'{'} phone_conversion_number: &apos;NUMBER&apos; {'}'})</span>.
+        Leave a row empty to skip it.
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 740 }}>
+        {t.callNumbers.map((c, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(180px, 1fr) minmax(180px, 1fr) auto', gap: 12, alignItems: 'end' }}>
+            <div className="a-field">
+              <label htmlFor={`call-num-${i}`}>Display number {i + 1}</label>
+              <input id={`call-num-${i}`} className="a-inp a-mono" value={c.number} placeholder="763-559-5130" disabled={!canEdit}
+                inputMode="tel" onChange={(e) => setCall(i, 'number', e.target.value)} />
+            </div>
+            <div className="a-field">
+              <label htmlFor={`call-lbl-${i}`}>Call conversion label {i + 1}</label>
+              <input id={`call-lbl-${i}`} className="a-inp a-mono" value={c.label} placeholder="XXXXXXXXXXXX" disabled={!canEdit}
+                spellCheck={false} onChange={(e) => setCall(i, 'label', e.target.value.trim())} />
+            </div>
+            {canEdit && (
+              <button type="button" className="a-btn" style={{ marginBottom: 2 }} aria-label={`Remove tracked number ${i + 1}`}
+                onClick={() => setT({ ...t, callNumbers: t.callNumbers.filter((_, j) => j !== i) })}>Remove</button>
+            )}
+          </div>
+        ))}
+      </div>
+      {canEdit && t.callNumbers.length < MAX_CALLS && (
+        <button type="button" className="a-btn sm" style={{ marginTop: 10 }}
+          onClick={() => setT({ ...t, callNumbers: [...t.callNumbers, { number: '', label: '' }] })}>+ Add tracked number</button>
+      )}
 
       <label className="a-check" style={{ marginTop: 12 }}>
         <input type="checkbox" checked={t.loadOnStaging} disabled={!canEdit} onChange={(e) => up('loadOnStaging', e.target.checked)} />
@@ -111,53 +155,74 @@ const PREVIEW_ADDRESS = '1525 99th Ln NE, Blaine, MN 55449'
  * for server lookups), so it is used where a browser on our domain draws a
  * map: each enquiry's map in Enquiries. See src/lib/maps.ts.
  *
- * The preview draws a real map with the key, so whoever pastes it sees at
- * once whether Google accepts it. On a laptop (localhost) Google refuses a
- * website key by design, so the preview says so instead of showing an error.
+ * THE KEY IS NEVER SHOWN (management, 27 Sep 2026: "mask this api so it is
+ * not showing"). The server only tells this card that a key is set and how
+ * it starts and ends ("AIza••••lFw"); a new key is typed into a password box
+ * (with the eye, for checking a paste) and is gone from the screen once
+ * saved. The preview is an iframe on /api/admin/maps/embed/, which adds the
+ * key on the server, so whoever pastes a key still sees at once whether
+ * Google accepts it. On a laptop (localhost) Google refuses a website key by
+ * design, so the preview says so instead of showing an error.
  */
+type MapsState = { set: boolean; masked: string }
+
 function GoogleMapsCard({ canEdit, onToast }: { canEdit: boolean; onToast: (m: string) => void }) {
-  const [key, setKey] = useState<string | null>(null)
-  const [saved, setSaved] = useState('')
+  const [saved, setSaved] = useState<MapsState | null>(null)
+  const [draft, setDraft] = useState<string | null>(null)   // null: not editing
   const [busy, setBusy] = useState(false)
   const [onOurDomain] = useState(() =>
     typeof window !== 'undefined' && /(^|\.)recycletechnologies\.com$/i.test(window.location.hostname))
   useEffect(() => {
-    void getJSON<{ maps: { browserKey: string } }>('/maps').then((r) => {
-      if (r.ok) { setKey(r.data.maps.browserKey); setSaved(r.data.maps.browserKey) }
-    })
+    void getJSON<{ maps: MapsState }>('/maps').then((r) => { if (r.ok) setSaved(r.data.maps) })
   }, [])
-  if (key === null) return null
+  if (saved === null) return null
 
-  async function save() {
+  async function put(browserKey: string) {
     setBusy(true)
-    const r = await sendJSON<{ maps: { browserKey: string } }>('/maps', 'PUT', { browserKey: key })
+    const r = await sendJSON<{ maps: MapsState }>('/maps', 'PUT', { browserKey })
     setBusy(false)
-    if (r.ok) setSaved(r.data.maps.browserKey)
-    onToast(r.ok ? (key ? 'Maps key saved. Enquiry maps use it from now on.' : 'Maps key removed.') : r.error)
+    if (r.ok) { setSaved(r.data.maps); setDraft(null) }
+    onToast(r.ok ? (browserKey ? 'Maps key saved. Enquiry maps use it from now on.' : 'Maps key removed.') : r.error)
   }
 
+  const editing = draft !== null || !saved.set
   return (
     <section className="a-card" style={{ marginBottom: 22 }}>
       <h3>Google Maps</h3>
       <p className="a-hint" style={{ marginTop: 0, marginBottom: 14 }}>
         Draws the map of where each enquiry is, in Enquiries. This is a website key: Google only accepts it on
         recycletechnologies.com pages (the live site and dev), and maps drawn this way are free. Keep it restricted
-        to <span className="a-mono">*.recycletechnologies.com/*</span> in Google Cloud.
+        to <span className="a-mono">*.recycletechnologies.com/*</span> in Google Cloud. The key is never shown here
+        once saved.
       </p>
       <div className="a-field" style={{ maxWidth: 520 }}>
         <label htmlFor="maps-key">Maps API key</label>
-        <input id="maps-key" className="a-inp a-mono" value={key} placeholder="AIza…" disabled={!canEdit}
-          autoComplete="off" spellCheck={false} onChange={(e) => setKey(e.target.value.trim())} />
+        {editing
+          ? (canEdit
+            ? <PasswordInput id="maps-key" value={draft ?? ''} onChange={(v) => setDraft(v.trim())} autoComplete="off"
+                placeholder="AIza…" mono label="key" />
+            : <input id="maps-key" className="a-inp a-mono" value="" placeholder="Not set" disabled readOnly />)
+          : <input id="maps-key" className="a-inp a-mono" value={saved.masked} readOnly disabled
+              title="Saved. The key itself is not shown." />}
       </div>
       {canEdit && (
-        <div style={{ marginTop: 12, display: 'flex', gap: 10 }}>
-          <button className="a-btn p" disabled={busy || key === saved} onClick={() => void save()}>
-            {busy ? 'Saving…' : 'Save Maps key'}
-          </button>
-          {saved && <button className="a-btn" disabled={busy} onClick={() => setKey('')}>Clear</button>}
+        <div style={{ marginTop: 12, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {editing ? (
+            <>
+              <button className="a-btn p" disabled={busy || !draft} onClick={() => void put(draft ?? '')}>
+                {busy ? 'Saving…' : 'Save Maps key'}
+              </button>
+              {saved.set && <button className="a-btn" disabled={busy} onClick={() => setDraft(null)}>Cancel</button>}
+            </>
+          ) : (
+            <>
+              <button className="a-btn" disabled={busy} onClick={() => setDraft('')}>Replace key</button>
+              <button className="a-btn" disabled={busy} onClick={() => { if (window.confirm('Remove the Maps key? Enquiry maps fall back to the keyless Google map.')) void put('') }}>Remove key</button>
+            </>
+          )}
         </div>
       )}
-      {saved && (
+      {saved.set && (
         <div style={{ marginTop: 16, maxWidth: 520 }}>
           <p className="a-hint" style={{ margin: '0 0 8px' }}>
             {onOurDomain
@@ -166,7 +231,7 @@ function GoogleMapsCard({ canEdit, onToast }: { canEdit: boolean; onToast: (m: s
           </p>
           {onOurDomain && (
             <iframe title="Maps key preview" loading="lazy" referrerPolicy="strict-origin-when-cross-origin"
-              src={`https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(saved)}&q=${encodeURIComponent(PREVIEW_ADDRESS)}&zoom=13`}
+              src={`/api/admin/maps/embed/?q=${encodeURIComponent(PREVIEW_ADDRESS)}&zoom=13`}
               style={{ width: '100%', height: 220, border: '1px solid var(--rule)', borderRadius: 10, display: 'block' }} />
           )}
         </div>

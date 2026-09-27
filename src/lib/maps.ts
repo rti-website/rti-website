@@ -15,9 +15,14 @@ import { one } from '@/lib/db'
  * through the Maps Embed API, which Google does not charge for.
  *
  * It is not a secret in the way a password is: a website key is meant to sit
- * in a web page, and its domain restriction is what protects it. It is still
- * only handed to signed-in admin users, and it should stay restricted to
- * recycletechnologies.com in Google Cloud.
+ * in a web page, and its domain restriction is what protects it. It should
+ * stay restricted to recycletechnologies.com in Google Cloud.
+ *
+ * NOT SHOWN IN THE ADMIN (management, 27 Sep 2026: "mask this api so it is
+ * not showing"). Since then the key never leaves the server: the settings
+ * screen gets `maskKey()` and a yes / no, and every map in the admin is an
+ * iframe pointing at /api/admin/maps/embed/, which adds the key and sends
+ * the browser on to Google. So it is not in the page, the DOM or the JSON.
  */
 
 export type MapsSettings = { browserKey: string }
@@ -41,4 +46,17 @@ export async function getMaps(): Promise<MapsSettings> {
   } catch {
     return MAPS_DEFAULTS
   }
+}
+
+/** "AIza••••••••••••••••••••••••••••••••lFw": enough to recognise a key, not enough to use it. */
+export function maskKey(key: string): string {
+  if (!key) return ''
+  return `${key.slice(0, 4)}${'\u2022'.repeat(Math.max(4, key.length - 7))}${key.slice(-3)}`
+}
+
+/** The Maps Embed API place URL with the key, or Google's keyless embed without one. */
+export function embedUrl(key: string, q: string, zoom: number): string {
+  return key
+    ? `https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(key)}&q=${encodeURIComponent(q)}&zoom=${zoom}`
+    : `https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=${zoom}&hl=en&output=embed`
 }

@@ -2,6 +2,7 @@ import 'server-only'
 import { cache as perRequest } from 'react'
 import { q } from '@/lib/db'
 import type { ContentMeta } from '@/lib/content'
+import { fixLegacyUrl, fixLegacyUrls } from '@/lib/legacy-urls'
 
 /**
  * Published posts, read from PostgreSQL AT BUILD TIME.
@@ -111,13 +112,15 @@ function toPost(r: Row): DbPost {
     h1: String(r.title ?? ''),
     date: r.published_at ? new Date(String(r.published_at)).toISOString() : undefined,
     updated: r.updated_at ? new Date(String(r.updated_at)).toISOString() : undefined,
-    image: str(r.og_image_url) ?? undefined,
-    heroImage: str(r.og_image_url) ?? undefined,
+    // fixLegacyUrl(s): the imported rows carry "recycletechnologies.comwp-content"
+    // (no slash after the domain) — see src/lib/legacy-urls.ts, 26 Sep 2026.
+    image: fixLegacyUrl(str(r.og_image_url)) ?? undefined,
+    heroImage: fixLegacyUrl(str(r.og_image_url)) ?? undefined,
     category: str(r.category_name) ?? undefined,
     readingTime: `${Number(r.reading_minutes ?? 1)} min read`,
     source: r.source === 'wordpress' ? 'wordpress' : 'editor',
-    html: String(r.content_html ?? ''),
-    canonical: str(r.canonical_url),
+    html: fixLegacyUrls(String(r.content_html ?? '')),
+    canonical: fixLegacyUrl(str(r.canonical_url)),
     noindex: r.robots_index === false,
     inSitemap: r.in_sitemap !== false,
     categorySlug: str(r.category_slug),

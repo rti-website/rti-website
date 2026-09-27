@@ -54,7 +54,7 @@ export type LeadGeo = {
     lat: number
     lng: number
   }
-  nearest: null | { facility: string; miles: number; inPickupArea: boolean }
+  nearest: null | { facility: string; miles: number; inPickupArea: boolean; /** measured from the IP, not an address */ approx?: boolean }
   ip: IpPlace | null
   /** Why `ip` is what it is. `no-database` is filled in later once the file exists. */
   ipLookup: 'found' | 'not-found' | 'private' | 'no-ip' | 'no-database'
@@ -124,6 +124,23 @@ export function locate(input: {
   if (ip) {
     if (ip.countryCode && ip.countryCode !== 'US') ipCheck = 'outside-us'
     else if (given && ip.region) ipCheck = stateCode(ip.region) === given.state ? 'same-state' : 'other-state'
+  }
+
+  /* No address typed (a tap on a phone number, 27 Sep 2026) but the IP puts
+     them somewhere in the US: the nearest facility is measured from THAT,
+     marked approximate — an IP lands in the right city most of the time and
+     the right state nearly always, which is enough to know which facility
+     should ring them back. */
+  if (!nearest && !given && ip && ip.countryCode === 'US' && ip.lat !== null && ip.lng !== null) {
+    const from = { lat: ip.lat, lng: ip.lng }
+    for (const f of SITES) {
+      const m = milesBetween(from, f.point)
+      if (!nearest || m < nearest.miles) nearest = { facility: f.name, miles: m, inPickupArea: false, approx: true }
+    }
+    if (nearest) {
+      nearest.miles = Math.round(nearest.miles)
+      nearest.inPickupArea = nearest.miles <= PICKUP_RADIUS_MILES
+    }
   }
 
   return { v: 1, at: new Date().toISOString(), given, nearest, ip, ipLookup, ipCheck }

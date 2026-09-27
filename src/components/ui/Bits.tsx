@@ -65,7 +65,7 @@ const BTN: Record<BtnVariant, { box: string; text: string; arrow: string }> = {
  * which is how it reads in the Figma preview.
  */
 export function Btn({
-  href, children, variant = 'colored', italic = false, className = '', external = false, submit = false,
+  href, children, variant = 'colored', italic = false, className = '', external = false, submit = false, wrap = false,
 }: {
   /** Where it goes. Omit it and pass `submit` for a form's submit button. */
   href?: string
@@ -76,13 +76,15 @@ export function Btn({
   external?: boolean
   /** Render a `<button type="submit">` in the same look, for a form. */
   submit?: boolean
+  /** Let a long label wrap on the phone (the city page CTAs, 27 Sep 2026) instead of running past the box. */
+  wrap?: boolean
 }) {
   const v = BTN[variant]
   // `btn-pop` — the site-wide hover lift, see globals.css.
-  const cls = `btn-pop inline-flex h-[48.05px] items-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] leading-[22.523px] tracking-[-0.0801px] ${italic ? 'font-light italic' : 'font-medium'} ${v.box} ${v.text} ${className}`
+  const cls = `btn-pop inline-flex h-[48.05px] items-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] leading-[22.523px] tracking-[-0.0801px] ${italic ? 'font-light italic' : 'font-medium'} ${v.box} ${v.text} ${wrap ? 'max-lg:h-auto max-lg:min-h-[48.05px] max-lg:py-[12px]' : ''} ${className}`
   const inner = (
     <>
-      <span className="whitespace-nowrap">{children}</span>
+      <span className={wrap ? 'max-lg:text-center lg:whitespace-nowrap' : 'whitespace-nowrap'}>{children}</span>
       <Image src={v.arrow} alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
     </>
   )

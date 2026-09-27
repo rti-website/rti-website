@@ -35,6 +35,9 @@ const ROUTES = [
   '/industries/retail-corporate-offices/', '/nope-404/', '/quote/',
   // The location pages (24 Sep 2026): a partner hub, a partner service page, a MN one.
   '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota-recycling/battery-recycling/',
+  // The fixed city service pages of 27 Sep 2026 (src/data/city-pages/).
+  '/minnesota-recycling/light-bulb-recycling/', '/minnesota-recycling/electronic-recycling/',
+  '/wisconsin-recycling/battery-recycling/', '/wisconsin-recycling/light-bulb-recycling/', '/wisconsin-recycling/electronic-recycling/',
 ]
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium' })

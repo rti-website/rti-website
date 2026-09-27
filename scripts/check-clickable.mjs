@@ -33,7 +33,10 @@ function findRoutes(dir, prefix = '') {
 }
 const ROUTES = ['/', ...findRoutes(path.join(process.cwd(), 'src', 'app')).sort().map((r) => `/${r}/`),
   // A sample of the location pages ([site]/[service] folders), 24 Sep 2026.
-  '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota-recycling/battery-recycling/']
+  '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota-recycling/battery-recycling/',
+  // The fixed city service pages of 27 Sep 2026 (src/data/city-pages/).
+  '/minnesota-recycling/light-bulb-recycling/', '/minnesota-recycling/electronic-recycling/',
+  '/wisconsin-recycling/battery-recycling/', '/wisconsin-recycling/light-bulb-recycling/', '/wisconsin-recycling/electronic-recycling/']
   .filter((r) => !r.startsWith('/admin') && !r.startsWith('/api'))
 
 const b = await chromium.launch({

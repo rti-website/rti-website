@@ -32,7 +32,7 @@ const N = 16384, r = 8, p = 1, KEYLEN = 64
 const COOKIE = 'rti_admin_session'
 const DAYS = 14
 
-export type Role = 'administrator' | 'editor' | 'author' | 'seo'
+export type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent'
 export type AdminUser = { id: number; email: string; name: string; role: Role }
 
 /**
@@ -53,6 +53,10 @@ export const ROLES = [
   { id: 'editor', label: 'Editor', blurb: 'Write, edit and publish anybody\u2019s posts.' },
   { id: 'author', label: 'Content writer', blurb: 'Write and edit their own posts. Cannot publish.' },
   { id: 'seo', label: 'SEO', blurb: 'Every SEO field on every post. Cannot edit the body or publish.' },
+  /* 26 Sep 2026, the lead workflow: an agent signs in and sees only the
+     enquiries assigned to them, updates their status, adds notes and logs
+     the phone enquiries they take. No posts, no settings. */
+  { id: 'agent', label: 'Sales agent', blurb: 'Works the enquiries assigned to them and logs phone enquiries. Nothing else.' },
 ] as const satisfies ReadonlyArray<{ id: Role; label: string; blurb: string }>
 
 export const roleLabel = (r: string) => ROLES.find((x) => x.id === r)?.label ?? r

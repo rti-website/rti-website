@@ -913,5 +913,15 @@
     "source": "/wisconsin-recycling/waukesha-recycling-center/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
+  },
+  {
+    "source": "/paper-shredding/",
+    "destination": "/paper-shredding-services/",
+    "statusCode": 301
+  },
+  {
+    "source": "/hard-drive-destruction-service/",
+    "destination": "/hard-drive-destruction-services/",
+    "statusCode": 301
   }
 ]

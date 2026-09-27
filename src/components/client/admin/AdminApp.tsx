@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { PostEditor } from './PostEditor'
 import { AskDialog, ConfirmDialog, Dialog } from './Dialog'
 import { MediaLibrary } from './MediaLibrary'
@@ -8,7 +8,9 @@ import { SeoDesk } from './SeoDesk'
 import { Users } from './Users'
 import { GoogleTracking, SocialLinks, type SocialLink } from './SiteSettings'
 import { Locations } from './Locations'
-import { LOCATION_CSV_HEAD, LocationBlock, LocationCell, locationCsv, locationText, type LeadGeo } from './LeadLocation'
+import { Leads } from './Leads'
+import { PasswordInput } from './Bits'
+import { LeadWorkflow } from './LeadWorkflow'
 import { slugify } from '@/lib/slug'
 import { api, getJSON, sendJSON } from './api'
 
@@ -27,7 +29,7 @@ import { api, getJSON, sendJSON } from './api'
  * behind a login where server rendering buys nothing anyway.
  */
 
-type Role = 'administrator' | 'editor' | 'author' | 'seo'
+type Role = 'administrator' | 'editor' | 'author' | 'seo' | 'agent'
 type User = { id: number; email: string; name: string; role: Role }
 type Category = {
   id: number; name: string; slug: string; landing_built: boolean
@@ -45,11 +47,11 @@ type Boot = {
 
 /* 'settings' was split in two on 24 Sep 2026: 'tracking' (Google & Tracking)
    and 'social' (Social Links). See SiteSettings.tsx. */
-type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'locations' | 'subs' | 'leads' | 'users' | 'tracking' | 'social'
+type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'locations' | 'subs' | 'leads' | 'workflow' | 'users' | 'tracking' | 'social'
 
 const TITLES: Record<View, string> = {
   dash: 'Overview', posts: 'All Posts', editor: 'Edit post', cats: 'Categories',
-  media: 'Media library', seo: 'SEO', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries',
+  media: 'Media library', seo: 'SEO', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries', workflow: 'Lead workflow',
   users: 'People & access', tracking: 'Google & Tracking', social: 'Social Links',
 }
 
@@ -66,7 +68,7 @@ export function AdminApp() {
      rail and header. The post editor raises it; nothing else sets it. */
   const [focus, setFocus] = useState(false)
   const [toast, setToast] = useState('')
-  const [asking, setAsking] = useState<null | 'post'>(null)
+  const [asking, setAsking] = useState<null | 'post' | 'lead'>(null)
 
   const say = useCallback((msg: string) => {
     setToast(msg)
@@ -91,6 +93,9 @@ export function AdminApp() {
     }
     setBoot(data)
     setState('in')
+    // An agent's whole admin is their enquiries (db/010), so that is where
+    // they land — the Overview is posts they cannot see.
+    if ((data as Boot).user?.role === 'agent') setView((v) => (v === 'dash' ? 'leads' : v))
   }, [])
 
   useEffect(() => { void load() }, [load])
@@ -99,8 +104,10 @@ export function AdminApp() {
   if (state === 'setup') return <SetupHelp error={setupError} />
   if (state === 'out' || !boot) return <Login onDone={load} />
 
-  const canPublish = boot.user.role !== 'author'
+  const agent = boot.user.role === 'agent'
+  const canPublish = boot.user.role !== 'author' && !agent
   const canTrack = boot.user.role === 'administrator' || boot.user.role === 'seo'
+  const canAssign = boot.user.role === 'administrator' || boot.user.role === 'editor'
 
   /* Switching screens starts at the top. Without this, opening a post from
      halfway down the list leaves the editor scrolled past its own title, with
@@ -127,6 +134,7 @@ export function AdminApp() {
           <span>Publisher</span>
         </div>
 
+        {!agent && <>
         <p className="a-navlabel">Content</p>
         <NavBtn on={view === 'dash'} go={() => show('dash')} label="Overview"
           icon="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" />
@@ -145,13 +153,23 @@ export function AdminApp() {
         {/* The location based service pages (SEO brief, 24 Sep 2026). */}
         <NavBtn on={view === 'locations'} go={() => show('locations')} label="Locations"
           icon="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21ZM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+        </>}
 
         <p className="a-navlabel">People</p>
-        <NavBtn on={view === 'subs'} go={() => show('subs')} label="Subscribers"
-          count={boot.counts.subscribers} icon="M3 5h18v14H3zM3 7l9 6 9-6" />
-        <NavBtn on={view === 'leads'} go={() => show('leads')} label="Enquiries"
+        {!agent && (
+          <NavBtn on={view === 'subs'} go={() => show('subs')} label="Subscribers"
+            count={boot.counts.subscribers} icon="M3 5h18v14H3zM3 7l9 6 9-6" />
+        )}
+        <NavBtn on={view === 'leads'} go={() => show('leads')} label={agent ? 'My enquiries' : 'Enquiries'}
           count={boot.counts.leads} icon="M9 11 3 7v10l6-4zM9 7h12v10H9z" />
+        {/* The lead workflow (db/010, 26 Sep 2026): who holds which enquiry,
+            and assigning them. Managers only; an agent has their own list. */}
+        {canAssign && (
+          <NavBtn on={view === 'workflow'} go={() => show('workflow')} label="Lead workflow"
+            icon="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M17 8l2 2 4-4" />
+        )}
 
+        {!agent && <>
         <p className="a-navlabel">Site</p>
         {boot.user.role === 'administrator' && (
           <NavBtn on={view === 'users'} go={() => show('users')} label="People & access"
@@ -166,6 +184,7 @@ export function AdminApp() {
         )}
         <NavBtn on={view === 'social'} go={() => show('social')} label="Social Links"
           icon="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19.5" />
+        </>}
 
         <div className="a-railfoot">
           <div className="a-who">
@@ -185,14 +204,18 @@ export function AdminApp() {
             <Icon d="M3 6h18M3 12h18M3 18h18" />
           </button>
           <div>
-            <h1>{TITLES[view]}</h1>
+            <h1>{view === 'leads' && agent ? 'My enquiries' : TITLES[view]}</h1>
             <div className="a-sub">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
           </div>
           <span className="a-spacer" />
           {/* The primary action follows the screen. A "New post" button on the
               Categories page is how people end up with a post called
               "Universal Waste" instead of the category they came to add. */}
-          {view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && (
+          {(view === 'leads' || view === 'workflow') ? (
+            <button className="a-btn p" onClick={() => setAsking('lead')}>
+              <Icon d="M12 5v14M5 12h14" w={2.2} /> Add enquiry
+            </button>
+          ) : !agent && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && (
             <button className="a-btn p" onClick={() => setAsking('post')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> New post
             </button>
@@ -232,7 +255,8 @@ export function AdminApp() {
         )}
         {view === 'users' && <Users meId={boot.user.id} onToast={say} />}
         {view === 'subs' && <Subscribers />}
-        {view === 'leads' && <Leads onToast={say} />}
+        {view === 'leads' && <Leads onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
+        {view === 'workflow' && canAssign && <LeadWorkflow onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
         {view === 'locations' && <Locations canEdit={canPublish} onToast={say} />}
         {view === 'tracking' && <GoogleTracking canEdit={canTrack} onToast={say} onGoSeo={() => show('seo')} />}
         {view === 'social' && <SocialLinks social={boot.social}
@@ -853,313 +877,6 @@ function Subscribers() {
   )
 }
 
-type LeadRow = {
-  id: number; type: string; name: string | null; email: string | null; phone: string | null
-  company: string | null; message: string | null; details: Record<string, string> | null
-  source_page: string | null; status: string; notes: string | null; created_at: string
-  /** lead_attribution (db/006): UTM tags, click IDs, landing page… or null. */
-  attribution?: Record<string, string | null> | null
-  /** Where they are (db/007, src/lib/lead-location.ts), or null before it ran. */
-  geo?: LeadGeo | null
-}
-
-/** How they found us — the attribution fields, in the order the brief lists them. */
-const ATTR_FIELDS: [string, string][] = [
-  ['utm_source', 'Source (utm_source)'], ['utm_medium', 'Medium (utm_medium)'], ['utm_campaign', 'Campaign (utm_campaign)'],
-  ['utm_term', 'Term (utm_term)'], ['utm_content', 'Content (utm_content)'],
-  ['gclid', 'Google click ID (gclid)'], ['gbraid', 'gbraid'], ['wbraid', 'wbraid'], ['fbclid', 'Facebook click ID (fbclid)'],
-  ['msclkid', 'Microsoft click ID (msclkid)'], ['campaign_id', 'Campaign ID'], ['adgroup_id', 'Ad group ID'],
-  ['keyword', 'Keyword'], ['matchtype', 'Match type'], ['device', 'Device'],
-  ['landing_page', 'Landing page'], ['referrer', 'Referrer'], ['submit_page', 'Submitted from'],
-  ['captured_at', 'First seen (click time)'], ['user_agent', 'Browser'],
-]
-
-/** One-word answer to "where did this lead come from?" for the list. */
-function leadSource(l: LeadRow): string {
-  const a = l.attribution ?? {}
-  if (a.utm_source) return a.utm_medium ? `${a.utm_source} / ${a.utm_medium}` : a.utm_source
-  if (a.gclid || a.gbraid || a.wbraid) return 'google / cpc'
-  if (a.fbclid) return 'facebook'
-  if (a.msclkid) return 'bing / cpc'
-  if (a.referrer) { try { return new URL(a.referrer).hostname.replace(/^www\./, '') } catch { return 'referral' } }
-  return l.attribution ? '(direct)' : '—'
-}
-
-/**
- * Every field a lead can carry, in the order a person reads a form, with the
- * label the Enquiries screen shows. Columns first, then the `details` keys.
- * Any details key NOT listed here is still shown, under its own name, so a
- * field added to a form later is never silently hidden.
- */
-const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
-  { key: 'firstName', label: 'First name', from: 'details' },
-  { key: 'lastName', label: 'Last name', from: 'details' },
-  { key: 'name', label: 'Name', from: 'col' },
-  { key: 'email', label: 'Email', from: 'col' },
-  { key: 'phone', label: 'Phone', from: 'col' },
-  { key: 'company', label: 'Company', from: 'col' },
-  { key: 'address', label: 'Address', from: 'details' },
-  { key: 'city', label: 'City', from: 'details' },
-  { key: 'state', label: 'State', from: 'details' },
-  { key: 'zip', label: 'Zip code', from: 'details' },
-  { key: 'service', label: 'What they want to recycle', from: 'details' },
-  { key: 'item', label: 'Item', from: 'details' },
-  { key: 'audience', label: 'Is it for', from: 'details' },
-  { key: 'referral', label: 'How they heard about us', from: 'details' },
-  { key: 'message', label: 'Message', from: 'col' },
-  { key: 'source_page', label: 'Sent from page', from: 'col' },
-  { key: 'consent', label: 'Consent', from: 'details' },
-  { key: 'consentAt', label: 'Consent given', from: 'details' },
-  { key: 'autoReply', label: 'Drop off email sent', from: 'details' },
-]
-const KNOWN_DETAILS = new Set(LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key))
-const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
-const LEAD_TYPES: Record<string, string> = { contact: 'Contact form', quote: 'Pickup / quote', download: 'Download', callback: 'Callback' }
-
-/** Every field of one lead as label/value pairs, empty ones left out. */
-function leadFields(l: LeadRow): [string, string][] {
-  const d = l.details ?? {}
-  const out: [string, string][] = []
-  for (const f of LEAD_FIELDS) {
-    const raw = f.from === 'col' ? (l as unknown as Record<string, unknown>)[f.key] : d[f.key]
-    if (raw === null || raw === undefined || String(raw).trim() === '') continue
-    // Name is already split into first / last when the form sent both.
-    if (f.key === 'name' && d.firstName) continue
-    out.push([f.label, f.key === 'consentAt' || f.key === 'autoReply' ? when(String(raw)) : String(raw)])
-  }
-  for (const [k, v] of Object.entries(d)) if (!KNOWN_DETAILS.has(k) && v) out.push([k, String(v)])
-  return out
-}
-
-/** CSV of the rows on screen, every field, for a spreadsheet. */
-function leadsCsv(rows: LeadRow[]): string {
-  const extra = [...new Set(rows.flatMap((l) => Object.keys(l.details ?? {}).filter((k) => !KNOWN_DETAILS.has(k))))]
-  const head = ['ID', 'Received', 'Type', 'Status', ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes',
-    ...LOCATION_CSV_HEAD, ...ATTR_FIELDS.map(([, label]) => label)]
-  const cell = (v: unknown) => {
-    const s = v === null || v === undefined ? '' : String(v)
-    return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
-  }
-  const lines = rows.map((l) => {
-    const d = l.details ?? {}
-    const r = l as unknown as Record<string, unknown>
-    return [l.id, l.created_at, l.type, l.status,
-      ...LEAD_FIELDS.map((f) => (f.from === 'col' ? r[f.key] : d[f.key])),
-      ...extra.map((k) => d[k]), l.notes, ...locationCsv(l.geo),
-      ...ATTR_FIELDS.map(([k]) => l.attribution?.[k] ?? '')].map(cell).join(',')
-  })
-  return [head.map(cell).join(','), ...lines].join('\r\n')
-}
-
-/**
- * Enquiries — every contact form, pickup/quote form and download lead, with
- * EVERY field it arrived with. Asim, 23 Sep 2026: "when someone submits the
- * form it must show on [the] admin side … all the entries that are
- * available". The table shows who, how to reach them and what they want at a
- * glance; "View" opens the whole submission under its row. The global search,
- * the status filter and the date range (24 Sep 2026) narrow the list;
- * "Download CSV" exports what is on screen.
- */
-function Leads({ onToast }: { onToast: (m: string) => void }) {
-  const [rows, setRows] = useState<LeadRow[]>([])
-  const [mapsKey, setMapsKey] = useState('')
-  const [loaded, setLoaded] = useState(false)
-  const [open, setOpen] = useState<number | null>(null)
-  const [q, setQ] = useState('')
-  const [status, setStatusFilter] = useState('')
-  // Date range — management's request, 24 Sep 2026 ("date-range filters and
-  // a global search bar"). Same choices as the Posts list.
-  const [range, setRange] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  /* The cut-off for the preset ranges, worked out when the range is picked
-     (reading the clock during render is not allowed; it would change under
-     React). "Today" is local midnight; the others count back whole days. */
-  const [since, setSince] = useState<number | null>(null)
-  function pickRange(next: string) {
-    setRange(next)
-    const now = new Date()
-    if (next === 'today') { now.setHours(0, 0, 0, 0); setSince(now.getTime()) }
-    else {
-      const days = ({ '7d': 7, '30d': 30, '90d': 90, '365d': 365 } as Record<string, number>)[next]
-      setSince(days ? now.getTime() - days * 86_400_000 : null)
-    }
-  }
-  const reload = useCallback(() => {
-    void getJSON<{ leads: LeadRow[]; mapsKey?: string }>('/leads').then((r) => {
-      if (r.ok) { setRows(r.data.leads ?? []); setMapsKey(r.data.mapsKey ?? '') }
-      setLoaded(true)
-    })
-  }, [])
-  useEffect(reload, [reload])
-
-  async function setStatus(id: number, next: string) {
-    const r = await sendJSON('/leads', 'PATCH', { id, status: next })
-    onToast(r.ok ? 'Enquiry updated' : r.error)
-    reload()
-  }
-
-  /* GLOBAL SEARCH: every word typed must appear somewhere in the enquiry —
-     any form field, the message, notes, status, type, enquiry number, the
-     date, and every "How they found us" value (source, campaign, keyword,
-     landing page…). "bing light bulb" finds Bing leads about light bulbs. */
-  const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean)
-  const haystack = (l: LeadRow) => [
-    ...leadFields(l).map(([, v]) => v), leadSource(l), l.status, LEAD_TYPES[l.type] ?? l.type,
-    l.notes ?? '', `#${l.id}`, String(l.id), new Date(l.created_at).toLocaleDateString(), when(l.created_at),
-    ...Object.values(l.attribution ?? {}).map((v) => v ?? ''), locationText(l.geo),
-  ].join('\n').toLowerCase()
-
-  /* DATE RANGE on when the enquiry arrived, in the admin's own time zone:
-     "Today" starts at local midnight; "Between" includes both whole days. */
-  const inRange = (iso: string) => {
-    if (!range) return true
-    const t = new Date(iso).getTime()
-    if (Number.isNaN(t)) return true
-    if (range === 'custom') {
-      if (from && t < new Date(`${from}T00:00:00`).getTime()) return false
-      if (to && t > new Date(`${to}T23:59:59.999`).getTime()) return false
-      return true
-    }
-    return since === null || t >= since
-  }
-
-  const shown = rows.filter((l) =>
-    (!status || l.status === status)
-    && inRange(l.created_at)
-    && (words.length === 0 || ((h) => words.every((w) => h.includes(w)))(haystack(l))))
-  const filtering = Boolean(q || status || range)
-
-  function download() {
-    const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `enquiries-${new Date().toISOString().slice(0, 10)}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
-  const wants = (l: LeadRow) => {
-    const d = l.details ?? {}
-    const bits = [d.service ?? d.item, d.audience].filter(Boolean)
-    return bits.length ? bits.join(' · ') : (l.message ? (l.message.length > 90 ? `${l.message.slice(0, 90)}…` : l.message) : '—')
-  }
-
-  return (
-    <main className="a-sheet">
-      <div className="a-note"><span>
-        <b>Every submission from the contact and pickup forms lands here, with every field it was sent with.</b>{' '}
-        Click <b>View</b> to see the whole enquiry, where they are on a map, and how they found us (campaign, keyword, landing page).
-        The <b>mi</b> under Location is the distance to the nearer facility: green is inside the 100 mile pickup area.
-        It is saved even if the notification email fails.
-      </span></div>
-      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 16 }}>
-        <span className="a-search" style={{ flex: '1 1 320px', maxWidth: 520 }}>
-          <Icon d="M11 4a7 7 0 1 1-.01 0M20 20l-3.5-3.5" />
-          <input className="a-inp" type="search" style={{ width: '100%' }}
-            placeholder="Search everything: name, email, phone, company, city, county, ZIP, message, source, campaign…"
-            aria-label="Search all enquiries" value={q} onChange={(e) => setQ(e.target.value)} />
-        </span>
-        <select className="a-inp" style={{ width: 'auto' }} value={status} onChange={(e) => setStatusFilter(e.target.value)} aria-label="Filter by status">
-          <option value="">All statuses</option>
-          {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-        <select className="a-inp" style={{ width: 'auto' }} aria-label="Filter by date received"
-          value={range} onChange={(e) => pickRange(e.target.value)}>
-          <option value="">Any date</option>
-          <option value="today">Today</option>
-          <option value="7d">Last 7 days</option>
-          <option value="30d">Last 30 days</option>
-          <option value="90d">Last 3 months</option>
-          <option value="365d">Last 12 months</option>
-          <option value="custom">Between…</option>
-        </select>
-        {range === 'custom' && (
-          <span className="a-daterange">
-            <input className="a-inp" type="date" aria-label="From" value={from} max={to || undefined}
-              onChange={(e) => setFrom(e.target.value)} />
-            <span className="a-hint">to</span>
-            <input className="a-inp" type="date" aria-label="To" value={to} min={from || undefined}
-              onChange={(e) => setTo(e.target.value)} />
-          </span>
-        )}
-        {filtering && (
-          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); pickRange(''); setFrom(''); setTo('') }}>
-            Clear filters
-          </button>
-        )}
-        <span style={{ color: 'var(--a-muted)', fontSize: 13 }}>{shown.length} of {rows.length}</span>
-        <button className="a-btn sm" style={{ marginLeft: 'auto' }} disabled={shown.length === 0} onClick={download}>Download CSV</button>
-      </div>
-      <Table head={['From', 'Contact', 'Location', 'Type', 'What they want', 'Source', 'Received', 'Status', '']}>
-        {loaded && rows.length === 0 && <Empty>No enquiries yet. They arrive here from the contact and pickup forms.</Empty>}
-        {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches those filters.</Empty>}
-        {shown.map((l) => (
-          <Fragment key={l.id}>
-            <tr>
-              <td><span className="a-ttl">{l.name ?? l.email ?? 'Anonymous'}</span>
-                {l.company && <span className="a-slug">{l.company}</span>}</td>
-              <td>
-                {l.email && <div><a className="a-link" href={`mailto:${l.email}`}>{l.email}</a></div>}
-                {l.phone && <div style={{ marginTop: 2 }}><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
-              </td>
-              <td><LocationCell geo={l.geo} /></td>
-              <td>{LEAD_TYPES[l.type] ?? l.type}</td>
-              <td>{wants(l)}</td>
-              <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-slug">{l.attribution.utm_campaign}</div>}</td>
-              <td>{when(l.created_at)}</td>
-              <td>
-                <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }}
-                  value={l.status} onChange={(e) => void setStatus(l.id, e.target.value)} aria-label="Status">
-                  {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                </select>
-              </td>
-              <td>
-                <button className="a-btn sm" aria-expanded={open === l.id} onClick={() => setOpen(open === l.id ? null : l.id)}>
-                  {open === l.id ? 'Hide' : 'View'}
-                </button>
-              </td>
-            </tr>
-            {open === l.id && (
-              <tr>
-                <td colSpan={9} style={{ background: 'var(--panel, #f7f8fa)' }}>
-                  <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '8px 4px' }}>
-                    {leadFields(l).map(([k, v]) => (
-                      <Fragment key={k}>
-                        <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>{k}</dt>
-                        <dd style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{v}</dd>
-                      </Fragment>
-                    ))}
-                    <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>Enquiry #</dt>
-                    <dd style={{ margin: 0 }} className="a-mono">{l.id}</dd>
-                  </dl>
-                  <LocationBlock geo={l.geo} details={l.details} mapsKey={mapsKey} />
-                  <p style={{ margin: '14px 4px 6px', fontWeight: 600 }}>How they found us</p>
-                  {l.attribution ? (
-                    <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '0 4px 8px' }}>
-                      {ATTR_FIELDS.filter(([k]) => l.attribution?.[k]).map(([k, label]) => (
-                        <Fragment key={k}>
-                          <dt style={{ color: 'var(--a-muted)', fontSize: 13 }}>{label}</dt>
-                          <dd style={{ margin: 0, wordBreak: 'break-all' }}>{k === 'captured_at' ? when(String(l.attribution?.[k])) : l.attribution?.[k]}</dd>
-                        </Fragment>
-                      ))}
-                    </dl>
-                  ) : (
-                    <p style={{ margin: '0 4px 8px', color: 'var(--a-muted)', fontSize: 13 }}>
-                      Nothing recorded — this enquiry came in before tracking was switched on.
-                    </p>
-                  )}
-                </td>
-              </tr>
-            )}
-          </Fragment>
-        ))}
-      </Table>
-    </main>
-  )
-}
-
 /* ================================================================== login */
 
 function Login({ onDone }: { onDone: () => void }) {
@@ -1202,8 +919,7 @@ function Login({ onDone }: { onDone: () => void }) {
           </div>
           <div className="a-field">
             <label htmlFor="password">Password</label>
-            <input id="password" className="a-inp" type="password" autoComplete="current-password" required
-              value={password} onChange={(e) => setPassword(e.target.value)} />
+            <PasswordInput id="password" autoComplete="current-password" required value={password} onChange={setPassword} />
           </div>
           <button className="a-btn p" style={{ width: '100%', justifyContent: 'center' }} disabled={busy}>
             {busy ? 'Checking…' : 'Sign in'}

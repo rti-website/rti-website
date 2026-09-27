@@ -1260,6 +1260,167 @@
       "node": "6472:3922",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Locations hero photo as redrawn 25 Sep 2026 (aerial warehouse with trucks, \"Recycling locations network hero\"), drawn 1920x1081 at y-372 under a navy-to-clear 89deg overlay; the phone frame (6816:11018) draws the same image. Replaces hero-locations.png on /all-locations/ only; the MN and WI facility pages keep hero-locations.png. URL expires about 2 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/chicago-battery/hero.png",
+      "id": "04cfe9b4-9b99-444c-b674-42d131b74fb7/34555.png",
+      "node": "6908:15988",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Battery Recycling in Chicago (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/chicago-light-bulb/hero.png",
+      "id": "be482893-12b7-45c8-b321-62e69b380c1d/25b1d.png",
+      "node": "6919:17774",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Light Bulb Recycling in Chicago (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/blaine-battery/hero.png",
+      "id": "ddd5e996-917e-4cf6-aca3-528653456c42/16e25.png",
+      "node": "6922:18658",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Battery Recycling in Blaine (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/blaine-light-bulb/hero.png",
+      "id": "05b38471-52a7-4f35-838b-8fce684f6064/12ba3.png",
+      "node": "6925:4596",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Light Bulb Recycling in Blaine (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/blaine-electronics/hero.png",
+      "id": "ed0cda82-23cd-440c-a524-0e09a863e328/fd4d1.png",
+      "node": "6927:9605",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Electronic Recycling in Blaine (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/new-berlin-battery/hero.png",
+      "id": "577e34c8-b384-459a-abb3-6abd0eda3e5b/84c3d.png",
+      "node": "6924:3669",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Battery Recycling in New Berlin (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/new-berlin-light-bulb/hero.png",
+      "id": "b10bbf0c-3dd1-469b-bd20-ebf4546188e0/0f021.png",
+      "node": "6925:5566",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Light Bulb Recycling in New Berlin (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/new-berlin-electronics/hero.png",
+      "id": "832c0401-b4a2-4f23-83f6-bd390d0e3d7f/5caa3.png",
+      "node": "6925:8558",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, Electronic Recycling in New Berlin (\"Wisconsin recycling facility hero\" layer), 1920x1081 at y-372 under a 20% grey veil. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/battery.svg",
+      "id": "b0c8bf99-f9e5-4cc6-87c9-a0202390d8e3/a35ea.svg",
+      "node": "6923:3115",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, alkaline & zinc batteries (20px white battery). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/bolt.svg",
+      "id": "b0c8bf99-f9e5-4cc6-87c9-a0202390d8e3/2c5b6.svg",
+      "node": "6923:3122",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, lithium-ion & lead-acid (20px white bolt). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/nicd.svg",
+      "id": "b0c8bf99-f9e5-4cc6-87c9-a0202390d8e3/7ca2c.svg",
+      "node": "6923:3129",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, NiCd & button cell (20px white target). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/ev.svg",
+      "id": "b0c8bf99-f9e5-4cc6-87c9-a0202390d8e3/e7282.svg",
+      "node": "6923:3136",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, EV, power tool & backup batteries (20px white car). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/ewaste.svg",
+      "id": "1df17962-2c82-4718-86a2-5eb3d787e1fc/1e856.svg",
+      "node": "6927:9646",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, general e-waste (20px white plug). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/laptop.svg",
+      "id": "1df17962-2c82-4718-86a2-5eb3d787e1fc/f8046.svg",
+      "node": "6927:9653",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, computers & laptops (20px white laptop). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/monitor.svg",
+      "id": "1df17962-2c82-4718-86a2-5eb3d787e1fc/14e63.svg",
+      "node": "6927:9661",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, monitors & displays (20px white monitor). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/printer.svg",
+      "id": "1df17962-2c82-4718-86a2-5eb3d787e1fc/e79f4.svg",
+      "node": "6927:9668",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, office & imaging equipment (20px white printer). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/phone.svg",
+      "id": "1df17962-2c82-4718-86a2-5eb3d787e1fc/f040e.svg",
+      "node": "6927:9676",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "What We Accept tile, phones (20px white phone). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/pin.svg",
+      "id": "8a961c58-d9f2-4efd-8fda-630ea5daeccf/bc79e.svg",
+      "node": "6923:3174",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Recycling Options disc, Drop-Off (22px white map pin). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/truck.svg",
+      "id": "8a961c58-d9f2-4efd-8fda-630ea5daeccf/1c4f3.svg",
+      "node": "6923:3181",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Recycling Options / Why disc, Business Pickup (22px white truck). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/mail.svg",
+      "id": "8a961c58-d9f2-4efd-8fda-630ea5daeccf/dbad9.svg",
+      "node": "6923:3188",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Recycling Options disc, Mail-In Recycling (22px white envelope). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/clock.svg",
+      "id": "e61e3918-b761-436b-85d9-622dd2d8a7cb/efa97.svg",
+      "node": "6909:2970",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why disc, Over 30 Years of Experience (22px white clock); the bulb pages also draw it on Drop-Off. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/inhouse.svg",
+      "id": "9d845df7-e88a-42ac-a6a5-2a44d61e89b9/f08b5.svg",
+      "node": "6909:2985",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why disc, In-House Processing (22px white building); the bulb pages also draw it on Mail-In. City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/icons/minority.svg",
+      "id": "9d845df7-e88a-42ac-a6a5-2a44d61e89b9/8cb52.svg",
+      "node": "6909:2991",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why disc, Minority-Owned (22px white glyph). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
     }
   ]
 }

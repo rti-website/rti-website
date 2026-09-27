@@ -74,6 +74,45 @@ function loadLegacyMedia(): Rewrite[] {
 }
 
 /**
+ * ONE HOSTNAME — 26 Sep 2026.
+ *
+ * The SEO crawl of 26 Sep found the same pages answering on three hosts:
+ * recycletechnologies.com, www.recycletechnologies.com and
+ * www.ww.recycletechnologies.com (a wildcard DNS record makes any label in
+ * front of the domain resolve to this server). Three copies of every URL is
+ * a duplicate-content problem, and the launch checks already noted that the
+ * bare domain answers 200 instead of redirecting.
+ *
+ * So every host that is not the canonical www, and is not the dev server,
+ * gets a single 301 to the same path on www.recycletechnologies.com. It sits
+ * BEFORE the url-map redirects so a bare-domain request for an old URL makes
+ * one hop to www and the second hop happens there, rather than the other
+ * way round.
+ *
+ * `has: host` matches the Host header the app receives. The admin team's
+ * proxy passes the visitor's Host through (deploy notes, step 7), which is
+ * what makes this work at the app instead of in nginx. The right long-term
+ * fix is ALSO on their side: the wildcard DNS record should go, and the
+ * certificate must cover the bare domain for the redirect to be reachable
+ * over https. Aaqib's nginx block for the bare domain does the same job on a
+ * server that runs nginx; this VM does not, so it lives here.
+ *
+ * Dev (dev.recycletechnologies.com), localhost and 127.0.0.1 never match.
+ */
+function hostRedirects() {
+  const has = [{ type: 'host' as const, value: '(?!www\\.recycletechnologies\\.com$|dev\\.recycletechnologies\\.com$)(?:[a-z0-9-]+\\.)*recycletechnologies\\.com' }]
+  // Three sources rather than one `/:path*`, which drops the trailing slash
+  // and would cost a second hop (the site's own slash redirect) on every
+  // page: the root, any path ending in a slash (pages), and anything else
+  // (files: /sitemap.xml, /images/...). The path is copied as it came.
+  return [
+    { source: '/', has, destination: 'https://www.recycletechnologies.com/', statusCode: 301 as const },
+    { source: '/:path(.*/)', has, destination: 'https://www.recycletechnologies.com/:path', statusCode: 301 as const },
+    { source: '/:path(.*[^/])', has, destination: 'https://www.recycletechnologies.com/:path', statusCode: 301 as const },
+  ]
+}
+
+/**
  * RTI production config.
  *
  * READ BEFORE CHANGING. Each line below is load-bearing for the migration.
@@ -99,7 +138,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     // Never hand-edit data/redirects.json — change data/url-map.csv and run
     // `npm run redirects:build`.
-    return loadRedirects()
+    return [...hostRedirects(), ...loadRedirects()]
   },
 
   async rewrites() {
