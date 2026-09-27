@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
-import { ARTICLES, GUIDES, SEARCH, type Guide } from '@/data/resources'
+import { type Guide } from '@/data/resources'
+import { content } from '@/lib/page-content'
 
 /**
  * The three bands of /resources/ — Figma 6375:905, 6375:906 and 6375:907, and
@@ -61,7 +62,8 @@ function Header({ eyebrow, heading, lead }: { eyebrow?: string; heading: string;
  * not accept one yet. The chips ARE links, so the band still leads somewhere.
  * See the note in src/data/resources.ts.
  */
-export function ResourceSearch({ top, height }: { top: number; height: number }) {
+export async function ResourceSearch({ top, height }: { top: number; height: number }) {
+  const { SEARCH } = await content('resources')
   return (
     <Section
       top={top} height={height} label="6375:905"
@@ -120,7 +122,8 @@ export function ResourceSearch({ top, height }: { top: number; height: number })
  * unchanged (p32, gap16, 21px title, 15/1.6 body — the frame redraws it at
  * 350 wide and alters nothing else).
  */
-export function ResourceGuides({ top, height }: { top: number; height: number }) {
+export async function ResourceGuides({ top, height }: { top: number; height: number }) {
+  const { GUIDES, RESOURCE_CARD_TEXT } = await content('resources')
   return (
     <Section
       top={top} height={height} label="6375:906"
@@ -148,8 +151,8 @@ export function ResourceGuides({ top, height }: { top: number; height: number })
                 <span className="w-[553px] font-sans text-[21px] font-medium leading-[1.3] text-[#132119] max-lg:w-full">{c.title}</span>
                 <span className="w-[553px] font-roboto text-[15px] leading-[1.6] text-[#7e7e7e] max-lg:w-full">{c.body}</span>
                 <span className="flex h-[20px] w-[553px] items-center justify-between max-lg:w-full">
-                  <span className="font-roboto text-[13px] text-[#a6a6a6]">Guide</span>
-                  <span className="font-roboto text-[14px] font-medium text-brand">Read Guide &nbsp;&rarr;</span>
+                  <span className="font-roboto text-[13px] text-[#a6a6a6]">{RESOURCE_CARD_TEXT.guideTag}</span>
+                  <span className="font-roboto text-[14px] font-medium text-brand">{RESOURCE_CARD_TEXT.readGuide} &nbsp;&rarr;</span>
                 </span>
               </Link>
             ))}
@@ -170,7 +173,8 @@ export function ResourceGuides({ top, height }: { top: number; height: number })
  * the shipped #eaf4f5 on r10. Kept teal, so the row does not change colour
  * when the viewport crosses 1024px; see the note in the agent report.
  */
-export function ResourceArticles({ top, height }: { top: number; height: number }) {
+export async function ResourceArticles({ top, height }: { top: number; height: number }) {
+  const { ARTICLES, RESOURCE_CARD_TEXT } = await content('resources')
   return (
     <Section
       top={top} height={height} label="6375:907"
@@ -194,7 +198,7 @@ export function ResourceArticles({ top, height }: { top: number; height: number 
               <span className="w-full font-sans text-[18px] font-medium text-[#132119]">{a.title}</span>
               <span className="w-full font-roboto text-[14px] text-[#7e7e7e]">{a.body}</span>
             </span>
-            <span className="shrink-0 whitespace-nowrap font-roboto text-[14px] font-medium text-brand">Read &rarr;</span>
+            <span className="shrink-0 whitespace-nowrap font-roboto text-[14px] font-medium text-brand">{RESOURCE_CARD_TEXT.readArticle} &rarr;</span>
           </Link>
         ))}
       </div>

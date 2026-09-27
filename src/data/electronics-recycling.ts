@@ -199,4 +199,5 @@ export const CONTENT: ServicePageContent = {
   process: PROCESS,
   faqs: FAQS,
   cta: CTA,
+  placesTitle: 'Electronic Recycling Near You',
 }

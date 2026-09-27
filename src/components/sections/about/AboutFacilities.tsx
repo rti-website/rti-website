@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { InfoRow } from '@/components/ui/Glyph'
-import { FACILITIES } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * Facilities — Figma 6372:845. Heading block on a 780px column, then three
@@ -18,7 +18,8 @@ import { FACILITIES } from '@/data/about'
  * mobile frame drops the phone row along with the desktop frame; it is kept
  * here for the same reason it was kept there.
  */
-export function AboutFacilities({ top, height }: { top: number; height: number }) {
+export async function AboutFacilities({ top, height }: { top: number; height: number }) {
+  const { FACILITIES } = await content('about')
   return (
     <Section top={top} height={height} label="6372:845"
       className="flex flex-col items-center gap-[24px] bg-[#f4f9f6] px-[20px] py-[48px] lg:gap-[50px] lg:px-0 lg:py-[100px]">

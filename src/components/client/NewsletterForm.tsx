@@ -33,7 +33,15 @@ import { path } from '@/lib/urls'
  */
 type State = 'idle' | 'sending' | 'sent' | 'error'
 
-export function NewsletterForm() {
+/** The words, from Admin -> Pages -> Footer (src/data/site-footer.ts). */
+type Text = { placeholder: string; consent: string; button: string }
+const DEFAULT_TEXT: Text = {
+  placeholder: 'Email Address',
+  consent: 'Send the latest news or something new crops up to my mail box directly.',
+  button: 'Yes, Please',
+}
+
+export function NewsletterForm({ text = DEFAULT_TEXT }: { text?: Text } = {}) {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -112,7 +120,7 @@ export function NewsletterForm() {
           name="email"
           type="email"
           required
-          placeholder="Email Address"
+          placeholder={text.placeholder}
           className="size-full rounded-[4px] bg-transparent pl-[53px] pr-[56px] font-roboto text-[15px] text-ink outline-none placeholder:text-muted lg:font-poppins lg:text-[14px]"
         />
         {/* 46 wide and a pixel proud of the box top and bottom, so it is 49 on
@@ -132,7 +140,7 @@ export function NewsletterForm() {
           6778:3899: the checkbox at y386, the 260px line 7px after it. */}
       <label className="order-1 flex items-start gap-[10px] font-roboto text-[14px] leading-[20.7px] text-muted lg:order-none lg:mt-[21px] lg:max-w-[284px] lg:gap-[7px]">
         <input type="checkbox" required className="mt-[2px] size-[17px] shrink-0 rounded-[4px] border border-line bg-white" />
-        Send the latest news or something new crops up to my mail box directly.
+        {text.consent}
       </label>
 
       {error && (
@@ -147,7 +155,7 @@ export function NewsletterForm() {
         disabled={state === 'sending'}
         className="btn-pop order-3 inline-flex h-[48.05px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand disabled:opacity-60 lg:order-none lg:mt-[20.6px] lg:w-auto"
       >
-        {state === 'sending' ? 'Signing you up…' : 'Yes, Please'}
+        {state === 'sending' ? 'Signing you up…' : text.button}
         <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
       </button>
     </form>

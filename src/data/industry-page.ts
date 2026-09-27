@@ -1,6 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, href } from '@/lib/urls'
-import { CERT_COPY } from '@/data/certifications'
 
 /**
  * Shared scaffolding for the seven industry detail pages — Figma 6246:1390.
@@ -54,8 +53,13 @@ export const CTA_BUTTONS = {
   secondary: { label: 'Contact Us',  href: href('/contact-us/') },
 }
 
-/** The site-wide compliance line (it was the industry docs' own line until 24 Sep 2026). */
-export const CERT_BODY = CERT_COPY.body
+/*
+ * The certifications paragraph is the site-wide compliance line (it was the
+ * industry docs' own line until 24 Sep 2026). It is no longer copied in here
+ * as `certifications.body` (CERT_BODY until 27 Sep 2026): with no body the
+ * band shows the shared line, read from the "Certifications (shared)"
+ * document, so an edit there reaches the industry pages too.
+ */
 
 /**
  * Builds the parts of a ServicePageContent that never vary between industries,
@@ -111,7 +115,6 @@ export function industryPage(input: {
       heading: input.servicesHeading,
       items: input.services,
     },
-    certifications: { body: CERT_BODY },
     faqs: input.faqs,
     cta: {
       heading: input.ctaHeading,

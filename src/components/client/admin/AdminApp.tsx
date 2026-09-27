@@ -8,6 +8,7 @@ import { SeoDesk } from './SeoDesk'
 import { Users } from './Users'
 import { GoogleTracking, SocialLinks, type SocialLink } from './SiteSettings'
 import { Locations } from './Locations'
+import { Pages } from './Pages'
 import { Leads } from './Leads'
 import { PasswordInput } from './Bits'
 import { LeadWorkflow } from './LeadWorkflow'
@@ -47,11 +48,11 @@ type Boot = {
 
 /* 'settings' was split in two on 24 Sep 2026: 'tracking' (Google & Tracking)
    and 'social' (Social Links). See SiteSettings.tsx. */
-type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'locations' | 'subs' | 'leads' | 'workflow' | 'users' | 'tracking' | 'social'
+type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'pages' | 'locations' | 'subs' | 'leads' | 'workflow' | 'users' | 'tracking' | 'social'
 
 const TITLES: Record<View, string> = {
   dash: 'Overview', posts: 'All Posts', editor: 'Edit post', cats: 'Categories',
-  media: 'Media library', seo: 'SEO', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries', workflow: 'Lead workflow',
+  media: 'Media library', seo: 'SEO', pages: 'Pages', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries', workflow: 'Lead workflow',
   users: 'People & access', tracking: 'Google & Tracking', social: 'Social Links',
 }
 
@@ -69,6 +70,10 @@ export function AdminApp() {
   const [focus, setFocus] = useState(false)
   const [toast, setToast] = useState('')
   const [asking, setAsking] = useState<null | 'post' | 'lead'>(null)
+  /* /admin/?lead=123 — the link in the email an agent gets when an enquiry is
+     assigned to them. Read once, after sign in, then taken off the address
+     bar so a reload does not reopen it. */
+  const [deepLead, setDeepLead] = useState<number | null>(null)
 
   const say = useCallback((msg: string) => {
     setToast(msg)
@@ -96,6 +101,11 @@ export function AdminApp() {
     // An agent's whole admin is their enquiries (db/010), so that is where
     // they land — the Overview is posts they cannot see.
     if ((data as Boot).user?.role === 'agent') setView((v) => (v === 'dash' ? 'leads' : v))
+    const lead = Number(new URLSearchParams(window.location.search).get('lead'))
+    if (Number.isInteger(lead) && lead > 0) {
+      setDeepLead(lead); setView('leads')
+      window.history.replaceState(null, '', window.location.pathname)
+    }
   }, [])
 
   useEffect(() => { void load() }, [load])
@@ -150,6 +160,12 @@ export function AdminApp() {
             half the job. */}
         <NavBtn on={view === 'seo'} go={() => show('seo')} label="SEO"
           icon="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.3-4.3M8.5 11.5l2 2 4-4.5" />
+        {/* Every page's words and pictures (Asim, 27 Sep 2026). Administrators
+            and editors, as he chose. */}
+        {canAssign && (
+          <NavBtn on={view === 'pages'} go={() => show('pages')} label="Pages"
+            icon="M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h8M9 9h3" />
+        )}
         {/* The location based service pages (SEO brief, 24 Sep 2026). */}
         <NavBtn on={view === 'locations'} go={() => show('locations')} label="Locations"
           icon="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21ZM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
@@ -215,7 +231,7 @@ export function AdminApp() {
             <button className="a-btn p" onClick={() => setAsking('lead')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> Add enquiry
             </button>
-          ) : !agent && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && (
+          ) : !agent && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && view !== 'pages' && (
             <button className="a-btn p" onClick={() => setAsking('post')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> New post
             </button>
@@ -255,8 +271,10 @@ export function AdminApp() {
         )}
         {view === 'users' && <Users meId={boot.user.id} onToast={say} />}
         {view === 'subs' && <Subscribers />}
-        {view === 'leads' && <Leads onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
+        {view === 'leads' && <Leads onToast={say} openId={deepLead} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
         {view === 'workflow' && canAssign && <LeadWorkflow onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
+        {view === 'pages' && canAssign && <Pages onToast={say} onFocusChange={setFocus}
+          onManage={(where, id) => { if (where === 'posts' && id) open(id); else if (where !== 'code') show(where) }} />}
         {view === 'locations' && <Locations canEdit={canPublish} onToast={say} />}
         {view === 'tracking' && <GoogleTracking canEdit={canTrack} onToast={say} onGoSeo={() => show('seo')} />}
         {view === 'social' && <SocialLinks social={boot.social}

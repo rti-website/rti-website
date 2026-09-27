@@ -2,7 +2,7 @@ import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { CERT_TRIM, HOME_HERO_SHIFT } from '@/lib/layout'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { LogoMarquee } from '@/components/ui/LogoMarquee'
-import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
+import { content } from '@/lib/page-content'
 
 /**
  * Certifications & Standards — Figma 6044:19732 (desktop, 1920x449) and
@@ -25,7 +25,8 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * heading, lead, strip — only matters on the board, where every child is
  * absolutely placed.
  */
-export function Certifications() {
+export async function Certifications() {
+  const { CERT_COPY, CERT_LOGOS } = await content('certifications')
   return (
     <Section
       top={1080 - HOME_HERO_SHIFT}

@@ -72,4 +72,5 @@ export const CONTENT: ServicePageContent = {
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
   },
+  placesTitle: 'Light Bulb Recycling Near You',
 }

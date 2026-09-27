@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { href } from '@/lib/urls'
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { DETAIL_COPY, type Facility } from '@/data/facilities'
+import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * "What This Location Accepts" — Figma 6744:8796 (Minnesota, six tiles) /
@@ -29,11 +30,12 @@ import { DETAIL_COPY, type Facility } from '@/data/facilities'
  * links to it, so the facility page is the hub the SEO brief asks for. Tiles
  * without one stay plain, as before.
  */
-export function LocationMaterials({ top, height, f, links = {} }: {
+export async function LocationMaterials({ top, height, f, links = {} }: {
   top: number; height: number; f: Facility
-  /** Material label -> published service page. */
+  /** Material id (its fixed name) -> published service page. */
   links?: Record<string, string>
 }) {
+  const { DETAIL_COPY } = await content('facilities')
   return (
     <Section top={top} height={height} label="6744:8796" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">
@@ -44,6 +46,8 @@ export function LocationMaterials({ top, height, f, links = {} }: {
 
       <ul className="grid w-full grid-cols-2 gap-[12px] lg:flex lg:w-auto lg:gap-[20px]">
         {f.materials.map((m) => {
+          /* Looked up by the material's fixed id, not its (editable) label. */
+          const link = links[m.id ?? m.label]
           const tile = 'flex flex-col gap-[10px] rounded-[12px] bg-[#eaf4f5] px-[16px] py-[20px] lg:w-[196px] lg:gap-[12px] lg:px-[20px] lg:py-[24px]'
           const inner = (
             <>
@@ -51,14 +55,14 @@ export function LocationMaterials({ top, height, f, links = {} }: {
                 <Image src={m.icon} alt="" width={20} height={20} unoptimized className="size-[18px] lg:size-[20px]" />
               </span>
               <span className="font-sans text-[14px] font-medium leading-[1.3] text-heading lg:text-[14.5px]">
-                {m.label}{links[m.label] && <span aria-hidden="true" className="text-brand"> &rarr;</span>}
+                {m.label}{link && <span aria-hidden="true" className="text-brand"> &rarr;</span>}
               </span>
             </>
           )
           return (
-            <li key={m.label} className="flex">
-              {links[m.label]
-                ? <Link href={href(links[m.label]!)} className={`${tile} w-full transition-colors hover:bg-[#dcefef]`}>{inner}</Link>
+            <li key={m.id ?? m.label} className="flex">
+              {link
+                ? <Link href={href(link)} className={`${tile} w-full transition-colors hover:bg-[#dcefef]`}>{inner}</Link>
                 : <span className={`${tile} w-full`}>{inner}</span>}
             </li>
           )

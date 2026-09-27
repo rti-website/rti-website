@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { Dialog } from './Dialog'
 import { Empty, Icon, Table } from './Bits'
 import { LOCATION_CSV_HEAD, LocationBlock, LocationCell, locationCsv, locationText, type LeadGeo } from './LeadLocation'
@@ -159,11 +159,14 @@ function leadsCsv(rows: LeadRow[]): string {
  * the status filter and the date range (24 Sep 2026) narrow the list;
  * "Download CSV" exports what is on screen.
  */
-export function Leads({ onToast, adding, onAdded }: {
+export function Leads({ onToast, adding, onAdded, openId = null }: {
   onToast: (m: string) => void
   /** The "+ Add enquiry" button lives in the page header; the shell flips this. */
   adding: boolean
   onAdded: () => void
+  /** Opened from a link (/admin/?lead=123, the assignment email): that
+   *  enquiry's details open and scroll into view once the list loads. */
+  openId?: number | null
 }) {
   const [rows, setRows] = useState<LeadRow[]>([])
   const [agents, setAgents] = useState<Agent[]>([])
@@ -172,6 +175,8 @@ export function Leads({ onToast, adding, onAdded }: {
   const [hasMapsKey, setHasMapsKey] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
+  const [formFor, setFormFor] = useState<LeadRow | null>(null)
+  const deepLinked = useRef(false)
   const [q, setQ] = useState('')
   const [status, setStatusFilter] = useState('')
   const [who, setWho] = useState('')   // '' any, 'none' unassigned, or an agent id
@@ -204,6 +209,13 @@ export function Leads({ onToast, adding, onAdded }: {
     })
   }, [])
   useEffect(reload, [reload])
+  // The link in the assignment email: open that enquiry once, when it is on screen.
+  useEffect(() => {
+    if (!openId || deepLinked.current || !rows.some((l) => l.id === openId)) return
+    deepLinked.current = true
+    setOpen(openId)
+    requestAnimationFrame(() => document.getElementById(`lead-${openId}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' }))
+  }, [openId, rows])
 
   async function setStatus(id: number, next: string) {
     const r = await sendJSON('/leads', 'PATCH', { id, status: next })
@@ -279,12 +291,13 @@ export function Leads({ onToast, adding, onAdded }: {
       {agent ? (
         <div className="a-note"><span>
           <b>These are the enquiries assigned to you.</b> Change the status as you work each one and add a note after
-          every call. Click <b>View</b> for the whole enquiry, the map and the history. Took a call? <b>+ Add enquiry</b> logs it under your name.
+          every call. <b>View details</b> shows the whole enquiry, the map and the history; <b>View form</b> shows it the way the email lays it out. Took a call? <b>+ Add enquiry</b> logs it under your name.
         </span></div>
       ) : (
         <div className="a-note"><span>
           <b>Every enquiry lands here: the website forms, and the ones the team logs from phone calls, emails and walk ins.</b>{' '}
-          Click <b>View</b> to see the whole enquiry, where they are on a map, how they found us and everything that has happened to it.
+          <b>View details</b> shows the whole enquiry, where they are on a map, how they found us and everything that has happened to it;
+          <b>View form</b> shows it the way the notification email laid it out.
           <b>Assigned</b> hands it to an agent, who then sees it in their own list. The <b>mi</b> under Location is the distance to the
           nearer facility: green is inside the 100 mile pickup area.
         </span></div>
@@ -339,7 +352,7 @@ export function Leads({ onToast, adding, onAdded }: {
         {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches those filters.</Empty>}
         {shown.map((l) => (
           <Fragment key={l.id}>
-            <tr>
+            <tr id={`lead-${l.id}`} style={{ scrollMarginTop: 80 }}>
               <td><span className="a-ttl">{l.name ?? l.email ?? (isCallClick(l) ? 'Unknown caller' : 'Anonymous')}</span>
                 {l.company && <span className="a-slug">{l.company}</span>}
                 {isCallClick(l) && !l.name && <span className="a-slug">tap to call · fill in below</span>}</td>
@@ -370,9 +383,15 @@ export function Leads({ onToast, adding, onAdded }: {
                 </select>
               </td>
               <td>
-                <button className="a-btn sm" aria-expanded={open === l.id} onClick={() => setOpen(open === l.id ? null : l.id)}>
-                  {open === l.id ? 'Hide' : 'View'}
-                </button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'stretch' }}>
+                  <button className="a-btn sm" style={{ whiteSpace: 'nowrap', justifyContent: 'center' }} aria-expanded={open === l.id}
+                    onClick={() => setOpen(open === l.id ? null : l.id)}>
+                    {open === l.id ? 'Hide details' : 'View details'}
+                  </button>
+                  <button className="a-btn sm" style={{ whiteSpace: 'nowrap', justifyContent: 'center' }} onClick={() => setFormFor(l)}>
+                    View form
+                  </button>
+                </div>
               </td>
             </tr>
             {open === l.id && (
@@ -420,7 +439,54 @@ export function Leads({ onToast, adding, onAdded }: {
         <LeadDialog agents={agents} me={me} onClose={onAdded}
           onSaved={(id) => { onToast(`Enquiry #${id} added`); onAdded(); reload() }} />
       )}
+      {formFor && <LeadFormDialog lead={formFor} onClose={() => setFormFor(null)} />}
     </main>
+  )
+}
+
+/* ----------------------------------------------------------------- form */
+
+/**
+ * "View form" (Asim, 27 Sep 2026): the enquiry the way the notification
+ * email lays it out, built by the same code that sends that email
+ * (src/lib/lead-email.ts through /api/admin/leads/form/), shown in a frame
+ * so the email's own styles apply and nothing of the admin's leaks in.
+ * The frame is sandboxed: no scripts, and the values in it are escaped.
+ */
+export function LeadFormDialog({ lead, onClose }: { lead: LeadRow; onClose: () => void }) {
+  const [mail, setMail] = useState<{ subject: string; html: string; emailed: boolean } | null>(null)
+  const [error, setError] = useState('')
+  const [height, setHeight] = useState(520)
+  useEffect(() => {
+    void getJSON<{ subject: string; html: string; emailed: boolean }>('/leads/form', new URLSearchParams({ id: String(lead.id) }))
+      .then((r) => { if (r.ok) setMail(r.data); else setError(r.error) })
+  }, [lead.id])
+  function print() {
+    const w = window.open('', '_blank', 'width=520,height=720')
+    if (!w || !mail) return
+    w.document.write(mail.html); w.document.close(); w.focus(); w.print()
+  }
+  return (
+    <Dialog title={`Enquiry #${lead.id}: the form`} onClose={onClose}
+      intro={mail ? (mail.emailed
+        ? <>As the notification email showed it. Subject: <b>{mail.subject}</b></>
+        : <>This enquiry did not come from a website form, so no notification email was sent. Here it is in the same layout.</>) : undefined}
+      footer={<>
+        <button className="a-btn" onClick={print} disabled={!mail}>Print</button>
+        <button className="a-btn p" onClick={onClose}>Close</button>
+      </>}>
+      {error && <div className="a-err">{error}</div>}
+      {!mail && !error && <p className="a-hint">Loading…</p>}
+      {mail && (
+        <iframe title={`Enquiry ${lead.id} as emailed`} srcDoc={mail.html} sandbox="allow-same-origin"
+          style={{ width: '100%', height, border: '1px solid var(--rule, #e5e5e5)', borderRadius: 8, background: '#fff' }}
+          onLoad={(e) => {
+            // Grow to the email's height so there is one scrollbar, not two.
+            const doc = e.currentTarget.contentDocument
+            if (doc?.body) setHeight(Math.min(Math.max(doc.body.scrollHeight + 52, 200), 2000))
+          }} />
+      )}
+    </Dialog>
   )
 }
 

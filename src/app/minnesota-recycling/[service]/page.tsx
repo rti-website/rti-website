@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import { ServiceLocationPage } from '@/components/sections/locations/ServiceLocation'
 import { CityServicePage } from '@/components/sections/locations/CityServicePage'
 import { findServicePage, offeredServices, servicePageMetadata } from '@/lib/service-location-route'
-import { fixedFacilityPage } from '@/data/city-pages'
+import { cityDocKey, fixedFacilityPage } from '@/data/city-pages'
+import { content } from '@/lib/page-content'
 import { buildMetadata } from '@/lib/seo'
 
 /**
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function MinnesotaServicePage({ params }: Props) {
   const { service } = await params
   const fixed = fixedFacilityPage(SITE, service)
-  if (fixed) return <CityServicePage page={fixed} />
+  if (fixed) return <CityServicePage page={await content(cityDocKey(fixed))} />
   const found = await findServicePage(SITE, service, false)
   if (!found) notFound()
   return <ServiceLocationPage {...found} />

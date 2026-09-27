@@ -7,7 +7,8 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import {
   ItadFeatures, ItadIntro, ItadPickup, ItadProcess, ItadServices, ItadWhy,
 } from '@/components/sections/itad/ItadSections'
-import { HERO, SEO } from '@/data/itad'
+import { SEO } from '@/data/itad'
+import { content } from '@/lib/page-content'
 
 /**
  * IT Asset Disposition — Figma 6778:2946 (desktop) / 6778:3335 (mobile).
@@ -58,7 +59,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function ItadPage() {
+export default async function ItadPage() {
+  const { HERO } = await content('itad')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

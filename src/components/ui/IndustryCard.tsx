@@ -80,7 +80,7 @@ export type Industry = {
 
 const EASE = 'duration-500 ease-out motion-reduce:transition-none'
 
-export function IndustryCard({ ind, reveal = false }: { ind: Industry; reveal?: boolean }) {
+export function IndustryCard({ ind, reveal = false, more = 'Learn More' }: { ind: Industry; reveal?: boolean; more?: string }) {
   const card = reveal ? (
     <article
       className="group relative h-[140px] w-full overflow-hidden rounded-[12px] bg-white lg:h-[226px] lg:w-[310px] lg:flex-none lg:rounded-[20px]"
@@ -106,7 +106,7 @@ export function IndustryCard({ ind, reveal = false }: { ind: Industry; reveal?: 
         {ind.b}
       </p>
       <span aria-hidden="true" className={`absolute left-[20px] right-[22px] top-[186px] hidden h-[16px] translate-y-[40px] items-center justify-between transition-[translate] group-hover:translate-y-0 group-focus-visible:translate-y-0 lg:flex ${EASE}`}>
-        <span className="font-mono text-[14px] font-medium leading-[15.95px] text-white">Learn More</span>
+        <span className="font-mono text-[14px] font-medium leading-[15.95px] text-white">{more}</span>
         <Image src="/images/icons/arrow-white.svg" alt="" width={20} height={16} className="h-[15.66px] w-[20px]" />
       </span>
     </article>

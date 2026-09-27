@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { CaseStudyFilter } from '@/components/client/CaseStudyFilter'
-import { GRID } from '@/data/case-studies'
+import { content } from '@/lib/page-content'
 
 /**
  * Filters + case study grid — Figma 6391:1527. pt 90 / pb 100 on white, gap 44:
@@ -13,7 +13,8 @@ import { GRID } from '@/data/case-studies'
  * each other. The cost is whitespace under a one-card result, which is the
  * right side to err on.
  */
-export function CaseStudyGrid({ top, height }: { top: number; height: number }) {
+export async function CaseStudyGrid({ top, height }: { top: number; height: number }) {
+  const { GRID, CASE_STUDY_CARDS } = await content('case-studies')
   return (
     /*
      * MOBILE — 6638:8851. px20 / py48 and a flat 20px rhythm: eyebrow, heading,
@@ -41,7 +42,7 @@ export function CaseStudyGrid({ top, height }: { top: number; height: number }) 
         <p className="w-full text-center font-roboto text-[14px] leading-[1.175] text-muted lg:w-[780px] lg:text-[17px]">{GRID.lead}</p>
       </div>
 
-      <CaseStudyFilter />
+      <CaseStudyFilter cards={CASE_STUDY_CARDS} grid={GRID} />
     </Section>
   )
 }

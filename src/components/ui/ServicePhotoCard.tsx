@@ -43,8 +43,10 @@ import type { ServiceCard } from '@/data/services'
  * every live service without a hole in the grid. The homepage tabs only take
  * cards that have a photo — see SERVICE_CARDS in src/data/home.ts.
  */
-export function ServicePhotoCard({ card, scale = 1, reveal = false }: {
+export function ServicePhotoCard({ card, scale = 1, reveal = false, more = 'Learn More' }: {
   card: ServiceCard
+  /** The hover label (homepage tabs); from Admin -> Pages -> Homepage. */
+  more?: string
   /**
    * Uniform scale of the whole card. /services/ (Figma 6142:1559 in file
    * drzg9BI08Dy8eWZNBfXBzD) draws the same component at 239.4 x 343.05, which
@@ -100,7 +102,7 @@ export function ServicePhotoCard({ card, scale = 1, reveal = false }: {
           </span>
           {/* Up from below: parked at the frame's y408, 79px under y329. */}
           <span aria-hidden="true" className="absolute inset-x-[20px] top-[329px] hidden h-[16px] translate-y-[79px] items-center justify-between transition-transform duration-500 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none lg:flex">
-            <span className="font-mono text-[14px] font-medium leading-[15.95px] text-brand">Learn More</span>
+            <span className="font-mono text-[14px] font-medium leading-[15.95px] text-brand">{more}</span>
             <Image src="/images/icons/arrow-teal.svg" alt="" width={20} height={16} className="h-[15.66px] w-[20px]" />
           </span>
         </>

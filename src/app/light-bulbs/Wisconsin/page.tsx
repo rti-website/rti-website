@@ -1,6 +1,7 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
 import { STATE_PAGES } from '@/data/state-pages'
+import { content } from '@/lib/page-content'
 
 /**
  * light-bulbs/Wisconsin: a landing page for Google Ads only (Asim, 24 Sep 2026).
@@ -18,6 +19,8 @@ export const metadata = buildMetadata({
   noindex: true,
 })
 
-export default function Page() {
-  return <ServiceDetailPage content={PAGE.content} layout={{ intro: 731, process: 728 }} />
+export default async function Page() {
+  // The copy with the admin's edits (Admin -> Pages); metadata above stays on STATE_PAGES.
+  const copy = await content('state/light-bulbs/Wisconsin')
+  return <ServiceDetailPage content={copy} layout={{ intro: 731, process: 728 }} />
 }

@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { CIRCULAR } from '@/data/sustainability'
+import { content } from '@/lib/page-content'
 
 /**
  * Keeping materials in circulation — Figma 6383:1161.
@@ -18,7 +18,8 @@ import { CIRCULAR } from '@/data/sustainability'
  * card goes full width on #f6f6f6 at r16 / p24 with a 20px gap and its step
  * text filling the row instead of a fixed 380.
  */
-export function CircularEconomy({ top, height }: { top: number; height: number }) {
+export async function CircularEconomy({ top, height }: { top: number; height: number }) {
+  const { CIRCULAR } = await content('sustainability')
   return (
     <Section top={top} height={height} label="6383:1161"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-0 lg:px-0 lg:py-[100px]">

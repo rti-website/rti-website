@@ -1,5 +1,5 @@
 import { ClosingCta, type CtaContent } from '@/components/sections/ClosingCta'
-import { SERVICES_CTA } from '@/data/services'
+import { content as pageContent } from '@/lib/page-content'
 
 /**
  * The closing CTA on /services/ (6142:1153), the service detail pages
@@ -12,12 +12,14 @@ import { SERVICES_CTA } from '@/data/services'
  */
 export type { CtaContent }
 
-export function ServicesCta({
-  top = 3374.86, label = '6142:1153', content = SERVICES_CTA,
+export async function ServicesCta({
+  top = 3374.86, label = '6142:1153', content,
 }: {
   top?: number
   label?: string
   content?: CtaContent
 } = {}) {
-  return <ClosingCta top={top} label={label} content={content} />
+  // No `content`: the services page's own closing CTA, as edited in the admin.
+  const cta = content ?? (await pageContent('services')).SERVICES_CTA
+  return <ClosingCta top={top} label={label} content={cta} />
 }

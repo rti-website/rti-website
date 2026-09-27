@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
+import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /battery-recycling-chicago/ — "Battery Recycling in Chicago, Illinois",
@@ -115,6 +115,7 @@ export const CHICAGO_BATTERY: CityPage = {
     body: ['Illinois state law generally restricts businesses from disposing of certain battery types in regular trash. Chicago businesses should confirm the current local rules with the City of Chicago before disposing of batteries, as specific requirements can change.'],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What battery types does Recycle Technologies recycle?',
       a: 'Alkaline and zinc batteries, lithium-ion and sealed lead-acid batteries, nickel-cadmium and button cell batteries, and EV, power tool and backup batteries. Other types, including mercury oxide batteries, are handled on a case-by-case basis.' },
@@ -139,10 +140,14 @@ export const CHICAGO_BATTERY: CityPage = {
       'Recycle Technologies picks up spent batteries from offices, warehouses, data centers, and fleet operations across the Chicago area, then processes them at its own R2v3 certified facilities and provides documentation for your records.',
       'Tell us what you have and where it is. Most Chicago pickups are scheduled within a few business days.',
     ],
-    primary: { label: 'Schedule a Battery Recycling Pickup in Chicago, Illinois', href: QUOTE },
-    phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166' },
+    primary: { label: 'Schedule a Battery Recycling Pickup in Chicago, Illinois', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166', phoneLabel: 'Phone: 800-969-5166' },
+    headingWidth: 598,
     footnote: 'Recycle Technologies has served businesses across the Midwest since 1993.',
   },
+
+  /** Grey bands as the revised board draws them (27 Sep 2026). */
+  bands: ['info', 'res', 'whycards', 'related'],
 
   todo: [
     'FAQ answers: the frame draws the five questions closed. Answers are built from this page’s own copy; confirm or replace.',

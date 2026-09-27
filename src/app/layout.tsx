@@ -7,6 +7,8 @@ import { trackingBootstrap, trackingRuntime } from '@/lib/tracking'
 import { PageViewTracker } from '@/components/client/PageViewTracker'
 import { TawkChat } from '@/components/client/TawkChat'
 import { canvasZoomScript } from '@/lib/canvas-zoom'
+import { isPreview } from '@/lib/page-content'
+import { PreviewBar } from '@/components/client/PreviewBar'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -25,7 +27,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
    * 23 Sep 2026). Settings come from Admin -> Settings -> Analytics &
    * Tracking; see src/lib/tracking.ts for what loads where.
    */
-  const tracking = await trackingRuntime()
+  const [live, preview] = await Promise.all([trackingRuntime(), isPreview()])
+  /* An editor previewing unpublished copy (Admin -> Pages) is not a visitor:
+     no GTM, no gtag, no call number swap, so previews never reach analytics
+     or Google Ads. Draft mode only exists for a signed in editor. */
+  const tracking = preview ? { ...live, gtm: null, gtag: false, calls: [] } : live
   return (
     // suppressHydrationWarning: browser extensions (ColorZilla's
     // cz-shortcut-listen, Grammarly, LastPass) inject attributes onto <html>
@@ -56,6 +62,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Suspense fallback={null}><PageViewTracker /></Suspense>
         {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
+        {preview && <PreviewBar />}
       </body>
     </html>
   )

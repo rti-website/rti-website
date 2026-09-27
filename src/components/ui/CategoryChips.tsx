@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * The category filter row — Figma 6384:1232, drawn exactly as it is there: a
@@ -28,7 +29,7 @@ const BASE = 'btn-pop flex h-[38px] items-center whitespace-nowrap rounded-full 
 const ON = 'bg-brand text-white'
 const OFF = 'bg-brand-soft text-brand hover:bg-[#dbecee]'
 
-export function CategoryChips({
+export async function CategoryChips({
   chips, active,
 }: {
   chips: Chip[]
@@ -45,7 +46,7 @@ export function CategoryChips({
         aria-current={active ? undefined : 'page'}
         className={`${BASE} ${active ? OFF : ON}`}
       >
-        All Articles
+        {(await content('blog')).LIST_TEXT.allArticles}
       </Link>
       {chips.map((c) => (
         <Link

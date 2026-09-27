@@ -1,7 +1,7 @@
 import { href, quoteHref } from '@/lib/urls'
 
 /**
- * /electronic-recycling-chicago/ — "Recycling in Chicago, Illinois", Figma
+ * /electronic-recycling-chicago/ — "Electronics Recycling in Chicago, Illinois" (H1 until 27 Sep 2026: "Recycling in Chicago, Illinois"), Figma
  * 6873:14196 (board) and 6896:15317 (phone) in BVtf2AOuUOcYbiMIlcKmbC. Built
  * 25 Sep 2026 (Asim: "make this chicago page exact content and design, when
  * someone clicks on the chicago card it lands on this").
@@ -12,15 +12,18 @@ import { href, quoteHref } from '@/lib/urls'
  * data/url-map.csv now KEEPs it.
  *
  * CHICAGO IS A SERVICE AREA, NOT A FACILITY. The page says so itself (the
- * yellow notice and "That Distinction Matters"), and the build follows it: no
+ * yellow notice and "Chicago Is a Service Area, Not a Facility"), and the build follows it: no
  * LocalBusiness schema, no address, no map. The schema is a Service with
  * Chicago as its area, a BreadcrumbList and the FAQPage.
  *
  * Copy is the frames' word for word, except:
- *   - the FAQ ANSWERS. The frames draw the four questions closed, with no
- *     answers. Three answers are taken from copy this site already publishes
- *     (the homepage FAQ, and the page's own step 4); the fourth (pickup lead
- *     time) promises no figure. See `todo`.
+ *   - the FAQ ANSWERS. The frames draw the five questions closed, with no
+ *     answers. Each restates this page's own copy. See `todo`.
+ *
+ * REVISED 27 SEP 2026 to the designer's new frames: residents are now served
+ * by the mail-in program (new Residents section), drop-off is gone, eight
+ * accepted categories, five steps, six "why" cards with titles, and a new
+ * CTA.
  *   - the SEO title and description, which the frames do not give. See `seo`.
  */
 
@@ -31,36 +34,51 @@ export const SEO = {
   description: 'Commercial electronics and e-waste recycling for Chicago businesses, with pickup, drop-off, ITAD and hard drive destruction through our certified process.',
 }
 
+/*
+ * HERO, REVISED 27 SEP 2026. The designer updated 6873:14198: the H1 now
+ * reads "Electronics Recycling in Chicago, Illinois" (Asim: the page is
+ * electronics, not all recycling), the photo is an electronics warehouse with
+ * the skyline behind (new file, hero-electronics.png, so the old one is
+ * untouched), and a button sits under the H1. The frame's label reads
+ * "Schedule a Electronics Recycling Pickup"; built with "an". The breadcrumb
+ * still reads "Recycling in Chicago, Illinois" in the frame and is left so.
+ * The phone frame (6896:15331) now draws its own button (6955:11443): 36
+ * tall, 14px, no arrow, its own label (`phoneLabel`).
+ */
 export const HERO = {
-  h1: 'Recycling in Chicago, Illinois',
+  h1: 'Electronics Recycling in Chicago, Illinois',
   crumbs: [
     { label: 'Home', href: href('/') },
     { label: 'Locations', href: href('/all-locations/') },
     { label: 'Recycling in Chicago, Illinois', href: null },
   ],
-  image: '/images/locations/chicago/hero.png',
+  image: '/images/locations/chicago/hero-electronics.png',
+  button: { label: 'Schedule an Electronics Recycling Pickup', phoneLabel: 'Schedule an Electronics Recycling Pickup', href: quoteHref({ service: 'Electronics Recycling', location: 'Chicago, IL' }) },
 }
 
-/** Section - Service Area Notice — 6879:2744 / 6897:2768. */
+/** Section - Service Area Notice — 6879:2744 / 6897:2768. Revised 27 Sep
+ *  2026: three paragraphs with a blank line between them. */
 export const NOTICE = [
-  'Recycle Technologies provides commercial electronics and e-waste recycling services to businesses in the Chicago area. Recycle Technologies does not operate a licensed recycling facility in Chicago. Chicago is served as part of the company’s expanded service area, with materials handled through the company’s certified processes.',
-  'If your business needs to recycle computers, TVs, or a batch of retired office equipment in Chicago, this page explains what is available, what is accepted, and how to get started.',
+  'Recycle Technologies provides electronics recycling services to businesses and residents in the Chicago area.',
+  'Recycle Technologies does not operate a facility or drop-off point in Chicago. Businesses in the Chicago area are served through scheduled commercial pickup, while residents and small-volume customers can use the mail-in program for eligible electronics.',
+  'If you need to recycle computers, TVs, monitors, cables, switches, adapters, or other electronics in Chicago, this page explains what is available, what is accepted, and how to get started.',
 ]
 
-/** Section - Intro — 6879:2745 / 6897:2769. */
+/** Section - Intro — 6879:2745 / 6897:2769. The eyebrow pill shows on the
+ *  board only (the phone frame drops it). */
 export const INTRO = {
   eyebrow: 'Chicago, Illinois',
   heading: 'Electronics Recycling Services in Chicago',
   body: [
-    'Recycle Technologies is a Midwest-based recycling and shredding company that has operated licensed, R2v3-certified facilities in Minnesota and Wisconsin for 3 decades.',
-    'In Chicago, the company serves business customers through expanded operations rather than a licensed facility located in the city itself.',
+    'Recycle Technologies is a Midwest-based recycling and shredding company that has operated licensed, R2v3-certified facilities in Minnesota and Wisconsin for more than 3 decades.',
+    'In Chicago, the company serves customers through expanded operations rather than a licensed recycling facility located in the city itself.',
   ],
   aside: {
-    heading: 'That Distinction Matters',
+    heading: 'Chicago Is a Service Area, Not a Facility',
     body: [
-      'Chicago is a service area, not a facility. Recycle Technologies does not have a licensed recycling plant, warehouse, or processing center in Chicago.',
-      'Businesses in Chicago can use Recycle Technologies’ services through commercial pickup or drop-off at this location.',
-      'Businesses can arrange service for office electronics, IT equipment, and larger recycling needs.',
+      'Recycle Technologies does not have a licensed recycling plant, warehouse, or processing center in Chicago.',
+      'Chicago businesses can arrange scheduled commercial pickup for computers, monitors, televisions, networking equipment, cables, adapters, and other electronics.',
+      'Residents and small-volume customers can use the mail-in program for eligible electronics that can be safely shipped to Recycle Technologies for processing.',
     ],
   },
 }
@@ -74,91 +92,141 @@ export const SERVICE_INFO = {
   heading: 'Chicago Location and Service Information',
   location: 'Chicago, Illinois',
   area: 'Chicago and surrounding areas',
+  businesses: 'Scheduled commercial pickup',
+  residents: 'Mail-in program',
+  facility: 'Processing takes place at Recycle Technologies facilities outside Chicago',
+  /** The row labels, in the frame's order. The phone frame reads "Business";
+   *  the board's "Businesses" is used for both. */
+  labels: {
+    location: 'Location',
+    phone: 'Phone',
+    area: 'Service Area',
+    businesses: 'Businesses',
+    residents: 'Residents and small quantities',
+    facility: 'Facility',
+  },
 }
 
 const I = '/images/locations/chicago'
 
-/** Section - What We Accept — 6879:2747 / 6897:2771. */
+/** Section - What We Accept — 6879:2747 / 6897:2771. Eight cards (3 + 3 + 2
+ *  on the board); the batteries banner is gone. Glyphs are the board's: the
+ *  phone frame draws a battery glyph on the last two cards. */
 export const ACCEPT = {
   eyebrow: 'What We Accept',
   heading: 'A Broad Range of Electronics & IT Equipment',
-  lead: 'Recycle Technologies accepts a broad range of electronics and IT equipment, including:',
+  lead: 'Recycle Technologies accepts a broad range of electronics and e-waste, including:',
   items: [
     { icon: `${I}/accept-computers.svg`, title: 'Computers & IT Equipment', text: 'Desktop computers, servers, and related IT hardware.' },
     { icon: `${I}/accept-laptops.svg`,   title: 'Laptops', text: 'Laptops from office use.' },
-    { icon: `${I}/accept-monitors.svg`,  title: 'Monitors & Displays', text: 'Computer monitors of all types.' },
-    { icon: `${I}/accept-tv.svg`,        title: 'Televisions', text: 'Televisions, with no restrictions on type or condition.' },
-    { icon: `${I}/accept-office.svg`,    title: 'Office & Networking Equipment', text: 'Printers, copiers, scanners, and fax machines.' },
-    { icon: `${I}/accept-small.svg`,     title: 'Small Electronics', text: 'Keyboards, mice, cables, switches, and cell phones.' },
+    { icon: `${I}/accept-monitors.svg`,  title: 'Monitors & Displays', text: 'Computer monitors, LCD displays, and other electronic display equipment.' },
+    { icon: `${I}/accept-tv.svg`,        title: 'Televisions', text: 'CRT, LCD, LED, plasma, and other television types.' },
+    { icon: `${I}/accept-office.svg`,    title: 'Networking Equipment', text: 'Switches, routers, access points, modems, and other networking hardware.' },
+    { icon: `${I}/accept-small.svg`,     title: 'Cables, Adapters, and Accessories', text: 'Power cables, data cables, chargers, adapters, keyboards, mice, and other electronic accessories.' },
+    { icon: `${I}/accept-tv.svg`,        title: 'Phones and Telecommunications Equipment', text: 'Cell phones, business phones, telecommunications equipment, and related electronics.' },
+    { icon: `${I}/accept-office.svg`,    title: 'Office Electronics', text: 'Small electronic devices, electronic components, and other miscellaneous e-waste.' },
   ],
-  /** Drawn as a full width banner under the grid on the board, a seventh card on the phone. */
-  batteries: { icon: `${I}/accept-batteries.svg`, title: 'Batteries', text: 'Collected and processed through our battery recycling program.' },
-  note: 'Do we accept all the above categories at this location? Acceptance can vary by drop-off point — contact us to confirm before bringing in a specific item.',
+  note: 'If you are unsure whether a specific item qualifies, describe your equipment when requesting service so Recycle Technologies can confirm whether it can be accepted.',
 }
 
-/** Section - Residents and Businesses — 6879:2748 / 6897:2772 ("For Chicago Businesses"). */
+/** Section - For Chicago Businesses — 6879:2748 / 6897:2772. */
 export const BUSINESSES = {
   heading: 'For Chicago Businesses',
   eyebrow: 'Businesses',
   title: 'Electronics Recycling for Chicago Businesses',
-  intro: 'Businesses in the Chicago area can arrange electronics recycling for office equipment, IT assets, and larger volumes of e-waste. This includes:',
+  intro: 'Businesses in the Chicago area can arrange electronics recycling for retired office equipment, IT equipment, facility electronics, and larger volumes of e-waste.',
+  includes: 'This includes:',
   points: [
-    'Retired computers, servers, and monitors',
-    'Networking and office equipment such as printers and copiers',
-    'IT asset disposition (ITAD) for equipment refreshes and decommissioning',
-    'Data security needs, including hard drive destruction',
+    'Computers, laptops, servers, and monitors',
+    'Televisions and displays',
+    'Switches, routers, access points, cables, and adapters',
+    'Phones and telecommunications equipment',
+    'Printers, copiers, scanners, and other office electronics',
+    'Larger volumes of mixed electronic equipment',
+    'Hard drives and storage devices requiring secure destruction',
   ],
   outro: [
-    'Illinois law requires businesses to recycle electronics rather than dispose of them with regular waste, making a documented recycling partner relevant for both compliance and sustainability.',
+    'Illinois law generally requires businesses to recycle covered electronics rather than dispose of them with regular waste, making a documented recycling partner relevant for both compliance and sustainability.',
     'To arrange service, businesses can request a quote or schedule a commercial pickup.',
   ],
 }
 
-/** Section - How It Works — 6879:2749 / 6897:2773. The phone frame spells
- *  step 3 "Recycling and Material Recovery"; the board's "&" is used for both. */
+/** Section - Residents — 6925:6405 / 6925:6409 (new 27 Sep 2026). The body
+ *  runs before + link + after, so the admin can edit the link's words and
+ *  address; the link opens in a new tab. */
+export const RESIDENTS = {
+  heading: 'Electronics Recycling for Chicago Residents',
+  body: {
+    before: 'Recycle Technologies does not offer residential pickup or a local drop-off facility in Chicago. Chicago residents and small-volume customers can use the mail-in program for eligible electronics: order an appropriate ',
+    linkText: 'recycling kit',
+    href: 'https://ezontheearth.com/collections/electronic-waste',
+    after: ', pack the materials according to the instructions provided, and ship them to Recycle Technologies for processing.',
+  },
+}
+
+/** Section - How It Works — 6879:2749 / 6897:2773. Five steps since 27 Sep. */
 export const STEPS = {
   heading: 'How Electronics Recycling Works',
   items: [
-    { title: 'Collection or Drop-Off', text: 'Items are collected either through commercial pickup or dropped off at this Chicago-area location.' },
-    { title: 'Sorting and Processing', text: 'Collected electronics are broken down into base materials, including plastic, wire, circuit boards, metals, and glass, so each component can be recycled properly.' },
-    { title: 'Recycling & Material Recovery', text: 'Plastic and wire are shredded and sent to molders and smelters. Monitors are decontaminated and recycled. Circuit boards are sorted so their materials can be recovered.' },
-    { title: 'Documentation', text: 'Recycle Technologies provides recycling documentation as part of its certified process, supporting businesses that need records for compliance or internal reporting.' },
+    { title: 'Commercial Pickup or Mail-In', text: 'Businesses can schedule commercial pickup for larger quantities of electronics. Residents and small-volume customers can use the mail-in program for eligible materials.' },
+    { title: 'Sorting and Processing', text: 'Collected electronics are sorted and broken down into base materials, including plastic, wire, circuit boards, metals, and glass.' },
+    { title: 'Data Destruction and Material Recovery', text: 'Hard drives and other storage devices requiring secure destruction can be processed through the applicable hard drive destruction service. Other electronics are dismantled and separated so recoverable materials can be recycled and reused.' },
+    { title: 'Recycling and Material Recovery', text: 'Plastics, metals, glass, circuit boards, wire, and other recoverable materials are separated and processed for recycling rather than sent to a landfill.' },
+    { title: 'Documentation', text: 'Recycle Technologies provides recycling documentation as part of its certified process, supporting customers who need records for compliance or internal reporting.' },
   ],
 }
 
-/** Section - Why Recycle Technologies — 6879:2750 / 6897:2774. Two icons
- *  differ between the frames (the phone draws a plain shield and a truck),
- *  so those two carry a `phoneIcon`. */
+/** Section - Why Recycle Technologies — 6879:2750 / 6897:2774. Six cards,
+ *  each a title over a line of text. Two icons differ between the frames
+ *  (the phone draws a plain shield and a truck), so those two carry a
+ *  `phoneIcon`. In-House Processing uses the Minority-Owned glyph, as drawn. */
 export const WHY = {
   heading: 'Why Recycle Technologies for Electronics Recycling',
   items: [
-    { icon: `${I}/why-years.svg`,     text: 'Over 30 years of experience. Recycle Technologies has operated since 1993.' },
-    { icon: `${I}/why-certified.svg`, phoneIcon: `${I}/why-certified-phone.svg`, text: 'Certified standards. The company holds R2v3 and RIOS certification for data destruction and recycling.' },
-    { icon: `${I}/why-pickup.svg`,    phoneIcon: `${I}/why-pickup-phone.svg`, text: 'Commercial pickup and drop-off. Chicago businesses can use pickup or drop-off at this location.' },
-    { icon: `${I}/why-security.svg`,  text: 'Data security. Hard drive destruction is available for businesses that need to protect sensitive information before disposing of equipment.' },
-    { icon: `${I}/why-minority.svg`,  text: 'Minority-owned. Recycle Technologies is the only minority-owned document destruction and recycling company in the Midwest region.' },
-  ] as { icon: string; phoneIcon?: string; text: string }[],
-  law: { icon: `${I}/why-law.svg`, text: 'Illinois state law generally requires that businesses recycle electronics rather than place them in regular trash. Chicago businesses should confirm the current local rules with the City of Chicago before disposing of electronics, as specific requirements can change.' },
+    { icon: `${I}/why-years.svg`,     title: 'Over 30 Years of Experience', text: 'Recycle Technologies has operated since 1993.' },
+    { icon: `${I}/why-certified.svg`, phoneIcon: `${I}/why-certified-phone.svg`, title: 'Certified Standards', text: 'The company holds R2v3 and RIOS certifications for applicable recycling and data destruction processes.' },
+    { icon: `${I}/why-pickup.svg`,    phoneIcon: `${I}/why-pickup-phone.svg`, title: 'Commercial Pickup and Mail-In Recycling', text: 'Businesses can schedule commercial pickup, while residents and small-volume customers can use the mail-in program for eligible electronics.' },
+    { icon: `${I}/why-security.svg`,  title: 'Hard Drive Destruction', text: 'Hard drive destruction is available for electronics containing sensitive data that require secure destruction before recycling.' },
+    { icon: `${I}/why-minority.svg`,  title: 'In-House Processing', text: 'Collected electronics are processed through Recycle Technologies’ own facilities rather than being sent through an outside broker.' },
+    { icon: `${I}/why-minority.svg`,  title: 'Minority-Owned', text: 'Recycle Technologies is the only minority-owned document destruction and recycling company in the Midwest region.' },
+  ] as { icon: string; phoneIcon?: string; title: string; text: string }[],
+  /** The white box under the cards: a heading since 27 Sep, then two lines. */
+  law: {
+    icon: `${I}/why-law.svg`,
+    heading: 'Local Chicago Recycling Information',
+    text: [
+      'Illinois state law generally requires businesses to recycle covered electronics rather than place them in regular trash.',
+      'Chicago businesses and residents should confirm current local requirements with the City of Chicago before disposing of electronics, as specific requirements can change.',
+    ],
+  },
 }
 
-/** Section - FAQ — 6879:2751 / 6897:2775. Questions from the frames; see
- *  the head note for where the answers come from. */
+/** Section - FAQ — 6879:2751 / 6897:2775: the pill and heading over the questions. */
+export const FAQ_HEAD = { eyebrow: 'FAQs', heading: 'Frequently Asked Questions' }
+
+/** Section - FAQ — 6879:2751 / 6897:2775. Questions from the frames (five
+ *  since 27 Sep). The frames draw them closed, with no answers: the answers
+ *  below restate this page's own copy and add nothing to it. See `todo`. */
 export const FAQS = [
+  {
+    q: 'What electronics can I recycle?',
+    a: 'Recycle Technologies accepts a broad range of electronics and e-waste, including computers and IT equipment, laptops, monitors and displays, televisions, networking equipment, cables, adapters and accessories, phones and telecommunications equipment, and office electronics. If you are unsure whether a specific item qualifies, describe your equipment when requesting service so Recycle Technologies can confirm whether it can be accepted.',
+  },
   {
     q: 'Can I recycle electronics that still work?',
     a: 'Yes. We accept working, unwanted, and outdated electronics for responsible recycling.',
   },
   {
-    q: 'Will my data be securely destroyed if I recycle a computer or hard drive?',
-    a: 'Data can remain on devices unless it is securely erased or destroyed. We offer secure hard drive destruction to help protect sensitive information.',
+    q: 'Does Recycle Technologies have an electronics drop-off facility in Chicago?',
+    a: 'No. Recycle Technologies does not operate a facility or drop-off point in Chicago. Businesses in the Chicago area are served through scheduled commercial pickup, while residents and small-volume customers can use the mail-in program for eligible electronics.',
   },
   {
-    q: 'Do I get documentation showing my Chicago recycling was handled responsibly?',
-    a: 'Yes. Recycle Technologies provides recycling documentation as part of its certified process, supporting businesses that need records for compliance or internal reporting.',
+    q: 'Can hard drives be securely destroyed?',
+    a: 'Yes. Hard drive destruction is available for electronics containing sensitive data that require secure destruction before recycling. Hard drives and other storage devices are processed through the applicable hard drive destruction service.',
   },
   {
-    q: 'How far in advance do Chicago businesses need to schedule a pickup?',
-    a: 'It depends on the size of the load and the current schedule for the Chicago area. Call (800) 969-5166 or request a quote, and our team will confirm the earliest available pickup date.',
+    q: 'Do I get documentation after my electronics are recycled?',
+    a: 'Yes. Recycle Technologies provides recycling documentation as part of its certified process, supporting customers who need records for compliance or internal reporting.',
   },
 ]
 
@@ -175,22 +243,27 @@ export const RELATED = {
   ],
 }
 
-/** Section - CTA — 6879:2752 / 6896:15629. Both buttons open the contact form
- *  with Electronics Recycling and "Chicago, IL" already filled in, as the
- *  state landing pages do. */
+/** Section - CTA — 6879:2752 / 6896:15629. Revised 27 Sep 2026: two
+ *  paragraphs, a white "Schedule …" button (a shorter label on the phone)
+ *  that opens the contact form with Electronics Recycling and "Chicago, IL"
+ *  filled in, and a bordered "Call: …" button. */
 const QUOTE = quoteHref({ service: 'Electronics Recycling', location: 'Chicago, IL' })
 export const CTA = {
   heading: 'Get Started With Electronics Recycling in Chicago',
-  body: 'For businesses: request a quote or schedule a commercial pickup, or drop off items at this location.',
-  primary: { label: 'Get a Quote', href: QUOTE },
-  secondary: { label: 'Schedule a Pickup', href: QUOTE },
-  phone: { label: 'Phone: 800-969-5166', tel: 'tel:+18009695166' },
-  note: 'Contact Recycle Technologies to confirm current options for the Chicago area.',
+  body: [
+    'Recycle Technologies serves Chicago businesses through scheduled commercial pickup and offers a mail-in option for residents and small-volume customers with eligible electronics.',
+    'Tell us what electronics you have and where they are located. Businesses can request a quote or schedule a pickup, while residents can check the mail-in program for eligible items.',
+  ],
+  primary: { label: 'Schedule an Electronics Pickup in Chicago, Illinois', phoneLabel: 'Schedule an Electronics Recycling Pickup', href: QUOTE },
+  phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166' },
+  note: 'Contact Recycle Technologies to confirm current service options and eligibility for your electronics.',
 }
 
 export const todo = [
-  'FAQ answers: the frames have none. Three reuse published copy; the pickup lead time answer gives no figure. Confirm or replace all four.',
-  'SEO title and description: written for the build (the frames give none). SEO team to confirm.',
+  'FAQ answers: the frames give the five questions but no answers. Each answer restates this page’s own copy (no new facts or figures); the working-electronics answer is the one published before. Confirm or replace all five.',
+  'SEO title and description: written for the build (the frames give none). The description still says "pickup, drop-off, ITAD", but the page now says there is no drop-off in Chicago. SEO team to confirm a new description (CLAUDE.md rule 6: not changed here).',
   'Second phone number (800) 305-3040: from the frame; confirm it is a live line for Chicago.',
-  '"Drop-off at this location": the page offers drop-off in Chicago while also saying there is no facility there. Confirm where Chicago drop-off happens, or reword.',
+  'The Chicago card on the locations pages (src/data/facilities.ts) carries a "Drop-off Location" badge; the page now says there is no drop-off in Chicago.',
+  'Phone frame differences, board used: What We Accept draws a battery glyph on "Phones and Telecommunications Equipment" and "Office Electronics", and gives Office Electronics other text ("Printers, copiers, scanners, fax machines, and other electronic office equipment."); Service Info labels the row "Business".',
+  'Phone hero button: the frame draws teal text on a teal fill (invisible); built with white text.',
 ]

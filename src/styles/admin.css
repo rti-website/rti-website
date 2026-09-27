@@ -884,3 +884,72 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
 
 /* The role cards under the accounts table. */
 .a-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 18px; }
+
+/* ------------------------------------------------------------------ pages
+   Admin -> Pages (27 Sep 2026): the list of every editable page, and the
+   editor, a form beside the real page in a preview frame. Components in
+   components/client/admin/Pages.tsx; the grip is the shared one (Split.tsx). */
+.a-pgbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; }
+.a-seg { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.a-pg { display: flex; flex-direction: column; gap: 14px; }
+.a-pghead {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; position: sticky; top: 0; z-index: 5;
+  background: var(--ground); padding: 10px 0; border-bottom: 1px solid var(--rule);
+}
+.a-pgtitle { font-family: var(--a-sans); font-size: 16px; font-weight: 600; }
+.a-pggrid { display: grid; grid-template-columns: minmax(0, 1fr) 26px var(--rail-w, 55%); align-items: start; }
+.a-pgform { min-width: 0; }
+.a-pgside {
+  position: sticky; top: 64px; display: flex; flex-direction: column; gap: 8px;
+  height: calc(100dvh - 150px); min-height: 420px;
+}
+.a-pgprevbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px; }
+.a-pgstale { font-size: 12px; background: var(--a-warn-soft); color: var(--a-warn); border-radius: 8px; padding: 6px 10px; }
+.a-pgframe {
+  position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; border: 1px solid var(--rule);
+  border-radius: 10px; background: var(--panel);
+}
+.a-pgframe iframe { border: 0; display: block; background: #fff; }
+.a-pgload { position: absolute; inset: 0; display: grid; place-items: center; color: var(--a-muted); font-size: 13px; pointer-events: none; }
+.a-pgsec { padding: 0; }
+.a-pgsec > summary {
+  cursor: pointer; padding: 13px 15px; font-family: var(--a-sans); font-size: 14px; font-weight: 600; list-style: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.a-pgsec > summary::before { content: "▸"; color: var(--a-muted); transition: transform .15s; }
+.a-pgsec[open] > summary::before { transform: rotate(90deg); }
+.a-pgsec > summary::-webkit-details-marker { display: none; }
+.a-pgsec > :not(summary) { padding: 0 15px 15px; }
+.a-pgfield { margin-bottom: 12px; }
+.a-pgfield > label { display: flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--a-ink); }
+.a-pgreset { border: 0; background: var(--a-warn-soft); color: var(--a-warn); border-radius: 999px; font-size: 10.5px; padding: 1px 8px; cursor: pointer; }
+.a-pgobj { border-left: 2px solid var(--rule-soft); padding-left: 12px; margin: 4px 0 10px; }
+.a-pglist { border: 1px dashed var(--rule); border-radius: 10px; padding: 10px; margin: 4px 0 12px; background: var(--panel-2); }
+.a-pglisthead { display: flex; justify-content: space-between; font-family: var(--a-sans); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+.a-pgitem { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; background: var(--ground); }
+.a-pgitemhead { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.a-pgitemhead .a-btn.sm { height: 24px; padding: 0 8px; }
+.a-pgimg { display: flex; gap: 10px; align-items: flex-start; }
+.a-pgimg img { width: 96px; height: 64px; object-fit: contain; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); }
+.a-pghist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.a-pghist li { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--rule-soft); padding-bottom: 8px; }
+.a-pggrid.dragging { cursor: col-resize; user-select: none; }
+.a-pggrid.dragging * { pointer-events: none; }
+.a-pggrid.dragging .a-grip { pointer-events: auto; }
+@media (max-width: 1100px) {
+  .a-pggrid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .a-pggrid .a-grip { display: none; }
+  .a-pgside { position: static; height: 70vh; }
+}
+/* Pages list: filters and sortable headings (27 Sep 2026). */
+.a-pgsel { width: auto; min-width: 150px; height: 36px; padding-right: 28px; }
+.a-pgth {
+  border: 0; background: none; padding: 0; cursor: pointer; font: inherit; color: inherit;
+  letter-spacing: inherit; text-transform: inherit;
+}
+.a-pgth:hover, .a-pgth.on { color: var(--a-brand); }
+/* The editor in full width (rail and page header folded away): the sheet
+   loses its top padding so the sticky bar sits at the very top, and the
+   preview takes the height the header used to. */
+.a-pgsheet { padding-top: 0; }
+.a-app.focus .a-pgside { top: 64px; height: calc(100dvh - 84px); }

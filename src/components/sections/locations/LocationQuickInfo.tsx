@@ -1,6 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { GLYPHS } from '@/components/ui/Glyph'
-import { DETAIL_COPY, type Facility } from '@/data/facilities'
+import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
@@ -19,7 +20,8 @@ import { R2_DIRECTORY } from '@/data/certifications'
  * MOBILE — 6750:8517. The plate becomes a 350px card with the four items
  * stacked, 18 apart, tiles at 38 with a 17px glyph.
  */
-export function LocationQuickInfo({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationQuickInfo({ top, height, f }: { top: number; height: number; f: Facility }) {
+  const { DETAIL_COPY } = await content('facilities')
   const items = [
     { glyph: 'pin' as const,   label: DETAIL_COPY.quickInfo.address, value: f.addressShort },
     { glyph: 'phone' as const, label: DETAIL_COPY.quickInfo.phone,   value: f.phone, href: `tel:${f.phone.replace(/[^+\d]/g, '')}` },
@@ -27,7 +29,7 @@ export function LocationQuickInfo({ top, height, f }: { top: number; height: num
     // A certified facility's status opens SERI's directory listing (new tab),
     // like every R2v3 mark on the site (25 Sep 2026). "Pursuing R2v3" does not.
     { glyph: 'badge' as const, label: DETAIL_COPY.quickInfo.cert,    value: f.cert.status,
-      href: f.cert.status === 'R2v3 Certified' ? R2_DIRECTORY : undefined, external: true },
+      href: f.cert.certified ? R2_DIRECTORY : undefined, external: true },
   ]
   return (
     <Section top={top} height={height} label="6744:8794" className="flex flex-col items-center bg-white px-[20px] py-[32px] lg:px-0 lg:py-[50px]">

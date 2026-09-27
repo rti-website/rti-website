@@ -79,6 +79,29 @@ export const NEWSLETTER = {
   placeholder: 'Enter your email address',
   button: 'Subscribe',
   disclaimer: 'By subscribing, you agree to receive occasional updates. Unsubscribe anytime.',
+  /** Replaces the bar once the address is in. */
+  sent: 'Thanks — you are on the list.',
+  /** Under the bar: an address that does not look like one, /api/subscribe
+   *  failing without a message of its own, the server out of reach. */
+  errors: {
+    invalid: 'Please check the email address.',
+    generic: 'Something went wrong. Please try again.',
+    network: 'Could not reach the server. Please try again.',
+  },
+}
+
+/** What BlogNewsletterForm takes: NEWSLETTER, as Admin -> Pages publishes it. */
+export type BlogNewsletterText = typeof NEWSLETTER
+
+/**
+ * Related Articles — Figma 6494:1750, the band under every blog post
+ * (components/sections/blog/RelatedArticles.tsx). The cards themselves come
+ * from "Resources"; these are the band's own words (the arrow stays in the
+ * markup).
+ */
+export const RELATED_ARTICLES = {
+  heading: 'Related Articles',
+  read: 'Read',
 }
 
 /** Gaps between Figma 6382:5541, the live blog and this build. */
@@ -88,3 +111,15 @@ export const TODO_FOR_DESIGN = [
   'The card disc is a glyph chosen from the post slug. Most imported posts now have a real og:image, so a thumbnail card is available if the design wants one.',
   'A blog card has room for two lines of title; real WordPress titles run to 90 characters and are clamped at two. Worth checking a few against the frame.',
 ]
+
+/**
+ * Words on the article lists (/blog/, its later pages and every category
+ * archive): the first category chip, the link on each card, and the pager.
+ * Admin -> Pages -> Blog page, 27 Sep 2026.
+ */
+export const LIST_TEXT = {
+  allArticles: 'All Articles',
+  read: 'Read',
+  previous: 'Previous',
+  next: 'Next',
+}

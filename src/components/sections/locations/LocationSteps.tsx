@@ -1,6 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { DETAIL_COPY, type Facility } from '@/data/facilities'
+import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * "Dropping Off at This Location" — Figma 6744:8797 / 6746:8589. Identical on
@@ -14,7 +15,8 @@ import { DETAIL_COPY, type Facility } from '@/data/facilities'
  * body is the frame's SHORT wording. Both wordings ship from
  * src/data/facilities.ts; the phone hides one and the board the other.
  */
-export function LocationSteps({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationSteps({ top, height, f }: { top: number; height: number; f: Facility }) {
+  const { DETAIL_COPY } = await content('facilities')
   return (
     <Section top={top} height={height} label="6744:8797" className="flex flex-col items-center gap-[24px] bg-[#fcfcfc] px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">

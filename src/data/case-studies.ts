@@ -52,8 +52,11 @@ export const HERO = {
 
 export type CaseStudyCard = {
   id: string
-  /** Matches a FILTERS entry; drives the industry filter on this page. */
+  /** The card's industry tag, as shown. Display only since 27 Sep 2026: the
+   *  filter matches on `category`, so editing this text cannot break it. */
   industry: string
+  /** Matches a GRID.filters `id`; drives the industry filter on this page. */
+  category: string
   glyph: 'laptop' | 'cross' | 'auto'
   title: string
   /** One line under the title on the card — the ERI-style "See how…" summary. */
@@ -104,6 +107,7 @@ export const CASE_STUDY_CARDS: CaseStudyCard[] = [
   {
     id: 'midwest-business',
     industry: 'Corporate Offices',
+    category: 'corporate-offices',
     glyph: 'laptop',
     title: 'A Midwest business goes paperless and waste-free',
     blurb: 'See how Recycle Technologies cleared years of old electronics, batteries, bulbs and confidential paper for one growing business — in a single pickup.',
@@ -134,6 +138,7 @@ export const CASE_STUDY_CARDS: CaseStudyCard[] = [
   {
     id: 'auto-repair-shop',
     industry: 'Automotive',
+    category: 'automotive',
     glyph: 'auto',
     title: 'An auto repair shop cuts its hazardous waste risk',
     blurb: 'See how a shop cleared undeployed airbags, shop batteries and fluorescent lighting through one certified partner instead of three vendors.',
@@ -164,6 +169,7 @@ export const CASE_STUDY_CARDS: CaseStudyCard[] = [
   {
     id: 'hospital-system',
     industry: 'Healthcare',
+    category: 'healthcare',
     glyph: 'cross',
     title: 'A Midwest hospital system clears years of old electronics',
     blurb: 'See how over 14,000 pounds of decommissioned equipment left a multi-campus hospital system in under six weeks, with zero sent to landfill.',
@@ -222,10 +228,21 @@ export const GRID = {
   lead: 'Real engagements across the industries we serve — client names withheld for confidentiality.',
   /** 6391:1534. The first pill is the "no filter" state. */
   allLabel: 'All Industries',
-  filters: ['Corporate Offices', 'Automotive', 'Healthcare'],
+  /** One pill per industry. `id` matches a card's `category` and is what the
+   *  filter compares, so the `label` can be edited freely (27 Sep 2026). */
+  filters: [
+    { id: 'corporate-offices', label: 'Corporate Offices' },
+    { id: 'automotive',        label: 'Automotive' },
+    { id: 'healthcare',        label: 'Healthcare' },
+  ],
   /** Download affordance on each card — Asim, 22 Sep 2026. */
   downloadLabel: 'Download the case study',
+  /** The file type in front of the size at the foot of each card ("PDF · 2.3 MB"). */
+  pdfLabel: 'PDF',
 }
+
+/** The labels a case study card prints besides the story itself. */
+export type CaseStudyCardLabels = Pick<typeof GRID, 'downloadLabel' | 'pdfLabel'>
 
 /** Closing CTA — 6391:1528, the shared GradientCta frame at 161.565°. */
 export const CTA = {

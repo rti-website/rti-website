@@ -11,6 +11,7 @@ import { LocationMaterials } from '@/components/sections/locations/LocationMater
 import { LocationSteps } from '@/components/sections/locations/LocationSteps'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
 import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * A facility page — Figma "Location Details - Minnesota" 6744:8392 and
@@ -53,9 +54,9 @@ export type LocationLayout = { info: number; map: number; mat: number; steps: nu
 const HERO_TOP = 140
 const HERO_H = 470
 
-export function LocationDetailPage({ f, layout: L, links }: {
+export async function LocationDetailPage({ f, layout: L, links }: {
   f: Facility; layout: LocationLayout
-  /** Material label -> this facility's published service page (Admin -> Locations). */
+  /** Material id -> this facility's published service page (Admin -> Locations). */
   links?: Record<string, string>
 }) {
   const INFO_TOP   = HERO_TOP + HERO_H
@@ -66,9 +67,10 @@ export function LocationDetailPage({ f, layout: L, links }: {
   const CTA_TOP    = FAQ_TOP + L.faq
   const FOOTER_TOP = CTA_TOP + CTA_H
 
+  const { DETAIL_COPY } = await content('facilities')
   const crumbs = [
-    { label: 'Home',      href: href('/') },
-    { label: 'Locations', href: href('/all-locations/') },
+    { label: DETAIL_COPY.crumbs.home,      href: href('/') },
+    { label: DETAIL_COPY.crumbs.locations, href: href('/all-locations/') },
     { label: f.state,     href: null },
   ]
 

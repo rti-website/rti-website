@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { VALUES } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * Mission, vision and values — Figma 6372:842. Heading block centred on a
@@ -37,7 +37,8 @@ const MARKS = {
   ],
 }
 
-export function AboutValues({ top, height }: { top: number; height: number }) {
+export async function AboutValues({ top, height }: { top: number; height: number }) {
+  const { VALUES } = await content('about')
   return (
     <Section top={top} height={height} label="6372:842"
       className="flex flex-col items-center gap-[32px] bg-[#fcfcfc] px-[20px] py-[48px] lg:gap-[50px] lg:px-0 lg:py-[100px]">

@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Mark } from '@/components/sections/why/WhyMarks'
-import { CALLOUT } from '@/data/why-choose-us'
+import { content } from '@/lib/page-content'
 
 /**
  * Certified & Accountable — Figma 6379:1034. py 70, gap 40, on the teal tint:
@@ -13,7 +13,8 @@ import { CALLOUT } from '@/data/why-choose-us'
  * `nowrap` so "Minority-Owned" can take two lines, which is what the frame
  * draws.
  */
-export function WhyCallout({ top, height }: { top: number; height: number }) {
+export async function WhyCallout({ top, height }: { top: number; height: number }) {
+  const { CALLOUT } = await content('why-choose-us')
   return (
     <Section top={top} height={height} label="6379:1034"
       className="flex flex-col items-center gap-[32px] bg-card px-[20px] py-[48px] lg:gap-[40px] lg:bg-brand-soft lg:px-0 lg:py-[70px]">

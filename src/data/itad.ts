@@ -164,12 +164,28 @@ export const PICKUP = {
     message:   { label: 'What Would You Like to Recycle?', placeholder: 'Please describe the assets you’d like picked up in detail — quantity, type, and condition.' },
   },
   heard: ['Search engine', 'Referral', 'Social media', 'Returning customer', 'Other'],
-  audiences: ['Residential', 'Business'],
+  /* `id` is what the form posts and is fixed: /api/leads checks it against
+     its own list, and 'Residential' is what drops the company requirement and
+     sends the residential auto-reply. Only `label` is the admin's to edit. */
+  audiences: [
+    { id: 'Residential', label: 'Residential' },
+    { id: 'Business',    label: 'Business' },
+  ],
   submit: 'Submit',
+  /** The button while the request is on its way. */
+  sending: 'Sending…',
   sent: 'Thanks — your request is with us. We usually reply within one business day.',
+  /** Shown under the button when /api/leads gives no message of its own, or cannot be reached. */
+  errors: {
+    generic: 'Something went wrong. Please try again.',
+    network: 'Could not reach the server. Please check your connection and try again.',
+  },
   /** The pop-up a sent request opens (SuccessDialog), 24 Sep 2026. */
   popup: {
     title: 'Thank you',
     body: 'Your pickup request has been sent. Our team usually replies within one business day.',
   },
 }
+
+/** What PickupForm takes: PICKUP, as Admin -> Pages publishes it. */
+export type PickupText = typeof PICKUP

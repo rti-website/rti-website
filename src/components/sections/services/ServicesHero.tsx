@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { InteriorHeroArt } from '@/components/ui/InteriorHeroArt'
-import { SERVICES_HERO } from '@/data/services'
+import { content } from '@/lib/page-content'
 
 /**
  * Services hero — Figma 6142:786. 1920x470 on #0b1f3a.
@@ -16,7 +16,8 @@ import { SERVICES_HERO } from '@/data/services'
  * NO breadcrumb — the frame parks the two crumb layers off the left edge of the
  * canvas, so they are hidden rather than deleted (the links stay in the DOM).
  */
-export function ServicesHero() {
+export async function ServicesHero() {
+  const { SERVICES_HERO } = await content('services')
   return (
     <Section
       top={140} height={470} label="6142:786"

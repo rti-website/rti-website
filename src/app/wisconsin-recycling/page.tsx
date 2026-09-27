@@ -2,6 +2,7 @@ import { buildMetadata } from '@/lib/seo'
 import { LocationDetailPage } from '@/components/sections/locations/LocationDetailPage'
 import { WISCONSIN } from '@/data/facilities'
 import { loadLocations, materialLinks } from '@/lib/service-locations'
+import { content } from '@/lib/page-content'
 
 /**
  * /wisconsin-recycling/ — the Wisconsin facility, Figma 6746:8471.
@@ -24,10 +25,11 @@ export const metadata = buildMetadata({
 // Async since 24 Sep 2026: the material tiles link to this facility's
 // published service pages (Admin -> Locations), read at build time.
 export default async function WisconsinFacilityPage() {
-  const links = materialLinks(await loadLocations(), 'wisconsin')
+  const [all, { WISCONSIN: f }] = await Promise.all([loadLocations(), content('facilities')])
+  const links = materialLinks(all, 'wisconsin')
   return (
     <LocationDetailPage
-      f={WISCONSIN} links={links}
+      f={f} links={links}
       layout={{ info: 200, map: 520, mat: 503, steps: 532, faq: 486 }}
     />
   )

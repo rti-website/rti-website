@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Mark } from './SustainabilityMarks'
-import { ZERO_LANDFILL } from '@/data/sustainability'
+import { content } from '@/lib/page-content'
 
 /**
  * Zero-landfill commitment — Figma 6383:1162. py 100 on #fcfcfc, gap 50:
@@ -17,7 +17,8 @@ import { ZERO_LANDFILL } from '@/data/sustainability'
  * 24px gap, heading block left-aligned at 26/32 over 16/24, and the three
  * bordered white cards stacked full width 16 apart at r16 / p24.
  */
-export function ZeroLandfill({ top, height }: { top: number; height: number }) {
+export async function ZeroLandfill({ top, height }: { top: number; height: number }) {
+  const { ZERO_LANDFILL } = await content('sustainability')
   return (
     <Section top={top} height={height} label="6383:1162"
       className="flex flex-col items-start gap-[24px] bg-[#fcfcfc] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

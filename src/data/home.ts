@@ -1,6 +1,6 @@
 import { caseStudyHref, href } from '@/lib/urls'
-import { SERVICE_GROUPS, type ServiceCard } from '@/data/services'
-import { CASE_STUDY_CARDS } from '@/data/case-studies'
+import type { ServiceCard, ServiceGroup } from '@/data/services'
+import type { CaseStudyCard } from '@/data/case-studies'
 import type { Faq } from '@/data/faqs'
 
 /* Homepage content, transcribed from the Figma frame 6023:3801.
@@ -11,12 +11,20 @@ import type { Faq } from '@/data/faqs'
  * flat — see src/data/services.ts. Derived rather than copied, because the two
  * pages drifting apart (a card here, a URL there) is exactly the kind of bug
  * that survives review and then shows up as a 404 in the crawl.
+ *
+ * Functions since 27 Sep 2026 (Admin -> Pages): OurServices calls them with
+ * the "Services page" document's SERVICE_GROUPS, so an edit there reaches the
+ * homepage tabs too.
  */
 export type Card = ServiceCard & { photo: string }
 
-export const SERVICE_TABS = SERVICE_GROUPS.map((g) => ({
-  id: g.id, label: g.tab, sub: g.tabSub, iconOn: g.tabIconOn, iconOff: g.tabIconOff,
-}))
+export type ServiceTab = { id: string; label: string; sub: string; iconOn: string; iconOff: string }
+
+export function serviceTabs(groups: ServiceGroup[]): ServiceTab[] {
+  return groups.map((g) => ({
+    id: g.id, label: g.tab, sub: g.tabSub, iconOn: g.tabIconOn, iconOff: g.tabIconOff,
+  }))
+}
 
 /**
  * The homepage draws a service as a photo card (Figma 6532:2049), so a card
@@ -24,12 +32,171 @@ export const SERVICE_TABS = SERVICE_GROUPS.map((g) => ({
  * `photo` note in src/data/services.ts for the one that has none. menuOnly
  * cards are live services with no Figma card at all: header menu only.
  */
-export const SERVICE_CARDS: Record<string, Card[]> = Object.fromEntries(
-  SERVICE_GROUPS.map((g) => [
-    g.id,
-    g.cards.filter((c): c is Card => Boolean(c.photo) && !c.menuOnly && !c.unbuilt),
-  ]),
-)
+export function serviceCards(groups: ServiceGroup[]): Record<string, Card[]> {
+  return Object.fromEntries(
+    groups.map((g) => [
+      g.id,
+      g.cards.filter((c): c is Card => Boolean(c.photo) && !c.menuOnly && !c.unbuilt),
+    ]),
+  )
+}
+
+/* ------------------------------------------------------------------ hero --
+ * The hero's words (Hero.tsx), moved out of the markup on 27 Sep 2026 so
+ * Admin -> Pages -> Homepage can edit them. Layout, icons, the R2v3 link and
+ * the phone's tel: link stay in the component.
+ *
+ * !! ONE <h1>, TWO WORDINGS — and Google reads the phone one. The phone frame
+ * (6590:2312) sets "Certified E-Waste Recycling and ITAD" on two lines; the
+ * board (6023:13162) sets "Certified E-Waste Recycling & IT Assets
+ * Disposition". Each wording is display:none at the other width. Google
+ * indexes mobile-first, so the phone wording is the H1 search sees — flagged
+ * to Asim for the SEO team, 24 Sep 2026. `l1` and `l2` are the two lines.
+ *
+ * `stats` are the three figures, in the board's order (R2v3 · 50 States ·
+ * 30+ Years): `v` the figure, `l` the line under it on the board, `short`
+ * the phone's one-line label (6604:5043). Icons, sizes and the phone's order
+ * are in Hero.tsx, by position.
+ *
+ * !! The R2v3 tile says "R2v3 Certified Locations" over "Minnesota.
+ * Wisconsin", but only Blaine, Minnesota holds R2v3; New Berlin is pending.
+ * See the note in Hero.tsx — flagged to Asim 22 Sep 2026.
+ */
+export const HOME_HERO = {
+  h1Phone: { l1: 'Certified E-Waste', l2: 'Recycling and ITAD' },
+  h1Board: { l1: 'Certified E-Waste Recycling', l2: '& IT Assets Disposition' },
+  /* Lead — 6023:13164. Board only: the phone frame has no lead. */
+  lead: 'Recycle Technologies provides certified e-waste recycling, ITAD, data destruction, and '
+    + 'shredding solutions that keep electronics out of landfills and valuable materials in '
+    + 'circulation.',
+  quoteButton: 'Get a Quick Quote',
+  /* The call button's label. Its tel: link is the header's Minnesota line
+     (TOP_BAR.phoneMn in "Header (every page)"): change both together. */
+  phone: '+1-763-559-5130',
+  stats: [
+    { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin', short: 'R2v3 Certified' },
+    { v: '50 States', l: 'Accessible through our Mail-In Program', short: '50 States' },
+    { v: '30+ Years', l: 'Of recycling experience', short: '30+ Years' },
+  ],
+}
+
+/* Our Services heading block (OurServices.tsx). The tabs and cards come from
+   the "Services page" document. */
+export const HOME_SERVICES = {
+  eyebrow: 'What We Do',
+  title: 'Our Services',
+  lead: 'Responsible recycling, destruction, and shredding solutions for materials that need proper handling.',
+  /** The words that slide up on a card when it is hovered. */
+  more: 'Learn More',
+}
+
+/* Industries We Serve heading block (Industries.tsx). */
+export const HOME_INDUSTRIES = {
+  eyebrow: 'Who We Serve',
+  title: 'Industries We Serve',
+  lead: 'From corporate facilities to schools and healthcare networks, we provide reliable '
+    + 'recycling, secure shredding, ITAD, and data destruction solutions for organizations '
+    + 'with different waste and equipment needs.',
+  /** The words that slide up on a card when it is hovered. */
+  more: 'Learn More',
+}
+
+/* How It Works heading block and button (HowItWorks.tsx). The one button is
+   the quote link — Asim, 23 Sep 2026; see the note in the component. */
+export const HOME_HOW_IT_WORKS = {
+  eyebrow: 'Simple & Secure',
+  title: 'How It Works',
+  lead: 'Responsible recycling made simple — from ordering your kit to receiving your '
+    + 'recycling documentation.',
+  button: 'Get a Free Quote',
+}
+
+/**
+ * Why Choose Recycle Technologies (WhyChooseUs.tsx). `heading` is the two
+ * lines of the title. The card positions are in the component, by position.
+ *
+ * Copy: Asim, 23 Sep 2026 — Chicago is "expanded operations", no longer
+ * listed with the R2v3 facilities.
+ *
+ * The four stat cards: the frame repeats "92% / Diversion Rate" in all four,
+ * and Asim supplied the real set on 21 Sep 2026, in this order. They are
+ * claims about the business, so Rizwan should check them against the impact
+ * report before launch. 25 Sep 2026 (Asim): two cards carry the same figures,
+ * in the same words, as IMPACT_STATS below — one set of numbers on the page.
+ */
+export const HOME_WHY_CHOOSE = {
+  heading: { l1: 'Why Choose', l2: 'Recycle Technologies?' },
+  body: [
+    'With over 30 years of experience, Recycle Technologies provides responsible '
+    + 'electronics recycling, IT asset recycling, and document shredding across the '
+    + 'Midwest. We are the region’s only minority-owned document destruction and '
+    + 'recycling company, backed by R2v3-certified facilities in Minnesota and Wisconsin '
+    + 'with expanded operations in Chicago.',
+    'Our convenient local and nationwide mail-in recycling options make electronics '
+    + 'recycling near you simple, secure, and environmentally responsible.',
+  ],
+  estimateButton: 'Get a Free Estimate',
+  aboutButton: 'Read More About Us',
+  stats: [
+    { v: '18M+',   l: 'Lbs of E-Waste Recycled' },
+    { v: '95%',    l: 'Diversion Rate' },
+    { v: '1,500+', l: 'Businesses Served' },
+    { v: '2.3M+',  l: 'Devices Destroyed' },
+  ],
+}
+
+/* Our Strategic National Network (Locations.tsx): the heading block, its
+   button, and the "See Our Impact in Action" banner. The facility cards are
+   LOCATION_CARDS below. Copy: Asim, 23 Sep 2026 — Chicago is "expanded
+   operations", not a licensed facility. The banner button opens /resources/
+   (Asim, 23 Sep 2026). */
+export const HOME_LOCATIONS = {
+  eyebrow: 'Where We Serve',
+  title: 'Our Strategic National Network',
+  lead: 'Recycle Technologies has licensed facilities in Minnesota and Wisconsin, with '
+    + 'expanded operations in Chicago. Our mail-in recycling program is available in '
+    + 'all 50 states.',
+  button: 'See all Locations',
+  impact: {
+    heading: 'See Our Impact in Action',
+    body: 'Transparency drives everything we do. Dive into our impact reports, brochures, '
+      + 'whitepapers, newsletters, and industry insights to understand the measurable '
+      + 'difference we actually make through responsible e-waste recycling',
+    button: 'Download Resources',
+  },
+}
+
+/* Client's Testimonials heading (Testimonials.tsx). The cards are
+   TESTIMONIALS below. */
+export const HOME_TESTIMONIALS = {
+  eyebrow: 'Why Enterprises Choose Us',
+  title: 'Client’s Testimonials',
+}
+
+/* Client's Stories heading block (CaseStudies.tsx), also shown on every
+   service detail page that carries the band. `lead` is the two lines the
+   board breaks it into (the phone runs them together). `readStory` is the
+   link label on each carousel card. The stories themselves come from the
+   "Case Studies" document. */
+export const HOME_CASE_STUDIES = {
+  eyebrow: 'Case Studies',
+  title: 'Client’s Stories',
+  lead: [
+    'Real results from real partnerships. See how organizations simplify ITAD,',
+    'strengthen data security, and recover value from retired hardware.',
+  ],
+  allButton: 'View All Stories',
+  estimateButton: 'Get a Free Estimate',
+  readStory: 'Read Story',
+}
+
+/* The FAQ band's heading block (FaqCtaFooter.tsx). The questions are FAQS
+   below. */
+export const HOME_FAQ = {
+  eyebrow: 'FAQs',
+  title: 'Frequently Asked Questions',
+  lead: 'Recycling helps conserve resources, reduce pollution and support economic sustainability.',
+}
 
 /**
  * Industries — Figma 6023:12500. 310x226 cards; the grid runs 4 + 3.
@@ -240,17 +407,27 @@ export type Story = {
   href: string
 }
 
-function story(id: string, img: string): Story {
-  const c = CASE_STUDY_CARDS.find((x) => x.id === id)
-  if (!c) throw new Error(`home.ts: no case study with id "${id}" in src/data/case-studies.ts`)
-  return { img, tag: c.industry, title: c.title, blurb: c.blurb, href: caseStudyHref(c.id) }
+/* The homepage's own photo for each story, in carousel order. Kept here, not
+   in the editable document: the text comes from the case study card. */
+const CASE_STUDY_PHOTOS: { id: string; img: string }[] = [
+  { id: 'auto-repair-shop',  img: '/images/home/case-auto-repair.png' },
+  { id: 'hospital-system',   img: '/images/home/case-healthcare.png' },
+  { id: 'midwest-business',  img: '/images/home/case-midwest-business.png' },
+]
+
+/**
+ * The carousel's stories, built from the case study cards CaseStudies.tsx
+ * reads from the "Case Studies" document (27 Sep 2026), so an edit there
+ * shows here too.
+ */
+export function caseStudies(cards: CaseStudyCard[]): Story[] {
+  return CASE_STUDY_PHOTOS.map(({ id, img }) => {
+    const c = cards.find((x) => x.id === id)
+    if (!c) throw new Error(`home.ts: no case study with id "${id}" in src/data/case-studies.ts`)
+    return { img, tag: c.industry, title: c.title, blurb: c.blurb, href: caseStudyHref(c.id) }
+  })
 }
 
-export const CASE_STUDIES: Story[] = [
-  story('auto-repair-shop', '/images/home/case-auto-repair.png'),
-  story('hospital-system', '/images/home/case-healthcare.png'),
-  story('midwest-business', '/images/home/case-midwest-business.png'),
-]
 export const CASE_STUDIES_START = 1
 
 /**

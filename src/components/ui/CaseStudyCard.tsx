@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { GRID, type CaseStudyCard as Card } from '@/data/case-studies'
+import type { CaseStudyCard as Card, CaseStudyCardLabels } from '@/data/case-studies'
 
 /**
  * One case-study card — Figma 6391:1549 on /case-studies/ and 6390:1533 on
@@ -32,8 +32,12 @@ import { GRID, type CaseStudyCard as Card } from '@/data/case-studies'
  * `after:z-[1]` is load-bearing — without it the overlay is painted in normal
  * flow order and every element AFTER the heading covers it, so clicks on the
  * blurb did nothing.
+ *
+ * `labels` are GRID's card labels from content('case-studies'), passed in by
+ * the caller (27 Sep 2026). This card is also rendered inside a client
+ * component (CaseStudyFilter), so it cannot read page content itself.
  */
-export function CaseStudyCardView({ card }: { card: Card }) {
+export function CaseStudyCardView({ card, labels }: { card: Card; labels: CaseStudyCardLabels }) {
   return (
     <article className="group relative flex w-full flex-col self-stretch overflow-hidden rounded-[12px] border border-line bg-white transition-shadow hover:shadow-[0_10px_28px_rgba(15,23,42,0.10)] lg:w-[410px] lg:shrink-0">
       {/* Preview — page one of the PDF, anchored to the top so the masthead and
@@ -74,7 +78,7 @@ export function CaseStudyCardView({ card }: { card: Card }) {
             href={card.pdf}
             download
             className="relative z-10 grid size-[44px] shrink-0 place-items-center rounded-[8px] border border-line text-brand transition-colors hover:border-brand hover:bg-brand hover:text-white"
-            aria-label={`${GRID.downloadLabel}: ${card.title} (PDF, ${card.pdfSize})`}
+            aria-label={`${labels.downloadLabel}: ${card.title} (PDF, ${card.pdfSize})`}
           >
             <svg viewBox="0 0 20 20" className="size-[18px] fill-current" aria-hidden="true">
               <path d="M9 2h2v7.2l2.6-2.6 1.4 1.4-5 5-5-5 1.4-1.4L9 9.2V2Z" />
@@ -85,7 +89,7 @@ export function CaseStudyCardView({ card }: { card: Card }) {
 
         <p className="font-roboto text-[14px] leading-[1.55] text-muted">{card.blurb}</p>
 
-        <p className="mt-auto pt-[6px] font-roboto text-[12px] text-muted/80">PDF · {card.pdfSize}</p>
+        <p className="mt-auto pt-[6px] font-roboto text-[12px] text-muted/80">{labels.pdfLabel} · {card.pdfSize}</p>
       </div>
     </article>
   )

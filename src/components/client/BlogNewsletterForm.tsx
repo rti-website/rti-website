@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { BarForm } from '@/components/client/BarForm'
-import { NEWSLETTER } from '@/data/blog'
+import type { BlogNewsletterText } from '@/data/blog'
 import { path } from '@/lib/urls'
 
 /**
@@ -20,14 +20,16 @@ import { path } from '@/lib/urls'
  * finder and has nowhere to hide one, so this endpoint's per-IP throttle is the
  * only brake. If sign-up spam ever becomes real, the field belongs in BarForm.
  */
-export function BlogNewsletterForm() {
+/** `text` is NEWSLETTER from src/data/blog.ts, read by the server parent
+ *  (BlogNewsletter) through Admin -> Pages. */
+export function BlogNewsletterForm({ text: NEWSLETTER }: { text: BlogNewsletterText }) {
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [error, setError] = useState<string | null>(null)
 
   if (state === 'sent') {
     return (
       <p role="status" className="font-roboto text-[15px] leading-[24px] text-brand">
-        Thanks — you are on the list.
+        {NEWSLETTER.sent}
       </p>
     )
   }
@@ -57,7 +59,7 @@ export function BlogNewsletterForm() {
         onSubmit={(email, form) => {
           if (state === 'sending') return
           if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError('Please check the email address.')
+            setError(NEWSLETTER.errors.invalid)
             setState('error')
             return
           }
@@ -71,7 +73,7 @@ export function BlogNewsletterForm() {
             .then(async (res) => {
               const body = (await res.json().catch(() => ({}))) as { error?: string }
               if (!res.ok) {
-                setError(body.error ?? 'Something went wrong. Please try again.')
+                setError(body.error ?? NEWSLETTER.errors.generic)
                 setState('error')
                 return
               }
@@ -79,7 +81,7 @@ export function BlogNewsletterForm() {
               setState('sent')
             })
             .catch(() => {
-              setError('Could not reach the server. Please try again.')
+              setError(NEWSLETTER.errors.network)
               setState('error')
             })
         }}

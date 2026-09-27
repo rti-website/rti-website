@@ -8,7 +8,7 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { BlogArticles, blogListHeight } from '@/components/sections/blog/BlogArticles'
 import { BlogNewsletter } from '@/components/sections/blog/BlogNewsletter'
 import { blogCards, blogChips, blogPagePath, pageCount, pageNumberParam, pageSlice } from '@/lib/blog-index'
-import { HERO, INTRO } from '@/data/blog'
+import { content } from '@/lib/page-content'
 
 /**
  * /blog/page/2/ and beyond — the same frame as /blog/, a different slice.
@@ -73,7 +73,7 @@ export default async function BlogArchivePage({ params }: Props) {
   const page = pageNumberParam(n)
   if (page === null) notFound()
 
-  const [all, chips] = await Promise.all([blogCards(), blogChips()])
+  const [all, chips, { HERO, INTRO }] = await Promise.all([blogCards(), blogChips(), content('blog')])
   const pages = pageCount(all.length)
   if (page > pages) notFound()
 

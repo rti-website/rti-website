@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Mark } from '@/components/sections/why/WhyMarks'
-import { TRUST } from '@/data/why-choose-us'
+import { content } from '@/lib/page-content'
 
 /**
  * Why businesses trust us — Figma 6379:1035. py 100, gap 50; three 410px cards
@@ -14,7 +14,8 @@ import { TRUST } from '@/data/why-choose-us'
  * and the cards to #f6f6f6 — the inverse of the board, which is what keeps a
  * borderless card readable once the two tones swap.
  */
-export function WhyTrust({ top, height }: { top: number; height: number }) {
+export async function WhyTrust({ top, height }: { top: number; height: number }) {
+  const { TRUST } = await content('why-choose-us')
   return (
     <Section top={top} height={height} label="6379:1035"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">

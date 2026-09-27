@@ -8,7 +8,8 @@ import { StandardsTable } from '@/components/sections/compliance/StandardsTable'
 import { StateRegulations } from '@/components/sections/compliance/StateRegulations'
 import { ComplianceCaseStudies } from '@/components/sections/compliance/ComplianceCaseStudies'
 import { ComplianceDownloads } from '@/components/sections/compliance/ComplianceDownloads'
-import { HERO, SEO } from '@/data/compliance-center'
+import { SEO } from '@/data/compliance-center'
+import { content } from '@/lib/page-content'
 
 /**
  * Compliance Center — a 1:1 build of Figma frame 6382:6227, and of 6638:8303
@@ -71,7 +72,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function ComplianceCenterPage() {
+export default async function ComplianceCenterPage() {
+  const { HERO } = await content('compliance-center')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

@@ -8,7 +8,8 @@ import { FOOTER_H } from '@/lib/layout'
 import { buildMetadata } from '@/lib/seo'
 import { absolute, href } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph } from '@/lib/schema'
-import { ALL_FAQS, FAQ_GROUPS, FAQ_HERO, FAQ_SEO } from '@/data/faqs'
+import { FAQ_SEO, allFaqs } from '@/data/faqs'
+import { content } from '@/lib/page-content'
 
 /**
  * /faqs/ — Figma 6382:6819.
@@ -39,7 +40,9 @@ export const metadata = buildMetadata({
   description: FAQ_SEO.description,
 })
 
-export default function FaqsPage() {
+export default async function FaqsPage() {
+  const { FAQ_HERO, FAQ_GROUPS } = await content('faqs')
+  const crumbs = FAQ_HERO.crumbs
   return (
     <FlowCanvas>
       <Header />
@@ -80,9 +83,10 @@ export default function FaqsPage() {
           <Box x={319} y={0} w={946} h={470} className="flex flex-col items-center lg:items-start lg:justify-center">
             <nav aria-label="Breadcrumb" className="max-lg:hidden">
               <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
-                <li><Link href={href('/')} className="text-white/50 hover:text-white">Home</Link></li>
+                {/* FAQ_HERO.crumbs: Home (a link) / FAQs (this page). */}
+                <li><Link href={href('/')} className="text-white/50 hover:text-white">{crumbs[0]?.label}</Link></li>
                 <li aria-hidden="true" className="text-white/50">/</li>
-                <li className="text-white">FAQs</li>
+                <li className="text-white">{crumbs[1]?.label}</li>
               </ol>
             </nav>
             <h1 className="w-full text-center font-sans text-[32px] font-semibold leading-[1.2] text-white lg:mt-[20px] lg:w-auto lg:text-left lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]">
@@ -152,10 +156,10 @@ export default function FaqsPage() {
         dangerouslySetInnerHTML={{
           __html: graph(
             breadcrumbNode([
-              { name: 'Home', url: absolute('/') },
-              { name: 'FAQs', url: absolute('/faqs/') },
+              { name: crumbs[0]?.label ?? 'Home', url: absolute('/') },
+              { name: crumbs[1]?.label ?? 'FAQs', url: absolute('/faqs/') },
             ]),
-            faqNode(ALL_FAQS),
+            faqNode(allFaqs(FAQ_GROUPS)),
           ),
         }}
       />

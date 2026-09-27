@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { PICKUP } from '@/data/itad'
+import type { PickupText } from '@/data/itad'
 import { path } from '@/lib/urls'
 import { trackLead } from '@/components/client/track'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
@@ -36,9 +36,11 @@ const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[
 const FIELD = 'flex w-full min-w-px flex-col gap-[6px] lg:flex-1 lg:gap-[8px]'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
-const F = PICKUP.fields
 
-export function PickupForm() {
+/** `text` is PICKUP from src/data/itad.ts, read by the server parent through
+ *  Admin -> Pages (a client component cannot read page-content itself). */
+export function PickupForm({ text: PICKUP }: { text: PickupText }) {
+  const F = PICKUP.fields
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
   /** The success pop-up, and the first name it greets (read before the reset). */
@@ -76,7 +78,7 @@ export function PickupForm() {
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string }
       if (!res.ok) {
-        setError(out.error ?? 'Something went wrong. Please try again.')
+        setError(out.error ?? PICKUP.errors.generic)
         setState('error')
         return
       }
@@ -86,7 +88,7 @@ export function PickupForm() {
       setState('sent')
       setPopup({ name: firstName })
     } catch {
-      setError('Could not reach the server. Please check your connection and try again.')
+      setError(PICKUP.errors.network)
       setState('error')
     }
   }
@@ -119,7 +121,7 @@ export function PickupForm() {
         <Field id="address" f={F.address} autoComplete="street-address" />
       </div>
       <div className={ROW}>
-        <Select id="heard" f={F.heard} options={PICKUP.heard} />
+        <Select id="heard" f={F.heard} options={PICKUP.heard.map((o) => ({ id: o, label: o }))} />
         <Select id="audience" f={F.audience} options={PICKUP.audiences} />
       </div>
 
@@ -139,7 +141,7 @@ export function PickupForm() {
         disabled={state === 'sending'}
         className="btn-pop inline-flex h-[46px] w-full items-center justify-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white transition-opacity disabled:opacity-60 lg:h-[48px] lg:w-[200px]"
       >
-        {state === 'sending' ? 'Sending…' : PICKUP.submit}
+        {state === 'sending' ? PICKUP.sending : PICKUP.submit}
         <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px]" />
       </button>
 
@@ -177,14 +179,15 @@ function Field({
   )
 }
 
-function Select({ id, f, options }: { id: string; f: { label: string; placeholder: string }; options: readonly string[] }) {
+/** `id` is the value posted, `label` the words shown (they differ only once the admin edits a label). */
+function Select({ id, f, options }: { id: string; f: { label: string; placeholder: string }; options: readonly { id: string; label: string }[] }) {
   return (
     <div className={FIELD}>
       <label htmlFor={`pickup-${id}`} className={LABEL}>{f.label}</label>
       <div className="relative">
         <select id={`pickup-${id}`} name={id} defaultValue="" className={`${INPUT} appearance-none pr-[40px] text-muted`}>
           <option value="" disabled>{f.placeholder}</option>
-          {options.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
+          {options.map((o) => <option key={o.id} value={o.id} className="text-ink">{o.label}</option>)}
         </select>
         {/* The same 16px chevron ContactForm's selects carry (Figma 6780:2744,
             14px on the phone). */}

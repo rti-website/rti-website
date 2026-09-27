@@ -7,7 +7,8 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { BlogArticles, blogListHeight } from '@/components/sections/blog/BlogArticles'
 import { BlogNewsletter } from '@/components/sections/blog/BlogNewsletter'
 import { blogCards, blogChips, blogPagePath, pageCount, pageSlice } from '@/lib/blog-index'
-import { HERO, LIVE_SEO } from '@/data/blog'
+import { LIVE_SEO } from '@/data/blog'
+import { content } from '@/lib/page-content'
 
 /**
  * Blog index — a 1:1 build of Figma frame 6382:5541 at the live /blog/ URL.
@@ -43,7 +44,7 @@ export const metadata = buildMetadata({
 })
 
 export default async function BlogPage() {
-  const [all, chips] = await Promise.all([blogCards(), blogChips()])
+  const [all, chips, { HERO }] = await Promise.all([blogCards(), blogChips(), content('blog')])
   const pages = pageCount(all.length)
   const posts = pageSlice(all, 1)
 

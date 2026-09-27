@@ -13,6 +13,7 @@ import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
 import { href } from '@/lib/urls'
 import { Btn } from '@/components/ui/Bits'
+import { content as pageContent } from '@/lib/page-content'
 
 /**
  * Every service detail page — Figma frame 6142:2048 "Service Details".
@@ -67,7 +68,7 @@ function toParagraphs(v: string | string[] | undefined): string[] {
   return Array.isArray(v) ? v : [v]
 }
 
-export function ServiceDetailPage({
+export async function ServiceDetailPage({
   content, layout, places = [], placesTitle = '',
 }: {
   content: ServicePageContent
@@ -105,6 +106,19 @@ export function ServiceDetailPage({
   const footerTop  = ctaTop + CTA_H
 
   const { hero, intro, accept, faqs } = content
+  /* The words this template writes around every page's own copy (the crumb
+     trail, the picker, the FAQ heading): SERVICE_PAGE_TEXT in
+     src/data/services.ts, edited under Admin -> Pages -> Services page. */
+  const text = (await pageContent('services')).SERVICE_PAGE_TEXT
+  /* The certifications paragraph: the page's own when it has one, else the
+     shared compliance line (the band's fallback), optionally followed by a
+     sentence of the page's own (`after`, the Wisconsin electronics ad page).
+     The shared line is read from its document, so an edit there reaches the
+     pages that add to it as well. */
+  const { CERT_COPY } = await pageContent('certifications')
+  const certAfter = content.certifications?.after
+  const certBody = content.certifications?.body ?? (certAfter ? `${CERT_COPY.body} ${certAfter}` : undefined)
+  const picker = hero.cta && !hero.secondaryCta && !hero.noPicker
 
   return (
     <Canvas height={Math.round(footerTop + FOOTER_H)}>
@@ -113,14 +127,14 @@ export function ServiceDetailPage({
         <ServiceHero
           label="6142:2050"
           crumbs={hero.trail ?? [
-            { label: 'Home',         href: href('/') },
-            { label: 'Our Services', href: href('/services/') },
+            { label: text.crumbs.home,     href: href('/') },
+            { label: text.crumbs.services, href: href('/services/') },
             { label: hero.crumb,     href: null },
           ]}
           h1={hero.h1}
           lead={hero.lead}
-          pickerPlaceholder={hero.cta && !hero.secondaryCta && !hero.noPicker ? 'Select Your Location' : undefined}
-          pickerOptions={hero.cta && !hero.secondaryCta && !hero.noPicker ? ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'] : undefined}
+          pickerPlaceholder={picker ? text.picker.placeholder : undefined}
+          pickerOptions={picker ? text.picker.options : undefined}
           cta={hero.cta}
           secondaryCta={hero.secondaryCta}
           image={hero.image}
@@ -212,7 +226,7 @@ export function ServiceDetailPage({
           />
         )}
 
-        <CertificationsBand top={certTop} height={certH} label="6173:2828" body={content.certifications?.body} />
+        <CertificationsBand top={certTop} height={certH} label="6173:2828" body={certBody} />
 
         <CaseStudies top={caseTop} label="6146:2403" />
 
@@ -220,9 +234,9 @@ export function ServiceDetailPage({
 
         <ServiceFaq
           top={faqTop} height={faqH} label="6146:2417"
-          eyebrow="FAQs"
-          heading="Frequently Asked Questions"
-          lead="Recycling helps conserve resources, reduce pollution and support economic sustainability."
+          eyebrow={text.faq.eyebrow}
+          heading={text.faq.heading}
+          lead={text.faq.lead}
           items={faqs}
         />
 

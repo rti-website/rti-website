@@ -1421,6 +1421,13 @@
       "node": "6909:2991",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Why disc, Minority-Owned (22px white glyph). City service pages (27 Sep 2026, src/data/city-pages/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/chicago/hero-electronics.png",
+      "id": "024c1f7f-d3f4-438e-90de-59314254af97/ba025.png",
+      "node": "6873:14201",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hero photo, revised 27 Sep 2026: electronics warehouse with the Chicago skyline behind (same \"Wisconsin recycling facility hero\" layer, new image), 1920x1081 at y-372; the phone frame draws the same image (6896:15673). Chicago page (/electronic-recycling-chicago/); URL expires about 4 Oct."
     }
   ]
 }

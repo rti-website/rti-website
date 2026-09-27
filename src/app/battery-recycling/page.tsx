@@ -1,5 +1,6 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
+import { content } from '@/lib/page-content'
 import { loadLocations, servicePlaces } from '@/lib/service-locations'
 import { CONTENT } from '@/data/battery-recycling'
 
@@ -22,5 +23,7 @@ export const metadata = buildMetadata({
 // location pages (Admin -> Locations), read at build and revalidated on save.
 export default async function Page() {
   const places = servicePlaces(await loadLocations(), 'battery-recycling')
-  return <ServiceDetailPage content={CONTENT} layout={{ intro: 658, process: 573, accept: 660 }} places={places} placesTitle="Battery Recycling Near You" />
+  // The copy with the admin's edits (Admin -> Pages); metadata above stays on the static import.
+  const { CONTENT: copy } = await content('battery-recycling')
+  return <ServiceDetailPage content={copy} layout={{ intro: 658, process: 573, accept: 660 }} places={places} placesTitle={copy.placesTitle ?? ''} />
 }

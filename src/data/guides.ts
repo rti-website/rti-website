@@ -105,6 +105,11 @@ export const GUIDES: {
   ],
 }
 
+/** The words pinned to the right of every guide row (the arrow stays in the markup). */
+export const GUIDE_ROW_TEXT = {
+  cta: 'Read Guide',
+}
+
 /**
  * Section - Downloads, 6386:1350. Three 410-wide cards.
  *

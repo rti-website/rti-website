@@ -7,7 +7,8 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { CertGrid } from '@/components/sections/certifications/CertGrid'
 import { CertAccountability } from '@/components/sections/certifications/CertAccountability'
-import { CTA, HERO, SEO } from '@/data/certifications-page'
+import { SEO } from '@/data/certifications-page'
+import { content } from '@/lib/page-content'
 
 /**
  * Certifications — a 1:1 build of Figma frame 6374:4886.
@@ -51,7 +52,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function CertificationsPage() {
+export default async function CertificationsPage() {
+  const { CTA, HERO } = await content('certifications-page')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

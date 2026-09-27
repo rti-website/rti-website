@@ -1,7 +1,7 @@
 import { Box, Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { ContactForm } from '@/components/client/ContactForm'
-import { FACILITIES, FORM } from '@/data/contact'
+import { content } from '@/lib/page-content'
 import { InfoRow } from '@/components/ui/Glyph'
 
 /**
@@ -37,7 +37,8 @@ const HEAD_BLOCK = 'flex w-full flex-col items-center gap-[12px] text-center lg:
 /** A column: full bleed and self-padding on a phone, 601px on the board. */
 const COLUMN = 'flex w-full shrink-0 flex-col items-start gap-[24px] px-[20px] py-[48px] lg:w-[601px] lg:p-0'
 
-export function ContactSection({ top, height }: { top: number; height: number }) {
+export async function ContactSection({ top, height }: { top: number; height: number }) {
+  const { FACILITIES, FORM, SERVICE_INTEREST, HERO_LOCATIONS } = await content('contact')
   return (
     <Section top={top} height={height} label="6369:757" className="bg-white">
       {/*
@@ -62,7 +63,7 @@ export function ContactSection({ top, height }: { top: number; height: number })
             <h2 className={HEADING}>{FORM.heading}</h2>
             <p className={LEAD}>{FORM.lead}</p>
           </div>
-          <ContactForm />
+          <ContactForm form={FORM} serviceInterest={SERVICE_INTEREST} heroLocations={HERO_LOCATIONS} />
         </div>
 
         <div className={`${COLUMN} bg-[#f9fafb] lg:bg-transparent`} data-figma="6638:8870">

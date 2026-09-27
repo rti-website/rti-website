@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { STANDARDS } from '@/data/compliance-center'
+import { content } from '@/lib/page-content'
 
 /**
  * Standards we're held to — Figma 6389:1527, and on a phone 6674:5298 in
@@ -40,7 +40,8 @@ const TONE = {
   warn: 'bg-[#fef3c7] text-[#99730d]',
 } as const
 
-export function StandardsTable({ top, height }: { top: number; height: number }) {
+export async function StandardsTable({ top, height }: { top: number; height: number }) {
+  const { STANDARDS } = await content('compliance-center')
   return (
     <Section top={top} height={height} label="6389:1527"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

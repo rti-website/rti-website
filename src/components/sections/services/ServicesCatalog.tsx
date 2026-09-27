@@ -1,6 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { ServicePhotoCard } from '@/components/ui/ServicePhotoCard'
 import { SERVICE_GROUPS, type ServiceGroup } from '@/data/services'
+import { content } from '@/lib/page-content'
 
 /**
  * The full catalogue — Figma 6142:1559 in file drzg9BI08Dy8eWZNBfXBzD (the
@@ -58,11 +59,16 @@ function visible(group: ServiceGroup) {
 }
 
 /** The frame names its three blocks; a missing group is a build error, not a blank. */
-function group(id: string): ServiceGroup {
-  const g = SERVICE_GROUPS.find((x) => x.id === id)
+function group(id: string, groups: ServiceGroup[] = SERVICE_GROUPS): ServiceGroup {
+  const g = groups.find((x) => x.id === id)
   if (!g) throw new Error(`ServicesCatalog: no service group "${id}" in src/data/services.ts`)
   return g
 }
+/*
+ * The layout below is measured from the groups as written in src/data (card
+ * counts and heading boxes are configuration, not copy). What renders comes
+ * from the admin's edited copy, found by the same ids, inside the component.
+ */
 const RECYCLING = group('recycling')
 const DESTRUCTION = group('destruction')
 const PROGRAMS = group('programs')
@@ -94,7 +100,11 @@ const BOARD = {
   '--cat-right': `${RIGHT_W}px`,
 } as React.CSSProperties
 
-export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
+export async function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
+  const { SERVICE_GROUPS: groups } = await content('services')
+  const recycling = group('recycling', groups)
+  const destruction = group('destruction', groups)
+  const programs = group('programs', groups)
   return (
     <Section
       top={top} left={319} width={WIDE_W} height={CATALOG_H} label="6142:1559"
@@ -106,9 +116,9 @@ export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
       >
         {/* Recycling Services — 6142:2018 over 6142:1587; 6638:8568 on the phone. */}
         <div className="flex flex-col gap-[16px] lg:gap-[var(--cat-block)]">
-          <GroupHeading group={RECYCLING} />
+          <GroupHeading group={recycling} />
           <div className="flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:justify-between lg:gap-0">
-            {visible(RECYCLING).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+            {visible(recycling).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
           </div>
         </div>
 
@@ -116,20 +126,20 @@ export function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
             One under the other on a phone: 6638:8681 then 6638:8705. */}
         <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[var(--cat-col)]">
           <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-left)] lg:shrink-0 lg:gap-[var(--cat-block)]">
-            <GroupHeading group={DESTRUCTION} />
+            <GroupHeading group={destruction} />
             {/* A three-column grid at lg rather than a wrapping row, for the
                 Firefox reason given in CaseStudyFilter: 3 x CARD_W + 2 x
                 LEFT_GAP is exactly LEFT_W, so a flex-wrap row had 0.01px of
                 slack and a browser that rounds differently wraps the third
                 card. LEFT_PER_ROW is the 3. */}
             <div className="flex flex-col gap-[16px] lg:grid lg:grid-cols-3 lg:gap-[var(--cat-card)]">
-              {visible(DESTRUCTION).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+              {visible(destruction).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
             </div>
           </div>
           <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-right)] lg:shrink-0 lg:gap-[var(--cat-block)]">
-            <GroupHeading group={PROGRAMS} />
+            <GroupHeading group={programs} />
             <div className="flex flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-[var(--cat-card)]">
-              {visible(PROGRAMS).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+              {visible(programs).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
             </div>
           </div>
         </div>

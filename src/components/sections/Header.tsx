@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
-import { ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, MAIN_NAV, TOP_BAR, type IntroMenu, type NavItem } from '@/lib/nav'
+import { type IndustryNavItem, type IntroMenu, type NavItem } from '@/lib/nav'
 import { INDUSTRY_MARKS } from '@/components/ui/IndustryMarks'
 import { SERVICE_MARKS } from '@/components/ui/ServiceMarks'
-import { SERVICE_GROUPS } from '@/data/services'
+import type { ServiceGroup } from '@/data/services'
+import { content } from '@/lib/page-content'
 import { HeaderNav, type NavEntry } from '@/components/client/HeaderNav'
 import { MobileNav } from '@/components/client/MobileNav'
 import { CONTACT_FORM_HREF, QUOTE_HREF, href } from '@/lib/urls'
@@ -39,7 +40,10 @@ export async function Header() {
    * That is the only reason this component is async — everything else in the
    * header is static. See blogMenuColumns() in src/lib/blog-index.ts.
    */
-  const NAV = buildNav(await blogMenuColumns())
+  const [blogColumns, { TOP_BAR, MAIN_NAV, ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, HEADER_CTA, MOBILE_NAV }, { SERVICE_GROUPS }] = await Promise.all([
+    blogMenuColumns(), content('site-header'), content('services'),
+  ])
+  const NAV = buildNav(blogColumns, { MAIN_NAV, ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, SERVICE_GROUPS })
 
   return (
     <>
@@ -53,6 +57,7 @@ export async function Header() {
         quoteHref={QUOTE_HREF}
         pickupHref={CONTACT_FORM_HREF}
         announce={TOP_BAR.announce}
+        labels={MOBILE_NAV}
       />
 
     {/* overflow="visible" so the menus can hang below the 140px bar. Every other
@@ -112,7 +117,7 @@ export async function Header() {
         </Link>
       </Box>
 
-      <HeaderNav nav={NAV} cta={{ label: 'Get a Quote', href: QUOTE_HREF }} />
+      <HeaderNav nav={NAV} cta={{ label: HEADER_CTA.label, href: QUOTE_HREF }} />
     </Section>
     </>
   )
@@ -154,7 +159,9 @@ function introMenu(item: NavItem, menu: IntroMenu): NavEntry {
  * mega-menu columns — Recycling Services, Destruction & Shredding, Recycling
  * Programs.
  */
-function buildNav(blogColumns: { title: string; href: string }[][]): NavEntry[] {
+type Menus = { MAIN_NAV: NavItem[]; ABOUT_NAV: IntroMenu; BLOG_NAV: IntroMenu; INDUSTRY_NAV: IndustryNavItem[][]; SERVICE_GROUPS: ServiceGroup[] }
+
+function buildNav(blogColumns: { title: string; href: string }[][], { MAIN_NAV, ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, SERVICE_GROUPS }: Menus): NavEntry[] {
   /* No database, no categories — one honest row rather than an empty panel or,
      as before, ten rows that all went nowhere. */
   const blogMenu: IntroMenu = {
@@ -165,7 +172,7 @@ function buildNav(blogColumns: { title: string; href: string }[][]): NavEntry[] 
   }
 
   return MAIN_NAV.map((item): NavEntry => {
-    if (item.label === 'Services') {
+    if (item.id === 'services') {
       return {
         label: item.label,
         href: item.href,
@@ -187,15 +194,15 @@ function buildNav(blogColumns: { title: string; href: string }[][]): NavEntry[] 
         },
       }
     }
-    if (item.label === 'About') return introMenu(item, ABOUT_NAV)
-    if (item.label === 'Blogs') return introMenu(item, blogMenu)
+    if (item.id === 'about') return introMenu(item, ABOUT_NAV)
+    if (item.id === 'blogs') return introMenu(item, blogMenu)
     /*
      * Industries — 6491:6934. Three columns of icon rows and no heading at all,
      * so it is MegaColumns with every column's `heading` left off. INDUSTRY_NAV
      * is already shaped as the frame's three columns; the note there explains why
      * its seven industries are not the frame's seven.
      */
-    if (item.label === 'Industries') {
+    if (item.id === 'industries') {
       return {
         label: item.label,
         href: item.href,

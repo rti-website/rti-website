@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
-import { DETAIL_COPY, mapEmbed, type Facility } from '@/data/facilities'
+import { mapEmbed, type Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * Map & Directions — Figma 6744:8795 (Minnesota) / 6746:8520 (Wisconsin).
@@ -29,7 +30,8 @@ import { DETAIL_COPY, mapEmbed, type Facility } from '@/data/facilities'
  */
 const BTN = 'btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] transition-colors lg:h-[48.05px]'
 
-export function LocationDirections({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationDirections({ top, height, f }: { top: number; height: number; f: Facility }) {
+  const { DETAIL_COPY } = await content('facilities')
   const tel = `tel:${f.phone.replace(/[^+\d]/g, '')}`
   return (
     <Section top={top} height={height} label="6744:8795" className="flex flex-col items-center bg-[#fcfcfc] px-[20px] py-[44px] lg:px-0 lg:py-[70px]">

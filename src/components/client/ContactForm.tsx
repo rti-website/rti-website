@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { FORM, HERO_LOCATIONS, SERVICE_INTEREST } from '@/data/contact'
+import { FORM as FORM_DEFAULTS, HERO_LOCATIONS as LOCATION_DEFAULTS, matchService } from '@/data/contact'
 import { path } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
 import { cityKey, stateCode } from '@/lib/us-address'
@@ -75,22 +75,35 @@ const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
 type State = 'idle' | 'sending' | 'sent' | 'error'
 type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'address' | 'city' | 'state' | 'zip' | 'service' | 'audience' | 'message' | 'consent'
 
+/** The words, from Admin -> Pages -> Contact Us (src/data/contact.ts). */
+type Form = typeof FORM_DEFAULTS
+type Location = (typeof LOCATION_DEFAULTS)[number]
+
+/**
+ * "Is it for?" posts the option's value as written in src/data/contact.ts
+ * ("Commercial", "Residential"), whatever the admin renames its label to:
+ * /api/leads, the residential auto-reply and the Lead Hub all key on those
+ * two words. The label shown is the edited one at the same position.
+ */
+const AUDIENCES = FORM_DEFAULTS.audiences
+
 /** The first rule a filled-in form breaks, or null. Mirrors /api/leads. */
-function check(v: (k: FieldName) => string, consent: boolean): { field: FieldName; message: string } | null {
+function check(v: (k: FieldName) => string, consent: boolean, form: Form): { field: FieldName; message: string } | null {
+  const E = form.errors
   const first = v('firstName'), last = v('lastName')
-  if (first.length < 2 || first.length > 60) return { field: 'firstName', message: 'Please enter your first name (2 to 60 characters).' }
-  if (last.length < 2 || last.length > 60) return { field: 'lastName', message: 'Please enter your last name (2 to 60 characters).' }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return { field: 'email', message: 'Please check the email address.' }
-  if (!usPhoneDigits(v('phone'))) return { field: 'phone', message: 'Please enter a US phone number, e.g. (763) 559-5130.' }
+  if (first.length < 2 || first.length > 60) return { field: 'firstName', message: E.firstName }
+  if (last.length < 2 || last.length > 60) return { field: 'lastName', message: E.lastName }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) return { field: 'email', message: E.email }
+  if (!usPhoneDigits(v('phone'))) return { field: 'phone', message: E.phone }
   // Business only since 24 Sep 2026: a Residential enquiry has no company
   // field on screen, so nothing to require.
-  if (v('audience') !== 'Residential' && !v('company')) return { field: 'company', message: 'Please enter your company name.' }
-  if (!v('city')) return { field: 'city', message: 'Please enter your city.' }
-  if (!stateCode(v('state'))) return { field: 'state', message: 'Please enter a US state, e.g. MN or Minnesota.' }
-  if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: 'Please enter a 5 digit ZIP code.' }
-  if (!v('service')) return { field: 'service', message: 'Please choose or type what you would like to recycle.' }
-  if (v('message').length > FORM.messageMax) return { field: 'message', message: `Please keep the message under ${FORM.messageMax} characters.` }
-  if (!consent) return { field: 'consent', message: 'Please tick the box so we can contact you.' }
+  if (v('audience') !== 'Residential' && !v('company')) return { field: 'company', message: E.company }
+  if (!v('city')) return { field: 'city', message: E.city }
+  if (!stateCode(v('state'))) return { field: 'state', message: E.usState }
+  if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: E.zipCode }
+  if (!v('service')) return { field: 'service', message: E.recycle }
+  if (v('message').length > form.messageMax) return { field: 'message', message: E.tooLong.replace('{max}', String(form.messageMax)) }
+  if (!consent) return { field: 'consent', message: E.consent }
   return null
 }
 
@@ -116,7 +129,14 @@ function filledNote(city: boolean, state: boolean): string {
   return `We filled in ${what} from your ZIP code. Change ${city && state ? 'them' : 'it'} if ${city && state ? 'they are' : 'it is'} not correct.`
 }
 
-export function ContactForm() {
+export function ContactForm({
+  form: FORM, serviceInterest, heroLocations,
+}: {
+  /** FORM, SERVICE_INTEREST and HERO_LOCATIONS as edited in the admin, from the server parent. */
+  form: Form
+  serviceInterest: readonly string[]
+  heroLocations: readonly Location[]
+}) {
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
   const [bad, setBad] = useState<FieldName | null>(null)
@@ -131,7 +151,7 @@ export function ContactForm() {
    * form". The select itself stays uncontrolled; this follows its onChange and
    * goes back to the default when the form resets.
    */
-  const [audience, setAudience] = useState<string>(FORM.audiences[0])
+  const [audience, setAudience] = useState<string>(AUDIENCES[0])
   const business = audience !== 'Residential'
   /** Which of the three we filled in (ours to replace) vs the visitor typed. */
   const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
@@ -161,7 +181,9 @@ export function ContactForm() {
     const select = document.getElementById('contact-service')
     const wanted = params.get('service')?.trim().toLowerCase()
     if (wanted) {
-      const match = SERVICE_INTEREST.find((o) => o.toLowerCase() === wanted)
+      // The edited list first; a link naming a service by its old wording
+      // still finds it (matchService, src/data/contact.ts).
+      const match = matchService(serviceInterest, wanted)
       if (match && select instanceof HTMLInputElement) select.value = match
     }
 
@@ -169,7 +191,12 @@ export function ContactForm() {
        State, as if the ZIP lookup had — so a ZIP typed later may still replace
        it — and Nationwide picks the Mail-In service if none was chosen. */
     const place = params.get('location')?.trim().toLowerCase()
-    const loc = place ? HERO_LOCATIONS.find((l) => l.label.toLowerCase() === place) : undefined
+    // Matched on the labels as edited, then as written: the hero may link
+    // with either. `state` and `service` are settings and travel with the row.
+    const loc = place
+      ? heroLocations.find((l) => l.label.toLowerCase() === place)
+        ?? LOCATION_DEFAULTS.find((l) => l.label.toLowerCase() === place)
+      : undefined
     /* A location page (24 Sep 2026) sends its place as "Phoenix, AZ": the
        state after the comma fills State the same way. The city is the drop-off
        site's, not necessarily the visitor's, so it is left for them. */
@@ -182,7 +209,11 @@ export function ContactForm() {
         filled.current.state = true
       }
     }
-    if (loc?.service && select instanceof HTMLInputElement && select.value === '') select.value = loc.service
+    if (loc?.service && select instanceof HTMLInputElement && select.value === '') {
+      select.value = matchService(serviceInterest, loc.service) ?? loc.service
+    }
+    // Read once, on arrival, as before; the lists do not change on the page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function focusField(f: FieldName) {
@@ -243,7 +274,7 @@ export function ContactForm() {
     const typed = stateInput?.value.trim() ?? ''
     const code = stateCode(typed)
     if (typed && !code) {
-      setHint({ tone: 'warn', text: 'Please enter a US state, e.g. MN or Minnesota.' })
+      setHint({ tone: 'warn', text: FORM.errors.usState })
       return
     }
     // "minnesota" -> "MN", so every lead reads alike (the server does the same).
@@ -305,7 +336,7 @@ export function ContactForm() {
     const value = (k: string) => String(data.get(k) ?? '').trim()
     const consent = data.get('consent') === 'yes'
 
-    const problem = check((k) => value(k), consent)
+    const problem = check((k) => value(k), consent, FORM)
     if (problem) {
       setError(problem.message)
       setState('error')
@@ -345,7 +376,7 @@ export function ContactForm() {
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string; field?: FieldName }
       if (!res.ok) {
-        setError(out.error ?? 'Something went wrong. Please try again.')
+        setError(out.error ?? FORM.errors.failed)
         setState('error')
         if (out.field) focusField(out.field)
         return
@@ -356,11 +387,11 @@ export function ContactForm() {
       filled.current = { city: false, state: false, zip: false }
       setHint(null)
       setCount(0)
-      setAudience(FORM.audiences[0])
+      setAudience(AUDIENCES[0])
       setState('sent')
       setPopup({ name: firstName })
     } catch {
-      setError('Could not reach the server. Please check your connection and try again.')
+      setError(FORM.errors.offline)
       setState('error')
     }
   }
@@ -453,7 +484,7 @@ export function ContactForm() {
               autoComplete="off" placeholder={F.service.placeholder} aria-invalid={invalid('service')}
               onInput={() => setBad(null)} className={`${INPUT} ${LIST_ARROW} relative pr-[44px]`} />
             <datalist id="contact-service-options">
-              {SERVICE_INTEREST.map((o) => <option key={o} value={o} />)}
+              {serviceInterest.map((o) => <option key={o} value={o} />)}
             </datalist>
             <Chevron />
           </div>
@@ -461,8 +492,8 @@ export function ContactForm() {
         <div className={FIELD}>
           <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}</label>
           <div className="relative">
-            <select id="contact-audience" name="audience" defaultValue={FORM.audiences[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
-              {FORM.audiences.map((o) => <option key={o} value={o}>{o}</option>)}
+            <select id="contact-audience" name="audience" defaultValue={AUDIENCES[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
+              {AUDIENCES.map((o, i) => <option key={o} value={o}>{FORM.audiences[i] ?? o}</option>)}
             </select>
             <Chevron />
           </div>
@@ -500,7 +531,7 @@ export function ContactForm() {
           disabled={state === 'sending'}
           className="btn-pop inline-flex h-[48.05px] w-fit items-center gap-[8.008px] rounded-[8px] border border-brand bg-brand px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white disabled:opacity-60"
         >
-          {state === 'sending' ? 'Sending…' : FORM.submit}
+          {state === 'sending' ? FORM.sending : FORM.submit}
           <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px]" />
         </button>
 

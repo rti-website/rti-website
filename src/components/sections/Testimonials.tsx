@@ -2,7 +2,8 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Title } from '@/components/ui/Bits'
-import { TESTIMONIALS } from '@/data/home'
+import type { Testimonial } from '@/data/home'
+import { content } from '@/lib/page-content'
 
 /**
  * Client's Testimonials — Figma 6024:14149 in BVtf2AOuUOcYbiMIlcKmbC as
@@ -47,14 +48,15 @@ type Card = { quote: string; name: string; sub: React.ReactNode; stars: number; 
 
 /** A function, not a module constant: reviewDate() reads MONTHS, which is
  *  declared further down the file. */
-function cards(): Card[] {
+function cards(TESTIMONIALS: Testimonial[]): Card[] {
   return TESTIMONIALS.slice(0, SHOWN).map((t) => ({
     quote: t.quote, name: t.name, stars: t.stars, truncated: t.truncated,
     sub: t.role ?? (t.date ? <time dateTime={t.date}>{reviewDate(t.date)}</time> : null),
   }))
 }
 
-export function Testimonials() {
+export async function Testimonials() {
+  const { TESTIMONIALS, HOME_TESTIMONIALS } = await content('home')
   return (
     <Section
       top={6739 - HOME_BELOW_SERVICES_SHIFT}
@@ -63,11 +65,11 @@ export function Testimonials() {
       className="flex flex-col items-center gap-[24px] bg-[#f5f5f5] px-[20px] py-[48px] lg:block lg:p-0"
     >
       <CenterBox y={90} w={900} className="flex flex-col items-center gap-[16px] max-lg:gap-[24px]">
-        <Eyebrow>Why Enterprises Choose Us</Eyebrow>
+        <Eyebrow>{HOME_TESTIMONIALS.eyebrow}</Eyebrow>
         {/* leading-[44.7px] is unprefixed and would follow the 26px mobile
             title down, so the phone figure is restated as a max-lg override
             rather than by touching the desktop value. */}
-        <Title className="text-center leading-[44.7px] max-lg:leading-[32px]">Client&rsquo;s Testimonials</Title>
+        <Title className="text-center leading-[44.7px] max-lg:leading-[32px]">{HOME_TESTIMONIALS.title}</Title>
       </CenterBox>
 
       {/* Cards Row — 6554:2055: four 300 x 393 cards, 22 apart, 1266 wide at
@@ -75,7 +77,7 @@ export function Testimonials() {
           (CSS scroll-snap, no script), one card and a bit in view. */}
       <Box x={327} y={235} w={1266} h={393} className="max-lg:w-full">
         <div className="flex gap-[22px] max-lg:-mx-[20px] max-lg:snap-x max-lg:snap-mandatory max-lg:overflow-x-auto max-lg:px-[20px] max-lg:[scrollbar-width:none] max-lg:[&::-webkit-scrollbar]:hidden lg:h-full">
-          {cards().map((t) => <ReviewCard key={t.name} t={t} />)}
+          {cards(TESTIMONIALS).map((t, i) => <ReviewCard key={i} t={t} />)}
         </div>
       </Box>
     </Section>

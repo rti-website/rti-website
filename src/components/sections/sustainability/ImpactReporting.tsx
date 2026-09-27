@@ -1,5 +1,5 @@
 import { Section } from '@/components/design/Frame'
-import { REPORTING } from '@/data/sustainability'
+import { content } from '@/lib/page-content'
 
 /**
  * Environmental impact reporting — Figma 6383:1163. py 90, gap 50, on a
@@ -21,7 +21,8 @@ import { REPORTING } from '@/data/sustainability'
  * same overstatement of the Wisconsin certification the desktop frame makes.
  * The doc's "Licensed Facilities" is kept. See TODO_FOR_DESIGN.
  */
-export function ImpactReporting({ top, height }: { top: number; height: number }) {
+export async function ImpactReporting({ top, height }: { top: number; height: number }) {
+  const { REPORTING } = await content('sustainability')
   return (
     <Section top={top} height={height} label="6383:1163"
       className="flex flex-col items-start gap-[32px] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[90px]"

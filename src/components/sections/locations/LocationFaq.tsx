@@ -1,7 +1,8 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Accordion } from '@/components/client/Accordion'
-import { DETAIL_COPY, type Facility } from '@/data/facilities'
+import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * "Questions About This Location" — Figma 6744:8798 / 6746:8610.
@@ -20,7 +21,8 @@ import { DETAIL_COPY, type Facility } from '@/data/facilities'
  *
  * MOBILE — 6751:8477: px20 / py44, the list at full width 12 apart.
  */
-export function LocationFaq({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationFaq({ top, height, f }: { top: number; height: number; f: Facility }) {
+  const { DETAIL_COPY } = await content('facilities')
   return (
     <Section top={top} height={height} label="6744:8798" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[40px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">

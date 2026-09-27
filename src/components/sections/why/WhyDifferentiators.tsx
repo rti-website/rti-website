@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Mark } from '@/components/sections/why/WhyMarks'
-import { DIFFERENTIATORS } from '@/data/why-choose-us'
+import { content } from '@/lib/page-content'
 
 /**
  * What sets us apart — Figma 6379:1033. py 100, gap 50: heading block on a
@@ -15,7 +15,8 @@ import { DIFFERENTIATORS } from '@/data/why-choose-us'
  * #f6f6f6 plate at r16 / p24, because a white card on a white section needs
  * the border and a grey one does not.
  */
-export function WhyDifferentiators({ top, height }: { top: number; height: number }) {
+export async function WhyDifferentiators({ top, height }: { top: number; height: number }) {
+  const { DIFFERENTIATORS } = await content('why-choose-us')
   return (
     <Section top={top} height={height} label="6379:1033"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

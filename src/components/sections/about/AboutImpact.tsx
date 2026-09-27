@@ -1,5 +1,5 @@
 import { Section } from '@/components/design/Frame'
-import { IMPACT } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * Impact numbers — Figma 6372:843. Navy-to-teal horizontal gradient, py 90,
@@ -20,7 +20,8 @@ import { IMPACT } from '@/data/about'
  * utility so the "no rule after the last row" case reads in the markup, and
  * they are switched off again at lg where the columns sit side by side.
  */
-export function AboutImpact({ top, height }: { top: number; height: number }) {
+export async function AboutImpact({ top, height }: { top: number; height: number }) {
+  const { IMPACT } = await content('about')
   return (
     <Section top={top} height={height} label="6372:843"
       className="flex flex-col items-center gap-[32px] bg-gradient-to-r from-navy to-[#0c4e5a] px-[20px] py-[48px] text-center lg:gap-[50px] lg:px-0 lg:py-[90px]">

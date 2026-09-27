@@ -3,7 +3,8 @@ import { Section } from '@/components/design/Frame'
 import { href } from '@/lib/urls'
 import { Eyebrow, Lead } from '@/components/ui/Bits'
 import { GLYPHS } from '@/components/ui/Glyph'
-import { NATIONWIDE, type NationwideFacility } from '@/data/facilities'
+import type { NationwideFacility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * "Additional Facilities Nationwide" — Figma 6831:2663 on /all-locations/
@@ -35,11 +36,12 @@ import { NATIONWIDE, type NationwideFacility } from '@/data/facilities'
  */
 export type SiteLinks = Record<string, { hub?: string; materials: Record<string, string> }>
 
-export function NationwideFacilities({ top, height, links = {} }: {
+export async function NationwideFacilities({ top, height, links = {} }: {
   top: number; height: number
   /** Card slug -> its published hub (and material pages, no longer shown here). */
   links?: SiteLinks
 }) {
+  const { NATIONWIDE } = await content('facilities')
   return (
     <Section
       top={top} height={height} label="6831:2663"
@@ -95,7 +97,7 @@ function Card({ f, hub }: { f: NationwideFacility; hub?: string }) {
           </h3>
         </div>
         {/* "Drop-off Location" — 6902:15978 (13.5) / 6902:15980 (10). */}
-        {f.tag && <span className="shrink-0 whitespace-nowrap font-sans text-[10px] font-medium leading-normal text-white lg:text-[13.5px]">{f.tag}</span>}
+        {f.badge && <span className="shrink-0 whitespace-nowrap font-sans text-[10px] font-medium leading-normal text-white lg:text-[13.5px]">{f.badge}</span>}
       </div>
 
       {/* Body — 6833:3009 / 6896:15937 */}

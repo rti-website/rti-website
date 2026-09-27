@@ -7,7 +7,8 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { ContactSection } from '@/components/sections/ContactSection'
 import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
-import { CTA, FAQ, HERO, LIVE_SEO } from '@/data/contact'
+import { LIVE_SEO } from '@/data/contact'
+import { content } from '@/lib/page-content'
 
 /**
  * Contact Us — a 1:1 build of Figma frame 6365:1082.
@@ -65,7 +66,8 @@ const CTA_TOP = FAQ_TOP + FAQ_H
 const CTA_H = 456
 const FOOTER_TOP = CTA_TOP + CTA_H
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { CTA, FAQ, HERO } = await content('contact')
   return (
     <Canvas height={FOOTER_TOP + FOOTER_H}>
       <Header />

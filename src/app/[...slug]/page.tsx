@@ -7,6 +7,9 @@ import { ArticleTemplate } from '@/components/blocks/ArticleTemplate'
 import { LocationTemplate } from '@/components/blocks/LocationTemplate'
 import { PageTemplate } from '@/components/blocks/PageTemplate'
 import { ServiceTemplate } from '@/components/blocks/ServiceTemplate'
+import { Markdown } from '@/components/ui/Markdown'
+import { content } from '@/lib/page-content'
+import { DOCS, MDX_DOC_BY_URL } from '@/content/registry'
 
 /**
  * Catch-all route driven by the content manifest.
@@ -124,11 +127,19 @@ export default async function CatchAllPage({ params }: Props) {
           <Body />
         </ArticleTemplate>
       )
-    default:
+    default: {
+      /* Editable in Admin -> Pages since 27 Sep 2026 (src/content/mdx-docs.ts).
+         Unedited, the MDX file renders as it always has; once there is a
+         published edit (or a draft, in preview), the edited blocks render
+         with the same components. */
+      const key = MDX_DOC_BY_URL[entry.url]
+      const doc = key ? ((await content(key)) as { BODY?: string[] }) : null
+      const edited = key && doc && JSON.stringify(doc) !== JSON.stringify(DOCS[key].data())
       return (
         <PageTemplate entry={entry}>
-          <Body />
+          {edited ? <Markdown source={(doc.BODY ?? []).join('\n\n')} /> : <Body />}
         </PageTemplate>
       )
+    }
   }
 }

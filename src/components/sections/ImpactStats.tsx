@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { HOME_BELOW_CERT_SHIFT } from '@/lib/layout'
-import { IMPACT_STATS } from '@/data/home'
+import { content } from '@/lib/page-content'
 
 /**
  * Impact figures — Figma 6873:13941 (board) and 6873:14158 (phone), placed
@@ -22,7 +22,8 @@ import { IMPACT_STATS } from '@/data/home'
  */
 export const IMPACT_H = 154
 
-export function ImpactStats() {
+export async function ImpactStats() {
+  const { IMPACT_STATS } = await content('home')
   return (
     <Section
       top={1679 + 969 + 150 - HOME_BELOW_CERT_SHIFT} left={319} width={1282} height={IMPACT_H}
@@ -34,8 +35,8 @@ export function ImpactStats() {
         style={{ backgroundImage: 'linear-gradient(270deg, #05838b 0%, #000 102.1%)' }}
       >
         <dl className="grid w-full grid-cols-2 gap-x-[12px] gap-y-[16px] text-center lg:flex lg:gap-[20px]">
-          {IMPACT_STATS.map((s) => (
-            <div key={s.l} className="flex min-w-px flex-col items-center gap-[8px] rounded-[14px] border border-white/15 bg-white/[0.08] px-[16px] py-[18px] lg:flex-1">
+          {IMPACT_STATS.map((s, i) => (
+            <div key={i} className="flex min-w-px flex-col items-center gap-[8px] rounded-[14px] border border-white/15 bg-white/[0.08] px-[16px] py-[18px] lg:flex-1">
               <dt className="order-2 w-full font-roboto text-[11px] font-medium leading-[16px] text-white/65 lg:text-[14px]">{s.l}</dt>
               <dd className="order-1 w-full font-sans text-[22px] font-bold leading-normal text-white lg:text-[26px]">{s.n}</dd>
             </div>

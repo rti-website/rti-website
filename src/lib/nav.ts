@@ -10,6 +10,12 @@ import { href } from './urls'
 import type { IndustryMark } from '@/components/ui/IndustryMarks'
 
 export type NavItem = {
+  /**
+   * Which menu this item opens ('about', 'services', 'industries', 'blogs').
+   * The header matches on this, never on the label, so the label can be
+   * edited in Admin -> Pages -> Header (27 Sep 2026).
+   */
+  id?: string
   label: string
   href: string
   external?: boolean
@@ -28,16 +34,16 @@ export type NavItem = {
  * heading points at it (Footer.tsx), and the page keeps its sitemap entry.
  */
 export const MAIN_NAV: NavItem[] = [
-  { label: 'About',      href: href('/about-us-commercial-recycling-solutions/'), hasDropdown: true },
-  { label: 'Services',   href: href('/services/'), hasDropdown: true },
-  { label: 'Industries', href: href('/industries/'), hasDropdown: true },
+  { id: 'about',      label: 'About',      href: href('/about-us-commercial-recycling-solutions/'), hasDropdown: true },
+  { id: 'services',   label: 'Services',   href: href('/services/'), hasDropdown: true },
+  { id: 'industries', label: 'Industries', href: href('/industries/'), hasDropdown: true },
   // "Blogs", plural, is the design's label. The page is still /blog/.
-  { label: 'Blogs',      href: href('/blog/'), hasDropdown: true },
+  { id: 'blogs',      label: 'Blogs',      href: href('/blog/'), hasDropdown: true },
   // Was "Drop off Locations" pointing at /dropoff/, which has no page and 404s.
   // Renamed and repointed at the built locations page on Asim's instruction,
   // 15 Sep 2026. /dropoff/ is still a KEEP row in url-map.csv with nothing
   // captured and no page — decide there whether it redirects here or gets built.
-  { label: 'Locations',  href: href('/all-locations/') },
+  { id: 'locations',  label: 'Locations',  href: href('/all-locations/') },
 ]
 
 /*
@@ -68,6 +74,12 @@ export const MAIL_IN: NavItem = {
  * longer touches the header, but it still stands in the industry pages'
  * closing copy (`ctaBody` in src/data/industries/*.ts), which says 205-3040.
  */
+/** The header's button (desktop bar). Admin -> Pages -> Header, 27 Sep 2026. */
+export const HEADER_CTA = { label: 'Get a Quote' }
+
+/** The phone header's two buttons: the small one in the bar and the drawer's quote button. */
+export const MOBILE_NAV = { pickup: 'Arrange Pickup', quote: 'Get a quote' }
+
 export const TOP_BAR = {
   /**
    * The announcement. Real copy since 22 Sep 2026 — Asim replaced the Figma

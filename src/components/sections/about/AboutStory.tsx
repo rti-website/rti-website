@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { FactsCard } from '@/components/ui/FactsCard'
-import { STORY } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * Company story — Figma 6372:841. Row at x319, 1282 wide: a 700px text column
@@ -16,7 +16,8 @@ import { STORY } from '@/data/about'
  * the prose block (gap 16, heading 28/34) and then the facts card, full width.
  * Nothing is reordered — the row simply becomes a column.
  */
-export function AboutStory({ top, height }: { top: number; height: number }) {
+export async function AboutStory({ top, height }: { top: number; height: number }) {
+  const { STORY } = await content('about')
   return (
     <Section top={top} height={height} label="6372:841"
       className="flex flex-col items-center bg-white px-[20px] py-[48px] lg:px-0 lg:py-[100px]">

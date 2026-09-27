@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
+import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /minnesota-recycling/electronic-recycling/ — "Electronic Recycling in
@@ -22,7 +22,7 @@ export const BLAINE_ELECTRONICS: CityPage = {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
     image: '/images/locations/city-pages/blaine-electronics/hero.png',
-    button: { label: 'Schedule an Electronics Pickup in Blaine, MN', href: QUOTE },
+    button: { label: 'Schedule an Electronics Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
   },
 
   opening: ['Used electronics, computers, monitors, printers, and the cables, switches, and chargers that go with them, contain metals, plastics, glass, and circuit boards that shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and processes electronics for households, businesses, and organizations at its Blaine, Minnesota facility, breaking devices down into their base materials instead of sending them to a landfill. Individuals can drop electronics off at the Blaine location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
@@ -77,6 +77,7 @@ export const BLAINE_ELECTRONICS: CityPage = {
   },
 
   local: {
+    width: 1000,
     heading: 'Local Recycling Information',
     body: ['Rules on disposing of electronics, particularly items with a circuit board or CRT, vary by device type and by whether the generator is a household or a business, and requirements can change, so it’s best to confirm with local authorities or contact the Blaine facility directly before disposing of any item you’re unsure about.'],
   },
@@ -92,6 +93,7 @@ export const BLAINE_ELECTRONICS: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What electronics does Recycle Technologies accept?',
       a: 'General e-waste such as cables, switches, chargers, keyboards, mice, remotes, microwaves and televisions; desktops, laptops and servers; monitors and displays including CRT units; fax machines, printers, scanners and copiers; and cell phones and related mobile devices. Other electronic scrap is handled case by case.' },
@@ -108,13 +110,15 @@ export const BLAINE_ELECTRONICS: CityPage = {
   related: {
     heading: 'Related Recycling Services',
     links: related('Battery Recycling', 'Light Bulbs Recycling', 'IT Asset Disposition (ITAD)', 'Mail-In Program', 'All Recycle Technologies Locations'),
+    phoneStack: true,
   },
 
   cta: {
     heading: 'Get Started With Electronic Recycling in Blaine, Minnesota',
     body: ['Drop off electronics at the Blaine facility during business hours, or schedule a business pickup for retired equipment.'],
-    primary: { label: 'Schedule an Electronics Recycling Pickup in Blaine, MN', href: QUOTE },
+    primary: { label: 'Schedule an Electronics Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
     phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130' },
+    bodyWidth: 720,
   },
 
   todo: [

@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { CERTS, INTRO, type CertLogo } from '@/data/certifications-page'
+import { type CertLogo } from '@/data/certifications-page'
+import { content } from '@/lib/page-content'
 
 /**
  * Certifications grid — Figma 6380:1097. py 100, gap 50: heading block on an
@@ -36,7 +37,8 @@ import { CERTS, INTRO, type CertLogo } from '@/data/certifications-page'
  * few KB each, and the optimizer caches by URL, so a re-exported logo would
  * keep showing the old one until .next is cleared.
  */
-export function CertGrid({ top, height }: { top: number; height: number }) {
+export async function CertGrid({ top, height }: { top: number; height: number }) {
+  const { CERTS, INTRO } = await content('certifications-page')
   return (
     <Section top={top} height={height} label="6380:1097"
       className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[40px] lg:gap-[50px] lg:px-0 lg:py-[100px]">

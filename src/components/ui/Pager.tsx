@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * Numbered pagination for the blog index.
@@ -36,7 +37,7 @@ function window_(page: number, count: number): Array<number | 'gap'> {
   return out
 }
 
-export function Pager({
+export async function Pager({
   page, count, pathFor,
 }: {
   page: number
@@ -44,6 +45,7 @@ export function Pager({
   /** Page number -> site-relative path. Pagination shapes differ per section. */
   pathFor: (n: number) => string
 }) {
+  const { LIST_TEXT } = await content('blog')
   if (count <= 1) return null
 
   return (
@@ -58,7 +60,7 @@ export function Pager({
       className="flex h-[44px] items-center gap-[10px] max-lg:h-auto max-lg:w-full max-lg:flex-wrap max-lg:justify-center"
     >
       {page > 1 && (
-        <Link href={href(pathFor(page - 1))} rel="prev" className={STEP}>&larr;&nbsp;Previous</Link>
+        <Link href={href(pathFor(page - 1))} rel="prev" className={STEP}>&larr;&nbsp;{LIST_TEXT.previous}</Link>
       )}
 
       {window_(page, count).map((n, i) =>
@@ -79,7 +81,7 @@ export function Pager({
       )}
 
       {page < count && (
-        <Link href={href(pathFor(page + 1))} rel="next" className={STEP}>Next&nbsp;&rarr;</Link>
+        <Link href={href(pathFor(page + 1))} rel="next" className={STEP}>{LIST_TEXT.next}&nbsp;&rarr;</Link>
       )}
     </nav>
   )

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Mark } from './ComplianceMarks'
-import { DOWNLOADS } from '@/data/compliance-center'
+import { content } from '@/lib/page-content'
 
 /**
  * Compliance documentation — Figma 6389:1530, and on a phone 6674:5400 in
@@ -22,7 +22,8 @@ import { DOWNLOADS } from '@/data/compliance-center'
  * a file that would 404. See the note above DOWNLOADS in
  * src/data/compliance-center.ts for what to change when the files are produced.
  */
-export function ComplianceDownloads({ top, height }: { top: number; height: number }) {
+export async function ComplianceDownloads({ top, height }: { top: number; height: number }) {
+  const { DOWNLOADS } = await content('compliance-center')
   return (
     <Section top={top} height={height} label="6389:1530"
       className="flex flex-col items-start gap-[24px] bg-[#fcfcfc] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

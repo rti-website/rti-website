@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
+import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /minnesota-recycling/light-bulb-recycling/ — "Light Bulb Recycling in
@@ -23,12 +23,13 @@ export const BLAINE_LIGHT_BULB: CityPage = {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
     image: '/images/locations/city-pages/blaine-light-bulb/hero.png',
-    button: { label: 'Schedule a Light Bulb Recycling Pickup in Blaine, MN', href: QUOTE },
+    button: { label: 'Schedule a Light Bulb Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
   },
 
   opening: ['Fluorescent bulbs, CFLs, and other lamps contain small amounts of mercury and can’t legally go in the trash in Minnesota. Recycle Technologies handles light bulb recycling at its Blaine facility, giving residents and businesses in the area a documented way to get spent bulbs recycled. Individuals can drop bulbs off at the Blaine location or use the nationwide Mail-In Program, and businesses can schedule commercial pickup.'],
 
   serviceInfo: {
+    compact: true,
     heading: 'Service Information',
     rows: [
       { label: 'Address', value: '1525 99th Ln NE, Blaine, Minnesota 55449' },
@@ -80,8 +81,9 @@ export const BLAINE_LIGHT_BULB: CityPage = {
   },
 
   local: {
+    width: 900,
     heading: 'Local Recycling Information',
-    body: ['Minnesota law (Minn. Stat. § 115A.932) bans disposing of fluorescent and high-intensity discharge lamps in the trash and requires them to be recycled, covering fluorescent lights of every shape and size, including CFLs. Unlike some states, Minnesota does not allow crushing fluorescent bulbs before recycling. The City of Blaine also runs a monthly community Recycling Saturday event at this same address, on the third Saturday of the month from 8 AM to noon, where residents can drop off lamps for a small per-item fee. This is a separate city-sponsored event from Recycle Technologies’ regular weekday drop-off hours.'],
+    body: ['Minnesota law (Minn. Stat. § 115A.932) bans disposing of fluorescent and high-intensity discharge lamps in the trash and requires them to be recycled, covering fluorescent lights of every shape and size, including CFLs. Unlike some states, Minnesota does not allow crushing fluorescent bulbs before recycling.', 'The City of Blaine also runs a monthly community Recycling Saturday event at this same address, on the third Saturday of the month from 8 AM to noon, where residents can drop off lamps for a small per-item fee. This is a separate city-sponsored event from Recycle Technologies’ regular weekday drop-off hours.'],
   },
 
   whyBox: {
@@ -95,6 +97,7 @@ export const BLAINE_LIGHT_BULB: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'Am I actually required to recycle fluorescent bulbs instead of throwing them out in Minnesota?',
       a: 'Yes. Minnesota law (Minn. Stat. § 115A.932) bans disposing of fluorescent and high-intensity discharge lamps in the trash and requires them to be recycled, covering fluorescent lights of every shape and size, including CFLs.' },
@@ -111,13 +114,15 @@ export const BLAINE_LIGHT_BULB: CityPage = {
   related: {
     heading: 'Related Recycling Services',
     links: related('Ballast Recycling - often replaced along with fluorescent tubes', 'Battery Recycling', 'Electronic Recycling', 'Mail-In Program', 'All Recycle Technologies Locations'),
+    phoneSkip: ['Mail-In Program'],
   },
 
   cta: {
     heading: 'Get Started With Light Bulb Recycling in Blaine, Minnesota',
     body: ['Drop off bulbs at the Blaine facility during business hours, schedule a commercial pickup if you’re a business, or start a shipment through the Mail-In Program.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Blaine, MN', href: QUOTE },
-    phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130' },
+    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130', phoneLabel: 'Call (763) 559-5130' },
+    bodyWidth: 720,
   },
 
   todo: [

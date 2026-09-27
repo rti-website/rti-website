@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Empty, Table } from './Bits'
 import { getJSON, sendJSON } from './api'
-import { CHANNELS, LEAD_STATUSES, LeadDialog, exactTime, leadSource, when, type Agent, type LeadRow, type Me } from './Leads'
+import { CHANNELS, LEAD_STATUSES, LeadDialog, LeadFormDialog, exactTime, leadSource, when, type Agent, type LeadRow, type Me } from './Leads'
 
 /**
  * Lead workflow — the management view (Asim, 26 Sep 2026: "another place,
@@ -28,6 +28,7 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
   const [status, setStatus] = useState('open')   // 'open' = new, contacted, qualified
   const [picked, setPicked] = useState<Set<number>>(new Set())
   const [bulkTo, setBulkTo] = useState('')
+  const [formFor, setFormFor] = useState<LeadRow | null>(null)
 
   const reload = useCallback(() => {
     void getJSON<{ leads: LeadRow[]; agents?: Agent[]; me?: Me; setup?: string }>('/leads').then((r) => {
@@ -77,7 +78,8 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
       <div className="a-note"><span>
         <b>Who is working what.</b> Each card is one agent&rsquo;s list; click it to see only theirs. Hand an enquiry over with the
         <b> Assigned</b> select on its row, or tick several and assign them together. An agent signs in with their own account
-        (People &amp; access, role <b>Sales agent</b>) and sees only the enquiries assigned to them.
+        (People &amp; access, role <b>Sales agent</b>) and sees only the enquiries assigned to them. Whoever you assign an
+        enquiry to gets it by email straight away, with a link to open it; the email is noted under the enquiry&rsquo;s activity.
       </span></div>
 
       <div className="a-tiles" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
@@ -123,14 +125,14 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
         )}
       </div>
 
-      <Table head={['', 'From', 'Contact', 'What they want', 'Came in by', 'Received', 'Status', 'Assigned', 'Last activity']}>
+      <Table head={['', 'From', 'Contact', 'What they want', 'Came in by', 'Received', 'Status', 'Assigned', 'Last activity', '']}>
         {loaded && rows.length === 0 && <Empty>No enquiries yet.</Empty>}
         {rows.length > 0 && shown.length === 0 && <Empty>Nothing matches those filters.</Empty>}
         {shown.length > 0 && (
           <tr>
             <td><input type="checkbox" checked={allPicked} aria-label="Select all shown"
               onChange={() => setPicked(allPicked ? new Set() : new Set(shown.map((l) => l.id)))} /></td>
-            <td colSpan={8} style={{ color: 'var(--a-muted)', fontSize: 12 }}>Select all shown</td>
+            <td colSpan={9} style={{ color: 'var(--a-muted)', fontSize: 12 }}>Select all shown</td>
           </tr>
         )}
         {shown.map((l) => {
@@ -164,6 +166,7 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
               <td style={{ fontSize: 12, maxWidth: 260 }}>
                 {last ? <><span style={{ color: 'var(--a-muted)' }}>{when(last.at)}{last.who ? ` · ${last.who}` : ''}</span><br />{last.kind === 'note' ? last.body : last.kind === 'assigned' ? (last.body ? `assigned to ${last.body}` : 'unassigned') : `${last.kind}: ${last.body ?? ''}`}</> : <span className="a-hint">—</span>}
               </td>
+              <td><button className="a-btn sm" style={{ whiteSpace: 'nowrap' }} onClick={() => setFormFor(l)}>View form</button></td>
             </tr>
           )
         })}
@@ -173,6 +176,7 @@ export function LeadWorkflow({ onToast, adding, onAdded }: { onToast: (m: string
         <LeadDialog agents={agents} me={me} onClose={onAdded}
           onSaved={(id) => { onToast(`Enquiry #${id} added`); onAdded(); reload() }} />
       )}
+      {formFor && <LeadFormDialog lead={formFor} onClose={() => setFormFor(null)} />}
     </main>
   )
 }

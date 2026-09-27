@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
+import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
  * /wisconsin-recycling/battery-recycling/ — "Battery Recycling in New
@@ -29,6 +29,7 @@ export const NEW_BERLIN_BATTERY: CityPage = {
   opening: ['Used batteries, alkaline, lithium-ion, lead-acid, and more, contain materials that can be hazardous if crushed, damaged, or left to leak, and shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and recycles batteries for households, businesses, and organizations at its New Berlin, Wisconsin facility, giving the area a documented way to clear out spent batteries instead of letting them accumulate. Individuals can drop batteries off at the New Berlin location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
 
   serviceInfo: {
+    compact: true,
     heading: 'Service Information',
     rows: [
       { label: 'Address', value: '2815 South 171st Street, New Berlin, WI 53151' },
@@ -59,7 +60,7 @@ export const NEW_BERLIN_BATTERY: CityPage = {
     items: [
       { title: 'Collection', text: 'Batteries enter the process through a business pickup, a drop-off at the New Berlin facility, or the Mail-In Program.' },
       { title: 'Sorting and Storage', text: 'Trained staff sort and separate batteries by type once they arrive, since a container of mixed battery types takes longer to process safely than one that’s already sorted. Battery terminals should be covered before shipping or storage to reduce fire risk, and batteries sent through the Mail-In Program should already be separated by type.' },
-      { title: 'Documentation', text: 'Once a pickup or drop-off is processed, Recycle Technologies issues a certificate of recycling and safe disposal. Recycle Technologies has handled battery recycling from its Wisconsin facility since 1993.' },
+      { title: 'Documentation', text: ['Once a pickup or drop-off is processed, Recycle Technologies issues a certificate of recycling and safe disposal.', 'Recycle Technologies has handled battery recycling from its Wisconsin facility since 1993.'] },
     ],
   },
 
@@ -67,9 +68,9 @@ export const NEW_BERLIN_BATTERY: CityPage = {
     heading: 'Recycling Options in New Berlin, Wisconsin',
     layout: 'three',
     items: [
-      { icon: ICON.pin,   title: 'Drop-Off', text: 'Bring batteries to 2815 South 171st Street, New Berlin, WI 53151, Monday through Friday from 8:00 AM to 4:30 PM. Enter via the main lot on South 171st Street; staff will direct you to the drop-off bay upon arrival.' },
+      { icon: ICON.clock, title: 'Drop-Off', text: 'Bring batteries to 2815 South 171st Street, New Berlin, WI 53151, Monday through Friday from 8:00 AM to 4:30 PM. Enter via the main lot on South 171st Street; staff will direct you to the drop-off bay upon arrival.' },
       { icon: ICON.truck, title: 'Business Pickup', text: 'Businesses within roughly 100 miles of the New Berlin facility can schedule a pickup for batteries rather than transporting them to the facility themselves.' },
-      { icon: ICON.mail,  title: 'Mail-In Recycling', text: 'If a trip to New Berlin isn’t convenient, the nationwide Mail-In Program lets you ship batteries from anywhere in the country, already sorted by type.' },
+      { icon: ICON.inhouse, title: 'Mail-In Recycling', text: 'If a trip to New Berlin isn’t convenient, the nationwide Mail-In Program lets you ship batteries from anywhere in the country, already sorted by type.' },
     ],
   },
 
@@ -89,6 +90,7 @@ export const NEW_BERLIN_BATTERY: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What battery types does Recycle Technologies accept?',
       a: 'Alkaline and zinc batteries, lithium-ion and sealed lead-acid batteries, nickel-cadmium and button cell batteries, and EV, power tool and backup batteries. Other types, including mercury oxide batteries, are handled on a case-by-case basis; call the New Berlin facility to check.' },
@@ -110,9 +112,13 @@ export const NEW_BERLIN_BATTERY: CityPage = {
   cta: {
     heading: 'Get Started With Battery Recycling in New Berlin, Wisconsin',
     body: ['Drop off batteries at the New Berlin facility during business hours, or schedule a business battery pickup if you’re within our service radius.'],
-    primary: { label: 'Schedule a Battery Recycling Pickup in New Berlin, WI', href: QUOTE },
-    phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040' },
+    primary: { label: 'Schedule a Battery Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040', phoneLabel: 'Phone: (262) 798-3040' },
+    headingWidth: 598,
   },
+
+  /** Grey bands as the revised board draws them (27 Sep 2026). */
+  bands: ['info', 'options', 'related'],
 
   todo: [
     'FAQ answers: the frame draws the five questions closed. Answers are built from this page’s own copy; confirm or replace.',

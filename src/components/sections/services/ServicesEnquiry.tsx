@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { ConnectForm } from '@/components/client/ConnectForm'
-import { SERVICES_ENQUIRY } from '@/data/services'
+import { content } from '@/lib/page-content'
 
 /**
  * "Don't See Your Item? Reach out to Us!" — Figma 6166:2746.
@@ -18,7 +18,8 @@ import { SERVICES_ENQUIRY } from '@/data/services'
  * div is `h-full w-full` inside the same 1282x201 box, so the board is
  * pixel-identical.
  */
-export function ServicesEnquiry({ top = 2574.83 }: { top?: number } = {}) {
+export async function ServicesEnquiry({ top = 2574.83 }: { top?: number } = {}) {
+  const { SERVICES_ENQUIRY } = await content('services')
   return (
     <Section
       top={top} left={319} width={1282} height={201} label="6166:2746"

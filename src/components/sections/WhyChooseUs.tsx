@@ -3,10 +3,15 @@ import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * Why Choose Recycle Technologies — Figma 6065:21652. 1280x532 at x320, r40.
  * Mobile frame 6609:2326 (390x916), BVtf2AOuUOcYbiMIlcKmbC.
+ *
+ * The words are HOME_WHY_CHOOSE in src/data/home.ts (Admin -> Pages ->
+ * Homepage, 27 Sep 2026). The four card positions below pair with its
+ * `stats` by position.
  *
  * The four stat cards. The frame repeats "92% / Diversion Rate" in all four —
  * one real number and three copies of it — and Asim supplied the real set on
@@ -24,14 +29,19 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  * E-Waste Recycled", and "100,000+ / Devices Securely Destroyed" became
  * "2.3M+ / Devices Destroyed". One set of numbers on the page, not two.
  */
-const STATS = [
-  { x: 0,      y: 0,     v: '18M+',   l: 'Lbs of E-Waste Recycled' },
-  { x: 288.94, y: 0,     v: '95%',    l: 'Diversion Rate' },
-  { x: 0,      y: 177.4, v: '1,500+', l: 'Businesses Served' },
-  { x: 288.94, y: 177.4, v: '2.3M+',  l: 'Devices Destroyed' },
+const STAT_POS = [
+  { x: 0,      y: 0 },
+  { x: 288.94, y: 0 },
+  { x: 0,      y: 177.4 },
+  { x: 288.94, y: 177.4 },
 ]
 
-export function WhyChooseUs() {
+export async function WhyChooseUs() {
+  const { HOME_WHY_CHOOSE } = await content('home')
+  const STATS = STAT_POS.flatMap((p, i) => {
+    const w = HOME_WHY_CHOOSE.stats[i]
+    return w ? [{ ...p, v: w.v, l: w.l }] : []
+  })
   return (
     <Section
       top={4435 - HOME_BELOW_SERVICES_SHIFT}
@@ -61,7 +71,7 @@ export function WhyChooseUs() {
 
       <Box x={56} y={37} w={501}>
         <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-white max-lg:text-center lg:text-[40px] lg:leading-[44.7px]">
-          Why Choose<br />Recycle Technologies?
+          {HOME_WHY_CHOOSE.heading.l1}<br />{HOME_WHY_CHOOSE.heading.l2}
         </h2>
       </Box>
 
@@ -75,17 +85,13 @@ export function WhyChooseUs() {
           keeps it five everywhere and still clears the stat grid at x667 by
           20px. */}
       <Box x={56} y={146} w={591}>
-        <p className="font-roboto text-[15px] leading-[22px] text-white/80 lg:text-[17.018px] lg:leading-[27.654px]">
-          With over 30 years of experience, Recycle Technologies provides responsible
-          electronics recycling, IT asset recycling, and document shredding across the
-          Midwest. We are the region&rsquo;s only minority-owned document destruction and
-          recycling company, backed by R2v3-certified facilities in Minnesota and Wisconsin
-          with expanded operations in Chicago.
-        </p>
-        <p className="pt-[22px] font-roboto text-[15px] leading-[22px] text-white/80 lg:pt-[27.654px] lg:text-[17.018px] lg:leading-[27.654px]">
-          Our convenient local and nationwide mail-in recycling options make electronics
-          recycling near you simple, secure, and environmentally responsible.
-        </p>
+        {HOME_WHY_CHOOSE.body.map((para, i) => (
+          <p key={i} className={i === 0
+            ? 'font-roboto text-[15px] leading-[22px] text-white/80 lg:text-[17.018px] lg:leading-[27.654px]'
+            : 'pt-[22px] font-roboto text-[15px] leading-[22px] text-white/80 lg:pt-[27.654px] lg:text-[17.018px] lg:leading-[27.654px]'}>
+            {para}
+          </p>
+        ))}
       </Box>
 
       {/* CTAs — 6609:2329. The two buttons sit 12px apart on the phone, not the
@@ -94,10 +100,10 @@ export function WhyChooseUs() {
           resolving its absolute position against the Section exactly as before. */}
       <div className="flex w-full flex-col gap-[12px] lg:contents">
         <Box x={56} y={423}>
-          <Btn href={QUOTE_HREF} variant="whiteFill" className="w-full justify-center lg:w-[210px]">Get a Free Estimate</Btn>
+          <Btn href={QUOTE_HREF} variant="whiteFill" className="w-full justify-center lg:w-[210px]">{HOME_WHY_CHOOSE.estimateButton}</Btn>
         </Box>
         <Box x={272} y={424}>
-          <Btn href={href('/about-us-commercial-recycling-solutions/')} variant="white" className="w-full lg:w-auto">Read More About Us</Btn>
+          <Btn href={href('/about-us-commercial-recycling-solutions/')} variant="white" className="w-full lg:w-auto">{HOME_WHY_CHOOSE.aboutButton}</Btn>
         </Box>
       </div>
 

@@ -9,7 +9,8 @@ import { CircularEconomy } from '@/components/sections/sustainability/CircularEc
 import { ZeroLandfill } from '@/components/sections/sustainability/ZeroLandfill'
 import { ImpactReporting } from '@/components/sections/sustainability/ImpactReporting'
 import { SustainabilityGoals } from '@/components/sections/sustainability/SustainabilityGoals'
-import { CTA, HERO, SEO } from '@/data/sustainability'
+import { SEO } from '@/data/sustainability'
+import { content } from '@/lib/page-content'
 
 /**
  * Sustainability & Environmental Impact — a 1:1 build of Figma frame 6374:5211.
@@ -70,7 +71,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function SustainabilityPage() {
+export default async function SustainabilityPage() {
+  const { CTA, HERO } = await content('sustainability')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { FactsCard } from '@/components/ui/FactsCard'
-import { COVERAGE } from '@/data/locations'
+import { content } from '@/lib/page-content'
 
 /**
  * Coverage note — Figma 6377:968. The same two-column shape as the About Us
@@ -14,7 +14,8 @@ import { COVERAGE } from '@/data/locations'
  * its title at 17 and 13.5/1.5 bullets 14 apart. On white, where the board
  * is #fcfcfc.
  */
-export function LocationsCoverage({ top, height }: { top: number; height: number }) {
+export async function LocationsCoverage({ top, height }: { top: number; height: number }) {
+  const { COVERAGE } = await content('locations')
   return (
     <Section top={top} height={height} label="6377:968"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[44px] lg:items-center lg:gap-0 lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">

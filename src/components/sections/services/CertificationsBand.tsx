@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { LogoMarquee } from '@/components/ui/LogoMarquee'
-import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
+import { content } from '@/lib/page-content'
 
 /**
  * Certifications band — Figma 6142:1622 on /services/, 6173:2828 on the
@@ -32,7 +32,7 @@ import { CERT_COPY, CERT_LOGOS } from '@/data/certifications'
  * pages' facility sentence) still shows there, because it says something
  * the logos do not.
  */
-export function CertificationsBand({
+export async function CertificationsBand({
   top = 2925.83, label = '6142:1622', body, height = 299.035,
 }: {
   top?: number
@@ -42,6 +42,7 @@ export function CertificationsBand({
   /** Page-specific compliance copy; falls back to the shared paragraph. */
   body?: string
 } = {}) {
+  const { CERT_COPY, CERT_LOGOS } = await content('certifications')
   return (
     <Section
       top={top} height={height} label={label}

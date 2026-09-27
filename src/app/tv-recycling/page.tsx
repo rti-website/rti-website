@@ -1,5 +1,6 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
+import { content } from '@/lib/page-content'
 import { CONTENT } from '@/data/tv-recycling'
 
 /**
@@ -17,6 +18,8 @@ export const metadata = buildMetadata({
   description: CONTENT.liveSeo.description,
 })
 
-export default function Page() {
-  return <ServiceDetailPage content={CONTENT} layout={{ intro: 834, process: 743, accept: 759 }} />
+export default async function Page() {
+  // The copy with the admin's edits (Admin -> Pages); metadata above stays on the static import.
+  const { CONTENT: copy } = await content('tv-recycling')
+  return <ServiceDetailPage content={copy} layout={{ intro: 834, process: 743, accept: 759 }} />
 }

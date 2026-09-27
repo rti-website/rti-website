@@ -3,9 +3,10 @@ import { one } from '@/lib/db'
 import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
 import { stateCode } from '@/lib/us-address'
-import { FORM, SERVICE_INTEREST } from '@/data/contact'
+import { FORM, SERVICE_INTEREST, matchService } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
-import { RESIDENTIAL_REPLY, residentialReplyHtml, residentialReplyText } from '@/data/emails'
+import { residentialReplyHtml, residentialReplyText } from '@/data/emails'
+import { publishedContent } from '@/lib/page-content'
 import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
 import { leadNotification } from '@/lib/lead-email'
 import { locateLead } from '@/lib/lead-location'
@@ -47,29 +48,51 @@ const LIMITS: Record<string, number> = {
  * Returns the cleaned values, or the field that failed and why — the form
  * focuses that field and shows the message.
  */
-function validateSpecForm(p: Payload):
+type ContactCopy = Pick<Awaited<ReturnType<typeof publishedContent<'contact'>>>, 'FORM' | 'SERVICE_INTEREST'>
+
+/** The published contact copy; the code's own if it cannot be read, so a
+ *  database hiccup never costs an enquiry here (the insert below reports it). */
+async function contactCopy(): Promise<ContactCopy> {
+  try {
+    return await publishedContent('contact')
+  } catch (err) {
+    console.error('[leads] contact copy not read, using the defaults:', (err as Error).message)
+    return { FORM, SERVICE_INTEREST }
+  }
+}
+
+/*
+ * `copy` is the contact page's copy as PUBLISHED in Admin -> Pages (the
+ * visitor saw that version): the error messages, the consent line stored with
+ * the lead, and the service list. Two things stay on the code's own values so
+ * that renaming a label never breaks them: "Is it for?" posts its value as
+ * written in src/data/contact.ts (see AUDIENCES in ContactForm), and a service
+ * is recognised under its edited or its original name (matchService).
+ */
+function validateSpecForm(p: Payload, copy: ContactCopy):
   | { ok: true; name: string; phone: string; zip: string; service: string; message: string | null; details: Record<string, string> }
   | { ok: false; field: string; error: string } {
+  const E = copy.FORM.errors
   const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
   const first = str(p.firstName)
   const last = str(p.lastName)
-  if (first.length < 2 || first.length > 60) return { ok: false, field: 'firstName', error: 'Please enter your first name (2 to 60 characters).' }
-  if (last.length < 2 || last.length > 60) return { ok: false, field: 'lastName', error: 'Please enter your last name (2 to 60 characters).' }
+  if (first.length < 2 || first.length > 60) return { ok: false, field: 'firstName', error: E.firstName }
+  if (last.length < 2 || last.length > 60) return { ok: false, field: 'lastName', error: E.lastName }
 
   const phone = toE164(str(p.phone))
-  if (!phone) return { ok: false, field: 'phone', error: 'Please enter a US phone number, e.g. (763) 559-5130.' }
+  if (!phone) return { ok: false, field: 'phone', error: E.phone }
 
   // Required since 23 Sep 2026 (Asim: "make optional only the address and
   // message, other things are compulsory"). The messages match ContactForm's.
   // Business only since 24 Sep 2026: the form does not show Company Name for
   // a Residential enquiry, so it is only required for the rest.
-  if (str(p.audience) !== 'Residential' && !str(p.company)) return { ok: false, field: 'company', error: 'Please enter your company name.' }
-  if (!str(p.city)) return { ok: false, field: 'city', error: 'Please enter your city.' }
+  if (str(p.audience) !== 'Residential' && !str(p.company)) return { ok: false, field: 'company', error: E.company }
+  if (!str(p.city)) return { ok: false, field: 'city', error: E.city }
   // Stored as the postal code ("Minnesota" -> "MN"), so every lead reads alike.
   const state = stateCode(str(p.state))
-  if (!state) return { ok: false, field: 'state', error: 'Please enter a US state, e.g. MN or Minnesota.' }
+  if (!state) return { ok: false, field: 'state', error: E.usState }
   const zip = str(p.zip)
-  if (!/^\d{5}$/.test(zip)) return { ok: false, field: 'zip', error: 'Please enter a 5 digit ZIP code.' }
+  if (!/^\d{5}$/.test(zip)) return { ok: false, field: 'zip', error: E.zipCode }
   // Whether the ZIP matches the city is NOT checked here. The form points out
   // a mismatch and offers the fix, but a real enquiry is never refused over
   // it: the table can be out of date, and towns go by more than one name.
@@ -79,20 +102,20 @@ function validateSpecForm(p: Payload):
   // as that service so the Lead Hub can still route on it; anything else is
   // kept as the visitor wrote it.
   const wanted = str(p.service).replace(/\s+/g, ' ').slice(0, 80)
-  const service = SERVICE_INTEREST.find((o) => o.toLowerCase() === wanted.toLowerCase()) ?? wanted
-  if (!service) return { ok: false, field: 'service', error: 'Please choose or type what you would like to recycle.' }
+  const service = matchService(copy.SERVICE_INTEREST, wanted) ?? wanted
+  if (!service) return { ok: false, field: 'service', error: E.recycle }
 
   const message = str(p.message) || null
   if (message && message.length > FORM.messageMax) {
-    return { ok: false, field: 'message', error: `Please keep the message under ${FORM.messageMax} characters.` }
+    return { ok: false, field: 'message', error: E.tooLong.replace('{max}', String(FORM.messageMax)) }
   }
 
-  if (p.consent !== true) return { ok: false, field: 'consent', error: 'Please tick the box so we can contact you.' }
+  if (p.consent !== true) return { ok: false, field: 'consent', error: E.consent }
 
   const details: Record<string, string> = {
     firstName: first,
     lastName: last,
-    consent: FORM.consent,
+    consent: copy.FORM.consent,
     consentAt: new Date().toISOString(),
   }
   details.service = service
@@ -184,7 +207,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const spec = typeof payload.firstName === 'string' || typeof payload.lastName === 'string'
-    ? validateSpecForm(payload)
+    ? validateSpecForm(payload, await contactCopy())
     : null
   if (spec && !spec.ok) {
     return fail(body, spec.error, 400, { field: spec.field })
@@ -310,11 +333,14 @@ export async function POST(req: Request): Promise<Response> {
             AND created_at > now() - interval '24 hours'`, [email])
       if ((recent?.n ?? 0) === 0) {
         const first = details.firstName || name?.split(/\s+/)[0] || null
+        // The reply as published in Admin -> Pages (the code's copy when
+        // nothing is), never a draft.
+        const { RESIDENTIAL_REPLY: copy } = await publishedContent('emails')
         const reply = await sendMail({
           to: email,
-          subject: RESIDENTIAL_REPLY.subject,
-          text: residentialReplyText(first),
-          html: residentialReplyHtml(first),
+          subject: copy.subject,
+          text: residentialReplyText(first, copy),
+          html: residentialReplyHtml(first, copy),
           from: process.env.CUSTOMER_MAIL_FROM || undefined,
           replyTo: notifyAddress() ?? undefined,
         })

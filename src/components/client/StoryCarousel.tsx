@@ -72,7 +72,12 @@ const SWIPE_PX = 44
  * than being imported from src/data/home.ts here: that module also builds the
  * FAQ, services and step data, none of which belongs in this client bundle.
  */
-export function StoryCarousel({ stories, start }: { stories: Story[]; start: number }) {
+export function StoryCarousel({ stories, start, readLabel }: {
+  stories: Story[]
+  start: number
+  /** The "Read Story" link label — HOME_CASE_STUDIES.readStory, Admin -> Pages -> Homepage. */
+  readLabel: string
+}) {
   const n = stories.length
   const [active, setActive] = useState(start)
   const go = (d: number) => setActive((i) => (i + d + n) % n)
@@ -172,7 +177,7 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
                   </span>
                 </span>
                 <span className="absolute bottom-[48px] right-[44px] flex items-center gap-[10px] font-sans text-[16px] leading-[22px] tracking-[0.126px] text-white">
-                  Read Story
+                  {readLabel}
                   <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14px] w-[18px]" />
                 </span>
               </>
@@ -187,7 +192,7 @@ export function StoryCarousel({ stories, start }: { stories: Story[]; start: num
                   {story.title}
                 </span>
                 <span className="flex items-center gap-[8px] font-sans text-[12px] leading-[19.351px] tracking-[0.126px] text-white">
-                  Read Story
+                  {readLabel}
                   <Image src="/images/icons/arrow-white.svg" alt="" width={14} height={11} className="h-[11px] w-[14px]" />
                 </span>
               </span>

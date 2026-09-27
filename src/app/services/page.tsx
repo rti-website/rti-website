@@ -5,10 +5,10 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { CATALOG_H, ServicesCatalog } from '@/components/sections/services/ServicesCatalog'
-import { SERVICES_CERT_BODY } from '@/data/services'
 import { ServicesEnquiry } from '@/components/sections/services/ServicesEnquiry'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
+import { content } from '@/lib/page-content'
 
 /**
  * All Services — a 1:1 build of Figma frame 6142:784 (1920 x 4512).
@@ -59,7 +59,10 @@ const CTA_TOP = CERT_TOP + CERT_H + GAP
 const CTA_H = 456
 const FOOTER_TOP = CTA_TOP + CTA_H
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  // The shared compliance line, read from its own document (it was
+  // SERVICES_CERT_BODY, a copy of it in src/data/services.ts).
+  const { CERT_COPY } = await content('certifications')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
@@ -67,7 +70,7 @@ export default function ServicesPage() {
         <ServicesHero />
         <ServicesCatalog top={CATALOG_TOP} />
         <ServicesEnquiry top={ENQUIRY_TOP} />
-        <CertificationsBand top={CERT_TOP} height={CERT_H} body={SERVICES_CERT_BODY} />
+        <CertificationsBand top={CERT_TOP} height={CERT_H} body={CERT_COPY.body} />
         <ServicesCta top={CTA_TOP} />
       </main>
       <Footer top={FOOTER_TOP} />

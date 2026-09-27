@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GUIDES, ARTICLES } from '@/data/resources'
+import { content } from '@/lib/page-content'
 
 /**
  * Related articles — Figma 6494:1750, 1920x471.
@@ -12,7 +12,8 @@ import { GUIDES, ARTICLES } from '@/data/resources'
  * retired post cannot linger here after it has been pulled from Resources. The
  * current post is filtered out, and the first four of what is left are shown.
  */
-export function RelatedArticles({ current }: { current: string }) {
+export async function RelatedArticles({ current }: { current: string }) {
+  const [{ GUIDES, ARTICLES }, { RELATED_ARTICLES }] = await Promise.all([content('resources'), content('blog')])
   const pool = [
     ...GUIDES.cards.map((g) => ({ category: g.category, title: g.title, href: g.href, date: 'Dec 24, 2024' })),
     ...ARTICLES.rows.map((a) => ({ category: a.category, title: a.title, href: a.href, date: a.date })),
@@ -37,7 +38,7 @@ export function RelatedArticles({ current }: { current: string }) {
       {/* Centred on the phone too since 24 Sep 2026 (Asim: centre every section
           heading on mobile). The section has left padding only, for the rail,
           so the heading carries its own right padding to centre on the screen. */}
-      <h2 className="pr-[20px] text-center font-sans text-[24px] font-semibold text-black lg:pr-0 lg:text-[34px]">Related Articles</h2>
+      <h2 className="pr-[20px] text-center font-sans text-[24px] font-semibold text-black lg:pr-0 lg:text-[34px]">{RELATED_ARTICLES.heading}</h2>
       {/* No `items-start`: flex stretches the four cards to the tallest of them,
           so a one-line title and a three-line title give the same box. Asim
           asked for that on 17 Sep 2026 — "the size of article must be same" —
@@ -75,7 +76,7 @@ export function RelatedArticles({ current }: { current: string }) {
                 card instead of leaving it under a short title. */}
             <span className="mt-auto flex items-center justify-between pt-[14px]">
               <span className="post-card__date font-roboto text-[12.5px] text-[#a6a6a6] transition-colors lg:text-[12px]">{c.date}</span>
-              <span className="post-card__read font-roboto text-[13.5px] font-medium text-brand transition-colors lg:text-[13px]">Read &rarr;</span>
+              <span className="post-card__read font-roboto text-[13.5px] font-medium text-brand transition-colors lg:text-[13px]">{RELATED_ARTICLES.read} &rarr;</span>
             </span>
           </Link>
         ))}

@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
+import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
  * /wisconsin-recycling/electronic-recycling/ — "Electronic Recycling in New
@@ -22,7 +22,7 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
     image: '/images/locations/city-pages/new-berlin-electronics/hero.png',
-    button: { label: 'Schedule an Electronics Pickup in New Berlin, WI', href: QUOTE },
+    button: { label: 'Schedule an Electronics Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
   },
 
   opening: ['Used electronics, computers, monitors, printers, and the cables, switches, and chargers that go with them, contain metals, plastics, glass, and circuit boards that shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and processes electronics for households, businesses, and organizations at its New Berlin, Wisconsin facility, breaking devices down into their base materials instead of sending them to a landfill. Individuals can drop electronics off at the New Berlin location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
@@ -77,6 +77,7 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
   },
 
   local: {
+    width: 1000,
     heading: 'Local Recycling Information',
     body: ['Rules on disposing of electronics, particularly items with a circuit board or CRT, vary by device type and by whether the generator is a household or a business, and requirements can change, so it’s best to confirm with local authorities or contact the New Berlin facility directly before disposing of any item you’re unsure about.'],
   },
@@ -92,6 +93,7 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What electronics does Recycle Technologies accept?',
       a: 'General e-waste such as cables, switches, chargers, keyboards, mice, remotes, microwaves and televisions; desktops, laptops and servers; monitors and displays including CRT units; fax machines, printers, scanners and copiers; and cell phones and related mobile devices. Other electronic scrap is handled case by case.' },
@@ -108,14 +110,19 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
   related: {
     heading: 'Related Recycling Services',
     links: related('Battery Recycling', 'Television Recycling', 'Paper Shredding', 'Mail-In Program', 'All Recycle Technologies Locations'),
+    phoneStack: true,
   },
 
   cta: {
     heading: 'Get Started With Electronic Recycling in New Berlin, Wisconsin',
     body: ['Drop off electronics at the New Berlin facility during business hours, or schedule a business pickup for retired equipment.'],
-    primary: { label: 'Schedule an Electronics Recycling Pickup in New Berlin, WI', href: QUOTE },
+    primary: { label: 'Schedule an Electronics Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
     phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040' },
+    bodyWidth: 720,
   },
+
+  /** Grey bands as the revised board draws them (27 Sep 2026). */
+  bands: ['info', 'steps', 'local', 'related'],
 
   todo: [
     'FAQ answers: the frame draws the five questions closed. Answers are built from this page’s own copy; confirm or replace.',

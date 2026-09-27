@@ -5,7 +5,8 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { DownloadGrid } from '@/components/sections/downloads/DownloadGrid'
-import { CERTIFICATES, CHECKLISTS, HERO, SEO, SHIPPING } from '@/data/downloads'
+import { SEO } from '@/data/downloads'
+import { content } from '@/lib/page-content'
 
 /**
  * Downloads — a 1:1 build of Figma frame 6382:7043, and of 6638:10182
@@ -61,7 +62,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function DownloadsPage() {
+export default async function DownloadsPage() {
+  const { CERTIFICATES, CHECKLISTS, HERO, SHIPPING, DOWNLOAD_CARD } = await content('downloads')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
@@ -70,9 +72,9 @@ export default function DownloadsPage() {
           label="6478:5167" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
           image="/images/pages/hero-downloads.png"
         />
-        <DownloadGrid top={CERTS_TOP} height={H.certs} tone="white" section={CERTIFICATES} />
-        <DownloadGrid top={LISTS_TOP} height={H.lists} tone="mist"  section={CHECKLISTS} />
-        <DownloadGrid top={SHIP_TOP}  height={H.ship}  tone="white" section={SHIPPING} />
+        <DownloadGrid top={CERTS_TOP} height={H.certs} tone="white" section={CERTIFICATES} action={DOWNLOAD_CARD.action} />
+        <DownloadGrid top={LISTS_TOP} height={H.lists} tone="mist"  section={CHECKLISTS} action={DOWNLOAD_CARD.action} />
+        <DownloadGrid top={SHIP_TOP}  height={H.ship}  tone="white" section={SHIPPING} action={DOWNLOAD_CARD.action} />
       </main>
       <Footer top={FOOTER_TOP} />
     </Canvas>

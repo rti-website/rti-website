@@ -5,8 +5,9 @@ import { href } from '@/lib/urls'
 import { FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
 import { socialLinks } from '@/lib/social'
-import { FACILITIES as CONTACT_FACILITIES } from '@/data/contact'
-import { FOOTER_CERTS, type FooterCert } from '@/data/certifications'
+import { type FooterCert } from '@/data/certifications'
+import type { FooterGroup } from '@/data/site-footer'
+import { content } from '@/lib/page-content'
 
 /**
  * Footer — Figma 6778:3897 (board, 1920x755) and 6620:2370 (phone), on #fcfcfc.
@@ -49,71 +50,6 @@ import { FOOTER_CERTS, type FooterCert } from '@/data/certifications'
  * link moved together, nothing else about the columns changed.
  */
 
-type LinkItem = { l: string; h: string; external?: boolean }
-type Group = { heading: string; headingHref?: string; links: LinkItem[] }
-
-const COL_1: Group[] = [
-  {
-    heading: 'Learn More',
-    links: [
-      { l: 'Home',            h: href('/') },
-      { l: 'About',           h: href('/about-us-commercial-recycling-solutions/') },
-      { l: 'Mail In Program', h: 'https://ezontheearth.com/', external: true },
-      { l: 'All Locations',   h: href('/all-locations/') },
-    ],
-  },
-  {
-    heading: 'News & Blogs',
-    links: [
-      { l: 'Blogs', h: href('/blog/') },
-      { l: 'News',  h: href('/category/news/') },
-      // Moved here from Resources — Asim, 24 Sep 2026.
-      { l: 'ITAD & Recycling Guides', h: href('/itad-recycling-guides/') },
-    ],
-  },
-  {
-    heading: 'Services',
-    links: [
-      { l: 'View all Services', h: href('/services/') },
-      // Asim, 23 Sep 2026, when /it-asset-disposition/ was built: "add ITAD
-      // here in services". Its one link from the site chrome — ITAD is not in
-      // the header menu (see the note in src/lib/nav.ts).
-      { l: 'IT Asset Disposition', h: href('/it-asset-disposition/') },
-    ],
-  },
-]
-
-const COL_2: Group[] = [
-  {
-    heading: 'Resources',
-    // The heading itself opens /resources/ since 21 Sep 2026, when Resources
-    // came out of the header bar — this is now the page's link.
-    headingHref: href('/resources/'),
-    links: [
-      { l: 'Contact Us',     h: href('/contact-us/') },
-      { l: 'Certifications', h: href('/certifications/') },
-      { l: 'Why Choose Us',  h: href('/why-choose-us/') },
-      { l: 'Sustainability', h: href('/sustainability/') },
-      { l: 'Compliance Center', h: href('/compliance-center/') },
-      { l: 'Case Studies',      h: href('/case-studies/') },
-      // Asim, 16 Sep 2026: Downloads goes under this heading. Figma 6382:7043.
-      { l: 'Downloads',         h: href('/downloads/') },
-      // ITAD & Recycling Guides sat here until 24 Sep 2026; now under News & Blogs.
-      // Asim, 17 Sep 2026, when the FAQ page was built.
-      { l: 'FAQs', h: href('/faqs/') },
-    ],
-  },
-  {
-    heading: 'Terms & Conditions',
-    links: [
-      { l: 'Privacy Policy',    h: href('/privacy-policy/') },
-      { l: 'Terms of Services', h: href('/terms-of-services/') },
-      { l: 'Cookies Policy',    h: href('/cookies-and-personal-information/') },
-      { l: 'Other Information', h: href('/faqs/') },
-    ],
-  },
-]
-
 /**
  * The two real facilities, read from the contact page's data — Asim, 22 Sep
  * 2026: "see the 2nd ss add this in footer, we add same, add this one".
@@ -131,7 +67,6 @@ const COL_2: Group[] = [
  * contact page renders, so the footer cannot drift from it. When a facility
  * moves, that file is the one place to change.
  */
-const FACILITIES = CONTACT_FACILITIES.cards
 
 /* Brand glyphs and hrefs both come from src/lib/social.ts, which reads the
    admin's `social_links` table and falls back to RTI's real accounts. This
@@ -144,7 +79,10 @@ const FACILITIES = CONTACT_FACILITIES.cards
  * onto the canvas at 3830.86.
  */
 export async function Footer({ top = 1192 }: { top?: number } = {}) {
-  const SOCIAL = await socialLinks()
+  const [SOCIAL, { COL_1, COL_2, FOOTER_TEXT, FOOTER_NEWSLETTER }, { FACILITIES: CONTACT_FACILITIES }, { FOOTER_CERTS }] = await Promise.all([
+    socialLinks(), content('site-footer'), content('contact'), content('certifications'),
+  ])
+  const FACILITIES = CONTACT_FACILITIES.cards
 
   return (
     /*
@@ -168,14 +106,13 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
         {/* 6778:3898 — 17/27.65 in a 296 column, four lines. */}
         <Box x={319} y={170} w={296}>
           <p className="font-roboto text-[15px] leading-[22px] text-muted lg:text-[17.018px] lg:leading-[27.654px]">
-            Recycle Technologies has been providing services to the community since 1993.
-            We are a Midwest-based recycling and shredding company.
+            {FOOTER_TEXT.about}
           </p>
         </Box>
 
         {/* 6778:3900..3906 — input at y317, consent at 384, button at 446. */}
         <Box x={318} y={317} w={296}>
-          <NewsletterForm />
+          <NewsletterForm text={FOOTER_NEWSLETTER} />
         </Box>
       </div>
 
@@ -230,7 +167,7 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
             188 wide on the board: heading block, card at +110, logo row at +343. */}
         <div className="flex flex-col items-center gap-[16px] lg:w-[188px] lg:shrink-0 lg:items-stretch lg:gap-[30px]">
           <div className="flex flex-col items-center gap-[16px] lg:items-start lg:gap-0">
-            <h3 className={HEADING}>Connect with Us</h3>
+            <h3 className={HEADING}>{FOOTER_TEXT.connectHeading}</h3>
             {/* 6778:4030 — 25px glyphs, 30 apart, in a 45px row. */}
             <ul className="flex items-center gap-[20px] lg:h-[45px] lg:gap-[30px]">
               {SOCIAL.map((s) => (
@@ -252,19 +189,19 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
               <Image src="/images/icons/chat-icon.png" alt="" width={18} height={18} className="size-[18px]" />
             </span>
             <p className="mt-[12px] font-sans text-[14px] font-medium leading-[20px] text-ink lg:mt-0 lg:font-poppins lg:text-[12px] lg:font-normal lg:leading-[18px] lg:text-[#13220f]">
-              Hi! How can we help?
+              {FOOTER_TEXT.chatPrompt}
             </p>
             <div className="mt-[12px] flex gap-[10px] lg:mt-0 lg:w-full lg:flex-col lg:gap-[10px]">
               <Link href={href('/contact-us/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
-                I have a question
+                {FOOTER_TEXT.questionButton}
               </Link>
               <Link href={href('/faqs/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
-                Tell me more
+                {FOOTER_TEXT.moreButton}
               </Link>
             </div>
           </div>
 
-          <CertGrid />
+          <CertGrid certs={FOOTER_CERTS} />
         </div>
       </Box>
 
@@ -277,12 +214,12 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
       <Box x={0} y={FOOTER_BAR_Y} w={1920} h={74} className="flex flex-col items-center gap-[12px] lg:block lg:border-t lg:border-[#e5e5e5] lg:bg-[#f8f8f8]">
         <Box x={321} y={0} h={74} className="flex items-center">
           <a href="#top" className="py-[6px] font-roboto text-[14px] leading-[14px] text-muted hover:text-brand lg:py-0 lg:font-poppins">
-            Back to Top &uarr;
+            {FOOTER_TEXT.backToTop} &uarr;
           </a>
         </Box>
         <Box x={1321} y={0} h={74} w={280} className="flex items-center justify-center text-center lg:justify-end lg:text-left">
           <p className="font-roboto text-[14px] leading-[14px] text-ink lg:font-poppins lg:text-[#13220f]">
-            Copyright@2026. All rights are reserved.
+            {FOOTER_TEXT.copyright}
           </p>
         </Box>
       </Box>
@@ -311,7 +248,7 @@ function Icon({ src, w, h }: { src: string; w: number; h: number }) {
   )
 }
 
-function LinkColumn({ groups }: { groups: Group[] }) {
+function LinkColumn({ groups }: { groups: FooterGroup[] }) {
   return (
     /* 6620:5101 on the phone: 16px headings over bare 14px Roboto links.
        6778:3920 on the board: groups 30 apart, each a 35px heading block over
@@ -351,12 +288,12 @@ const LINK = 'block py-[5px] font-roboto text-[14px] leading-[20px] text-muted h
  * between the marks are grid items
  * with a left border, so they land on the track edges at any width.
  */
-function CertGrid() {
+function CertGrid({ certs }: { certs: FooterCert[] }) {
   return (
     <div className="grid w-full grid-cols-3 grid-rows-[97px] lg:w-[188px] lg:grid-rows-[64px] lg:opacity-80">
       <span aria-hidden="true" className="col-start-2 row-start-1 border-l border-line" />
       <span aria-hidden="true" className="col-start-3 row-start-1 border-l border-line" />
-      {FOOTER_CERTS.map((c, i) => <Cert key={c.name} c={c} col={i + 1} />)}
+      {certs.map((c, i) => <Cert key={c.name} c={c} col={i + 1} />)}
     </div>
   )
 }

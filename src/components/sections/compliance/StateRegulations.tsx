@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { STATE_LAW } from '@/data/compliance-center'
+import { content } from '@/lib/page-content'
 
 /**
  * Minnesota & Wisconsin law — Figma 6389:1528, and on a phone 6674:5334 in
@@ -21,7 +21,8 @@ import { STATE_LAW } from '@/data/compliance-center'
  * ! The frame fills the card #fcfcfc, which is the SECTION's own colour — the
  * card would be invisible. Kept white-on-border, as drawn on the board.
  */
-export function StateRegulations({ top, height }: { top: number; height: number }) {
+export async function StateRegulations({ top, height }: { top: number; height: number }) {
+  const { STATE_LAW } = await content('compliance-center')
   return (
     <Section top={top} height={height} label="6389:1528"
       className="flex flex-col items-start gap-[24px] bg-[#fcfcfc] px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

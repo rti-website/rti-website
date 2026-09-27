@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { SERVICE_CARDS, SERVICE_TABS } from '@/data/home'
-import { SERVICES_ENQUIRY } from '@/data/services'
+import type { Card, ServiceTab } from '@/data/home'
+import type { SERVICES_ENQUIRY } from '@/data/services'
 import { HOME_SERVICES_DELTA_VAR } from '@/lib/layout'
 import { ServicePhotoCard } from '@/components/ui/ServicePhotoCard'
 import { ConnectForm } from '@/components/client/ConnectForm'
@@ -58,7 +58,14 @@ import { ConnectForm } from '@/components/client/ConnectForm'
  * listener and a second source of truth for where the breakpoint is.
  *
  * Client only because it owns the active tab.
+ *
+ * THE DATA ARRIVES AS PROPS (27 Sep 2026, Admin -> Pages): OurServices reads
+ * the Services page document and passes the tabs and cards (serviceTabs() /
+ * serviceCards() in src/data/home.ts) and the "Don't See Your Item?" copy, so
+ * an edit there reaches this component, and neither data module is in the
+ * client bundle.
  */
+type Enquiry = typeof SERVICES_ENQUIRY
 const CARD_H = 374
 const ROW_GAP = 24
 const PER_ROW = 3
@@ -92,9 +99,14 @@ function panelH(count: number): number {
   return Math.max(COLUMN_H, rows * CARD_H + (rows - 1) * ROW_GAP)
 }
 
-const TALLEST = Math.max(...SERVICE_TABS.map((t) => panelH((SERVICE_CARDS[t.id] ?? []).length)))
-
-export function ServiceTabs() {
+export function ServiceTabs({ tabs: SERVICE_TABS, cards: SERVICE_CARDS, enquiry, more }: {
+  tabs: ServiceTab[]
+  /** The cards' hover label. */
+  more?: string
+  cards: Record<string, Card[]>
+  enquiry: Enquiry
+}) {
+  const TALLEST = Math.max(...SERVICE_TABS.map((t) => panelH((SERVICE_CARDS[t.id] ?? []).length)))
   // SERVICE_TABS is derived from a non-empty literal, but noUncheckedIndexedAccess
   // does not know that — fall back rather than assert.
   const [active, setActive] = useState<string>(SERVICE_TABS[0]?.id ?? 'recycling')
@@ -113,7 +125,7 @@ export function ServiceTabs() {
     if (!canvas) return
     canvas.style.setProperty(HOME_SERVICES_DELTA_VAR, `${panelH(cards.length) - TALLEST}px`)
     return () => { canvas.style.removeProperty(HOME_SERVICES_DELTA_VAR) }
-  }, [cards.length])
+  }, [cards.length, TALLEST])
 
   useEffect(() => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -151,7 +163,7 @@ export function ServiceTabs() {
     const frame = rail.getBoundingClientRect()
     const left = rail.scrollLeft + (box.left - frame.left) - (frame.width - box.width) / 2
     rail.scrollTo({ left: Math.max(0, left), behavior: reduced ? 'auto' : 'smooth' })
-  }, [active, reduced])
+  }, [active, reduced, SERVICE_TABS])
 
   return (
     <div
@@ -196,7 +208,7 @@ export function ServiceTabs() {
         })}
       </div>
         <div className="max-lg:hidden lg:mt-[12px] lg:h-[270px] lg:w-[417px]">
-          <EnquiryCard id="home-services-email" />
+          <EnquiryCard id="home-services-email" enquiry={enquiry} />
         </div>
       </div>
 
@@ -207,13 +219,13 @@ export function ServiceTabs() {
         className="flex w-full flex-col gap-[20px] lg:w-[833px] lg:shrink-0 lg:gap-[24px]"
       >
         <div className="flex w-full flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:gap-[24px]">
-          {cards.map((c) => <ServicePhotoCard key={c.href} card={c} reveal />)}
+          {cards.map((c) => <ServicePhotoCard key={c.href} card={c} reveal more={more} />)}
         </div>
 
         {/* The same card on the phone (6605:2394), after the cards: the tab
             column is a sideways chip rail down here, with no room in it. */}
         <div className="lg:hidden">
-          <EnquiryCard id="home-services-email-phone" />
+          <EnquiryCard id="home-services-email-phone" enquiry={enquiry} />
         </div>
       </div>
     </div>
@@ -229,7 +241,7 @@ export function ServiceTabs() {
  * input id each, because the board puts it in the tab column and the phone
  * after the cards.
  */
-function EnquiryCard({ id }: { id: string }) {
+function EnquiryCard({ id, enquiry: SERVICES_ENQUIRY }: { id: string; enquiry: Enquiry }) {
   return (
     <div className="flex size-full flex-col justify-center gap-[15px] overflow-hidden rounded-[16px] bg-brand-soft p-[24px] lg:px-[36px] lg:py-[30px]">
       <div className="flex flex-col gap-[6px]">

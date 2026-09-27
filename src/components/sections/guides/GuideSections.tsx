@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
 import { DownloadTile, MARKS } from '@/components/sections/downloads/DownloadGrid'
 import { GUIDE_MARKS } from '@/components/sections/resources/ResourceSections'
-import { DOCS, GUIDES, type GuideRow } from '@/data/guides'
+import { type GuideRow } from '@/data/guides'
+import { content } from '@/lib/page-content'
 
 /**
  * The two bands of /itad-recycling-guides/ — Figma 6386:1349 and 6386:1350,
@@ -71,7 +72,8 @@ function BandHeader({ eyebrow, heading, lead }: { eyebrow: string; heading: stri
  * shipped #eaf4f5 on r10. Kept teal, so the row does not change colour when
  * the viewport crosses 1024px; see the note in the agent report.
  */
-export function GuideList({ top, height }: { top: number; height: number }) {
+export async function GuideList({ top, height }: { top: number; height: number }) {
+  const { GUIDES, GUIDE_ROW_TEXT } = await content('guides')
   return (
     <Section
       top={top} height={height} label={GUIDES.label}
@@ -101,7 +103,7 @@ export function GuideList({ top, height }: { top: number; height: number }) {
             </span>
 
             <span className="shrink-0 whitespace-nowrap font-roboto text-[14px] font-medium text-brand max-lg:col-span-2 max-lg:text-[13px] max-lg:font-bold">
-              Read Guide &rarr;
+              {GUIDE_ROW_TEXT.cta} &rarr;
             </span>
           </Link>
         ))}
@@ -116,7 +118,8 @@ export function GuideList({ top, height }: { top: number; height: number }) {
  * The cards are byte-for-byte the ones /downloads/ draws, so they come from
  * DownloadTile rather than from a second copy here. Only the header differs.
  */
-export function ReferenceDocs({ top, height }: { top: number; height: number }) {
+export async function ReferenceDocs({ top, height }: { top: number; height: number }) {
+  const { DOCS } = await content('guides')
   return (
     <Section
       top={top} height={height} label={DOCS.label}

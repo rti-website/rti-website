@@ -4,8 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BarForm } from '@/components/client/BarForm'
-import { FACILITIES, mapEmbed, type Facility } from '@/data/facilities'
-import { FINDER } from '@/data/locations'
+import { mapEmbed, type Facility } from '@/data/facilities'
+import type { Finder } from '@/data/locations'
 import { path } from '@/lib/urls'
 
 /**
@@ -56,12 +56,6 @@ import { path } from '@/lib/urls'
 
 const PIN_36 = 'M18 2a11 11 0 0 0-11 11c0 7.9 9.8 19.1 10.2 19.6a1 1 0 0 0 1.5 0C19.2 32.1 29 20.9 29 13A11 11 0 0 0 18 2Zm0 15.5a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z'
 
-/** Switch label → facility. */
-const PIN_TO_SLUG: Record<string, Facility['slug']> = {
-  'Blaine, MN': 'minnesota-recycling',
-  'New Berlin, WI': 'wisconsin-recycling',
-}
-
 type Result = { slug: Facility['slug']; miles: number }
 type State =
   | { kind: 'idle' }
@@ -70,12 +64,19 @@ type State =
   | { kind: 'notFound'; q: string }
   | { kind: 'error'; message: string }
 
-export function LocationFinder() {
+/**
+ * The copy and the two facilities come in as props from LocationsFinder
+ * (server), which reads them with content() so Admin -> Pages edits reach
+ * them; a client component cannot read page-content itself.
+ */
+export function LocationFinder({ finder: FINDER, facilities: FACILITIES }: {
+  finder: Finder
+  facilities: Facility[]
+}) {
   const [state, setState] = useState<State>({ kind: 'idle' })
   /** Which facility the map shows. A search result moves it to the nearest. */
   const [shown, setShown] = useState<Facility['slug']>(FACILITIES[0]!.slug)
   const s = FINDER.search
-  const nearest = state.kind === 'found' ? state.results[0]?.slug : null
   const shownF = FACILITIES.find((x) => x.slug === shown) ?? FACILITIES[0]!
 
   async function search(q: string, form: HTMLFormElement) {
@@ -139,7 +140,7 @@ export function LocationFinder() {
         <div role="group" aria-label="Show a facility on the map"
           className={`flex gap-[4px] rounded-full bg-white p-[4px] shadow-[0px_2px_8px_rgba(0,0,0,0.15)] lg:absolute lg:right-[16px] lg:top-[16px] lg:z-10 ${state.kind === 'idle' ? '' : 'lg:hidden'}`}>
           {FINDER.map.pins.map((p) => {
-            const slug = PIN_TO_SLUG[p.label]!
+            const slug = p.slug
             const on = slug === shown
             return (
               <button key={p.label} type="button" aria-pressed={on} onClick={() => setShown(slug)}
@@ -178,7 +179,7 @@ export function LocationFinder() {
                 <p className="font-roboto text-[14px] leading-[1.5] text-muted">
                   {FINDER.result.notFound.replace('{q}', state.q)}
                 </p>
-                <ClearButton onClick={() => clear(document.querySelector<HTMLFormElement>('form:has(#location-search)'))} />
+                <ClearButton label={FINDER.result.clear} onClick={() => clear(document.querySelector<HTMLFormElement>('form:has(#location-search)'))} />
               </>
             )}
 
@@ -217,7 +218,7 @@ export function LocationFinder() {
                       {FINDER.result.also} <Link href={otherF.url} className="underline underline-offset-2 hover:text-brand">{otherF.name}</Link> · {other.miles} {FINDER.result.miles}
                     </p>
                   )}
-                  <ClearButton onClick={() => clear(document.querySelector<HTMLFormElement>('form:has(#location-search)'))} />
+                  <ClearButton label={FINDER.result.clear} onClick={() => clear(document.querySelector<HTMLFormElement>('form:has(#location-search)'))} />
                 </>
               )
             })()}
@@ -229,14 +230,14 @@ export function LocationFinder() {
   )
 }
 
-function ClearButton({ onClick }: { onClick: () => void }) {
+function ClearButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className="absolute right-[12px] top-[12px] grid size-[28px] place-items-center rounded-full text-muted transition-colors hover:bg-mist hover:text-heading lg:right-[16px] lg:top-[16px]"
-      aria-label={FINDER.result.clear}
-      title={FINDER.result.clear}
+      aria-label={label}
+      title={label}
     >
       <svg viewBox="0 0 16 16" className="size-[14px] fill-current" aria-hidden="true">
         <path d="M3.3 2.2 8 6.9l4.7-4.7 1.1 1.1L9.1 8l4.7 4.7-1.1 1.1L8 9.1l-4.7 4.7-1.1-1.1L6.9 8 2.2 3.3l1.1-1.1Z" />

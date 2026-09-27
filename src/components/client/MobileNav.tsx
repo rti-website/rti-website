@@ -68,9 +68,11 @@ function GroupArrow() {
 }
 
 export function MobileNav({
-  nav, topBar, announce, quoteHref, pickupHref,
+  nav, topBar, announce, quoteHref, pickupHref, labels = { pickup: 'Arrange Pickup', quote: 'Get a quote' },
 }: {
   nav: NavEntry[]
+  /** From Admin -> Pages -> Header (MOBILE_NAV in src/lib/nav.ts). */
+  labels?: { pickup: string; quote: string }
   topBar: {
     dropOff: { label: string; href: string }
     phoneMn: { label: string; tel: string }
@@ -137,7 +139,7 @@ export function MobileNav({
           href={pickupHref}
           className="btn-pop flex h-[24px] w-[93px] shrink-0 items-center justify-center whitespace-nowrap rounded-[4px] border border-brand bg-brand font-roboto text-[10px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4.004px] [word-spacing:1px]"
         >
-          Arrange Pickup
+          {labels.pickup}
         </Link>
         <button
           type="button"
@@ -367,7 +369,7 @@ export function MobileNav({
               href={quoteHref} onClick={() => setDrawer(false)}
               className="flex h-[44px] flex-1 items-center justify-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] text-center font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
             >
-              Get a quote
+              {labels.quote}
             </Link>
             <Link
               href={topBar.contact.href} onClick={() => setDrawer(false)}

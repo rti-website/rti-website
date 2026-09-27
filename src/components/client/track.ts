@@ -5,11 +5,10 @@
  * ok, never before: a conversion for a lead that failed to save is a lie in
  * the report.
  *
- *   GTM loaded     -> dataLayer.push({ event: 'generate_lead', … }). GTM's
- *                     GA4 event tag and Google Ads conversion tag both fire
- *                     on it; the Ads ID and label ride along in the event
- *                     (and in rti_ads_conversion_id / _label from page load),
- *                     so they are set once, in the CMS.
+ *   GTM loaded     -> dataLayer.push of `generate_lead`, then the two names
+ *                     the live container actually fires on: `lead_form_submit`
+ *                     (Google Ads lead conversion) and `form_submit` (GA4
+ *                     Form Submission). See the note in the function.
  *   gtag.js only   -> gtag('event', 'generate_lead') and, when an Ads ID and
  *                     label are set, gtag('event', 'conversion').
  *   neither        -> the dataLayer push still happens and harms nothing.
@@ -25,8 +24,7 @@ export function trackLead(lead: { type: 'contact' | 'quote'; formId: string; ser
   const attr = w.__rtiAttr ?? {}
   const cfg = w.__rtiTracking
   const source = attr.utm_source || (attr.gclid || attr.gbraid || attr.wbraid ? 'google' : attr.referrer ? hostOf(attr.referrer) : '(direct)')
-  const event = {
-    event: 'generate_lead',
+  const fields = {
     lead_type: lead.type,
     form_id: lead.formId,
     service_interest: lead.service || '(not set)',
@@ -37,7 +35,19 @@ export function trackLead(lead: { type: 'contact' | 'quote'; formId: string; ser
     ads_conversion_id: cfg?.ads || undefined,
     ads_conversion_label: cfg?.label || undefined,
   }
-  ;(w.dataLayer = w.dataLayer || []).push(event)
+  const event = { event: 'generate_lead', ...fields }
+  const dl = (w.dataLayer = w.dataLayer || [])
+  dl.push(event)
+  /*
+   * THE LIVE GTM CONTAINER LISTENS FOR DIFFERENT NAMES (checked 27 Sep 2026,
+   * GTM-WXH55D9): the Google Ads "Lead Form Submit (New)" conversion
+   * (AW-11155126235 / k-tECLG58IMdENvvlscp) fires on `lead_form_submit`, and
+   * the GA4 "Form Submission" event on `form_submit`. Nothing in GTM fires on
+   * `generate_lead`, so without these two pushes a lead was saved but never
+   * counted in Google Ads. Same fields ride along on both.
+   */
+  dl.push({ event: 'lead_form_submit', ...fields })
+  dl.push({ event: 'form_submit', ...fields })
 
   if (cfg && !cfg.gtm && typeof w.gtag === 'function') {
     w.gtag('event', 'generate_lead', { service_interest: event.service_interest, source: event.source, campaign: event.campaign })

@@ -1,8 +1,8 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { CaseStudyCardView } from '@/components/ui/CaseStudyCard'
-import { CASE_STUDIES } from '@/data/compliance-center'
-import { CASE_STUDY_CARDS, COMPLIANCE_CASE_IDS } from '@/data/case-studies'
+import { COMPLIANCE_CASE_IDS } from '@/data/case-studies'
+import { content } from '@/lib/page-content'
 
 /**
  * How we solve compliance challenges — Figma 6389:1529, and on a phone
@@ -30,7 +30,11 @@ import { CASE_STUDY_CARDS, COMPLIANCE_CASE_IDS } from '@/data/case-studies'
  * copy, so the stories are defined once and read from both places. Only this
  * section's own heading block lives in src/data/compliance-center.ts.
  */
-export function ComplianceCaseStudies({ top, height }: { top: number; height: number }) {
+export async function ComplianceCaseStudies({ top, height }: { top: number; height: number }) {
+  const { CASE_STUDIES } = await content('compliance-center')
+  // The stories and the card labels are the "Case Studies" document's, so an
+  // edit there shows here too. Which three show (COMPLIANCE_CASE_IDS) is not copy.
+  const { CASE_STUDY_CARDS, GRID } = await content('case-studies')
   const cards = COMPLIANCE_CASE_IDS
     .map((id) => CASE_STUDY_CARDS.find((c) => c.id === id))
     .filter((c) => c !== undefined)
@@ -49,7 +53,7 @@ export function ComplianceCaseStudies({ top, height }: { top: number; height: nu
 
       {/* Cards — 6390:1532 */}
       <div className="flex items-start gap-[24px] max-lg:w-full max-lg:flex-col max-lg:gap-[16px] max-lg:[&>article]:w-full max-lg:[&>article]:p-[24px] max-lg:[&_h3]:w-full max-lg:[&_p]:w-full">
-        {cards.map((c) => <CaseStudyCardView key={c.id} card={c} />)}
+        {cards.map((c) => <CaseStudyCardView key={c.id} card={c} labels={GRID} />)}
       </div>
     </Section>
   )

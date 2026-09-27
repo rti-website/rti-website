@@ -10,7 +10,8 @@ import { LocationCards } from '@/components/sections/locations/LocationCards'
 import { NationwideFacilities, type SiteLinks } from '@/components/sections/locations/NationwideFacilities'
 import { loadLocations, materialLinks } from '@/lib/service-locations'
 import { LocationsCoverage } from '@/components/sections/locations/LocationsCoverage'
-import { CTA, HERO, LIVE_SEO } from '@/data/locations'
+import { LIVE_SEO } from '@/data/locations'
+import { content } from '@/lib/page-content'
 
 /**
  * Locations — a 1:1 build of Figma frame 6374:4194, at the live URL
@@ -77,7 +78,7 @@ export const metadata = buildMetadata({
 export default async function LocationsPage() {
   /* The nationwide cards link to their location pages once published
      (Admin -> Locations, 24 Sep 2026); read at build, revalidated on save. */
-  const all = await loadLocations()
+  const [all, { CTA, HERO }] = await Promise.all([loadLocations(), content('locations')])
   const links: SiteLinks = Object.fromEntries(all.sites.map((s) => [s.slug, {
     hub: s.published && s.hubPath.startsWith('/locations/') ? s.hubPath : undefined,
     materials: materialLinks(all, s.slug),

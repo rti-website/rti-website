@@ -8,7 +8,8 @@ import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { WhyDifferentiators } from '@/components/sections/why/WhyDifferentiators'
 import { WhyCallout } from '@/components/sections/why/WhyCallout'
 import { WhyTrust } from '@/components/sections/why/WhyTrust'
-import { CTA, HERO, SEO } from '@/data/why-choose-us'
+import { SEO } from '@/data/why-choose-us'
+import { content } from '@/lib/page-content'
 
 /**
  * Why Choose Us — a 1:1 build of Figma frame 6374:4567.
@@ -58,7 +59,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function WhyChooseUsPage() {
+export default async function WhyChooseUsPage() {
+  const { CTA, HERO } = await content('why-choose-us')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

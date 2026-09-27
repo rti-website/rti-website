@@ -174,4 +174,5 @@ export const CONTENT: ServicePageContent = {
   process: PROCESS,
   faqs: FAQS,
   cta: CTA,
+  placesTitle: 'Battery Recycling Near You',
 }

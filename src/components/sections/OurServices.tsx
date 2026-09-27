@@ -2,6 +2,8 @@ import { Section } from '@/components/design/Frame'
 import { HOME_BELOW_CERT_SHIFT, HOME_SERVICES_DELTA_VAR } from '@/lib/layout'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { ServiceTabs } from '@/components/client/ServiceTabs'
+import { serviceCards, serviceTabs } from '@/data/home'
+import { content } from '@/lib/page-content'
 
 /**
  * Our Services — Figma 6532:2049. 1282 x 1133 at x319.
@@ -34,7 +36,13 @@ import { ServiceTabs } from '@/components/client/ServiceTabs'
  * not scoped by anything, so it is prefixed here rather than left to be
  * harmless by accident.
  */
-export function OurServices() {
+export async function OurServices() {
+  /* Heading from the Homepage document; the tabs, cards and the "Don't See
+     Your Item?" card from the Services page document, so an edit there shows
+     here too. */
+  const [{ HOME_SERVICES }, { SERVICE_GROUPS, SERVICES_ENQUIRY }] = await Promise.all([
+    content('home'), content('services'),
+  ])
   return (
     <Section
       top={1679 - HOME_BELOW_CERT_SHIFT} left={319} width={1282}
@@ -51,14 +59,14 @@ export function OurServices() {
     >
       <div className="flex w-full flex-col items-center gap-[20px] lg:gap-[48px]">
         <div className="flex w-full flex-col items-center gap-[20px] lg:w-[829px] lg:gap-[6px]">
-          <Eyebrow>What We Do</Eyebrow>
-          <Title className="text-center">Our Services</Title>
+          <Eyebrow>{HOME_SERVICES.eyebrow}</Eyebrow>
+          <Title className="text-center">{HOME_SERVICES.title}</Title>
           <Lead className="text-center">
-            Responsible recycling, destruction, and shredding solutions for materials that need proper handling.
+            {HOME_SERVICES.lead}
           </Lead>
         </div>
 
-        <ServiceTabs />
+        <ServiceTabs tabs={serviceTabs(SERVICE_GROUPS)} cards={serviceCards(SERVICE_GROUPS)} enquiry={SERVICES_ENQUIRY} />
       </div>
     </Section>
   )

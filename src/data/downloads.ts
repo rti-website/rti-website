@@ -51,6 +51,15 @@ export type DownloadSection = {
   cards: DownloadCard[]
 }
 
+/**
+ * The action line at the foot of every card — "Request Download", as the
+ * design labels all eight (see the note at the top of this file). Shared with
+ * /itad-recycling-guides/ through DownloadTile, which falls back to it.
+ */
+export const DOWNLOAD_CARD = {
+  action: 'Request Download',
+}
+
 const request = (doc: string) => `${href('/contact-us/')}?document=${encodeURIComponent(doc)}`
 
 /** 6393:1579 — two cards, 410 wide, centred. */

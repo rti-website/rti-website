@@ -1,6 +1,7 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { buildMetadata } from '@/lib/seo'
 import { STATE_PAGES } from '@/data/state-pages'
+import { content } from '@/lib/page-content'
 
 /**
  * battery-recycling/Minnesota: a landing page for Google Ads only (Asim, 24 Sep 2026).
@@ -18,6 +19,8 @@ export const metadata = buildMetadata({
   noindex: true,
 })
 
-export default function Page() {
-  return <ServiceDetailPage content={PAGE.content} layout={{ intro: 582, process: 840, accept: 660 }} />
+export default async function Page() {
+  // The copy with the admin's edits (Admin -> Pages); metadata above stays on STATE_PAGES.
+  const copy = await content('state/battery-recycling/Minnesota')
+  return <ServiceDetailPage content={copy} layout={{ intro: 582, process: 840, accept: 660 }} />
 }

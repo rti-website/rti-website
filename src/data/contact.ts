@@ -78,6 +78,25 @@ export const SERVICE_INTEREST = [
 ] as const
 
 /**
+ * A service as the list shows it, for a name that arrives from elsewhere (a
+ * `?service=` link, a typed value, a location's preset). `list` is the list
+ * as edited in Admin -> Pages; the name is looked for there first, in any
+ * capitalisation, then in the list as written here, so a link made before a
+ * service was renamed still finds it: by position when the edited list still
+ * has the same number of services, else under its old name. Undefined when
+ * it is not a listed service at all.
+ */
+export function matchService(list: readonly string[], name: string): string | undefined {
+  const wanted = name.trim().toLowerCase()
+  if (!wanted) return undefined
+  const hit = list.find((o) => o.toLowerCase() === wanted)
+  if (hit) return hit
+  const i = SERVICE_INTEREST.findIndex((o) => o.toLowerCase() === wanted)
+  if (i < 0) return undefined
+  return list.length === SERVICE_INTEREST.length ? list[i] : SERVICE_INTEREST[i]
+}
+
+/**
  * The homepage hero's "Select Your Location" — moved into the quote card on
  * 24 Sep 2026 (Asim: "move the location to the form above Pick Your Service;
  * when a user fills it, it must already be filled in the form"). It posts as
@@ -154,6 +173,29 @@ export const FORM = {
   consent: 'I agree to be contacted by Recycle Technologies',
   messageMax: 2000,
   submit: 'Send Message',
+  /** The button while the form is on its way. */
+  sending: 'Sending…',
+  /**
+   * What the form says when a field is missing or wrong. The browser
+   * (ContactForm) and /api/leads say the same words, from here. `{max}` is
+   * replaced by messageMax. (Keys avoid "state", "zip" and "service", which
+   * the admin treats as settings rather than copy.)
+   */
+  errors: {
+    firstName: 'Please enter your first name (2 to 60 characters).',
+    lastName: 'Please enter your last name (2 to 60 characters).',
+    email: 'Please check the email address.',
+    phone: 'Please enter a US phone number, e.g. (763) 559-5130.',
+    company: 'Please enter your company name.',
+    city: 'Please enter your city.',
+    usState: 'Please enter a US state, e.g. MN or Minnesota.',
+    zipCode: 'Please enter a 5 digit ZIP code.',
+    recycle: 'Please choose or type what you would like to recycle.',
+    tooLong: 'Please keep the message under {max} characters.',
+    consent: 'Please tick the box so we can contact you.',
+    failed: 'Something went wrong. Please try again.',
+    offline: 'Could not reach the server. Please check your connection and try again.',
+  },
   sent: 'Thanks — your message is with us. We usually reply within one business day.',
   /** The pop-up a sent form opens (SuccessDialog), 24 Sep 2026. The title
    *  gets the visitor's first name when they gave one: "Thank you, Jane!" */

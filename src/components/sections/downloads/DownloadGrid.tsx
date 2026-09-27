@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
-import type { DownloadCard, DownloadSection } from '@/data/downloads'
+import { DOWNLOAD_CARD, type DownloadCard, type DownloadSection } from '@/data/downloads'
 
 /**
  * A band of download cards — Figma 6393:1579, 6393:1580 and 6393:1581, and on
@@ -56,13 +56,15 @@ export const MARKS: Record<DownloadCard['glyph'], string> = {
 export const DOWNLOAD_MARK = 'M8.7 1.7h1.6v6.6l2.2-2.2 1.1 1.1L9.5 12 5.4 7.2l1.1-1.1 2.2 2.2V1.7ZM2.7 12.3h1.6v2.4h11.4v-2.4h1.6v2.8c0 .7-.6 1.2-1.2 1.2H3.9c-.7 0-1.2-.5-1.2-1.2v-2.8Z'
 
 export function DownloadGrid({
-  top, height, tone = 'white', section,
+  top, height, tone = 'white', section, action,
 }: {
   top: number
   height: number
   /** The design alternates white and #fcfcfc down the page. */
   tone?: 'white' | 'mist'
   section: DownloadSection
+  /** The cards' action line, DOWNLOAD_CARD.action from content('downloads'). */
+  action: string
 }) {
   return (
     <Section
@@ -78,7 +80,7 @@ export function DownloadGrid({
       </div>
 
       <div className="flex items-start gap-[24px] max-lg:w-full max-lg:flex-col max-lg:gap-[16px]">
-        {section.cards.map((c) => <DownloadTile key={c.title} card={c} />)}
+        {section.cards.map((c) => <DownloadTile key={c.title} card={c} action={action} />)}
       </div>
     </Section>
   )
@@ -95,7 +97,12 @@ export function DownloadGrid({
  * bold link and no mark. Built to the Downloads frame, which is this tile's
  * home and the only one of the two that gives the link a tap target.
  */
-export function DownloadTile({ card: c }: { card: DownloadCard }) {
+export function DownloadTile({ card: c, action = DOWNLOAD_CARD.action }: {
+  card: DownloadCard
+  /** "Request Download". Pass the page's content() value; the static default
+   *  is only for a caller that has none of its own. */
+  action?: string
+}) {
   return (
     <Link
       href={c.href}
@@ -117,7 +124,7 @@ export function DownloadTile({ card: c }: { card: DownloadCard }) {
         <svg viewBox="0 0 20 18" className="size-[16px] fill-brand" aria-hidden="true">
           <path d={DOWNLOAD_MARK} />
         </svg>
-        <span className="font-roboto text-[14px] font-bold leading-[16px] text-brand">Request Download</span>
+        <span className="font-roboto text-[14px] font-bold leading-[16px] text-brand">{action}</span>
       </span>
     </Link>
   )

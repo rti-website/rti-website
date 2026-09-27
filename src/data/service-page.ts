@@ -111,8 +111,20 @@ export type ServicePageContent = {
     outro?: string
   }
 
-  /** Overrides the shared certifications paragraph when a doc supplies its own. */
-  certifications?: { body?: string }
+  /**
+   * Overrides the shared certifications paragraph when a doc supplies its own
+   * (`body`), or adds a sentence of the page's own after it (`after`). A page
+   * with neither shows the shared line, read from the "Certifications
+   * (shared)" document, so an edit there reaches every page that uses it.
+   */
+  certifications?: { body?: string; after?: string }
+
+  /**
+   * The "<Service> Near You" band's heading, on the three service hubs that
+   * list their location pages (ServiceLocationsBand). Pages without that band
+   * leave it out.
+   */
+  placesTitle?: string
 
   faqs: { q: string; a: string }[]
 

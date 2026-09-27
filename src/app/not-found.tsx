@@ -5,6 +5,7 @@ import { FlowCanvas } from '@/components/design/Frame'
 import { InteriorHeroArt } from '@/components/ui/InteriorHeroArt'
 import { FOOTER_H } from '@/lib/layout'
 import { href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * The 404 page.
@@ -27,16 +28,10 @@ import { href } from '@/lib/urls'
  * template. The Footer still needs its own relative box of exactly FOOTER_H.
  */
 
-const LINKS = [
-  { label: 'Services',      to: '/services/',   blurb: 'Recycling, shredding and data destruction.' },
-  { label: 'Industries',    to: '/industries/', blurb: 'What we do for healthcare, finance, education and more.' },
-  { label: 'Locations',     to: '/all-locations/', blurb: 'Facilities and service areas across the Midwest.' },
-  { label: 'Resources',     to: '/resources/',  blurb: 'Guides, downloads and recycling how-tos.' },
-  { label: 'Blog',          to: '/blog/',       blurb: 'Every article we have published.' },
-  { label: 'Contact us',    to: '/contact-us/', blurb: 'Talk to someone about a pickup or a quote.' },
-]
 
-export default function NotFound() {
+export default async function NotFound() {
+  // Editable in Admin -> Pages (27 Sep 2026); src/data/not-found.ts is the original.
+  const { NOT_FOUND: t, NOT_FOUND_LINKS: links } = await content('not-found')
   return (
     <FlowCanvas>
       <Header />
@@ -45,21 +40,20 @@ export default function NotFound() {
           <InteriorHeroArt />
           <div className="relative flex h-full flex-col justify-center px-[20px] lg:px-[319px]">
             <span className="font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px] text-white/50">
-              Error 404
+              {t.eyebrow}
             </span>
             <h1 className="mt-[18px] font-sans text-[32px] font-semibold leading-[40px] text-white lg:text-[60px] lg:leading-[74.7px]">
-              We could not find that page
+              {t.heading}
             </h1>
             <p className="mt-[14px] w-full font-roboto text-[16px] leading-[24px] text-white/70 lg:w-[620px] lg:text-[20px] lg:leading-[30.031px]">
-              The address may have changed, or the page may have been retired. Everything below is
-              still where it should be.
+              {t.text}
             </p>
           </div>
         </div>
 
         <section className="bg-white px-[20px] py-[48px] lg:px-0 lg:py-[90px]">
           <div className="mx-auto grid w-full grid-cols-1 gap-[16px] lg:w-[1280px] lg:grid-cols-3 lg:gap-[24px]">
-            {LINKS.map((l) => (
+            {links.map((l) => (
               <Link
                 key={l.to}
                 href={href(l.to)}
@@ -72,7 +66,7 @@ export default function NotFound() {
                   {l.blurb}
                 </span>
                 <span className="post-card__read mt-auto pt-[18px] font-roboto text-[13px] font-medium text-brand transition-colors">
-                  Go &rarr;
+                  {t.go} &rarr;
                 </span>
               </Link>
             ))}

@@ -176,3 +176,14 @@ export const ARTICLES: { eyebrow: string; heading: string; lead: string; rows: A
     },
   ],
 }
+
+/**
+ * The small words on the guide cards and article rows above: the grey tag at
+ * the bottom left of a guide card, and the teal link words (the arrows stay in
+ * the markup).
+ */
+export const RESOURCE_CARD_TEXT = {
+  guideTag: 'Guide',
+  readGuide: 'Read Guide',
+  readArticle: 'Read',
+}

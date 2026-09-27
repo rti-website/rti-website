@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
 import { Btn, Eyebrow } from '@/components/ui/Bits'
 import { PickupForm } from '@/components/client/PickupForm'
-import { FEATURES, INTRO, PICKUP, PROCESS, SERVICES, WHY } from '@/data/itad'
+import { content } from '@/lib/page-content'
 
 /**
  * The six body sections of /it-asset-disposition/ — Figma 6778:2946 on the
@@ -47,7 +47,8 @@ function Heading({ eyebrow, title, lead, width = 780, hideLeadOnPhone = false, p
 }
 
 /** Intro — 6779:2661 (py100, a 700 column and the 502 "What's Included" card, gap 80) / 6783:2667. */
-export function ItadIntro({ top, height }: { top: number; height: number }) {
+export async function ItadIntro({ top, height }: { top: number; height: number }) {
+  const { INTRO } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2661"
       className="flex flex-col bg-white px-[20px] pb-[40px] pt-[44px] lg:items-center lg:px-0 lg:py-[100px]">
@@ -79,7 +80,8 @@ export function ItadIntro({ top, height }: { top: number; height: number }) {
 }
 
 /** Why it matters — 6779:2662 (three 410 cards, gap 24) / 6783:2668 (stacked, gap 20). */
-export function ItadWhy({ top, height }: { top: number; height: number }) {
+export async function ItadWhy({ top, height }: { top: number; height: number }) {
+  const { WHY } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2662"
       className="flex flex-col items-center gap-[20px] bg-[#fcfcfc] px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
@@ -97,7 +99,8 @@ export function ItadWhy({ top, height }: { top: number; height: number }) {
 }
 
 /** Complete IT disposal services — 6779:2663 (four 302 cards, gap 20) / 6783:2669. */
-export function ItadServices({ top, height }: { top: number; height: number }) {
+export async function ItadServices({ top, height }: { top: number; height: number }) {
+  const { SERVICES } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2663"
       className="flex flex-col items-center gap-[20px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
@@ -123,7 +126,8 @@ export function ItadServices({ top, height }: { top: number; height: number }) {
  * the cards stack 14 apart and the arrows go — a vertical list reads in order
  * without them, which is what the frame draws.
  */
-export function ItadProcess({ top, height }: { top: number; height: number }) {
+export async function ItadProcess({ top, height }: { top: number; height: number }) {
+  const { PROCESS } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2664"
       className="flex flex-col items-center gap-[24px] bg-[#fcfcfc] px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
@@ -148,7 +152,8 @@ export function ItadProcess({ top, height }: { top: number; height: number }) {
 }
 
 /** Our prominent features — 6779:2665 (two 410 columns, 24 across and 44 down) / 6783:2671. */
-export function ItadFeatures({ top, height }: { top: number; height: number }) {
+export async function ItadFeatures({ top, height }: { top: number; height: number }) {
+  const { FEATURES } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2665"
       className="flex flex-col items-center gap-[20px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
@@ -168,7 +173,8 @@ export function ItadFeatures({ top, height }: { top: number; height: number }) {
 }
 
 /** Book a pickup — 6779:2666 (pt90 pb100, the 900 form card) / 6783:2672 (pt44 pb56). */
-export function ItadPickup({ top, height }: { top: number; height: number }) {
+export async function ItadPickup({ top, height }: { top: number; height: number }) {
+  const { PICKUP } = await content('itad')
   return (
     <Section top={top} height={height} label="6779:2666"
       className="flex flex-col items-center gap-[24px] bg-[#fcfcfc] px-[20px] pb-[56px] pt-[44px] lg:gap-[44px] lg:px-0 lg:pb-[100px] lg:pt-[90px]">
@@ -176,7 +182,7 @@ export function ItadPickup({ top, height }: { top: number; height: number }) {
           the form. Offset for the sticky header, as on /contact-us/. */}
       <span id="book-a-pickup" className="absolute -top-[140px]" aria-hidden="true" />
       <Heading eyebrow={PICKUP.eyebrow} title={PICKUP.heading} lead={PICKUP.lead} phoneTitle="text-[24px]" />
-      <PickupForm />
+      <PickupForm text={PICKUP} />
     </Section>
   )
 }

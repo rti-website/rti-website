@@ -48,16 +48,21 @@ export const RESIDENTIAL_REPLY = {
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
 
-/** Plain text version. `first` is the person's first name when the form had one. */
-export function residentialReplyText(first: string | null): string {
-  const r = RESIDENTIAL_REPLY
+/** The reply's copy: RESIDENTIAL_REPLY, or the published edit of it (Admin -> Pages). */
+export type ResidentialReply = typeof RESIDENTIAL_REPLY
+
+/**
+ * Plain text version. `first` is the person's first name when the form had
+ * one; `r` is the copy to send, which /api/leads reads with the admin's
+ * published edits (`publishedContent('emails')`). Defaults to the copy above.
+ */
+export function residentialReplyText(first: string | null, r: ResidentialReply = RESIDENTIAL_REPLY): string {
   return [
     `Hi ${first ?? 'there'},`,
     '',
-    r.intro[0],
-    '',
-    r.intro[1],
-    '',
+    // One paragraph each, a blank line after. Two as written; an editor may
+    // add or remove one.
+    ...r.intro.flatMap((t) => [t, '']),
     ...r.locations.flatMap((l) => [l.state, ...l.lines, `Phone: ${l.phone}`, '']),
     r.confirm,
     '',
@@ -72,9 +77,8 @@ export function residentialReplyText(first: string | null): string {
   ].join('\n')
 }
 
-/** HTML version: the same words, simple inline styles every mail client keeps. */
-export function residentialReplyHtml(first: string | null): string {
-  const r = RESIDENTIAL_REPLY
+/** HTML version: the same words, simple inline styles every mail client keeps. `r` as above. */
+export function residentialReplyHtml(first: string | null, r: ResidentialReply = RESIDENTIAL_REPLY): string {
   const p = (t: string) => `<p style="margin:0 0 14px">${esc(t)}</p>`
   const loc = r.locations.map((l) => `
     <td valign="top" style="padding:0 24px 0 0">

@@ -10,7 +10,8 @@ import { AboutImpact } from '@/components/sections/about/AboutImpact'
 import { AboutLeadership } from '@/components/sections/about/AboutLeadership'
 import { AboutFacilities } from '@/components/sections/about/AboutFacilities'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
-import { CTA, HERO, LIVE_SEO } from '@/data/about'
+import { LIVE_SEO } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * About Us — a 1:1 build of Figma frame 6371:3478.
@@ -64,7 +65,8 @@ export const metadata = buildMetadata({
   description: LIVE_SEO.description,
 })
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { CTA, HERO } = await content('about')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

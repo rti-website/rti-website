@@ -66,7 +66,7 @@ export function Empty({ children }: { children: React.ReactNode }) {
 export function Table({ head, children }: { head: string[]; children: React.ReactNode }) {
   return (
     <div className="a-tablewrap"><div className="a-scroll"><table>
-      <thead><tr>{head.map((h) => <th key={h}>{h}</th>)}</tr></thead>
+      <thead><tr>{head.map((h, i) => <th key={i}>{h}</th>)}</tr></thead>
       <tbody>{children}</tbody>
     </table></div></div>
   )

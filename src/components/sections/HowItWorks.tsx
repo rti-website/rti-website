@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
-import { STEPS } from '@/data/home'
+import { content } from '@/lib/page-content'
 import { QUOTE_HREF } from '@/lib/urls'
 
 /**
@@ -42,7 +42,8 @@ import { QUOTE_HREF } from '@/lib/urls'
 const X: readonly number[] = [319, 666, 1013, 1360]
 const CONNECTOR_X: readonly number[] = [569, 916, 1263]
 
-export function HowItWorks() {
+export async function HowItWorks() {
+  const { STEPS, HOME_HOW_IT_WORKS } = await content('home')
   return (
     <Section
       top={3726 - HOME_BELOW_SERVICES_SHIFT}
@@ -50,12 +51,11 @@ export function HowItWorks() {
       label="6040:18591"
       className="flex flex-col items-center gap-[28px] bg-white px-[20px] py-[48px] lg:block lg:p-0"
     >
-      <CenterBox y={0} w={400} offset={-0.47} className="flex justify-center"><Eyebrow>Simple &amp; Secure</Eyebrow></CenterBox>
-      <CenterBox y={52} w={500}><Title className="text-center">How It Works</Title></CenterBox>
+      <CenterBox y={0} w={400} offset={-0.47} className="flex justify-center"><Eyebrow>{HOME_HOW_IT_WORKS.eyebrow}</Eyebrow></CenterBox>
+      <CenterBox y={52} w={500}><Title className="text-center">{HOME_HOW_IT_WORKS.title}</Title></CenterBox>
       <CenterBox y={126} w={594}>
         <Lead className="text-center">
-          Responsible recycling made simple — from ordering your kit to receiving your
-          recycling documentation.
+          {HOME_HOW_IT_WORKS.lead}
         </Lead>
       </CenterBox>
 
@@ -106,7 +106,7 @@ export function HowItWorks() {
           offset centred the PAIR; one button centres on the page axis, the
           same line as the title and the lead above it. */}
       <CenterBox y={511} w={700} className="flex flex-col lg:flex-row lg:items-center lg:justify-center">
-        <Btn href={QUOTE_HREF} variant="colored" className="w-full justify-center lg:w-auto">Get a Free Quote</Btn>
+        <Btn href={QUOTE_HREF} variant="colored" className="w-full justify-center lg:w-auto">{HOME_HOW_IT_WORKS.button}</Btn>
       </CenterBox>
     </Section>
   )

@@ -5,7 +5,9 @@ import { geoipAvailable } from '@/lib/geoip'
 import { getMaps } from '@/lib/maps'
 import { toE164 } from '@/lib/phone'
 import { stateCode } from '@/lib/us-address'
+import { adminOrigin, emailAssignee } from '@/lib/lead-assign-mail'
 import type { AdminUser } from '@/lib/auth'
+import { after } from 'next/server'
 
 /**
  * Contact, quote and gated-download submissions — business records, not a list.
@@ -26,7 +28,9 @@ import type { AdminUser } from '@/lib/auth'
  *   - assignment: PATCH { assigned_to } hands an enquiry to an agent, and
  *     GET returns `agents`, the people it can be handed to;
  *   - the story: lead_activity records every assignment, status change and
- *     note, and GET returns it as `activity` on each row.
+ *     note, and GET returns it as `activity` on each row;
+ *   - the email: whoever an enquiry is assigned to gets it by email
+ *     (src/lib/lead-assign-mail.ts, 27 Sep 2026), noted under its activity.
  *
  * An AGENT sees only the enquiries assigned to them, can change their status
  * and add notes, and can log a phone enquiry (assigned to themselves). They
@@ -130,6 +134,11 @@ export const PATCH = guard(async ({ req, user }) => {
     await q('UPDATE leads SET assigned_to = $2, assigned_at = CASE WHEN $2::bigint IS NULL THEN NULL ELSE now() END, assigned_by = $3 WHERE id = $1',
       [id, assigned_to, user.id])
     await log(id, user.id, 'assigned', name)
+    // The agent hears about it by email (27 Sep 2026), after the answer goes back.
+    if (assigned_to !== null) {
+      const origin = adminOrigin(req)
+      after(() => emailAssignee({ leadId: id, agentId: assigned_to, by: user, origin }))
+    }
   }
   if (typeof note === 'string' && note.trim()) await log(id, user.id, 'note', note.trim().slice(0, 4000))
   if (contact && typeof contact === 'object') {
@@ -197,6 +206,8 @@ export const POST = guard(async ({ req, user }) => {
   if (assigned) {
     const who = await one<{ name: string }>('SELECT name FROM users WHERE id = $1', [assigned])
     await log(row.id, user.id, 'assigned', who?.name ?? null)
+    const leadId = row.id, agentId = assigned, origin = adminOrigin(req)
+    after(() => emailAssignee({ leadId, agentId, by: user, origin }))
   }
   // Same location lookup the website forms get, so the distance and the map work.
   try { await locateLead(row.id) } catch { /* best effort */ }

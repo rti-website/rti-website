@@ -29,6 +29,12 @@ export type Crumb = { label: string; href: string | null }
 export type Link = { label: string; href: string }
 export type Phone = { label: string; tel: string }
 
+/**
+ * The page's sections by key, for `bands`: which ones sit on the #fcfcfc
+ * grey. The revised frames (27 Sep 2026) no longer strictly alternate.
+ */
+export type SectionKey = 'opening' | 'intro' | 'info' | 'accept' | 'biz' | 'res' | 'steps' | 'whycards' | 'options' | 'local' | 'whybox' | 'faq' | 'related'
+
 export type CityPage = {
   /** The page's own path, with trailing slash. */
   url: string
@@ -42,8 +48,11 @@ export type CityPage = {
     h1: string
     crumbs: Crumb[]
     image: string
-    /** Board only: the frames drop it on the phone. */
-    button?: Link
+    /**
+     * Under the H1. The revised phone frames (27 Sep 2026) draw it too, as a
+     * smaller button, sometimes with a shorter label (`phoneLabel`).
+     */
+    button?: Link & { phoneLabel?: string }
   }
 
   /** Section - Opening. The first paragraph is the lead when there are several. */
@@ -53,7 +62,12 @@ export type CityPage = {
   intro?: { heading: string; body: string[]; aside: { heading: string; body: string[] } }
 
   /** Section - Service Info. A row's value is text, or phone numbers drawn as tel: links. */
-  serviceInfo: { heading: string; rows: { label: string; value: string | Phone[] }[] }
+  serviceInfo: {
+    heading: string
+    rows: { label: string; value: string | Phone[] }[]
+    /** The revised table (27 Sep 2026): a 260 label column and 40px rows, centred, 14 apart. */
+    compact?: boolean
+  }
 
   /**
    * Section - What We Accept. `cards`: tinted cards with a tile icon (a
@@ -93,21 +107,43 @@ export type CityPage = {
   options?: { heading: string; items: { icon: string; title: string; text: string }[]; layout: 'three' | 'two-one' }
 
   /** Section - Local Law / Local Recycling Information. */
-  local: { heading: string; body: string[] }
+  local: {
+    heading: string
+    body: string[]
+    /** Board text width: 1078 unless the frame sets it (1000, or 900 for the light bulb pages). */
+    width?: number
+  }
 
   /** Section - Why Recycle Technologies as a boxed bullet list (facility pages). */
   whyBox?: { heading: string; intro?: string; points: string[] }
 
+  /** The FAQ band's pill and heading, the same on every frame (FAQ_HEAD). */
+  faqHead: { eyebrow: string; heading: string }
   faqs: { q: string; a: string }[]
-  related: { heading: string; links: Link[] }
+  related: {
+    heading: string
+    links: Link[]
+    /** Chips the phone frame leaves out, by label (the light bulb pages drop Mail-In Program). */
+    phoneSkip?: string[]
+    /** One chip per row on the phone (the electronics frames). */
+    phoneStack?: boolean
+  }
 
   cta: {
     heading: string
     body: string[]
-    primary: Link
-    phone: Phone
+    /** `phoneLabel`: the phone frames' shorter label (27 Sep 2026). */
+    primary: Link & { phoneLabel?: string }
+    phone: Phone & { phoneLabel?: string }
     footnote?: string
+    /** Board width the heading wraps at: 720, or 598 on the battery frames. */
+    headingWidth?: number
+    /** Board width of the body: 1068, or 720 where the frame wraps it to two lines. */
+    bodyWidth?: number
   }
+
+  /** Sections on the #fcfcfc grey; unset = alternate from white. */
+  bands?: SectionKey[]
 
   /** What the build could not settle from the frames. Surfaced in the project doc. */
   todo: string[]
@@ -140,6 +176,10 @@ export const CHICAGO_PHONES: Phone[] = [
   { label: '(800) 969-5166', tel: 'tel:+18009695166' },
   { label: '(800) 305-3040', tel: 'tel:+18003053040' },
 ]
+
+/** The FAQ band's pill and heading, as every city frame draws them. Each
+ *  page carries its own copy (`faqHead`), so Admin -> Pages edits it per page. */
+export const FAQ_HEAD = { eyebrow: 'FAQs', heading: 'Frequently Asked Questions' }
 
 export const HOME_CRUMB: Crumb = { label: 'Home', href: href('/') }
 export const LOCATIONS_CRUMB: Crumb = { label: 'Locations', href: href('/all-locations/') }

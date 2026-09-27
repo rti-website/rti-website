@@ -2,7 +2,8 @@ import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead } from '@/components/ui/Bits'
 import { GLYPHS } from '@/components/ui/Glyph'
-import { FACILITIES, HUB_CARDS, type Facility } from '@/data/facilities'
+import { facilitiesOf, type Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * "Licensed Facilities Ready to Serve You" — Figma 6743:2450 on /all-locations/,
@@ -32,7 +33,10 @@ import { FACILITIES, HUB_CARDS, type Facility } from '@/data/facilities'
  * The card header's gradient is the same navy-to-green the closing CTA and
  * the contact page's facility cards use, drawn at the frame's own angle.
  */
-export function LocationCards({ top, height }: { top: number; height: number }) {
+export async function LocationCards({ top, height }: { top: number; height: number }) {
+  const doc = await content('facilities')
+  const { HUB_CARDS } = doc
+  const FACILITIES = facilitiesOf(doc)
   return (
     <Section
       top={top} height={height} label="6743:2450"
@@ -50,13 +54,13 @@ export function LocationCards({ top, height }: { top: number; height: number }) 
           The row stretches both to the taller one, and the body below pins
           its buttons to the bottom so the two button rows sit level. */}
       <div className="flex w-full flex-col gap-[28px] lg:w-[1254px] lg:flex-row lg:items-stretch">
-        {FACILITIES.map((f) => <Card key={f.slug} f={f} />)}
+        {FACILITIES.map((f) => <Card key={f.slug} f={f} labels={HUB_CARDS} />)}
       </div>
     </Section>
   )
 }
 
-function Card({ f }: { f: Facility }) {
+function Card({ f, labels: HUB_CARDS }: { f: Facility; labels: { primary: string; secondary: string } }) {
   const rows = [
     { glyph: 'pin' as const,   text: f.cardAddress ?? f.address },
     { glyph: 'phone' as const, text: f.phone, href: `tel:${f.phone.replace(/[^+\d]/g, '')}` },

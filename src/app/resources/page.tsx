@@ -5,9 +5,9 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
-import { HOME_CTA } from '@/data/home'
 import { ResourceArticles, ResourceGuides, ResourceSearch } from '@/components/sections/resources/ResourceSections'
-import { HERO, SEO } from '@/data/resources'
+import { SEO } from '@/data/resources'
+import { content } from '@/lib/page-content'
 
 /**
  * Resources — a 1:1 build of Figma frame 6374:3828, and of 6638:2227
@@ -72,7 +72,9 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const { HERO } = await content('resources')
+  const { HOME_CTA } = await content('home')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

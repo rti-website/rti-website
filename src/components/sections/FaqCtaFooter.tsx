@@ -1,6 +1,6 @@
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
-import { FAQS, HOME_CTA } from '@/data/home'
+import { content } from '@/lib/page-content'
 import { Accordion } from '@/components/client/Accordion'
 import { Footer } from '@/components/sections/Footer'
 import { CTA_H, ClosingCtaBand } from '@/components/sections/ClosingCta'
@@ -22,18 +22,19 @@ import { FOOTER_H, HOME_BELOW_CASES_SHIFT } from '@/lib/layout'
  * plain block as tall as its content and the three bands stack in flow at their
  * own frames' paddings. Nothing here needs to know the number.
  */
-export function FaqCtaFooter() {
+export async function FaqCtaFooter() {
+  const { FAQS, HOME_CTA, HOME_FAQ } = await content('home')
   return (
     <Section top={8518 - HOME_BELOW_CASES_SHIFT} height={1192 + FOOTER_H} label="6044:20133">
       {/* ---------------------------------------------------------------- FAQ
           6618:2338: px20 / py48 / gap20, and the phone frame draws this band on
           WHITE rather than the board's #f4f9f6 wash. */}
       <Box x={0} y={0} w={1920} h={736} className="flex flex-col items-center gap-[20px] bg-white px-[20px] py-[48px] lg:block lg:bg-[#f4f9f6] lg:p-0">
-        <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>FAQs</Eyebrow></CenterBox>
-        <CenterBox y={130} w={900}><Title className="text-center">Frequently Asked Questions</Title></CenterBox>
+        <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>{HOME_FAQ.eyebrow}</Eyebrow></CenterBox>
+        <CenterBox y={130} w={900}><Title className="text-center">{HOME_FAQ.title}</Title></CenterBox>
         <CenterBox y={205} w={900}>
           <Lead className="text-center">
-            Recycling helps conserve resources, reduce pollution and support economic sustainability.
+            {HOME_FAQ.lead}
           </Lead>
         </CenterBox>
         <CenterBox y={270} w={780}>

@@ -656,8 +656,13 @@ export const FAQ_GROUPS: FaqGroup[] = [
   },
 ]
 
-/** Every question on the page, flattened — used for the FAQPage schema block. */
-export const ALL_FAQS: Faq[] = FAQ_GROUPS.flatMap((g) => g.items)
+/** Every question on the page, flattened — used for the FAQPage schema block.
+ *  The page derives it with allFaqs() from FAQ_GROUPS as Admin -> Pages
+ *  publishes them, so an edited answer reaches the schema too. */
+export function allFaqs(groups: readonly FaqGroup[]): Faq[] {
+  return groups.flatMap((g) => g.items)
+}
+export const ALL_FAQS: Faq[] = allFaqs(FAQ_GROUPS)
 
 /** Gaps between the frame, the content document and this build. */
 export const TODO_FOR_CONTENT = [

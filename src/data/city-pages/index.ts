@@ -54,6 +54,35 @@ export function fixedFacilityPage(site: string, service: string): CityPage | nul
   return bySite?.[service] ?? null
 }
 
+/**
+ * Each page's document in Admin -> Pages (src/content/registry.ts), by URL.
+ * A route renders `await content(cityDocKey(page))`, the page with the
+ * admin's edits over it; metadata and the sitemap keep reading the static
+ * objects here.
+ */
+export type CityDocKey =
+  | 'city/chicago-battery' | 'city/chicago-light-bulb'
+  | 'city/blaine-battery' | 'city/blaine-light-bulb' | 'city/blaine-electronics'
+  | 'city/new-berlin-battery' | 'city/new-berlin-light-bulb' | 'city/new-berlin-electronics'
+
+export const CITY_DOC_KEY: Record<string, CityDocKey> = {
+  [CHICAGO_BATTERY.url]:        'city/chicago-battery',
+  [CHICAGO_LIGHT_BULB.url]:     'city/chicago-light-bulb',
+  [BLAINE_BATTERY.url]:         'city/blaine-battery',
+  [BLAINE_LIGHT_BULB.url]:      'city/blaine-light-bulb',
+  [BLAINE_ELECTRONICS.url]:     'city/blaine-electronics',
+  [NEW_BERLIN_BATTERY.url]:     'city/new-berlin-battery',
+  [NEW_BERLIN_LIGHT_BULB.url]:  'city/new-berlin-light-bulb',
+  [NEW_BERLIN_ELECTRONICS.url]: 'city/new-berlin-electronics',
+}
+
+/** The Admin -> Pages document of a city page. Throws on a page with none, so a new page cannot ship unwired. */
+export function cityDocKey(page: CityPage): CityDocKey {
+  const key = CITY_DOC_KEY[page.url]
+  if (!key) throw new Error(`src/data/city-pages/index.ts: no CITY_DOC_KEY for ${page.url}`)
+  return key
+}
+
 /** The six facility URLs, for the sitemap. */
 export const FIXED_FACILITY_URLS: string[] = Object.values(FIXED_FACILITY_PAGES)
   .flatMap((m) => Object.values(m))

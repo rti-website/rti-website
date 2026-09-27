@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
+import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /minnesota-recycling/battery-recycling/ — "Battery Recycling in Blaine,
@@ -88,6 +88,7 @@ export const BLAINE_BATTERY: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What battery types does Recycle Technologies accept?',
       a: 'Alkaline and zinc batteries, lithium-ion and sealed lead-acid batteries, nickel-cadmium and button cell batteries, and EV, power tool and backup batteries. Other types, including mercury oxide batteries, are handled on a case-by-case basis; call the Blaine facility to check.' },
@@ -109,8 +110,9 @@ export const BLAINE_BATTERY: CityPage = {
   cta: {
     heading: 'Get Started With Battery Recycling in Blaine, Minnesota',
     body: ['Drop off batteries at the Blaine facility during business hours, or schedule a business battery pickup if you’re within our service radius.'],
-    primary: { label: 'Schedule a Battery Recycling Pickup in Blaine, MN', href: QUOTE },
-    phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130' },
+    primary: { label: 'Schedule a Battery Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130', phoneLabel: 'Phone: (763) 559-5130' },
+    headingWidth: 598,
   },
 
   todo: [

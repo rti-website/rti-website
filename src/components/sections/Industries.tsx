@@ -1,7 +1,7 @@
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
-import { INDUSTRIES } from '@/data/home'
+import { content } from '@/lib/page-content'
 import { IndustryCard } from '@/components/ui/IndustryCard'
 
 /**
@@ -46,7 +46,8 @@ import { IndustryCard } from '@/components/ui/IndustryCard'
  *
  * The cards reveal their blurb on hover — see `reveal` in IndustryCard.
  */
-export function Industries() {
+export async function Industries() {
+  const { INDUSTRIES, HOME_INDUSTRIES } = await content('home')
   return (
     <Section
       top={2689 - HOME_BELOW_SERVICES_SHIFT}
@@ -54,13 +55,11 @@ export function Industries() {
       label="6023:12500"
       className="flex flex-col items-center gap-[20px] bg-mist px-[20px] py-[48px] lg:block lg:p-0"
     >
-      <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>Who We Serve</Eyebrow></CenterBox>
-      <CenterBox y={125} w={600}><Title className="text-center">Industries We Serve</Title></CenterBox>
+      <CenterBox y={80} w={400} className="flex justify-center"><Eyebrow>{HOME_INDUSTRIES.eyebrow}</Eyebrow></CenterBox>
+      <CenterBox y={125} w={600}><Title className="text-center">{HOME_INDUSTRIES.title}</Title></CenterBox>
       <CenterBox y={199} w={857}>
         <Lead className="text-center">
-          From corporate facilities to schools and healthcare networks, we provide reliable
-          recycling, secure shredding, ITAD, and data destruction solutions for organizations
-          with different waste and equipment needs.
+          {HOME_INDUSTRIES.lead}
         </Lead>
       </CenterBox>
 
@@ -71,7 +70,7 @@ export function Industries() {
         className="grid grid-cols-2 gap-[12px] self-stretch lg:grid-cols-8 lg:gap-x-[14px] lg:[&>*]:col-span-2 lg:[&>*:nth-child(5)]:col-start-2"
       >
         {INDUSTRIES.map((ind) => (
-          <IndustryCard key={ind.t} ind={ind} reveal />
+          <IndustryCard key={ind.href} ind={ind} reveal more={HOME_INDUSTRIES.more} />
         ))}
       </Box>
     </Section>

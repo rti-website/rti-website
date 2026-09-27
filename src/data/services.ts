@@ -1,5 +1,4 @@
 import { href } from '@/lib/urls'
-import { CERT_COPY } from '@/data/certifications'
 import type { ServiceMark } from '@/components/ui/ServiceMarks'
 
 /**
@@ -192,14 +191,15 @@ export const SERVICES_HERO = {
   lead: 'Recycle Technologies has been providing services to the community since 1993. Explore our full range of recycling, destruction, and mail-in programs below.',
 }
 
-/**
- * The certifications band's paragraph on /services/. It had its own wording
- * from the "Our Services" doc (21 Sep 2026); since 24 Sep 2026 Asim wants the
- * one compliance line on every band, so this now matches CERT_COPY.body. Kept
- * as a separate constant so the page can diverge again without touching the
- * shared copy.
+/*
+ * The certifications band's paragraph on /services/ is the shared compliance
+ * line, CERT_COPY.body in src/data/certifications.ts (Asim, 24 Sep 2026: the
+ * one compliance line on every band). It was a SERVICES_CERT_BODY constant
+ * here, a copy of that line; since 27 Sep 2026 the page reads it from the
+ * "Certifications (shared)" document instead, so an edit there reaches this
+ * page too. To let the page diverge again, add its own paragraph here and
+ * pass it as the band's `body`.
  */
-export const SERVICES_CERT_BODY = CERT_COPY.body
 
 /** "Don't See Your Item?" teal panel — Figma 6166:2746. */
 export const SERVICES_ENQUIRY = {
@@ -220,4 +220,32 @@ export const SERVICES_CTA = {
   ],
   primary:   { label: 'Find Locations',          href: href('/all-locations/') },
   secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+}
+
+/**
+ * The words every service detail page (ServiceDetailPage) writes around its
+ * own copy: the breadcrumb, the hero's location picker, the FAQ heading and
+ * the "Near You" band. They were typed into the components until 27 Sep 2026;
+ * here they are editable under Admin -> Pages -> Services page.
+ */
+export const SERVICE_PAGE_TEXT = {
+  /** Home / Our Services / <service> — the trail on a page without its own. */
+  crumbs: { home: 'Home', services: 'Our Services' },
+  /** The hero's location picker, beside a single quote button. */
+  picker: {
+    placeholder: 'Select Your Location',
+    options: ['Minnesota', 'Wisconsin', 'Nationwide (Mail-In)'],
+  },
+  /** The FAQ band's heading block (6146:2417). */
+  faq: {
+    eyebrow: 'FAQs',
+    heading: 'Frequently Asked Questions',
+    lead: 'Recycling helps conserve resources, reduce pollution and support economic sustainability.',
+  },
+  /** "<Service> Near You" (ServiceLocationsBand); the title is each page's own. */
+  nearYou: {
+    eyebrow: 'Near You',
+    lead: 'Address, hours, what each site accepts and how to get a quote.',
+    allLocations: 'See all locations and the Mail-In Program',
+  },
 }

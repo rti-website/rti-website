@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { ACCOUNTABILITY } from '@/data/certifications-page'
+import { content } from '@/lib/page-content'
 
 /**
  * Accountability practices — Figma 6380:1098. py 100, gap 50: heading block on
@@ -25,7 +25,8 @@ const MARKS: Record<string, string[]> = {
   ],
 }
 
-export function CertAccountability({ top, height }: { top: number; height: number }) {
+export async function CertAccountability({ top, height }: { top: number; height: number }) {
+  const { ACCOUNTABILITY } = await content('certifications-page')
   return (
     <Section top={top} height={height} label="6380:1098"
       className="flex flex-col items-center gap-[24px] bg-[#fafafa] px-[20px] py-[40px] lg:gap-[50px] lg:bg-[#fcfcfc] lg:px-0 lg:py-[100px]">

@@ -81,12 +81,17 @@ export const FINDER = {
    * src/data/facilities.ts — see LocationCards.tsx.
    */
   map: {
+    /* `slug` is the facility the switch button shows; the label is copy
+       (Admin -> Pages), so the button no longer looks the facility up by it. */
     pins: [
-      { label: 'Blaine, MN',     x: 420, y: 90 },
-      { label: 'New Berlin, WI', x: 760, y: 220 },
+      { slug: 'minnesota-recycling' as const, label: 'Blaine, MN',     x: 420, y: 90 },
+      { slug: 'wisconsin-recycling' as const, label: 'New Berlin, WI', x: 760, y: 220 },
     ],
   },
 }
+
+/** The finder's copy, as LocationFinder (client) takes it in props. */
+export type Finder = typeof FINDER
 
 /** Coverage — 6377:968. Same two-column shape as the About Us story section. */
 export const COVERAGE = {

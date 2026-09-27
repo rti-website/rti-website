@@ -1,5 +1,5 @@
 import { quoteHref } from '@/lib/urls'
-import { HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
+import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
  * /wisconsin-recycling/light-bulb-recycling/ — "Light Bulb Recycling in New
@@ -22,12 +22,13 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
     image: '/images/locations/city-pages/new-berlin-light-bulb/hero.png',
-    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE },
+    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
   },
 
   opening: ['Used light bulbs, especially fluorescent and CFL types, contain small amounts of mercury and can’t go in the trash or curbside recycling bin in Wisconsin. Recycle Technologies handles light bulb recycling at its New Berlin facility, giving households, businesses, and property managers in the area a documented way to get spent bulbs processed. Individuals can drop bulbs off at the New Berlin location or use the nationwide Mail-In Program, while businesses can arrange commercial pickup.'],
 
   serviceInfo: {
+    compact: true,
     heading: 'Service Information',
     rows: [
       { label: 'Address', value: '2815 South 171st Street, New Berlin, WI 53151' },
@@ -79,8 +80,9 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
   },
 
   local: {
+    width: 900,
     heading: 'Local Recycling Information',
-    body: ['Wisconsin law prohibits sending mercury-containing lamps, including fluorescent, CFL, mercury vapor, metal halide, and high-pressure sodium bulbs, to a landfill. These must be recycled or managed as hazardous waste. Businesses and institutions that recycle these lamps fall under Wisconsin’s Universal Waste Rule (NR 673), which requires bulbs to be kept in closed, labeled containers and removed for recycling within one year. New Berlin’s municipal recycling center does not accept light bulbs or other electronics, so residents and businesses need a private recycler like Recycle Technologies or the Mail-In Program.'],
+    body: ['Wisconsin law prohibits sending mercury-containing lamps, including fluorescent, CFL, mercury vapor, metal halide, and high-pressure sodium bulbs, to a landfill. These must be recycled or managed as hazardous waste. Businesses and institutions that recycle these lamps fall under Wisconsin’s Universal Waste Rule (NR 673), which requires bulbs to be kept in closed, labeled containers and removed for recycling within one year.', 'New Berlin’s municipal recycling center does not accept light bulbs or other electronics, so residents and businesses need a private recycler like Recycle Technologies or the Mail-In Program.'],
   },
 
   whyBox: {
@@ -94,6 +96,7 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'Can I put light bulbs in my curbside recycling bin in New Berlin?',
       a: 'No. New Berlin’s municipal recycling center does not accept light bulbs or other electronics, so residents and businesses need a private recycler like Recycle Technologies or the Mail-In Program.' },
@@ -110,14 +113,19 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
   related: {
     heading: 'Related Recycling Services',
     links: related('Ballast Recycling - often replaced along with fluorescent tubes', 'Battery Recycling', 'Electronic Recycling', 'Mail-In Program', 'All Recycle Technologies Locations'),
+    phoneSkip: ['Mail-In Program'],
   },
 
   cta: {
     heading: 'Get Started With Light Bulb Recycling in New Berlin, Wisconsin',
     body: ['Drop off bulbs at the New Berlin facility during business hours, schedule a commercial pickup if you’re a business, or start a shipment through the Mail-In Program.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in New Berlin, WI', href: QUOTE },
-    phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040' },
+    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040', phoneLabel: 'Call (262) 798-3040' },
+    bodyWidth: 720,
   },
+
+  /** Grey bands as the revised board draws them (27 Sep 2026). */
+  bands: ['info', 'steps', 'whybox', 'faq'],
 
   todo: [
     'FAQ answers: the frame draws the five questions closed. Answers are built from this page’s own copy, except the broken bulb answer, which the page does not cover; confirm or replace all five.',

@@ -7,9 +7,8 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { IndustriesCatalog } from '@/components/sections/IndustriesCatalog'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
-import {
-  CATALOGUE_HEADING, CERTIFICATIONS_BODY, CTA, HERO, INDUSTRIES, SEO,
-} from '@/data/industries'
+import { SEO } from '@/data/industries'
+import { content } from '@/lib/page-content'
 
 /**
  * All Industries — a 1:1 build of Figma frame 6246:1006 (1920 x 3068).
@@ -55,7 +54,11 @@ export const metadata = buildMetadata({
 
 const FOOTER_TOP = 2387.035
 
-export default function IndustriesPage() {
+export default async function IndustriesPage() {
+  const { CATALOGUE_HEADING, CTA, HERO, INDUSTRIES } = await content('industries')
+  // The shared compliance line, from its own document (it was
+  // CERTIFICATIONS_BODY, a copy of it in src/data/industries.ts).
+  const { CERT_COPY } = await content('certifications')
   return (
     /* The page ends where the footer does. This was a literal 3008 (2387 + the
        old 621 footer) — the one route that did not follow FOOTER_H, so the
@@ -77,7 +80,7 @@ export default function IndustriesPage() {
           industries={INDUSTRIES}
         />
 
-        <CertificationsBand top={1482} label="6246:1064" body={CERTIFICATIONS_BODY} />
+        <CertificationsBand top={1482} label="6246:1064" body={CERT_COPY.body} />
 
         <ServicesCta top={1931.035} label="6246:1081" content={CTA} />
       </main>

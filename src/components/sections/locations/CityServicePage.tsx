@@ -7,7 +7,7 @@ import { Accordion } from '@/components/client/Accordion'
 import { Btn } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
-import type { CityPage } from '@/data/city-pages/types'
+import type { CityPage, SectionKey } from '@/data/city-pages/types'
 
 /**
  * One service in one city — the eight pages of 27 Sep 2026 (Figma file
@@ -21,11 +21,18 @@ import type { CityPage } from '@/data/city-pages/types'
  * auto-layout column in the frame, so the page is laid out in normal flow
  * on FlowCanvas rather than pinned to measured y offsets. Every number is
  * the board's; where the phone frame differs it is written mobile first
- * with the board's value at `lg:`. The phone frames drop the hero button
- * and give several cards a fixed height that clips their text; the cards
- * grow with their text here.
+ * with the board's value at `lg:`. Some phone frames give cards a fixed
+ * height that clips their text; the cards grow with their text here.
+ *
+ * REVISED FRAMES, 27 SEP 2026: phone hero button (36px, no arrow) and
+ * shorter phone labels, #474747 opening text, per-page grey bands
+ * (`bands`), the compact service table, Local widths and paragraph breaks,
+ * phone steps with the disc beside the text, phone CTA sizes.
  */
-export function CityServicePage({ page }: { page: CityPage }) {
+export function CityServicePage({ page }: {
+  /** The page's copy from `await content(cityDocKey(...))`, so Admin -> Pages edits reach it. */
+  page: CityPage
+}) {
   const schema = graph(
     breadcrumbNode(page.hero.crumbs.map((c) => ({ name: c.label, url: c.href ?? page.url }))),
     serviceNode({ name: page.schema.service, url: page.url, description: page.seo.description, areaServed: page.schema.areaServed }),
@@ -33,30 +40,32 @@ export function CityServicePage({ page }: { page: CityPage }) {
   )
 
   /* The sections this page has, in frame order. Backgrounds alternate from
-     white, as the boards draw them. */
-  const sections: React.ReactNode[] = [
-    <Opening key="opening" page={page} />,
-    page.intro && <Intro key="intro" page={page} />,
-    <ServiceInfo key="info" page={page} />,
-    <Accept key="accept" page={page} />,
-    page.businesses && <Businesses key="biz" page={page} />,
-    page.residents && <Residents key="res" page={page} />,
-    <Steps key="steps" page={page} />,
-    page.whyCards && <WhyCards key="whycards" page={page} />,
-    page.options && <Options key="options" page={page} />,
-    <Local key="local" page={page} />,
-    page.whyBox && <WhyBox key="whybox" page={page} />,
-    <Faq key="faq" page={page} />,
-    <Related key="related" page={page} />,
-  ].filter(Boolean)
+     white, unless the page lists its grey bands (`bands`): the revised
+     frames of 27 Sep 2026 no longer strictly alternate. */
+  const sections = ([
+    ['opening', <Opening key="opening" page={page} />],
+    ['intro', page.intro && <Intro key="intro" page={page} />],
+    ['info', <ServiceInfo key="info" page={page} />],
+    ['accept', <Accept key="accept" page={page} />],
+    ['biz', page.businesses && <Businesses key="biz" page={page} />],
+    ['res', page.residents && <Residents key="res" page={page} />],
+    ['steps', <Steps key="steps" page={page} />],
+    ['whycards', page.whyCards && <WhyCards key="whycards" page={page} />],
+    ['options', page.options && <Options key="options" page={page} />],
+    ['local', <Local key="local" page={page} />],
+    ['whybox', page.whyBox && <WhyBox key="whybox" page={page} />],
+    ['faq', <Faq key="faq" page={page} />],
+    ['related', <Related key="related" page={page} />],
+  ] as [SectionKey, React.ReactNode][]).filter(([, s]) => Boolean(s))
+  const grey = (k: SectionKey, i: number) => (page.bands ? page.bands.includes(k) : i % 2 === 1)
 
   return (
     <FlowCanvas>
       <Header />
       <main>
         <Hero page={page} />
-        {sections.map((s, i) => (
-          <div key={i} className={i % 2 ? 'bg-[#fcfcfc]' : 'bg-white'}>{s}</div>
+        {sections.map(([k, s], i) => (
+          <div key={k} className={grey(k, i) ? 'bg-[#fcfcfc]' : 'bg-white'}>{s}</div>
         ))}
         <Cta page={page} />
       </main>
@@ -169,13 +178,22 @@ function Hero({ page }: P) {
             ))}
           </ol>
         </nav>
-        <h1 className="w-full max-w-[350px] text-center font-sans text-[32px] font-semibold leading-[1.2] text-white lg:w-auto lg:max-w-none lg:whitespace-nowrap lg:text-left lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]">
+        {/* 28/1.2 on the phone since the revised frames (27 Sep 2026). */}
+        <h1 className="w-full max-w-[350px] text-center font-sans text-[28px] font-semibold leading-[1.2] text-white lg:w-auto lg:max-w-none lg:whitespace-nowrap lg:text-left lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]">
           {hero.h1}
         </h1>
         {hero.button && (
-          <div className="max-lg:hidden lg:mt-[21px]">
-            <Btn href={hero.button.href} variant="colored" className="backdrop-blur-[4px]">{hero.button.label}</Btn>
-          </div>
+          <>
+            {/* Phone (6955:* in the revised frames): a 36px teal button,
+                14px Roboto Medium, no arrow, often a shorter label. */}
+            <Link href={hero.button.href}
+              className="btn-pop mt-[18px] inline-flex h-[36px] max-w-[350px] items-center justify-center rounded-[8px] bg-brand px-[18px] font-roboto text-[14px] font-medium leading-none text-white lg:hidden">
+              <span className="truncate">{hero.button.phoneLabel ?? hero.button.label}</span>
+            </Link>
+            <div className="max-lg:hidden lg:mt-[21px]">
+              <Btn href={hero.button.href} variant="colored" className="backdrop-blur-[4px]">{hero.button.label}</Btn>
+            </div>
+          </>
         )}
       </div>
     </section>
@@ -184,13 +202,17 @@ function Hero({ page }: P) {
 
 /* --------------------------------------------------------------- opening -- */
 
-/** Section - Opening: one to three 16/1.6 paragraphs at 1282, 60 under the hero. */
+/**
+ * Section - Opening: one to three paragraphs at 1282, 60 under the hero.
+ * Revised frames (27 Sep 2026): every paragraph #474747 at 16/1.65, 20 of
+ * bottom padding; on the phone left aligned and justified, 14.5/1.6, 32/16.
+ */
 function Opening({ page }: P) {
   return (
-    <section className="px-[20px] pb-[10px] pt-[36px] lg:px-0 lg:pb-[30px] lg:pt-[60px]">
-      <div className="mx-auto flex w-full flex-col gap-[16px] text-center lg:w-[1282px] lg:text-left">
-        {page.opening.map((p, i) => (
-          <p key={p} className={`${BODY} ${i === 0 && page.opening.length > 1 ? 'text-heading' : ''}`}>{p}</p>
+    <section className="px-[20px] pb-[16px] pt-[32px] lg:px-0 lg:pb-[20px] lg:pt-[60px]">
+      <div className="mx-auto flex w-full flex-col gap-[14px] text-justify lg:w-[1282px] lg:gap-[16px] lg:text-left">
+        {page.opening.map((p) => (
+          <p key={p} className="font-roboto text-[14.5px] leading-[1.6] text-[#474747] lg:text-[16px] lg:leading-[1.65]">{p}</p>
         ))}
       </div>
     </section>
@@ -205,14 +227,16 @@ function Intro({ page }: P) {
   return (
     <section className="px-[20px] py-[40px] lg:px-0 lg:pb-[60px] lg:pt-[40px]">
       <div className="mx-auto flex w-full flex-col gap-[24px] lg:w-[1282px] lg:gap-[40px]">
-        <div className="flex flex-col gap-[14px] text-center lg:gap-[16px] lg:text-left">
-          <h2 className="font-sans text-[24px] font-semibold leading-[1.28] text-heading lg:text-[34px] lg:leading-[1.22]">{intro.heading}</h2>
-          {intro.body.map((p) => <p key={p} className={BODY}>{p}</p>)}
+        {/* Revised frames (27 Sep 2026): 32px heading, #474747 body at 1.65;
+            on the phone a 22px heading and justified text, left aligned. */}
+        <div className="flex flex-col gap-[14px] text-left lg:gap-[16px]">
+          <h2 className="font-sans text-[22px] font-semibold leading-[1.28] text-heading lg:text-[32px] lg:leading-[1.22]">{intro.heading}</h2>
+          {intro.body.map((p) => <p key={p} className="text-justify font-roboto text-[14.5px] leading-[1.6] text-[#474747] lg:text-left lg:text-[16px] lg:leading-[1.65]">{p}</p>)}
         </div>
-        <aside className="flex w-full flex-col gap-[14px] rounded-[12px] bg-brand-soft p-[24px] text-center lg:gap-[14px] lg:px-[36px] lg:py-[32px] lg:text-left">
-          <h3 className="font-sans text-[18px] font-medium leading-normal text-heading lg:text-[22px]">{intro.aside.heading}</h3>
+        <aside className="flex w-full flex-col gap-[12px] rounded-[14px] bg-brand-soft px-[22px] py-[24px] text-left lg:gap-[14px] lg:px-[36px] lg:py-[32px]">
+          <h3 className="font-sans text-[16px] font-medium leading-normal text-heading lg:text-[22px]">{intro.aside.heading}</h3>
           {intro.aside.body.map((p) => (
-            <p key={p} className="font-roboto text-[14px] leading-[1.55] text-[#333] lg:text-[15.5px] lg:leading-[1.6]">{p}</p>
+            <p key={p} className="font-roboto text-[13.5px] leading-[1.55] text-[#474747] lg:text-[15.5px] lg:leading-[1.6]">{p}</p>
           ))}
         </aside>
       </div>
@@ -232,11 +256,13 @@ function ServiceInfo({ page }: P) {
     <section className="px-[20px] py-[40px] lg:px-0 lg:py-[60px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:gap-[30px]">
         <H2Small>{serviceInfo.heading}</H2Small>
-        <dl className="flex w-full flex-col gap-[14px] rounded-[14px] border border-[#e6e6e6] bg-white p-[24px] lg:w-[1000px] lg:gap-0 lg:rounded-[16px] lg:px-[41px] lg:py-[20px]">
+        {/* `compact` (revised frames, 27 Sep 2026): a 260 label column and
+            rows at least 40 tall, centred, 14 apart, card padding 32/40. */}
+        <dl className={`flex w-full flex-col gap-[14px] rounded-[14px] border border-[#e6e6e6] bg-white p-[24px] lg:w-[1000px] lg:rounded-[16px] ${serviceInfo.compact ? 'lg:gap-[14px] lg:px-[40px] lg:py-[32px]' : 'lg:gap-0 lg:px-[41px] lg:py-[20px]'}`}>
           {serviceInfo.rows.map((r, i) => (
             <div key={r.label}
-              className={`flex flex-col gap-[3px] lg:flex-row lg:items-start lg:gap-[20px] lg:py-[14px] ${i < serviceInfo.rows.length - 1 ? 'border-b border-[#ededed] pb-[14px]' : ''}`}>
-              <dt className="font-sans text-[13px] font-medium leading-normal text-heading lg:w-[220px] lg:shrink-0 lg:text-[14.5px]">{r.label}</dt>
+              className={`flex flex-col gap-[3px] lg:flex-row lg:gap-[20px] ${serviceInfo.compact ? 'lg:min-h-[40px] lg:items-center' : 'lg:items-start lg:py-[14px]'} ${i < serviceInfo.rows.length - 1 ? 'border-b border-[#ededed] pb-[14px]' : ''}`}>
+              <dt className={`font-sans text-[13px] font-medium leading-normal text-heading lg:shrink-0 lg:text-[14.5px] ${serviceInfo.compact ? 'lg:w-[260px]' : 'lg:w-[220px]'}`}>{r.label}</dt>
               <dd className="font-roboto text-[13.5px] leading-[1.55] text-muted lg:min-w-px lg:flex-1 lg:text-[14.5px]">
                 {typeof r.value === 'string' ? r.value : r.value.map((p, j) => (
                   <span key={p.tel}>
@@ -292,7 +318,8 @@ function Accept({ page }: P) {
             {accept.groups!.map((g) => (
               <div key={g.title} className="flex w-full flex-col items-center gap-[14px] lg:gap-[16px]">
                 <h3 className="font-sans text-[17px] font-medium leading-normal text-brand lg:text-[18px]">{g.title}</h3>
-                <ul className="flex w-full flex-wrap justify-center gap-[10px] lg:w-[860px] lg:gap-[12px]">
+                {/* One pill per line, centred, on the phone (revised frame 6920:8992). */}
+                <ul className="flex w-full flex-col items-center gap-[10px] lg:w-[860px] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-[12px]">
                   {g.items.map((it) => (
                     <li key={it} className="flex h-[36px] items-center rounded-full bg-brand-soft px-[14px] font-sans text-[13px] font-medium leading-normal text-heading lg:h-[40px] lg:px-[18px] lg:text-[14px]">{it}</li>
                   ))}
@@ -370,16 +397,20 @@ function Steps({ page }: P) {
         <H2>{s.heading}</H2>
         <ol className={`flex w-full flex-col lg:flex-row lg:items-stretch ${s.arrows ? 'gap-[14px] lg:gap-[16px]' : 'gap-[16px] lg:gap-[20px]'} ${wide ? 'lg:w-[1536px]' : 'lg:w-[1282px]'}`}>
           {s.items.map((it, i) => (
-            <li key={it.title} className={`flex flex-col items-center lg:flex-1 lg:flex-row ${s.arrows ? 'gap-[14px] lg:gap-[16px]' : ''}`}>
-              <div className={`flex w-full flex-col gap-[10px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:h-full lg:flex-1 lg:gap-[12px] ${small ? 'lg:px-[23px] lg:py-[25px]' : 'lg:px-[25px] lg:py-[27px]'}`}>
-                <span className="grid size-[34px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[14px] font-medium text-white">{i + 1}</span>
-                <span className={`font-sans font-medium leading-normal text-heading ${small ? 'text-[15px] lg:text-[16px]' : 'text-[15px] lg:text-[17px]'}`}>{it.title}</span>
-                {(Array.isArray(it.text) ? it.text : [it.text]).map((t) => (
-                  <span key={t} className={`font-roboto leading-[1.6] text-muted ${small ? 'text-[13px] lg:text-[13.5px]' : 'text-[13px] lg:text-[14.5px]'}`}>{t}</span>
-                ))}
+            <li key={it.title} className={`flex flex-col items-center lg:flex-1 lg:flex-row ${s.arrows ? 'lg:gap-[16px]' : ''}`}>
+              {/* Phone (revised frames, 27 Sep 2026): the number disc sits left
+                  of the title and text, and there are no arrows. */}
+              <div className={`flex w-full flex-row items-start gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white p-[20px] lg:h-full lg:flex-1 lg:flex-col lg:items-stretch lg:gap-[12px] ${small ? 'lg:px-[23px] lg:py-[25px]' : 'lg:px-[25px] lg:py-[27px]'}`}>
+                <span className="grid size-[32px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[14px] font-medium text-white lg:size-[34px]">{i + 1}</span>
+                <span className="flex min-w-px flex-1 flex-col gap-[8px] lg:gap-[12px]">
+                  <span className={`font-sans font-medium leading-normal text-heading ${small ? 'text-[15px] lg:text-[16px]' : 'text-[15px] lg:text-[17px]'}`}>{it.title}</span>
+                  {(Array.isArray(it.text) ? it.text : [it.text]).map((t) => (
+                    <span key={t} className={`font-roboto leading-[1.6] text-muted ${small ? 'text-[13px] lg:text-[13.5px]' : 'text-[13px] lg:text-[14.5px]'}`}>{t}</span>
+                  ))}
+                </span>
               </div>
               {s.arrows && i < n - 1 && (
-                <Image src="/images/locations/chicago/step-arrow.svg" alt="" width={18} height={18} unoptimized className="size-[18px] shrink-0 rotate-90 lg:rotate-0" />
+                <Image src="/images/locations/chicago/step-arrow.svg" alt="" width={18} height={18} unoptimized className="size-[18px] shrink-0 max-lg:hidden" />
               )}
             </li>
           ))}
@@ -448,9 +479,14 @@ function Local({ page }: P) {
   const l = page.local
   return (
     <section className="px-[20px] py-[40px] lg:px-0 lg:py-[60px]">
+      {/* Revised frames (27 Sep 2026): 16/1.65 text in the frame's own width
+          (1000 on the electronics pages, 900 on the light bulb pages), and
+          a paragraph break drawn as a blank line on the board. */}
       <div className="mx-auto flex w-full flex-col items-center gap-[14px] text-center lg:w-[1078px] lg:gap-[16px]">
         <H2Small>{l.heading}</H2Small>
-        {l.body.map((p) => <p key={p} className="font-roboto text-[14px] leading-[1.6] text-muted lg:text-[15.5px]">{p}</p>)}
+        <div className="flex w-full flex-col gap-[8px] lg:w-[var(--local-w)] lg:gap-[26px]" style={{ '--local-w': `${l.width ?? 1078}px` } as React.CSSProperties}>
+          {l.body.map((p) => <p key={p} className="font-roboto text-[14px] leading-[1.6] text-muted lg:text-[16px] lg:leading-[1.65]">{p}</p>)}
+        </div>
       </div>
     </section>
   )
@@ -480,8 +516,8 @@ function Faq({ page }: P) {
     <section className="px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[900px] lg:gap-[40px]">
         <div className="flex w-full flex-col items-center gap-[16px] lg:gap-[10px]">
-          <Pill>FAQs</Pill>
-          <H2>Frequently Asked Questions</H2>
+          <Pill>{page.faqHead.eyebrow}</Pill>
+          <H2>{page.faqHead.heading}</H2>
         </div>
         <Accordion items={page.faqs} gap={15} variant="ring" idPrefix={`faq-${page.url.replace(/\W+/g, '-')}`} />
       </div>
@@ -498,9 +534,11 @@ function Related({ page }: P) {
     <section className="px-[20px] py-[40px] lg:px-0 lg:py-[60px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:gap-[24px]">
         <H2Small>{r.heading}</H2Small>
-        <ul className="flex w-full flex-wrap justify-center gap-[8px] lg:w-[1346px] lg:gap-[14px]">
+        {/* Phone: the electronics frames stack the chips one per row
+            (`phoneStack`); the light bulb frames leave some out (`phoneSkip`). */}
+        <ul className={`flex w-full justify-center gap-[8px] lg:w-[1346px] lg:flex-row lg:flex-wrap lg:gap-[14px] ${r.phoneStack ? 'max-lg:flex-col max-lg:items-center max-lg:gap-[10px]' : 'flex-wrap'}`}>
           {r.links.map((l) => (
-            <li key={l.label}>
+            <li key={l.label} className={r.phoneSkip?.includes(l.label) ? 'max-lg:hidden' : ''}>
               <Link href={l.href}
                 className="btn-pop flex h-[40px] items-center gap-[5px] rounded-full border border-[#e6e6e6] bg-white px-[12px] font-sans text-[12.5px] font-medium text-brand hover:border-brand lg:h-[44px] lg:gap-[8px] lg:px-[21px] lg:text-[14px]">
                 {l.label}
@@ -524,18 +562,25 @@ function Related({ page }: P) {
 function Cta({ page }: P) {
   const c = page.cta
   return (
-    <section className="px-[20px] py-[56px] lg:px-0 lg:py-[90px]"
-      style={{ backgroundImage: 'linear-gradient(162.13deg, #0b1f3a 7.25%, #1b7a3d 79.71%)' }}>
+    /* Revised phone frames (27 Sep 2026): a 122.48deg gradient, a 24/1.25
+       heading, 14/1.58 body, the two buttons 46 tall, 10 apart, with the
+       phone's own shorter labels. */
+    <section className="bg-[linear-gradient(122.48deg,#0b1f3a_7.25%,#1b7a3d_79.71%)] px-[20px] py-[56px] lg:bg-[linear-gradient(162.13deg,#0b1f3a_7.25%,#1b7a3d_79.71%)] lg:px-0 lg:py-[90px]"
+      style={{ '--cta-h': `${c.headingWidth ?? 720}px`, '--cta-b': `${c.bodyWidth ?? 1068}px` } as React.CSSProperties}>
       <div className="mx-auto flex w-full flex-col items-center gap-[18px] text-center lg:w-[1216px] lg:gap-[20px]">
-        <h2 className="font-sans text-[27px] font-semibold leading-[1.22] text-white lg:w-[720px] lg:text-[34px]">{c.heading}</h2>
+        <h2 className="font-sans text-[24px] font-semibold leading-[1.25] text-white lg:w-[var(--cta-h)] lg:text-[34px] lg:leading-[1.22]">{c.heading}</h2>
         {c.body.map((p) => (
-          <p key={p} className="font-roboto text-[14.5px] leading-[1.6] text-white/85 lg:w-[1068px] lg:text-[16px]">{p}</p>
+          <p key={p} className="font-roboto text-[14px] leading-[1.58] text-white/85 lg:w-[var(--cta-b)] lg:text-[16px] lg:leading-[1.6]">{p}</p>
         ))}
-        <div className="flex w-full flex-col gap-[14px] lg:w-auto lg:flex-row lg:gap-[16px] lg:pt-[10px]">
-          <Btn href={c.primary.href} variant="coloredWhite" wrap className="justify-center backdrop-blur-[4px] max-lg:w-full">{c.primary.label}</Btn>
+        <div className="flex w-full flex-col gap-[10px] lg:w-auto lg:flex-row lg:gap-[16px] lg:pt-[10px]">
+          <Btn href={c.primary.href} variant="coloredWhite" wrap className="justify-center backdrop-blur-[4px] max-lg:min-h-[46px] max-lg:w-full max-lg:px-[16px] max-lg:text-[14px]">
+            <span className="lg:hidden">{c.primary.phoneLabel ?? c.primary.label}</span>
+            <span className="max-lg:hidden">{c.primary.label}</span>
+          </Btn>
           <a href={c.phone.tel}
-            className="btn-pop inline-flex h-[48.05px] items-center justify-center gap-[8.008px] rounded-[8px] border border-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] max-lg:w-full">
-            <span className="whitespace-nowrap">{c.phone.label}</span>
+            className="btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008px] rounded-[8px] border border-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] max-lg:w-full lg:h-[48.05px]">
+            <span className="whitespace-nowrap lg:hidden">{c.phone.phoneLabel ?? c.phone.label}</span>
+            <span className="whitespace-nowrap max-lg:hidden">{c.phone.label}</span>
             <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
           </a>
         </div>

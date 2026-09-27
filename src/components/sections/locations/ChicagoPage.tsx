@@ -7,12 +7,11 @@ import { Accordion } from '@/components/client/Accordion'
 import { Btn } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
-import {
-  ACCEPT, BUSINESSES, CTA, FAQS, HERO, INTRO, NOTICE, PHONES, RELATED, SEO, SERVICE_INFO, STEPS, URL, WHY,
-} from '@/data/chicago'
+import { SEO, URL } from '@/data/chicago'
+import { content } from '@/lib/page-content'
 
 /**
- * "Recycling in Chicago, Illinois" — Figma 6873:14196 (board, 1920) and
+ * "Electronics Recycling in Chicago, Illinois" — Figma 6873:14196 (board, 1920) and
  * 6896:15317 (phone, 390). Built 25 Sep 2026. Copy lives in src/data/chicago.ts.
  *
  * FLOW, LIKE THE LOCATION SERVICE PAGES. Every section is an auto-layout
@@ -26,7 +25,10 @@ import {
  * phone frame gives several cards a fixed height that clips their text
  * (What We Accept, How It Works); those cards grow with their text here.
  */
-export function ChicagoPage() {
+export async function ChicagoPage() {
+  /* Copy from Admin -> Pages ('chicago'); each section below reads its own
+     part the same way (one read per request). SEO and URL stay static. */
+  const { HERO, FAQS } = await content('chicago')
   const schema = graph(
     breadcrumbNode(HERO.crumbs.map((c) => ({ name: c.label, url: c.href ?? URL }))),
     serviceNode({ name: 'Electronics Recycling in Chicago', url: URL, description: SEO.description, areaServed: ['Chicago, IL'] }),
@@ -42,6 +44,7 @@ export function ChicagoPage() {
         <ServiceInfo />
         <Accept />
         <Businesses />
+        <Residents />
         <Steps />
         <Why />
         <Faq />
@@ -100,7 +103,8 @@ function IconTile({ src, round = false, phoneSrc }: { src: string; round?: boole
  * veil; a navy wash rises from the bottom and a green one comes in from the
  * left. The breadcrumb is board only; the phone centres the H1.
  */
-function Hero() {
+async function Hero() {
+  const { HERO } = await content('chicago')
   return (
     <section data-figma="6873:14198" className="relative h-[276px] overflow-hidden bg-navy lg:h-[470px]">
       <div className="absolute left-1/2 top-1/2 h-[411px] w-[730px] -translate-x-1/2 -translate-y-1/2 lg:top-[-372px] lg:h-[1081px] lg:w-[1920px] lg:translate-y-0" aria-hidden="true">
@@ -116,10 +120,9 @@ function Hero() {
 
       {/* Text — 6873:14204: a 700 wide block centred on the band at x319,
           crumbs on top and the H1 38 below them. */}
-      {/* Bottom padding puts the text where the frames do: the board's block
-          is 192 tall and centred (top 139) though its text is 123, and the
-          phone's two line H1 sits at y75 of 276 rather than centred. */}
-      <div className="relative flex h-full flex-col items-center justify-center px-[20px] pb-[48px] lg:mx-auto lg:w-[1282px] lg:items-start lg:px-0 lg:pb-[69px]">
+      {/* The board's block (crumbs, H1, button) is 192 tall and centred on
+          the band (top 139), so no offset is needed now the button is in. */}
+      <div className="relative flex h-full flex-col items-center justify-center px-[20px] lg:mx-auto lg:w-[1282px] lg:items-start lg:px-0">
         <nav aria-label="Breadcrumb" className="max-lg:hidden lg:mb-[21px] lg:pl-[3px]">
           <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
             {HERO.crumbs.map((c, i) => (
@@ -134,9 +137,21 @@ function Hero() {
             ))}
           </ol>
         </nav>
-        <h1 className="w-full max-w-[350px] text-center font-sans text-[32px] font-semibold leading-[1.2] text-white lg:w-[936px] lg:max-w-none lg:text-left lg:text-[70px] lg:leading-[84.7px] lg:tracking-[-2.03px]">
+        {/* 60 on the board since the 27 Sep revision (was 70 at 936 wide),
+            on one line like the city pages; 28/1.2 on the phone (6896:15338). */}
+        <h1 className="w-full max-w-[350px] text-center font-sans text-[28px] font-semibold leading-[1.2] text-white lg:w-auto lg:max-w-none lg:whitespace-nowrap lg:text-left lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]">
           {HERO.h1}
         </h1>
+        {/* Board 6927:10446 — 21 under the H1's line, the site's button.
+            Phone 6955:11443 — 25 under the H1, 36 tall, 14px, no arrow, its
+            own label. The frame draws its text teal on the teal fill; white. */}
+        <div className="mt-[25px] flex max-w-[350px] justify-center lg:mt-[21px] lg:max-w-none">
+          <Link href={HERO.button.href}
+            className="btn-pop inline-flex h-[36px] items-center justify-center rounded-[8px] bg-brand px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] lg:hidden">
+            {HERO.button.phoneLabel}
+          </Link>
+          <Btn href={HERO.button.href} variant="colored" className="backdrop-blur-[4px] max-lg:hidden">{HERO.button.label}</Btn>
+        </div>
       </div>
     </section>
   )
@@ -144,16 +159,17 @@ function Hero() {
 
 /* ---------------------------------------------------------------- notice -- */
 
-/** Service Area Notice — 6879:2744 / 6897:2768. */
-function Notice() {
+/** Service Area Notice — 6879:2744 / 6897:2768. Three paragraphs with a
+ *  blank line between them (the gap is one line: 13.5 / 14.5 x 1.55), text
+ *  1100 wide on the board, justified on the phone. */
+async function Notice() {
+  const { NOTICE } = await content('chicago')
   return (
     <section data-figma="6879:2744" className="bg-white px-[20px] pb-[20px] pt-[32px] lg:px-0 lg:pt-[44px]">
-      <div role="note" className="mx-auto flex w-full flex-col gap-[10px] rounded-[12px] bg-[#fef3c7] p-[18px] text-center font-roboto text-[13.5px] leading-[1.55] text-[#59470d] lg:w-[1282px] lg:px-[28px] lg:py-[22px] lg:text-left lg:text-[14.5px]">
-        {/* The board wraps the first paragraph at 1100 and the second at 1167.
-            At 1100 the site's Roboto runs the first to a third line of one
-            word, so it takes the box's full width and keeps the frame's two. */}
-        <p>{NOTICE[0]}</p>
-        <p className="lg:w-[1167px]">{NOTICE[1]}</p>
+      <div role="note" className="mx-auto w-full rounded-[12px] bg-[#fef3c7] p-[18px] lg:w-[1282px] lg:px-[28px] lg:py-[22px]">
+        <div className="flex w-full max-w-[303px] flex-col gap-[20.925px] text-justify font-roboto text-[13.5px] leading-[1.55] text-[#59470d] lg:w-[1100px] lg:max-w-none lg:gap-[22.475px] lg:text-left lg:text-[14.5px]">
+          {NOTICE.map((p) => <p key={p}>{p}</p>)}
+        </div>
       </div>
     </section>
   )
@@ -161,23 +177,30 @@ function Notice() {
 
 /* ----------------------------------------------------------------- intro -- */
 
-/** Intro — 6879:2745 / 6897:2769: copy column 700 + 80 + the 502 aside. */
-function Intro() {
+/** Intro — 6879:2745 / 6897:2769: copy column 700 + 80 + the 502 aside.
+ *  The phone justifies everything and drops the pill. The aside's three
+ *  paragraphs sit a blank line apart (13.5 / 14.5 x line height); on the
+ *  board the frame also ends the text on a blank line, hence the deeper
+ *  bottom padding (32 + 21.75). */
+async function Intro() {
+  const { INTRO } = await content('chicago')
   return (
     <section data-figma="6879:2745" className="bg-white px-[20px] py-[40px] lg:px-0 lg:pb-[90px] lg:pt-[60px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[1282px] lg:flex-row lg:items-start lg:gap-[80px]">
-        <div className="flex w-full flex-col items-center gap-[20px] text-center lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[18px] lg:text-left">
-          <Pill>{INTRO.eyebrow}</Pill>
-          <h2 className="font-sans text-[24px] font-semibold leading-[1.28] text-heading lg:text-[34px] lg:leading-[1.22]">{INTRO.heading}</h2>
+        <div className="flex w-full flex-col gap-[20px] text-justify lg:w-[700px] lg:shrink-0 lg:items-start lg:gap-[18px] lg:text-left">
+          <span className="max-lg:hidden"><Pill>{INTRO.eyebrow}</Pill></span>
+          <h2 className="text-left font-sans text-[24px] font-semibold leading-[1.28] text-heading lg:text-[34px] lg:leading-[1.22]">{INTRO.heading}</h2>
           {INTRO.body.map((p) => (
             <p key={p} className="font-roboto text-[14.5px] leading-[1.6] text-muted lg:text-[16px] lg:leading-[1.65]">{p}</p>
           ))}
         </div>
-        <aside className="flex w-full flex-col gap-[16px] rounded-[12px] bg-brand-soft p-[24px] text-center lg:w-[502px] lg:shrink-0 lg:gap-[20px] lg:p-[32px] lg:text-left">
-          <h3 className="font-sans text-[17px] font-medium leading-normal text-heading lg:text-[19px]">{INTRO.aside.heading}</h3>
-          {INTRO.aside.body.map((p) => (
-            <p key={p} className="font-roboto text-[13.5px] leading-[1.55] text-[#333] lg:w-[400px] lg:font-poppins lg:text-[14.5px] lg:leading-[1.5]">{p}</p>
-          ))}
+        <aside className="flex w-full flex-col gap-[16px] rounded-[12px] bg-brand-soft p-[24px] text-justify lg:w-[502px] lg:shrink-0 lg:gap-[20px] lg:px-[32px] lg:pb-[53.75px] lg:pt-[32px] lg:text-left">
+          <h3 className="self-center text-center font-sans text-[17px] font-medium leading-normal text-heading max-lg:w-[232px] lg:self-start lg:text-[19px]">{INTRO.aside.heading}</h3>
+          <div className="flex flex-col gap-[20.925px] lg:w-[400px] lg:gap-[21.75px]">
+            {INTRO.aside.body.map((p) => (
+              <p key={p} className="font-roboto text-[13.5px] leading-[1.55] text-[#333] lg:font-poppins lg:text-[14.5px] lg:leading-[1.5]">{p}</p>
+            ))}
+          </div>
         </aside>
       </div>
     </section>
@@ -187,12 +210,15 @@ function Intro() {
 /* ---------------------------------------------------------- service info -- */
 
 /** Location and Service Information — 6879:2746 / 6897:2770. Label beside
- *  value on the board (label 200 wide), label over value on the phone. */
-function ServiceInfo() {
+ *  value on the board (label 200 wide, so "Residents and small quantities"
+ *  takes two lines inside the 40 row, as drawn), label over value on the
+ *  phone. Six rows since 27 Sep. */
+async function ServiceInfo() {
+  const { PHONES, SERVICE_INFO } = await content('chicago')
   const rows = [
-    { label: 'Location', value: SERVICE_INFO.location },
+    { label: SERVICE_INFO.labels.location, value: SERVICE_INFO.location },
     {
-      label: 'Phone',
+      label: SERVICE_INFO.labels.phone,
       value: (
         <>
           {PHONES.map((p, i) => (
@@ -204,7 +230,10 @@ function ServiceInfo() {
         </>
       ),
     },
-    { label: 'Service Area', value: SERVICE_INFO.area },
+    { label: SERVICE_INFO.labels.area, value: SERVICE_INFO.area },
+    { label: SERVICE_INFO.labels.businesses, value: SERVICE_INFO.businesses },
+    { label: SERVICE_INFO.labels.residents, value: SERVICE_INFO.residents },
+    { label: SERVICE_INFO.labels.facility, value: SERVICE_INFO.facility },
   ]
   return (
     <section data-figma="6879:2746" className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
@@ -226,11 +255,12 @@ function ServiceInfo() {
 
 /* ---------------------------------------------------------------- accept -- */
 
-/** What We Accept — 6879:2747 / 6897:2771. Board: 3 x 302 cards to a row,
- *  then the batteries banner and the note at 942. Phone: one row per item,
- *  the tile on the left, batteries a seventh card. */
-function Accept() {
-  const all = [...ACCEPT.items, ACCEPT.batteries]
+/** What We Accept — 6879:2747 / 6897:2771. Board: eight 302 cards, three to
+ *  a row and the last two centred (3 + 3 + 2, 20 apart, each row as tall as
+ *  its tallest card), then the note, 942 wide and centred. Phone: one row
+ *  per item, the tile on the left. */
+async function Accept() {
+  const { ACCEPT } = await content('chicago')
   return (
     <section data-figma="6879:2747" className="bg-white px-[20px] py-[40px] lg:px-0 lg:py-[90px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[946px] lg:gap-[44px]">
@@ -240,11 +270,11 @@ function Accept() {
           <p className="font-roboto text-[13.5px] leading-normal text-muted lg:text-[16px]">{ACCEPT.lead}</p>
         </div>
 
-        <div className="flex w-full flex-col items-start gap-[20px]">
-          <ul className="grid w-full grid-cols-1 gap-[20px] lg:grid-cols-[repeat(3,302px)]">
-            {all.map((it, i) => (
+        <div className="flex w-full flex-col items-center gap-[20px]">
+          <ul className="flex w-full flex-col gap-[20px] lg:flex-row lg:flex-wrap lg:justify-center">
+            {ACCEPT.items.map((it) => (
               <li key={it.title}
-                className={`flex gap-[14px] rounded-[12px] bg-brand-soft px-[20px] py-[18px] lg:flex-col lg:gap-[12px] lg:px-[22px] lg:py-[26px] ${i === all.length - 1 ? 'lg:hidden' : ''}`}>
+                className="flex gap-[14px] rounded-[12px] bg-brand-soft px-[20px] py-[18px] lg:w-[302px] lg:flex-col lg:gap-[12px] lg:px-[22px] lg:py-[26px]">
                 <IconTile src={it.icon} />
                 <span className="flex min-w-px flex-col gap-[4px] lg:gap-[12px]">
                   <span className="font-sans text-[14.5px] font-medium leading-normal text-heading lg:text-[16px]">{it.title}</span>
@@ -254,17 +284,8 @@ function Accept() {
             ))}
           </ul>
 
-          {/* Batteries Banner — 6880:2794, board only (the phone draws it as
-              the seventh card above). */}
-          <div className="flex h-[90px] w-[942px] items-center gap-[18px] rounded-[12px] bg-brand-soft px-[26px] max-lg:hidden">
-            <IconTile src={ACCEPT.batteries.icon} />
-            <span className="flex flex-col gap-[3px]">
-              <span className="font-sans text-[16px] font-medium leading-normal text-heading">{ACCEPT.batteries.title}</span>
-              <span className="font-roboto text-[13.5px] leading-normal text-muted">{ACCEPT.batteries.text}</span>
-            </span>
-          </div>
-
-          <p className="w-full rounded-[10px] border border-[#e6e6e6] bg-white px-[18px] py-[16px] font-roboto text-[12.5px] leading-[1.5] text-muted lg:w-[942px] lg:px-[20px] lg:text-[13.5px] lg:leading-normal">
+          {/* 6883:5504 — centred text on the board (60 tall), left on the phone. */}
+          <p className="w-full rounded-[10px] border border-[#e6e6e6] bg-white px-[18px] py-[16px] font-roboto text-[12.5px] leading-[1.5] text-muted lg:min-h-[60px] lg:w-[942px] lg:px-[20px] lg:text-center lg:text-[13.5px] lg:leading-normal">
             {ACCEPT.note}
           </p>
         </div>
@@ -275,21 +296,26 @@ function Accept() {
 
 /* ------------------------------------------------------------ businesses -- */
 
-/** For Chicago Businesses — 6879:2748 / 6897:2772: one 617 card. */
-function Businesses() {
+/** For Chicago Businesses — 6879:2748 / 6897:2772: one card, 780 on the
+ *  board since 27 Sep (title, "This includes:" and the list 545 wide, the
+ *  paragraphs the full 706), the intro and "This includes:" as two lines,
+ *  seven points with the dot centred on each. */
+async function Businesses() {
+  const { BUSINESSES } = await content('chicago')
   return (
     <section data-figma="6879:2748" className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[90px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[24px] lg:gap-[44px]">
         <H2>{BUSINESSES.heading}</H2>
-        <div className="flex w-full flex-col gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] lg:w-[617px] lg:gap-[16px] lg:p-[36px]">
+        <div className="flex w-full flex-col gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] lg:w-[780px] lg:gap-[16px] lg:p-[36px]">
           <p className="font-roboto text-[10.5px] font-bold uppercase leading-normal tracking-[0.6px] text-brand lg:text-[11px]">{BUSINESSES.eyebrow}</p>
-          <h3 className="font-sans text-[17px] font-medium leading-[1.3] text-heading lg:text-[22px] lg:leading-normal">{BUSINESSES.title}</h3>
+          <h3 className="font-sans text-[17px] font-medium leading-[1.3] text-heading lg:w-[545px] lg:text-[22px] lg:leading-normal">{BUSINESSES.title}</h3>
           <p className="font-roboto text-[13.5px] leading-[1.55] text-muted lg:text-[14.5px] lg:leading-[1.6]">{BUSINESSES.intro}</p>
-          <ul className="flex flex-col gap-[10px]">
+          <p className="font-roboto text-[13.5px] leading-[1.55] text-muted lg:w-[545px] lg:text-[14.5px] lg:leading-[1.6]">{BUSINESSES.includes}</p>
+          <ul className="flex flex-col gap-[10px] lg:w-[545px]">
             {BUSINESSES.points.map((p) => (
-              <li key={p} className="flex items-start gap-[10px]">
+              <li key={p} className="flex items-center gap-[10px]">
                 <span aria-hidden="true" className="size-[6px] shrink-0 rounded-full bg-brand" />
-                <span className="font-roboto text-[13.5px] leading-[1.5] text-muted lg:w-[500px] lg:text-[14.5px] lg:leading-[1.55]">{p}</span>
+                <span className="min-w-px flex-1 font-roboto text-[13.5px] leading-[1.5] text-muted lg:w-[500px] lg:flex-none lg:text-[14.5px] lg:leading-[1.55]">{p}</span>
               </li>
             ))}
           </ul>
@@ -301,19 +327,43 @@ function Businesses() {
   )
 }
 
+/* ------------------------------------------------------------- residents -- */
+
+/** Electronics Recycling for Chicago Residents — 6925:6405 / 6925:6409, new
+ *  27 Sep 2026. A centred heading over one paragraph with an underlined
+ *  link to the mail-in kits (new tab). */
+async function Residents() {
+  const { RESIDENTS } = await content('chicago')
+  const b = RESIDENTS.body
+  return (
+    <section data-figma="6925:6405" className="bg-[#fcfcfc] px-[20px] py-[60px] lg:px-0">
+      <div className="mx-auto flex w-full flex-col items-center gap-[16px] text-center">
+        <h2 className="w-full max-w-[324px] font-sans text-[22px] font-semibold leading-normal text-black lg:w-[1000px] lg:max-w-none lg:text-[28px] lg:text-heading">{RESIDENTS.heading}</h2>
+        <p className="w-full font-roboto text-[13.5px] leading-[1.55] text-muted lg:w-[1152px] lg:text-[16px] lg:leading-[1.65]">
+          {b.before}
+          <a href={b.href} target="_blank" rel="noopener" className="underline hover:text-brand">{b.linkText}</a>
+          {b.after}
+        </p>
+      </div>
+    </section>
+  )
+}
+
 /* ----------------------------------------------------------------- steps -- */
 
-/** How Electronics Recycling Works — 6879:2749 / 6897:2773. Board: four
- *  280 cards, an 18px arrow 16 after each of the first three, 20 between
- *  groups (1282 in all). Phone: stacked rows, the number disc on the left. */
-function Steps() {
+/** How Electronics Recycling Works — 6879:2749 / 6897:2773. Board: five
+ *  280 cards, an 18px arrow between each pair, everything 20 apart (1632 in
+ *  all), the cards as tall as the tallest. Phone: stacked rows, the number
+ *  disc on the left, no arrows. */
+async function Steps() {
+  const { STEPS } = await content('chicago')
   return (
     <section data-figma="6879:2749" className="bg-white px-[20px] py-[40px] lg:px-0 lg:py-[90px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:gap-[44px]">
         <H2>{STEPS.heading}</H2>
-        <ol className="flex w-full flex-col gap-[20px] lg:w-[1282px] lg:flex-row lg:items-stretch">
+        <ol className="flex w-full flex-col gap-[20px] lg:w-[1632px] lg:flex-row lg:items-stretch">
           {STEPS.items.map((s, i) => (
-            <li key={s.title} className="flex lg:items-center lg:gap-[16px]">
+            <li key={s.title} className="flex lg:items-center lg:gap-[20px]">
               <div className="flex w-full gap-[16px] rounded-[12px] border border-[#e6e6e6] bg-white p-[20px] lg:h-full lg:w-[280px] lg:flex-col lg:gap-[12px] lg:px-[24px] lg:py-[26px]">
                 <span className="grid size-[34px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[14px] font-medium text-white">{i + 1}</span>
                 <span className="flex min-w-px flex-col gap-[6px] lg:gap-[12px]">
@@ -334,26 +384,38 @@ function Steps() {
 
 /* ------------------------------------------------------------------- why -- */
 
-/** Why Recycle Technologies — 6879:2750 / 6897:2774. Board: pairs of 627
- *  cards (90 tall), the fifth full width, every row 44 apart, then the
- *  Illinois note. Phone: one column, 20 apart, on #fcfcfc. */
-function Why() {
+/** Why Recycle Technologies — 6879:2750 / 6897:2774. Board: six cards, two
+ *  627 to a row, three rows 44 apart, each card as tall as its own text
+ *  (the rows align to the top), a title over a line of text; then the
+ *  white "Local Chicago Recycling Information" box, the scales glyph beside
+ *  a 24px heading and two lines. Phone: one column, 20 apart, on #fcfcfc;
+ *  the box drops the glyph. */
+async function Why() {
+  const { WHY } = await content('chicago')
   return (
     <section data-figma="6879:2750" className="bg-[#fcfcfc] px-[20px] py-[40px] lg:bg-white lg:px-0 lg:py-[90px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[1282px] lg:gap-[44px]">
         <h2 className="w-full text-center font-sans text-[20px] font-semibold leading-[1.3] text-black lg:text-[34px] lg:leading-normal">{WHY.heading}</h2>
-        <ul className="grid w-full grid-cols-1 gap-[20px] lg:w-[1278px] lg:grid-cols-2 lg:gap-x-[24px] lg:gap-y-[44px]">
-          {WHY.items.map((w, i) => (
-            <li key={w.text}
-              className={`flex items-center gap-[16px] rounded-[12px] bg-brand-soft px-[20px] py-[18px] lg:h-[90px] lg:gap-[18px] lg:px-[24px] lg:py-[22px] ${i === WHY.items.length - 1 ? 'lg:col-span-2' : ''}`}>
+        <ul className="grid w-full grid-cols-1 gap-[20px] lg:w-[1278px] lg:grid-cols-2 lg:items-start lg:gap-x-[24px] lg:gap-y-[44px]">
+          {WHY.items.map((w) => (
+            <li key={w.title}
+              className="flex items-center gap-[16px] rounded-[12px] bg-brand-soft px-[20px] py-[18px] lg:gap-[18px] lg:px-[24px] lg:py-[22px]">
               <IconTile src={w.icon} phoneSrc={w.phoneIcon} round />
-              <p className={`min-w-px font-roboto text-[13px] leading-[1.5] text-heading lg:font-sans lg:text-[15px] lg:font-medium lg:leading-[1.35] ${i === WHY.items.length - 1 ? 'lg:w-[774px]' : 'lg:flex-1'}`}>{w.text}</p>
+              <span className="flex min-w-px flex-col gap-[6px] max-lg:w-[250px] lg:flex-1 lg:gap-[8px]">
+                <span className="font-sans text-[15px] font-medium leading-normal text-heading lg:text-[16px]">{w.title}</span>
+                <span className="font-roboto text-[12.5px] leading-[1.5] text-muted lg:text-[13px]">{w.text}</span>
+              </span>
             </li>
           ))}
         </ul>
         <div className="flex w-full items-center gap-[16px] rounded-[12px] border border-[#e6e6e6] bg-white px-[20px] py-[18px] lg:w-[1282px] lg:px-[28px] lg:py-[22px]">
           <Image src={WHY.law.icon} alt="" width={22} height={22} unoptimized className="size-[22px] shrink-0 max-lg:hidden" />
-          <p className="min-w-px flex-1 font-roboto text-[12.5px] leading-[1.55] text-muted lg:text-[14.5px]">{WHY.law.text}</p>
+          <div className="flex min-w-px flex-1 flex-col gap-[10px] lg:gap-[16px]">
+            <h3 className="font-sans text-[20px] font-semibold leading-[1.3] text-black lg:text-[24px] lg:leading-normal">{WHY.law.heading}</h3>
+            <div className="font-roboto text-[12.5px] leading-[1.55] text-muted lg:text-[14.5px]">
+              {WHY.law.text.map((p) => <p key={p}>{p}</p>)}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -363,13 +425,14 @@ function Why() {
 /* ------------------------------------------------------------------- faq -- */
 
 /** FAQ — 6879:2751 / 6897:2775: the site's ringed FAQ rows (6107:512) at 900. */
-function Faq() {
+async function Faq() {
+  const { FAQS, FAQ_HEAD } = await content('chicago')
   return (
     <section data-figma="6879:2751" className="bg-white px-[20px] py-[40px] lg:px-0 lg:py-[90px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[900px] lg:gap-[40px]">
         <div className="flex w-full flex-col items-center gap-[20px] lg:w-[780px] lg:gap-[10px]">
-          <Pill>FAQs</Pill>
-          <H2>Frequently Asked Questions</H2>
+          <Pill>{FAQ_HEAD.eyebrow}</Pill>
+          <H2>{FAQ_HEAD.heading}</H2>
         </div>
         <Accordion items={FAQS} gap={15} variant="ring" idPrefix="faq-chicago" />
       </div>
@@ -382,7 +445,8 @@ function Faq() {
 /** Related Recycling Services — 6883:5521 / 6897:2776: pill links, 44 tall
  *  on the board (four, then two), 40 and centred two to a row on the phone
  *  (12.5px, px12, 8 apart, so two fit in the 350 column). */
-function Related() {
+async function Related() {
+  const { RELATED } = await content('chicago')
   return (
     <section data-figma="6883:5521" className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:gap-[30px]">
@@ -405,24 +469,34 @@ function Related() {
 
 /* ------------------------------------------------------------------- cta -- */
 
-/** Get Started — 6879:2752 / 6896:15629: the navy to green band; heading and
- *  body one line each on the board; the two buttons go full width and stack
- *  on the phone. */
-function Cta() {
+/** Get Started — 6879:2752 / 6896:15629: the navy to green band. Revised
+ *  27 Sep 2026: the heading wraps at 580 (two lines on the board), two
+ *  paragraphs at 686, a white "Schedule …" button (a shorter label on the
+ *  phone) and a bordered "Call: …" button, both with the arrow; on the phone
+ *  the two are 350 x 46, stacked 10 apart. */
+async function Cta() {
+  const { CTA } = await content('chicago')
   return (
-    <section data-figma="6879:2752" className="px-[20px] pb-[56px] pt-[56px] lg:px-0 lg:py-[90px]"
+    <section data-figma="6879:2752" className="px-[20px] py-[56px] lg:px-0 lg:py-[90px]"
       style={{ backgroundImage: 'linear-gradient(157.74deg, #0b1f3a 7.25%, #1b7a3d 79.71%)' }}>
-      {/* Heading and body each on ONE line on the board — Asim, 25 Sep 2026
-          ("adjust both in one line"). The frame wraps both at 686. */}
-      <div className="mx-auto flex w-full flex-col items-center gap-[18px] text-center lg:w-auto lg:gap-[20px]">
-        <h2 className="font-sans text-[27px] font-semibold leading-[1.22] text-white lg:whitespace-nowrap lg:text-[36px]">{CTA.heading}</h2>
-        <p className="font-roboto text-[14.5px] leading-[1.5] text-white/80 lg:whitespace-nowrap lg:text-[16px] lg:leading-[1.6]">{CTA.body}</p>
-        <div className="flex w-full flex-col gap-[18px] lg:w-auto lg:flex-row lg:gap-[16px] lg:pt-[10px]">
-          <Btn href={CTA.primary.href} variant="coloredWhite" className="justify-center max-lg:w-full">{CTA.primary.label}</Btn>
-          <Btn href={CTA.secondary.href} variant="white" className="justify-center border border-white max-lg:w-full lg:w-[200px]">{CTA.secondary.label}</Btn>
+      <div className="mx-auto flex w-full flex-col items-center gap-[18px] text-center lg:w-[686px] lg:gap-[20px]">
+        <h2 className="w-full font-sans text-[26px] font-semibold leading-[1.25] text-white lg:w-[580px] lg:text-[36px] lg:leading-[1.22]">{CTA.heading}</h2>
+        {CTA.body.map((p) => (
+          <p key={p} className="w-full font-roboto text-[14.5px] leading-[1.55] text-white/80 lg:text-[16px] lg:leading-[1.6]">{p}</p>
+        ))}
+        <div className="flex w-full flex-col gap-[10px] pt-[6px] lg:w-auto lg:flex-row lg:gap-[16px] lg:pt-[10px]">
+          <Btn href={CTA.primary.href} variant="coloredWhite" className="justify-center backdrop-blur-[4px] max-lg:h-[46px] max-lg:w-full max-lg:px-[16px]">
+            <span className="lg:hidden">{CTA.primary.phoneLabel}</span>
+            <span className="max-lg:hidden">{CTA.primary.label}</span>
+          </Btn>
+          {/* A plain anchor, as on the city pages: Btn is for page links. */}
+          <a href={CTA.phone.tel}
+            className="btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008px] rounded-[8px] border border-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] max-lg:w-full lg:h-[48.05px]">
+            <span className="whitespace-nowrap">{CTA.phone.label}</span>
+            <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
+          </a>
         </div>
-        <a href={CTA.phone.tel} className="font-roboto text-[14px] leading-normal text-white/85 hover:text-white">{CTA.phone.label}</a>
-        <p className="font-roboto text-[13.5px] leading-normal text-white/70">{CTA.note}</p>
+        <p className="w-full font-roboto text-[13.5px] leading-normal text-white/70">{CTA.note}</p>
       </div>
     </section>
   )

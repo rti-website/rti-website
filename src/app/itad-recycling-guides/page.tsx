@@ -5,7 +5,8 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { GuideList, ReferenceDocs } from '@/components/sections/guides/GuideSections'
-import { HERO, SEO } from '@/data/guides'
+import { SEO } from '@/data/guides'
+import { content } from '@/lib/page-content'
 
 /**
  * ITAD & Recycling Guides — a 1:1 build of Figma frame 6382:5883 in
@@ -56,7 +57,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function ItadRecyclingGuidesPage() {
+export default async function ItadRecyclingGuidesPage() {
+  const { HERO } = await content('guides')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

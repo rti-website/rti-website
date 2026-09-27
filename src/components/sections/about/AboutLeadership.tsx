@@ -1,6 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { LEADERSHIP } from '@/data/about'
+import { content } from '@/lib/page-content'
 
 /**
  * Leadership — Figma 6372:844. One centred 900px column, py 100, gap 20.
@@ -11,7 +11,8 @@ import { LEADERSHIP } from '@/data/about'
  * a 16-gap row to a 12-gap stack of full-width plates, px20 / py10 rather than
  * a fixed 44px bar.
  */
-export function AboutLeadership({ top, height }: { top: number; height: number }) {
+export async function AboutLeadership({ top, height }: { top: number; height: number }) {
+  const { LEADERSHIP } = await content('about')
   return (
     <Section top={top} height={height} label="6372:844"
       className="flex flex-col items-center bg-white px-[20px] py-[48px] lg:px-0 lg:py-[100px]">

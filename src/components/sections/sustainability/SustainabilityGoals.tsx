@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Mark } from './SustainabilityMarks'
-import { GOALS } from '@/data/sustainability'
+import { content } from '@/lib/page-content'
 
 /**
  * Where we're headed — Figma 6383:1164. py 100 on white, gap 50: a 780px
@@ -23,7 +23,8 @@ import { GOALS } from '@/data/sustainability'
  * against the doc's four. Still built as the doc's, per doc-wins-on-words, but
  * it is worth a decision. See TODO_FOR_DESIGN.
  */
-export function SustainabilityGoals({ top, height }: { top: number; height: number }) {
+export async function SustainabilityGoals({ top, height }: { top: number; height: number }) {
+  const { GOALS } = await content('sustainability')
   return (
     <Section top={top} height={height} label="6383:1164"
       className="flex flex-col items-start gap-[24px] bg-white px-[20px] py-[48px] lg:items-center lg:gap-[50px] lg:px-0 lg:py-[100px]">

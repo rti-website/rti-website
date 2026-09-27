@@ -6,7 +6,8 @@ import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { CaseStudyGrid } from '@/components/sections/case-studies/CaseStudyGrid'
-import { CTA, HERO, SEO } from '@/data/case-studies'
+import { SEO } from '@/data/case-studies'
+import { content } from '@/lib/page-content'
 
 /**
  * Case Studies — a 1:1 build of Figma frame 6382:6595.
@@ -53,7 +54,8 @@ export const metadata = buildMetadata({
   description: SEO.description,
 })
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const { CTA, HERO } = await content('case-studies')
   return (
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />

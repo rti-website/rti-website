@@ -1,5 +1,5 @@
 import { href, quoteHref } from '@/lib/urls'
-import { CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
+import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /light-bulb-recycling-chicago/ — "Light Bulb Recycling in Chicago,
@@ -22,7 +22,7 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
     image: '/images/locations/city-pages/chicago-light-bulb/hero.png',
-    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE },
+    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
   },
 
   opening: [
@@ -121,6 +121,7 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
     ],
   },
 
+  faqHead: { ...FAQ_HEAD },
   faqs: [
     { q: 'What types of light bulbs does Recycle Technologies recycle?',
       a: 'Fluorescent tubes, plastic-coated and shielded tubes, CFLs, green-tipped bulbs, circular and U-shaped lamps, UV, neon, argon and other cold cathode lamps, HID lamps including metal halide and high-pressure sodium, flood lamps, incandescent bulbs and halogen bulbs.' },
@@ -142,10 +143,13 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
   cta: {
     heading: 'Get Started With Light Bulb Recycling in Chicago',
     body: ['Chicago businesses can request a quote or schedule a commercial pickup for spent light bulbs and other accepted lighting materials.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Chicago', href: QUOTE },
-    phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166' },
+    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Chicago', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166', phoneLabel: 'Phone: 800-969-5166' },
     footnote: 'Contact Recycle Technologies to confirm current pickup options for the Chicago area.',
   },
+
+  /** Grey bands as the revised board draws them (27 Sep 2026). */
+  bands: ['info', 'biz', 'steps', 'local', 'faq'],
 
   todo: [
     'FAQ answers: the frame draws the five questions closed. Answers are built from this page’s own copy; the lead time answer promises no figure. Confirm or replace.',

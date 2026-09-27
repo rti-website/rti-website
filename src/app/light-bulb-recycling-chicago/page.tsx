@@ -1,4 +1,5 @@
 import { buildMetadata } from '@/lib/seo'
+import { content } from '@/lib/page-content'
 import { CityServicePage } from '@/components/sections/locations/CityServicePage'
 import { CHICAGO_LIGHT_BULB as PAGE } from '@/data/city-pages/chicago-light-bulb'
 
@@ -10,6 +11,6 @@ import { CHICAGO_LIGHT_BULB as PAGE } from '@/data/city-pages/chicago-light-bulb
  */
 export const metadata = buildMetadata({ url: PAGE.url, title: PAGE.seo.title, description: PAGE.seo.description })
 
-export default function Page() {
-  return <CityServicePage page={PAGE} />
+export default async function Page() {
+  return <CityServicePage page={await content('city/chicago-light-bulb')} />
 }

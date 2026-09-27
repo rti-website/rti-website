@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
 import { Eyebrow, Lead } from '@/components/ui/Bits'
 import { href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * "<Service> Near You" — the service hub linking out to every PUBLISHED
@@ -26,15 +27,17 @@ export function placesBandHeight(n: number): number {
   return 141 + 32 + rows * 48 + (rows - 1) * 12 + 44 + 110 + 4
 }
 
-export function ServiceLocationsBand({ top, height, title, places }: { top: number; height: number; title: string; places: Place[] }) {
+export async function ServiceLocationsBand({ top, height, title, places }: { top: number; height: number; title: string; places: Place[] }) {
   if (places.length === 0) return null
+  // The band's own words: SERVICE_PAGE_TEXT in src/data/services.ts.
+  const { nearYou } = (await content('services')).SERVICE_PAGE_TEXT
   return (
     <Section top={top} height={height} label="locations-near-you"
       className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[32px] lg:px-0 lg:pb-[110px] lg:pt-0">
       <div className="flex w-full flex-col items-center gap-[12px] text-center lg:w-[820px] lg:gap-[10px]">
-        <Eyebrow>Near You</Eyebrow>
+        <Eyebrow>{nearYou.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[26px] font-semibold leading-[32px] text-black lg:text-[40px] lg:leading-[48px]">{title}</h2>
-        <Lead>Address, hours, what each site accepts and how to get a quote.</Lead>
+        <Lead>{nearYou.lead}</Lead>
       </div>
       <ul className="flex w-full flex-wrap justify-center gap-[10px] lg:w-[1282px] lg:gap-[12px]">
         {places.map((p) => (
@@ -46,7 +49,7 @@ export function ServiceLocationsBand({ top, height, title, places }: { top: numb
           </li>
         ))}
       </ul>
-      <Link href={href('/all-locations/')} className="font-roboto text-[15px] text-brand underline underline-offset-2">See all locations and the Mail-In Program</Link>
+      <Link href={href('/all-locations/')} className="font-roboto text-[15px] text-brand underline underline-offset-2">{nearYou.allLocations}</Link>
     </Section>
   )
 }

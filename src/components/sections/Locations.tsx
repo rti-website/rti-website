@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
-import { LOCATION_CARDS } from '@/data/home'
+import { content } from '@/lib/page-content'
 import { href } from '@/lib/urls'
 
 /**
@@ -29,7 +29,8 @@ const PINS = [
   { x: 890,  y: 683.84 },
 ]
 
-export function Locations() {
+export async function Locations() {
+  const { LOCATION_CARDS, HOME_LOCATIONS } = await content('home')
   return (
     <Section
       top={5117 - HOME_BELOW_SERVICES_SHIFT}
@@ -42,19 +43,17 @@ export function Locations() {
          frame's items-center draws. */
       className="flex flex-col gap-[24px] bg-white px-[20px] py-[48px] lg:block lg:gap-0 lg:p-0"
     >
-      <CenterBox y={0} w={400} className="flex justify-center"><Eyebrow>Where We Serve</Eyebrow></CenterBox>
-      <CenterBox y={52} w={700}><Title className="text-center">Our Strategic National Network</Title></CenterBox>
+      <CenterBox y={0} w={400} className="flex justify-center"><Eyebrow>{HOME_LOCATIONS.eyebrow}</Eyebrow></CenterBox>
+      <CenterBox y={52} w={700}><Title className="text-center">{HOME_LOCATIONS.title}</Title></CenterBox>
       <CenterBox y={130} w={819}>
         {/* Copy: Asim, 23 Sep 2026 — Chicago is "expanded operations", not a
             licensed facility. */}
         <Lead className="text-center">
-          Recycle Technologies has licensed facilities in Minnesota and Wisconsin, with
-          expanded operations in Chicago. Our mail-in recycling program is available in
-          all 50 states.
+          {HOME_LOCATIONS.lead}
         </Lead>
       </CenterBox>
       <CenterBox y={210} w={300} offset={13.78} className="flex justify-center">
-        <Btn href={href('/all-locations/')} variant="colored">See all Locations</Btn>
+        <Btn href={href('/all-locations/')} variant="colored">{HOME_LOCATIONS.button}</Btn>
       </CenterBox>
 
       {/* Map — 6024:14083, 707x804 centred at y301. Mobile 6609:5079 keeps it,
@@ -103,8 +102,8 @@ export function Locations() {
           the wrapper — `lg:contents` makes it generate no box at lg, so each
           Box still resolves its absolute position against the Section. */}
       <div className="flex w-full flex-col gap-[16px] lg:contents">
-        {LOCATION_CARDS.map((c) => (
-          <Box key={c.t} x={c.x} y={c.y} w={278} h={125}
+        {LOCATION_CARDS.map((c, i) => (
+          <Box key={i} x={c.x} y={c.y} w={278} h={125}
             className="flex items-center gap-[16px] rounded-[8px] bg-white p-[20px] shadow-[0px_4px_12px_0px_rgba(13,39,80,0.12)] lg:block lg:p-0 lg:shadow-[0px_0px_20px_0px_#ebebeb,0px_0px_20px_0px_rgba(13,39,80,0.1)]">
             <Image src="/images/icons/pin-card.png" alt="" width={22} height={34}
               className="h-[34px] w-[22px] shrink-0 object-contain lg:absolute lg:left-[18px] lg:top-[24px]" />
@@ -127,18 +126,16 @@ export function Locations() {
       <Box x={319} y={1162} w={1282} h={243}
         className="flex flex-col gap-[20px] rounded-[20px] bg-brand px-[24px] py-[32px] max-lg:overflow-hidden lg:block lg:gap-0 lg:p-0">
         <p className="font-sans text-[22px] font-bold leading-[28px] text-white lg:absolute lg:left-[57px] lg:top-[35px] lg:text-[24px] lg:leading-[31.511px]">
-          See Our Impact in Action
+          {HOME_LOCATIONS.impact.heading}
         </p>
         <p className="font-inter text-[15px] leading-[22px] text-white/80 lg:absolute lg:left-[57px] lg:top-[75px] lg:w-[654px] lg:text-[15.958px] lg:leading-[24.239px]">
-          Transparency drives everything we do. Dive into our impact reports, brochures,
-          whitepapers, newsletters, and industry insights to understand the measurable
-          difference we actually make through responsible e-waste recycling
+          {HOME_LOCATIONS.impact.body}
         </p>
         <Box x={57} y={164}>
           {/* Opens /resources/ — Asim, 23 Sep 2026: "when someone clicks on
               Download Resources it lands on [the] resource main page". It went
               to /blog/ before. */}
-          <Btn href={href('/resources/')} variant="whiteFill" className="w-full justify-center lg:w-auto lg:justify-start">Download Resources</Btn>
+          <Btn href={href('/resources/')} variant="whiteFill" className="w-full justify-center lg:w-auto lg:justify-start">{HOME_LOCATIONS.impact.button}</Btn>
         </Box>
         {/* Brochure art — 6557:12912, a 566x309 clip at x772 y-22 holding the
             image at 110.91% of its height, top-aligned. It breaks out of the

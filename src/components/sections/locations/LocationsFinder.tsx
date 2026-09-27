@@ -1,7 +1,8 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { LocationFinder } from '@/components/client/LocationFinder'
-import { FINDER } from '@/data/locations'
+import { facilitiesOf } from '@/data/facilities'
+import { content } from '@/lib/page-content'
 
 /**
  * Location finder — Figma 6377:967. py 90, gap 40: heading block on a 780px
@@ -27,7 +28,8 @@ import { FINDER } from '@/data/locations'
  * "Locations - Mobile" 6747:2557. 390 wide: px20 / py48 on white and a flat
  * 24px gap down the section; the map is 350x220.
  */
-export function LocationsFinder({ top, height }: { top: number; height: number }) {
+export async function LocationsFinder({ top, height }: { top: number; height: number }) {
+  const [{ FINDER }, facilities] = await Promise.all([content('locations'), content('facilities')])
   return (
     <Section top={top} height={height} label="6377:967"
       className="flex flex-col items-center gap-[20px] bg-white px-[20px] pb-[40px] pt-[48px] lg:gap-[40px] lg:px-0 lg:py-[90px]">
@@ -45,7 +47,7 @@ export function LocationsFinder({ top, height }: { top: number; height: number }
 
       {/* The search bar AND the map panel, together — a search lights up a
           pin, so both live in one client component. See LocationFinder.tsx. */}
-      <LocationFinder />
+      <LocationFinder finder={FINDER} facilities={facilitiesOf(facilities)} />
     </Section>
   )
 }

@@ -3,7 +3,7 @@ import { Eyebrow } from '@/components/ui/Bits'
 import { PostCard, type CardPost } from '@/components/ui/PostCard'
 import { CategoryChips, type Chip } from '@/components/ui/CategoryChips'
 import { Pager } from '@/components/ui/Pager'
-import { INTRO } from '@/data/blog'
+import { content } from '@/lib/page-content'
 
 /**
  * Latest articles — Figma 6384:1225. pt 90, pb 100, 44px between the heading
@@ -48,7 +48,7 @@ export function blogListHeight(cards: number, withPager: boolean): number {
   )
 }
 
-export function BlogArticles({
+export async function BlogArticles({
   top, height, posts, chips, page, pages, pathFor, heading,
 }: {
   top: number
@@ -61,6 +61,7 @@ export function BlogArticles({
   /** Overridden on page 2 and beyond so the H2 is not the same on 26 pages. */
   heading?: string | undefined
 }) {
+  const { INTRO } = await content('blog')
   return (
     /*
      * MOBILE — 6638:8106 "Section - Latest Articles Heading" and 6638:8126

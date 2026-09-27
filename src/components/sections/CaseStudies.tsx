@@ -3,7 +3,8 @@ import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { StoryCarousel } from '@/components/client/StoryCarousel'
 import { QUOTE_HREF, href } from '@/lib/urls'
-import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
+import { CASE_STUDIES_START, caseStudies } from '@/data/home'
+import { content } from '@/lib/page-content'
 
 /**
  * Client's Stories — Figma 6557:12903 on the homepage. 1920 x 934.
@@ -40,10 +41,15 @@ import { CASE_STUDIES, CASE_STUDIES_START } from '@/data/home'
  */
 export const CASE_STUDIES_H = 934
 
-export function CaseStudies({ top = 7483 - HOME_BELOW_TESTIMONIALS_SHIFT, label = '6557:12903' }: {
+export async function CaseStudies({ top = 7483 - HOME_BELOW_TESTIMONIALS_SHIFT, label = '6557:12903' }: {
   top?: number
   label?: string
 } = {}) {
+  /* The heading from the Homepage document; the stories' tag, title and
+     summary from the Case Studies document (home-specific photos kept). */
+  const [{ HOME_CASE_STUDIES }, { CASE_STUDY_CARDS }] = await Promise.all([
+    content('home'), content('case-studies'),
+  ])
   return (
     <Section
       top={top}
@@ -52,22 +58,22 @@ export function CaseStudies({ top = 7483 - HOME_BELOW_TESTIMONIALS_SHIFT, label 
       className="flex flex-col items-center gap-[20px] bg-white px-[20px] py-[48px] lg:block lg:p-0"
     >
       <CenterBox y={0} w={645} className="flex flex-col items-center gap-[10px] max-lg:gap-[20px]">
-        <Eyebrow>Case Studies</Eyebrow>
-        <div className="flex h-[64.5px] items-center max-lg:h-auto"><Title className="text-center">Client&rsquo;s Stories</Title></div>
+        <Eyebrow>{HOME_CASE_STUDIES.eyebrow}</Eyebrow>
+        <div className="flex h-[64.5px] items-center max-lg:h-auto"><Title className="text-center">{HOME_CASE_STUDIES.title}</Title></div>
         <Lead className="text-center">
-          Real results from real partnerships. See how organizations simplify ITAD,<br className="max-lg:hidden" />
-          strengthen data security, and recover value from retired hardware.
+          {HOME_CASE_STUDIES.lead[0]}<br className="max-lg:hidden" />
+          {HOME_CASE_STUDIES.lead[1]}
         </Lead>
         <div className="flex items-center justify-center gap-[12px] max-lg:w-full max-lg:flex-col">
-          <Btn href={href('/case-studies/')} variant="colored" className="max-lg:w-full max-lg:justify-center">View All Stories</Btn>
-          <Btn href={QUOTE_HREF} variant="coloredWhite" className="max-lg:w-full max-lg:justify-center">Get a Free Estimate</Btn>
+          <Btn href={href('/case-studies/')} variant="colored" className="max-lg:w-full max-lg:justify-center">{HOME_CASE_STUDIES.allButton}</Btn>
+          <Btn href={QUOTE_HREF} variant="coloredWhite" className="max-lg:w-full max-lg:justify-center">{HOME_CASE_STUDIES.estimateButton}</Btn>
         </div>
       </CenterBox>
 
       {/* Track — 6557:12824 at y284.96, with the pager 583 below its top.
           Desktop only: the mobile frame drops the cards (see the note above). */}
       <Box x={0} y={284.96} w={1920} h={649} className="max-lg:hidden">
-        <StoryCarousel stories={CASE_STUDIES} start={CASE_STUDIES_START} />
+        <StoryCarousel stories={caseStudies(CASE_STUDY_CARDS)} start={CASE_STUDIES_START} readLabel={HOME_CASE_STUDIES.readStory} />
       </Box>
     </Section>
   )

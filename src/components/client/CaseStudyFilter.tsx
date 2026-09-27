@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { CaseStudyCardView } from '@/components/ui/CaseStudyCard'
-import { CASE_STUDY_CARDS, GRID } from '@/data/case-studies'
+import type { CaseStudyCard, GRID } from '@/data/case-studies'
 
 /**
  * The industry filter and the card grid — Figma 6391:1534 + 6391:1547.
@@ -23,8 +23,14 @@ import { CASE_STUDY_CARDS, GRID } from '@/data/case-studies'
  * are three real ones and they fill exactly one row. The row is `items-stretch`
  * so all three cards match the tallest — without it the download link floats
  * mid-card on the shorter two, because the card pins it with `mt-auto`.
+ *
+ * THE COPY COMES IN AS PROPS (27 Sep 2026): the cards and GRID's labels are
+ * content('case-studies'), read by the server parent CaseStudyGrid, since a
+ * client component cannot read page content. The filter compares ids (a
+ * pill's `id`, a card's `category`), never the visible text, so an editor
+ * renaming an industry cannot break it.
  */
-export function CaseStudyFilter() {
+export function CaseStudyFilter({ cards, grid }: { cards: CaseStudyCard[]; grid: typeof GRID }) {
   const [active, setActive] = useState<string | null>(null)
 
   /*
@@ -43,15 +49,15 @@ export function CaseStudyFilter() {
   useEffect(() => {
     const apply = () => {
       const id = decodeURIComponent(window.location.hash.slice(1))
-      const card = CASE_STUDY_CARDS.find((c) => c.id === id)
+      const card = cards.find((c) => c.id === id)
       if (!card) return
-      setActive(card.industry)
+      setActive(card.category)
       requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }))
     }
     apply()
     window.addEventListener('hashchange', apply)
     return () => window.removeEventListener('hashchange', apply)
-  }, [])
+  }, [cards])
 
   const pill = 'btn-pop flex h-[38px] shrink-0 items-center whitespace-nowrap rounded-full px-[18px] font-sans text-[13.5px] font-medium transition-colors'
   const on   = 'bg-brand text-white'
@@ -63,12 +69,12 @@ export function CaseStudyFilter() {
       <div className="flex items-start gap-[12px]" role="group" aria-label="Filter case studies by industry">
         <button type="button" onClick={() => setActive(null)} aria-pressed={active === null}
           className={`${pill} ${active === null ? on : off}`}>
-          {GRID.allLabel}
+          {grid.allLabel}
         </button>
-        {GRID.filters.map((f) => (
-          <button key={f} type="button" onClick={() => setActive(f)} aria-pressed={active === f}
-            className={`${pill} ${active === f ? on : off}`}>
-            {f}
+        {grid.filters.map((f) => (
+          <button key={f.id} type="button" onClick={() => setActive(f.id)} aria-pressed={active === f.id}
+            className={`${pill} ${active === f.id ? on : off}`}>
+            {f.label}
           </button>
         ))}
       </div>
@@ -85,13 +91,13 @@ export function CaseStudyFilter() {
           CaseStudyGrid's descendant rules still turn this into a column.
           scripts/check-wrap-slack.mjs finds rows like this across the site. */}
       <div className="flex w-[1278px] flex-wrap items-stretch gap-[24px] lg:grid lg:grid-cols-[repeat(3,410px)]">
-        {CASE_STUDY_CARDS.map((c) => (
-          <div key={c.id} hidden={active !== null && c.industry !== active} className="relative flex">
+        {cards.map((c) => (
+          <div key={c.id} hidden={active !== null && c.category !== active} className="relative flex">
             {/* Scroll target for caseStudyHref(). An offset span, not an id
                 on the card: the sticky 120px header would cover the card's
                 top. Same trick as #contact-form on /contact-us/. */}
             <span id={c.id} className="absolute -top-[150px]" aria-hidden="true" />
-            <CaseStudyCardView card={c} />
+            <CaseStudyCardView card={c} labels={grid} />
           </div>
         ))}
       </div>

@@ -5,7 +5,7 @@ import { Btn } from '@/components/ui/Bits'
 import { CONTACT_FORM_HREF } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { R2_DIRECTORY } from '@/data/certifications'
-import { TOP_BAR } from '@/lib/nav'
+import { content } from '@/lib/page-content'
 
 /**
  * Hero — Figma 6023:13152, 1920x940.
@@ -83,25 +83,37 @@ import { TOP_BAR } from '@/lib/nav'
  * (R2_DIRECTORY, shared with the certifications strip and the footer), in a
  * new tab. The whole tile is the link, icon and text together.
  */
+/*
+ * The words — `v` the figure, `l` the line under it, `short` the phone's
+ * one-line label ("R2v3 Certified", 6604:5043, 25 Sep 2026) — are HOME_HERO.stats
+ * in src/data/home.ts (Admin -> Pages -> Homepage), matched to the tiles
+ * below by position. Everything else about a tile stays here.
+ */
 type Stat = {
   v: string; l: string; icon: string; href?: string
-  /** The phone's one-line label (6604:5043, 25 Sep 2026): "R2v3 Certified". */
   short: string
   /** Position in the phone's row, which runs R2v3 · 30+ Years · 50 States. */
   phoneOrder: number
   board: { w: number; h: number }; phone: { w: number; h: number }
 }
 
-const STATS: Stat[] = [
-  { v: 'R2v3 Certified Locations', l: 'Minnesota. Wisconsin', icon: '/images/home/stat-r2.png', href: R2_DIRECTORY,
-    short: 'R2v3 Certified', phoneOrder: 0, board: { w: 44.602, h: 46.46 }, phone: { w: 27, h: 28 } },
-  { v: '50 States', l: 'Accessible through our Mail-In Program', icon: '/images/home/stat-pin.png',
-    short: '50 States', phoneOrder: 2, board: { w: 31, h: 46 }, phone: { w: 19, h: 28 } },
-  { v: '30+ Years', l: 'Of recycling experience', icon: '/images/home/stat-years.png',
-    short: '30+ Years', phoneOrder: 1, board: { w: 42, h: 42 }, phone: { w: 25.496, h: 25.63 } },
+type StatTile = Omit<Stat, 'v' | 'l' | 'short'>
+
+const TILES: StatTile[] = [
+  { icon: '/images/home/stat-r2.png', href: R2_DIRECTORY,
+    phoneOrder: 0, board: { w: 44.602, h: 46.46 }, phone: { w: 27, h: 28 } },
+  { icon: '/images/home/stat-pin.png',
+    phoneOrder: 2, board: { w: 31, h: 46 }, phone: { w: 19, h: 28 } },
+  { icon: '/images/home/stat-years.png',
+    phoneOrder: 1, board: { w: 42, h: 42 }, phone: { w: 25.496, h: 25.63 } },
 ]
 
-export function Hero() {
+export async function Hero() {
+  const [{ HOME_HERO }, { TOP_BAR }] = await Promise.all([content('home'), content('site-header')])
+  const STATS: Stat[] = TILES.flatMap((t, i) => {
+    const w = HOME_HERO.stats[i]
+    return w ? [{ ...t, v: w.v, l: w.l, short: w.short }] : []
+  })
   return (
     <Section
       top={140} height={HERO_H} label="6023:13152"
@@ -155,8 +167,8 @@ export function Hero() {
           sees — flagged to Asim for the SEO team, 24 Sep 2026. */}
       <Box x={319} y={100} w={952}>
         <h1 className="text-center font-sans text-[28px] font-semibold leading-[38px] text-white lg:text-left lg:text-[70px] lg:leading-[74.7px]">
-          <span className="lg:hidden">Certified E-Waste{' '}<br />Recycling and ITAD</span>
-          <span className="max-lg:hidden">Certified E-Waste Recycling{' '}<br />&amp; IT Assets Disposition</span>
+          <span className="lg:hidden">{HOME_HERO.h1Phone.l1}{' '}<br />{HOME_HERO.h1Phone.l2}</span>
+          <span className="max-lg:hidden">{HOME_HERO.h1Board.l1}{' '}<br />{HOME_HERO.h1Board.l2}</span>
         </h1>
       </Box>
 
@@ -164,9 +176,7 @@ export function Hero() {
           only: the phone frame has no lead. */}
       <Box x={319} y={275} w={715} className="max-lg:hidden">
         <p className="font-roboto text-[20px] leading-[30.031px] text-white/70">
-          Recycle Technologies provides certified e-waste recycling, ITAD, data destruction, and
-          shredding solutions that keep electronics out of landfills and valuable materials in
-          circulation.
+          {HOME_HERO.lead}
         </p>
       </Box>
 
@@ -181,14 +191,14 @@ export function Hero() {
           frames draw it after. */}
       <Box x={319} y={401} w={681} className="flex flex-col gap-[10px] lg:flex-row">
         <Btn href={CONTACT_FORM_HREF} variant="colored" className="w-full justify-center backdrop-blur-[4.004px] lg:h-[48px] lg:w-auto lg:min-w-px lg:flex-1">
-          Get a Quick Quote
+          {HOME_HERO.quoteButton}
         </Btn>
         <a
           href={TOP_BAR.phoneMn.tel}
           className="btn-pop flex h-[48px] w-full items-center justify-center gap-[8.008px] rounded-[8px] bg-white px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand backdrop-blur-[4.004px] lg:w-auto lg:min-w-px lg:flex-1"
         >
           <Image src="/images/home/hero-phone.png" alt="" width={34} height={34} className="size-[17px] shrink-0 object-cover" />
-          <span className="whitespace-nowrap">+1-763-559-5130</span>
+          <span className="whitespace-nowrap">{HOME_HERO.phone}</span>
         </a>
       </Box>
 
@@ -214,7 +224,7 @@ export function Hero() {
           )
           const cls = 'flex min-w-px flex-1 flex-col items-center gap-[12px] text-center'
           return (
-            <Fragment key={s.v}>
+            <Fragment key={s.icon}>
               {i > 0 && <span className="w-px shrink-0 self-stretch bg-white/15" aria-hidden="true" />}
               {s.href ? (
                 <a href={s.href} target="_blank" rel="noopener noreferrer"
@@ -255,13 +265,13 @@ export function Hero() {
             </>
           )
           return s.href ? (
-            <a key={s.v} href={s.href} target="_blank" rel="noopener noreferrer"
+            <a key={s.icon} href={s.href} target="_blank" rel="noopener noreferrer"
               aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
               className={`${cls} transition-opacity hover:opacity-80`}>
               {body}
             </a>
           ) : (
-            <div key={s.v} className={cls}>{body}</div>
+            <div key={s.icon} className={cls}>{body}</div>
           )
         })}
       </Box>

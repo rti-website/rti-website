@@ -44,7 +44,10 @@ import { R2_DIRECTORY } from '@/data/certifications'
  * and building these two pages does not close it.
  */
 
-export type Material = { label: string; icon: string }
+/** `id` is the material's fixed name, the key materialLinks() uses
+ *  (src/lib/service-locations.ts), so a label edited in Admin -> Pages does
+ *  not lose the tile's link. */
+export type Material = { id: string; label: string; icon: string }
 
 export type Facility = {
   /** Route folder and the key the hub cards use. */
@@ -71,7 +74,9 @@ export type Facility = {
   hours: string
   /** Weekday line only, as the quick-info bar draws it. */
   hoursShort: string
-  cert: { status: string; badge: string }
+  /** `certified` drives the directory link on the quick-info bar, so an
+   *  edited status wording cannot switch it off. */
+  cert: { status: string; badge: string; certified: boolean }
   /**
    * The mark in the /all-locations/ card header, where the status pill used to
    * be — Asim, 23 Sep 2026: the R2v3 logo "without bg and make it clickable"
@@ -127,13 +132,13 @@ export function mapEmbed(address: string, zoom = 15): string {
 
 /** Material tiles — icons are Figma exports, see data/figma-assets.json. */
 const M = {
-  electronics: { label: 'Electronics',            icon: '/images/locations/mat-electronics.svg' },
-  batteries:   { label: 'Batteries',              icon: '/images/locations/mat-batteries.svg' },
-  bulbs:       { label: 'Light Bulbs',            icon: '/images/locations/mat-bulbs.svg' },
-  ballasts:    { label: 'Ballasts',               icon: '/images/locations/mat-ballasts.svg' },
-  tv:          { label: 'TV Recycling',           icon: '/images/locations/mat-tv.svg' },
-  paper:       { label: 'Paper Shredding',        icon: '/images/locations/mat-paper.svg' },
-  hardDrive:   { label: 'Hard Drive Destruction', icon: '/images/locations/mat-harddrive.svg' },
+  electronics: { id: 'Electronics', label: 'Electronics',            icon: '/images/locations/mat-electronics.svg' },
+  batteries:   { id: 'Batteries', label: 'Batteries',              icon: '/images/locations/mat-batteries.svg' },
+  bulbs:       { id: 'Light Bulbs', label: 'Light Bulbs',            icon: '/images/locations/mat-bulbs.svg' },
+  ballasts:    { id: 'Ballasts', label: 'Ballasts',               icon: '/images/locations/mat-ballasts.svg' },
+  tv:          { id: 'TV Recycling', label: 'TV Recycling',           icon: '/images/locations/mat-tv.svg' },
+  paper:       { id: 'Paper Shredding', label: 'Paper Shredding',        icon: '/images/locations/mat-paper.svg' },
+  hardDrive:   { id: 'Hard Drive Destruction', label: 'Hard Drive Destruction', icon: '/images/locations/mat-harddrive.svg' },
 } satisfies Record<string, Material>
 
 /** The three steps are word-for-word the same on both frames. */
@@ -196,7 +201,7 @@ export const MINNESOTA: Facility = {
   email: MN_CONTACT.email,
   hours: 'Mon–Fri 8:30 AM–4:30 PM · 2nd & 4th Sat 9 AM–1 PM', // FRAME — unconfirmed
   hoursShort: 'Mon–Fri 8:30 AM–4:30 PM',                        // FRAME — unconfirmed
-  cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified' },
+  cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified', certified: true },
   /* stat-r2.png is the R2v3 mark on a transparent ground (the hero stats
      strip's own file); the certifications page's r2v3.png has a white one. */
   badgeLogo: { src: '/images/home/stat-r2.png', alt: 'R2v3 certified', w: 38, h: 40, href: R2_DIRECTORY },
@@ -248,7 +253,7 @@ export const WISCONSIN: Facility = {
   hoursShort: 'Mon–Fri 8:00 AM–4:30 PM', // FRAME — unconfirmed
   /* "Pursuing", not "Certified" — the one fact on these pages the site is
      sure of. See the note in claude/why-choose-us-page.md. */
-  cert: { status: 'Pursuing R2v3', badge: 'Pursuing R2v3' },
+  cert: { status: 'Pursuing R2v3', badge: 'Pursuing R2v3', certified: false },
   /* !! The card no longer says "Pursuing R2v3" — Asim, 23 Sep 2026, swapped
      the pill for the NAID AAA badge. The status still shows on the facility
      page itself (quick-info bar and hero lead). The NAID AAA claim carries
@@ -278,10 +283,22 @@ export const WISCONSIN: Facility = {
   },
 }
 
-export const FACILITIES: Facility[] = [MINNESOTA, WISCONSIN]
+/**
+ * The facilities in page order. Takes the two records so a component can
+ * build the list from `await content('facilities')` (Admin -> Pages edits
+ * included); FACILITIES is the same list from the defaults, for code that
+ * needs no copy (the lead locator, src/lib/lead-location.ts).
+ */
+export function facilitiesOf(d: { MINNESOTA: Facility; WISCONSIN: Facility }): Facility[] {
+  return [d.MINNESOTA, d.WISCONSIN]
+}
+
+export const FACILITIES: Facility[] = facilitiesOf({ MINNESOTA, WISCONSIN })
 
 /** Shared section copy — identical on both frames. */
 export const DETAIL_COPY = {
+  /** The hero breadcrumb before the state name. */
+  crumbs: { home: 'Home', locations: 'Locations' },
   quickInfo: { address: 'Address', phone: 'Phone', hours: 'Hours', cert: 'Certification' },
   directions: {
     heading: 'Getting Here',
@@ -320,8 +337,9 @@ export type NationwideFacility = {
   slug?: string
   /** A page of its own outside Admin -> Locations; the whole card links there. Chicago only. */
   href?: string
-  /** The small label at the right of the card header ("Drop-off Location"). */
-  tag?: string
+  /** The small label at the right of the card header ("Drop-off Location").
+   *  Was `tag`, a key Admin -> Pages hides; renamed 27 Sep 2026 so it edits. */
+  badge?: string
   /** Its place in the PHONE frame's order, which differs from the board's. */
   phoneOrder: number
 }
@@ -351,7 +369,7 @@ export const NATIONWIDE = {
        site and not a facility, so its address is the city; the card opens its
        page, /electronic-recycling-chicago/ (src/data/chicago.ts). */
     { ...nationwide('Chicago, Illinois', 'Chicago, Illinois', '(800)969-5166 | (800)305-3040', 0),
-      href: href('/electronic-recycling-chicago/'), tag: 'Drop-off Location' },
+      href: href('/electronic-recycling-chicago/'), badge: 'Drop-off Location' },
     nationwide('Lewisburg, TN',    'Lighting Resources, 1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'),
     nationwide('Greenwood, IN',    'Lighting Resources, 498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'),
     nationwide('Ocala, FL',        'Lighting Resources, 1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),

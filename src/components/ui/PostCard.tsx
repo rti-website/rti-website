@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { href } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 
 /**
  * The article card — Figma 6385:1225. 410 wide, 221 tall, 28px padding:
@@ -90,7 +91,8 @@ export type CardPost = {
   glyph?: string | undefined
 }
 
-export function PostCard({ post }: { post: CardPost }) {
+export async function PostCard({ post }: { post: CardPost }) {
+  const { LIST_TEXT } = await content('blog')
   const slug = post.url.replace(/^\/|\/$/g, '')
   const mark = MARKS[post.glyph ?? glyphFor(slug)] ?? MARKS.recycle ?? []
   // A fallback row already carries "Dec 24, 2024"; a DB row carries an ISO
@@ -137,7 +139,7 @@ export function PostCard({ post }: { post: CardPost }) {
           an otherwise empty card. */}
       <span className="mt-auto flex h-[20px] w-full items-center justify-between whitespace-nowrap lg:w-[354px]">
         <span className="post-card__date font-roboto text-[13px] leading-[1.175] text-[#a6a6a6] transition-colors">{date}</span>
-        <span className="post-card__read font-roboto text-[13.5px] font-medium leading-[1.175] text-brand transition-colors">Read &rarr;</span>
+        <span className="post-card__read font-roboto text-[13.5px] font-medium leading-[1.175] text-brand transition-colors">{LIST_TEXT.read} &rarr;</span>
       </span>
     </Link>
   )

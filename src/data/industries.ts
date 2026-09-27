@@ -1,6 +1,5 @@
 import type { Industry } from '@/components/ui/IndustryCard'
 import { QUOTE_HREF, href } from '@/lib/urls'
-import { CERT_COPY } from '@/data/certifications'
 
 /**
  * /industries/ — copy from the "Industries We Serve" doc, geometry from
@@ -80,8 +79,12 @@ export const INDUSTRIES: Industry[] = [
   { t: 'Retail & Corporate Offices',    img: '/images/home/ind-retail.png',        b: 'Retailers and offices can recycle retired computers, batteries, and IT equipment through our licensed services.', href: href('/industries/retail-corporate-offices/') },
 ]
 
-/** The certifications paragraph on /industries/. The shared compliance line since 24 Sep 2026 (Asim). */
-export const CERTIFICATIONS_BODY = CERT_COPY.body
+/*
+ * The certifications paragraph on /industries/ is the shared compliance line
+ * since 24 Sep 2026 (Asim). It was CERTIFICATIONS_BODY here, a copy of
+ * CERT_COPY.body; since 27 Sep 2026 the page reads it from the
+ * "Certifications (shared)" document, so an edit there reaches this page too.
+ */
 
 /* ------------------------------------------------------------ closing CTA --
  * !! PHONE NUMBER CONFLICT !! The doc gives the Wisconsin line as
