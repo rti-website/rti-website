@@ -308,6 +308,13 @@ export const DETAIL_COPY = {
   materials: { eyebrow: 'Materials Accepted', heading: 'What This Location Accepts' },
   steps: { eyebrow: 'What to Expect', heading: 'Dropping Off at This Location' },
   faq: { eyebrow: 'Location FAQ', heading: 'Questions About This Location' },
+  /** Section - Counties We Serve (7079:6388, 29 Sep 2026). {state} is the facility's state. */
+  counties: {
+    eyebrow: 'Counties',
+    heading: 'Counties We Serve',
+    lead: 'Explore our services across counties throughout {state}. Select a county to learn more about the services available in your area.',
+    more: 'Load More',
+  },
 }
 
 /** The hub's cards section — Figma 6743:2450. */

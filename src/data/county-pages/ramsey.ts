@@ -1,12 +1,12 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Ramsey Recycling, /minnesota-recycling/ramsey/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7031:22236, phone 7031:22581 (29 Sep 2026).
  * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * ./types.ts. The SEO title and description are the old WordPress page's
+ * (15 Sep 2026 backup).
  */
 export const RAMSEY: CountyPage = {
   url: '/minnesota-recycling/ramsey/',
@@ -14,8 +14,8 @@ export const RAMSEY: CountyPage = {
   county: "Ramsey County",
   figma: { board: '7031:22236', phone: '7031:22581' },
   seo: {
-    title: "Ramsey Recycling Center, MN | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Ramsey County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.",
+    title: "Recycling in Ramsey | Call (800) 969-5166",
+    description: "Recycling Ramsey for tablets, desktops, routers, small appliances, lamps, and dry cell batteries, received through controlled intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
     h1: "Ramsey Recycling",
@@ -24,7 +24,7 @@ export const RAMSEY: CountyPage = {
     image: '/images/locations/county/ramsey.png',
     imageTop: -372,
     phoneOverlay: 'rgba(0,0,0,0.3)',
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Minnesota' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "About Ramsey Recycling Center MN",

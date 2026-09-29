@@ -1,29 +1,31 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Washington County Recycling Center, MN, /minnesota-recycling/washington-county/
- * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7023:19962, phone 7023:20515 (29 Sep 2026).
- * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7072:5904, phone 7072:7060 (29 Sep 2026).
+ * The frame's copy word for word; "this form" and the like link to the quote
+ * form (the pickup form in a sentence about pickups). The SEO title and
+ * description are the old WordPress page's (15 Sep 2026 backup).
+ * Redrawn as the "(2)" frame of the area batch, whose copy is the old
+ * WordPress page's word for word; the photo is kept from the first frame.
  */
 export const WASHINGTON_MN: CountyPage = {
-  url: '/minnesota-recycling/washington-county/',
-  state: 'Minnesota',
+  url: "/minnesota-recycling/washington-county/",
+  state: "Minnesota",
   county: "Washington County",
-  figma: { board: '7023:19962', phone: '7023:20515' },
+  figma: { board: "7072:5904", phone: "7072:7060" },
   seo: {
-    title: "Washington County Recycling Center, MN | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Washington County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.",
+    title: "Recycling Center in Washington County MN | Call (800) 969-5166",
+    description: "Recycling center in Washington County MN accepting electronics, batteries, lighting, paper, and approved materials from homes and facilities. Call (800) 969-5166",
   },
   hero: {
     h1: "Washington County Recycling Center, MN",
     crumb: "Washington County Recycling Center, MN",
-    lead: "Washington County Recycling Center, MN Recycle technologies is the one-stop solution to your recycling needs.",
+    lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/washington-mn.png',
     imageTop: -372,
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Minnesota' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "About Washington County Recycling",
@@ -34,27 +36,26 @@ export const WASHINGTON_MN: CountyPage = {
       { p: "Washington County has recycling programs and laws in place to help reduce waste and protect the environment. Examples include:" },
       { list: [
         { title: "Recycling is mandatory", text: "Washington County requires residents and businesses to recycle designated materials, including paper, cardboard, glass, metal, and plastic containers. It is illegal to throw these materials in the trash." },
-        { title: "Organics recycling", text: "Washington County's organics recycling program includes yard waste and food scraps. Residents can place these materials in designated bins or compost them at home." },
+        { title: "Organics recycling", text: "Washington County’s organics recycling program includes yard waste and food scraps. Residents can place these materials in designated bins or compost them at home." },
         { title: "Electronics recycling", text: "Washington County has a program for recycling electronics, such as computers, TVs, and cell phones. It is illegal to throw these items in the trash." },
         { title: "Hazardous waste disposal", text: "Washington County has a program for disposing of hazardous waste, such as paint, chemicals, and batteries. Residents can bring these items to designated drop-off locations." },
         { title: "Single-use plastic bag ban", text: "Washington County has a ban on single-use plastic bags in retail stores, with some exemptions for certain types of bags." },
       ] },
-      { p: "It's important to note that these laws may be subject to change, so it's best to check with Washington County or your local government for the most up-to-date information." },
+      { p: "It’s important to note that these laws may be subject to change, so it’s best to check with Washington County or your local government for the most up-to-date information." },
       { p: "Recycle Technologies Inc provides all Washington residents with a drop facility for their Electronics and Hazardous waste. Government Agencies and Companies that require bulk recycling of their e-waste can contact us. We provide ITAD solutions to many companies." },
     ],
   },
-  items: { heading: "ITEMS WE ACCEPT" },
-  sights: {
-    heading: "Washington County Top Sights",
-    items: [
+  sections: [
+    { kind: 'items', heading: "Items We Accept" },
+    { kind: 'sights', heading: "Washington County Top Sights", items: [
       "Stillwater Lift Bridge, Historic Site",
       "Afton State Park",
       "William O'Brien State Park",
       "Lake Elmo Park Reserve",
       "Teddy Bear Park",
       "Gammelgården Museum of Scandia",
-    ],
-  },
+    ] },
+  ],
   company: {
     name: "Recycle Technologies",
     text: "Providing reliable and certified electronics recycling services at individual and business levels.",

@@ -133,7 +133,8 @@ export function leadSections(l: LeadForEmail, opts: { spacedPhone?: boolean } = 
       ['Phone Number', phoneForEmail(l.phone, opts.spacedPhone) ?? ''],
       ['Email', l.email ?? ''],
       ['Company Name', l.company ?? ''],
-      ['Company Address', address],
+      /* A residential visitor has no company (Asim, 29 Sep 2026): just "Address". */
+      [/residential/i.test(d.audience ?? '') ? 'Address' : 'Company Address', address],
     ] },
     { title: 'More Info', rows: [
       ['Please describe in detail what you would like to recycle or shred, and include other questions or comments here.', (l.message ?? '').trim()],
@@ -177,7 +178,9 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
     title: 'New Website Enquiry', line: `A new ${l.type} enquiry came in from the website.`, subject: 'New Website Enquiry',
   }
   const form = leadFormName({ type: l.type, details: d, source_page: l.sourcePage ?? l.source_page ?? null })
-  const head = intro ?? (form ? { ...base, line: `A ${form} form was submitted on the website.` } : base)
+  /* The heading names the form rather than "New Website Enquiry" (Asim,
+     29 Sep 2026): Get a Quote, Contact Us or Schedule a Pickup. */
+  const head = intro ?? (form ? { title: form, line: `A ${form} form was submitted on the website.` } : base)
   const sections = leadSections(l)
   const name = leadName(l)
 

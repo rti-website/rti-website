@@ -5,9 +5,9 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { Btn } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { breadcrumbNode, graph, serviceNode } from '@/lib/schema'
-import type { AboutBlock, CountyPage as Page } from '@/data/county-pages/types'
+import type { AboutBlock, AreaSection, CompanyLine, CountyPage as Page } from '@/data/county-pages/types'
 import { COUNTY_CTA, COUNTY_FEATURE_ICONS, COUNTY_ITEMS, COUNTY_LINE_ICONS, COUNTY_SERVICES } from '@/data/county-pages/shared'
 
 /**
@@ -35,7 +35,7 @@ export function CountyPage({ page }: { page: Page }) {
   ]
   const schema = graph(
     breadcrumbNode(trail),
-    serviceNode({ name: 'Electronics Recycling', url: page.url, description: page.seo.description, areaServed: [`${page.county}, ${page.state}`] }),
+    serviceNode({ name: page.service ?? 'Electronics Recycling', url: page.url, description: page.seo.description, areaServed: [page.areaServed ?? `${page.county}, ${page.state}`] }),
   )
   return (
     <FlowCanvas>
@@ -43,12 +43,10 @@ export function CountyPage({ page }: { page: Page }) {
       <main>
         <Hero page={page} />
         <About page={page} />
-        <Services />
+        <Services heading={page.servicesHeading} />
         <Cta />
-        {page.items && <Items heading={page.items.heading} />}
-        {page.features && <Features cards={page.features} />}
-        {page.sights && <Sights sights={page.sights} />}
-        <Company page={page} />
+        {(page.sections ?? legacySections(page)).map((s, i) => <Section key={i} section={s} wrap={!!page.sections} />)}
+        {page.company && <Company company={page.company} />}
       </main>
       <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
         <Footer top={0} />
@@ -65,18 +63,38 @@ function rows<T>(list: T[], n: number): T[][] {
   return out
 }
 
+/** The first batch's fixed order: Items (or the Pioneers cards), then Top Sights. */
+function legacySections(page: Page): AreaSection[] {
+  const out: AreaSection[] = []
+  if (page.items) out.push({ kind: 'items', heading: page.items.heading })
+  if (page.features) out.push({ kind: 'features', cards: page.features })
+  if (page.sights) out.push({ kind: 'sights', heading: page.sights.heading, items: page.sights.items })
+  return out
+}
+
+function Section({ section: s, wrap }: { section: AreaSection; wrap: boolean }) {
+  switch (s.kind) {
+    case 'items': return <Items heading={s.heading} wrap={wrap} />
+    case 'features': return <Features cards={s.cards} />
+    case 'sights': return <Sights sights={s} />
+    case 'text': return <TextSection heading={s.heading} blocks={s.blocks} />
+  }
+}
+
 /**
  * Old copy with its links: "[this form](quote)" -> the quote form,
+ * "[this form](pickup)" -> the pickup form (a sentence about pickups),
  * "[Click here](mailin)" -> /mail-in-recycling/. See types.ts.
  */
+const RICH_HREF = { quote: QUOTE_HREF, pickup: PICKUP_HREF, mailin: href('/mail-in-recycling/') }
 function Rich({ text }: { text: string }) {
-  const parts = text.split(/(\[[^\]]+\]\((?:quote|mailin)\))/)
+  const parts = text.split(/(\[[^\]]+\]\((?:quote|pickup|mailin)\))/)
   return (
     <>
       {parts.map((part, i) => {
-        const m = /^\[([^\]]+)\]\((quote|mailin)\)$/.exec(part)
+        const m = /^\[([^\]]+)\]\((quote|pickup|mailin)\)$/.exec(part)
         if (!m) return part
-        return <Link key={i} href={m[2] === 'mailin' ? href('/mail-in-recycling/') : QUOTE_HREF} className="text-brand underline-offset-2 hover:underline">{m[1]}</Link>
+        return <Link key={i} href={RICH_HREF[m[2] as keyof typeof RICH_HREF]} className="text-brand underline-offset-2 hover:underline">{m[1]}</Link>
       })}
     </>
   )
@@ -97,8 +115,8 @@ function Hero({ page }: { page: Page }) {
   return (
     <section data-figma={page.figma.board} className="relative h-[276px] overflow-hidden bg-navy lg:h-[470px]">
       <div aria-hidden="true" className="absolute left-[-223px] top-[-108px] h-[494px] w-[878px] lg:left-1/2 lg:top-[var(--img-t)] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2"
-        style={{ '--img-t': `${h.imageTop}px` } as React.CSSProperties}>
-        <Image src={h.image} alt="" fill priority sizes="(width < 64rem) 878px, 1920px" className="object-cover" />
+        style={{ '--img-t': `${h.imageTop ?? -372}px` } as React.CSSProperties}>
+        {h.image && <Image src={h.image} alt="" fill priority sizes="(width < 64rem) 878px, 1920px" className="object-cover" />}
         {h.phoneOverlay && <span className="absolute inset-0 lg:hidden" style={{ background: h.phoneOverlay }} />}
         {h.overlay && <span className="absolute inset-0 max-lg:hidden" style={{ background: h.overlay }} />}
       </div>
@@ -122,7 +140,8 @@ function Hero({ page }: { page: Page }) {
             ))}
           </ol>
         </nav>
-        <h1 className="w-full max-w-[310px] font-sans text-[28px] font-semibold leading-[1.2] text-white lg:max-w-[1156px] lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]">
+        <h1 className="w-full max-w-[310px] font-sans text-[28px] font-semibold leading-[1.2] text-white lg:max-w-[var(--h1-w)] lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]"
+          style={{ '--h1-w': `${h.h1Width ?? 1156}px` } as React.CSSProperties}>
           {h.h1}
         </h1>
         <p className="mt-[8px] w-full max-w-[310px] font-roboto text-[13.5px] leading-[1.4] text-white/90 lg:mt-[7px] lg:min-h-[32px] lg:max-w-[777px] lg:text-[17px] lg:leading-[normal]">
@@ -160,11 +179,23 @@ const P = 'font-roboto text-[14px] leading-[1.6] text-[#474747] max-lg:text-just
  * the text; the others sit in the text column, 18 under the paragraph before.
  */
 function About({ page }: { page: Page }) {
+  return <TextSection heading={page.about.heading} blocks={page.about.blocks} />
+}
+
+const H2 = 'font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] max-lg:text-justify lg:text-[32px] lg:leading-[normal]'
+
+/**
+ * A heading and its blocks on white: About, and on the area pages the text
+ * sections after the CTA ("Battery Disposal Services in Milwaukee", 7061:7029;
+ * the "Recycling Locations" and "Shredding Locations" lists, 7060:5137 and
+ * 7073:8209). Same column, sizes and 18 gaps as About in every frame.
+ */
+function TextSection({ heading, blocks }: { heading: string; blocks: AboutBlock[] }) {
   return (
     <section className="bg-white px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[20px] lg:max-w-none lg:w-[1282px] lg:gap-[18px]">
-        <h2 className="font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] max-lg:text-justify lg:text-[32px] lg:leading-[normal]">{page.about.heading}</h2>
-        {page.about.blocks.map((b, i) => <Block key={i} block={b} />)}
+        <h2 className={H2}>{heading}</h2>
+        {blocks.map((b, i) => <Block key={i} block={b} />)}
       </div>
     </section>
   )
@@ -172,13 +203,16 @@ function About({ page }: { page: Page }) {
 
 function Block({ block }: { block: AboutBlock }) {
   if ('p' in block) return <p className={P}><Rich text={block.p} /></p>
+  if ('h2' in block) return <h2 className={H2}>{block.h2}</h2>
   if ('h' in block) return <h3 className="font-sans text-[18px] font-semibold leading-[1.3] text-[#132119] lg:mt-[4px] lg:text-[22px] lg:leading-[normal]">{block.h}</h3>
   return (
     <div className={`overflow-hidden rounded-[14px] border border-[#e6e6e6] bg-white lg:rounded-[16px] ${block.padded ? 'lg:mt-[22px] lg:p-[8px]' : ''}`}>
       {block.list.map((it, i) => (
         <div key={it.title} className={`flex flex-col gap-[6px] p-[20px] lg:gap-[8px] lg:px-[32px] lg:py-[24px] ${i < block.list.length - 1 ? 'border-b border-[#ededed]' : ''}`}>
-          <h3 className="font-sans text-[15.5px] font-medium leading-[normal] text-[#132119] lg:text-[18px]">{it.title}</h3>
-          <p className="font-roboto text-[13.5px] leading-[1.55] text-[#474747] max-lg:text-justify lg:text-[15.5px] lg:leading-[1.6]"><Rich text={it.text} /></p>
+          <h3 className="font-sans text-[15.5px] font-medium leading-[normal] text-[#132119] lg:text-[18px]">
+            {it.href ? <Link href={it.href} className="hover:text-brand">{it.title}</Link> : it.title}
+          </h3>
+          {it.text && <p className="font-roboto text-[13.5px] leading-[1.55] text-[#474747] max-lg:text-justify lg:text-[15.5px] lg:leading-[1.6]"><Rich text={it.text} /></p>}
         </div>
       ))}
     </div>
@@ -187,10 +221,14 @@ function Block({ block }: { block: AboutBlock }) {
 
 /* -------------------------------------------------------------- services -- */
 
-/** Section - Service Options (7016:9108): three cards, stacked on the phone. */
-function Services() {
+/**
+ * Section - Service Options (7016:9108): three cards, stacked on the phone.
+ * Some area frames put a heading over them, 24 above the cards (7060:4075).
+ */
+function Services({ heading }: { heading?: string }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
+      {heading && <h2 className="mb-[16px] text-center font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] lg:mb-[24px] lg:text-[32px] lg:leading-[normal]">{heading}</h2>}
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1272px] lg:flex-row lg:gap-[24px]">
         {COUNTY_SERVICES.map((s) => (
           <div key={s.title} className="flex flex-col gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] lg:min-h-[285px] lg:w-[408px] lg:gap-[16px] lg:px-[30px] lg:py-[32px]">
@@ -245,8 +283,13 @@ function Pill({ children }: { children: React.ReactNode }) {
   )
 }
 
-/** Section - Items We Accept (7016:9110): four groups; six pills a row on the board, two on the phone. */
-function Items({ heading }: { heading: string }) {
+/**
+ * Section - Items We Accept (7016:9110): four groups. The first county frames
+ * break the pills six a row on the board and two on the phone; the area
+ * frames (7060:4119, phone 7060:5836) let them wrap in a 1200 column (350 on
+ * the phone) and centre each line, `wrap`.
+ */
+function Items({ heading, wrap = false }: { heading: string; wrap?: boolean }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[30px] lg:w-[1282px] lg:gap-[40px]">
@@ -254,12 +297,20 @@ function Items({ heading }: { heading: string }) {
         {COUNTY_ITEMS.map((g) => (
           <div key={g.title} className="flex w-full flex-col items-center gap-[12px] lg:gap-[16px]">
             <h3 className="text-center font-sans text-[16px] font-medium leading-[normal] text-brand lg:text-[19px]">{g.title}</h3>
-            <div className="flex flex-col items-center gap-[8px] lg:hidden">
-              {rows(g.items, 2).map((r) => <ul key={r.join()} className="flex justify-center gap-[8px]">{r.map((x) => <Pill key={x}>{x}</Pill>)}</ul>)}
-            </div>
-            <div className="flex flex-col items-center gap-[10px] max-lg:hidden">
-              {rows(g.items, 6).map((r) => <ul key={r.join()} className="flex justify-center gap-[10px]">{r.map((x) => <Pill key={x}>{x}</Pill>)}</ul>)}
-            </div>
+            {wrap ? (
+              <ul className="flex w-full max-w-[350px] flex-wrap justify-center gap-[8px] lg:max-w-none lg:w-[1200px] lg:gap-[10px]">
+                {g.items.map((x) => <Pill key={x}>{x}</Pill>)}
+              </ul>
+            ) : (
+              <>
+                <div className="flex flex-col items-center gap-[8px] lg:hidden">
+                  {rows(g.items, 2).map((r) => <ul key={r.join()} className="flex justify-center gap-[8px]">{r.map((x) => <Pill key={x}>{x}</Pill>)}</ul>)}
+                </div>
+                <div className="flex flex-col items-center gap-[10px] max-lg:hidden">
+                  {rows(g.items, 6).map((r) => <ul key={r.join()} className="flex justify-center gap-[10px]">{r.map((x) => <Pill key={x}>{x}</Pill>)}</ul>)}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
@@ -269,15 +320,20 @@ function Items({ heading }: { heading: string }) {
 
 /* -------------------------------------------------------------- features -- */
 
-/** Section - Pioneers Feature Block (Scott 7027:21191, Benton 7038:28622): four cards, two a row on the board. */
+/**
+ * Section - Feature Block (Scott 7027:21191, Benton 7038:28622; the area
+ * pages' 7061:6988 …): cards two a row on the board, rows centred, so an odd
+ * last card (Document Shredding Minnesota's fifth, 7073:8142) sits in the
+ * middle. The four icons repeat in order.
+ */
 function Features({ cards }: { cards: { title: string; text: string }[] }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
-      <div className="mx-auto grid w-full max-w-[350px] grid-cols-1 gap-[16px] lg:max-w-none lg:w-[1264px] lg:grid-cols-2 lg:items-start lg:gap-x-[24px] lg:gap-y-[40px]">
+      <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1264px] lg:flex-row lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-[24px] lg:gap-y-[40px]">
         {cards.map((c, i) => (
-          <div key={c.title} className="flex flex-col gap-[12px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:gap-[14px] lg:p-[32px]">
+          <div key={c.title} className="flex flex-col gap-[12px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:w-[620px] lg:gap-[14px] lg:p-[32px]">
             <span className="grid size-[44px] place-items-center rounded-full bg-brand lg:size-[48px]">
-              <Image src={COUNTY_FEATURE_ICONS[i] ?? COUNTY_FEATURE_ICONS[0]!} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />
+              <Image src={COUNTY_FEATURE_ICONS[i % COUNTY_FEATURE_ICONS.length]!} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />
             </span>
             <h2 className="font-sans text-[17px] font-medium leading-[normal] text-[#132119] lg:text-[20px]">{c.title}</h2>
             <p className="font-roboto text-[13.5px] leading-[1.55] text-[#7e7e7e] lg:text-[15px] lg:leading-[1.6]">{c.text}</p>
@@ -314,8 +370,7 @@ function Sights({ sights }: { sights: { heading: string; items: string[] } }) {
 /* --------------------------------------------------------------- company -- */
 
 /** Section - Company Info (7016:9112): one card, text left and hours right on the board. */
-function Company({ page }: { page: Page }) {
-  const c = page.company
+function Company({ company: c }: { company: NonNullable<Page['company']> }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[20px] rounded-[14px] border border-[#e6e6e6] bg-white px-[26px] py-[30px] lg:max-w-none lg:w-[1059px] lg:flex-row lg:items-center lg:gap-[60px] lg:rounded-[16px] lg:px-[48px] lg:py-[40px]">
@@ -327,12 +382,25 @@ function Company({ page }: { page: Page }) {
         <ul className="flex flex-col gap-[12px] lg:w-[340px] lg:gap-[10px]">
           {c.lines.map((l) => (
             <li key={l.text} className="flex items-center gap-[10px] font-roboto text-[14px] leading-[normal] text-[#132119] lg:text-[15px]">
-              <Image src={COUNTY_LINE_ICONS[l.kind]} alt="" width={18} height={18} className="size-[17px] shrink-0 lg:size-[18px]" />
-              {l.kind === 'phone' ? <a href={`tel:${l.tel}`} className="hover:text-brand">{l.text}</a> : l.text}
+              <Image src={COUNTY_LINE_ICONS[lineIcon(l)]} alt="" width={18} height={18} className="size-[17px] shrink-0 lg:size-[18px]" />
+              {l.kind === 'phone' ? <a href={`tel:${l.tel}`} className="hover:text-brand">{l.text}</a>
+                : l.kind === 'email' ? <a href={`mailto:${l.text}`} className="hover:text-brand">{l.text}</a>
+                : l.text}
             </li>
           ))}
         </ul>
       </div>
     </section>
   )
+}
+
+/**
+ * The icon a line gets: the frames draw the clock by hours, and on the
+ * mail-in cities' card (7084:67703) by the manager's name and number too,
+ * with the phone by the email address.
+ */
+function lineIcon(l: CompanyLine): keyof typeof COUNTY_LINE_ICONS {
+  if (l.kind === 'phone') return l.icon ?? 'phone'
+  if (l.kind === 'email') return 'phone'
+  return 'hours'
 }

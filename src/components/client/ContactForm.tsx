@@ -70,7 +70,7 @@ import type { AddressSuggestion } from '@/app/api/address/route'
  *                                  Commercial) and the business notice on top
  * It posts `form` with the variant, so the enquiry says where it came from.
  * Picking Residential on contact / quote shows the "We do not offer
- * residential pickup" notice above that row (ResidentialHelp: nearest
+ * residential pickup" notice under that row (ResidentialHelp: nearest
  * drop-off and Mail-In pop-ups); the form still sends.
  *
  * Client only because it owns a submit handler and that state.
@@ -509,8 +509,6 @@ export function ContactForm({
         </div>
       </div>
 
-      {!pickup && !business && <ResidentialHelp mode="residential" {...help} />}
-
       <div className={ROW}>
         <div className={FIELD}>
           <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
@@ -541,6 +539,10 @@ export function ContactForm({
           </div>
         </div>}
       </div>
+
+      {/* Under the row with "Is it for?" (Asim, 29 Sep 2026: "move these
+          precautions below the is this for place"). */}
+      {!pickup && !business && <ResidentialHelp mode="residential" {...help} />}
 
       <div className="flex w-full flex-col gap-[8px]">
         <label htmlFor="contact-message" className={LABEL}>{F.message.label}</label>

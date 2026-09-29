@@ -1,12 +1,12 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Washington County Recycling Center, WI, /wisconsin-recycling/washington-county-recycling-center/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7020:15552, phone 7020:16107 (29 Sep 2026).
  * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * ./types.ts. The SEO title and description are the old WordPress page's
+ * (15 Sep 2026 backup).
  */
 export const WASHINGTON_WI: CountyPage = {
   url: '/wisconsin-recycling/washington-county-recycling-center/',
@@ -14,8 +14,8 @@ export const WASHINGTON_WI: CountyPage = {
   county: "Washington County",
   figma: { board: '7020:15552', phone: '7020:16107' },
   seo: {
-    title: "Washington County Recycling Center, WI | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Washington County, Wisconsin: business pickup, drop-off at our New Berlin facility and mail-in recycling since 1993.",
+    title: "Recycling Center Washington County WI | Call (800) 969-5166",
+    description: "Recycling center Washington County WI accepting circuit boards, cables, lamps, dry cell batteries, and small equipment, managed through approved intake procedures. Call (800) 969-5166.",
   },
   hero: {
     h1: "Washington County Recycling Center, WI",
@@ -25,7 +25,7 @@ export const WASHINGTON_WI: CountyPage = {
     imageTop: -389,
     overlay: 'rgba(32,32,32,0.4)',
     phoneOverlay: 'rgba(0,0,0,0.4)',
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Wisconsin' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "About Washington County in Recycling",

@@ -22,6 +22,24 @@
 export const HEADER_H = 120
 
 /**
+ * THE LOCATION DIRECTORY (29 Sep 2026) — the band of county and city columns
+ * between the footer's link columns and its bottom bar (LocationDirectory,
+ * src/data/county-pages/directory.ts). Asim: "add the location below the
+ * footer … main city name heading and their county below it".
+ *
+ * A fixed height at lg, like the rest of the footer: 40 top, a 26px title,
+ * 24 under it, DIRECTORY_ROWS rows of DIRECTORY_COLS columns each tall
+ * enough for a heading, "See all" and seven links (DIRECTORY_ROW_H), 32
+ * between rows, 40 bottom. directory.ts throws if the data outgrows it.
+ * FOOTER_H and FOOTER_BAR_Y include it, so every page's canvas grows with it.
+ */
+export const DIRECTORY_ROWS = 3
+export const DIRECTORY_COLS = 7
+export const DIRECTORY_ROW_H = 225
+export const DIRECTORY_ROW_GAP = 32
+export const DIRECTORY_H = 40 + 26 + 24 + DIRECTORY_ROWS * DIRECTORY_ROW_H + (DIRECTORY_ROWS - 1) * DIRECTORY_ROW_GAP + 40
+
+/**
  * Footer — Figma 6778:3897 draws 755. Built at 715.
  *
  * History: the first footer frame drew 681 with an 84px dead band between the
@@ -38,10 +56,10 @@ export const HEADER_H = 120
  * Every route sizes its canvas from FOOTER_H, so this one number is the whole
  * change for every page.
  */
-export const FOOTER_H = 715
+export const FOOTER_H = 715 + DIRECTORY_H
 
 /** Where the footer's bottom bar starts, inside the footer. */
-export const FOOTER_BAR_Y = 614
+export const FOOTER_BAR_Y = 614 + DIRECTORY_H
 
 /**
  * How far the whole canvas slides up under the shortened header.
@@ -133,6 +151,13 @@ export const HOME_BELOW_SERVICES_SHIFT = HOME_BELOW_CERT_SHIFT - HOME_SERVICES_G
  * Canvas adds it to the page height. One variable, so the four cannot drift.
  */
 export const HOME_SERVICES_DELTA_VAR = '--home-svc-delta'
+
+/**
+ * The same for Counties We Serve on the facility pages (29 Sep 2026): the
+ * height Load More has added to the card grid. CountyCards sets it; the
+ * section, the wrapper round the CTA and footer, and the canvas add it.
+ */
+export const COUNTIES_DELTA_VAR = '--counties-delta'
 
 /**
  * Client's Testimonials grew on 21 Sep 2026: three cards and a pager (594)

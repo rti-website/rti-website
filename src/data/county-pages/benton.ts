@@ -1,12 +1,12 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Benton County Recycling, /minnesota-recycling/benton-county-recycling/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7037:27359, phone 7037:27902 (29 Sep 2026).
  * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * ./types.ts. The SEO title and description are the old WordPress page's
+ * (15 Sep 2026 backup).
  */
 export const BENTON: CountyPage = {
   url: '/minnesota-recycling/benton-county-recycling/',
@@ -14,8 +14,8 @@ export const BENTON: CountyPage = {
   county: "Benton County",
   figma: { board: '7037:27359', phone: '7037:27902' },
   seo: {
-    title: "Benton County Recycling | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Benton County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.",
+    title: "Recycling Center in Benton County | (800) 969-5166",
+    description: "Recycling center in Benton County supporting electronic equipment, spent batteries, lighting waste, paper streams, and secure material handling. Call (800) 969-5166.",
   },
   hero: {
     h1: "Benton County Recycling",
@@ -24,7 +24,7 @@ export const BENTON: CountyPage = {
     image: '/images/locations/county/benton.png',
     imageTop: -372,
     phoneOverlay: 'rgba(0,0,0,0.3)',
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Minnesota' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "About Benton County shredding Recycling",

@@ -10,6 +10,7 @@ import { WASHINGTON_MN } from './washington-mn'
 import { CALUMET } from './calumet'
 import { RACINE } from './racine'
 import { WASHINGTON_WI } from './washington-wi'
+import { AREA_DOC_KEY, AREA_PAGES, type AreaDocKey } from './areas'
 
 export type { CountyPage } from './types'
 
@@ -19,23 +20,40 @@ export const COUNTY_PAGES: CountyPage[] = [
   CALUMET, RACINE, WASHINGTON_WI,
 ]
 
-/** `/minnesota-recycling/anoka-county-recycling/` -> 'minnesota' + 'anoka-county-recycling'. */
-function parts(url: string): [string, string] {
-  const [state = '', slug = ''] = url.split('/').filter(Boolean)
-  return [state.replace(/-recycling$/, ''), slug]
+/** The county pages and the area pages (./areas), every page this template draws. */
+export const LOCATION_PAGES: CountyPage[] = [...COUNTY_PAGES, ...AREA_PAGES]
+
+/**
+ * `/minnesota-recycling/anoka-county-recycling/` -> 'minnesota' + 'anoka-county-recycling'.
+ * Null for any other shape: deeper paths (/minnesota-recycling/ramsey/blaine/)
+ * and other folders go to the catch-all.
+ */
+function parts(url: string): [string, string] | null {
+  const segs = url.split('/').filter(Boolean)
+  if (segs.length !== 2 || !/^(minnesota|wisconsin)-recycling$/.test(segs[0]!)) return null
+  return [segs[0]!.replace(/-recycling$/, ''), segs[1]!]
 }
 
-/** The county page at /<site>-recycling/<slug>/, for the two [service] routes. */
+/** The page at /<site>-recycling/<slug>/, for the two [service] routes. */
 export function countyPage(site: string, slug: string): CountyPage | null {
-  return COUNTY_PAGES.find((p) => { const [s, x] = parts(p.url); return s === site && x === slug }) ?? null
+  return LOCATION_PAGES.find((p) => { const x = parts(p.url); return !!x && x[0] === site && x[1] === slug }) ?? null
 }
 
-/** Route params of one state's county pages. */
+/** Route params of one state's pages in its [service] folder. */
 export function countySlugs(site: string): string[] {
-  return COUNTY_PAGES.map((p) => parts(p.url)).filter(([s]) => s === site).map(([, x]) => x)
+  return LOCATION_PAGES.map((p) => parts(p.url)).filter((x): x is [string, string] => !!x && x[0] === site).map(([, x]) => x)
 }
 
-export const COUNTY_URLS = COUNTY_PAGES.map((p) => p.url)
+/** The pages the [...slug] catch-all serves: every one outside the two [service] folders. */
+export const CATCH_ALL_LOCATION_PAGES = LOCATION_PAGES.filter((p) => !parts(p.url))
+
+/** The page at this URL for the catch-all ('/shredding-minnesota/duluth' or with the slash). */
+export function catchAllLocationPage(url: string): CountyPage | null {
+  const u = url.endsWith('/') ? url : url + '/'
+  return CATCH_ALL_LOCATION_PAGES.find((p) => p.url === u) ?? null
+}
+
+export const COUNTY_URLS = LOCATION_PAGES.map((p) => p.url)
 
 /** Admin -> Pages document keys, one per county page. */
 export type CountyDocKey =
@@ -48,9 +66,9 @@ const DOC_KEY = new Map<CountyPage, CountyDocKey>([
   [CALUMET, 'county/calumet'], [RACINE, 'county/racine'], [WASHINGTON_WI, 'county/washington-wi'],
 ])
 
-/** The Admin -> Pages document of a county page. Throws on one with none, so a new page cannot ship unwired. */
-export function countyDocKey(page: CountyPage): CountyDocKey {
-  const k = DOC_KEY.get(page)
+/** The Admin -> Pages document of a county or area page. Throws on one with none, so a new page cannot ship unwired. */
+export function countyDocKey(page: CountyPage): CountyDocKey | AreaDocKey {
+  const k = DOC_KEY.get(page) ?? AREA_DOC_KEY.get(page)
   if (!k) throw new Error(`County page ${page.url} has no Admin -> Pages document`)
   return k
 }

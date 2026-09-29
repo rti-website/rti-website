@@ -10,6 +10,8 @@ import { ServiceTemplate } from '@/components/blocks/ServiceTemplate'
 import { Markdown } from '@/components/ui/Markdown'
 import { content } from '@/lib/page-content'
 import { DOCS, MDX_DOC_BY_URL } from '@/content/registry'
+import { CountyPage } from '@/components/sections/locations/CountyPage'
+import { CATCH_ALL_LOCATION_PAGES, catchAllLocationPage, countyDocKey } from '@/data/county-pages'
 
 /**
  * Catch-all route driven by the content manifest.
@@ -54,8 +56,12 @@ export async function generateStaticParams() {
   // A post whose slug collides with an MDX page loses: the file is the one a
   // person deliberately built, and duplicate params make Next build the same
   // route twice.
-  const taken = new Set(fromFiles.map((e) => e.slug.join('/')))
-  return [...fromFiles, ...fromDb.filter((e) => !taken.has(e.slug.join('/')))]
+  // The area pages outside /minnesota-recycling/ and /wisconsin-recycling/
+  // (29 Sep 2026: shredding, TV and mail-in city pages, and the cities under
+  // a county), fixed copy in src/data/county-pages/areas/.
+  const fromAreas = CATCH_ALL_LOCATION_PAGES.map((p) => ({ slug: toSegments(p.url) }))
+  const taken = new Set([...fromFiles, ...fromAreas].map((e) => e.slug.join('/')))
+  return [...fromFiles, ...fromAreas, ...fromDb.filter((e) => !taken.has(e.slug.join('/')))]
 }
 
 type Props = { params: Promise<{ slug: string[] }> }
@@ -63,6 +69,8 @@ type Props = { params: Promise<{ slug: string[] }> }
 // Next 16: params is a Promise. Synchronous access was removed in v16.
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
+  const area = catchAllLocationPage('/' + slug.join('/'))
+  if (area) return buildMetadata({ url: area.url, title: area.seo.title, description: area.seo.description })
   const entry = byUrl('/' + slug.join('/'))
   if (entry) {
     return buildMetadata({
@@ -95,6 +103,8 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function CatchAllPage({ params }: Props) {
   const { slug } = await params
+  const area = catchAllLocationPage('/' + slug.join('/'))
+  if (area) return <CountyPage page={await content(countyDocKey(area))} />
   const entry = byUrl('/' + slug.join('/'))
 
   if (!entry) {

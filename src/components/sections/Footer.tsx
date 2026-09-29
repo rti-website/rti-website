@@ -2,7 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Box } from '@/components/design/Frame'
 import { href } from '@/lib/urls'
-import { FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
+import { DIRECTORY_H, FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
+import { LocationDirectory } from '@/components/sections/LocationDirectory'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
 import { socialLinks } from '@/lib/social'
 import { type FooterCert } from '@/data/certifications'
@@ -204,6 +205,10 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
           <CertGrid certs={FOOTER_CERTS} />
         </div>
       </Box>
+
+      {/* The location directory (29 Sep 2026), between the columns and the
+          bottom bar, which moved down by its height. */}
+      <LocationDirectory y={FOOTER_BAR_Y - DIRECTORY_H} />
 
       {/* 6621:2427 */}
       <div className="h-px w-full bg-line lg:hidden" />

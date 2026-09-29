@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { FOOTER_H } from '@/lib/layout'
+import { COUNTIES_DELTA_VAR, FOOTER_H } from '@/lib/layout'
 import { href } from '@/lib/urls'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
@@ -10,6 +10,8 @@ import { LocationDirections } from '@/components/sections/locations/LocationDire
 import { LocationMaterials } from '@/components/sections/locations/LocationMaterials'
 import { LocationSteps } from '@/components/sections/locations/LocationSteps'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
+import { LocationCounties, countiesHeight } from '@/components/sections/locations/LocationCounties'
+import { countyCards } from '@/data/county-pages/directory'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
 import { HERO_PHOTOS } from '@/data/hero-photos'
@@ -28,6 +30,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  *   Materials      6744:8796   467 / 486   L.mat     Wisconsin's lead wraps to two lines
  *   Steps          6744:8797   525         L.steps
  *   FAQ            6744:8798   473.26      L.faq
+ *   Counties       7079:6388   620         + Load More   LocationCounties, 29 Sep 2026
  *   Closing CTA    6744:8799   373.05      CTA_H     the shared band, see below
  *   Footer         —           681         681
  *
@@ -65,7 +68,8 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   const MAT_TOP    = MAP_TOP + L.map
   const STEPS_TOP  = MAT_TOP + L.mat
   const FAQ_TOP    = STEPS_TOP + L.steps
-  const CTA_TOP    = FAQ_TOP + L.faq
+  const COUNTIES_TOP = FAQ_TOP + L.faq
+  const CTA_TOP    = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota').length)
   const FOOTER_TOP = CTA_TOP + CTA_H
 
   const { DETAIL_COPY } = await content('facilities')
@@ -76,7 +80,7 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   ]
 
   return (
-    <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
+    <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)} grow={COUNTIES_DELTA_VAR}>
       <Header />
       <main>
         <ServiceHero
@@ -90,9 +94,17 @@ export async function LocationDetailPage({ f, layout: L, links }: {
         <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />
         <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />
         <LocationFaq        top={FAQ_TOP}   height={L.faq}   f={f} />
-        <ClosingCta top={CTA_TOP} label="6744:8799" content={f.cta} />
+        <LocationCounties   top={COUNTIES_TOP} f={f} />
+        {/* Everything under Counties We Serve rides one positioned wrapper
+            whose top is what Load More has added (COUNTIES_DELTA_VAR), as on
+            the homepage under Our Services. Below lg it is an ordinary block. */}
+        <div className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0 lg:top-[var(--counties-delta,0px)]">
+          <ClosingCta top={CTA_TOP} label="6744:8799" content={f.cta} />
+        </div>
       </main>
-      <Footer top={FOOTER_TOP} />
+      <div className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0 lg:top-[var(--counties-delta,0px)]">
+        <Footer top={FOOTER_TOP} />
+      </div>
     </Canvas>
   )
 }

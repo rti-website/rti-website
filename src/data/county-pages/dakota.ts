@@ -1,12 +1,12 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Dakota County Recycling Center, /minnesota-recycling/dakota-county/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7031:26237, phone 7031:26790 (29 Sep 2026).
  * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * ./types.ts. The SEO title and description are the old WordPress page's
+ * (15 Sep 2026 backup).
  */
 export const DAKOTA: CountyPage = {
   url: '/minnesota-recycling/dakota-county/',
@@ -14,8 +14,8 @@ export const DAKOTA: CountyPage = {
   county: "Dakota County",
   figma: { board: '7031:26237', phone: '7031:26790' },
   seo: {
-    title: "Dakota County Recycling Center | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Dakota County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.",
+    title: "Recycling Center in Dakota County | (800) 969-5166",
+    description: "Recycling center in Dakota County providing intake for e-waste, lighting waste, used batteries, paper streams, and controlled material processing. Call (800) 969-5166.",
   },
   hero: {
     h1: "Dakota County Recycling Center",
@@ -24,7 +24,7 @@ export const DAKOTA: CountyPage = {
     image: '/images/locations/county/dakota.png',
     imageTop: -372,
     phoneOverlay: 'rgba(0,0,0,0.3)',
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Minnesota' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "Dakota County Center Recycling",

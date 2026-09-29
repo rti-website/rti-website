@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { MAIL_IN } from '@/lib/nav'
 
 /**
@@ -14,7 +14,7 @@ export const COUNTY_SERVICES = [
     icon: `${ICONS}/pickup.svg`,
     title: 'Business Pick-Up Service',
     text: 'Exclusive pick-up recycling services for businesses',
-    links: [{ label: 'Schedule your Pick-Up', href: QUOTE_HREF, external: false }],
+    links: [{ label: 'Schedule your Pick-Up', href: PICKUP_HREF, external: false }],
   },
   {
     icon: `${ICONS}/drop-off.svg`,

@@ -1,12 +1,12 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from './types'
 
 /**
  * Calumet County Recycling Center, /wisconsin-recycling/calumet-county/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7023:18867, phone 7023:19407 (29 Sep 2026).
  * The frame's copy word for word, except the corrections listed in
- * ./types.ts. The SEO title and description are ours: the frames give none
- * and the old WordPress page left none on record.
+ * ./types.ts. The SEO title and description are the old WordPress page's
+ * (15 Sep 2026 backup).
  */
 export const CALUMET: CountyPage = {
   url: '/wisconsin-recycling/calumet-county/',
@@ -14,8 +14,8 @@ export const CALUMET: CountyPage = {
   county: "Calumet County",
   figma: { board: '7023:18867', phone: '7023:19407' },
   seo: {
-    title: "Calumet County Recycling Center | Recycle Technologies",
-    description: "Electronics, light bulb and battery recycling in Calumet County, Wisconsin: business pickup, drop-off at our New Berlin facility and mail-in recycling since 1993.",
+    title: "Material Recycling in Calumet | Call (800) 969-5166",
+    description: "Material recycling in Calumet handling accepted electronics, spent lamps, mixed battery formats, document paper, and approved items. Call (800) 969-5166",
   },
   hero: {
     h1: "Calumet County Recycling Center",
@@ -24,7 +24,7 @@ export const CALUMET: CountyPage = {
     image: '/images/locations/county/calumet.png',
     imageTop: -372,
     phoneOverlay: 'rgba(0,0,0,0.3)',
-    button: { label: "Schedule a Pickup", href: quoteHref({ location: 'Wisconsin' }) },
+    button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {
     heading: "Calumet County Recycling Center",
