@@ -1,6 +1,8 @@
 import { Box, Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
-import { ContactForm } from '@/components/client/ContactForm'
+import { ContactForm, type FormVariant } from '@/components/client/ContactForm'
+import { dropoffSites } from '@/lib/dropoff-sites'
+import { MAIL_IN } from '@/lib/nav'
 import { content } from '@/lib/page-content'
 import { InfoRow } from '@/components/ui/Glyph'
 
@@ -37,8 +39,15 @@ const HEAD_BLOCK = 'flex w-full flex-col items-center gap-[12px] text-center lg:
 /** A column: full bleed and self-padding on a phone, 601px on the board. */
 const COLUMN = 'flex w-full shrink-0 flex-col items-start gap-[24px] px-[20px] py-[48px] lg:w-[601px] lg:p-0'
 
-export async function ContactSection({ top, height }: { top: number; height: number }) {
-  const { FACILITIES, FORM, SERVICE_INTEREST, HERO_LOCATIONS } = await content('contact')
+/**
+ * `variant` (29 Sep 2026): the same section on /contact-us/, /quote/ and
+ * /request-a-pickup/. Only the form's heading block and the form's variant
+ * change; see ContactForm.
+ */
+export async function ContactSection({ top, height, variant = 'contact' }: { top: number; height: number; variant?: FormVariant }) {
+  const { FACILITIES, FORM, SERVICE_INTEREST, HERO_LOCATIONS, NO_PICKUP, QUOTE_PAGE, PICKUP_PAGE } = await content('contact')
+  const head = variant === 'quote' ? QUOTE_PAGE.form : variant === 'pickup' ? PICKUP_PAGE.form : FORM
+  const help = { copy: NO_PICKUP, sites: dropoffSites(), mailInHref: MAIL_IN.href }
   return (
     <Section top={top} height={height} label="6369:757" className="bg-white">
       {/*
@@ -59,11 +68,11 @@ export async function ContactSection({ top, height }: { top: number; height: num
       <Box x={319} y={100} w={1282} className="flex flex-col items-start gap-0 lg:flex-row lg:gap-[80px]">
         <div className={COLUMN} data-figma="6638:8418">
           <div className={HEAD_BLOCK}>
-            <Eyebrow>{FORM.eyebrow}</Eyebrow>
-            <h2 className={HEADING}>{FORM.heading}</h2>
-            <p className={LEAD}>{FORM.lead}</p>
+            <Eyebrow>{head.eyebrow}</Eyebrow>
+            <h2 className={HEADING}>{head.heading}</h2>
+            <p className={LEAD}>{head.lead}</p>
           </div>
-          <ContactForm form={FORM} serviceInterest={SERVICE_INTEREST} heroLocations={HERO_LOCATIONS} />
+          <ContactForm form={FORM} serviceInterest={SERVICE_INTEREST} heroLocations={HERO_LOCATIONS} variant={variant} help={help} />
         </div>
 
         <div className={`${COLUMN} bg-[#f9fafb] lg:bg-transparent`} data-figma="6638:8870">

@@ -10,6 +10,7 @@ import { absolute, href } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph } from '@/lib/schema'
 import { FAQ_SEO, allFaqs } from '@/data/faqs'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /faqs/ — Figma 6382:6819.
@@ -73,7 +74,7 @@ export default async function FaqsPage() {
           centred. `min-h` rather than `h` so a longer H1 cannot be clipped.
         */}
         <div data-figma="6478:5152" className="relative flex min-h-[276px] flex-col justify-center overflow-hidden bg-navy px-[20px] py-[48px] lg:block lg:h-[470px] lg:p-0">
-          <InteriorHeroArt />
+          <InteriorHeroArt src={HERO_PHOTOS.faqs.image} fill={HERO_PHOTOS.faqs.imageFill} tone={HERO_PHOTOS.faqs.tone} />
           {/* 24 Sep 2026: the H1 became "Frequently Asked Questions" and the lead
               the doc's opening sentence, so the text block is the service
               hero's (x319, 946 wide, 60/70 over 18/27) rather than the frame's

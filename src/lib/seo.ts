@@ -68,7 +68,7 @@ export function buildMetadata(raw: SeoInput): Metadata {
   return {
     title: input.title,
     description: input.description,
-    ...(sheet ? { keywords: [sheet.focusKeyword] } : {}),
+    ...(sheet?.focusKeyword ? { keywords: [sheet.focusKeyword] } : {}),
     // Page context and tracking switches for the dataLayer (src/lib/tracking.ts).
     other: trackingMeta(input),
     alternates: { canonical },

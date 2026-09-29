@@ -39,7 +39,7 @@ export const HERO = {
     { label: 'Home',     href: href('/') },
     { label: 'About Us', href: null },
   ],
-  h1: 'About Us',
+  h1: 'ABOUT US', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   // Asim, 23 Sep 2026.
   lead: 'Founded in 1993, Recycle Technologies has grown into a certified, multi-facility electronics recycling and data destruction company serving the Midwest.',
 }

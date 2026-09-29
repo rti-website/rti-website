@@ -49,6 +49,21 @@ export type CityPage = {
     crumbs: Crumb[]
     image: string
     /**
+     * The 20% grey veil over the photo. On by default; the photos the
+     * designer swapped in on 28 Sep 2026 (the batteries shot) are drawn
+     * without it, so those pages set `veil: false`.
+     */
+    veil?: boolean
+    /**
+     * Where the photo sits on the phone, in hero pixels (the hero is 390x276).
+     * Without it the photo is 730x411 centred, as first drawn. The revised
+     * frames place it by its layer: the batteries shot is 878x494 at
+     * (-223, -108), under a green wash 505 wide from x-6 and no navy.
+     * `washWidth` when the frame's green is not 505 wide (the electronics
+     * frames keep the 1127 wide wash from x-62).
+     */
+    phone?: { width: number; height: number; left: number; top: number; washLeft: number; washWidth?: number }
+    /**
      * Under the H1. The revised phone frames (27 Sep 2026) draw it too, as a
      * smaller button, sometimes with a shorter label (`phoneLabel`).
      */

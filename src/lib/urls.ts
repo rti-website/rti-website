@@ -58,7 +58,13 @@ export function isExternal(input: string): boolean {
  * CONTACT_FORM_HREF and quoteHref() below, so every quote button on the site,
  * with or without a preselected service, arrives at the same place.
  */
-export const QUOTE_HREF = `${path('/contact-us/')}#contact-form`
+// 29 Sep 2026: /quote/ is built (Asim: "Two CTAs sitewide: Schedule a Pickup
+// (/request-a-pickup/) and Get a Quote (/quote/)"), so every quote button
+// lands on its form there.
+export const QUOTE_HREF = `${path('/quote/')}#contact-form`
+
+/** The Schedule a Pickup page's form (29 Sep 2026): business pickup only. */
+export const PICKUP_HREF = `${path('/request-a-pickup/')}#contact-form`
 
 /**
  * The contact form itself, rather than the top of the page it sits on.
@@ -84,7 +90,7 @@ export function quoteHref(q: { service?: string; location?: string }): string {
   if (q.service) params.set('service', q.service)
   if (q.location) params.set('location', q.location)
   const qs = params.toString()
-  return `${path('/contact-us/')}${qs ? `?${qs}` : ''}#contact-form`
+  return `${path('/quote/')}${qs ? `?${qs}` : ''}#contact-form`
 }
 
 /**

@@ -12,6 +12,7 @@ import { LocationSteps } from '@/components/sections/locations/LocationSteps'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * A facility page — Figma "Location Details - Minnesota" 6744:8392 and
@@ -82,7 +83,7 @@ export async function LocationDetailPage({ f, layout: L, links }: {
           label="6744:8394" crumbs={crumbs} h1={f.hero.h1}
           /* 6745:6485 — the phone frame drops the zip and the state's full name. */
           lead={<><span className="lg:hidden">{f.hero.leadShort}</span><span className="max-lg:hidden">{f.hero.lead}</span></>}
-          image="/images/pages/hero-locations.png"
+          {...(f.state === 'Wisconsin' ? HERO_PHOTOS.wisconsin : HERO_PHOTOS.minnesota)}
         />
         <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
         <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />

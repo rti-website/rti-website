@@ -45,6 +45,17 @@ import { BLAINE_ELECTRONICS } from '@/data/city-pages/blaine-electronics'
 import { NEW_BERLIN_BATTERY } from '@/data/city-pages/new-berlin-battery'
 import { NEW_BERLIN_LIGHT_BULB } from '@/data/city-pages/new-berlin-light-bulb'
 import { NEW_BERLIN_ELECTRONICS } from '@/data/city-pages/new-berlin-electronics'
+import { ANOKA } from '@/data/county-pages/anoka'
+import { BENTON } from '@/data/county-pages/benton'
+import { DAKOTA } from '@/data/county-pages/dakota'
+import { HENNEPIN } from '@/data/county-pages/hennepin'
+import { OLMSTED } from '@/data/county-pages/olmsted'
+import { RAMSEY } from '@/data/county-pages/ramsey'
+import { SCOTT } from '@/data/county-pages/scott'
+import { WASHINGTON_MN } from '@/data/county-pages/washington-mn'
+import { CALUMET } from '@/data/county-pages/calumet'
+import { RACINE } from '@/data/county-pages/racine'
+import { WASHINGTON_WI } from '@/data/county-pages/washington-wi'
 import * as facilities from '@/data/facilities'
 import * as certifications from '@/data/certifications'
 import * as nav from '@/lib/nav'
@@ -115,7 +126,7 @@ export const DOCS = {
   'case-studies': { title: 'Case Studies', group: 'Main pages', urls: ['/case-studies/', '/'], data: mod(caseStudies, ['COMPLIANCE_CASE_IDS']),
     note: 'The case study cards also show on the homepage and the Compliance Center.' },
   'compliance-center': { title: 'Compliance Center', group: 'Main pages', urls: ['/compliance-center/'], data: mod(complianceCenter) },
-  contact: { title: 'Contact Us', group: 'Main pages', urls: ['/contact-us/', '/'], data: mod(contact),
+  contact: { title: 'Contact Us', group: 'Main pages', urls: ['/contact-us/', '/', '/quote/', '/request-a-pickup/'], data: mod(contact),
     note: 'The form (labels, options, messages) and facility cards. The service and location options also feed the homepage quote picker; the facility cards also show in the footer.' },
   downloads: { title: 'Downloads', group: 'Main pages', urls: ['/downloads/'], data: mod(downloads) },
   faqs: { title: 'FAQs', group: 'Main pages', urls: ['/faqs/'], data: mod(faqs, ['ALL_FAQS']) },
@@ -171,6 +182,19 @@ export const DOCS = {
   'city/new-berlin-battery': { title: 'Battery Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_BATTERY.url], data: one(NEW_BERLIN_BATTERY) },
   'city/new-berlin-light-bulb': { title: 'Light Bulb Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_LIGHT_BULB.url], data: one(NEW_BERLIN_LIGHT_BULB) },
   'city/new-berlin-electronics': { title: 'Electronic Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_ELECTRONICS.url], data: one(NEW_BERLIN_ELECTRONICS) },
+  /* The county pages (29 Sep 2026): the Items We Accept pills, service cards
+     and CTA banner are shared (src/data/county-pages/shared.ts) and not here. */
+  'county/anoka': { title: 'Anoka County Recycling Center', group: 'Location pages', urls: [ANOKA.url], data: one(ANOKA) },
+  'county/benton': { title: 'Benton County Recycling', group: 'Location pages', urls: [BENTON.url], data: one(BENTON) },
+  'county/dakota': { title: 'Dakota County Recycling Center', group: 'Location pages', urls: [DAKOTA.url], data: one(DAKOTA) },
+  'county/hennepin': { title: 'Hennepin County Recycling Center', group: 'Location pages', urls: [HENNEPIN.url], data: one(HENNEPIN) },
+  'county/olmsted': { title: 'Olmsted County Recycling Center', group: 'Location pages', urls: [OLMSTED.url], data: one(OLMSTED) },
+  'county/ramsey': { title: 'Ramsey Recycling (Ramsey County)', group: 'Location pages', urls: [RAMSEY.url], data: one(RAMSEY) },
+  'county/scott': { title: 'Scott County Recycling', group: 'Location pages', urls: [SCOTT.url], data: one(SCOTT) },
+  'county/washington-mn': { title: 'Washington County Recycling Center, MN', group: 'Location pages', urls: [WASHINGTON_MN.url], data: one(WASHINGTON_MN) },
+  'county/calumet': { title: 'Calumet County Recycling Center', group: 'Location pages', urls: [CALUMET.url], data: one(CALUMET) },
+  'county/racine': { title: 'Racine County Recycling Center', group: 'Location pages', urls: [RACINE.url], data: one(RACINE) },
+  'county/washington-wi': { title: 'Washington County Recycling Center, WI', group: 'Location pages', urls: [WASHINGTON_WI.url], data: one(WASHINGTON_WI) },
 
   /* ----------------------------------------------- legal and other pages -- */
   /* The MDX pages (27 Sep 2026): one box per paragraph, heading or list, in

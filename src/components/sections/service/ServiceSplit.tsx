@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
+import type { ImageCrop } from '@/data/service-page'
 
 /**
  * The two-column prose blocks on a service detail page, both on #f8faf9:
@@ -29,7 +30,7 @@ import { Section } from '@/components/design/Frame'
  * everything except the shape of it comes from the page data, not the frame.
  */
 export function ServiceSplit({
-  top, height, media, id, label, heading, image, imageAlt, children, footer,
+  top, height, media, id, label, heading, image, imageAlt, imageFlip = false, imageCrop, children, footer,
 }: {
   top: number
   height: number
@@ -39,6 +40,10 @@ export function ServiceSplit({
   heading: string
   image: string
   imageAlt: string
+  /** Mirror the photo left to right, as the frame does. */
+  imageFlip?: boolean
+  /** The frame's placement of the photo in its box — see ImageCrop. */
+  imageCrop?: ImageCrop
   /** The prose. Styled by the caller so each block can set its own rhythm. */
   children: React.ReactNode
   /** Optional row under the prose — the "Read More" link on the first block. */
@@ -98,10 +103,23 @@ export function ServiceSplit({
    * below where nobody sees it. Below lg nothing changes: the phone frame's
    * 220-tall photo above the text.
    */
+  /* The photo, object-cover in its own box: the whole art box by default, or
+     the frame's larger, offset box when there is an `imageCrop`. */
+  const pic = (sizes: string) => {
+    const img = <Image src={image} alt={imageAlt} fill sizes={sizes} className={`object-cover ${imageFlip ? '-scale-x-100' : ''}`} />
+    if (!imageCrop) return img
+    const c = imageCrop
+    return (
+      <span className="absolute block" style={{
+        left: `${(c.x / c.fw) * 100}%`, top: `${(c.y / c.fh) * 100}%`,
+        width: `${(c.w / c.fw) * 100}%`, height: `${(c.h / c.fh) * 100}%`,
+      }}>{img}</span>
+    )
+  }
   const art = media === 'right'
     ? (
       <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] max-lg:order-first lg:h-auto lg:w-[568px] lg:shrink-0 lg:rounded-[20px]">
-        <Image src={image} alt={imageAlt} fill sizes="(min-width: 1024px) 568px, 100vw" className="object-cover" />
+        {pic('(min-width: 1024px) 1200px, 200vw')}
       </div>
     )
     : (
@@ -109,7 +127,7 @@ export function ServiceSplit({
          started working once the heading above stopped forcing the row to
          overflow. */
       <div className="relative h-[220px] w-full overflow-hidden rounded-[16px] lg:h-auto lg:w-auto lg:min-w-px lg:flex-1 lg:rounded-[20px]">
-        <Image src={image} alt={imageAlt} fill sizes="(min-width: 1024px) 710px, 100vw" className="object-cover" />
+        {pic('(min-width: 1024px) 1400px, 200vw')}
       </div>
     )
 

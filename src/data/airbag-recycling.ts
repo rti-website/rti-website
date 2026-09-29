@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /airbag-recycling/ — copy from the "Airbag Recycling" doc, geometry from
@@ -22,9 +23,10 @@ export const CONTENT: ServicePageContent = {
     description: 'Certified airbag recycling for auto shops, dealerships & fleets. Deployed and undeployed units, DOT-compliant packaging, and recycling certificates.',
   },
   hero: {
+    ...HERO_PHOTOS.airbag, // 28 Sep 2026 frame — see src/data/hero-photos.ts
     crumb: 'Airbag Recycling',
     // Live H1 is "Airbag Recycling" — this page's only difference is "Services".
-    h1: 'Airbag Recycling Services',
+    h1: 'Airbag Recycling', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides certified airbag disposal for deployed and undeployed units, serving auto shops, dealerships, and fleet operators with a reliable, compliant recycling process.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
   },
@@ -37,7 +39,8 @@ export const CONTENT: ServicePageContent = {
       'For auto repair shops, dealerships, and vehicle dismantlers generating airbag waste on a regular basis, working with a recycler that treats this as a specialized service, not an afterthought, matters.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/airbag-intro.png',
+    imageCrop: { x: -11, y: -75, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13119)
   },
   accept: {
     heading: 'What We Accept',
@@ -60,7 +63,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Compliance Documentation',  text: 'Once disposal is complete, Recycle Technologies issues a certificate of recycling for your records.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/airbag-process.png',
+    imageCrop: { x: -75, y: 0, w: 1185, h: 666, fw: 750, fh: 655 }, // as the frame places it (6989:13117)
   },
   // The only page whose doc writes its own compliance copy, so the shared
   // certifications paragraph is overridden here and the band grows to fit.
@@ -81,6 +85,6 @@ export const CONTENT: ServicePageContent = {
       'Stop storing liability. Get a quote or schedule a pickup and get your airbags recycled the right way. Pickup service is exclusively available to commercial clients.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }

@@ -52,7 +52,9 @@ export const HERO = {
     { label: 'Locations', href: href('/all-locations/') },
     { label: 'Recycling in Chicago, Illinois', href: null },
   ],
-  image: '/images/locations/chicago/hero-electronics.png',
+  // 28 Sep 2026: the electronics shot the Blaine and New Berlin electronics
+  // pages use too (6873:14201), drawn without the grey veil — see ChicagoPage.
+  image: '/images/locations/city-pages/electronics-hero.png',
   button: { label: 'Schedule an Electronics Recycling Pickup', phoneLabel: 'Schedule an Electronics Recycling Pickup', href: quoteHref({ service: 'Electronics Recycling', location: 'Chicago, IL' }) },
 }
 

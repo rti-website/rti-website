@@ -22,7 +22,12 @@ export const NEW_BERLIN_BATTERY: CityPage = {
   hero: {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
-    image: '/images/locations/city-pages/new-berlin-battery/hero.png',
+    /* New photo, 28 Sep 2026: the batteries shot the Chicago and Blaine
+       battery pages got the same day (6924:3669), drawn without the grey
+       veil and placed by its own layer on the phone (6924:4107). */
+    image: '/images/locations/city-pages/battery-hero.png',
+    veil: false,
+    phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
     button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
   },
 

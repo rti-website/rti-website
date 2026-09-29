@@ -9,6 +9,7 @@ import {
 } from '@/components/sections/itad/ItadSections'
 import { SEO } from '@/data/itad'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * IT Asset Disposition — Figma 6778:2946 (desktop) / 6778:3335 (mobile).
@@ -65,8 +66,7 @@ export default async function ItadPage() {
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
       <main>
-        <ServiceHero label="6778:2948" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} image={HERO.image}
-          imageFill={HERO.imageFill} washes={HERO.washes}
+        <ServiceHero label="6778:2948" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} {...HERO_PHOTOS.itad}
         />
         <ItadIntro    top={INTRO_TOP}    height={H.intro} />
         <ItadWhy      top={WHY_TOP}      height={H.why} />

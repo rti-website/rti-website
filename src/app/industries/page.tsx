@@ -9,6 +9,7 @@ import { CertificationsBand } from '@/components/sections/services/Certification
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
 import { SEO } from '@/data/industries'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * All Industries — a 1:1 build of Figma frame 6246:1006 (1920 x 3068).
@@ -71,7 +72,7 @@ export default async function IndustriesPage() {
           crumbs={HERO.crumbs}
           h1={HERO.h1}
           lead={HERO.lead}
-          image="/images/industries/hero-industries.png"
+          {...HERO_PHOTOS.industries}
         />
 
         <IndustriesCatalog

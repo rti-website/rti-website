@@ -1,3 +1,17 @@
+import type { HeroFill, HeroTone, HeroWashes } from '@/components/ui/InteriorHeroArt'
+
+/**
+ * How a Figma frame places a photo inside the box that shows it (28 Sep 2026).
+ * The service and industry frames draw the photo LARGER than its box and
+ * offset, so the box shows one part of it: `x y w h` is the photo's box and
+ * `fw fh` the frame box it sits in (568x295 beside "What is", 750x655 beside
+ * "How do we"). ServiceSplit turns that into percentages of whatever size the
+ * box renders at, so the same part of the picture shows. Without it the photo
+ * is simply object-cover in the box, which on the TV page put a photo credit
+ * baked into the picture ("Credit: Constantinis") in view; the frame crops it
+ * out.
+ */
+export type ImageCrop = { x: number; y: number; w: number; h: number; fw: number; fh: number }
 /**
  * The shape every service detail page's content file exports.
  *
@@ -35,6 +49,13 @@ export type ServicePageContent = {
      * picture. Omit it and the page keeps the shared interior hero.
      */
     image?: string
+    /**
+     * The 28 Sep 2026 redraw: `image` as a raw 1920x1081 fill, its phone
+     * placement and the frame's washes — see src/data/hero-photos.ts.
+     */
+    imageFill?: HeroFill
+    washes?: HeroWashes
+    tone?: HeroTone
     /** The service frames carry a picker + button; the industry frames do not. */
     cta?: Cta
     /**
@@ -58,6 +79,10 @@ export type ServicePageContent = {
     body: string[]
     more?: { label: string; href: string }
     image: string
+    /** Mirrored left to right, where the frame flips the photo (off-site shredding, 28 Sep 2026). */
+    imageFlip?: boolean
+    /** Where the frame places the photo inside its box — see ImageCrop. */
+    imageCrop?: ImageCrop
   }
 
   /**
@@ -96,6 +121,8 @@ export type ServicePageContent = {
      */
     extra?: { heading: string; body?: string[]; items?: { label: string; text: string }[]; cta?: Cta }[]
     image: string
+    /** Where the frame places the photo inside its box — see ImageCrop. */
+    imageCrop?: ImageCrop
   }
 
   /**

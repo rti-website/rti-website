@@ -21,7 +21,13 @@ export const BLAINE_ELECTRONICS: CityPage = {
   hero: {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
-    image: '/images/locations/city-pages/blaine-electronics/hero.png',
+    /* New photo, 28 Sep 2026 (Figma BVtf2AOuUOcYbiMIlcKmbC, the same
+       electronics shot on both electronics pages): drawn without the grey
+       veil; on the phone the layer sits at -194,-67 (6927:10028) over the
+       navy, with the 1127 wide green from x-62 on top. */
+    image: '/images/locations/city-pages/electronics-hero.png',
+    veil: false,
+    phone: { width: 730, height: 411, left: -194, top: -67, washLeft: -62, washWidth: 1127 },
     button: { label: 'Schedule an Electronics Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
   },
 

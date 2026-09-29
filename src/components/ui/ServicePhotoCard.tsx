@@ -73,7 +73,28 @@ export function ServicePhotoCard({ card, scale = 1, reveal = false, more = 'Lear
     : ''
   const inner = (
     <>
-      {card.photo ? (
+      {card.cut ? (
+        /* 28 Sep 2026: a product cut-out on a #ddd plate (see ServiceCut).
+           The plate takes the photo's place and its slide; on the phone it is
+           the 180 band, rounded 14, with the picture centred at its phone size. */
+        <span className={'relative block h-[180px] w-full overflow-hidden rounded-[14px] bg-[#ddd] lg:absolute lg:left-[20px] lg:top-[84px] lg:h-[270px] lg:w-[221px]' + slide}>
+          <span
+            className="absolute left-1/2 top-1/2 block h-[var(--cut-ph)] w-[var(--cut-pw)] -translate-x-1/2 -translate-y-1/2 overflow-hidden lg:left-[var(--cut-x)] lg:top-[var(--cut-y)] lg:h-[var(--cut-h)] lg:w-[var(--cut-w)] lg:translate-x-0 lg:translate-y-0"
+            style={{
+              '--cut-x': `${card.cut.x}px`, '--cut-y': `${card.cut.y}px`, '--cut-w': `${card.cut.w}px`, '--cut-h': `${card.cut.h}px`,
+              '--cut-pw': `${card.cut.pw}px`, '--cut-ph': `${card.cut.ph}px`,
+            } as React.CSSProperties}
+          >
+            {card.cut.crop ? (
+              <span className="absolute block" style={{ left: `${card.cut.crop[0]}%`, top: `${card.cut.crop[1]}%`, width: `${card.cut.crop[2]}%`, height: `${card.cut.crop[3]}%` }}>
+                <Image src={card.cut.src} alt="" fill sizes="(width < 64rem) 480px, 560px" className="object-fill" />
+              </span>
+            ) : (
+              <Image src={card.cut.src} alt="" fill sizes="(width < 64rem) 480px, 560px" className="object-cover" />
+            )}
+          </span>
+        </span>
+      ) : card.photo ? (
         <Image
           src={card.photo}
           alt=""

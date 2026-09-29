@@ -12,6 +12,7 @@ import { loadLocations, materialLinks } from '@/lib/service-locations'
 import { LocationsCoverage } from '@/components/sections/locations/LocationsCoverage'
 import { LIVE_SEO } from '@/data/locations'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Locations — a 1:1 build of Figma frame 6374:4194, at the live URL
@@ -94,8 +95,7 @@ export default async function LocationsPage() {
             frame's "Resources" is a slip. */}
         <ServiceHero
           label="6374:4196" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} size="large"
-          image="/images/pages/hero-locations-warehouse.png"
-          imageFill={{ y: -372, h: 1081, overlay: 'linear-gradient(89.28deg, #0b1f3a 10.212%, rgba(30,86,160,0) 99.651%)' }}
+          {...HERO_PHOTOS.locations}
         />
         <LocationsFinder   top={FINDER_TOP} height={H.finder} />
         <LocationCards     top={CARDS_TOP}  height={H.cards} />

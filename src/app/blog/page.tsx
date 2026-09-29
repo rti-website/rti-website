@@ -9,6 +9,7 @@ import { BlogNewsletter } from '@/components/sections/blog/BlogNewsletter'
 import { blogCards, blogChips, blogPagePath, pageCount, pageSlice } from '@/lib/blog-index'
 import { LIVE_SEO } from '@/data/blog'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Blog index — a 1:1 build of Figma frame 6382:5541 at the live /blog/ URL.
@@ -58,7 +59,7 @@ export default async function BlogPage() {
       <main>
         <ServiceHero
           label="6382:5543" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-blog.png"
+          {...HERO_PHOTOS.blog}
         />
         <BlogArticles
           top={LIST_TOP} height={listH}

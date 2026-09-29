@@ -72,9 +72,50 @@ export type ServiceCard = {
    * and in the menu until Aqeel supplies one.
    */
   photo?: string
+  /**
+   * The product cut-out that REPLACED the photo on 28 Sep 2026 (Figma
+   * BVtf2AOuUOcYbiMIlcKmbC, /services/ 6142:1559 and the homepage tabs).
+   * When set it is drawn instead of `photo`; `photo` stays as the flag that
+   * puts the card on the homepage. See ServiceCut.
+   */
+  cut?: ServiceCut
   href: string
   external?: boolean
 }
+
+/**
+ * A transparent product shot on a #ddd plate. Desktop: the plate is the old
+ * photo's 221x270 box at (20, 84), r14, and `x y w h` is the image box inside
+ * it, read off the frame (component 150..159). `crop` is the frame's
+ * percentage crop of the picture inside that box (left, top, width, height),
+ * where it has one; without it the picture is object-cover in the box.
+ * Phone (6605:2369): the plate is the card's full-width 180 band and the image
+ * is `pw` x `ph`, centred.
+ */
+export type ServiceCut = {
+  src: string
+  x: number; y: number; w: number; h: number
+  crop?: [number, number, number, number]
+  pw: number; ph: number
+}
+
+const CUT = '/images/home'
+/* Node ids are the /services/ frame's (6948:11172 ...); the homepage tabs and
+   both phone frames draw the same assets at the same sizes. */
+const CUTS = {
+  bulbs:       { src: `${CUT}/svc-cut-bulbs.png`,       x: 0,     y: 50.93, w: 221,     h: 168, crop: [-9.65, 0, 114.31, 100],          pw: 203, ph: 154 },
+  electronics: { src: `${CUT}/svc-cut-electronics.png`, x: -14,   y: 39.93, w: 250,     h: 189,                                          pw: 219, ph: 165 },
+  batteries:   { src: `${CUT}/svc-cut-batteries.png`,   x: 20,    y: 43.93, w: 182,     h: 182,                                          pw: 182, ph: 182 },
+  ballasts:    { src: `${CUT}/svc-cut-ballasts.png`,    x: 3,     y: 78.93, w: 208,     h: 112,                                          pw: 208, ph: 112 },
+  tv:          { src: `${CUT}/svc-cut-tv.png`,          x: 19,    y: 37.93, w: 182,     h: 182,                                          pw: 182, ph: 182 },
+  airbag:      { src: `${CUT}/svc-cut-airbag.png`,      x: 62,    y: 21.93, w: 98,      h: 227, crop: [-181.46, -5.01, 468.29, 109.66], pw: 69,  ph: 160 },
+  harddrive:   { src: `${CUT}/svc-cut-harddrive.png`,   x: 17.62, y: 76,    w: 187.765, h: 133,                                          pw: 189, ph: 133 },
+  paper:       { src: `${CUT}/svc-cut-paper.png`,       x: 8,     y: 32,    w: 206,     h: 206,                                          pw: 206, ph: 206 },
+  offsite:     { src: `${CUT}/svc-cut-offsite.png`,     x: 0,     y: 44,    w: 237,     h: 158,                                          pw: 237, ph: 158 },
+  phone:       { src: `${CUT}/svc-cut-phone.png`,       x: 9,     y: 62,    w: 204,     h: 146, crop: [-17.21, -15.55, 135.02, 125.63], pw: 204, ph: 146 },
+  kit:         { src: `${CUT}/svc-cut-kit.png`,         x: 20,    y: 60,    w: 182,     h: 164, crop: [-12.97, -19.58, 125.95, 139.16], pw: 182, ph: 164 },
+  mailin:      { src: `${CUT}/svc-cut-mailin.png`,      x: -30,   y: -12,   w: 282,     h: 282,                                          pw: 236, ph: 236 },
+} satisfies Record<string, ServiceCut>
 
 export type ServiceGroup = {
   id: string
@@ -113,7 +154,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
          Recycling"), from the frame's "Lighting Bulbs Recycling" and
          "Batteries Recycling Service". Menu, /services/ and the homepage
          all read these two lines. */
-      { l1: 'Light Bulbs',    l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulb types.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', href: href('/light-bulbs/'), homeBlurb: 'Safe recycling of fluorescent, LED, and other bulbs.' },
+      { l1: 'Light Bulbs',    l2: 'Recycling',         blurb: 'Safe recycling of fluorescent, LED, and other bulb types.',   icon: '/images/home/svc-bulbs.png',      iw: 35, ih: 40, photo: '/images/home/svc-photo-bulbs.webp', cut: CUTS.bulbs, href: href('/light-bulbs/'), homeBlurb: 'Safe recycling of fluorescent, LED, and other bulbs.' },
       /* "Kit" dropped from the label on Asim's instruction, 22 Sep 2026. The
          card points at /electronic-recycle/, whose H1 is "Electronics
          Recycling Services" and whose crumb is "Electronic Recycling" — it is
@@ -122,17 +163,17 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
          ("Mail-in kit for recycling smaller quantities"), and the Recycling
          Programs group below still carries a second "Electronic Recycling Kit"
          row pointing at this same URL. Both need Asim's call. */
-      { l1: 'Electronic',     l2: 'Recycling',         blurb: 'Mail-in kit for recycling smaller quantities of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronic-recycle/'), homeBlurb: 'Easy collection and recycling of unwanted electronics.' },
-      { l1: 'Battery',        l2: 'Recycling',         blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', href: href('/battery-recycling/'), homeBlurb: 'Safe collection and recycling of spent batteries.' },
-      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', href: href('/ballasts/'), homeBlurb: 'Proper recycling of PCB and non-PCB ballasts.' },
-      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', href: href('/tv-recycling/'), homeBlurb: 'Responsible recycling of TVs and electronic displays.' },
+      { l1: 'Electronic',     l2: 'Recycling',         blurb: 'Mail-in kit for recycling smaller quantities of unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', cut: CUTS.electronics, href: href('/electronic-recycle/'), homeBlurb: 'Easy collection and recycling of unwanted electronics.' },
+      { l1: 'Battery',        l2: 'Recycling',         blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', cut: CUTS.batteries, href: href('/battery-recycling/'), homeBlurb: 'Safe collection and recycling of spent batteries.' },
+      { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', cut: CUTS.ballasts, href: href('/ballasts/'), homeBlurb: 'Proper recycling of PCB and non-PCB ballasts.' },
+      { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', cut: CUTS.tv, href: href('/tv-recycling/'), homeBlurb: 'Responsible recycling of TVs and electronic displays.' },
       // Live and linked from the live /services/ page, but absent from Figma
       // 6142:784 — menu only until a card is designed.
       // No Figma card and no Figma icon, so this row borrowed the TELEVISION
       // icon until 16 Sep 2026, when Asim caught it. `mark` names a drawn
       // stroked mark in src/components/ui/ServiceMarks.ts instead; swap it for
       // a real asset the moment Aqeel draws one.
-      { l1: 'Airbag',         l2: 'Recycling',         blurb: 'Certified disposal of deployed and undeployed airbags.',  mark: 'airbag',                          iw: 30, ih: 23, href: href('/airbag-recycling/'), menuOnly: true },
+      { l1: 'Airbag',         l2: 'Recycling',         blurb: 'Certified disposal of deployed and undeployed airbags.',  mark: 'airbag',                          iw: 30, ih: 23, cut: CUTS.airbag, href: href('/airbag-recycling/'), menuOnly: true },
     ],
   },
   {
@@ -145,15 +186,15 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     tabIconOn: '/images/icons/tab-destruction-on.svg',
     tabIconOff: '/images/icons/tab-destruction-off.svg',
     cards: [
-      { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', href: href('/hard-drive-destruction-services/'), homeBlurb: 'Secure destruction and responsible recycling of hard drives.' },
-      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', href: href('/paper-shredding-services/'), homeBlurb: 'Secure shredding and recycling of confidential paper.' },
-      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', href: href('/off-site-shredding/'), homeBlurb: 'Convenient off-site shredding for documents and materials.' },
+      { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', cut: CUTS.harddrive, href: href('/hard-drive-destruction-services/'), homeBlurb: 'Secure destruction and responsible recycling of hard drives.' },
+      { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', cut: CUTS.paper, href: href('/paper-shredding-services/'), homeBlurb: 'Secure shredding and recycling of confidential paper.' },
+      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', cut: CUTS.offsite, href: href('/off-site-shredding/'), homeBlurb: 'Convenient off-site shredding for documents and materials.' },
       // See the conflict note at the top of this file. Menu only since
       // 21 Sep 2026: the redrawn /services/ frame (6142:1559 in file
       // drzg9BI08Dy8eWZNBfXBzD) draws three Destruction cards, and Asim asked
       // for this one taken off the page ("remove this one"). The page itself
       // stays live and the header menu still links it.
-      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, href: href('/phone-shredding-service/'), menuOnly: true, homeBlurb: 'Secure shredding and recycling of unwanted phones.' },
+      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, cut: CUTS.phone, href: href('/phone-shredding-service/'), menuOnly: true, homeBlurb: 'Secure shredding and recycling of unwanted phones.' },
     ],
   },
   {
@@ -171,8 +212,8 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // homepage tab (6563:2130) and on /services/ (6142:1688).
       // Its own page since 24 Sep 2026 (the kit doc); it opened the
       // /electronic-recycle/ service page until then.
-      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', href: href('/electronics-recycling-kit/'), menuOnly: true },
-      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
+      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', cut: CUTS.kit, href: href('/electronics-recycling-kit/'), menuOnly: true },
+      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', cut: CUTS.mailin, href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
       // "About the Mail-In Program" (/mail-in-recycling/) came out of the
       // menu on 25 Sep 2026 — Asim: "remove the about mail in program from
       // here, just keep the page". The page stays, and the industry pages'
@@ -187,7 +228,7 @@ export const SERVICES_HERO = {
     { label: 'Home', href: href('/') },
     { label: 'Services', href: null },
   ],
-  h1: 'Our Services',
+  h1: 'Services', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead: 'Recycle Technologies has been providing services to the community since 1993. Explore our full range of recycling, destruction, and mail-in programs below.',
 }
 

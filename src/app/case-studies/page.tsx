@@ -8,6 +8,7 @@ import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { CaseStudyGrid } from '@/components/sections/case-studies/CaseStudyGrid'
 import { SEO } from '@/data/case-studies'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Case Studies — a 1:1 build of Figma frame 6382:6595.
@@ -62,7 +63,7 @@ export default async function CaseStudiesPage() {
       <main>
         <ServiceHero
           label="6382:6597" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-case-studies.png"
+          {...HERO_PHOTOS.caseStudies}
         />
         <CaseStudyGrid top={GRID_TOP} height={H.grid} />
         <ClosingCta top={CTA_TOP} label="6391:1528" content={CTA} />

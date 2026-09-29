@@ -9,6 +9,7 @@ import { BlogArticles, blogListHeight } from '@/components/sections/blog/BlogArt
 import { BlogNewsletter } from '@/components/sections/blog/BlogNewsletter'
 import { blogCards, blogChips, blogPagePath, pageCount, pageNumberParam, pageSlice } from '@/lib/blog-index'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /blog/page/2/ and beyond — the same frame as /blog/, a different slice.
@@ -88,7 +89,7 @@ export default async function BlogArchivePage({ params }: Props) {
       <main>
         <ServiceHero
           label="6382:5543" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-blog.png"
+          {...HERO_PHOTOS.blog}
         />
         <BlogArticles
           top={LIST_TOP} height={listH}

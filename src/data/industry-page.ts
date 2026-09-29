@@ -1,5 +1,6 @@
-import type { ServicePageContent } from '@/data/service-page'
+import type { ImageCrop, ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import type { HeroPhoto } from '@/data/hero-photos'
 
 /**
  * Shared scaffolding for the seven industry detail pages — Figma 6246:1390.
@@ -83,6 +84,14 @@ export function industryPage(input: {
    */
   heroImage?: string
   /**
+   * The 28 Sep 2026 redraw of the hero (healthcare only so far — the
+   * "Industries details" frame): photo, fill, phone placement and washes.
+   * Wins over `heroImage`. See src/data/hero-photos.ts.
+   */
+  heroPhoto?: HeroPhoto
+  /** The frame's placement of `introImage` in its 568x295 box — see ImageCrop. */
+  introCrop?: ImageCrop
+  /**
    * The photo beside "Recycling Challenges in X". One per industry since
    * 23 Sep 2026 (Figma 6734:5890..5897, supplied by Asim); omit it and the
    * block falls back to the shared service-detail photo.
@@ -102,6 +111,7 @@ export function industryPage(input: {
       h1: input.h1,
       lead: input.lead,
       image: input.heroImage,
+      ...input.heroPhoto,
       // Figma's industry hero has no button row; the docs' "[Get a Quote]" is
       // served by the closing CTA instead of adding one the design lacks.
     },
@@ -110,6 +120,7 @@ export function industryPage(input: {
       body: input.challenges,
       more: { label: 'Read More', href: '#services' },
       image: input.introImage ?? '/images/services/detail-intro.png',
+      imageCrop: input.introCrop,
     },
     accept: {
       heading: input.servicesHeading,

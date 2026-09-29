@@ -7,6 +7,7 @@ import { sitemapEntry } from '@/lib/seo'
 import { allDbPosts, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
 import { blogPagePath, categoryPagePath, pageCount, pageSlice } from '@/lib/blog-index'
 import { FIXED_FACILITY_URLS } from '@/data/city-pages'
+import { COUNTY_URLS } from '@/data/county-pages'
 
 /**
  * Only KEEP URLs. Never a redirected URL, never a noindexed URL — a sitemap
@@ -53,7 +54,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      /wisconsin-recycling/ (27 Sep 2026) live in [service] folders, which the
      walk below skips, so they are listed by name. Indexed by Asim's choice
      ("yes, index them"), though nothing in the menus links to them. */
-  const staticPages = ['/', ...explicitRoutes(), ...FIXED_FACILITY_URLS]
+  // The eleven county pages (29 Sep 2026) live in the same [service] folders.
+  const staticPages = ['/', ...explicitRoutes(), ...FIXED_FACILITY_URLS, ...COUNTY_URLS]
   const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
   const listed = posts.filter((p) => p.inSitemap && !p.noindex)
 

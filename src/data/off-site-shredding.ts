@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -17,10 +18,10 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "Off-Site Shredding Services". The doc covers BOTH off-site and
     // on-site, which is a scope change as well as a wording one — worth raising
     // with Rizwan separately from the other H1 diffs.
-    h1: 'Off-Site and On-Site Shredding',
+    h1: 'Off-Site Shredding Services', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides secure shredding for businesses handling confidential paperwork, with an off-site option that transports documents to a shredding facility and an on-site option that shreds documents at your location.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
-    image: '/images/services/hero-off-site-shredding.png',
+    ...HERO_PHOTOS.offSite, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What Is Off-Site and On-Site Shredding?',
@@ -31,7 +32,9 @@ export const CONTENT: ServicePageContent = {
       'Both options are built around the same goal: making sure confidential paper doesn’t leave your control unshredded. Once destroyed, the shredded material is recycled rather than sent to a landfill.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/off-site-shredding-intro.jpg',
+    image: '/images/services/off-site-shredding-intro-v2.png',
+    imageCrop: { x: -9, y: -41, w: 586, h: 376, fw: 568, fh: 295 }, // as the frame places it (6982:13065)
+    imageFlip: true, // mirrored in the frame (6982:13065)
   },
   accept: {
     heading: 'What We Accept',
@@ -55,7 +58,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Certificate of Destruction:', text: 'Once your documents are shredded, Recycle Technologies provides a Certificate of Destruction for your records.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
-    image: '/images/services/off-site-shredding-process.jpg',
+    image: '/images/services/off-site-shredding-process-v2.png',
+    imageCrop: { x: -291, y: -73, w: 1333, h: 800, fw: 750, fh: 655 }, // as the frame places it (6982:13063)
   },
   faqs: [
     { q: 'What’s the difference between on-site and off-site shredding?', a: 'On-site shredding destroys documents at your location; off-site shredding transports them to a facility for destruction and typically costs less.' },
@@ -70,6 +74,6 @@ export const CONTENT: ServicePageContent = {
       'If your business has confidential documents to destroy, get a quote or schedule a pickup to choose the shredding option that fits your needs. Pickup service is exclusively available to commercial clients.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }

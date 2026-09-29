@@ -1,4 +1,6 @@
 import 'server-only'
+import { SITE } from '@/lib/site'
+import { leadFormName } from '@/lib/lead-forms'
 
 /**
  * The notification email a new lead sends to LEAD_NOTIFY_TO.
@@ -49,6 +51,12 @@ export type LeadForEmail = {
   message: string | null
   details: Record<string, string>
   submittedAt?: Date
+  /** The page it was sent from (the leads row's source_page), and the full URL. */
+  sourcePage?: string | null
+  source_page?: string | null
+  submitPage?: string | null
+  /** The enquiry number, for the link to it in Publisher. */
+  id?: number | null
 }
 
 const esc = (s: string) =>
@@ -108,7 +116,12 @@ export function leadSections(l: LeadForEmail, opts: { spacedPhone?: boolean } = 
   const address = [d.address, place].filter(Boolean).join(', ')
   const name = leadName(l)
 
+  /* Which form and page it came from (29 Sep 2026): Contact Us, Get a Quote
+     or Schedule a Pickup (src/lib/lead-forms.ts). */
+  const page = l.sourcePage ?? l.source_page ?? ''
+  const form = leadFormName({ type: l.type, details: d, source_page: page })
   const all: Section[] = [
+    { title: 'Form', rows: [['Form', form ?? ''], ['Page sent from', l.submitPage || page]] },
     { title: 'Select Service', rows: [['Choose any one', kind]] },
     { title: 'Quote Type', rows: [
       ['What would you like to Recycle or Shred?', what],
@@ -163,12 +176,18 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
   const base = INTRO[l.type] ?? {
     title: 'New Website Enquiry', line: `A new ${l.type} enquiry came in from the website.`, subject: 'New Website Enquiry',
   }
-  const head = intro ?? base
+  const form = leadFormName({ type: l.type, details: d, source_page: l.sourcePage ?? l.source_page ?? null })
+  const head = intro ?? (form ? { ...base, line: `A ${form} form was submitted on the website.` } : base)
   const sections = leadSections(l)
   const name = leadName(l)
 
   const sent = `Sent ${submittedAt(l.submittedAt ?? new Date())}${d.consent ? ' · Consent given' : ''}`
-  const subject = `${base.subject}: ${name || l.email || 'no name given'}`
+  /* The subject names the form (29 Sep 2026), after the old WordPress
+     "Request a Pickup/Quote Form submitted on Recycle Technologies". */
+  const subject = form && !intro
+    ? `${form} Form submitted on Recycle Technologies: ${name || l.email || 'no name given'}`
+    : `${base.subject}: ${name || l.email || 'no name given'}`
+  const link = l.id ? `${SITE.origin}/admin/?lead=${l.id}` : null
 
   const text = [head.title, '', ...sectionsText(sections), sent].join('\n')
 
@@ -177,11 +196,14 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
 <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#222222">${esc(head.title)}</p>
 <p style="margin:0;font-size:13px;color:#777777">${esc(head.line)}</p>
 ${sectionsHtml(sections)}
+${link ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 0"><tr><td style="background:#05838b;border-radius:6px">
+<a href="${esc(link)}" style="display:inline-block;padding:10px 18px;font-size:13px;font-weight:700;color:#ffffff;text-decoration:none">Open in Publisher</a>
+</td></tr></table>` : ''}
 <p style="margin:22px 0 0;font-size:11px;color:#999999">${esc(sent)}</p>
 </div>
 </body></html>`
 
-  return { subject, text, html }
+  return { subject, text: link ? `${text}\nOpen in Publisher: ${link}` : text, html }
 }
 
 /**

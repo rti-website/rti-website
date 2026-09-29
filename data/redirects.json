@@ -10,16 +10,6 @@
     "statusCode": 301
   },
   {
-    "source": "/quote/",
-    "destination": "/contact-us/",
-    "statusCode": 301
-  },
-  {
-    "source": "/request-a-pickup/",
-    "destination": "/contact-us/",
-    "statusCode": 301
-  },
-  {
     "source": "/about-us/",
     "destination": "/about-us-commercial-recycling-solutions/",
     "statusCode": 301
@@ -145,11 +135,6 @@
     "statusCode": 301
   },
   {
-    "source": "/minnesota-recycling/anoka-county-recycling/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/minnesota-recycling/battery-recycling-duluth/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
@@ -161,11 +146,6 @@
   },
   {
     "source": "/minnesota-recycling/battery-recycling-st-paul/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/benton-county-recycling/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
   },
@@ -191,11 +171,6 @@
   },
   {
     "source": "/minnesota-recycling/coon-rapids/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/dakota-county/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
   },
@@ -240,11 +215,6 @@
     "statusCode": 301
   },
   {
-    "source": "/minnesota-recycling/hennepin-county-recycling-center/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
@@ -285,17 +255,7 @@
     "statusCode": 301
   },
   {
-    "source": "/minnesota-recycling/olmsted-county/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/minnesota-recycling/olmsted-county/rochester-recycling/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/ramsey/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
   },
@@ -316,16 +276,6 @@
   },
   {
     "source": "/minnesota-recycling/ramsey/roseville/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/scott-county/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/washington-county/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
   },
@@ -770,11 +720,6 @@
     "statusCode": 301
   },
   {
-    "source": "/wisconsin-recycling/calumet-county/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/wisconsin-recycling/calumet-county/appleton-recycling/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
@@ -860,11 +805,6 @@
     "statusCode": 301
   },
   {
-    "source": "/wisconsin-recycling/racine/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/wisconsin-recycling/sheboygan/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
@@ -891,11 +831,6 @@
   },
   {
     "source": "/wisconsin-recycling/tv-recycling-waukesha/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/wisconsin-recycling/washington-county-recycling-center/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
   },

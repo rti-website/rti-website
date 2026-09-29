@@ -63,8 +63,12 @@ export function serviceCards(groups: ServiceGroup[]): Record<string, Card[]> {
  * See the note in Hero.tsx — flagged to Asim 22 Sep 2026.
  */
 export const HOME_HERO = {
-  h1Phone: { l1: 'Certified E-Waste', l2: 'Recycling and ITAD' },
-  h1Board: { l1: 'Certified E-Waste Recycling', l2: '& IT Assets Disposition' },
+  /* 29 Sep 2026: back to the WordPress H1, "PAVE THE WAY For A Cleaner Future"
+     (RTI-Backup-vs-Live-Audit, tab Title and H1 changes). Was phone "Certified
+     E-Waste Recycling and ITAD", board "Certified E-Waste Recycling & IT Assets
+     Disposition". When both wordings are the same the hero prints it once. */
+  h1Phone: { l1: 'PAVE THE WAY', l2: 'For A Cleaner Future' },
+  h1Board: { l1: 'PAVE THE WAY', l2: 'For A Cleaner Future' },
   /* Lead — 6023:13164. Board only: the phone frame has no lead. */
   lead: 'Recycle Technologies provides certified e-waste recycling, ITAD, data destruction, and '
     + 'shredding solutions that keep electronics out of landfills and valuable materials in '
@@ -229,17 +233,21 @@ export const HOME_FAQ = {
  * Aqeel to supply both. ind-food.png is now unused; leave it in public/ until
  * the design file drops it too.
  */
+/* 28 Sep 2026: the homepage frame's industry cards got new photos (Figma
+   BVtf2AOuUOcYbiMIlcKmbC, Home 6023:3801 and Home - Mobile 6588:2308), -v2
+   files so /industries/ — whose frame did not change — keeps the old ones.
+   Retail is unchanged; Government still borrows the logistics picture. */
 export const INDUSTRIES = [
   { t: 'Retail',             img: '/images/home/ind-retail.png',        href: href('/industries/retail-corporate-offices/'),   b: 'Responsible electronics recycling and secure shredding to help stores manage outdated equipment and sensitive materials.' },
-  { t: 'Manufacturing',      img: '/images/home/ind-manufacturing.png', href: href('/industries/manufacturing-industrial/'),   b: 'Electronics recycling, battery disposal, and material recovery solutions for facilities managing equipment and production waste.' },
-  { t: 'Healthcare',         img: '/images/home/ind-healthcare.png',    href: href('/industries/healthcare/'),                 b: 'Secure electronics recycling and data destruction for devices and materials containing sensitive information.' },
-  { t: 'Banking & Finance',  img: '/images/home/ind-banking.png',       href: href('/industries/financial-services-banking/'), b: 'Secure hard drive destruction and document shredding to protect sensitive financial and customer information.' },
+  { t: 'Manufacturing',      img: '/images/home/ind-manufacturing-v2.png', href: href('/industries/manufacturing-industrial/'),   b: 'Electronics recycling, battery disposal, and material recovery solutions for facilities managing equipment and production waste.' },
+  { t: 'Healthcare',         img: '/images/home/ind-healthcare-v2.png',    href: href('/industries/healthcare/'),                 b: 'Secure electronics recycling and data destruction for devices and materials containing sensitive information.' },
+  { t: 'Banking & Finance',  img: '/images/home/ind-banking-v2.png',       href: href('/industries/financial-services-banking/'), b: 'Secure hard drive destruction and document shredding to protect sensitive financial and customer information.' },
   // The old "Education & Government" card, split: two pages, two cards.
-  { t: 'Education',          img: '/images/home/ind-education.png',     href: href('/industries/education/'),                  b: 'Reliable electronics recycling, data destruction, and shredding services for schools, districts, and universities.' },
+  { t: 'Education',          img: '/images/home/ind-education-v2.png',     href: href('/industries/education/'),                  b: 'Reliable electronics recycling, data destruction, and shredding services for schools, districts, and universities.' },
   // placeholder art — see the TODO above
   { t: 'Government',         img: '/images/home/ind-logistics.png',     href: href('/industries/government-municipal/'),       b: 'Electronics recycling, data destruction, and secure shredding for government offices and municipal departments.' },
-  // placeholder art
-  { t: 'Automotive & Fleet', img: '/images/home/ind-construction.png',  href: href('/industries/automotive-fleet/'),           b: 'Airbag recycling, electronics disposal, and battery collection for auto shops, dealerships, and fleet operations.' },
+  // Its own photo since 28 Sep 2026 (the homepage frame's Automotive card)
+  { t: 'Automotive & Fleet', img: '/images/home/ind-automotive.png',    href: href('/industries/automotive-fleet/'),           b: 'Airbag recycling, electronics disposal, and battery collection for auto shops, dealerships, and fleet operations.' },
 ]
 
 /**

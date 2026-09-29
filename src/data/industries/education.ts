@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/education/ — copy from the "Education (K-12 & Higher Ed)" doc. */
 export const CONTENT = industryPage({
@@ -26,7 +27,10 @@ export const CONTENT = industryPage({
     { label: 'Mail-In Program',        href: L.mailIn,      text: 'Campuses or school buildings outside the Minnesota and Wisconsin service area can order a recycling kit online, pack it, and drop it off at a FedEx location using the included prepaid label, then receive a recycling certificate once it’s processed.' },
   ],
   heroImage: '/images/industries/hero-education.png',
-  introImage: '/images/industries/intro-education-government.png', // Figma 6734:5897, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.education, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-education-v2.png', // 28 Sep 2026 frame; was intro-education-government.png
+  introCrop: { x: -81, y: -152, w: 730, h: 486, fw: 568, fh: 295 }, // as the frame places it (6989:13163)
+  // (the 23 Sep photo was Figma 6734:5897, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies work with schools, districts, colleges, or universities?', a: 'Our electronics recycling and IT asset disposition services are set up to handle equipment from businesses and institutions, including bulk technology refreshes.' },
     { q: 'Can a school district recycle a large batch of retired computers at once?', a: 'Yes. Our IT asset disposition process includes a planning and estimation step specifically for larger equipment lists.' },

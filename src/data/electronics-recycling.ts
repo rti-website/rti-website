@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /electronic-recycle/ — all page copy.
@@ -45,7 +46,7 @@ export const HERO = {
     { label: 'Our Services', href: href('/services/') },
     { label: 'Electronic Recycling', href: null },
   ],
-  h1: 'Electronics Recycling Services',
+  h1: 'Electronic Recycling', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead:
     'Recycle Technologies collects and processes electronics for businesses and '
     + 'organizations, breaking devices down into their base materials instead of '
@@ -78,7 +79,9 @@ export const INTRO = {
     + 'a documented way to retire old equipment.',
   ],
   more: { label: 'Read More', href: '#how-we-recycle' },
-  image: '/images/services/electronics-intro.jpg',
+  // 28 Sep 2026: the "Service Details" frame's new photo (6989:13292).
+  image: '/images/services/electronics-intro-v2.png',
+  imageCrop: { x: -9, y: -41, w: 586, h: 376, fw: 568, fh: 295 }, // as the frame places it (6989:13292)
 }
 
 /* --------------------------------------------------------- what we accept --
@@ -131,7 +134,9 @@ export const PROCESS = {
   outro:
     'Not every device follows an identical path through the facility, since equipment types '
     + 'vary, but this is the general process electronics go through once they arrive.',
-  image: '/images/services/electronics-process.jpg',
+  // 28 Sep 2026: the "Service Details" frame's new photo (6989:13295).
+  image: '/images/services/electronics-process-v2.png',
+  imageCrop: { x: -122, y: -8, w: 1149, h: 670, fw: 750, fh: 655 }, // as the frame places it (6989:13295)
 }
 
 /* -------------------------------------------------------------------- FAQ --
@@ -192,8 +197,10 @@ export const CONTENT: ServicePageContent = {
   url: '/electronic-recycle/',
   liveSeo: LIVE_SEO,
   proposedSeo: PROPOSED_SEO,
+  // Photo, fill and washes: the 28 Sep 2026 "Service Details" frame — see
+  // HERO_PHOTOS.electronics. The kit page uses the same photo (HERO_PHOTOS.kit).
   hero: { crumb: 'Electronic Recycling', h1: HERO.h1, lead: HERO.lead, cta: HERO.cta,
-          image: '/images/services/hero-electronics.png' },
+          ...HERO_PHOTOS.electronics },
   intro: INTRO,
   accept: ACCEPT,
   process: PROCESS,

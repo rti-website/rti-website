@@ -152,8 +152,12 @@ export async function Locations() {
             card clips (hence `max-lg:overflow-hidden` above, which must not
             reach the desktop or the overhang is cut off). The 110.91% crop is
             the same at both sizes. */}
-        <Box x={772} y={-22} w={566} h={309} className="overflow-hidden max-lg:h-[165px]">
-          <Image src="/images/home/impact.webp" alt="" width={1132} height={685} className="h-[110.91%] w-full max-w-none object-cover object-top" />
+        {/* 28 Sep 2026: a new brochure picture (6873:15312), drawn whole — no
+            clip, no crop — 502x308 at x830 y-24 of the card, so it still hangs
+            out of the card's top, right and bottom. On the phone (6873:15313)
+            it is in flow at the full content width, 1602:982. */}
+        <Box x={830} y={-24.016} w={502} h={308} className="max-lg:aspect-[1602/982] max-lg:h-auto">
+          <Image src="/images/home/impact-v2.png" alt="" width={1004} height={616} sizes="(width < 64rem) 604px, 1004px" className="size-full object-cover" />
         </Box>
       </Box>
     </Section>

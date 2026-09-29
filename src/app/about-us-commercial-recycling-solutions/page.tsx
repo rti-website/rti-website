@@ -12,6 +12,7 @@ import { AboutFacilities } from '@/components/sections/about/AboutFacilities'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { LIVE_SEO } from '@/data/about'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * About Us — a 1:1 build of Figma frame 6371:3478.
@@ -73,7 +74,7 @@ export default async function AboutPage() {
       <main>
         <ServiceHero
           label="6371:3480" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-about.png"
+          {...HERO_PHOTOS.about}
         />
         <AboutStory      top={STORY_TOP}  height={H.story} />
         <AboutValues     top={VALUES_TOP} height={H.values} />

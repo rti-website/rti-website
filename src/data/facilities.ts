@@ -1,6 +1,6 @@
 import { FACILITIES as CONTACT } from '@/data/contact'
 import type { CtaContent } from '@/components/sections/ClosingCta'
-import { href } from '@/lib/urls'
+import { href, PICKUP_HREF } from '@/lib/urls'
 import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
@@ -190,7 +190,7 @@ export const MINNESOTA: Facility = {
   },
   liveH1: 'Recycling Center in Minnesota',
   hero: {
-    h1: 'Minnesota Facility',
+    h1: 'Recycling Center in Minnesota', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: '1525 99th Ln NE, Blaine, Minnesota 55449, R2v3 Certified',
     leadShort: '1525 99th Ln NE, Blaine, MN, R2v3 Certified',
   },
@@ -223,7 +223,7 @@ export const MINNESOTA: Facility = {
   cta: {
     heading: 'Ready to Bring Materials to Blaine?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if Blaine isn’t convenient.',
-    primary:   { label: 'Schedule a Pickup',  href: href('/request-a-pickup/') },
+    primary:   { label: 'Schedule a Pickup',  href: PICKUP_HREF },
     secondary: { label: 'See All Locations',  href: href('/all-locations/') },
   },
 }
@@ -241,7 +241,7 @@ export const WISCONSIN: Facility = {
   },
   liveH1: 'Recycling in Wisconsin',
   hero: {
-    h1: 'Wisconsin Facility',
+    h1: 'Recycling in Wisconsin', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: '2815 South 171st Street, New Berlin, WI 53151, Pursuing R2v3',
     leadShort: '2815 South 171st Street, New Berlin, WI, Pursuing R2v3',
   },
@@ -278,7 +278,7 @@ export const WISCONSIN: Facility = {
   cta: {
     heading: 'Ready to Bring Materials to New Berlin?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if New Berlin isn’t convenient.',
-    primary:   { label: 'Schedule a Pickup',  href: href('/request-a-pickup/') },
+    primary:   { label: 'Schedule a Pickup',  href: PICKUP_HREF },
     secondary: { label: 'See All Locations',  href: href('/all-locations/') },
   },
 }

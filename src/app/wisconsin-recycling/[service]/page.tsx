@@ -5,6 +5,8 @@ import { findServicePage, offeredServices, servicePageMetadata } from '@/lib/ser
 import { cityDocKey, fixedFacilityPage } from '@/data/city-pages'
 import { content } from '@/lib/page-content'
 import { buildMetadata } from '@/lib/seo'
+import { CountyPage } from '@/components/sections/locations/CountyPage'
+import { countyDocKey, countyPage, countySlugs } from '@/data/county-pages'
 
 /**
  * /wisconsin-recycling/<service>/ — the Wisconsin service pages from the SEO brief
@@ -18,6 +20,12 @@ import { buildMetadata } from '@/lib/seo'
  * admin-managed rendering below stays for any service the fixed set does not
  * cover, and for the partner sites under /locations/.
  */
+/*
+ * THE COUNTY PAGES (29 Sep 2026) share this folder: /wisconsin-recycling/
+ * <county>/ were 301'd to the facility page at launch and are back at their
+ * own URLs on the county template (src/data/county-pages/). A county slug is
+ * matched before the service pages; no service slug is also a county slug.
+ */
 export const dynamicParams = true
 
 const SITE = 'wisconsin'
@@ -25,13 +33,15 @@ const SITE = 'wisconsin'
 export async function generateStaticParams() {
   const fromAdmin = await offeredServices(SITE)
   const fixed = ['battery-recycling', 'light-bulb-recycling', 'electronic-recycling'].filter((s) => fixedFacilityPage(SITE, s))
-  return [...new Set([...fixed, ...fromAdmin.map((p) => p.service)])].map((service) => ({ service }))
+  return [...new Set([...fixed, ...countySlugs(SITE), ...fromAdmin.map((p) => p.service)])].map((service) => ({ service }))
 }
 
 type Props = { params: Promise<{ service: string }> }
 
 export async function generateMetadata({ params }: Props) {
   const { service } = await params
+  const county = countyPage(SITE, service)
+  if (county) return buildMetadata({ url: county.url, title: county.seo.title, description: county.seo.description })
   const fixed = fixedFacilityPage(SITE, service)
   if (fixed) return buildMetadata({ url: fixed.url, title: fixed.seo.title, description: fixed.seo.description })
   return servicePageMetadata(await findServicePage(SITE, service, false))
@@ -39,6 +49,8 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function WisconsinServicePage({ params }: Props) {
   const { service } = await params
+  const county = countyPage(SITE, service)
+  if (county) return <CountyPage page={await content(countyDocKey(county))} />
   const fixed = fixedFacilityPage(SITE, service)
   if (fixed) return <CityServicePage page={await content(cityDocKey(fixed))} />
   const found = await findServicePage(SITE, service, false)

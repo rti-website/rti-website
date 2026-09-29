@@ -21,7 +21,13 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
   hero: {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
-    image: '/images/locations/city-pages/chicago-light-bulb/hero.png',
+    /* New photo, 28 Sep 2026 (Figma BVtf2AOuUOcYbiMIlcKmbC, the same bulbs
+       shot on all three light bulb pages): drawn without the grey veil, and
+       placed by its own layer on the phone (6919:18212: 880x495 at -223,-109,
+       green wash 505 wide from x-6). */
+    image: '/images/locations/city-pages/light-bulb-hero.png',
+    veil: false,
+    phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
     button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
   },
 

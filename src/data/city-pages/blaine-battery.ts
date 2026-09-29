@@ -20,7 +20,12 @@ export const BLAINE_BATTERY: CityPage = {
   hero: {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
-    image: '/images/locations/city-pages/blaine-battery/hero.png',
+    /* The batteries photo the designer swapped in on 28 Sep 2026 (Figma
+       6922:18658, phone 6922:19096): shared by the battery pages, drawn
+       without the grey veil, and placed by its own layer on the phone. */
+    image: '/images/locations/city-pages/battery-hero.png',
+    veil: false,
+    phone: { width: 880, height: 495, left: -223, top: -108, washLeft: -15 },
     button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
   },
 

@@ -21,7 +21,12 @@ export const CHICAGO_BATTERY: CityPage = {
   hero: {
     h1: H1,
     crumbs: [HOME_CRUMB, LOCATIONS_CRUMB, { label: H1, href: null }],
-    image: '/images/locations/city-pages/chicago-battery/hero.png',
+    /* The batteries photo the designer swapped in on 28 Sep 2026 (Figma
+       6908:15988, phone 6915:16919): shared by the battery pages, drawn
+       without the grey veil, and placed by its own layer on the phone. */
+    image: '/images/locations/city-pages/battery-hero.png',
+    veil: false,
+    phone: { width: 878, height: 494, left: -223, top: -108, washLeft: -6 },
     button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
   },
 

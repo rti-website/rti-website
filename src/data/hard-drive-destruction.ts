@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /hard-drive-destruction-services/ — copy from the "Hard Drive Destruction" doc. */
 export const CONTENT: ServicePageContent = {
@@ -17,8 +18,8 @@ export const CONTENT: ServicePageContent = {
     // Matches the live H1 exactly — no gate 2 conflict on this page.
     h1: 'Hard Drive Destruction Services',
     lead: 'Deleting files or reformatting a drive does not remove the data stored on it. Recycle Technologies provides secure hard drive destruction for businesses in Minnesota and Wisconsin, physically destroying hard disk drives, solid-state drives, and other data-bearing storage media so the information on them cannot be recovered.',
-    cta: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
-    image: '/images/services/hero-hard-drives.png',
+    cta: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+    ...HERO_PHOTOS.hardDrive, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What Is Hard Drive Destruction?',
@@ -28,7 +29,8 @@ export const CONTENT: ServicePageContent = {
       'Destruction is different from simply throwing a drive away or handing it off with the rest of the retired electronics. A drive placed in general e-waste may still hold intact data. Physical destruction addresses that risk directly, and the materials left over from the process are handled through Recycle Technologies’ recycling operations rather than sent to a landfill.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/hard-drive-intro.jpg',
+    image: '/images/services/hard-drive-intro-v2.png',
+    imageCrop: { x: -81, y: -152, w: 730, h: 486, fw: 568, fh: 295 }, // as the frame places it (6979:13040)
   },
   accept: {
     heading: 'What We Accept',
@@ -49,7 +51,8 @@ export const CONTENT: ServicePageContent = {
       { label: '4. Recycling',   text: 'The shredded material left over from the destruction process is recycled rather than sent to a landfill, which keeps the metal, plastic, and other components in the recycling stream.' },
     ],
     outro: 'For businesses that are also clearing out other retired IT equipment, electronics recycling and IT asset disposition (ITAD) services can be arranged alongside hard drive destruction.',
-    image: '/images/services/hard-drive-process.jpg',
+    image: '/images/services/hard-drive-process-v2.png',
+    imageCrop: { x: -120, y: -8, w: 1149, h: 670, fw: 750, fh: 655 }, // as the frame places it (6979:13038)
   },
   faqs: [
     { q: 'What types of hard drives can Recycle Technologies destroy?', a: 'We destroy hard disk drives (HDDs), solid-state drives (SSDs), and other data-bearing storage devices from computers and IT equipment.' },
@@ -66,6 +69,6 @@ export const CONTENT: ServicePageContent = {
       'Recycle Technologies handles hard drive destruction, as well as electronics, battery, light bulb, ballast, TV, and airbag recycling for businesses in Minnesota and Wisconsin. Request a pickup or get a quote today to get started.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }

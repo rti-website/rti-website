@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /contact-us/ — copy from the "Contact Us" doc, geometry from Figma 6365:1082.
@@ -31,7 +31,7 @@ export const HERO = {
     { label: 'Contact Us', href: null },
   ],
   // Live H1 is "contact us" (lowercase). Built as designed, like every other page.
-  h1: 'Contact Us',
+  h1: 'contact us', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   // Asim, 23 Sep 2026.
   lead: 'Questions about recycling, drop-off, or getting a quote? Reach out to our team and get a quick response to your queries.',
 }
@@ -248,5 +248,95 @@ export const CTA = {
     'Recycle Technologies has been providing services to the community since 1993. Tell us what you need to recycle and we’ll send a fast, no-obligation quote — or set up a pickup with one of our licensed Minnesota or Wisconsin facilities.',
   ],
   primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-  secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+}
+
+/* ===========================================================================
+ * THE THREE FORMS — Asim, 29 Sep 2026.
+ *
+ * One form, three places: Contact Us (/contact-us/), Get a Quote (/quote/)
+ * and Schedule a Pickup (/request-a-pickup/). Contact Us and Get a Quote are
+ * the same form, "Is it for?" preselected Commercial. Schedule a Pickup is
+ * business only: no "Is it for?" (every pickup is Commercial) and the
+ * business notice at the top. Each lead is stored with the form it came from
+ * (details.form: contact / quote / pickup), which Admin -> Enquiries and the
+ * notification email show.
+ * ===========================================================================
+ */
+
+/** The Get a Quote page (/quote/). Title, description and H1 are the old
+ *  WordPress ones from data/url-map.csv, word for word (CLAUDE.md rule 6). */
+export const QUOTE_PAGE = {
+  seo: {
+    title: 'Get Quote related to Recycling & Shredding | Recycle Technologies',
+    description: 'Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.',
+  },
+  crumbs: [{ label: 'Home', href: href('/') }, { label: 'Get A Quote', href: null }],
+  h1: 'Get A Quote',
+  lead: 'Tell us what you need to recycle or shred and we will send a fast, no obligation quote.',
+  form: {
+    eyebrow: 'Get a Quote',
+    heading: 'Request Your Free Quote',
+    lead: 'Fill out the short form below and our team will get back to you within one business day.',
+  },
+}
+
+/** The Schedule a Pickup page (/request-a-pickup/). Same rule for the SEO fields and H1. */
+export const PICKUP_PAGE = {
+  seo: {
+    title: 'Request a pickup - Recycle Technologies',
+    description: 'Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.',
+  },
+  crumbs: [{ label: 'Home', href: href('/') }, { label: 'Request a pickup', href: null }],
+  h1: 'Request a pickup',
+  lead: 'Business pickup for electronics, batteries, lamps, paper and more, from our licensed Minnesota and Wisconsin facilities.',
+  form: {
+    eyebrow: 'Schedule a Pickup',
+    heading: 'Schedule a Business Pickup',
+    lead: 'Tell us what you have and where it is. Our team will confirm a pickup time within one business day.',
+  },
+}
+
+/**
+ * "We do not offer residential pickup" — shown above "Is it for?" when a
+ * visitor picks Residential on Contact Us or Get a Quote, and at the top of
+ * the Schedule a Pickup form. The form still sends either way. Each link
+ * opens a pop-up (ResidentialHelp): the nearest drop-off locations (after the
+ * browser asks for the visitor's location), or the Mail-In Program.
+ * `{n}` and `{miles}` are filled in.
+ */
+export const NO_PICKUP = {
+  residential: 'We do not offer residential pickup.',
+  business: 'Pickup is for businesses only. We do not offer residential pickup.',
+  dropoffLink: 'Click here to see the nearest drop-off facility',
+  mailinLink: 'Click here to subscribe to our Mail-In Program',
+  dropoff: {
+    finding: 'Finding your location…',
+    title: 'Drop-off Locations Near You',
+    found: 'We found {n} drop-off locations near you',
+    foundOne: 'We found 1 drop-off location near you',
+    none: 'There is no drop-off location within {miles} miles of you. These are the nearest ones, or you can recycle by mail.',
+    denied: 'We could not get your location. Enter your ZIP code instead.',
+    zipLabel: 'ZIP code',
+    search: 'Search',
+    notFound: 'We could not find that ZIP code. Please check it.',
+    directions: 'Get directions',
+    facility: 'Recycle Technologies facility',
+    partner: 'Drop-off partner',
+    away: '{miles} miles away',
+    close: 'Less than a mile away',
+    viewAll: 'See all drop-off locations',
+    mailin: 'Recycle by mail instead',
+  },
+  mailin: {
+    title: 'Mail-In Recycling Program',
+    body: 'Not near a drop-off location? Order a recycling kit online, pack your items and ship them back. The Mail-In Program is open to households and businesses anywhere in the US.',
+    steps: [
+      'Order a recycling kit online for what you need to send.',
+      'Pack your eligible items in the kit when it arrives.',
+      'Ship it back with the return label included with your order.',
+    ],
+    buy: 'Buy Recycling Kits',
+    more: 'Learn more about the Mail-In Program',
+  },
 }

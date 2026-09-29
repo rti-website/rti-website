@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/retail-corporate-offices/ — copy from the "Retail & Corporate Offices" doc. */
 export const CONTENT = industryPage({
@@ -27,7 +28,9 @@ export const CONTENT = industryPage({
     { label: 'Light Bulb Recycling',   href: L.lightBulbs,  text: 'Stores and offices replacing fluorescent, LED, halogen, or incandescent lighting during renovations or maintenance can recycle the retired bulbs rather than sending them to a landfill.' },
   ],
   heroImage: '/images/industries/hero-retail.png',
-  introImage: '/images/industries/intro-retail.png', // Figma 6734:5891, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.retail, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-retail-v2.png', // 28 Sep 2026 frame; was intro-retail.png
+  // (the 23 Sep photo was Figma 6734:5891, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies accept retired computers and IT equipment from retail stores and corporate offices?', a: 'Yes, our electronics recycling and IT asset disposition services cover retired computers, monitors, and other office electronics.' },
     { q: 'Can a retail or corporate office recycle old televisions along with its electronics?', a: 'Yes, our TV recycling service accepts retired television units, including older CRT models.' },

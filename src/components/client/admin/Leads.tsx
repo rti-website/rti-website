@@ -1,9 +1,10 @@
 'use client'
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { Dialog } from './Dialog'
+import { ConfirmDialog, Dialog } from './Dialog'
 import { Empty, Icon, Table } from './Bits'
 import { LOCATION_CSV_HEAD, LocationBlock, LocationCell, locationCsv, locationText, type LeadGeo } from './LeadLocation'
+import { LEAD_FORMS, leadFormKey } from '@/lib/lead-forms'
 import { getJSON, sendJSON } from './api'
 
 /**
@@ -102,7 +103,9 @@ const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
   { key: 'clickLabel', label: 'Link text', from: 'details' },
   { key: 'autoReply', label: 'Drop off email sent', from: 'details' },
 ]
-const KNOWN_DETAILS = new Set(LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key))
+const KNOWN_DETAILS = new Set([...LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key), 'form'])
+/** "Contact Us", "Get a Quote" or "Schedule a Pickup" (29 Sep 2026, src/lib/lead-forms.ts). */
+const formOf = (l: LeadRow): string | null => { const k = leadFormKey(l); return k ? LEAD_FORMS[k] : null }
 /** Who hands enquiries out: administrators, editors and the Ads manager (28 Sep 2026). */
 export const isLeadManager = (role: string) => role === 'administrator' || role === 'editor' || role === 'ads'
 export const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
@@ -120,6 +123,8 @@ const LEAD_TYPES: Record<string, string> = { contact: 'Contact form', quote: 'Pi
 function leadFields(l: LeadRow): [string, string][] {
   const d = l.details ?? {}
   const out: [string, string][] = []
+  const form = formOf(l)
+  if (form) out.push(['Form', form])
   for (const f of LEAD_FIELDS) {
     const raw = f.from === 'col' ? (l as unknown as Record<string, unknown>)[f.key] : d[f.key]
     if (raw === null || raw === undefined || String(raw).trim() === '') continue
@@ -134,7 +139,7 @@ function leadFields(l: LeadRow): [string, string][] {
 /** CSV of the rows on screen, every field, for a spreadsheet. */
 function leadsCsv(rows: LeadRow[]): string {
   const extra = [...new Set(rows.flatMap((l) => Object.keys(l.details ?? {}).filter((k) => !KNOWN_DETAILS.has(k))))]
-  const head = ['ID', 'Received', 'Type', 'Status', 'Came in by', 'Came in detail', 'Logged by', 'Assigned to',
+  const head = ['ID', 'Received', 'Type', 'Form', 'Status', 'Came in by', 'Came in detail', 'Logged by', 'Assigned to',
     ...LEAD_FIELDS.map((f) => f.label), ...extra, 'Notes',
     ...LOCATION_CSV_HEAD, ...ATTR_FIELDS.map(([, label]) => label)]
   const cell = (v: unknown) => {
@@ -144,7 +149,7 @@ function leadsCsv(rows: LeadRow[]): string {
   const lines = rows.map((l) => {
     const d = l.details ?? {}
     const r = l as unknown as Record<string, unknown>
-    return [l.id, l.created_at, l.type, l.status, CHANNELS[l.channel ?? 'website'] ?? l.channel, l.channel_detail, l.created_by_name, l.assigned_name,
+    return [l.id, l.created_at, l.type, formOf(l) ?? '', l.status, CHANNELS[l.channel ?? 'website'] ?? l.channel, l.channel_detail, l.created_by_name, l.assigned_name,
       ...LEAD_FIELDS.map((f) => (f.from === 'col' ? r[f.key] : d[f.key])),
       ...extra.map((k) => d[k]), l.notes, ...locationCsv(l.geo),
       ...ATTR_FIELDS.map(([k]) => l.attribution?.[k] ?? '')].map(cell).join(',')
@@ -178,10 +183,13 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
   const [loaded, setLoaded] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
   const [formFor, setFormFor] = useState<LeadRow | null>(null)
+  const [removing, setRemoving] = useState<LeadRow | null>(null)
   const deepLinked = useRef(false)
   const [q, setQ] = useState('')
   const [status, setStatusFilter] = useState('')
   const [who, setWho] = useState('')   // '' any, 'none' unassigned, or an agent id
+  // Which form (29 Sep 2026): '' any, a LEAD_FORMS key, or 'other' (phone, tap to call…).
+  const [formF, setFormF] = useState('')
   // Date range — management's request, 24 Sep 2026 ("date-range filters and
   // a global search bar"). Same choices as the Posts list.
   const [range, setRange] = useState('')
@@ -229,6 +237,14 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
     onToast(r.ok ? (to ? `Assigned to ${agents.find((a) => a.id === to)?.name ?? 'agent'}` : 'Unassigned') : r.error)
     reload()
   }
+  async function remove(l: LeadRow) {
+    const r = await sendJSON('/leads', 'DELETE', { ids: [l.id] })
+    setRemoving(null)
+    if (!r.ok) { onToast(r.error); return }
+    if (open === l.id) setOpen(null)
+    onToast(`Enquiry #${l.id} deleted`)
+    reload()
+  }
   async function addNote(id: number, note: string) {
     const r = await sendJSON('/leads', 'PATCH', { id, note })
     onToast(r.ok ? 'Note added' : r.error)
@@ -267,9 +283,10 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
   const shown = rows.filter((l) =>
     (!status || l.status === status)
     && (!who || (who === 'none' ? !l.assigned_to : String(l.assigned_to) === who))
+    && (!formF || (formF === 'other' ? !leadFormKey(l) : leadFormKey(l) === formF))
     && inRange(l.created_at)
     && (words.length === 0 || ((h) => words.every((w) => h.includes(w)))(haystack(l))))
-  const filtering = Boolean(q || status || range || who)
+  const filtering = Boolean(q || status || range || who || formF)
 
   function download() {
     const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
@@ -298,9 +315,9 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
       ) : (
         <div className="a-note"><span>
           <b>Every enquiry lands here: the website forms, and the ones the team logs from phone calls, emails and walk ins.</b>{' '}
-          <b>View details</b> shows the whole enquiry, where they are on a map, how they found us and everything that has happened to it;
-          <b>View form</b> shows it the way the notification email laid it out.
-          <b>Assigned</b> hands it to an agent, who then sees it in their own list. The <b>mi</b> under Location is the distance to the
+          <b>View details</b> shows the whole enquiry, where they are on a map, how they found us and everything that has happened to it;{' '}
+          <b>View form</b> shows it the way the notification email laid it out.{' '}
+          <b>Assigned</b> hands it to an agent, who then sees it in their own list. <b>Delete</b> removes test entries and spam for good. The <b>mi</b> under Location is the distance to the
           nearer facility: green is inside the 100 mile pickup area.
         </span></div>
       )}
@@ -314,6 +331,11 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
         <select className="a-inp" style={{ width: 'auto' }} value={status} onChange={(e) => setStatusFilter(e.target.value)} aria-label="Filter by status">
           <option value="">All statuses</option>
           {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+        <select className="a-inp" style={{ width: 'auto' }} value={formF} onChange={(e) => setFormF(e.target.value)} aria-label="Filter by form">
+          <option value="">All forms</option>
+          {Object.entries(LEAD_FORMS).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
+          <option value="other">Not from a form</option>
         </select>
         {canAssign && (
           <select className="a-inp" style={{ width: 'auto' }} value={who} onChange={(e) => setWho(e.target.value)} aria-label="Filter by agent">
@@ -342,7 +364,7 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           </span>
         )}
         {filtering && (
-          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); setWho(''); pickRange(''); setFrom(''); setTo('') }}>
+          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); setWho(''); setFormF(''); pickRange(''); setFrom(''); setTo('') }}>
             Clear filters
           </button>
         )}
@@ -363,7 +385,7 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
                 {l.phone && <div style={{ marginTop: 2 }}><a className="a-link" href={`tel:${l.phone}`}>{l.phone}</a></div>}
               </td>
               <td><LocationCell geo={l.geo} /></td>
-              <td>{isCallClick(l) ? 'Tapped to call' : l.channel && l.channel !== 'website' && l.type === 'contact' ? 'Enquiry' : (LEAD_TYPES[l.type] ?? l.type)}</td>
+              <td>{isCallClick(l) ? 'Tapped to call' : l.channel && l.channel !== 'website' && l.type === 'contact' ? 'Enquiry' : (formOf(l) ?? LEAD_TYPES[l.type] ?? l.type)}</td>
               <td>{wants(l)}</td>
               <td><div>{leadSource(l)}</div>{l.attribution?.utm_campaign && <div className="a-meta">{l.attribution.utm_campaign}</div>}</td>
               {/* The exact moment, for management; the "3 days ago" under it
@@ -393,6 +415,13 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
                   <button className="a-btn sm" style={{ whiteSpace: 'nowrap', justifyContent: 'center' }} onClick={() => setFormFor(l)}>
                     View form
                   </button>
+                  {/* 28 Sep 2026: managers can remove test entries and spam. */}
+                  {canAssign && (
+                    <button className="a-btn sm stop" style={{ whiteSpace: 'nowrap', justifyContent: 'center' }}
+                      aria-label={`Delete enquiry ${l.id}`} onClick={() => setRemoving(l)}>
+                      Delete
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>
@@ -442,6 +471,19 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           onSaved={(id) => { onToast(`Enquiry #${id} added`); onAdded(); reload() }} />
       )}
       {formFor && <LeadFormDialog lead={formFor} onClose={() => setFormFor(null)} />}
+      {removing && (
+        <ConfirmDialog title={`Delete enquiry #${removing.id}?`} confirmLabel="Delete enquiry"
+          onCancel={() => setRemoving(null)} onConfirm={() => remove(removing)}>
+          <p style={{ margin: 0 }}>
+            <b>{removing.name ?? removing.email ?? (isCallClick(removing) ? 'Unknown caller' : 'Anonymous')}</b>
+            {removing.email && removing.name ? <> ({removing.email})</> : null}, received {exactTime(removing.created_at)}.
+          </p>
+          <p style={{ margin: '10px 0 0' }}>
+            It goes for good, with its notes, its activity and how they found us. It cannot be brought back.
+            For a real enquiry that did not work out, set its status to <b>lost</b> instead, so it stays in the reports.
+          </p>
+        </ConfirmDialog>
+      )}
     </main>
   )
 }

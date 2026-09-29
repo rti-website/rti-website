@@ -9,6 +9,9 @@ import { cityKey, stateCode } from '@/lib/us-address'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
+import { ResidentialHelp } from '@/components/client/ResidentialHelp'
+import type { DropoffSite } from '@/lib/dropoff-sites'
+import type { NO_PICKUP } from '@/data/contact'
 
 /**
  * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
@@ -58,6 +61,16 @@ import { SuccessDialog } from '@/components/client/SuccessDialog'
  * `?service=<name>` here (Asim, 23 Sep 2026: "when someone selects the service
  * it must automatically come to [the] contact form"); the effect below picks
  * it out of the URL and selects it.
+ *
+ * THREE FORMS, ONE COMPONENT (Asim, 29 Sep 2026). `variant` says which:
+ *   contact  /contact-us/          "Is it for?" preselected Commercial
+ *   quote    /quote/               the same form
+ *   pickup   /request-a-pickup/    business only: no "Is it for?" (it posts
+ *                                  Commercial) and the business notice on top
+ * It posts `form` with the variant, so the enquiry says where it came from.
+ * Picking Residential on contact / quote shows the "We do not offer
+ * residential pickup" notice above that row (ResidentialHelp: nearest
+ * drop-off and Mail-In pop-ups); the form still sends.
  *
  * Client only because it owns a submit handler and that state.
  */
@@ -129,14 +142,21 @@ function filledNote(city: boolean, state: boolean): string {
   return `We filled in ${what} from your ZIP code. Change ${city && state ? 'them' : 'it'} if ${city && state ? 'they are' : 'it is'} not correct.`
 }
 
+export type FormVariant = 'contact' | 'quote' | 'pickup'
+
 export function ContactForm({
-  form: FORM, serviceInterest, heroLocations,
+  form: FORM, serviceInterest, heroLocations, variant = 'contact', help,
 }: {
   /** FORM, SERVICE_INTEREST and HERO_LOCATIONS as edited in the admin, from the server parent. */
   form: Form
   serviceInterest: readonly string[]
   heroLocations: readonly Location[]
+  /** Which of the three forms this is (see above). */
+  variant?: FormVariant
+  /** The no-residential-pickup notice: its words, the drop-off sites and the kit store. */
+  help: { copy: typeof NO_PICKUP; sites: DropoffSite[]; mailInHref: string }
 }) {
+  const pickup = variant === 'pickup'
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
   const [bad, setBad] = useState<FieldName | null>(null)
@@ -354,6 +374,7 @@ export function ContactForm({
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           type: 'contact',
+          form: variant,
           firstName: value('firstName'),
           lastName: value('lastName'),
           email: value('email'),
@@ -381,7 +402,7 @@ export function ContactForm({
         if (out.field) focusField(out.field)
         return
       }
-      trackLead({ type: 'contact', formId: 'contact_form', service: value('service'), audience: value('audience') })
+      trackLead({ type: 'contact', formId: `${variant}_form`, service: value('service'), audience: value('audience') })
       const firstName = value('firstName')
       form.reset()
       filled.current = { city: false, state: false, zip: false }
@@ -404,6 +425,10 @@ export function ContactForm({
        GETting the fields into the address bar (RTI-10, src/lib/form-post.ts). */
     <form method="post" action={path('/api/leads/')} className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit} noValidate>
       <input type="hidden" name="type" value="contact" />
+      <input type="hidden" name="form" value={variant} />
+      {/* Schedule a Pickup is business only: every pickup posts Commercial. */}
+      {pickup && <input type="hidden" name="audience" value="Commercial" />}
+      {pickup && <ResidentialHelp mode="business" {...help} />}
       {/* Honeypot. Hidden from sight AND from screen readers, and out of the
           tab order, so no person is ever offered it — only a bot that fills
           every input it finds. See the check in /api/leads. */}
@@ -469,6 +494,8 @@ export function ContactForm({
         </div>
       </div>
 
+      {!pickup && !business && <ResidentialHelp mode="residential" {...help} />}
+
       <div className={ROW}>
         <div className={FIELD}>
           <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
@@ -489,7 +516,7 @@ export function ContactForm({
             <Chevron />
           </div>
         </div>
-        <div className={FIELD}>
+        {!pickup && <div className={FIELD}>
           <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}</label>
           <div className="relative">
             <select id="contact-audience" name="audience" defaultValue={AUDIENCES[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
@@ -497,7 +524,7 @@ export function ContactForm({
             </select>
             <Chevron />
           </div>
-        </div>
+        </div>}
       </div>
 
       <div className="flex w-full flex-col gap-[8px]">

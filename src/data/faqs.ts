@@ -46,7 +46,7 @@ export const FAQ_HERO = {
     { label: 'Home', href: href('/') },
     { label: 'FAQs', href: null },
   ],
-  h1: 'Frequently Asked Questions',
+  h1: 'FAQS', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead: 'Find answers to common questions about electronics recycling, e-waste recycling, battery '
     + 'recycling, light bulb recycling, hard drive destruction, shredding, mail-in recycling, '
     + 'pickups, drop-offs, and responsible recycling services.',

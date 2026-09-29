@@ -7,6 +7,7 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { DownloadGrid } from '@/components/sections/downloads/DownloadGrid'
 import { SEO } from '@/data/downloads'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Downloads — a 1:1 build of Figma frame 6382:7043, and of 6638:10182
@@ -70,7 +71,7 @@ export default async function DownloadsPage() {
       <main>
         <ServiceHero
           label="6478:5167" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-downloads.png"
+          {...HERO_PHOTOS.downloads}
         />
         <DownloadGrid top={CERTS_TOP} height={H.certs} tone="white" section={CERTIFICATES} action={DOWNLOAD_CARD.action} />
         <DownloadGrid top={LISTS_TOP} height={H.lists} tone="mist"  section={CHECKLISTS} action={DOWNLOAD_CARD.action} />

@@ -7,6 +7,7 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { GuideList, ReferenceDocs } from '@/components/sections/guides/GuideSections'
 import { SEO } from '@/data/guides'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * ITAD & Recycling Guides — a 1:1 build of Figma frame 6382:5883 in
@@ -65,7 +66,7 @@ export default async function ItadRecyclingGuidesPage() {
       <main>
         <ServiceHero
           label="6478:4384" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-guides.png"
+          {...HERO_PHOTOS.guides}
         />
         <GuideList     top={GUIDES_TOP} height={H.guides} />
         <ReferenceDocs top={DOCS_TOP}   height={H.docs} />

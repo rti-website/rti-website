@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /ballasts/ — copy from the "Ballast Recycling" doc, geometry from 6142:2048.
@@ -26,7 +27,7 @@ export const CONTENT: ServicePageContent = {
     h1: 'Ballasts Recycling',
     lead: 'Recycle Technologies accepts PCB, non-PCB, electronic, and magnetic ballasts from commercial and industrial facilities, processing hazardous components through an EPA-approved incineration facility and reclaiming non-hazardous metals like copper and steel.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
-    image: '/images/services/hero-ballasts.png',
+    ...HERO_PHOTOS.ballasts, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What’s Ballast Recycling?',
@@ -37,7 +38,8 @@ export const CONTENT: ServicePageContent = {
       'That’s why a recycler needs to be able to identify and handle multiple ballast types rather than treating every unit the same way.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/ballasts-intro.jpg',
+    image: '/images/services/ballasts-intro-v2.png',
+    imageCrop: { x: -11, y: 0, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13111)
   },
   accept: {
     heading: 'What We Accept',
@@ -65,7 +67,8 @@ export const CONTENT: ServicePageContent = {
       'When processing is complete, Recycle Technologies issues a Certificate of Recycling that documents proper disposal, which many businesses need for their own compliance records.',
       'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
     ],
-    image: '/images/services/ballasts-process.jpg',
+    image: '/images/services/ballasts-process-v2.png',
+    imageCrop: { x: -210, y: 0, w: 1185, h: 666, fw: 750, fh: 655 }, // as the frame places it (6989:13109)
   },
   // The doc's compliance line ("...recognized industry certification standards
   // for responsible recycling, including R2v3") is the same generic statement
@@ -86,7 +89,7 @@ export const CONTENT: ServicePageContent = {
       'Pickup service is available exclusively for commercial customers; if you’re a residential customer, you can find a nearby drop-off location or order a mail-in recycling kit instead.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
   todo: [
     'Case studies and customer testimonials are marked "to be added" in the doc.',

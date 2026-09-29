@@ -11,6 +11,7 @@ import { ImpactReporting } from '@/components/sections/sustainability/ImpactRepo
 import { SustainabilityGoals } from '@/components/sections/sustainability/SustainabilityGoals'
 import { SEO } from '@/data/sustainability'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Sustainability & Environmental Impact — a 1:1 build of Figma frame 6374:5211.
@@ -77,7 +78,7 @@ export default async function SustainabilityPage() {
     <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
       <main>
-        <ServiceHero label="6374:5213" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} />
+        <ServiceHero label="6374:5213" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} {...HERO_PHOTOS.sustainability} />
         <CircularEconomy      top={CIRC_TOP}   height={H.circ} />
         <ZeroLandfill         top={ZERO_TOP}   height={H.zero} />
         <ImpactReporting      top={REPORT_TOP} height={H.report} />

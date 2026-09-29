@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/healthcare/ — copy from the "Healthcare Recycling" doc. */
 export const CONTENT = industryPage({
@@ -25,7 +26,10 @@ export const CONTENT = industryPage({
     { label: 'Light Bulb Recycling',   href: L.lightBulbs,  text: 'Facilities replacing fluorescent, LED, or other bulbs can recycle used lighting instead of sending it to a landfill.' },
   ],
   heroImage: '/images/industries/hero-healthcare.png',
-  introImage: '/images/industries/intro-healthcare.png', // Figma 6734:5890, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.healthcare, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-healthcare-v2.png', // 28 Sep 2026 frame; was intro-healthcare.png
+  introCrop: { x: -6, y: -75, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13153)
+  // (the 23 Sep photo was Figma 6734:5890, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies work with healthcare organizations?', a: 'Yes. Our IT asset disposition service supports businesses, hospitals, and institutes in retiring computers and IT equipment.' },
     { q: 'Can healthcare facilities recycle retired computers and IT equipment?', a: 'Yes, our electronics recycling and IT asset disposition services accept computers, monitors, and related IT equipment.' },

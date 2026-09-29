@@ -37,7 +37,7 @@ export const HERO = {
     { label: 'Home',      href: href('/') },
     { label: 'Locations', href: null },
   ],
-  h1: 'Locations',
+  h1: 'All Locations', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   /* The frame's lead since 25 Sep 2026 (6472:3926 / 6747:2576) — Asim: "make
      it exactly like the figma". It replaces his own 23 Sep line, "Two
      licensed facilities, nationwide Mail-In reach, and pickup and drop-off

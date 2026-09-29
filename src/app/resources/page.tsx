@@ -8,6 +8,7 @@ import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { ResourceArticles, ResourceGuides, ResourceSearch } from '@/components/sections/resources/ResourceSections'
 import { SEO } from '@/data/resources'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Resources — a 1:1 build of Figma frame 6374:3828, and of 6638:2227
@@ -81,7 +82,7 @@ export default async function ResourcesPage() {
       <main>
         <ServiceHero
           label="6472:3904" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-resources.png"
+          {...HERO_PHOTOS.resources}
         />
         <ResourceSearch   top={SEARCH_TOP}   height={H.search} />
         <ResourceGuides   top={GUIDES_TOP}   height={H.guides} />

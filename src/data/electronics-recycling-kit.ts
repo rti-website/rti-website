@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { MAIL_IN } from '@/lib/nav'
 import { href } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /electronics-recycling-kit/ — the "Electronics Recycling Kit" doc, supplied
@@ -40,7 +41,7 @@ export const CONTENT: ServicePageContent = {
     lead: 'Recycle Technologies’ Electronics Recycling Kit is a mail-in option that lets you recycle electronics from home when a local drop-off or pickup isn’t available, with kits purchased online and mailed back once filled.',
     cta: { label: 'Get a Recycling Kit', href: MAIL_IN.href, external: true },
     noPicker: true,
-    image: '/images/services/hero-electronics.png',
+    ...HERO_PHOTOS.kit, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What Is the Electronics Recycling Kit?',
@@ -49,7 +50,8 @@ export const CONTENT: ServicePageContent = {
       'The program works around a simple idea: if a nearby “electronics recycling near me” search doesn’t turn up anything useful, you can still get your electronics into Recycle Technologies’ recycling process by mail. Kits are purchased online, and once you’ve filled yours, you send it back for processing.',
       'This countrywide mail-in option is open to individuals as well as businesses, which sets it apart from Recycle Technologies’ pickup service, which is limited to commercial clients. If you’re a household user with a handful of old devices, or a small business without enough volume to justify a scheduled pickup, the kit program is designed with you in mind.',
     ],
-    image: '/images/services/mail-in-intro.jpg',
+    image: '/images/services/electronics-intro-v2.png',
+    imageCrop: { x: -9, y: -41, w: 586, h: 376, fw: 568, fh: 295 }, // as the frame places it (6982:13081)
   },
   accept: {
     heading: 'What Can Go in the Kit?',
@@ -70,7 +72,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Send the Kit Back:',         text: 'Use the prepaid shipping label included with your kit to send it back to Recycle Technologies via any of the listed courier services, no separate postage purchase or account needed.' },
       { label: 'Recycling and Processing:',  text: 'Once received, your electronics enter Recycle Technologies’ certified recycling process, which has operated from licensed facilities in Minnesota and Wisconsin since 1993.' },
     ],
-    image: '/images/services/mail-in-process.jpg',
+    image: '/images/services/electronics-process-v2.png',
+    imageCrop: { x: -122, y: -8, w: 1149, h: 670, fw: 750, fh: 655 }, // as the frame places it (6982:13079)
   },
   audience: {
     heading: 'Who Is the Program For?',

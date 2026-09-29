@@ -167,8 +167,13 @@ export async function Hero() {
           sees — flagged to Asim for the SEO team, 24 Sep 2026. */}
       <Box x={319} y={100} w={952}>
         <h1 className="text-center font-sans text-[28px] font-semibold leading-[38px] text-white lg:text-left lg:text-[70px] lg:leading-[74.7px]">
-          <span className="lg:hidden">{HOME_HERO.h1Phone.l1}{' '}<br />{HOME_HERO.h1Phone.l2}</span>
-          <span className="max-lg:hidden">{HOME_HERO.h1Board.l1}{' '}<br />{HOME_HERO.h1Board.l2}</span>
+          {/* One wording (29 Sep 2026): printed once, so the H1 text is not doubled. */}
+          {HOME_HERO.h1Phone.l1 === HOME_HERO.h1Board.l1 && HOME_HERO.h1Phone.l2 === HOME_HERO.h1Board.l2
+            ? <>{HOME_HERO.h1Board.l1}{' '}<br />{HOME_HERO.h1Board.l2}</>
+            : <>
+                <span className="lg:hidden">{HOME_HERO.h1Phone.l1}{' '}<br />{HOME_HERO.h1Phone.l2}</span>
+                <span className="max-lg:hidden">{HOME_HERO.h1Board.l1}{' '}<br />{HOME_HERO.h1Board.l2}</span>
+              </>}
         </h1>
       </Box>
 

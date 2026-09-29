@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { lookupZip, zipsForCity } from '@/lib/zips'
+import { lookupZip, zipPoint, zipsForCity } from '@/lib/zips'
 import { stateCode } from '@/lib/us-address'
 
 /**
@@ -18,7 +18,10 @@ export function GET(req: Request) {
   const zip = (q.get('zip') ?? '').trim()
   if (zip) {
     const info = lookupZip(zip)
-    return NextResponse.json(info ? { found: true, ...info } : { found: false, zip }, { headers: CACHE })
+    // lat / lng (29 Sep 2026): the drop-off pop-up's ZIP search, when the
+    // visitor will not share their location (ResidentialHelp).
+    const pt = info ? zipPoint(zip) : null
+    return NextResponse.json(info ? { found: true, ...info, ...(pt ? { lat: pt.lat, lng: pt.lng } : {}) } : { found: false, zip }, { headers: CACHE })
   }
 
   const city = (q.get('city') ?? '').trim().slice(0, 80)

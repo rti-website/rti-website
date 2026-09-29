@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /phone-shredding-service/ — copy from the "Phone Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -13,11 +14,12 @@ export const CONTENT: ServicePageContent = {
     description: 'Secure off-site phone shredding for businesses. Cell phones, SIM cards, and memory chips destroyed with a Certificate of Recycling issued.',
   },
   hero: {
+    ...HERO_PHOTOS.phone, // 28 Sep 2026 frame — see src/data/hero-photos.ts
     crumb: 'Phone Shredding',
     // Matches the live H1 exactly — no gate 2 conflict on this page.
     h1: 'Phone Shredding Services',
     lead: 'Recycle Technologies provides secure, off-site phone shredding and recycling for businesses and offices, collecting old or broken cell phones and processing them at a dedicated facility with a Certificate of Recycling issued afterward.',
-    cta: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    cta: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
   intro: {
     heading: 'What Is Phone Shredding?',
@@ -28,7 +30,8 @@ export const CONTENT: ServicePageContent = {
       'For an office or business retiring a batch of old phones, whether from employee turnover, an upgrade cycle, or a fleet of company devices, having a documented process for getting rid of them safely matters more than it does for most other electronics.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/detail-intro.png',
+    image: '/images/services/phone-shredding-intro.png',
+    imageCrop: { x: -8, y: -12, w: 584, h: 318, fw: 568, fh: 295 }, // as the frame places it (6982:13073)
   },
   accept: {
     heading: 'What We Accept',
@@ -50,7 +53,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Certificate of Recycling.', text: 'Once processing is complete, Recycle Technologies issues a Certificate of Recycling confirming your devices were responsibly handled.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, operating licensed facilities in Minnesota and Wisconsin.',
-    image: '/images/services/detail-process.png',
+    image: '/images/services/phone-shredding-process.png',
+    imageCrop: { x: -179, y: -154, w: 1264, h: 843, fw: 750, fh: 655 }, // as the frame places it (6982:13071)
   },
   faqs: [
     { q: 'Does Recycle Technologies shred phones on-site?', a: 'No. Devices are collected and transported to a dedicated facility for off-site processing.' },
@@ -65,6 +69,6 @@ export const CONTENT: ServicePageContent = {
       'If your business has old phones to dispose of securely, schedule a pickup or get a quote to get started. Pickup service is exclusively available to commercial clients; residential customers can find a nearby drop-off location or order a mail-in recycling kit instead.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }

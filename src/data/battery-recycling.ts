@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, href } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /battery-recycling/ — all page copy.
@@ -42,7 +43,7 @@ export const HERO = {
     { label: 'Our Services', href: href('/services/') },
     { label: 'Battery Recycling', href: null },
   ],
-  h1: 'Battery Recycling Services',
+  h1: 'BATTERY RECYCLING', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead:
     'Recycle Technologies collects and recycles batteries for businesses and organizations, '
     + 'ensuring spent batteries are sorted and processed rather than sitting in storage or '
@@ -73,7 +74,8 @@ export const INTRO = {
     + 'documented way to clear out old battery inventory instead of letting it accumulate.',
   ],
   more: { label: 'Read More', href: '#how-we-recycle' },
-  image: '/images/services/batteries-intro.jpg',
+  image: '/images/services/batteries-intro-v2.png',
+  imageCrop: { x: -11, y: -46, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6965:12982)
 }
 
 /* --------------------------------------------------------- what we accept --*/
@@ -112,7 +114,8 @@ export const PROCESS = {
   outro:
     'Recycle Technologies has handled battery recycling from its Minnesota and Wisconsin '
     + 'facilities since 1993.',
-  image: '/images/services/batteries-process.jpg',
+  image: '/images/services/batteries-process-v2.png',
+  imageCrop: { x: -312, y: 0, w: 1185, h: 666, fw: 750, fh: 655 }, // as the frame places it (6965:12981)
 }
 
 /* -------------------------------------------------------------------- FAQ --*/
@@ -168,7 +171,7 @@ export const CONTENT: ServicePageContent = {
   liveSeo: LIVE_SEO,
   proposedSeo: PROPOSED_SEO,
   hero: { crumb: 'Battery Recycling', h1: HERO.h1, lead: HERO.lead, cta: HERO.cta,
-          image: '/images/services/hero-batteries.png' },
+          ...HERO_PHOTOS.batteries }, // 28 Sep 2026 frame 6965:12989
   intro: INTRO,
   accept: ACCEPT,
   process: PROCESS,

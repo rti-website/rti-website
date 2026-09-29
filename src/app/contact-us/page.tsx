@@ -9,6 +9,7 @@ import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import { ServicesCta } from '@/components/sections/services/ServicesCta'
 import { LIVE_SEO } from '@/data/contact'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Contact Us — a 1:1 build of Figma frame 6365:1082.
@@ -74,7 +75,7 @@ export default async function ContactPage() {
       <main>
         <ServiceHero
           label="6365:1084"
-          image="/images/pages/hero-contact.png"
+          {...HERO_PHOTOS.contact}
           crumbs={HERO.crumbs}
           h1={HERO.h1}
           lead={HERO.lead}

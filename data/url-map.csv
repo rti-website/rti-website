@@ -15,8 +15,8 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /phone-shredding-service/,service,0,0,KEEP,/phone-shredding-service/,Phone Shredding Services | Call (800) 969-5166,"Phone shredding services providing physical destruction of mobile devices, SIM cards, memory chips, and handheld electronics to prevent data exposure. Call (800) 969-5166",Phone Shredding Services,TRUE,TRUE
 /mobile-shredding-service/,service,0,0,KEEP,/mobile-shredding-service/,,,,FALSE,FALSE
 /dropoff/,page,0,0,301,/all-locations/,Dropoff - Recycle Technologies,Drop off your electronic devices and recyclable materials at our convenient DROP-OFF LOCATIONS. Join us in promoting a greener future across the USA!,drop-off locations,FALSE,FALSE
-/quote/,page,0,0,301,/contact-us/,Get Quote related to Recycling & Shredding | Recycle Technologies,"Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.",Get A Quote,FALSE,FALSE
-/request-a-pickup/,page,0,0,301,/contact-us/,Request a pickup - Recycle Technologies,Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.,Request a pickup,FALSE,FALSE
+/quote/,page,0,0,KEEP,/quote/,Get Quote related to Recycling & Shredding | Recycle Technologies,"Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.",Get A Quote,TRUE,TRUE
+/request-a-pickup/,page,0,0,KEEP,/request-a-pickup/,Request a pickup - Recycle Technologies,Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.,Request a pickup,TRUE,TRUE
 /contact-us/,page,0,0,KEEP,/contact-us/,Contact Us for inquires about E-Waste | Recycle Technologies,Contact Us- for Recycle Technologies' safe recycling and shredding services in MN & WI. A reliable and eco-friendly waste management solutions.,contact us,TRUE,TRUE
 /certifications/,page,0,0,KEEP,/certifications/,"Certifications & Compliance | R2v3, RIOS, EPA | Recycle Technologies","Recycle Technologies holds R2v3 certification at its Blaine, Minnesota facilities and follows EPA, Minnesota PCA and Wisconsin DNR rules for hazardous and universal waste.",Certifications,TRUE,TRUE
 /why-choose-us/,page,0,0,KEEP,/why-choose-us/,"Why Choose Recycle Technologies | Minority-Owned, R2v3 Certified","A Minority-Owned Midwest recycler since 1993, R2v3 certified in Blaine, Minnesota, issuing a Certificate of Recycling or Shredding on every shipment.",Why Choose Us,TRUE,TRUE
@@ -80,17 +80,17 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /light-bulb-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/light-bulb-recycling/,,,,FALSE,FALSE
 /light-bulb-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /locations/,legacy,,,301,/all-locations/,,,,FALSE,FALSE
-/minnesota-recycling/anoka-county-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/anoka-county-recycling/,location,,,KEEP,/minnesota-recycling/anoka-county-recycling/,"Anoka County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Anoka County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Anoka County Recycling Center",TRUE,TRUE
 /minnesota-recycling/battery-recycling-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/battery-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/battery-recycling-st-paul/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/benton-county-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/benton-county-recycling/,location,,,KEEP,/minnesota-recycling/benton-county-recycling/,"Benton County Recycling | Recycle Technologies","Electronics, light bulb and battery recycling in Benton County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Benton County Recycling",TRUE,TRUE
 /minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/bulb-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/computer-recycle-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/computer-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/coon-rapids/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/dakota-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/dakota-county/,location,,,KEEP,/minnesota-recycling/dakota-county/,"Dakota County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Dakota County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Dakota County Recycling Center",TRUE,TRUE
 /minnesota-recycling/dakota-county/burnsville-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/dakota-county/lakeville-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
@@ -99,7 +99,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /minnesota-recycling/electronic-recycling-in-woodbury/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/electronic-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/electronic-recycling-st-paul/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/hennepin-county-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/,"Hennepin County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Hennepin County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Hennepin County Recycling Center",TRUE,TRUE
 /minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
@@ -108,15 +108,15 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/richfield-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/olmsted-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/olmsted-county/,location,,,KEEP,/minnesota-recycling/olmsted-county/,"Olmsted County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Olmsted County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Olmsted County Recycling Center",TRUE,TRUE
 /minnesota-recycling/olmsted-county/rochester-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/ramsey/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/ramsey/,location,,,KEEP,/minnesota-recycling/ramsey/,"Ramsey Recycling Center, MN | Recycle Technologies","Electronics, light bulb and battery recycling in Ramsey County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Ramsey Recycling",TRUE,TRUE
 /minnesota-recycling/ramsey/blaine/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/ramsey/electronic-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/ramsey/roseville/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/scott-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/washington-county/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/scott-county/,location,,,KEEP,/minnesota-recycling/scott-county/,"Scott County Recycling | Recycle Technologies","Electronics, light bulb and battery recycling in Scott County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Scott County Recycling",TRUE,TRUE
+/minnesota-recycling/washington-county/,location,,,KEEP,/minnesota-recycling/washington-county/,"Washington County Recycling Center, MN | Recycle Technologies","Electronics, light bulb and battery recycling in Washington County, Minnesota: business pickup, drop-off at our Blaine facility and mail-in recycling since 1993.","Washington County Recycling Center, MN",TRUE,TRUE
 /minnesota-recycling/washington-county/oakdale-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /news/,legacy,,,301,/category/news/,,,,FALSE,FALSE
 /ocala-florida/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
@@ -205,7 +205,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /wisconsin-recycling/battery-recycling-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/battery-recycling-waukesha/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/bulb-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
-/wisconsin-recycling/calumet-county/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/calumet-county/,location,,,KEEP,/wisconsin-recycling/calumet-county/,"Calumet County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Calumet County, Wisconsin: business pickup, drop-off at our New Berlin facility and mail-in recycling since 1993.","Calumet County Recycling Center",TRUE,TRUE
 /wisconsin-recycling/calumet-county/appleton-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/computer-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/computer-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
@@ -223,14 +223,14 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /wisconsin-recycling/milwaukee/oak-creek/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/new-berlin-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/oconomowoc-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
-/wisconsin-recycling/racine/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/racine/,location,,,KEEP,/wisconsin-recycling/racine/,"Racine County Recycling Center | Recycle Technologies","Electronics, light bulb and battery recycling in Racine County, Wisconsin: business pickup, drop-off at our New Berlin facility and mail-in recycling since 1993.","Racine County Recycling Center",TRUE,TRUE
 /wisconsin-recycling/sheboygan/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/tv-recycling-appleton/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/tv-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/tv-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/tv-recycling-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/tv-recycling-waukesha/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
-/wisconsin-recycling/washington-county-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/washington-county-recycling-center/,location,,,KEEP,/wisconsin-recycling/washington-county-recycling-center/,"Washington County Recycling Center, WI | Recycle Technologies","Electronics, light bulb and battery recycling in Washington County, Wisconsin: business pickup, drop-off at our New Berlin facility and mail-in recycling since 1993.","Washington County Recycling Center, WI",TRUE,TRUE
 /wisconsin-recycling/washington-county-recycling-center/wood-bury-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/waukesha-electronic-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/waukesha-recycling-center/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE

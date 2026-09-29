@@ -9,6 +9,7 @@ import { CertGrid } from '@/components/sections/certifications/CertGrid'
 import { CertAccountability } from '@/components/sections/certifications/CertAccountability'
 import { SEO } from '@/data/certifications-page'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Certifications — a 1:1 build of Figma frame 6374:4886.
@@ -60,7 +61,7 @@ export default async function CertificationsPage() {
       <main>
         <ServiceHero
           label="6374:4888" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-certifications.png"
+          {...HERO_PHOTOS.certifications}
         />
         <CertGrid           top={CERTS_TOP} height={H.certs} />
         <CertAccountability top={ACCT_TOP}  height={H.acct} />

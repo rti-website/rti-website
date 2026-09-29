@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /light-bulbs/ — copy from the "Light Bulb Recycling" doc, geometry from 6142:2048. */
 export const CONTENT: ServicePageContent = {
@@ -15,10 +16,10 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Light Bulb Recycling',
     // Live H1 is "LIGHT BULB RECYCLING" — see the gate 2 note in the build docs.
-    h1: 'Light Bulb Recycling Services',
+    h1: 'LIGHT BULB RECYCLING', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies has recycled fluorescent lamps and other light bulbs since 1993, processing everything at its own Minnesota and Wisconsin facilities rather than sending materials through a broker.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
-    image: '/images/services/hero-light-bulbs.png',
+    ...HERO_PHOTOS.lightBulbs, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What’s Light Bulb Recycling?',
@@ -29,7 +30,7 @@ export const CONTENT: ServicePageContent = {
       'For businesses, facilities, and property managers, working with a recycler that manages the full process in-house makes it easier to account for where bulbs end up and to keep records tied to a documented recycling program rather than an unverified disposal method.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/light-bulbs-intro.jpg',
+    image: '/images/services/light-bulbs-intro-v2.png',
   },
   accept: {
     heading: 'What We Accept',
@@ -49,7 +50,7 @@ export const CONTENT: ServicePageContent = {
       { label: 'Step 4: Separation', text: 'During processing, mercury-contaminated phosphor powder and filters, glass, and aluminum end caps are separated from one another so each material can be directed to the right next step.' },
       { label: 'Step 5: Recovery', text: 'Phosphor powder and filters are shipped to a distillation company. Glass is put toward further use in industrial products, and aluminum caps are sent to an aluminum salvage partner.' },
     ],
-    image: '/images/services/light-bulbs-process.jpg',
+    image: '/images/services/light-bulbs-process-v2.png',
   },
   faqs: [
     { q: 'What types of light bulbs does Recycle Technologies recycle?', a: 'Fluorescent tubes and CFLs, along with UV, neon, argon, HID, halogen, and incandescent lamps.' },
@@ -70,7 +71,7 @@ export const CONTENT: ServicePageContent = {
       'Whether you need a commercial pickup or want to ship bulbs through the mail-in program, Recycle Technologies can get your used or spent lighting into a documented recycling process. Get a quote or schedule a pickup to get started.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
   placesTitle: 'Light Bulb Recycling Near You',
 }

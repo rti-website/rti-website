@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/government-municipal/ — copy from the "Government & Municipal" doc. */
 export const CONTENT = industryPage({
@@ -29,7 +30,10 @@ export const CONTENT = industryPage({
   // Government one, so this borrows Education's. Swap it when the real photo
   // lands; the card art on /industries/ borrows too (see src/data/industries.ts).
   heroImage: '/images/industries/hero-education.png',
-  introImage: '/images/industries/intro-education-government.png', // Figma 6734:5897, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.government, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-government.png', // 28 Sep 2026 frame; was intro-education-government.png
+  introCrop: { x: -81, y: -152, w: 730, h: 486, fw: 568, fh: 295 }, // as the frame places it (6989:13241)
+  // (the 23 Sep photo was Figma 6734:5897, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies work with government and municipal organizations?', a: 'Our electronics recycling, IT asset disposition, and shredding services are set up to handle equipment from businesses and institutions, including offices with larger equipment lists.' },
     { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete.' },

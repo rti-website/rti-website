@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/financial-services-banking/ — copy from the "Financial Services & Banking" doc. */
 export const CONTENT = industryPage({
@@ -26,7 +27,10 @@ export const CONTENT = industryPage({
     { label: 'Battery Recycling',      href: L.battery,     text: 'Office equipment and backup systems often rely on batteries, including lithium-ion types, which can be recycled rather than discarded with general waste.' },
   ],
   heroImage: '/images/industries/hero-banking.png',
-  introImage: '/images/industries/intro-banking.png', // Figma 6734:5895, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.banking, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-banking-v2.png', // 28 Sep 2026 frame; was intro-banking.png
+  introCrop: { x: -11, y: -75, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13157)
+  // (the 23 Sep photo was Figma 6734:5895, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies work with financial services and banking organizations?', a: 'Yes. Our electronics recycling, IT asset disposition, and shredding services are available to businesses retiring computers, IT equipment, and paper records.' },
     { q: 'Can financial institutions recycle retired computers and IT equipment?', a: 'Yes, our electronics recycling and IT asset disposition services accept computers, monitors, and related IT equipment.' },

@@ -1428,6 +1428,748 @@
       "node": "6873:14201",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Hero photo, revised 27 Sep 2026: electronics warehouse with the Chicago skyline behind (same \"Wisconsin recycling facility hero\" layer, new image), 1920x1081 at y-372; the phone frame draws the same image (6896:15673). Chicago page (/electronic-recycling-chicago/); URL expires about 4 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/battery-hero.png",
+      "id": "5b681be3-8b09-4b7e-83e2-34792666f1b1/05f4d.png",
+      "node": "6908:15988",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Batteries photo, the hero of Battery Recycling in Chicago (6908:15988) and in Blaine (6922:18658), swapped in by the designer on 28 Sep 2026. 2048x2048 fill, drawn object-cover in 1920x1081 at y-372; the phone frames use a 1024 copy of the same photo. URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-about-v2.png",
+      "id": "ede288a7-c27b-4c45-8a0f-ded375372d2a/1b984.png",
+      "node": "6687:3502",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "About Us hero photo (desktop 6472:3892 draws the same picture mirrored, 1920x1081 at y-448; this is the 2048 copy from the phone frame). Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-services-v2.png",
+      "id": "a9f9a6bb-aa2a-4a3f-b940-04b008d21a0a/3c1b6.png",
+      "node": "6472:3862",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "All Services hero photo, 1920x1081 at y-611. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-industries-v2.png",
+      "id": "84ea2176-b990-4807-8d10-850f8e1e8dbc/93fbb.png",
+      "node": "6472:3847",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "All Industries hero photo, 1920x1081 at y-412. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-contact-v2.png",
+      "id": "8cb89457-6aa6-4765-a614-791d34b758e5/daf92.png",
+      "node": "6472:3877",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Contact Us hero photo, 1920x1081 at y-332. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-resources-v2.png",
+      "id": "fe67dd8a-cee4-4c2b-9e27-7d3b7f37be6f/a12d3.png",
+      "node": "6472:3907",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Resources hero photo, 1920x1081 at y-602. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-locations-v2.png",
+      "id": "b53a22f7-8dfc-4bf1-80a7-59ac9b57d1b7/f4542.png",
+      "node": "6472:3922",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Locations hero photo, 1920x1081 at y-372. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-minnesota.png",
+      "id": "021e2eb7-1cd5-4b20-a734-e2bb54094c75/9b60f.png",
+      "node": "6744:8397",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Location Details - Minnesota hero photo, 1920x1081 at y-372. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-wisconsin.png",
+      "id": "521907e2-2e31-4310-9fe2-cfc492b5f60d/f4b18.png",
+      "node": "6746:8476",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Location Details - Wisconsin hero photo, 1920x1081 at y-372. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-why-choose-us-v2.png",
+      "id": "704d2a0d-b2ba-4f05-af5b-de9b35c0975a/59c0a.png",
+      "node": "6472:3937",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why Choose Us hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-certifications-v2.png",
+      "id": "9f6bdbc6-de71-44f4-ae6b-2f33957c7110/07dee.png",
+      "node": "6472:3952",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Certifications hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-sustainability.png",
+      "id": "5689c103-d048-47aa-b01a-e855dc1584da/975df.png",
+      "node": "6472:3967",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Sustainability hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-faqs-v2.png",
+      "id": "982f2ddf-2de6-4fff-be63-4d53acb465ad/74126.png",
+      "node": "6478:5155",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "FAQs hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-downloads-v2.png",
+      "id": "f348be8e-aa84-4192-882a-e2cb38c876b4/a218b.png",
+      "node": "6478:5170",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Downloads hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/itad/hero-v2.png",
+      "id": "a87768a2-0e61-47f0-b6bb-16a1358e1bf7/6f509.png",
+      "node": "6778:2951",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD hero photo, 1920x1081 at y-332. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-guides-v2.png",
+      "id": "cd5dcfd0-f58d-4d00-9fdc-c75103f5834e/1986d.png",
+      "node": "6478:4387",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "ITAD & Recycling Guides hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-compliance-v2.png",
+      "id": "de9d5599-8fb4-4db7-ad1b-b0295c1cefa2/a8ed7.png",
+      "node": "6478:4675",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Compliance Center hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-case-studies-v2.png",
+      "id": "210237e8-402e-444b-9120-b8827ef58bc5/8dde5.png",
+      "node": "6478:5140",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Case Studies hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-blog-v2.png",
+      "id": "a5161bfb-82ae-4d32-8cda-7690f201f316/bc7c8.png",
+      "node": "6478:4372",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Blogs hero photo, 1920x1081 at y-422. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-electronics-v2.png",
+      "id": "a7333a2e-2b65-4e77-82ed-f7dc52e5f8b4/489fa.png",
+      "node": "6989:13264",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics Recycling Services (\"Service Details\") hero photo, 1920x1081 at y-205 under a teal fade. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/light-bulb-hero.png",
+      "id": "9d6c03fa-6c4e-4493-a0c1-d0eb0e0f38dc/dabe6.png",
+      "node": "6919:17774",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Light bulbs photo, the hero of the three light bulb city pages (Chicago 6919:17774, Blaine 6925:4596, New Berlin 6925:5566). Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/locations/city-pages/electronics-hero.png",
+      "id": "1fb9be31-f2ff-404d-8303-91b80012e198/aef82.png",
+      "node": "6873:14201",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics photo, the hero of Electronics Recycling in Chicago (6873:14201), Blaine (6927:9605) and New Berlin (6925:8558). Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-bulbs.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/4e23c.png",
+      "node": "6948:11172",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 453, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-electronics.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/f6b37.png",
+      "node": "6948:11182",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 457, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-batteries.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/46860.png",
+      "node": "6948:11192",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 454, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-ballasts.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/67b59.png",
+      "node": "6948:11203",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 455, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-tv.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/6dc23.png",
+      "node": "6948:11260",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 456, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-airbag.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/7e803.png",
+      "node": "6948:11267",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 459, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-harddrive.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/e5132.png",
+      "node": "6948:11280",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 460, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-paper.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/d6e10.png",
+      "node": "6948:11290",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 461, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-offsite.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/5c1eb.png",
+      "node": "6948:11300",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 462, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-phone.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/7052e.png",
+      "node": "6948:11310",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 463, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-kit.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/ccad2.png",
+      "node": "6948:11321",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 464, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/svc-cut-mailin.png",
+      "id": "d3b8e1dc-3c2f-4caa-a526-a30ff323e64d/f672d.png",
+      "node": "6948:11331",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Service card product cut-out (image 465, transparent), on the #ddd plate of the /services/ and homepage cards. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/ind-manufacturing-v2.png",
+      "id": "e2167b54-bfde-4f17-a71d-e0eda2324d69/a1b10.png",
+      "node": "I6542:12638;6542:12612",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage Manufacturing card photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/ind-healthcare-v2.png",
+      "id": "e2167b54-bfde-4f17-a71d-e0eda2324d69/41f81.png",
+      "node": "I6542:12649;6542:12565",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage Healthcare card photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/ind-banking-v2.png",
+      "id": "e2167b54-bfde-4f17-a71d-e0eda2324d69/07f8b.png",
+      "node": "I6542:12669;6542:12565",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage Banking & Finance card photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/ind-education-v2.png",
+      "id": "e2167b54-bfde-4f17-a71d-e0eda2324d69/5756e.png",
+      "node": "I6542:12671;6542:12565",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage Education card photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/ind-automotive.png",
+      "id": "e2167b54-bfde-4f17-a71d-e0eda2324d69/b8578.png",
+      "node": "I6542:12670;6542:12565",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage Automotive card photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/home/impact-v2.png",
+      "id": "e06e3eca-2391-4d78-850d-3fe1000f93e1/d47f0.png",
+      "node": "6873:15312",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage impact card brochure (transparent), 502x308 hanging off the card. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/electronics-intro-v2.png",
+      "id": "08c55157-4dc0-49a7-95c2-2acd2b72b5c5/57dd1.png",
+      "node": "6989:13292",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics Recycling Services intro photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/electronics-process-v2.png",
+      "id": "b71c3680-94d2-4108-a389-7352ca9a942d/ed779.png",
+      "node": "6989:13295",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Electronics Recycling Services process photo. Redesign of 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-light-bulbs-v2.png",
+      "id": "8911eca9-ba3d-4603-b769-4abacc86a307/6bc94.png",
+      "node": "6963:12916",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Light Bulb Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/light-bulbs-intro-v2.png",
+      "id": "301a9429-7b48-497b-9813-f3267b49b673/ceefe.png",
+      "node": "6959:11936",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Light Bulb Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/light-bulbs-process-v2.png",
+      "id": "42ba96e3-923e-4809-a139-25b502e8e11a/fc1d4.png",
+      "node": "6959:11973",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Light Bulb Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-batteries-v2.png",
+      "id": "cb976d1f-88bf-43be-863c-6a5612876d42/52824.png",
+      "node": "6965:12989",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Battery Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/batteries-intro-v2.png",
+      "id": "e27e91e5-70b7-42c4-8d58-1083277cc8a1/0ad9d.png",
+      "node": "6965:12982",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Battery Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/batteries-process-v2.png",
+      "id": "1d968549-c9a1-499c-87d9-cc0a6287a167/fa956.png",
+      "node": "6965:12981",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Battery Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-ballasts-v2.png",
+      "id": "4f58ea80-0edd-4a46-9710-cb4e0698e5bc/f1705.png",
+      "node": "6989:13113",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballast Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/ballasts-intro-v2.png",
+      "id": "e629578d-febb-47d3-ad0e-e1e47380bcab/098f3.png",
+      "node": "6989:13111",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballast Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/ballasts-process-v2.png",
+      "id": "314272bb-0da3-48fe-80ad-820bbc4b3576/ba677.png",
+      "node": "6989:13109",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ballast Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-television-v2.png",
+      "id": "7db2d64b-aec5-4ad2-9218-6542029b8bb8/b9bdc.png",
+      "node": "6975:13023",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "TV Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/tv-intro-v2.png",
+      "id": "9fdc89dd-c2e9-42e8-a1aa-da79e4bf1eee/ce60b.png",
+      "node": "6975:13021",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "TV Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/tv-process-v2.png",
+      "id": "b1625bd4-c9b8-4fef-bfb9-70ea7993aeed/5c1a4.png",
+      "node": "6975:13019",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "TV Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-airbag.png",
+      "id": "12741282-3d74-46e8-8e6d-6aa86fce993a/23590.png",
+      "node": "6989:13121",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Airbag Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/airbag-intro.png",
+      "id": "9ff3d694-27f4-4370-851e-0091cf6a7fc4/051e0.png",
+      "node": "6989:13119",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Airbag Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/airbag-process.png",
+      "id": "f7768540-cb7e-4c28-8b82-c98b108f3320/1a4c1.png",
+      "node": "6989:13117",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Airbag Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-hard-drives-v2.png",
+      "id": "848b631a-1aec-4a39-88c3-3ecef7e03078/70e53.png",
+      "node": "6979:13042",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drive Destruction hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hard-drive-intro-v2.png",
+      "id": "a1ae8944-3489-481e-9d46-e669ac403605/f4dbe.png",
+      "node": "6979:13040",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drive Destruction intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hard-drive-process-v2.png",
+      "id": "bdd25bcc-32d3-44f6-ab5b-c5554d559f36/2c556.png",
+      "node": "6979:13038",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hard Drive Destruction process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-paper-shredding-v2.png",
+      "id": "ba948128-7dc5-4f9c-b9f9-6ffd363d26d6/07a15.png",
+      "node": "6982:13056",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/paper-shredding-intro-v2.png",
+      "id": "e6cc29dd-5350-4a8f-b0b1-1ba2ba6c6669/89874.png",
+      "node": "6982:13054",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/paper-shredding-process-v2.png",
+      "id": "e10f95df-8a82-43d8-bcd9-1d9f41716d4b/195ac.png",
+      "node": "6982:13052",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Paper Shredding process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-off-site-shredding-v2.png",
+      "id": "87bb156d-162b-4950-9f68-1ce2defa9c29/78bdd.png",
+      "node": "6982:13067",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Off-Site Shredding hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/off-site-shredding-intro-v2.png",
+      "id": "4e3328a9-b9a8-403e-ba26-3cc02189af5b/fc39b.png",
+      "node": "6982:13065",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Off-Site Shredding intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/off-site-shredding-process-v2.png",
+      "id": "12322f3d-7d7f-4339-84f7-4392ff1ed596/6cf2e.png",
+      "node": "6982:13063",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Off-Site Shredding process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-phone-shredding.png",
+      "id": "be99a716-b0ab-4a55-8cca-08352b981bbf/40863.png",
+      "node": "6982:13075",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Phone Shredding hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/phone-shredding-intro.png",
+      "id": "0283ae83-e0aa-4e22-941d-a43b28492b5f/32166.png",
+      "node": "6982:13073",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Phone Shredding intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/phone-shredding-process.png",
+      "id": "8480a41c-fa6c-45ab-bc20-cfccbf263249/51efe.png",
+      "node": "6982:13071",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Phone Shredding process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/hero-mail-in-v2.png",
+      "id": "ad976db8-cecb-4296-b83e-8543429582e6/1576b.png",
+      "node": "6982:13091",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail-In Recycling hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/mail-in-intro-v2.png",
+      "id": "7093070c-2039-4948-baa2-dd7afce83166/c9da4.png",
+      "node": "6982:13089",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail-In Recycling intro photo (the 568x295 block beside \"What is\"). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/services/mail-in-process-v2.png",
+      "id": "88d5f522-6247-41cb-9c3d-7349762a8c8f/4e617.png",
+      "node": "6982:13087",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail-In Recycling process photo (the 750x655 block). Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-retail-v2.png",
+      "id": "9c0b8ed5-e277-4ed1-a7a8-f85e5b73f1d9/356dd.png",
+      "node": "6989:13199",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Retail & Corporate Offices hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-retail-v2.png",
+      "id": "c08feab4-8a7c-48ed-bd3c-ebae9d38b91f/21b9a.png",
+      "node": "6989:13146",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Retail & Corporate Offices \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-manufacturing-v2.png",
+      "id": "b88efe09-98e0-4128-87d7-527b4915a744/2c28b.png",
+      "node": "6989:13203",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Manufacturing & Industrial hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-manufacturing-v2.png",
+      "id": "83a323fa-39a0-47af-b013-0d1995b9ad29/21902.png",
+      "node": "6989:13155",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Manufacturing & Industrial \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-healthcare-v3.png",
+      "id": "81e232a3-0004-4a2b-bc8e-d61e6ff3cf2d/a4f5f.png",
+      "node": "6989:13195",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Healthcare hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-healthcare-v2.png",
+      "id": "18d92656-8b86-4ade-a962-456794976822/66339.png",
+      "node": "6989:13153",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Healthcare \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-automotive-v2.png",
+      "id": "0790db47-33e6-4cc4-8e58-380ac1fb571c/ddecf.png",
+      "node": "6989:13215",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Automotive & Fleet hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-automotive-v2.png",
+      "id": "0c9f7039-2a6d-4516-bf20-77a8fbecd3ee/b25a2.png",
+      "node": "6989:13159",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Automotive & Fleet \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-banking-v2.png",
+      "id": "cff5e89f-e120-4eeb-a0f2-b67d41927ad1/86aa5.png",
+      "node": "6989:13207",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Financial Services & Banking hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-banking-v2.png",
+      "id": "08d635d5-8b09-4361-91a8-07cc1ea49232/f8d0d.png",
+      "node": "6989:13157",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Financial Services & Banking \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-education-v2.png",
+      "id": "031a5f0f-e72f-4e71-839f-de06963105d6/6c865.png",
+      "node": "6989:13219",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Education hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-education-v2.png",
+      "id": "00ac881f-ae6e-49a9-ac6d-cc51e0b9447c/d7641.png",
+      "node": "6989:13163",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Education \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/hero-government.png",
+      "id": "093a1705-b9ad-4e29-a0f1-cf6776eb979e/1a97b.png",
+      "node": "6989:13245",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Government & Municipal hero photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/industries/intro-government.png",
+      "id": "d3462064-7e53-4ef9-a0f6-55656d86ba16/9fd56.png",
+      "node": "6989:13241",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Government & Municipal \"Recycling Challenges\" photo. Per-page frame sent by Asim on 28 Sep 2026; URL expires about 5 Oct."
+    },
+    {
+      "to": "public/images/locations/county/anoka.png",
+      "id": "756d1a88-d763-42e7-89c0-aa8d6edffab4/2da99.png",
+      "node": "7015:13577",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Anoka County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/washington-wi.png",
+      "id": "218d5378-34cb-4ebe-b43a-efe6865efc0f/ac3ca.png",
+      "node": "7020:15557",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Washington County, WI county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/racine.png",
+      "id": "b5a1dcda-1ded-49ea-b717-7137b928b4e8/03e67.png",
+      "node": "7023:16682",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Racine County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/calumet.png",
+      "id": "ab84b7dd-0f44-4007-99bf-e189b0ad767d/2e1d6.png",
+      "node": "7023:18872",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Calumet County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/washington-mn.png",
+      "id": "b9c8a6f0-e246-41ab-9405-27a888d24ae7/dfed2.png",
+      "node": "7023:19967",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Washington County, MN county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/scott.png",
+      "id": "bb7f3f3b-7a50-4e0e-8708-f9c368a71c2a/b3b64.png",
+      "node": "7027:21110",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Scott County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/ramsey.png",
+      "id": "4b64e3f7-347e-45e7-b089-3e3ce5e57e74/d9f29.png",
+      "node": "7031:22241",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Ramsey county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/olmsted.png",
+      "id": "8aac305d-b3da-488c-b5d5-cf431f772e8e/1c5fd.png",
+      "node": "7031:22912",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Olmsted County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/hennepin.png",
+      "id": "9a1a5655-8772-4c08-b2c6-7943e9821e4f/93f94.png",
+      "node": "7031:25108",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Hennepin County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/dakota.png",
+      "id": "14e172e1-3005-46f1-a923-c73f0315b907/ac1df.png",
+      "node": "7031:26242",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Dakota County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/locations/county/benton.png",
+      "id": "fc200b37-725b-4499-9ea2-332a66c28247/09558.png",
+      "node": "7037:27364",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Benton County county page hero photo, 1920x1081 object-cover in the 470 band. 29 Sep 2026; URL expires about 6 Oct."
+    },
+    {
+      "to": "public/images/icons/county/pickup.svg",
+      "id": "0dad7a9c-f565-46ec-83f2-7956f7b8f8a6/9f3b8.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Business Pick-Up Service card icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/drop-off.svg",
+      "id": "0dad7a9c-f565-46ec-83f2-7956f7b8f8a6/f6705.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Residential Drop-Off card icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/mail-in.svg",
+      "id": "0dad7a9c-f565-46ec-83f2-7956f7b8f8a6/42dd6.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Mail-In Recycling Program card icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/hours.svg",
+      "id": "12cf5adc-b047-45d5-8bd4-0ca14c2841c7/030f1.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Company card hours (clock) icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/phone.svg",
+      "id": "12cf5adc-b047-45d5-8bd4-0ca14c2841c7/17913.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Company card phone icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/clock.svg",
+      "id": "ac3a94b3-f84c-4df8-9da0-898c7d307df8/c191f.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Pioneers card 1 icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/shield.svg",
+      "id": "ac3a94b3-f84c-4df8-9da0-898c7d307df8/80b52.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Pioneers card 2 icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/recycle.svg",
+      "id": "ac3a94b3-f84c-4df8-9da0-898c7d307df8/cbf58.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Pioneers card 3 icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/icons/county/award.svg",
+      "id": "ac3a94b3-f84c-4df8-9da0-898c7d307df8/d8a3e.svg",
+      "node": "county template",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Pioneers card 4 icon (county pages, 29 Sep 2026)."
     }
   ]
 }

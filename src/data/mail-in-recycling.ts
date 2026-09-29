@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { href, QUOTE_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * /mail-in-recycling/ — copy from the "Mail-In Recycling Program" doc.
@@ -37,7 +38,7 @@ export const CONTENT: ServicePageContent = {
     lead: 'Recycle Technologies’ Mail-In Program gives customers outside its local drop-off and pickup areas a way to send eligible materials for recycling, including items purchased online and shipped in when a nearby option isn’t available.',
     // The doc's "Get Quote" (24 Sep 2026), worded like every other quote button.
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
-    image: '/images/services/hero-mail-in.png',
+    ...HERO_PHOTOS.mailIn, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What Is the Mail-In Recycling Program?',
@@ -48,7 +49,8 @@ export const CONTENT: ServicePageContent = {
       'Once received, materials sent through the Mail-In Program enter the same recycling process Recycle Technologies has run out of its licensed Minnesota and Wisconsin facilities since 1993.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/mail-in-intro.jpg',
+    image: '/images/services/mail-in-intro-v2.png',
+    imageCrop: { x: -9, y: -41, w: 586, h: 376, fw: 568, fh: 295 }, // as the frame places it (6982:13089)
   },
   accept: {
     heading: 'What Can I Send Through the Mail-In Program?',
@@ -74,7 +76,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Pack and Ship:',         text: 'Once your kit arrives, pack your eligible items and send the kit back using the return method included with your order.' },
       { label: 'Receipt and Recycling:', text: 'Once your shipment arrives, it’s processed through Recycle Technologies’ recycling operations at our licensed Minnesota and Wisconsin facilities, the same standard applied to every material we handle, regardless of how it reaches us.' },
     ],
-    image: '/images/services/mail-in-process.jpg',
+    image: '/images/services/mail-in-process-v2.png',
+    imageCrop: { x: -122, y: -8, w: 1149, h: 670, fw: 750, fh: 655 }, // as the frame places it (6982:13087)
   },
   faqs: [
     { q: 'Can I use the Mail-In Program if I live outside Minnesota or Wisconsin?', a: 'Yes, that’s exactly who it’s for. The Mail-In Program was built for customers outside our Minnesota and Wisconsin drop-off and pickup areas, so you can ship eligible materials to us from anywhere in the country.' },

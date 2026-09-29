@@ -1,5 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /paper-shredding-services/ — copy from the "Paper Shredding" doc. */
 export const CONTENT: ServicePageContent = {
@@ -15,10 +16,10 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Paper Shredding',
     // Live H1 is "Paper Shredding".
-    h1: 'Paper Shredding Services',
+    h1: 'Paper Shredding', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides secure paper shredding for businesses and offices in Minnesota and Wisconsin, destroying confidential documents and recycling the shredded material afterward.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
-    image: '/images/services/hero-paper-shredding.png',
+    ...HERO_PHOTOS.paper, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
   intro: {
     heading: 'What Is Paper Shredding?',
@@ -30,7 +31,8 @@ export const CONTENT: ServicePageContent = {
       'Whether you’re clearing out old files during an office move, closing out a fiscal year, or managing an ongoing accumulation of paperwork, having a reliable way to destroy documents securely is part of running a business responsibly.',
     ],
     more: { label: 'Read More', href: '#how-we-recycle' },
-    image: '/images/services/paper-shredding-intro.jpg',
+    image: '/images/services/paper-shredding-intro-v2.png',
+    imageCrop: { x: -9, y: -41, w: 586, h: 376, fw: 568, fh: 295 }, // as the frame places it (6982:13054)
   },
   accept: {
     heading: 'What We Accept',
@@ -52,7 +54,8 @@ export const CONTENT: ServicePageContent = {
       { label: 'Recycling',          text: 'Shredded paper is recycled afterward rather than sent to a landfill.' },
     ],
     outro: 'Recycle Technologies has provided recycling services to the Midwest since 1993, using equipment and staff dedicated to paper shredding across its Minnesota and Wisconsin service area.',
-    image: '/images/services/paper-shredding-process.jpg',
+    image: '/images/services/paper-shredding-process-v2.png',
+    imageCrop: { x: -122, y: -8, w: 1149, h: 670, fw: 750, fh: 655 }, // as the frame places it (6982:13052)
   },
   faqs: [
     { q: 'Is paper shredding available for businesses only, or residential customers too?', a: 'Business pickup is available exclusively for commercial clients; residential customers can use a drop-off location instead.' },
@@ -67,6 +70,6 @@ export const CONTENT: ServicePageContent = {
       'If your business has confidential paperwork to destroy, get a quote or schedule a pickup to get started. Pickup service is exclusively available to commercial clients; residential customers can find a nearby drop-off location instead.',
     ],
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: href('/request-a-pickup/') },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }

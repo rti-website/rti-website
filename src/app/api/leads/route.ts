@@ -10,6 +10,7 @@ import { publishedContent } from '@/lib/page-content'
 import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
 import { leadNotification } from '@/lib/lead-email'
 import { locateLead } from '@/lib/lead-location'
+import { isLeadFormKey } from '@/lib/lead-forms'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -235,6 +236,14 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
+  /* Which form it came from (29 Sep 2026): Contact Us, Get a Quote or
+     Schedule a Pickup (src/lib/lead-forms.ts). Pickup is business only, so a
+     pickup enquiry is Commercial whatever was posted. */
+  if (isLeadFormKey(payload.form)) {
+    details.form = payload.form
+    if (payload.form === 'pickup') details.audience = 'Commercial'
+  }
+
   let id: number | null = null
   try {
     const row = await one<{ id: number }>(
@@ -293,7 +302,7 @@ export async function POST(req: Request): Promise<Response> {
   let notified = false
   if (to && mailConfigured()) {
     // The table layout Asim sent on 24 Sep 2026 — see src/lib/lead-email.ts.
-    const mail = leadNotification({ type, name, email, phone, company, message, details })
+    const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id })
     const result = await sendMail({
       to,
       subject: mail.subject,

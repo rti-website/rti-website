@@ -62,51 +62,145 @@ const SHARED_HERO = '/images/services/hero-bg.png'
  * draws it: in its own box (6778:2951: 1920x1081 at y-332, object-cover) with
  * the node's gradient laid over it.
  */
-export type HeroFill = { y: number; h: number; overlay: string }
+export type HeroFill = {
+  y: number
+  h: number
+  /** A gradient drawn on the photo itself. The 28 Sep heroes have none. */
+  overlay?: string
+  /** Mirrored left to right (Figma's `-scale-y-100 rotate-180`), desktop only. */
+  flip?: boolean
+  /**
+   * The photo's opacity over the navy band, where a bright photo drowns the
+   * white text — Asim, 28 Sep 2026, on Healthcare and Automotive: "decrease
+   * the opacity of the bg image … by 50% so the text become readable".
+   * Applies on the phone too.
+   */
+  opacity?: number
+  /** Where the phone frame puts the same photo — see PhoneFill. */
+  phone?: PhoneFill
+}
+
+/**
+ * THE PHONE FRAMES PLACE THE PHOTO THEMSELVES — 28 Sep 2026.
+ *
+ * Each "- Mobile" frame draws the picture in its own box, far larger than the
+ * 390-wide band (About: 679x382 at x0 y-69 in a band 276 tall), so the phone
+ * shows a closer crop than simply covering the band would. `x y w h` are that
+ * box, relative to the band's top-left, read straight off the frame.
+ *
+ * The bands in the build are not all 276 tall (the service hero is 360 below
+ * lg, and a long H1 can grow any of them), so the box is written in `cqh`: one
+ * band height is 100cqh, so at 276 it is exactly the frame and a taller band
+ * scales the whole box up about its top-left, still covering the band instead
+ * of leaving a strip of bare navy under the photo.
+ *
+ * `band` is the frame's band height when it is not 276 (the service detail
+ * phone frame is 360). `under` is true where the frame nests the photo INSIDE
+ * the 60% navy container, so that navy paints under the picture rather than
+ * over it (FAQs, Downloads, Locations, Location Details, ITAD, All
+ * Industries). `green` moves the green wash when the frame does.
+ */
+export type PhoneFill = {
+  x: number; y: number; w: number; h: number
+  band?: number
+  under?: boolean
+  green?: { x: number; w: number }
+}
 
 /** Where the two washes sit, when a frame moves them off the default. */
 export type HeroWashes = { navy: { x: number; w: number }; green: { x: number; w: number } }
 
+/**
+ * Which set of washes the frame draws.
+ *
+ *   classic  the 16 Sep set: navy 60% bottom-up, green 64% left to right.
+ *   deep     the 28 Sep redesign (every interior hero now carries a full
+ *            1920x1081 photograph named "ChatGPT Image Aug 28"): navy 90% and
+ *            a SOLID green, both 1920 wide. The phone frames keep the lighter
+ *            pair and add the 90% navy again at 80% opacity on top.
+ *   teal     the Electronics Recycling Services hero (6989:13263): no navy at
+ *            all; the photo fades to #012325 at the bottom (its `overlay`) and
+ *            two green washes, 64% then solid, sit over it.
+ */
+export type HeroTone = 'classic' | 'deep' | 'teal'
+
+const NAVY = (a: number) => `linear-gradient(0deg, rgba(11,31,58,${a}) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)`
+const GREEN = (a: number) => `linear-gradient(90deg, rgba(27,122,61,${a}) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)`
+
 export function InteriorHeroArt({
-  src, fill: fillBox, washes,
+  src, fill: fillBox, washes, tone = 'classic',
 }: {
   /** The page's own hero photograph, exported 1920x470 — or a raw fill, see `fill`. */
   src?: string
   fill?: HeroFill
   washes?: HeroWashes
+  tone?: HeroTone
 } = {}) {
   const photo = src ?? SHARED_HERO
+  const wide = tone === 'classic' ? 1935 : 1920
   const navy = washes?.navy ?? { x: 0, w: 1920 }
-  const green = washes?.green ?? { x: 0, w: 1935 }
+  const green = washes?.green ?? { x: 0, w: wide }
+  const ph = fillBox?.phone
+  const phBand = ph?.band ?? 276
+  /* Frame px -> cqh, so the box scales with the band (see PhoneFill). */
+  const q = (v: number) => `${(v / phBand) * 100}cqh`
+  const navyGrad = NAVY(tone === 'deep' ? 0.9 : 0.6)
+  const greenGrad = tone === 'deep' ? GREEN(1) : GREEN(0.639)
   return (
     <>
       {/* All three take `fill` — they are layers, not content. Without it they
           join the flow below lg, the picture's wrapper collapses to nothing and
-          every interior hero on the site goes flat navy. Added 22 Sep 2026. */}
-      <Box x={0} y={fillBox?.y ?? 0} w={1920} h={fillBox?.h ?? 470} fill>
+          every interior hero on the site goes flat navy. Added 22 Sep 2026.
+          With a phone placement the phone draws its own copy below, so these
+          are desktop only. */}
+      <Box x={0} y={fillBox?.y ?? 0} w={1920} h={fillBox?.h ?? 470} fill className={ph ? 'max-lg:hidden' : ''}>
         <Image
           src={photo}
           alt=""
           fill
           priority
           sizes="(width < 64rem) 100vw, 1920px"
-          className="object-cover"
+          className={`object-cover ${fillBox?.flip ? 'lg:-scale-x-100' : ''}`}
+          style={fillBox?.opacity !== undefined ? { opacity: fillBox.opacity } : undefined}
         />
-        {fillBox && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
+        {fillBox?.overlay && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
       </Box>
 
-      {/* Navy wash, bottom to top — 6472:3968. The green wash is its child. */}
-      <Box
-        x={navy.x} y={0} w={navy.w} h={470} fill
-        style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
-      >
-        {/* 6472:3969. Figma draws it 1935 wide inside a 1920 frame; kept as
-            drawn because the section clips and the extra 15px never shows. */}
+      {tone === 'teal' ? (
+        /* 6989:13265 "Gradient Overlay", 64% green, with the solid green
+           6989:13266 inside it. No navy on this frame. */
+        <Box x={0} y={0} w={1920} h={470} fill className={ph ? 'max-lg:hidden' : ''} style={{ backgroundImage: GREEN(0.64) }}>
+          <Box x={0} y={0} w={1920} h={470} fill style={{ backgroundImage: GREEN(1) }} />
+        </Box>
+      ) : (
+        /* Navy wash, bottom to top — 6472:3968. The green wash is its child. */
         <Box
-          x={green.x} y={0} w={green.w} h={470} fill
-          style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)' }}
-        />
-      </Box>
+          x={navy.x} y={0} w={navy.w} h={470} fill className={ph ? 'max-lg:hidden' : ''}
+          style={{ backgroundImage: navyGrad }}
+        >
+          {/* 6472:3969. The 16 Sep frame drew it 1935 wide inside a 1920
+              frame; kept as drawn because the section clips and the extra
+              15px never shows. */}
+          <Box x={green.x} y={0} w={green.w} h={470} fill style={{ backgroundImage: greenGrad }} />
+        </Box>
+      )}
+
+      {ph && (
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden [container-type:size] lg:hidden">
+          {ph.under && tone !== 'teal' && <div className="absolute inset-0" style={{ backgroundImage: NAVY(0.6) }} />}
+          <div className="absolute" style={{ left: q(ph.x), top: q(ph.y), width: q(ph.w), height: q(ph.h) }}>
+            <Image src={photo} alt="" fill priority sizes="(width < 64rem) 200vw, 1px" className="object-cover"
+              style={fillBox?.opacity !== undefined ? { opacity: fillBox.opacity } : undefined} />
+            {fillBox?.overlay && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
+          </div>
+          {!ph.under && tone !== 'teal' && <div className="absolute inset-0" style={{ backgroundImage: NAVY(0.6) }} />}
+          <div
+            className="absolute inset-y-0"
+            style={{ left: q(ph.green?.x ?? 0), width: q(ph.green?.w ?? (tone === 'teal' ? 390 : 1127.489)), backgroundImage: GREEN(0.639) }}
+          />
+          {tone === 'deep' && <div className="absolute inset-0 opacity-80" style={{ backgroundImage: NAVY(0.9) }} />}
+        </div>
+      )}
     </>
   )
 }

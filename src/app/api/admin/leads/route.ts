@@ -214,3 +214,21 @@ export const POST = guard(async ({ req, user }) => {
   try { await locateLead(row.id) } catch { /* best effort */ }
   return json({ id: row.id }, 201)
 })
+
+/**
+ * Deleting enquiries (Asim, 28 Sep 2026: "in enquiries add delete option").
+ * DELETE { ids: [..] } removes them for good, with their activity and their
+ * attribution (both cascade). Administrators, editors and the Ads manager;
+ * never an agent. Test entries and spam are what this is for; a real lead
+ * that is not going anywhere is better marked "lost", which keeps it in the
+ * reports.
+ */
+export const DELETE = guard(async ({ req, user }) => {
+  if (!canAssign(user)) return json({ error: 'Only an administrator, editor or ads manager can delete enquiries.' }, 403)
+  const { ids } = await body<{ ids: number[] }>(req)
+  const list = Array.isArray(ids) ? [...new Set(ids.filter((n) => Number.isInteger(n) && n > 0))].slice(0, 500) : []
+  if (list.length === 0) return json({ error: 'Which enquiries?' }, 400)
+  const rows = await q<{ id: number }>('DELETE FROM leads WHERE id = ANY($1::bigint[]) RETURNING id', [list])
+  console.log(`[leads] ${user.name} (#${user.id}) deleted enquiries ${rows.map((r) => r.id).join(', ') || 'none'}`)
+  return json({ deleted: rows.length })
+})

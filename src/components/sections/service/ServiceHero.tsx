@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
-import { InteriorHeroArt, type HeroFill, type HeroWashes } from '@/components/ui/InteriorHeroArt'
+import { InteriorHeroArt, type HeroFill, type HeroTone, type HeroWashes } from '@/components/ui/InteriorHeroArt'
 import { Picker } from '@/components/client/Picker'
 
 export type Crumb = { label: string; href: string | null }
@@ -23,7 +23,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, top = 140, size,
+  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, tone, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -49,6 +49,8 @@ export function ServiceHero({
   imageFill?: HeroFill
   /** The washes' position, when the frame moves them — see HeroWashes. */
   washes?: HeroWashes
+  /** Which washes the frame draws — see HeroTone. The 28 Sep 2026 heroes are 'deep'. */
+  tone?: HeroTone
   /**
    * The picker and button are optional: the service detail frames carry them,
    * the Industries frame (6246:1012) does not. Omit both and the hero is just
@@ -91,7 +93,7 @@ export function ServiceHero({
         `fill`; it is a no-op then.
       */}
       <div className="max-lg:absolute max-lg:inset-0 max-lg:[&_.design-box]:absolute! max-lg:[&_.design-box]:inset-0! lg:contents">
-        <InteriorHeroArt src={image} fill={imageFill} washes={washes} />
+        <InteriorHeroArt src={image} fill={imageFill} washes={washes} tone={tone} />
       </div>
 
       {/* Content column — 6199:4945 at x319 y113, w946, gap 20; 6638:10147..

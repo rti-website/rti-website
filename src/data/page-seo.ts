@@ -42,7 +42,8 @@ export type PageSeo = {
   focusKeyword: string
 }
 
-export const PAGE_SEO: Record<string, PageSeo> = {
+/** The 23 Sep sheet, as applied then. Kept for the record; RESTORED below wins. */
+const SHEET_SEO: Record<string, PageSeo> = {
   // #1 Homepage
   "/": {
     title: "Certified Electronics & IT Recycling | Recycle Technologies",
@@ -254,3 +255,107 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     focusKeyword: "contact Recycle Technologies",
   },
 }
+
+/**
+ * BACK TO THE WORDPRESS TITLES AND DESCRIPTIONS — 29 Sep 2026.
+ *
+ * Asim, 29 Sep 2026, from RTI-Backup-vs-Live-Audit.xlsx, tab "Title and H1
+ * changes": the 20 pages below go back to the title and meta description they
+ * had on WordPress (column "Old title (WordPress)" and "Old meta
+ * description"), word for word, typos included ("Recyling", "inquires"),
+ * because they were ranking with them. Their H1s went back the same day (see
+ * each page's hero). The sheet's focus keyword stays as the keywords tag.
+ *
+ * /recycle-symbol/ is a blog post and /category/news/ a category archive: an
+ * entry here beats what the post or category holds in the database, so their
+ * titles can no longer be changed from Admin until the entry is removed.
+ */
+const RESTORED: Record<string, { title: string; description: string }> = {
+  "/": {
+    title: "E-Waste, Electronics & Industrial Recycling Services",
+    description: "Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics. Call (800) 969-5166.",
+  },
+  "/wisconsin-recycling/": {
+    title: "Recycling in Wisconsin | Call (800) 969-5166",
+    description: "Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.",
+  },
+  "/minnesota-recycling/": {
+    title: "Recycling Center in Minnesota | Call (800) 969-5166",
+    description: "Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",
+  },
+  "/it-asset-disposition/": {
+    title: "IT Asset Disposition | Call (800) 969-5166",
+    description: "IT asset disposition for retired laptops, servers, storage hardware, networking equipment, and office technology. Call (800) 969-5166 to arrange service.",
+  },
+  "/all-locations/": {
+    title: "Electronics Recycling in USA | Recycle technologies",
+    description: "Explore electronics recycling facility in USA. Drop-off your E-waste: old TVs, printers, computer, phones, monitors, small appliances, and more at one platform in your area.",
+  },
+  "/hard-drive-destruction-services/": {
+    title: "Commercial Hard Drive Destruction Services | Call (800) 969-5166",
+    description: "Commercial hard drive destruction for businesses, offices & organizations. Securely destroy HDDs, SSDs and data storage devices with verified service.",
+  },
+  "/airbag-recycling/": {
+    title: "Commercial Airbag Recycling | Deployed & Undeployed",
+    description: "Commercial airbag recycling for auto shops, dealerships & facilities. Recycle deployed and undeployed vehicle airbags with a reliable recycling service.",
+  },
+  "/battery-recycling/": {
+    title: "Commercial Battery Recycling | Lithium, Alkaline | Call Now",
+    description: "Commercial battery recycling for businesses, offices & facilities. Recycle non-hazardous batteries from electronics and devices with reliable service.",
+  },
+  "/recycle-symbol/": {
+    title: "Recycling Symbols Explained - Recycle Technologies",
+    description: "This guide will break down the most common recycling symbols, which will help you understand it much better and what you are supposed to do with each symbol.",
+  },
+  "/tv-recycling/": {
+    title: "Commercial TV Recycling | LCD, LED | Call (800) 969-5166",
+    description: "Commercial TV recycling for businesses, offices, and facilities. Recycle LCD, LED, plasma & flat-screen TVs. Call (800) 969-5166.",
+  },
+  "/light-bulbs/": {
+    title: "Commercial Light Bulb Recycling | CFL, LED | (800) 969-5166",
+    description: "Commercial light bulb recycling for businesses, facilities, and organizations. Recycle fluorescent, CFL, LED & other lamps. Call (800) 969-5166.",
+  },
+  "/contact-us/": {
+    title: "Contact Us for inquires about E-Waste | Recycle Technologies",
+    description: "Contact Us- for Recycle Technologies' safe recycling and shredding services in MN & WI. A reliable and eco-friendly waste management solutions.",
+  },
+  "/paper-shredding-services/": {
+    title: "Paper Shredding | Document Destruction | (800) 969-5166",
+    description: "Commercial paper shredding covering files, records, reports, and office paperwork using controlled destruction to reduce exposure risks. Call (800) 969-5166",
+  },
+  "/electronic-recycle/": {
+    title: "Commercial Electronic Recycling | Call (800) 969-5166 Today",
+    description: "Commercial electronics recycling for businesses, offices & facilities. Recycle computers, servers, monitors & more with reliable e-waste pickup.",
+  },
+  "/services/": {
+    title: "Recycling Services | Call (800) 969-5166",
+    description: "Recycling services for electronics, batteries, light bulbs, paper, shredding, and more. Call (800) 969-5166 for recycling services today.",
+  },
+  "/about-us-commercial-recycling-solutions/": {
+    title: "Commercial recycling | Recycling solution | Recycle technologies",
+    description: "Recycle Technologies Offering full-service commercial recycling as a recycling solution for e-waste, batteries, and lightbulbs in Minnesota and Wisconsin.",
+  },
+  "/category/news/": {
+    title: "Recyling & E-waste latest news in USA | Recycle Technologies",
+    description: "Explore the ever-evolving landscape of US Recycling & E-waste through Recycle Technologies – delivering the latest updates for a sustainable tomorrow.",
+  },
+  "/blog/": {
+    title: "Recyling & E-waste recycling trends Blog | Recycle Technologies",
+    description: "Stay updated with our blog on recycling and E-waste trends. From emerging technologies to consumer behaviors, gain valuable insights into the evolving world.",
+  },
+  "/off-site-shredding/": {
+    title: "Off-Site Shredding Services | Call (800) 969-5166",
+    description: "Off-site shredding services for confidential paperwork collected from offices and facilities, securely destroyed at certified locations. Call (800) 969-5166",
+  },
+  "/faqs/": {
+    title: "FAQs - Recycle Technologies",
+    description: "Explore FAQs about recycling technologies. Discover why recycling is crucial, what items are considered electronics, and how recycling can make a difference.",
+  },
+}
+
+export const PAGE_SEO: Record<string, PageSeo> = Object.fromEntries(
+  [...new Set([...Object.keys(SHEET_SEO), ...Object.keys(RESTORED)])].map((url) => [
+    url,
+    { focusKeyword: '', ...SHEET_SEO[url], ...RESTORED[url] } as PageSeo,
+  ]),
+)

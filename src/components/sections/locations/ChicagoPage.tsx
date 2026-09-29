@@ -107,13 +107,15 @@ async function Hero() {
   const { HERO } = await content('chicago')
   return (
     <section data-figma="6873:14198" className="relative h-[276px] overflow-hidden bg-navy lg:h-[470px]">
-      <div className="absolute left-1/2 top-1/2 h-[411px] w-[730px] -translate-x-1/2 -translate-y-1/2 lg:top-[-372px] lg:h-[1081px] lg:w-[1920px] lg:translate-y-0" aria-hidden="true">
+      {/* 28 Sep 2026: the new electronics photo has no grey veil, and on the
+          phone its layer (6896:15673) sits at -204,-67 inside the navy
+          container, so the navy wash is under it there, not over it. */}
+      <div className="absolute left-[-204px] top-[-67px] h-[411px] w-[730px] lg:left-1/2 lg:top-[-372px] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2" aria-hidden="true">
         <Image src={HERO.image} alt="" fill priority sizes="(width < 64rem) 730px, 1920px" className="object-cover" />
-        <span className="absolute inset-0 bg-[rgba(98,98,98,0.2)]" />
       </div>
       {/* Washes — 6873:14202 / 14203 on the board; on the phone the same two
           sit in a 1127 wide box that starts off to the left (6896:15334/15337). */}
-      <span aria-hidden="true" className="absolute inset-0"
+      <span aria-hidden="true" className="absolute inset-0 max-lg:hidden"
         style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 100%)' }} />
       <span aria-hidden="true" className="absolute inset-y-0 left-[-62px] w-[1127px] lg:left-0 lg:w-full"
         style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 100%)' }} />

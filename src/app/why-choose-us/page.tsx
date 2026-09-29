@@ -10,6 +10,7 @@ import { WhyCallout } from '@/components/sections/why/WhyCallout'
 import { WhyTrust } from '@/components/sections/why/WhyTrust'
 import { SEO } from '@/data/why-choose-us'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Why Choose Us — a 1:1 build of Figma frame 6374:4567.
@@ -67,7 +68,7 @@ export default async function WhyChooseUsPage() {
       <main>
         <ServiceHero
           label="6374:4569" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-why-choose-us.png"
+          {...HERO_PHOTOS.whyChooseUs}
         />
         <WhyDifferentiators top={DIFF_TOP}    height={H.diff} />
         <WhyCallout         top={CALLOUT_TOP} height={H.callout} />

@@ -10,6 +10,7 @@ import { ComplianceCaseStudies } from '@/components/sections/compliance/Complian
 import { ComplianceDownloads } from '@/components/sections/compliance/ComplianceDownloads'
 import { SEO } from '@/data/compliance-center'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Compliance Center — a 1:1 build of Figma frame 6382:6227, and of 6638:8303
@@ -80,7 +81,7 @@ export default async function ComplianceCenterPage() {
       <main>
         <ServiceHero
           label="6382:6229" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead}
-          image="/images/pages/hero-compliance.png"
+          {...HERO_PHOTOS.compliance}
         />
         <StandardsTable         top={STD_TOP}  height={H.std} />
         <StateRegulations       top={LAW_TOP}  height={H.law} />

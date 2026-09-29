@@ -152,16 +152,26 @@ function Bullets({ points }: { points: string[] }) {
  */
 function Hero({ page }: P) {
   const { hero } = page
+  const ph = hero.phone
+  /* The phone position of the photo, when the page gives one (see
+     hero.phone in types.ts): custom properties read only below lg, so the
+     board keeps its 1920x1081 at y-372. */
+  const phoneBox = ph
+    ? ({ '--ph-w': `${ph.width}px`, '--ph-h': `${ph.height}px`, '--ph-l': `${ph.left}px`, '--ph-t': `${ph.top}px`, '--ph-wash': `${ph.washLeft}px`, '--ph-wash-w': `${ph.washWidth ?? 505}px` } as React.CSSProperties)
+    : undefined
   return (
     <section data-figma={page.figma.board} className="relative h-[276px] overflow-hidden bg-navy lg:h-[470px]">
-      <div className="absolute left-1/2 top-1/2 h-[411px] w-[730px] -translate-x-1/2 -translate-y-1/2 lg:top-[-372px] lg:h-[1081px] lg:w-[1920px] lg:translate-y-0" aria-hidden="true">
-        <Image src={hero.image} alt="" fill priority sizes="(width < 64rem) 730px, 1920px" className="object-cover" />
-        <span className="absolute inset-0 bg-[rgba(98,98,98,0.2)]" />
+      <div style={phoneBox} aria-hidden="true"
+        className={`absolute lg:left-1/2 lg:top-[-372px] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2 lg:translate-y-0 ${ph
+          ? 'left-[var(--ph-l)] top-[var(--ph-t)] h-[var(--ph-h)] w-[var(--ph-w)]'
+          : 'left-1/2 top-1/2 h-[411px] w-[730px] -translate-x-1/2 -translate-y-1/2'}`}>
+        <Image src={hero.image} alt="" fill priority sizes={ph ? `(width < 64rem) ${ph.width}px, 1920px` : '(width < 64rem) 730px, 1920px'} className="object-cover" />
+        {hero.veil !== false && <span className="absolute inset-0 bg-[rgba(98,98,98,0.2)]" />}
       </div>
-      <span aria-hidden="true" className="absolute inset-0"
+      <span aria-hidden="true" className={`absolute inset-0 ${ph ? 'max-lg:hidden' : ''}`}
         style={{ backgroundImage: 'linear-gradient(0deg, rgba(11,31,58,0.6) 0%, rgba(11,31,58,0) 50%, rgba(0,0,0,0) 100%)' }} />
-      <span aria-hidden="true" className="absolute inset-y-0 left-[-62px] w-[1127px] lg:left-0 lg:w-full"
-        style={{ backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 100%)' }} />
+      <span aria-hidden="true" className={`absolute inset-y-0 lg:left-0 lg:w-full ${ph ? 'left-[var(--ph-wash)] w-[var(--ph-wash-w)]' : 'left-[-62px] w-[1127px]'}`}
+        style={{ ...phoneBox, backgroundImage: 'linear-gradient(90deg, rgba(27,122,61,0.639) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 100%)' }} />
 
       {/* Text block — 839 wide at x319, centred on the band: crumbs, the H1
           38 below them, the button 21 under the H1's line. */}

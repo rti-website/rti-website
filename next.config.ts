@@ -171,12 +171,15 @@ const nextConfig: NextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000',
           },
-          /* Nothing on this site asks for a camera, a microphone or a location,
-             so nothing embedded in it should be able to either. Named here
-             rather than left to default because the default is "allowed". */
+          /* Nothing on this site asks for a camera or a microphone, so nothing
+             embedded in it should be able to either. Named here rather than
+             left to default because the default is "allowed".
+             geolocation=(self) since 29 Sep 2026: the forms' "nearest drop-off
+             facility" pop-up asks for the visitor's location (ResidentialHelp).
+             Our own pages only; an embedded frame still cannot ask. */
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+            value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()',
           },
         ],
       },

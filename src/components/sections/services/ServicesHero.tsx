@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { InteriorHeroArt } from '@/components/ui/InteriorHeroArt'
 import { content } from '@/lib/page-content'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * Services hero — Figma 6142:786. 1920x470 on #0b1f3a.
@@ -35,7 +36,7 @@ export async function ServicesHero() {
         the day InteriorHeroArt passes `fill`; it will be a no-op by then.
       */}
       <div className="max-lg:absolute max-lg:inset-0 max-lg:[&_.design-box]:absolute! max-lg:[&_.design-box]:inset-0! lg:contents">
-        <InteriorHeroArt src="/images/services/hero-services.png" />
+        <InteriorHeroArt src={HERO_PHOTOS.services.image} fill={HERO_PHOTOS.services.imageFill} tone={HERO_PHOTOS.services.tone} />
       </div>
 
       {/* Breadcrumb — 6142:1548 at x322 y112, gap 13. Off-canvas on the phone. */}

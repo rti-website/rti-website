@@ -1,4 +1,5 @@
 import { industryPage, SERVICE_LINKS as L } from '@/data/industry-page'
+import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /** /industries/manufacturing-industrial/ — copy from the "Manufacturing & Industrial" doc. */
 export const CONTENT = industryPage({
@@ -26,7 +27,10 @@ export const CONTENT = industryPage({
     { label: 'Mail-In Program',        href: L.mailIn,      text: 'Facilities outside the Minnesota and Wisconsin service area can order a recycling kit online for electronics, batteries, or bulbs, pack it, and ship it with a prepaid label, then get a certificate of recycling once it’s processed.' },
   ],
   heroImage: '/images/industries/hero-manufacturing.png',
-  introImage: '/images/industries/intro-manufacturing.png', // Figma 6734:5892, supplied by Asim 23 Sep 2026
+  heroPhoto: HERO_PHOTOS.manufacturing, // 28 Sep 2026 frame — see src/data/hero-photos.ts
+  introImage: '/images/industries/intro-manufacturing-v2.png', // 28 Sep 2026 frame; was intro-manufacturing.png
+  introCrop: { x: -11, y: -46, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13155)
+  // (the 23 Sep photo was Figma 6734:5892, supplied by Asim)
   faqs: [
     { q: 'Does Recycle Technologies accept retired computers and IT equipment from manufacturing facilities?', a: 'Yes, our electronics recycling and IT asset disposition services cover retired computers, monitors, and networking equipment.' },
     { q: 'Can manufacturing and industrial facilities recycle batteries and lighting equipment along with their electronics?', a: 'Yes, our battery recycling service accepts lithium-ion, EV, mercury, nickel-cadmium, and zinc batteries, and our light bulb recycling service covers fluorescent, LED, and other bulb types.' },

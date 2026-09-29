@@ -138,12 +138,17 @@ export async function ServiceDetailPage({
           cta={hero.cta}
           secondaryCta={hero.secondaryCta}
           image={hero.image}
+          imageFill={hero.imageFill}
+          washes={hero.washes}
+          tone={hero.tone}
         />
 
         <ServiceSplit
           top={introTop} height={layout.intro} media="right" label="6197:4463"
           heading={intro.heading}
           image={intro.image}
+          imageFlip={intro.imageFlip}
+          imageCrop={intro.imageCrop}
           imageAlt=""
           /* READ MORE IS GONE — Asim, 22 Sep 2026: "remove the read more from
              all the services subpages". It was a jump link to #how-we-recycle,
@@ -174,6 +179,7 @@ export async function ServiceDetailPage({
             id="how-we-recycle"
             heading={content.process.heading}
             image={content.process.image}
+            imageCrop={content.process.imageCrop}
             imageAlt=""
           >
             {content.process.intro && <p className={PROSE}>{content.process.intro}</p>}
