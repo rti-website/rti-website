@@ -12,6 +12,7 @@ import { SuccessDialog } from '@/components/client/SuccessDialog'
 import { ResidentialHelp } from '@/components/client/ResidentialHelp'
 import type { DropoffSite } from '@/lib/dropoff-sites'
 import type { NO_PICKUP } from '@/data/contact'
+import type { AddressSuggestion } from '@/app/api/address/route'
 
 /**
  * Contact form — Figma 6370:758 / 6365:1082 for the look, and since 23 Sep
@@ -325,6 +326,18 @@ export function ContactForm({
     }
   }
 
+  /** An address picked from the suggestions: it fills City, State and Zip as
+   *  if the visitor had typed them (theirs, not ours to replace). */
+  function pickAddress(a: AddressSuggestion) {
+    put('city', a.city, false)
+    put('state', a.state, false)
+    put('zip', a.zip, false)
+    setBad(null)
+    setHint(null)
+    seq.current++
+    if (!a.zip) void fromCity()
+  }
+
   function onZipInput(e: React.FormEvent<HTMLInputElement>) {
     setBad(null)
     filled.current.zip = false
@@ -453,7 +466,9 @@ export function ContactForm({
         <Field id="company" f={F.company} autoComplete="organization" required maxLength={160} invalid={invalid('company')} onInput={() => setBad(null)} />
       )}
 
-      <Field id="address" f={F.address} autoComplete="street-address" maxLength={200} />
+      {/* Suggestions as the visitor types (29 Sep 2026): picking one fills
+          City, State and Zip too. See AddressField below. */}
+      <AddressField f={F.address} onPick={pickAddress} />
 
       {/* City / State / Zip — three across at lg, stacked on a phone — and the
           ZIP hint under them. The hint's box is empty (no height) until there
@@ -576,6 +591,97 @@ export function ContactForm({
         message={FORM.popup.body}
       />
     </form>
+  )
+}
+
+/**
+ * Address with suggestions — Asim, 29 Sep 2026 ("auto fill the address,
+ * give suggestions like the one in Find a Recycling Location Near You").
+ * After 3 characters and a short pause it asks /api/address (US addresses,
+ * see that route) and lists up to six under the field; arrow keys and Enter
+ * or a click pick one, which also fills City, State and Zip. Escape or
+ * leaving the field closes the list. Anything typed is still accepted as it
+ * is: the suggestions help, they are never required.
+ *
+ * autoComplete "off" so the browser's own address list does not open on top
+ * of ours.
+ */
+function AddressField({ f, onPick }: { f: { label: string; placeholder: string }; onPick: (a: AddressSuggestion) => void }) {
+  const [items, setItems] = useState<AddressSuggestion[]>([])
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(-1)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const ask = useRef(0)
+  const listId = 'contact-address-list'
+
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current) }, [])
+
+  function onInput(e: React.FormEvent<HTMLInputElement>) {
+    const q = e.currentTarget.value.trim()
+    if (timer.current) clearTimeout(timer.current)
+    if (q.length < 3) { ask.current++; setItems([]); setOpen(false); return }
+    timer.current = setTimeout(async () => {
+      const n = ++ask.current
+      try {
+        const res = await fetch(`${path('/api/address/')}?q=${encodeURIComponent(q)}`)
+        const r = res.ok ? ((await res.json()) as { suggestions?: AddressSuggestion[] }) : null
+        if (n !== ask.current) return
+        const list = r?.suggestions ?? []
+        setItems(list)
+        setActive(-1)
+        setOpen(list.length > 0)
+      } catch {
+        if (n === ask.current) { setItems([]); setOpen(false) }
+      }
+    }, 300)
+  }
+
+  function choose(a: AddressSuggestion) {
+    const input = document.getElementById('contact-address') as HTMLInputElement | null
+    if (input) input.value = a.line
+    ask.current++
+    setOpen(false)
+    setItems([])
+    onPick(a)
+  }
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!open || items.length === 0) return
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((i) => (i + 1) % items.length) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((i) => (i <= 0 ? items.length - 1 : i - 1)) }
+    else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); choose(items[active]!) }
+    else if (e.key === 'Escape') { setOpen(false) }
+  }
+
+  return (
+    <div className={FIELD}>
+      <label htmlFor="contact-address" className={LABEL}>{f.label}</label>
+      <div className="relative">
+        <input id="contact-address" name="address" type="text" maxLength={200} autoComplete="off"
+          role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={listId}
+          aria-activedescendant={open && active >= 0 ? `${listId}-${active}` : undefined}
+          placeholder={f.placeholder} className={INPUT}
+          onInput={onInput} onKeyDown={onKeyDown}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          onFocus={() => { if (items.length) setOpen(true) }} />
+        {open && (
+          <ul id={listId} role="listbox"
+            className="absolute left-0 right-0 top-[calc(100%+6px)] z-30 overflow-hidden rounded-[10px] border border-field bg-white py-[6px] shadow-[0_12px_30px_rgba(12,34,48,0.14)]">
+            {items.map((a, i) => (
+              <li key={a.label} id={`${listId}-${i}`} role="option" aria-selected={i === active}
+                onMouseDown={(e) => { e.preventDefault(); choose(a) }}
+                onMouseEnter={() => setActive(i)}
+                className={`flex cursor-pointer items-start gap-[10px] px-[14px] py-[9px] font-roboto text-[14px] leading-[20px] text-label ${i === active ? 'bg-brand-soft' : ''}`}>
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[2px] size-[16px] shrink-0 fill-brand">
+                  <path d="M8 1a5 5 0 0 0-5 5c0 3.6 4.5 8.6 4.7 8.8a.4.4 0 0 0 .6 0C8.5 14.6 13 9.6 13 6a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z" />
+                </svg>
+                <span><span className="font-medium text-heading">{a.line}</span>{`, ${a.city}, ${a.state}${a.zip ? ` ${a.zip}` : ''}`}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   )
 }
 
