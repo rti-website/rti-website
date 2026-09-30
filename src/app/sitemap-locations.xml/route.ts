@@ -1,7 +1,7 @@
 import { absolute } from '@/lib/urls'
 import { SERVICE_SLUGS } from '@/data/service-locations'
 import { isPartnerHub, loadLocations, pageUrl } from '@/lib/service-locations'
-import { fixedFacilityPage } from '@/data/city-pages'
+import { localFacilityPage as fixedFacilityPage } from '@/data/local-pages'
 
 /**
  * /sitemap-locations.xml — the location pages' own sitemap, as the SEO brief

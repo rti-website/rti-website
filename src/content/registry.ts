@@ -35,16 +35,6 @@ import * as indGovernment from '@/data/industries/government-municipal'
 import * as indHealthcare from '@/data/industries/healthcare'
 import * as indManufacturing from '@/data/industries/manufacturing-industrial'
 import * as indRetail from '@/data/industries/retail-corporate-offices'
-import { STATE_PAGES } from '@/data/state-pages'
-import * as chicago from '@/data/chicago'
-import { CHICAGO_BATTERY } from '@/data/city-pages/chicago-battery'
-import { CHICAGO_LIGHT_BULB } from '@/data/city-pages/chicago-light-bulb'
-import { BLAINE_BATTERY } from '@/data/city-pages/blaine-battery'
-import { BLAINE_LIGHT_BULB } from '@/data/city-pages/blaine-light-bulb'
-import { BLAINE_ELECTRONICS } from '@/data/city-pages/blaine-electronics'
-import { NEW_BERLIN_BATTERY } from '@/data/city-pages/new-berlin-battery'
-import { NEW_BERLIN_LIGHT_BULB } from '@/data/city-pages/new-berlin-light-bulb'
-import { NEW_BERLIN_ELECTRONICS } from '@/data/city-pages/new-berlin-electronics'
 import { ANOKA } from '@/data/county-pages/anoka'
 import { BENTON } from '@/data/county-pages/benton'
 import { DAKOTA } from '@/data/county-pages/dakota'
@@ -105,6 +95,45 @@ import { COMPUTER_RECYCLING_MADISON } from '@/data/county-pages/areas/computer-r
 import { MINNEAPOLIS } from '@/data/county-pages/areas/minneapolis'
 import { BATTERY_RECYCLING_GREEN_BAY } from '@/data/county-pages/areas/battery-recycling-green-bay'
 import { SHREDDING_WAUKESHA } from '@/data/county-pages/areas/shredding-waukesha'
+import { NEW_BERLIN_RECYCLING_CENTER } from '@/data/county-pages/areas/new-berlin-recycling-center'
+import { LANDING_WISCONSIN_BATTERY_RECYCLING } from '@/data/landing-pages/wisconsin-battery-recycling'
+import { LANDING_WISCONSIN_ELECTRONIC_RECYCLE } from '@/data/landing-pages/wisconsin-electronic-recycle'
+import { LANDING_WISCONSIN_LIGHT_BULBS } from '@/data/landing-pages/wisconsin-light-bulbs'
+import { LANDING_MINNESOTA_BATTERY_RECYCLING } from '@/data/landing-pages/minnesota-battery-recycling'
+import { LANDING_MINNESOTA_ELECTRONIC_RECYCLE } from '@/data/landing-pages/minnesota-electronic-recycle'
+import { LANDING_MINNESOTA_LIGHT_BULBS } from '@/data/landing-pages/minnesota-light-bulbs'
+import { LANDING_CHICAGO_BATTERY_RECYCLING } from '@/data/landing-pages/chicago-battery-recycling'
+import { LANDING_CHICAGO_ELECTRONIC_RECYCLE } from '@/data/landing-pages/chicago-electronic-recycle'
+import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-bulbs'
+import { WISCONSIN_AIRBAG_RECYCLING } from '@/data/local-pages/wisconsin-airbag-recycling'
+import { WISCONSIN_BALLAST_RECYCLING } from '@/data/local-pages/wisconsin-ballast-recycling'
+import { WISCONSIN_BATTERY_RECYCLING } from '@/data/local-pages/wisconsin-battery-recycling'
+import { WISCONSIN_ELECTRONIC_RECYCLING } from '@/data/local-pages/wisconsin-electronic-recycling'
+import { WISCONSIN_LIGHT_BULB_RECYCLING } from '@/data/local-pages/wisconsin-light-bulb-recycling'
+import { WISCONSIN_ON_SITE_OFF_SITE_SHREDDING } from '@/data/local-pages/wisconsin-on-site-off-site-shredding'
+import { WISCONSIN_PAPER_SHREDDING } from '@/data/local-pages/wisconsin-paper-shredding'
+import { WISCONSIN_PHONE_SHREDDING } from '@/data/local-pages/wisconsin-phone-shredding'
+import { WISCONSIN_TV_RECYCLING } from '@/data/local-pages/wisconsin-tv-recycling'
+import { MINNESOTA_AIRBAG_RECYCLING } from '@/data/local-pages/minnesota-airbag-recycling'
+import { MINNESOTA_BALLAST_RECYCLING } from '@/data/local-pages/minnesota-ballast-recycling'
+import { MINNESOTA_BATTERY_RECYCLING } from '@/data/local-pages/minnesota-battery-recycling'
+import { MINNESOTA_ELECTRONIC_RECYCLING } from '@/data/local-pages/minnesota-electronic-recycling'
+import { MINNESOTA_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/minnesota-hard-drive-destruction'
+import { MINNESOTA_LIGHT_BULB_RECYCLING } from '@/data/local-pages/minnesota-light-bulb-recycling'
+import { MINNESOTA_ON_SITE_OFF_SITE_SHREDDING } from '@/data/local-pages/minnesota-on-site-off-site-shredding'
+import { MINNESOTA_PAPER_SHREDDING } from '@/data/local-pages/minnesota-paper-shredding'
+import { MINNESOTA_PHONE_SHREDDING } from '@/data/local-pages/minnesota-phone-shredding'
+import { MINNESOTA_TV_RECYCLING } from '@/data/local-pages/minnesota-tv-recycling'
+import { CHICAGO_AIRBAG_RECYCLING } from '@/data/local-pages/chicago-airbag-recycling'
+import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
+import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
+import { CHICAGO_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/chicago-hard-drive-destruction'
+import { CHICAGO_LIGHT_BULB_RECYCLING } from '@/data/local-pages/chicago-light-bulb-recycling'
+import { CHICAGO_ON_SITE_OFF_SITE_SHREDDING } from '@/data/local-pages/chicago-on-site-off-site-shredding'
+import { CHICAGO_PAPER_SHREDDING } from '@/data/local-pages/chicago-paper-shredding'
+import { CHICAGO_PHONE_SHREDDING } from '@/data/local-pages/chicago-phone-shredding'
+import { CHICAGO_TV_RECYCLING } from '@/data/local-pages/chicago-tv-recycling'
+import { CHICAGO_ELECTRONIC_RECYCLING } from '@/data/local-pages/chicago-electronic-recycling'
 import * as facilities from '@/data/facilities'
 import * as certifications from '@/data/certifications'
 import * as nav from '@/lib/nav'
@@ -212,25 +241,10 @@ export const DOCS = {
   'industries/retail-corporate-offices': { title: 'Retail & Corporate Offices', group: 'Industry pages', urls: ['/industries/retail-corporate-offices/'], data: mod(indRetail) },
 
   /* ------------------------------------------------- state landing pages -- */
-  'state/light-bulbs/Minnesota': { title: 'Light Bulbs, Minnesota', group: 'State landing pages', urls: ['/light-bulbs/Minnesota/'], data: one(STATE_PAGES['light-bulbs'].Minnesota.content), note: 'Google Ads landing page (noindex).' },
-  'state/light-bulbs/Wisconsin': { title: 'Light Bulbs, Wisconsin', group: 'State landing pages', urls: ['/light-bulbs/Wisconsin/'], data: one(STATE_PAGES['light-bulbs'].Wisconsin.content), note: 'Google Ads landing page (noindex).' },
-  'state/electronic-recycle/Minnesota': { title: 'Electronics, Minnesota', group: 'State landing pages', urls: ['/electronic-recycle/Minnesota/'], data: one(STATE_PAGES['electronic-recycle'].Minnesota.content), note: 'Google Ads landing page (noindex).' },
-  'state/electronic-recycle/Wisconsin': { title: 'Electronics, Wisconsin', group: 'State landing pages', urls: ['/electronic-recycle/Wisconsin/'], data: one(STATE_PAGES['electronic-recycle'].Wisconsin.content), note: 'Google Ads landing page (noindex).' },
-  'state/battery-recycling/Minnesota': { title: 'Batteries, Minnesota', group: 'State landing pages', urls: ['/battery-recycling/Minnesota/'], data: one(STATE_PAGES['battery-recycling'].Minnesota.content), note: 'Google Ads landing page (noindex).' },
-  'state/battery-recycling/Wisconsin': { title: 'Batteries, Wisconsin', group: 'State landing pages', urls: ['/battery-recycling/Wisconsin/'], data: one(STATE_PAGES['battery-recycling'].Wisconsin.content), note: 'Google Ads landing page (noindex).' },
 
   /* ------------------------------------------------------ location pages -- */
   /* Chicago, Blaine and New Berlin: reached by URL and from ads, not from
      the menus. ("City pages" until 27 Sep 2026.) */
-  chicago: { title: 'Electronics Recycling in Chicago', group: 'Location pages', urls: ['/electronic-recycling-chicago/'], data: mod(chicago) },
-  'city/chicago-battery': { title: 'Battery Recycling in Chicago', group: 'Location pages', urls: [CHICAGO_BATTERY.url], data: one(CHICAGO_BATTERY) },
-  'city/chicago-light-bulb': { title: 'Light Bulb Recycling in Chicago', group: 'Location pages', urls: [CHICAGO_LIGHT_BULB.url], data: one(CHICAGO_LIGHT_BULB) },
-  'city/blaine-battery': { title: 'Battery Recycling in Blaine', group: 'Location pages', urls: [BLAINE_BATTERY.url], data: one(BLAINE_BATTERY) },
-  'city/blaine-light-bulb': { title: 'Light Bulb Recycling in Blaine', group: 'Location pages', urls: [BLAINE_LIGHT_BULB.url], data: one(BLAINE_LIGHT_BULB) },
-  'city/blaine-electronics': { title: 'Electronic Recycling in Blaine', group: 'Location pages', urls: [BLAINE_ELECTRONICS.url], data: one(BLAINE_ELECTRONICS) },
-  'city/new-berlin-battery': { title: 'Battery Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_BATTERY.url], data: one(NEW_BERLIN_BATTERY) },
-  'city/new-berlin-light-bulb': { title: 'Light Bulb Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_LIGHT_BULB.url], data: one(NEW_BERLIN_LIGHT_BULB) },
-  'city/new-berlin-electronics': { title: 'Electronic Recycling in New Berlin', group: 'Location pages', urls: [NEW_BERLIN_ELECTRONICS.url], data: one(NEW_BERLIN_ELECTRONICS) },
   /* The county pages (29 Sep 2026): the Items We Accept pills, service cards
      and CTA banner are shared (src/data/county-pages/shared.ts) and not here. */
   'county/anoka': { title: 'Anoka County Recycling Center', group: 'Location pages', urls: [ANOKA.url], data: one(ANOKA) },
@@ -252,6 +266,45 @@ export const DOCS = {
   'area/battery-recycling-milwaukee': { title: "Non-Hazardous Battery Recycling Milwaukee", group: 'Location pages', urls: [BATTERY_RECYCLING_MILWAUKEE.url], data: one(BATTERY_RECYCLING_MILWAUKEE) },
   'area/electronics-recycling-milwaukee': { title: "Electronics Recycling Milwaukee, WI", group: 'Location pages', urls: [ELECTRONICS_RECYCLING_MILWAUKEE.url], data: one(ELECTRONICS_RECYCLING_MILWAUKEE) },
   'area/oak-creek': { title: "Oak Creek Recycling Center", group: 'Location pages', urls: [OAK_CREEK.url], data: one(OAK_CREEK) },
+  'local/wisconsin-recycling-airbag-recycling': { title: "Airbag Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_AIRBAG_RECYCLING.url], data: one(WISCONSIN_AIRBAG_RECYCLING) },
+  'local/wisconsin-recycling-ballast-recycling': { title: "Ballast Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_BALLAST_RECYCLING.url], data: one(WISCONSIN_BALLAST_RECYCLING) },
+  'local/wisconsin-recycling-battery-recycling': { title: "Battery Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_BATTERY_RECYCLING.url], data: one(WISCONSIN_BATTERY_RECYCLING) },
+  'local/wisconsin-recycling-electronic-recycling': { title: "Electronic Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_ELECTRONIC_RECYCLING.url], data: one(WISCONSIN_ELECTRONIC_RECYCLING) },
+  'local/wisconsin-recycling-light-bulb-recycling': { title: "Light Bulb Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_LIGHT_BULB_RECYCLING.url], data: one(WISCONSIN_LIGHT_BULB_RECYCLING) },
+  'local/wisconsin-recycling-on-site-off-site-shredding': { title: "On-Site & Off-Site Shredding in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_ON_SITE_OFF_SITE_SHREDDING.url], data: one(WISCONSIN_ON_SITE_OFF_SITE_SHREDDING) },
+  'local/wisconsin-recycling-paper-shredding': { title: "Paper Shredding Services in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PAPER_SHREDDING.url], data: one(WISCONSIN_PAPER_SHREDDING) },
+  'local/wisconsin-recycling-phone-shredding': { title: "Phone Shredding Service in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PHONE_SHREDDING.url], data: one(WISCONSIN_PHONE_SHREDDING) },
+  'local/wisconsin-recycling-tv-recycling': { title: "Television Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_TV_RECYCLING.url], data: one(WISCONSIN_TV_RECYCLING) },
+  'local/minnesota-recycling-airbag-recycling': { title: "Airbag Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_AIRBAG_RECYCLING.url], data: one(MINNESOTA_AIRBAG_RECYCLING) },
+  'local/minnesota-recycling-ballast-recycling': { title: "Ballast Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_BALLAST_RECYCLING.url], data: one(MINNESOTA_BALLAST_RECYCLING) },
+  'local/minnesota-recycling-battery-recycling': { title: "Battery Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_BATTERY_RECYCLING.url], data: one(MINNESOTA_BATTERY_RECYCLING) },
+  'local/minnesota-recycling-electronic-recycling': { title: "Electronic Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_ELECTRONIC_RECYCLING.url], data: one(MINNESOTA_ELECTRONIC_RECYCLING) },
+  'local/minnesota-recycling-hard-drive-destruction': { title: "Hard Drive Destruction in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_HARD_DRIVE_DESTRUCTION.url], data: one(MINNESOTA_HARD_DRIVE_DESTRUCTION) },
+  'local/minnesota-recycling-light-bulb-recycling': { title: "Light Bulb Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_LIGHT_BULB_RECYCLING.url], data: one(MINNESOTA_LIGHT_BULB_RECYCLING) },
+  'local/minnesota-recycling-on-site-off-site-shredding': { title: "On-Site & Off-Site Shredding in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_ON_SITE_OFF_SITE_SHREDDING.url], data: one(MINNESOTA_ON_SITE_OFF_SITE_SHREDDING) },
+  'local/minnesota-recycling-paper-shredding': { title: "Paper Shredding Services in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PAPER_SHREDDING.url], data: one(MINNESOTA_PAPER_SHREDDING) },
+  'local/minnesota-recycling-phone-shredding': { title: "Phone Shredding Service in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PHONE_SHREDDING.url], data: one(MINNESOTA_PHONE_SHREDDING) },
+  'local/minnesota-recycling-tv-recycling': { title: "Television Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_TV_RECYCLING.url], data: one(MINNESOTA_TV_RECYCLING) },
+  'local/airbag-recycling-chicago': { title: "Airbag Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_AIRBAG_RECYCLING.url], data: one(CHICAGO_AIRBAG_RECYCLING) },
+  'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
+  'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
+  'local/hard-drive-destruction-chicago': { title: "Hard Drive Destruction in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_HARD_DRIVE_DESTRUCTION.url], data: one(CHICAGO_HARD_DRIVE_DESTRUCTION) },
+  'local/light-bulb-recycling-chicago': { title: "Light Bulb Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_LIGHT_BULB_RECYCLING.url], data: one(CHICAGO_LIGHT_BULB_RECYCLING) },
+  'local/on-site-off-site-shredding-chicago': { title: "On-Site and Off-Site Shredding in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_ON_SITE_OFF_SITE_SHREDDING.url], data: one(CHICAGO_ON_SITE_OFF_SITE_SHREDDING) },
+  'local/paper-shredding-chicago': { title: "Paper Shredding Services in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_PAPER_SHREDDING.url], data: one(CHICAGO_PAPER_SHREDDING) },
+  'local/phone-shredding-chicago': { title: "Phone Shredding Service in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_PHONE_SHREDDING.url], data: one(CHICAGO_PHONE_SHREDDING) },
+  'local/tv-recycling-chicago': { title: "Television Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_TV_RECYCLING.url], data: one(CHICAGO_TV_RECYCLING) },
+  'local/electronic-recycling-chicago': { title: "Electronics Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_ELECTRONIC_RECYCLING.url], data: one(CHICAGO_ELECTRONIC_RECYCLING) },
+  'landing/battery-recycling-Wisconsin': { title: "Battery Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_BATTERY_RECYCLING.url], data: one(LANDING_WISCONSIN_BATTERY_RECYCLING) },
+  'landing/electronic-recycle-Wisconsin': { title: "Electronics Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_ELECTRONIC_RECYCLE.url], data: one(LANDING_WISCONSIN_ELECTRONIC_RECYCLE) },
+  'landing/light-bulbs-Wisconsin': { title: "Light Bulb Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_LIGHT_BULBS.url], data: one(LANDING_WISCONSIN_LIGHT_BULBS) },
+  'landing/battery-recycling-Minnesota': { title: "Battery Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_BATTERY_RECYCLING.url], data: one(LANDING_MINNESOTA_BATTERY_RECYCLING) },
+  'landing/electronic-recycle-Minnesota': { title: "Electronics Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_ELECTRONIC_RECYCLE.url], data: one(LANDING_MINNESOTA_ELECTRONIC_RECYCLE) },
+  'landing/light-bulbs-Minnesota': { title: "Light Bulb Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_LIGHT_BULBS.url], data: one(LANDING_MINNESOTA_LIGHT_BULBS) },
+  'landing/battery-recycling-Chicago': { title: "Battery Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_BATTERY_RECYCLING.url], data: one(LANDING_CHICAGO_BATTERY_RECYCLING) },
+  'landing/electronic-recycle-Chicago': { title: "Electronics Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_ELECTRONIC_RECYCLE.url], data: one(LANDING_CHICAGO_ELECTRONIC_RECYCLE) },
+  'landing/light-bulbs-Chicago': { title: "Light Bulb Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_LIGHT_BULBS.url], data: one(LANDING_CHICAGO_LIGHT_BULBS) },
+  'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
   'area/oconomowoc-recycling-center': { title: "Oconomowoc Recycling Center", group: 'Location pages', urls: [OCONOMOWOC_RECYCLING_CENTER.url], data: one(OCONOMOWOC_RECYCLING_CENTER) },
   'area/waukesha-electronic-recycling': { title: "Sustainable Electronic Recycling in Waukesha WI", group: 'Location pages', urls: [WAUKESHA_ELECTRONIC_RECYCLING.url], data: one(WAUKESHA_ELECTRONIC_RECYCLING) },
   'area/battery-recycling-waukesha': { title: "Battery Recycling Waukesha", group: 'Location pages', urls: [BATTERY_RECYCLING_WAUKESHA.url], data: one(BATTERY_RECYCLING_WAUKESHA) },

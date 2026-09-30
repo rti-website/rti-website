@@ -26,7 +26,8 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  *   Hero           6374:4196   470        470
  *   Finder         6377:967    822        H.finder  map now full width, list gone
  *   Cards          6743:2450   696.05     H.cards   NEW 22 Sep 2026 — two facility cards (redrawn 25 Sep)
- *   Nationwide     6831:2663   1634       H.nation  NEW 24 Sep 2026 — Chicago and eight partner sites (redrawn 25 Sep)
+ *   Extended       —           —          H.extended NEW 30 Sep 2026 — "Extended Operations", the Chicago card (management)
+ *   Nationwide     6831:2663   1634       H.nation  NEW 24 Sep 2026 — the eight partner sites (Chicago moved up 30 Sep)
  *   Coverage       6377:968    493        H.cover   doc paragraphs differ
  *   Closing CTA    6491:6580   456        H.cta
  *   Footer         6374:4353   681        681
@@ -56,7 +57,8 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 const H = {
   finder: 822,    // Figma 822 — the revised frame, map at full width
   cards:  712,    // Figma 696.05 (redrawn 25 Sep 2026: no hours, no chips) — measured; the lead sets a line longer than drawn
-  nation: 1627,   // Figma 1634 (redrawn 25 Sep 2026: two-row cards, nine of them) — measured; the frame's Greenwood row carries a stray empty line
+  extended: 530,  // "Extended Operations" (30 Sep 2026, no frame) — measured: the card ends at 520
+  nation: 1375,   // Figma 1634 with nine cards; eight since Chicago moved up to Extended (30 Sep 2026): measured 1275 + pb100
   cover:  491,    // Figma 493 — the doc's second paragraph is two pixels shorter
   cta:    CTA_H,  // the shared closing band
 }
@@ -65,7 +67,8 @@ const HERO_TOP = 140
 const HERO_H = 470
 const FINDER_TOP = HERO_TOP + HERO_H
 const CARDS_TOP  = FINDER_TOP + H.finder
-const NATION_TOP = CARDS_TOP + H.cards
+const EXT_TOP    = CARDS_TOP + H.cards
+const NATION_TOP = EXT_TOP + H.extended
 const COVER_TOP  = NATION_TOP + H.nation
 const CTA_TOP    = COVER_TOP + H.cover
 const FOOTER_TOP = CTA_TOP + H.cta
@@ -99,6 +102,7 @@ export default async function LocationsPage() {
         />
         <LocationsFinder   top={FINDER_TOP} height={H.finder} />
         <LocationCards     top={CARDS_TOP}  height={H.cards} />
+        <NationwideFacilities top={EXT_TOP} height={H.extended} block="EXTENDED" />
         <NationwideFacilities top={NATION_TOP} height={H.nation} links={links} />
         <LocationsCoverage top={COVER_TOP}  height={H.cover} />
         <ClosingCta top={CTA_TOP} label="6377:969" content={CTA} />

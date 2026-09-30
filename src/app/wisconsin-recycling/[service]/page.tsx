@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import { ServiceLocationPage } from '@/components/sections/locations/ServiceLocation'
-import { CityServicePage } from '@/components/sections/locations/CityServicePage'
+import { LocalServicePage } from '@/components/sections/locations/LocalServicePage'
 import { findServicePage, offeredServices, servicePageMetadata } from '@/lib/service-location-route'
-import { cityDocKey, fixedFacilityPage } from '@/data/city-pages'
+import { LOCAL_FACILITY_PAGES, localDocKey, localFacilityPage, type LocalPage } from '@/data/local-pages'
 import { content } from '@/lib/page-content'
 import { buildMetadata } from '@/lib/seo'
 import { CountyPage } from '@/components/sections/locations/CountyPage'
@@ -32,7 +32,7 @@ const SITE = 'wisconsin'
 
 export async function generateStaticParams() {
   const fromAdmin = await offeredServices(SITE)
-  const fixed = ['battery-recycling', 'light-bulb-recycling', 'electronic-recycling'].filter((s) => fixedFacilityPage(SITE, s))
+  const fixed = Object.keys(LOCAL_FACILITY_PAGES[SITE])
   return [...new Set([...fixed, ...countySlugs(SITE), ...fromAdmin.map((p) => p.service)])].map((service) => ({ service }))
 }
 
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props) {
   const { service } = await params
   const county = countyPage(SITE, service)
   if (county) return buildMetadata({ url: county.url, title: county.seo.title, description: county.seo.description })
-  const fixed = fixedFacilityPage(SITE, service)
-  if (fixed) return buildMetadata({ url: fixed.url, title: fixed.seo.title, description: fixed.seo.description })
+  const local = localFacilityPage(SITE, service)
+  if (local) return buildMetadata({ url: local.url, title: local.seo.title, description: local.seo.description })
   return servicePageMetadata(await findServicePage(SITE, service, false))
 }
 
@@ -51,8 +51,8 @@ export default async function WisconsinServicePage({ params }: Props) {
   const { service } = await params
   const county = countyPage(SITE, service)
   if (county) return <CountyPage page={await content(countyDocKey(county))} />
-  const fixed = fixedFacilityPage(SITE, service)
-  if (fixed) return <CityServicePage page={await content(cityDocKey(fixed))} />
+  const local = localFacilityPage(SITE, service)
+  if (local) return <LocalServicePage page={(await content(localDocKey(local))) as LocalPage} />
   const found = await findServicePage(SITE, service, false)
   if (!found) notFound()
   return <ServiceLocationPage {...found} />

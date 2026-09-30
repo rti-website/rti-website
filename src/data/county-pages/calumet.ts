@@ -18,8 +18,8 @@ export const CALUMET: CountyPage = {
     description: "Material recycling in Calumet handling accepted electronics, spent lamps, mixed battery formats, document paper, and approved items. Call (800) 969-5166",
   },
   hero: {
-    h1: "Calumet County Recycling Center",
-    crumb: "Calumet County Recycling Center",
+    h1: "Calumet Recycling", // WordPress H1, restored 30 Sep 2026 (Asim)
+    crumb: "Calumet Recycling",
     lead: "Calumet Recycling Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/calumet.png',
     imageTop: -372,

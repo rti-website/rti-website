@@ -359,31 +359,46 @@ const nationwide = (
   name: string, address: string, phone: string, phoneOrder: number, slug?: string,
 ): NationwideFacility => ({ name, address, phone, phoneOrder, slug })
 
+/**
+ * "Extended Operations" — its own section above Additional Facilities
+ * Nationwide on /all-locations/ (management, via Asim, 30 Sep 2026:
+ * "Extended Operations, Chicago card beneath it"). Chicago moved out of the
+ * nationwide list into it: it is RTI's own service area, not a partner site.
+ * No Figma frame; the section reuses the nationwide heading block and card.
+ */
+export const EXTENDED = {
+  eyebrow: 'Service Area',
+  heading: 'Extended Operations',
+  lead: 'Beyond our Minnesota and Wisconsin facilities, Recycle Technologies also serves businesses in and around Chicago, Illinois.',
+  leadMobile: 'Recycle Technologies also serves businesses in and around Chicago.',
+  facilities: [
+    /* Chicago, Illinois — 6896:15675. The card opens its page,
+       /electronic-recycling-chicago/ (src/data/chicago.ts). */
+    { ...nationwide('Chicago, Illinois', 'Chicago, Illinois', '(800)969-5166 | (800)305-3040', 0),
+      href: href('/electronic-recycling-chicago/'), badge: 'Drop-off Location' },
+  ] as NationwideFacility[],
+}
+
 export const NATIONWIDE = {
   eyebrow: 'Expanding Network',
   heading: 'Additional Facilities Nationwide',
   lead: 'Our network is growing beyond Minnesota and Wisconsin — drop off electronics, batteries, and bulbs at any of these locations.',
   leadMobile: 'Our network is growing beyond Minnesota and Wisconsin.',
-  /* The board's order (6833:2668), two to a row: Chicago · Lewisburg /
-     Greenwood · Ocala / Johnson City · Atlanta / Ontario · Phoenix / Fort
-     Worth. Fort Worth (RTI) left the frame on 25 Sep 2026.
+  /* The board's order (6833:2668), two to a row: Lewisburg · Greenwood /
+     Ocala · Johnson City / Atlanta · Ontario / Phoenix · Fort Worth. Chicago
+     led the list until 30 Sep 2026, when it moved up to EXTENDED above.
 
      !! ONTARIO: the board frame's Ontario card repeats Ocala's address and
      phone (a copy and paste slip). The phone frame (6834:2668) has Ontario's
      own, and that is what is used here. */
   facilities: [
-    /* Chicago, Illinois — 6896:15675. RTI's own service area, not a partner
-       site and not a facility, so its address is the city; the card opens its
-       page, /electronic-recycling-chicago/ (src/data/chicago.ts). */
-    { ...nationwide('Chicago, Illinois', 'Chicago, Illinois', '(800)969-5166 | (800)305-3040', 0),
-      href: href('/electronic-recycling-chicago/'), badge: 'Drop-off Location' },
-    nationwide('Lewisburg, TN',    'Lighting Resources, 1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'),
-    nationwide('Greenwood, IN',    'Lighting Resources, 498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'),
-    nationwide('Ocala, FL',        'Lighting Resources, 1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),
-    nationwide('Johnson City, TN', 'Lighting Resources, 300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'),
-    nationwide('Atlanta, GA',      'Lighting Resources, 3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'),
-    nationwide('Ontario, CA',      'Lighting Resources, 805 East Francis Street, Ontario, CA 91761',          '(888) 923-7252', 1, 'ontario-ca'),
-    nationwide('Phoenix, AZ',      'Lighting Resources, 1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'),
-    nationwide('Fort Worth, TX',   'Lighting Resources, 101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'),
+    nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'),
+    nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'),
+    nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),
+    nationwide('Johnson City, TN', '300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'),
+    nationwide('Atlanta, GA',      '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'),
+    nationwide('Ontario, CA',      '805 East Francis Street, Ontario, CA 91761',          '(888) 923-7252', 1, 'ontario-ca'),
+    nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'),
+    nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'),
   ],
 }

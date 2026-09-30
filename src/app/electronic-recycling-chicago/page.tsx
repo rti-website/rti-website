@@ -1,14 +1,16 @@
 import { buildMetadata } from '@/lib/seo'
-import { ChicagoPage } from '@/components/sections/locations/ChicagoPage'
-import { SEO, URL } from '@/data/chicago'
+import { content } from '@/lib/page-content'
+import { LocalServicePage } from '@/components/sections/locations/LocalServicePage'
+import { localDocKey, type LocalPage } from '@/data/local-pages'
+import { CHICAGO_ELECTRONIC_RECYCLING as PAGE } from '@/data/local-pages/chicago-electronic-recycling'
 
 /**
- * "Electronics Recycling in Chicago, Illinois" at the old WordPress Chicago URL — see
- * src/data/chicago.ts for why this address, and ChicagoPage for the build.
- * The Chicago card on /all-locations/ links here.
+ * "Electronics Recycling in Chicago, Illinois" (Asim, 30 Sep 2026). Reached by URL and the sitemap only;
+ * nothing in the menus links here. At the old WordPress Chicago URL; the page's SEO title and description stay as they were (data/url-map.csv). Copy in
+ * src/data/local-pages/chicago-electronic-recycling.ts, build in LocalServicePage.
  */
-export const metadata = buildMetadata({ url: URL, title: SEO.title, description: SEO.description })
+export const metadata = buildMetadata({ url: PAGE.url, title: PAGE.seo.title, description: PAGE.seo.description })
 
-export default function Page() {
-  return <ChicagoPage />
+export default async function Page() {
+  return <LocalServicePage page={(await content(localDocKey(PAGE))) as LocalPage} />
 }

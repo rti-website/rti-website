@@ -6,7 +6,7 @@ import { allContent } from '@/lib/content'
 import { sitemapEntry } from '@/lib/seo'
 import { allDbPosts, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
 import { blogPagePath, categoryPagePath, pageCount, pageSlice } from '@/lib/blog-index'
-import { FIXED_FACILITY_URLS } from '@/data/city-pages'
+import { LOCAL_FACILITY_URLS as FIXED_FACILITY_URLS } from '@/data/local-pages'
 import { COUNTY_URLS } from '@/data/county-pages'
 
 /**

@@ -43,6 +43,7 @@ import { BATTERY_RECYCLING_WAUKESHA } from './areas/battery-recycling-waukesha'
 import { TV_RECYCLING_WAUKESHA } from './areas/tv-recycling-waukesha'
 import { SHREDDING_WAUKESHA } from './areas/shredding-waukesha'
 import { OCONOMOWOC_RECYCLING_CENTER } from './areas/oconomowoc-recycling-center'
+import { NEW_BERLIN_RECYCLING_CENTER } from './areas/new-berlin-recycling-center'
 import { MADISON } from './areas/madison'
 import { BATTERY_RECYCLING_MADISON } from './areas/battery-recycling-madison'
 import { FLUORESCENT_BULB_RECYCLE_MADISON } from './areas/fluorescent-bulb-recycle-madison'
@@ -144,6 +145,7 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(TV_RECYCLING_WAUKESHA, 'TV Recycling', 'TV Recycling Waukesha'),
     l(SHREDDING_WAUKESHA, 'Shredding Service', 'Shredding Waukesha'),
     l(OCONOMOWOC_RECYCLING_CENTER, 'Oconomowoc'),
+    l(NEW_BERLIN_RECYCLING_CENTER, 'New Berlin'),
   ] },
   { heading: 'Madison', page: MADISON, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_MADISON, 'Battery Recycling', 'Battery Recycling Madison'),

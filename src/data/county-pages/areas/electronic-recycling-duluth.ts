@@ -18,7 +18,7 @@ export const ELECTRONIC_RECYCLING_DULUTH: CountyPage = {
     description: "Sustainable electronic recycling Duluth Minnesota for POS terminals, barcode scanners, AV gear, and tablets, managed through verified intake steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Sustainable Electronic Recycling in Duluth, MN",
+    h1: "Sustainable Electronic Recycling in Duluth Minnesota", // WordPress H1, restored 30 Sep 2026 (Asim)
     crumb: "Sustainable Electronic Recycling in Duluth Minnesota",
     lead: "Providing reliable and certified electronics recycling services at individual and business levels..",
     h1Width: 1477,

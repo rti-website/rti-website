@@ -36,16 +36,25 @@ import { content } from '@/lib/page-content'
  */
 export type SiteLinks = Record<string, { hub?: string; materials: Record<string, string> }>
 
-export async function NationwideFacilities({ top, height, links = {} }: {
+export async function NationwideFacilities({ top, height, links = {}, block = 'NATIONWIDE' }: {
   top: number; height: number
   /** Card slug -> its published hub (and material pages, no longer shown here). */
   links?: SiteLinks
+  /**
+   * Which list: the partner sites, or EXTENDED — "Extended Operations", the
+   * Chicago card in a section of its own above them (30 Sep 2026). Same
+   * heading block and card; the one Chicago card sits centred, and the
+   * section keeps its bottom padding short so the two read as a pair.
+   */
+  block?: 'NATIONWIDE' | 'EXTENDED'
 }) {
-  const { NATIONWIDE } = await content('facilities')
+  const data = await content('facilities')
+  const NATIONWIDE = data[block]
+  const single = NATIONWIDE.facilities.length === 1
   return (
     <Section
-      top={top} height={height} label="6831:2663"
-      className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:pb-[100px] lg:pt-[90px]"
+      top={top} height={height} label={block === 'EXTENDED' ? 'extended-operations' : '6831:2663'}
+      className={`flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:pt-[90px] ${block === 'EXTENDED' ? 'max-lg:pb-0 lg:pb-0' : 'lg:pb-[100px]'}`}
     >
       <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[820px] lg:gap-[10px]">
         <Eyebrow>{NATIONWIDE.eyebrow}</Eyebrow>
@@ -58,7 +67,7 @@ export async function NationwideFacilities({ top, height, links = {} }: {
 
       {/* A grid, so the two cards in a row are the same height whichever one
           wraps its address. */}
-      <ul className="grid w-full grid-cols-1 gap-[20px] lg:w-[1250px] lg:grid-cols-[613px_613px] lg:gap-[24px]">
+      <ul className={`grid w-full grid-cols-1 gap-[20px] lg:gap-[24px] ${single ? 'lg:w-[613px]' : 'lg:w-[1250px] lg:grid-cols-[613px_613px]'}`}>
         {NATIONWIDE.facilities.map((f) => <Card key={f.name} f={f} hub={f.slug ? links[f.slug]?.hub : undefined} />)}
       </ul>
     </Section>

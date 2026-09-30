@@ -196,7 +196,7 @@
   },
   {
     "source": "/quote-by-location/",
-    "destination": "/contact-us/",
+    "destination": "/quote/",
     "statusCode": 301
   },
   {
@@ -580,11 +580,6 @@
     "statusCode": 301
   },
   {
-    "source": "/wisconsin-recycling/new-berlin-recycling-center/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/wisconsin-recycling/sheboygan/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
@@ -617,6 +612,26 @@
   {
     "source": "/hard-drive-destruction-service/",
     "destination": "/hard-drive-destruction-services/",
+    "statusCode": 301
+  },
+  {
+    "source": "/sham-lighting-recyclers-are-you-at-risk-2/",
+    "destination": "/sham-lighting-recyclers-are-you-at-risk/",
+    "statusCode": 301
+  },
+  {
+    "source": "/e-scrap-processor-charged-with-illegal-dumping-2/",
+    "destination": "/e-scrap-processor-charged-with-illegal-dumping/",
+    "statusCode": 301
+  },
+  {
+    "source": "/reduce-reuse-recycle-re-examine-guide/",
+    "destination": "/reduce-reuse-recycle-re-examine/",
+    "statusCode": 301
+  },
+  {
+    "source": "/e-waste-recycling-whats-next/",
+    "destination": "/social-responsibility-recycling/",
     "statusCode": 301
   }
 ]

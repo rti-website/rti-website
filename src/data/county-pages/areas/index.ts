@@ -48,6 +48,7 @@ import { COMPUTER_RECYCLING_MADISON } from './computer-recycling-madison'
 import { MINNEAPOLIS } from './minneapolis'
 import { BATTERY_RECYCLING_GREEN_BAY } from './battery-recycling-green-bay'
 import { SHREDDING_WAUKESHA } from './shredding-waukesha'
+import { NEW_BERLIN_RECYCLING_CENTER } from './new-berlin-recycling-center'
 
 /**
  * THE AREA PAGES (29 Sep 2026): 49 old WordPress location pages that had been
@@ -75,7 +76,7 @@ export const AREA_PAGES: CountyPage[] = [
   TV_RECYCLING_APPLETON, EDINA_RECYCLING_SERVICES, SHREDDING_DULUTH, PHOENIX_ARIZONA,
   LAKEVILLE_RECYCLING_CENTER, BATTERY_RECYCLING_ST_PAUL, GREEN_BAY_RECYCLING, FORT_WORTH_TEXAS,
   EAST_BETHEL, COMPUTER_RECYCLING_MADISON, MINNEAPOLIS, BATTERY_RECYCLING_GREEN_BAY,
-  SHREDDING_WAUKESHA,
+  SHREDDING_WAUKESHA, NEW_BERLIN_RECYCLING_CENTER,
 ]
 
 export type AreaDocKey =
@@ -128,6 +129,7 @@ export type AreaDocKey =
   | 'area/minneapolis'
   | 'area/battery-recycling-green-bay'
   | 'area/shredding-waukesha'
+  | 'area/new-berlin-recycling-center'
 
 export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'], [WAUKESHA_RECYCLING_CENTER, 'area/waukesha-recycling-center'],
@@ -147,4 +149,5 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [GREEN_BAY_RECYCLING, 'area/green-bay-recycling'], [FORT_WORTH_TEXAS, 'area/fort-worth-texas'], [EAST_BETHEL, 'area/east-bethel'],
   [COMPUTER_RECYCLING_MADISON, 'area/computer-recycling-madison'], [MINNEAPOLIS, 'area/minneapolis'], [BATTERY_RECYCLING_GREEN_BAY, 'area/battery-recycling-green-bay'],
   [SHREDDING_WAUKESHA, 'area/shredding-waukesha'],
+  [NEW_BERLIN_RECYCLING_CENTER, 'area/new-berlin-recycling-center'],
 ])

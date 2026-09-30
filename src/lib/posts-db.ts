@@ -3,6 +3,7 @@ import { cache as perRequest } from 'react'
 import { q } from '@/lib/db'
 import type { ContentMeta } from '@/lib/content'
 import { fixLegacyUrl, fixLegacyUrls } from '@/lib/legacy-urls'
+import REDIRECTS from '../../data/redirects.json'
 
 /**
  * Published posts, read from PostgreSQL AT BUILD TIME.
@@ -180,10 +181,17 @@ function buildOnce<T>(load: () => Promise<T>): () => Promise<T> {
   return () => (BUILD ? (kept ??= once()) : once())
 }
 
+const REDIRECTED = new Set((REDIRECTS as { source: string }[]).map((r) => r.source))
+
 export const allDbPosts = buildOnce(async (): Promise<DbPost[]> => {
   try {
     const rows = await q<Row>(`${SELECT} ORDER BY p.published_at DESC NULLS LAST, p.id DESC`)
-    return rows.map(toPost)
+    // A post whose URL 301s elsewhere (data/url-map.csv) is left out of the
+    // blog lists, the categories and the sitemap: the SEO team's duplicate
+    // posts (30 Sep 2026, e.g. …-at-risk-2/) redirect to the original, and a
+    // listed link to a redirect is a wasted hop. The redirect itself runs
+    // from next.config, before the page is ever reached.
+    return rows.map(toPost).filter((p) => !REDIRECTED.has(p.url))
   } catch (err) {
     return noDatabase(err)
   }

@@ -4,7 +4,7 @@ import { DOCS, DOC_KEYS } from '@/content/registry'
 import { allContent } from '@/lib/content'
 import { path } from '@/lib/urls'
 import { isPartnerHub, pageUrl, readLocationsForAdmin, serviceInfo } from '@/lib/service-locations'
-import { fixedFacilityPage } from '@/data/city-pages'
+import { localFacilityPage as fixedFacilityPage } from '@/data/local-pages'
 
 /**
  * Admin -> Pages: every editable document with where it stands (27 Sep 2026).

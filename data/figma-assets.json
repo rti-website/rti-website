@@ -2170,6 +2170,125 @@
       "node": "county template",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Pioneers card 4 icon (county pages, 29 Sep 2026)."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/check.svg",
+      "id": "c98b5b24-b1c2-4932-a259-1d7cae4ddabb/5d3e9.svg",
+      "node": "7148:17229",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, check (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/clock.svg",
+      "id": "3c79b0af-815e-4ca7-9286-be7a25dfb551/a038c.svg",
+      "node": "7148:17155",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, clock (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/factory.svg",
+      "id": "4234cac4-1a9f-44c0-99b8-69d8635ca8c0/ab3f3.svg",
+      "node": "7148:17335",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, factory (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/file.svg",
+      "id": "4234cac4-1a9f-44c0-99b8-69d8635ca8c0/bbba0.svg",
+      "node": "7148:17338",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, file (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/leaf.svg",
+      "id": "f38e44bb-8c19-4b02-888c-1285d7e043b8/57d5c.svg",
+      "node": "7148:17415",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, leaf (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/lock.svg",
+      "id": "c98b5b24-b1c2-4932-a259-1d7cae4ddabb/26655.svg",
+      "node": "7148:17233",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, lock (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/mail.svg",
+      "id": "c98b5b24-b1c2-4932-a259-1d7cae4ddabb/ff9d0.svg",
+      "node": "7148:17242",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, mail (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/phone.svg",
+      "id": "4c340dff-7ff2-4396-9c9e-436f72646d12/9e531.svg",
+      "node": "7148:17668",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, phone (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/pin.svg",
+      "id": "4c340dff-7ff2-4396-9c9e-436f72646d12/34565.svg",
+      "node": "7148:17671",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, pin (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/shield.svg",
+      "id": "3c79b0af-815e-4ca7-9286-be7a25dfb551/fec37.svg",
+      "node": "7148:17137",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, shield (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/truck.svg",
+      "id": "3c79b0af-815e-4ca7-9286-be7a25dfb551/32be4.svg",
+      "node": "7148:17145",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, truck (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/local-pages/icons/users.svg",
+      "id": "5e2ab6c7-bda3-41fa-9781-8c703d2e61eb/e3df2.svg",
+      "node": "7149:17808",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Card icon disc, users (22px white). Location service pages (30 Sep 2026, src/data/local-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/landing/battery-hero.png",
+      "id": "798009b4-ab09-4837-8f1f-3213014d56d2/a521b.png",
+      "node": "7153:17134",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Landing page photo, shared by the pages that draw it (hero). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/landing/about-facility.png",
+      "id": "798009b4-ab09-4837-8f1f-3213014d56d2/fdaf6.png",
+      "node": "7153:17157",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Landing page photo, shared by the pages that draw it (about). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/landing/electronics-hero.png",
+      "id": "9b15d8a7-7204-4ae5-b5df-7b86bc82c1de/13122.png",
+      "node": "7153:17846",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Landing page photo, shared by the pages that draw it (hero). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/landing/light-bulb-hero.png",
+      "id": "f61495ef-f957-4959-896a-13e37d2e280d/5e91c.png",
+      "node": "7153:18569",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Landing page photo, shared by the pages that draw it (hero). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/landing/about-chicago.png",
+      "id": "290c5a1a-93ea-4d24-acb7-95f9e8cf58d6/28567.png",
+      "node": "7155:19415",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Landing page photo, shared by the pages that draw it (about). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
     }
   ]
 }

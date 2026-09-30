@@ -18,7 +18,7 @@ export const WAUKESHA_ELECTRONIC_RECYCLING: CountyPage = {
     description: "Sustainable electronic recycling Waukesha Wisconsin for servers, desktops, tablets, network gear, and components, managed through verified intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Sustainable Electronic Recycling in Waukesha WI",
+    h1: "Sustainable Electronic Recycling in Waukesha Wisconsin", // WordPress H1, restored 30 Sep 2026 (Asim)
     crumb: "Sustainable Electronic Recycling in Waukesha Wisconsin",
     lead: "Providing reliable and certified electronics recycling services at individual and business levels.",
     h1Width: 1481,
