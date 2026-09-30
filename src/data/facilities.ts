@@ -373,9 +373,9 @@ export const EXTENDED = {
   leadMobile: 'Recycle Technologies also serves businesses in and around Chicago.',
   facilities: [
     /* Chicago, Illinois — 6896:15675. The card opens its page,
-       /electronic-recycling-chicago/ (src/data/chicago.ts). */
+       /electronic-recycling-chicago/ (src/data/local-pages/). */
     { ...nationwide('Chicago, Illinois', 'Chicago, Illinois', '(800)969-5166 | (800)305-3040', 0),
-      href: href('/electronic-recycling-chicago/'), badge: 'Drop-off Location' },
+      href: href('/electronic-recycling-chicago/') }, // no "Drop-off Location" label since 30 Sep 2026 (Asim)
   ] as NationwideFacility[],
 }
 
