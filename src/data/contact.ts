@@ -306,8 +306,9 @@ export const PICKUP_PAGE = {
  * `{n}` and `{miles}` are filled in.
  */
 export const NO_PICKUP = {
-  residential: 'We do not offer residential pickup.',
-  business: 'Pickup is for businesses only. We do not offer residential pickup.',
+  // Both notices, Asim 30 Sep 2026 (was "We do not offer residential pickup.")
+  residential: 'Pickup is for businesses only. Households can drop off at a nearby facility or use our Mail-In Program.',
+  business: 'Pickup is for businesses only. Households can drop off at a nearby facility or use our Mail-In Program.',
   dropoffLink: 'Click here to see the nearest drop-off facility',
   mailinLink: 'Click here to subscribe to our Mail-In Program',
   dropoff: {
