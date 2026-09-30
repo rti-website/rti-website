@@ -11,7 +11,7 @@ import { ServiceSplit } from '@/components/sections/service/ServiceSplit'
 import { ServiceAcceptBand } from '@/components/sections/service/ServiceAcceptBand'
 import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { Btn } from '@/components/ui/Bits'
 import { content as pageContent } from '@/lib/page-content'
 
@@ -118,7 +118,13 @@ export async function ServiceDetailPage({
   const { CERT_COPY } = await pageContent('certifications')
   const certAfter = content.certifications?.after
   const certBody = content.certifications?.body ?? (certAfter ? `${CERT_COPY.body} ${certAfter}` : undefined)
-  const picker = hero.cta && !hero.secondaryCta && !hero.noPicker
+  /* The hero's buttons (30 Sep 2026): Schedule a Pickup, where the location
+     picker was, then Get a Quote — on every page whose frame draws buttons.
+     The page's own quote link is kept when its button is a quote (it may
+     carry ?service=); anything else it had (a kit, a pickup) gives way. */
+  const own = [hero.cta, hero.secondaryCta].find((c) => c && /quote/i.test(c.label))
+  const heroQuote = hero.cta ? { label: 'Get a Quote', href: own?.href ?? QUOTE_HREF } : undefined
+  const heroPickup = hero.cta ? { label: 'Schedule a Pickup', href: PICKUP_HREF } : undefined
 
   return (
     <Canvas height={Math.round(footerTop + FOOTER_H)}>
@@ -132,11 +138,10 @@ export async function ServiceDetailPage({
             { label: hero.crumb,     href: null },
           ]}
           h1={hero.h1}
+          h1OneLine={hero.h1OneLine}
           lead={hero.lead}
-          pickerPlaceholder={picker ? text.picker.placeholder : undefined}
-          pickerOptions={picker ? text.picker.options : undefined}
-          cta={hero.cta}
-          secondaryCta={hero.secondaryCta}
+          pickupCta={heroPickup}
+          cta={heroQuote}
           image={hero.image}
           imageFill={hero.imageFill}
           washes={hero.washes}

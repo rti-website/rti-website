@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /all-locations/ — copy from the "Locations" doc, geometry from Figma
@@ -131,8 +131,8 @@ export const CTA = {
   bodyMobile: 'Our Mail-In Program brings certified recycling and shredding to all 50 states.',
   /** This page's own band (6491:6580 / 6750:8507) — see `narrow` in ClosingCta. */
   narrow: true,
-  primary:   { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
-  secondary: { label: 'Get a Quote',             href: QUOTE_HREF },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6374:4194 and the Locations doc, for Aqeel and Musaveer. */

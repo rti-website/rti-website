@@ -1,4 +1,4 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
@@ -6,7 +6,6 @@ import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, t
  * Figma 6908:15983 (board) / 6911:16530 (phone). A service area page: no
  * facility, no address, no map (see types.ts).
  */
-const QUOTE = quoteHref({ service: 'Battery Recycling', location: 'Chicago, IL' })
 const H1 = 'Battery Recycling in Chicago, Illinois'
 
 export const CHICAGO_BATTERY: CityPage = {
@@ -27,7 +26,7 @@ export const CHICAGO_BATTERY: CityPage = {
     image: '/images/locations/city-pages/battery-hero.png',
     veil: false,
     phone: { width: 878, height: 494, left: -223, top: -108, washLeft: -6 },
-    button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: [
@@ -145,7 +144,7 @@ export const CHICAGO_BATTERY: CityPage = {
       'Recycle Technologies picks up spent batteries from offices, warehouses, data centers, and fleet operations across the Chicago area, then processes them at its own R2v3 certified facilities and provides documentation for your records.',
       'Tell us what you have and where it is. Most Chicago pickups are scheduled within a few business days.',
     ],
-    primary: { label: 'Schedule a Battery Recycling Pickup in Chicago, Illinois', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166', phoneLabel: 'Phone: 800-969-5166' },
     headingWidth: 598,
     footnote: 'Recycle Technologies has served businesses across the Midwest since 1993.',

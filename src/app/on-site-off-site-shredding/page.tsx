@@ -4,7 +4,11 @@ import { content } from '@/lib/page-content'
 import { CONTENT } from '@/data/off-site-shredding'
 
 /**
- * Off-Site and On-Site Shredding — Figma 6142:2048 "Service Details".
+ * On-Site & Off-Site Shredding — Figma 6142:2048 "Service Details".
+ *
+ * At /on-site-off-site-shredding/ since 30 Sep 2026 (Asim: change the URL and
+ * cover both on-site and off-site). /off-site-shredding/, where it was, 301s
+ * here (data/url-map.csv).
  *
  * All the copy lives in src/data/off-site-shredding.ts; the layout is the shared
  * ServiceDetailPage. `layout` carries the only two per-page numbers: the

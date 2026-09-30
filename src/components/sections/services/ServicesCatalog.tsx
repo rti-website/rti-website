@@ -4,35 +4,18 @@ import { SERVICE_GROUPS, type ServiceGroup } from '@/data/services'
 import { content } from '@/lib/page-content'
 
 /**
- * The full catalogue — Figma 6142:1559 in file drzg9BI08Dy8eWZNBfXBzD (the
- * 21 Sep 2026 redraw), 1282 wide at x319.
+ * The full catalogue — Figma 6142:1559 (file BVtf2AOuUOcYbiMIlcKmbC, redrawn
+ * by 30 Sep 2026), 1282 wide at x319.
  *
- * The homepage's photo cards (ServicePhotoCard) at 0.9172 scale — 239.4 x
- * 343.05 — in the frame's arrangement:
- *
- *   Recycling Services        full width: heading, 48, five cards spread
- *                             across the 1282 (gap 21.25)
- *   Destruction & Shredding   a 746.2 column: heading, 48, three per row,
- *                             gap 14
- *   Recycling Programs        a 487.8 column beside it (48 between): heading,
- *                             48, its card centred
- *
- * Built as flow, not absolute offsets. The gaps are the frame's: 150 above
- * the first heading, 48 between every heading and its cards and between the
- * two blocks. A fourth Destruction card would wrap onto a second row of that
- * column (Phone Shredding did, until Asim took it off the page — see its row
- * in src/data/services.ts).
- *
- * CATALOG_H is that flow added up, so the services page can place what
- * follows without anyone measuring a screenshot.
+ * Laid out as the 30 Sep 2026 redraw below describes (see the note above
+ * CARD_W). Built as flow, not absolute offsets.
  *
  * MOBILE — Figma 6638:8546 "Our Services Content" in file BVtf2AOuUOcYbiMIlcKmbC.
  * px20 / pt32 / pb8, the three groups stacked 32 apart, each one a plain
  * heading over a single column of full-width cards 16 apart. The cards need
  * nothing here: ServicePhotoCard is already `w-full lg:w-[261px]`. What did
- * need doing is the INLINE widths and gaps around it — `style={{ width: 746.2 }}`
- * and `style={{ gap: 48 }}` apply at every viewport, so they are custom
- * properties now, read only by an `lg:` utility.
+ * need doing is the widths and gaps around it: they are custom properties,
+ * read only by `lg:` utilities, so the phone is a plain single column.
  *
  * NOT BUILT: the frame opens the section with a "Chips Scroll" rail (6638:8547)
  * — three gradient/outline chips carrying the group names and an icon each.
@@ -40,21 +23,40 @@ import { content } from '@/lib/page-content'
  * repo, and would put a second copy of all three headings in the DOM. Flagged
  * for Aqeel/Asim rather than invented here.
  */
-const SCALE = 239.4 / 261
-const CARD_W = 261 * SCALE
-const CARD_H = 374 * SCALE
+/*
+ * 30 SEP 2026 — the redrawn frame (6142:1559 in file BVtf2AOuUOcYbiMIlcKmbC).
+ * Asim: "make the design like the figma", with Airbag Recycling, Phone
+ * Shredding and the Electronic Recycling Kit on the page. The three groups
+ * now stack full width, the cards at full size (261 x 374, no zoom) and with
+ * the homepage's hover reveal:
+ *
+ *   Recycling Services        heading 60, 48, four a row (gap 20) and the
+ *                             rest centred under them, rows 48 apart
+ *   Destruction & Shredding   48 under that: heading 95, 48, four a row
+ *                             (gap 14), centred
+ *   Recycling Programs        48 under that: heading 95, 48, the cards
+ *                             centred, gap 14
+ *
+ * 150 above the first heading. With six, four and two cards that is the
+ * frame's 2184. CATALOG_H adds the same flow up from the data, so a card
+ * added or taken away moves everything under the catalogue.
+ */
+const CARD_W = 261
+const CARD_H = 374
 const PT = 150
 const BLOCK_GAP = 48
-const COL_GAP = 48
 const WIDE_W = 1282
-const LEFT_W = 746.2
-const RIGHT_W = 487.8
-const LEFT_GAP = 14
-const LEFT_PER_ROW = 3
+const PER_ROW = 4
+/** Across and down, per group: the frame's gaps. */
+const GAPS: Record<string, { x: number; y: number }> = {
+  recycling: { x: 20, y: 48 },
+  destruction: { x: 14, y: 48 },
+  programs: { x: 14, y: 48 },
+}
 
 function visible(group: ServiceGroup) {
-  // menuOnly: live service Figma has no card for — menu only.
-  // unbuilt:   no page yet, so it would link to a 404 — hidden everywhere.
+  // unbuilt: no page yet, so it would link to a 404 — hidden everywhere.
+  // menuOnly: a service kept in the header menu but off the cards.
   return group.cards.filter((c) => !c.menuOnly && !c.unbuilt)
 }
 
@@ -69,42 +71,18 @@ function group(id: string, groups: ServiceGroup[] = SERVICE_GROUPS): ServiceGrou
  * counts and heading boxes are configuration, not copy). What renders comes
  * from the admin's edited copy, found by the same ids, inside the component.
  */
-const RECYCLING = group('recycling')
-const DESTRUCTION = group('destruction')
-const PROGRAMS = group('programs')
+const ORDER = ['recycling', 'destruction', 'programs'] as const
 
-const LEFT_ROWS = Math.ceil(visible(DESTRUCTION).length / LEFT_PER_ROW)
-const LEFT_CARDS_H = LEFT_ROWS * CARD_H + (LEFT_ROWS - 1) * LEFT_GAP
-const RIGHT_ROWS = Math.ceil(visible(PROGRAMS).length / 2)
-const RIGHT_CARDS_H = RIGHT_ROWS * CARD_H + (RIGHT_ROWS - 1) * LEFT_GAP
+function blockH(g: ServiceGroup): number {
+  const rows = Math.max(1, Math.ceil(visible(g).length / PER_ROW))
+  const gap = GAPS[g.id] ?? GAPS.destruction!
+  return g.headingH + BLOCK_GAP + rows * CARD_H + (rows - 1) * gap.y
+}
 
-const WIDE_H = RECYCLING.headingH + BLOCK_GAP + CARD_H
-const PAIR_H = Math.max(
-  DESTRUCTION.headingH + BLOCK_GAP + LEFT_CARDS_H,
-  PROGRAMS.headingH + BLOCK_GAP + RIGHT_CARDS_H,
-)
-export const CATALOG_H = PT + WIDE_H + BLOCK_GAP + PAIR_H
-
-/**
- * Every measurement the Figma board asks for, as custom properties. They used
- * to be inline `style={{ width }}` / `style={{ gap }}`, which no media query
- * can switch off — 746.2px of column on a 350px screen. Only `lg:` utilities
- * read these, so below lg the same markup is a plain single column.
- */
-const BOARD = {
-  '--cat-pt': `${PT}px`,
-  '--cat-block': `${BLOCK_GAP}px`,
-  '--cat-col': `${COL_GAP}px`,
-  '--cat-card': `${LEFT_GAP}px`,
-  '--cat-left': `${LEFT_W}px`,
-  '--cat-right': `${RIGHT_W}px`,
-} as React.CSSProperties
+export const CATALOG_H = PT + ORDER.map((id) => blockH(group(id))).reduce((a, b) => a + b, 0) + (ORDER.length - 1) * BLOCK_GAP
 
 export async function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
   const { SERVICE_GROUPS: groups } = await content('services')
-  const recycling = group('recycling', groups)
-  const destruction = group('destruction', groups)
-  const programs = group('programs', groups)
   return (
     <Section
       top={top} left={319} width={WIDE_W} height={CATALOG_H} label="6142:1559"
@@ -112,37 +90,25 @@ export async function ServicesCatalog({ top = 610 }: { top?: number } = {}) {
     >
       <div
         className="flex flex-col gap-[32px] lg:gap-[var(--cat-block)] lg:pt-[var(--cat-pt)]"
-        style={BOARD}
+        style={{ '--cat-pt': `${PT}px`, '--cat-block': `${BLOCK_GAP}px` } as React.CSSProperties}
       >
-        {/* Recycling Services — 6142:2018 over 6142:1587; 6638:8568 on the phone. */}
-        <div className="flex flex-col gap-[16px] lg:gap-[var(--cat-block)]">
-          <GroupHeading group={recycling} />
-          <div className="flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:justify-between lg:gap-0">
-            {visible(recycling).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
-          </div>
-        </div>
-
-        {/* Destruction & Shredding beside Recycling Programs — 6593:5943.
-            One under the other on a phone: 6638:8681 then 6638:8705. */}
-        <div className="flex flex-col gap-[32px] lg:flex-row lg:items-start lg:gap-[var(--cat-col)]">
-          <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-left)] lg:shrink-0 lg:gap-[var(--cat-block)]">
-            <GroupHeading group={destruction} />
-            {/* A three-column grid at lg rather than a wrapping row, for the
-                Firefox reason given in CaseStudyFilter: 3 x CARD_W + 2 x
-                LEFT_GAP is exactly LEFT_W, so a flex-wrap row had 0.01px of
-                slack and a browser that rounds differently wraps the third
-                card. LEFT_PER_ROW is the 3. */}
-            <div className="flex flex-col gap-[16px] lg:grid lg:grid-cols-3 lg:gap-[var(--cat-card)]">
-              {visible(destruction).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
+        {ORDER.map((id) => {
+          const g = group(id, groups)
+          const gap = GAPS[id] ?? GAPS.destruction!
+          return (
+            /* 6142:2018 over 6142:1587, 6142:1653, 6142:1688; one column of
+               full-width cards on the phone (6638:8568 / 8681 / 8705). */
+            <div key={id} className="flex flex-col gap-[16px] lg:gap-[var(--cat-block)]">
+              <GroupHeading group={g} />
+              <div
+                className="mx-auto flex w-full flex-col gap-[16px] lg:w-[var(--row-w)] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-x-[var(--gx)] lg:gap-y-[var(--gy)]"
+                style={{ '--row-w': `${PER_ROW * CARD_W + (PER_ROW - 1) * gap.x}px`, '--gx': `${gap.x}px`, '--gy': `${gap.y}px` } as React.CSSProperties}
+              >
+                {visible(g).map((card) => <ServicePhotoCard key={card.href} card={card} reveal />)}
+              </div>
             </div>
-          </div>
-          <div className="flex w-full flex-col gap-[16px] lg:w-[var(--cat-right)] lg:shrink-0 lg:gap-[var(--cat-block)]">
-            <GroupHeading group={programs} />
-            <div className="flex flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-[var(--cat-card)]">
-              {visible(programs).map((card) => <ServicePhotoCard key={card.href} card={card} scale={SCALE} />)}
-            </div>
-          </div>
-        </div>
+          )
+        })}
       </div>
     </Section>
   )
@@ -172,6 +138,3 @@ function GroupHeading({ group }: { group: ServiceGroup }) {
     </div>
   )
 }
-
-// Keep the unused-width guard honest: five cards must fit the wide row.
-if (5 * CARD_W > WIDE_W) throw new Error('ServicesCatalog: five cards no longer fit the 1282 row')

@@ -1,4 +1,4 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
@@ -6,7 +6,6 @@ import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related,
  * Berlin, Wisconsin", Figma 6925:8553 (board) / 6925:9059 (phone). A
  * facility page, the twin of the Blaine electronics frame.
  */
-const QUOTE = quoteHref({ service: 'Electronics Recycling', location: 'Wisconsin' })
 const H1 = 'Electronic Recycling in New Berlin, Wisconsin'
 
 export const NEW_BERLIN_ELECTRONICS: CityPage = {
@@ -28,7 +27,7 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
     image: '/images/locations/city-pages/electronics-hero.png',
     veil: false,
     phone: { width: 730, height: 411, left: -194, top: -67, washLeft: -62, washWidth: 1127 },
-    button: { label: 'Schedule an Electronics Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: ['Used electronics, computers, monitors, printers, and the cables, switches, and chargers that go with them, contain metals, plastics, glass, and circuit boards that shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and processes electronics for households, businesses, and organizations at its New Berlin, Wisconsin facility, breaking devices down into their base materials instead of sending them to a landfill. Individuals can drop electronics off at the New Berlin location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
@@ -122,7 +121,7 @@ export const NEW_BERLIN_ELECTRONICS: CityPage = {
   cta: {
     heading: 'Get Started With Electronic Recycling in New Berlin, Wisconsin',
     body: ['Drop off electronics at the New Berlin facility during business hours, or schedule a business pickup for retired equipment.'],
-    primary: { label: 'Schedule an Electronics Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule an Electronics Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040' },
     bodyWidth: 720,
   },

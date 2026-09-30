@@ -8,7 +8,7 @@ import type { ServiceGroup } from '@/data/services'
 import { content } from '@/lib/page-content'
 import { HeaderNav, type NavEntry } from '@/components/client/HeaderNav'
 import { MobileNav } from '@/components/client/MobileNav'
-import { CONTACT_FORM_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { blogMenuColumns } from '@/lib/blog-index'
 import { HEADER_H } from '@/lib/layout'
 
@@ -55,7 +55,7 @@ export async function Header() {
         nav={NAV}
         topBar={TOP_BAR}
         quoteHref={QUOTE_HREF}
-        pickupHref={CONTACT_FORM_HREF}
+        pickupHref={PICKUP_HREF}
         announce={TOP_BAR.announce}
         labels={MOBILE_NAV}
       />
@@ -102,7 +102,7 @@ export async function Header() {
           <a href={TOP_BAR.phoneWi.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneWi.label}</a>
           <Link
             href={TOP_BAR.contact.href}
-            className="btn-pop flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-brand"
+            className="btn-pop flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold leading-[12.129px] tracking-[0.2426px] text-brand"
           >
             {TOP_BAR.contact.label}
           </Link>

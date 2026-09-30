@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
@@ -157,8 +157,8 @@ export const CTA = {
     + 'a pickup or get a quote; individuals can find a drop-off location or order a mail-in '
     + 'recycling kit.',
   ],
-  primary:   { label: 'Find Locations',          href: href('/all-locations/') },
-  secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /**

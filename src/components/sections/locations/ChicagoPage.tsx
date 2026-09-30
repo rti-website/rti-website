@@ -150,7 +150,7 @@ async function Hero() {
         <div className="mt-[25px] flex max-w-[350px] justify-center lg:mt-[21px] lg:max-w-none">
           <Link href={HERO.button.href}
             className="btn-pop inline-flex h-[36px] items-center justify-center rounded-[8px] bg-brand px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] lg:hidden">
-            {HERO.button.phoneLabel}
+            {HERO.button.label}
           </Link>
           <Btn href={HERO.button.href} variant="colored" className="backdrop-blur-[4px] max-lg:hidden">{HERO.button.label}</Btn>
         </div>
@@ -488,7 +488,7 @@ async function Cta() {
         ))}
         <div className="flex w-full flex-col gap-[10px] pt-[6px] lg:w-auto lg:flex-row lg:gap-[16px] lg:pt-[10px]">
           <Btn href={CTA.primary.href} variant="coloredWhite" className="justify-center backdrop-blur-[4px] max-lg:h-[46px] max-lg:w-full max-lg:px-[16px]">
-            <span className="lg:hidden">{CTA.primary.phoneLabel}</span>
+            <span className="lg:hidden">{CTA.primary.label}</span>
             <span className="max-lg:hidden">{CTA.primary.label}</span>
           </Btn>
           {/* A plain anchor, as on the city pages: Btn is for page links. */}

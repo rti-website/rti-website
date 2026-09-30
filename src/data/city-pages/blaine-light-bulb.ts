@@ -1,4 +1,4 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
@@ -7,7 +7,6 @@ import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, typ
  * page. This frame lists what is accepted as centred teal lines rather than
  * cards, and draws two Recycling Options cards with a third centred below.
  */
-const QUOTE = quoteHref({ service: 'Light Bulb Recycling', location: 'Minnesota' })
 const H1 = 'Light Bulb Recycling in Blaine, Minnesota'
 
 export const BLAINE_LIGHT_BULB: CityPage = {
@@ -29,7 +28,7 @@ export const BLAINE_LIGHT_BULB: CityPage = {
     image: '/images/locations/city-pages/light-bulb-hero.png',
     veil: false,
     phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
-    button: { label: 'Schedule a Light Bulb Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: ['Fluorescent bulbs, CFLs, and other lamps contain small amounts of mercury and can’t legally go in the trash in Minnesota. Recycle Technologies handles light bulb recycling at its Blaine facility, giving residents and businesses in the area a documented way to get spent bulbs recycled. Individuals can drop bulbs off at the Blaine location or use the nationwide Mail-In Program, and businesses can schedule commercial pickup.'],
@@ -126,7 +125,7 @@ export const BLAINE_LIGHT_BULB: CityPage = {
   cta: {
     heading: 'Get Started With Light Bulb Recycling in Blaine, Minnesota',
     body: ['Drop off bulbs at the Blaine facility during business hours, schedule a commercial pickup if you’re a business, or start a shipment through the Mail-In Program.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130', phoneLabel: 'Call (763) 559-5130' },
     bodyWidth: 720,
   },

@@ -1,4 +1,4 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
@@ -7,7 +7,6 @@ import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related,
  * facility page. This frame's accept cards carry a title only (no second
  * line) and its three steps are 360 wide with arrows.
  */
-const QUOTE = quoteHref({ service: 'Battery Recycling', location: 'Wisconsin' })
 const H1 = 'Battery Recycling in New Berlin, Wisconsin'
 
 export const NEW_BERLIN_BATTERY: CityPage = {
@@ -28,7 +27,7 @@ export const NEW_BERLIN_BATTERY: CityPage = {
     image: '/images/locations/city-pages/battery-hero.png',
     veil: false,
     phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
-    button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: ['Used batteries, alkaline, lithium-ion, lead-acid, and more, contain materials that can be hazardous if crushed, damaged, or left to leak, and shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and recycles batteries for households, businesses, and organizations at its New Berlin, Wisconsin facility, giving the area a documented way to clear out spent batteries instead of letting them accumulate. Individuals can drop batteries off at the New Berlin location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
@@ -117,7 +116,7 @@ export const NEW_BERLIN_BATTERY: CityPage = {
   cta: {
     heading: 'Get Started With Battery Recycling in New Berlin, Wisconsin',
     body: ['Drop off batteries at the New Berlin facility during business hours, or schedule a business battery pickup if you’re within our service radius.'],
-    primary: { label: 'Schedule a Battery Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040', phoneLabel: 'Phone: (262) 798-3040' },
     headingWidth: 598,
   },

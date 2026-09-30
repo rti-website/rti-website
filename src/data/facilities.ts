@@ -1,6 +1,6 @@
 import { FACILITIES as CONTACT } from '@/data/contact'
 import type { CtaContent } from '@/components/sections/ClosingCta'
-import { href, PICKUP_HREF } from '@/lib/urls'
+import { href, PICKUP_HREF, QUOTE_HREF } from '@/lib/urls'
 import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
@@ -223,8 +223,8 @@ export const MINNESOTA: Facility = {
   cta: {
     heading: 'Ready to Bring Materials to Blaine?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if Blaine isn’t convenient.',
-    primary:   { label: 'Schedule a Pickup',  href: PICKUP_HREF },
-    secondary: { label: 'See All Locations',  href: href('/all-locations/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }
 
@@ -278,8 +278,8 @@ export const WISCONSIN: Facility = {
   cta: {
     heading: 'Ready to Bring Materials to New Berlin?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if New Berlin isn’t convenient.',
-    primary:   { label: 'Schedule a Pickup',  href: PICKUP_HREF },
-    secondary: { label: 'See All Locations',  href: href('/all-locations/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 }
 

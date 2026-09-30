@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /case-studies/ — a 1:1 build of Figma frame 6382:6595.
@@ -248,8 +248,8 @@ export type CaseStudyCardLabels = Pick<typeof GRID, 'downloadLabel' | 'pdfLabel'
 export const CTA = {
   heading: 'Have a Similar Challenge?',
   body: 'Tell us what you’re working with, and we’ll put together a plan that fits your industry and compliance needs.',
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Contact Us',  href: href('/contact-us/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6382:6595 and what can be verified. */

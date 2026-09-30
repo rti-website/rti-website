@@ -13,8 +13,10 @@ export const FOOTER_TEXT = {
   about: 'Recycle Technologies has been providing services to the community since 1993. We are a Midwest-based recycling and shredding company.',
   connectHeading: 'Connect with Us',
   chatPrompt: 'Hi! How can we help?',
-  questionButton: 'I have a question',
-  moreButton: 'Tell me more',
+  /* The chat card's two buttons since 30 Sep 2026 (Figma 6778:4359, phone
+     6620:5197): Get a Quote, and a call to the Minnesota line, which shows
+     the number itself. Were "I have a question" and "Tell me more". */
+  quoteButton: 'Get a Quote',
   backToTop: 'Back to Top',
   copyright: 'Copyright@2026. All rights are reserved.',
 }

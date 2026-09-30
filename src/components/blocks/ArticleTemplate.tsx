@@ -7,7 +7,7 @@ import { Btn } from '@/components/ui/Bits'
 import { ArticleBody } from '@/components/client/ArticleReader'
 import { RelatedArticles } from '@/components/sections/blog/RelatedArticles'
 import { FOOTER_H } from '@/lib/layout'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import type { ContentEntry } from '@/lib/content'
 
 /**
@@ -112,7 +112,7 @@ export function ArticleTemplate({
                   <p className="w-full font-roboto text-[14.5px] leading-[1.55] text-white/85 lg:w-[316px]">
                     Not sure how to recycle something specific? Our ITAD &amp; e-waste specialists can help.
                   </p>
-                  <Btn href={href('/contact-us/')} variant="whiteFill" className="max-lg:w-full max-lg:justify-center">Contact Us</Btn>
+                  <Btn href={QUOTE_HREF} variant="whiteFill" className="max-lg:w-full max-lg:justify-center">Get a Quote</Btn>
                 </div>
 
                 {/* Share This Guide — 6501:1778. Copy-link, Facebook, LinkedIn,

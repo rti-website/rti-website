@@ -1,6 +1,6 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { MAIL_IN } from '@/lib/nav'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
@@ -95,8 +95,8 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If a local option isn’t available to you, get a recycling kit to start recycling your electronics by mail. Business pickup service is available exclusively to commercial clients; the mail-in kit program is open to individuals and businesses alike.',
     ],
-    primary:   { label: 'Get a Recycling Kit', href: MAIL_IN.href, external: true },
-    secondary: { label: 'Find Locations',      href: href('/all-locations/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
   todo: [
     'What Can Go in the Kit: no published list of kit-approved electronics. The placeholder paragraph is not rendered.',

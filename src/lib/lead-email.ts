@@ -111,7 +111,11 @@ export type Section = { title: string; rows: Row[] }
 export function leadSections(l: LeadForEmail, opts: { spacedPhone?: boolean } = {}): Section[] {
   const d = l.details
   const what = (d.service ?? d.item ?? '').trim()
-  const kind = /shred|destruction|degauss/i.test(what) ? 'Shredding' : 'Recycling'
+  // Several picks since 30 Sep 2026: "Recycling, Shredding" when they are both.
+  const parts = what.split(',').map((x) => x.trim()).filter(Boolean)
+  const shred = parts.some((x) => /shred|destruction|degauss/i.test(x))
+  const recycle = parts.length === 0 || parts.some((x) => !/shred|destruction|degauss/i.test(x))
+  const kind = [recycle && 'Recycling', shred && 'Shredding'].filter(Boolean).join(', ')
   const place = [d.city, [d.state, d.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ')
   const address = [d.address, place].filter(Boolean).join(', ')
   const name = leadName(l)

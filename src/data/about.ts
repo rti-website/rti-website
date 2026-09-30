@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
@@ -152,8 +152,8 @@ export const FACILITIES = {
 export const CTA = {
   heading: 'Ready to Partner With a Team You Can Trust?',
   body: 'From the first pickup to the final Certificate of Recycling, our Midwest-based team handles your materials responsibly, securely, and on time.',
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Contact Us',  href: href('/contact-us/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6371:3478 and the About Us doc, for Aqeel and Musaveer. */

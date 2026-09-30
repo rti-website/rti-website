@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /sustainability/ — copy from the "Sustainability & Environmental Impact" doc,
@@ -163,8 +163,8 @@ export const GOALS = {
 export const CTA = {
   heading: 'Put Your Materials to Better Use',
   body: 'Get a free quote and see how our recycling supports the circular economy instead of the landfill.',
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6374:5211, the copy and the facts. */

@@ -1,5 +1,5 @@
 import type { ImageCrop, ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 import type { HeroPhoto } from '@/data/hero-photos'
 
 /**
@@ -39,7 +39,7 @@ export const SERVICE_LINKS = {
   itad:         href('/it-asset-disposition/'),
   hardDrive:    href('/hard-drive-destruction-services/'),
   paper:        href('/paper-shredding-services/'),
-  offSite:      href('/off-site-shredding/'),
+  offSite:      href('/on-site-off-site-shredding/'),
   battery:      href('/battery-recycling/'),
   lightBulbs:   href('/light-bulbs/'),
   ballasts:     href('/ballasts/'),
@@ -50,8 +50,8 @@ export const SERVICE_LINKS = {
 
 /** Every industry doc closes the same way. */
 export const CTA_BUTTONS = {
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Contact Us',  href: href('/contact-us/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /*

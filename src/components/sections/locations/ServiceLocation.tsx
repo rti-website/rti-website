@@ -11,7 +11,7 @@ import { GLYPHS } from '@/components/ui/Glyph'
 import { mapEmbed } from '@/data/facilities'
 import { NETWORK_PHONE, SERVICES, SERVICE_SLUGS, type ServiceSlug } from '@/data/service-locations'
 import { FOOTER_H } from '@/lib/layout'
-import { absolute, href, quoteHref } from '@/lib/urls'
+import { absolute, href, quoteHref, PICKUP_HREF } from '@/lib/urls'
 import { US_STATES } from '@/lib/us-address'
 import { breadcrumbNode, faqNode, graph } from '@/lib/schema'
 import {
@@ -183,9 +183,9 @@ function cta(site: Site, svc: ServiceSlug | null, heading: string, phone: string
           site.data.mailin ? 'Not near the site? The Mail-In Program ships a kit to your door.' : '',
         ].filter(Boolean),
         primary: { label: 'Get a Quote', href: quoteHref(q) },
-        secondary: site.data.mailin
-          ? { label: 'Order a Mail-In Kit', href: href('/mail-in-recycling/') }
-          : { label: `Call ${phone}`, href: tel(phone) },
+        // The site's two calls to action (30 Sep 2026). Was a Mail-In kit
+        // or a call button.
+        secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
       }} />
     </div>
   )
@@ -232,6 +232,7 @@ export function ServiceLocationPage({ all, site, page }: { all: Locations; site:
     <Shell draft={!page.published} schema={graph(...schemaNodes)}>
       <Hero
         crumbs={crumbs} h1={h1} lead={lead}
+        pickupCta={{ label: 'Schedule a Pickup', href: PICKUP_HREF }}
         cta={{ label: 'Get a Quote', href: quoteHref(quoteLink(site, page.service)) }}
         secondaryCta={{ label: `Call ${phone}`, href: tel(phone) }}
       />
@@ -430,6 +431,7 @@ export function SiteHubPage({ all, site }: { all: Locations; site: Site }) {
   return (
     <Shell draft={!site.published} schema={schema}>
       <Hero crumbs={crumbs} h1={hubH1(site)} lead={lead}
+        pickupCta={{ label: 'Schedule a Pickup', href: PICKUP_HREF }}
         cta={{ label: 'Get a Quote', href: quoteHref({ location: `${d.city}, ${d.state}` }) }}
         secondaryCta={{ label: `Call ${phone}`, href: tel(phone) }} />
 

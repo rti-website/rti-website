@@ -2,23 +2,32 @@ import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
 
-/** /off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc. */
+/**
+ * /on-site-off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc.
+ *
+ * Moved from /off-site-shredding/ on 30 Sep 2026, and renamed to name both
+ * services (Asim: "change this url and add both onsite and offsite shredding
+ * in it"). The old URL 301s here. The file keeps its name so the Admin ->
+ * Pages document keeps its key and any published edits.
+ */
 export const CONTENT: ServicePageContent = {
-  url: '/off-site-shredding/',
+  url: '/on-site-off-site-shredding/',
   liveSeo: {
-    title: 'Off-Site Shredding Services | Call (800) 969-5166',
-    description: 'Off-site shredding services for confidential paperwork collected from offices and facilities, securely destroyed at certified locations. Call (800) 969-5166',
+    // New with the URL, 30 Sep 2026, in the old title's pattern.
+    title: 'On-Site & Off-Site Shredding Services | Call (800) 969-5166',
+    description: 'On-site and off-site shredding for confidential paperwork, shredded at your location or collected and securely destroyed at our certified facilities. Call (800) 969-5166',
   },
   proposedSeo: {
     title: 'Off-Site & On-Site Shredding Services | Recycle Tech',
     description: 'Secure off-site and on-site document shredding for businesses in Minnesota and Wisconsin, with a Certificate of Destruction issued after service.',
   },
   hero: {
-    crumb: 'Off-Site Shredding',
+    crumb: 'On-Site & Off-Site Shredding',
     // Live H1 is "Off-Site Shredding Services". The doc covers BOTH off-site and
     // on-site, which is a scope change as well as a wording one — worth raising
     // with Rizwan separately from the other H1 diffs.
-    h1: 'Off-Site Shredding Services', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'On-Site & Off-Site Shredding Services', // 30 Sep 2026, with the new URL (was the WordPress "Off-Site Shredding Services")
+    h1OneLine: true, // Asim, 30 Sep 2026: "Services" on the first line too
     lead: 'Recycle Technologies provides secure shredding for businesses handling confidential paperwork, with an off-site option that transports documents to a shredding facility and an on-site option that shreds documents at your location.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
     ...HERO_PHOTOS.offSite, // 28 Sep 2026 frame — see src/data/hero-photos.ts

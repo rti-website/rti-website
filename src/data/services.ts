@@ -1,4 +1,4 @@
-import { href } from '@/lib/urls'
+import { href, QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import type { ServiceMark } from '@/components/ui/ServiceMarks'
 
 /**
@@ -146,7 +146,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     headingH: 60,
     headingW: 345,
     tab: 'Recycling Services',
-    tabSub: 'Bulbs, electronics, batteries, TVs & ballasts',
+    tabSub: 'Bulbs, electronics, batteries, TVs & airbags',
     tabIconOn: '/images/icons/tab-recycling-on.svg',
     tabIconOff: '/images/icons/tab-recycling-off.svg',
     cards: [
@@ -167,13 +167,11 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       { l1: 'Battery',        l2: 'Recycling',         blurb: 'Responsible collection and recycling of spent batteries.',      icon: '/images/home/svc-batteries.png',  iw: 28, ih: 15, photo: '/images/home/svc-photo-batteries.webp', cut: CUTS.batteries, href: href('/battery-recycling/'), homeBlurb: 'Safe collection and recycling of spent batteries.' },
       { l1: 'Ballasts',       l2: 'Recycling',         blurb: 'Proper recycling of PCB and non-PCB lighting ballasts.',          icon: '/images/home/svc-ballasts.png',   iw: 41, ih: 17, photo: '/images/home/svc-photo-ballasts.webp', cut: CUTS.ballasts, href: href('/ballasts/'), homeBlurb: 'Proper recycling of PCB and non-PCB ballasts.' },
       { l1: 'Television',     l2: 'Recycling',         blurb: 'Responsible recycling of CRT, LCD, LED, and plasma TVs.',  icon: '/images/home/svc-tv.png',         iw: 30, ih: 23, photo: '/images/home/svc-photo-tv.webp', cut: CUTS.tv, href: href('/tv-recycling/'), homeBlurb: 'Responsible recycling of TVs and electronic displays.' },
-      // Live and linked from the live /services/ page, but absent from Figma
-      // 6142:784 — menu only until a card is designed.
-      // No Figma card and no Figma icon, so this row borrowed the TELEVISION
-      // icon until 16 Sep 2026, when Asim caught it. `mark` names a drawn
-      // stroked mark in src/components/ui/ServiceMarks.ts instead; swap it for
-      // a real asset the moment Aqeel draws one.
-      { l1: 'Airbag',         l2: 'Recycling',         blurb: 'Certified disposal of deployed and undeployed airbags.',  mark: 'airbag',                          iw: 30, ih: 23, cut: CUTS.airbag, href: href('/airbag-recycling/'), menuOnly: true },
+      // On the cards since 30 Sep 2026: the redrawn /services/ frame
+      // (6142:784, card 6948:11261) and the homepage tab draw it (Asim: "add
+      // the air bag in recycling service and also in home page"). The menu
+      // keeps its drawn mark (src/components/ui/ServiceMarks.ts).
+      { l1: 'Airbag',         l2: 'Recycling',         blurb: 'Certified disposal of deployed and undeployed airbags.',  mark: 'airbag',                          iw: 30, ih: 23, cut: CUTS.airbag, href: href('/airbag-recycling/'), homeBlurb: 'Certified disposal of deployed and undeployed airbags.' },
     ],
   },
   {
@@ -188,13 +186,11 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     cards: [
       { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', cut: CUTS.harddrive, href: href('/hard-drive-destruction-services/'), homeBlurb: 'Secure destruction and responsible recycling of hard drives.' },
       { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', cut: CUTS.paper, href: href('/paper-shredding-services/'), homeBlurb: 'Secure shredding and recycling of confidential paper.' },
-      { l1: 'Off-Site',    l2: 'Shredding',   blurb: 'Documents are collected and securely shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', cut: CUTS.offsite, href: href('/off-site-shredding/'), homeBlurb: 'Convenient off-site shredding for documents and materials.' },
-      // See the conflict note at the top of this file. Menu only since
-      // 21 Sep 2026: the redrawn /services/ frame (6142:1559 in file
-      // drzg9BI08Dy8eWZNBfXBzD) draws three Destruction cards, and Asim asked
-      // for this one taken off the page ("remove this one"). The page itself
-      // stays live and the header menu still links it.
-      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, cut: CUTS.phone, href: href('/phone-shredding-service/'), menuOnly: true, homeBlurb: 'Secure shredding and recycling of unwanted phones.' },
+      { l1: 'On-Site & Off-Site', l2: 'Shredding', blurb: 'Documents shredded at your location, or collected and shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', cut: CUTS.offsite, href: href('/on-site-off-site-shredding/'), homeBlurb: 'On-site or off-site shredding for confidential documents.' },
+      // Back on the cards 30 Sep 2026 (menu only from 21 Sep): the redrawn
+      // /services/ frame draws four Destruction cards (6948:11304), and Asim
+      // asked for it "both in home page and in main service page".
+      { l1: 'Phone',       l2: 'Shredding',   blurb: 'Off-site destruction of cell phones and mobile devices.',      icon: '/images/home/svc-phone.svg',     iw: 24, ih: 34, cut: CUTS.phone, href: href('/phone-shredding-service/'), homeBlurb: 'Secure shredding and recycling of unwanted phones.' },
     ],
   },
   {
@@ -203,7 +199,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     headingH: 95,
     headingW: 310,
     tab: 'Recycling Programs',
-    tabSub: 'Mail-in kits, drop-off, and airbag disposal',
+    tabSub: 'Recycling kits and mail-in recycling',
     tabIconOn: '/images/icons/tab-programs-on.svg',
     tabIconOff: '/images/icons/tab-programs-off.svg',
     cards: [
@@ -212,7 +208,10 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // homepage tab (6563:2130) and on /services/ (6142:1688).
       // Its own page since 24 Sep 2026 (the kit doc); it opened the
       // /electronic-recycle/ service page until then.
-      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', cut: CUTS.kit, href: href('/electronics-recycling-kit/'), menuOnly: true },
+      // On the cards since 30 Sep 2026 (card 6948:11315 on /services/; Asim:
+      // "add the electronic recycling kit service in both the home page
+      // services and also in service home page").
+      { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', cut: CUTS.kit, href: href('/electronics-recycling-kit/'), homeBlurb: 'Order a kit online and mail in your electronics.' },
       { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', cut: CUTS.mailin, href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
       // "About the Mail-In Program" (/mail-in-recycling/) came out of the
       // menu on 25 Sep 2026 — Asim: "remove the about mail in program from
@@ -259,8 +258,8 @@ export const SERVICES_CTA = {
     'Whether you’re a business or an individual looking to recycle old electronics, Recycle Technologies makes it simple and secure.',
     'Find a location near you or ship your items through our Mail-In Program, with a Certificate of Recycling provided for your records.',
   ],
-  primary:   { label: 'Find Locations',          href: href('/all-locations/') },
-  secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /**

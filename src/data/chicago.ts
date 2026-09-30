@@ -1,4 +1,4 @@
-import { href, quoteHref } from '@/lib/urls'
+import { href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /electronic-recycling-chicago/ — "Electronics Recycling in Chicago, Illinois" (H1 until 27 Sep 2026: "Recycling in Chicago, Illinois"), Figma
@@ -55,7 +55,7 @@ export const HERO = {
   // 28 Sep 2026: the electronics shot the Blaine and New Berlin electronics
   // pages use too (6873:14201), drawn without the grey veil — see ChicagoPage.
   image: '/images/locations/city-pages/electronics-hero.png',
-  button: { label: 'Schedule an Electronics Recycling Pickup', phoneLabel: 'Schedule an Electronics Recycling Pickup', href: quoteHref({ service: 'Electronics Recycling', location: 'Chicago, IL' }) },
+  button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Section - Service Area Notice — 6879:2744 / 6897:2768. Revised 27 Sep
@@ -249,14 +249,13 @@ export const RELATED = {
  *  paragraphs, a white "Schedule …" button (a shorter label on the phone)
  *  that opens the contact form with Electronics Recycling and "Chicago, IL"
  *  filled in, and a bordered "Call: …" button. */
-const QUOTE = quoteHref({ service: 'Electronics Recycling', location: 'Chicago, IL' })
 export const CTA = {
   heading: 'Get Started With Electronics Recycling in Chicago',
   body: [
     'Recycle Technologies serves Chicago businesses through scheduled commercial pickup and offers a mail-in option for residents and small-volume customers with eligible electronics.',
     'Tell us what electronics you have and where they are located. Businesses can request a quote or schedule a pickup, while residents can check the mail-in program for eligible items.',
   ],
-  primary: { label: 'Schedule an Electronics Pickup in Chicago, Illinois', phoneLabel: 'Schedule an Electronics Recycling Pickup', href: QUOTE },
+  primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166' },
   note: 'Contact Recycle Technologies to confirm current service options and eligibility for your electronics.',
 }

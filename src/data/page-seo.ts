@@ -343,9 +343,10 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     title: "Recyling & E-waste recycling trends Blog | Recycle Technologies",
     description: "Stay updated with our blog on recycling and E-waste trends. From emerging technologies to consumer behaviors, gain valuable insights into the evolving world.",
   },
-  "/off-site-shredding/": {
-    title: "Off-Site Shredding Services | Call (800) 969-5166",
-    description: "Off-site shredding services for confidential paperwork collected from offices and facilities, securely destroyed at certified locations. Call (800) 969-5166",
+  // Moved from /off-site-shredding/ on 30 Sep 2026 (see src/data/off-site-shredding.ts).
+  "/on-site-off-site-shredding/": {
+    title: "On-Site & Off-Site Shredding Services | Call (800) 969-5166",
+    description: "On-site and off-site shredding for confidential paperwork, shredded at your location or collected and securely destroyed at our certified facilities. Call (800) 969-5166",
   },
   "/faqs/": {
     title: "FAQs - Recycle Technologies",

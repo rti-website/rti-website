@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /why-choose-us/ — copy from the "Why Choose Us" doc, geometry from Figma
@@ -106,8 +106,8 @@ export const TRUST = {
 export const CTA = {
   heading: 'See the Difference for Yourself',
   body: 'Get a free, no-obligation quote and see why businesses across the Midwest trust RT for recycling and data destruction.',
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Contact Us',  href: href('/contact-us/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6374:4567, the doc and the facts. */

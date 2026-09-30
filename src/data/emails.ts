@@ -66,7 +66,7 @@ export function residentialReplyText(first: string | null, r: ResidentialReply =
     ...r.locations.flatMap((l) => [l.state, ...l.lines, `Phone: ${l.phone}`, '']),
     r.confirm,
     '',
-    `${r.acceptsTitle}:`,
+    r.acceptsTitle,
     ...r.accepts.map((a) => `  • ${a}`),
     '',
     r.bikes,

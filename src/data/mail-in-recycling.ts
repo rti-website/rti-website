@@ -1,5 +1,5 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { href, QUOTE_HREF } from '@/lib/urls'
+import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
@@ -89,8 +89,8 @@ export const CONTENT: ServicePageContent = {
     body: [
       'If a local drop-off or pickup option isn’t available to you, get started with the Mail-In Program to send in your eligible materials. Business pickup service is available exclusively to commercial clients; the Mail-In Program is open to anyone.',
     ],
-    primary:   { label: 'Get a Quote',    href: QUOTE_HREF },
-    secondary: { label: 'Find Locations', href: href('/all-locations/') },
+    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
   todo: [
     'Doc of 24 Sep 2026 replaced the placeholder sections: the eligibility list, the three process steps and the three FAQs are now its copy. Still unpublished: who pays for shipping, and whether mail-in orders get recycling documentation.',

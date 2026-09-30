@@ -5,6 +5,11 @@
     "statusCode": 301
   },
   {
+    "source": "/off-site-shredding/",
+    "destination": "/on-site-off-site-shredding/",
+    "statusCode": 301
+  },
+  {
     "source": "/dropoff/",
     "destination": "/all-locations/",
     "statusCode": 301

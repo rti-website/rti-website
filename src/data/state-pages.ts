@@ -2,7 +2,7 @@ import type { Cta, ServicePageContent } from '@/data/service-page'
 import { CONTENT as LIGHT_BULBS } from '@/data/light-bulbs'
 import { CONTENT as ELECTRONICS } from '@/data/electronics-recycling'
 import { CONTENT as BATTERIES } from '@/data/battery-recycling'
-import { href, quoteHref } from '@/lib/urls'
+import { href, quoteHref, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * State landing pages for ads — Asim, 24 Sep 2026: "we have to build subpages
@@ -33,7 +33,7 @@ export type StatePage = { content: ServicePageContent; seo: { title: string; des
 
 const buttons = (service: string, state: StateName): { quote: Cta; pickup: Cta } => ({
   quote: { label: 'Get a Quote', href: quoteHref({ service, location: state }) },
-  pickup: { label: 'Schedule a Pickup', href: quoteHref({ service, location: state }) },
+  pickup: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 })
 
 const trail = (service: string, serviceUrl: string, state: StateName) => [

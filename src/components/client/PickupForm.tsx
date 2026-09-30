@@ -173,7 +173,11 @@ function Field({
 }) {
   return (
     <div className={FIELD}>
-      <label htmlFor={`pickup-${id}`} className={LABEL}>{f.label}</label>
+      <label htmlFor={`pickup-${id}`} className={LABEL}>
+        {f.label}
+        {/* The red required mark, as on the contact form (30 Sep 2026). */}
+        {required && <span aria-hidden="true" className="ml-[3px] text-[#d92d20]">*</span>}
+      </label>
       <input id={`pickup-${id}`} name={id} type={type} autoComplete={autoComplete} required={required} placeholder={f.placeholder} className={INPUT} />
     </div>
   )

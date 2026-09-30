@@ -1,5 +1,5 @@
 import type { Industry } from '@/components/ui/IndustryCard'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 
 /**
  * /industries/ — copy from the "Industries We Serve" doc, geometry from
@@ -101,6 +101,6 @@ export const CTA = {
     'Get a quote for your industry, or call MN: (800) 969-5166 / WI: (800) 205-3040 to discuss '
     + 'retired electronics, IT equipment, batteries, or lighting from your organization.',
   ],
-  primary:   { label: 'Get a Quote', href: QUOTE_HREF },
-  secondary: { label: 'Contact Us',  href: href('/contact-us/') },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }

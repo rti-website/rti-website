@@ -1,4 +1,4 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
@@ -208,8 +208,8 @@ export const ACCOUNTABILITY = {
 export const CTA = {
   heading: 'Questions About Our Standards?',
   body: 'Whether you need documentation for an audit or just want to understand our process, our team is happy to walk you through it.',
-  primary:   { label: 'Contact Us',  href: href('/contact-us/') },
-  secondary: { label: 'Get a Quote', href: QUOTE_HREF },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
 /** Gaps between Figma 6374:4886, the facts and the live site. */

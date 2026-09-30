@@ -41,6 +41,12 @@ export type ServicePageContent = {
      */
     trail?: { label: string; href: string | null }[]
     h1: string
+    /**
+     * Keep the H1 on one line at lg, running past the 946 column when it is
+     * wider — Asim, 30 Sep 2026, on On-Site & Off-Site Shredding: "move the
+     * service to first line of heading". Wraps as usual on the phone.
+     */
+    h1OneLine?: boolean
     lead: string
     /**
      * This page's own hero photograph. Aqeel started drawing one frame per

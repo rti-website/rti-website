@@ -1,11 +1,10 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, BLAINE_PHONE, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
  * /minnesota-recycling/battery-recycling/ — "Battery Recycling in Blaine,
  * Minnesota", Figma 6922:18653 (board) / 6922:19075 (phone). A facility page.
  */
-const QUOTE = quoteHref({ service: 'Battery Recycling', location: 'Minnesota' })
 const H1 = 'Battery Recycling in Blaine, Minnesota'
 
 export const BLAINE_BATTERY: CityPage = {
@@ -26,7 +25,7 @@ export const BLAINE_BATTERY: CityPage = {
     image: '/images/locations/city-pages/battery-hero.png',
     veil: false,
     phone: { width: 880, height: 495, left: -223, top: -108, washLeft: -15 },
-    button: { label: 'Schedule a Battery Recycling Pickup', href: QUOTE },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: ['Used batteries, alkaline, lithium-ion, lead-acid, and more, contain materials that can be hazardous if crushed, damaged, or left to leak, and shouldn’t go in the trash or curbside recycling bin. Recycle Technologies collects and recycles batteries for households, businesses, and organizations at its Blaine, Minnesota facility, giving the area a documented way to clear out spent batteries instead of letting them accumulate or ending up in the trash. Individuals can drop batteries off at the Blaine location or use the nationwide Mail-In Program, while businesses can schedule a pickup.'],
@@ -115,7 +114,7 @@ export const BLAINE_BATTERY: CityPage = {
   cta: {
     heading: 'Get Started With Battery Recycling in Blaine, Minnesota',
     body: ['Drop off batteries at the Blaine facility during business hours, or schedule a business battery pickup if you’re within our service radius.'],
-    primary: { label: 'Schedule a Battery Recycling Pickup in Blaine, MN', href: QUOTE, phoneLabel: 'Schedule a Battery Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: (763) 559-5130', tel: 'tel:+17635595130', phoneLabel: 'Phone: (763) 559-5130' },
     headingWidth: 598,
   },

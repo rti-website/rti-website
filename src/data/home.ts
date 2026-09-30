@@ -1,4 +1,4 @@
-import { caseStudyHref, href } from '@/lib/urls'
+import { caseStudyHref, href, QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import type { ServiceCard, ServiceGroup } from '@/data/services'
 import type { CaseStudyCard } from '@/data/case-studies'
 import type { Faq } from '@/data/faqs'
@@ -16,7 +16,7 @@ import type { Faq } from '@/data/faqs'
  * the "Services page" document's SERVICE_GROUPS, so an edit there reaches the
  * homepage tabs too.
  */
-export type Card = ServiceCard & { photo: string }
+export type Card = ServiceCard
 
 export type ServiceTab = { id: string; label: string; sub: string; iconOn: string; iconOff: string }
 
@@ -36,7 +36,7 @@ export function serviceCards(groups: ServiceGroup[]): Record<string, Card[]> {
   return Object.fromEntries(
     groups.map((g) => [
       g.id,
-      g.cards.filter((c): c is Card => Boolean(c.photo) && !c.menuOnly && !c.unbuilt),
+      g.cards.filter((c): c is Card => Boolean(c.photo || c.cut) && !c.menuOnly && !c.unbuilt),
     ]),
   )
 }
@@ -73,7 +73,7 @@ export const HOME_HERO = {
   lead: 'Recycle Technologies provides certified e-waste recycling, ITAD, data destruction, and '
     + 'shredding solutions that keep electronics out of landfills and valuable materials in '
     + 'circulation.',
-  quoteButton: 'Get a Quick Quote',
+  quoteButton: 'Get a Quote',
   /* The call button's label. Its tel: link is the header's Minnesota line
      (TOP_BAR.phoneMn in "Header (every page)"): change both together. */
   phone: '+1-763-559-5130',
@@ -112,7 +112,7 @@ export const HOME_HOW_IT_WORKS = {
   title: 'How It Works',
   lead: 'Responsible recycling made simple — from ordering your kit to receiving your '
     + 'recycling documentation.',
-  button: 'Get a Free Quote',
+  button: 'Get a Quote',
 }
 
 /**
@@ -503,6 +503,6 @@ export const HOME_CTA = {
     'Find a location near you or ship your items through our Mail-In Program — certified data '
     + 'destruction and environmental impact reporting included.',
   ],
-  primary:   { label: 'Find a Location',         href: href('/all-locations/') },
-  secondary: { label: 'Start Mail-In Recycling', href: 'https://ezontheearth.com/', external: true },
+  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
+  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }

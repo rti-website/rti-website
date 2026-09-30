@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
 import { InteriorHeroArt, type HeroFill, type HeroTone, type HeroWashes } from '@/components/ui/InteriorHeroArt'
-import { Picker } from '@/components/client/Picker'
 
 export type Crumb = { label: string; href: string | null }
 
@@ -11,7 +10,13 @@ export type Crumb = { label: string; href: string | null }
  *
  * Same art as /services/ — see InteriorHeroArt — but the content is one
  * auto-layout column at x319 y113, gap 20: breadcrumb, H1, lead, then the
- * location picker and Get a Quote button side by side with a 12px gap.
+ * Schedule a Pickup and Get a Quote buttons side by side with a 12px gap.
+ *
+ * THE LOCATION PICKER IS GONE (30 Sep 2026). Asim: remove "Select Your
+ * Location" from every page and put Schedule a Pickup in its place; the
+ * site's calls to action are Schedule a Pickup and Get a Quote, nothing else.
+ * `pickerOptions` and `pickerPlaceholder` are still accepted so nothing that
+ * passes them breaks, and are ignored.
  *
  * Written generic because every other service page uses this same frame, and
  * /industries/ uses it too with the button row omitted.
@@ -23,7 +28,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, lead, pickerPlaceholder, pickerOptions, cta, secondaryCta, label, image, imageFill, washes, tone, top = 140, size,
+  crumbs, h1, h1OneLine, lead, pickupCta, cta, secondaryCta, label, image, imageFill, washes, tone, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -34,6 +39,8 @@ export function ServiceHero({
    * space in it. No other page uses it.
    */
   h1: string
+  /** One line at lg, past the 946 column if need be (30 Sep 2026, On-Site & Off-Site Shredding). */
+  h1OneLine?: boolean
   /**
    * A string, or two spans for a lead the phone frame shortens — the location
    * pages hand in `<><span className="lg:hidden">…</span><span className="max-lg:hidden">…</span></>`
@@ -56,8 +63,12 @@ export function ServiceHero({
    * the Industries frame (6246:1012) does not. Omit both and the hero is just
    * breadcrumb, headline and lead.
    */
+  /** Ignored since 30 Sep 2026 (see above). */
   pickerPlaceholder?: string
+  /** Ignored since 30 Sep 2026 (see above). */
   pickerOptions?: string[]
+  /** "Schedule a Pickup", drawn first, where the location picker was. */
+  pickupCta?: { label: string; href: string }
   cta?: { label: string; href: string; external?: boolean }
   /** A second, outlined button after `cta` (state landing pages, 24 Sep 2026). */
   secondaryCta?: { label: string; href: string; external?: boolean }
@@ -112,7 +123,7 @@ export function ServiceHero({
           </ol>
         </nav>
 
-        <h1 className={`w-full text-center font-sans font-semibold text-white lg:w-auto lg:text-left ${large
+        <h1 className={`w-full text-center font-sans font-semibold text-white lg:w-auto lg:text-left ${h1OneLine ? 'lg:whitespace-nowrap ' : ''}${large
           ? 'text-[32px] leading-[1.2] lg:mb-[8px] lg:text-[70px] lg:leading-[84.7px] lg:tracking-[-2.03px]'
           : 'text-[28px] leading-[1.18] lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]'}`}>
           {h1.includes('\n')
@@ -142,17 +153,17 @@ export function ServiceHero({
             : lead}
         </p>
 
-        {(cta || pickerOptions) && (
+        {(cta || pickupCta) && (
           <div className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:items-start">
-            {pickerOptions && (
-              <div className="h-[50px] w-full lg:w-[393px]">
-                <Picker
-                  id="service-location"
-                  placeholder={pickerPlaceholder ?? 'Select Your Location'}
-                  srLabel="Select your location"
-                  options={pickerOptions}
-                />
-              </div>
+            {pickupCta && (
+              /* Outlined white on the navy, where the picker's glass field was. */
+              <Btn
+                href={pickupCta.href}
+                variant="white"
+                className="border border-white/60 max-lg:w-full max-lg:justify-center"
+              >
+                {pickupCta.label}
+              </Btn>
             )}
             {cta && (
               <Btn

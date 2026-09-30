@@ -10,6 +10,7 @@ import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
 import { ResidentialHelp } from '@/components/client/ResidentialHelp'
+import { ServicePicker } from '@/components/client/ServicePicker'
 import type { DropoffSite } from '@/lib/dropoff-sites'
 import type { NO_PICKUP } from '@/data/contact'
 import type { AddressSuggestion } from '@/app/api/address/route'
@@ -77,11 +78,6 @@ import type { AddressSuggestion } from '@/app/api/address/route'
  */
 const INPUT = 'h-[48px] w-full rounded-[8px] border border-field bg-white px-[16px] font-poppins text-[14px] text-ink outline-none transition-colors placeholder:text-muted focus-visible:border-brand aria-[invalid=true]:border-[#b3261e]'
 const LABEL = 'font-sans text-[14px] font-medium leading-none text-label'
-/** Chrome and Safari draw their own arrow on an input with a datalist. It is
- *  made invisible and stretched over the right 44px, where our 16px chevron
- *  sits, so the chevron looks like the design and a click on it still opens
- *  the list. */
-const LIST_ARROW = '[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:top-0 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-[44px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0'
 /** A pair of fields: one under the other on a phone, side by side at lg. */
 const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[20px]'
 const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
@@ -173,6 +169,8 @@ export function ContactForm({
    * goes back to the default when the form resets.
    */
   const [audience, setAudience] = useState<string>(AUDIENCES[0])
+  /** What would you like to recycle? — the picks (ServicePicker). */
+  const [services, setServices] = useState<string[]>([])
   const business = audience !== 'Residential'
   /** Which of the three we filled in (ours to replace) vs the visitor typed. */
   const filled = useRef<Record<AddrField, boolean>>({ city: false, state: false, zip: false })
@@ -199,13 +197,12 @@ export function ContactForm({
     } catch { /* storage blocked — nothing to carry over */ }
 
     const params = new URLSearchParams(window.location.search)
-    const select = document.getElementById('contact-service')
     const wanted = params.get('service')?.trim().toLowerCase()
     if (wanted) {
       // The edited list first; a link naming a service by its old wording
       // still finds it (matchService, src/data/contact.ts).
       const match = matchService(serviceInterest, wanted)
-      if (match && select instanceof HTMLInputElement) select.value = match
+      if (match) setServices([match])
     }
 
     /* The hero's "Select Your Location" (24 Sep 2026): a facility state fills
@@ -230,8 +227,9 @@ export function ContactForm({
         filled.current.state = true
       }
     }
-    if (loc?.service && select instanceof HTMLInputElement && select.value === '') {
-      select.value = matchService(serviceInterest, loc.service) ?? loc.service
+    if (loc?.service) {
+      const preset = matchService(serviceInterest, loc.service) ?? loc.service
+      setServices((cur) => (cur.length ? cur : [preset]))
     }
     // Read once, on arrival, as before; the lists do not change on the page.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -422,6 +420,7 @@ export function ContactForm({
       setHint(null)
       setCount(0)
       setAudience(AUDIENCES[0])
+      setServices([])
       setState('sent')
       setPopup({ name: firstName })
     } catch {
@@ -511,26 +510,14 @@ export function ContactForm({
 
       <div className={ROW}>
         <div className={FIELD}>
-          <label htmlFor="contact-service" className={LABEL}>{F.service.label}</label>
-          {/* Pick from the list OR type anything (Asim, 24 Sep 2026: "make it
-              editable, the user can write in it if they want"). A text input
-              with a <datalist>: the browser offers the services as the
-              visitor clicks or types, and any other wording is kept as
-              written. No script and no new dependency; it works before
-              hydration and on every phone. autoComplete off so the list is
-              the services, not the browser's history of this box. */}
-          <div className="relative">
-            <input id="contact-service" name="service" type="text" list="contact-service-options" required maxLength={80}
-              autoComplete="off" placeholder={F.service.placeholder} aria-invalid={invalid('service')}
-              onInput={() => setBad(null)} className={`${INPUT} ${LIST_ARROW} relative pr-[44px]`} />
-            <datalist id="contact-service-options">
-              {serviceInterest.map((o) => <option key={o} value={o} />)}
-            </datalist>
-            <Chevron />
-          </div>
+          <label htmlFor="contact-service" className={LABEL}>{F.service.label}<Req /></label>
+          {/* Several at once, or the visitor's own words (30 Sep 2026): see
+              ServicePicker. Was a single text box with a <datalist>. */}
+          <ServicePicker options={serviceInterest} value={services} onChange={(v) => { setServices(v); setBad(null) }}
+            placeholder={F.service.placeholder} invalid={invalid('service')} inputClass={INPUT} />
         </div>
         {!pickup && <div className={FIELD}>
-          <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}</label>
+          <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}<Req /></label>
           <div className="relative">
             <select id="contact-audience" name="audience" defaultValue={AUDIENCES[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
               {AUDIENCES.map((o, i) => <option key={o} value={o}>{FORM.audiences[i] ?? o}</option>)}
@@ -566,7 +553,7 @@ export function ContactForm({
         <input id="contact-consent" name="consent" value="yes" type="checkbox" required aria-invalid={invalid('consent')}
           onChange={() => setBad(null)}
           className="mt-[1px] size-[18px] shrink-0 accent-brand" />
-        <span>{FORM.consent}</span>
+        <span>{FORM.consent}<Req /></span>
       </label>
 
       <div className="flex w-full flex-col gap-[12px]">
@@ -687,6 +674,16 @@ function AddressField({ f, onPick }: { f: { label: string; placeholder: string }
   )
 }
 
+/**
+ * The red asterisk on a required field's label (Asim, 30 Sep 2026: "add red
+ * compulsory sign … so lead know that these things are compulsory"). The
+ * inputs carry `required` too, which is what a screen reader announces, so
+ * the mark itself is hidden from one.
+ */
+function Req() {
+  return <span aria-hidden="true" className="ml-[3px] text-[#d92d20]">*</span>
+}
+
 function Chevron() {
   return (
     <Image src="/images/icons/chevron-16.svg" alt="" width={16} height={16}
@@ -714,7 +711,7 @@ function Field({
 }) {
   return (
     <div className={FIELD}>
-      <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}</label>
+      <label htmlFor={`contact-${id}`} className={LABEL}>{f.label}{required && <Req />}</label>
       <input id={`contact-${id}`} name={id} type={type} inputMode={inputMode} autoComplete={autoComplete}
         required={required} minLength={minLength} maxLength={maxLength} pattern={pattern}
         aria-invalid={invalid} aria-describedby={describedBy} onInput={onInput} onBlur={onBlur}

@@ -36,7 +36,7 @@ import { isLeadFormKey } from '@/lib/lead-forms'
 const LIMITS: Record<string, number> = {
   name: 120, email: 200, phone: 40, company: 160, message: 5000,
   address: 200, city: 80, state: 80, zip: 20, item: 80, audience: 40, referral: 80,
-  firstName: 60, lastName: 60, service: 80,
+  firstName: 60, lastName: 60, service: 300,
 }
 
 /**
@@ -102,8 +102,16 @@ function validateSpecForm(p: Payload, copy: ContactCopy):
   // value that is one of the listed services, in any capitalisation, is saved
   // as that service so the Lead Hub can still route on it; anything else is
   // kept as the visitor wrote it.
-  const wanted = str(p.service).replace(/\s+/g, ' ').slice(0, 80)
-  const service = matchService(copy.SERVICE_INTEREST, wanted) ?? wanted
+  // Several since 30 Sep 2026 (ServicePicker posts them joined with ", "):
+  // each is matched on its own, repeats dropped.
+  const picks: string[] = []
+  for (const part of str(p.service).split(',')) {
+    const wanted = part.replace(/\s+/g, ' ').trim().slice(0, 80)
+    if (!wanted) continue
+    const hit = matchService(copy.SERVICE_INTEREST, wanted) ?? wanted
+    if (!picks.some((x) => x.toLowerCase() === hit.toLowerCase())) picks.push(hit)
+  }
+  const service = picks.join(', ').slice(0, 300)
   if (!service) return { ok: false, field: 'service', error: E.recycle }
 
   const message = str(p.message) || null

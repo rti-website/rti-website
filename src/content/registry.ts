@@ -197,7 +197,7 @@ export const DOCS = {
   'tv-recycling': { title: 'TV Recycling', group: 'Service pages', urls: ['/tv-recycling/'], data: mod(tvRecycling) },
   'hard-drive-destruction': { title: 'Hard Drive Destruction', group: 'Service pages', urls: ['/hard-drive-destruction-services/'], data: mod(hardDriveDestruction) },
   'paper-shredding': { title: 'Paper Shredding', group: 'Service pages', urls: ['/paper-shredding-services/'], data: mod(paperShredding) },
-  'off-site-shredding': { title: 'Off-Site Shredding', group: 'Service pages', urls: ['/off-site-shredding/'], data: mod(offSiteShredding) },
+  'off-site-shredding': { title: 'On-Site & Off-Site Shredding', group: 'Service pages', urls: ['/on-site-off-site-shredding/'], data: mod(offSiteShredding) },
   'phone-shredding': { title: 'Phone Shredding', group: 'Service pages', urls: ['/phone-shredding-service/'], data: mod(phoneShredding) },
   'mail-in-recycling': { title: 'Mail-In Recycling', group: 'Service pages', urls: ['/mail-in-recycling/'], data: mod(mailInRecycling) },
   'electronics-recycling-kit': { title: 'Electronics Recycling Kit', group: 'Service pages', urls: ['/electronics-recycling-kit/'], data: mod(electronicsRecyclingKit) },

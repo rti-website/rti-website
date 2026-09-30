@@ -1,4 +1,4 @@
-import { href, quoteHref } from '@/lib/urls'
+import { href, PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, type CityPage } from './types'
 
 /**
@@ -6,7 +6,6 @@ import { FAQ_HEAD, CHICAGO_PHONES, HOME_CRUMB, ICON, LOCATIONS_CRUMB, related, t
  * Illinois", Figma 6919:17769 (board) / 6919:18191 (phone). A service area
  * page: no facility, no address, no map (see types.ts).
  */
-const QUOTE = quoteHref({ service: 'Light Bulb Recycling', location: 'Chicago, IL' })
 const H1 = 'Light Bulb Recycling in Chicago, Illinois'
 
 export const CHICAGO_LIGHT_BULB: CityPage = {
@@ -28,7 +27,7 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
     image: '/images/locations/city-pages/light-bulb-hero.png',
     veil: false,
     phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
-    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: [
@@ -149,7 +148,7 @@ export const CHICAGO_LIGHT_BULB: CityPage = {
   cta: {
     heading: 'Get Started With Light Bulb Recycling in Chicago',
     body: ['Chicago businesses can request a quote or schedule a commercial pickup for spent light bulbs and other accepted lighting materials.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in Chicago', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: 800-969-5166', tel: 'tel:+18009695166', phoneLabel: 'Phone: 800-969-5166' },
     footnote: 'Contact Recycle Technologies to confirm current pickup options for the Chicago area.',
   },

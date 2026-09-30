@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Box } from '@/components/design/Frame'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 import { DIRECTORY_H, FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { LocationDirectory } from '@/components/sections/LocationDirectory'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
@@ -84,6 +84,8 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
     socialLinks(), content('site-footer'), content('contact'), content('certifications'),
   ])
   const FACILITIES = CONTACT_FACILITIES.cards
+  /** The chat card's call button: the Minnesota facility's line, as the frame prints it. */
+  const MN_PHONE = FACILITIES[0]?.phone ?? '+1-763-559-5130'
 
   return (
     /*
@@ -181,24 +183,29 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
             </ul>
           </div>
 
-          {/* Chat card — 6778:4036 on the board: 188x203, #eaf4f5, r10, its
-              contents centred on a 10px gap and the two 30px buttons full
-              width. 6620:5197 on the phone, where it is #f5f5f5, r12 and the
-              buttons sit side by side. */}
-          <div className="w-full rounded-[12px] bg-[#f5f5f5] p-[20px] text-center lg:flex lg:h-[203px] lg:flex-col lg:items-center lg:justify-center lg:gap-[10px] lg:rounded-[10px] lg:bg-brand-soft lg:px-[25px] lg:py-[13px]">
-            <span className="mx-auto grid size-[37px] place-items-center rounded-full bg-brand lg:mx-0">
+          {/* Chat card — 6778:4359 on the board (188 wide, #eaf4f5, r10,
+              px25 py13, 10 apart) and 6620:5197 on the phone (#f5f5f5, r12,
+              p20, 12 apart), redrawn 30 Sep 2026: the icon, the prompt, then
+              two full-width buttons 10 apart — Get a Quote in teal and the
+              Minnesota number in white with the phone glyph after it (the
+              frames export that label white on white; teal here, as their
+              previews show). 38 tall at 12px on the board, 48 at 15 on the phone. */}
+          <div className="flex w-full flex-col items-center gap-[12px] rounded-[12px] bg-[#f5f5f5] p-[20px] text-center lg:h-[203px] lg:justify-center lg:gap-[10px] lg:rounded-[10px] lg:bg-brand-soft lg:px-[25px] lg:py-[13px]">
+            <span className="grid size-[37px] place-items-center rounded-full bg-brand">
               <Image src="/images/icons/chat-icon.png" alt="" width={18} height={18} className="size-[18px]" />
             </span>
-            <p className="mt-[12px] font-sans text-[14px] font-medium leading-[20px] text-ink lg:mt-0 lg:font-poppins lg:text-[12px] lg:font-normal lg:leading-[18px] lg:text-[#13220f]">
+            <p className="font-poppins text-[12px] leading-normal text-[#13220f]">
               {FOOTER_TEXT.chatPrompt}
             </p>
-            <div className="mt-[12px] flex gap-[10px] lg:mt-0 lg:w-full lg:flex-col lg:gap-[10px]">
-              <Link href={href('/contact-us/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-white px-[8px] text-center font-roboto text-[12px] font-medium text-brand lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
-                {FOOTER_TEXT.questionButton}
+            <div className="flex w-full flex-col gap-[10px]">
+              <Link href={QUOTE_HREF} className="btn-pop flex h-[48px] w-full items-center justify-center gap-[8px] rounded-[8px] bg-brand px-[16px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white lg:h-[38px] lg:text-[12px]">
+                {FOOTER_TEXT.quoteButton}
+                <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px]" />
               </Link>
-              <Link href={href('/faqs/')} className="btn-pop flex h-[44px] flex-1 items-center justify-center rounded-[8px] border border-brand bg-brand px-[8px] text-center font-roboto text-[12px] font-medium text-white lg:h-[30px] lg:w-full lg:flex-none lg:px-0">
-                {FOOTER_TEXT.moreButton}
-              </Link>
+              <a href={`tel:${MN_PHONE.replace(/[^+\d]/g, '')}`} className="btn-pop flex h-[48px] w-full items-center justify-center gap-[8px] rounded-[8px] bg-white px-[12px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] text-brand lg:h-[38px] lg:text-[12px]">
+                <span className="whitespace-nowrap">{MN_PHONE}</span>
+                <Image src="/images/home/hero-phone.png" alt="" width={34} height={34} className="size-[17px] shrink-0 object-cover lg:size-[15px]" />
+              </a>
             </div>
           </div>
 

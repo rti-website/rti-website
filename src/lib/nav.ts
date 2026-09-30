@@ -6,7 +6,7 @@
  * change a single URL. Every path goes through href() so the trailing-slash
  * rule is applied in exactly one place.
  */
-import { href } from './urls'
+import { PICKUP_HREF, href } from './urls'
 import type { IndustryMark } from '@/components/ui/IndustryMarks'
 
 export type NavItem = {
@@ -78,7 +78,7 @@ export const MAIL_IN: NavItem = {
 export const HEADER_CTA = { label: 'Get a Quote' }
 
 /** The phone header's two buttons: the small one in the bar and the drawer's quote button. */
-export const MOBILE_NAV = { pickup: 'Arrange Pickup', quote: 'Get a quote' }
+export const MOBILE_NAV = { pickup: 'Schedule a Pickup', quote: 'Get a Quote' }
 
 export const TOP_BAR = {
   /**
@@ -110,7 +110,10 @@ export const TOP_BAR = {
   dropOff: { label: 'Drop Off Locations', href: href('/all-locations/') },
   phoneMn: { label: 'MN:+1-763-559-5130', tel: 'tel:+17635595130' },
   phoneWi: { label: 'WI:+1-262-798-3040', tel: 'tel:+12627983040' },
-  contact: { label: 'Contact Us', href: href('/contact-us/') },
+  /* The top bar's button: "Schedule a Pickup" since 30 Sep 2026 (Asim: the
+     site's only two calls to action are Schedule a Pickup and Get a Quote;
+     Get a Quote is the header's own button). Was Contact Us. */
+  contact: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   // `quote` was here until 21 Sep 2026. Asim removed the second button from
   // the announcement bar and gave Contact Us its filled style; nothing else
   // read this row, so it went with the button rather than sitting unused.

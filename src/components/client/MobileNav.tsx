@@ -68,7 +68,7 @@ function GroupArrow() {
 }
 
 export function MobileNav({
-  nav, topBar, announce, quoteHref, pickupHref, labels = { pickup: 'Arrange Pickup', quote: 'Get a quote' },
+  nav, topBar, announce, quoteHref, pickupHref, labels = { pickup: 'Schedule a Pickup', quote: 'Get a Quote' },
 }: {
   nav: NavEntry[]
   /** From Admin -> Pages -> Header (MOBILE_NAV in src/lib/nav.ts). */
@@ -137,7 +137,7 @@ export function MobileNav({
         <div className="flex shrink-0 items-center">
         <Link
           href={pickupHref}
-          className="btn-pop flex h-[24px] w-[93px] shrink-0 items-center justify-center whitespace-nowrap rounded-[4px] border border-brand bg-brand font-roboto text-[10px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4.004px] [word-spacing:1px]"
+          className="btn-pop flex h-[24px] min-w-[93px] shrink-0 items-center justify-center whitespace-nowrap rounded-[4px] px-[8px] border border-brand bg-brand font-roboto text-[10px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4.004px] [word-spacing:1px]"
         >
           {labels.pickup}
         </Link>
@@ -373,7 +373,7 @@ export function MobileNav({
             </Link>
             <Link
               href={topBar.contact.href} onClick={() => setDrawer(false)}
-              className="flex h-[44px] flex-1 items-center justify-center rounded-[2.426px] border-[0.606px] border-ink px-[19.406px] text-center font-sans text-[12.129px] font-semibold capitalize leading-[12.129px] tracking-[0.2426px] text-ink"
+              className="flex h-[44px] flex-1 items-center justify-center rounded-[2.426px] border-[0.606px] border-ink px-[19.406px] text-center font-sans text-[12.129px] font-semibold leading-[12.129px] tracking-[0.2426px] text-ink"
             >
               {topBar.contact.label}
             </Link>

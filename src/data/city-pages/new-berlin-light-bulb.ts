@@ -1,4 +1,4 @@
-import { quoteHref } from '@/lib/urls'
+import { PICKUP_HREF } from '@/lib/urls'
 import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related, type CityPage } from './types'
 
 /**
@@ -6,7 +6,6 @@ import { FAQ_HEAD, HOME_CRUMB, ICON, LOCATIONS_CRUMB, NEW_BERLIN_PHONE, related,
  * Berlin, Wisconsin", Figma 6925:5561 (board) / 6925:5928 (phone). A facility
  * page, the twin of the Blaine light bulb frame.
  */
-const QUOTE = quoteHref({ service: 'Light Bulb Recycling', location: 'Wisconsin' })
 const H1 = 'Light Bulb Recycling in New Berlin, Wisconsin'
 
 export const NEW_BERLIN_LIGHT_BULB: CityPage = {
@@ -28,7 +27,7 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
     image: '/images/locations/city-pages/light-bulb-hero.png',
     veil: false,
     phone: { width: 880, height: 495, left: -223, top: -109, washLeft: -6 },
-    button: { label: 'Schedule a Light Bulb Recycling Pickup', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },
 
   opening: ['Used light bulbs, especially fluorescent and CFL types, contain small amounts of mercury and can’t go in the trash or curbside recycling bin in Wisconsin. Recycle Technologies handles light bulb recycling at its New Berlin facility, giving households, businesses, and property managers in the area a documented way to get spent bulbs processed. Individuals can drop bulbs off at the New Berlin location or use the nationwide Mail-In Program, while businesses can arrange commercial pickup.'],
@@ -125,7 +124,7 @@ export const NEW_BERLIN_LIGHT_BULB: CityPage = {
   cta: {
     heading: 'Get Started With Light Bulb Recycling in New Berlin, Wisconsin',
     body: ['Drop off bulbs at the New Berlin facility during business hours, schedule a commercial pickup if you’re a business, or start a shipment through the Mail-In Program.'],
-    primary: { label: 'Schedule a Light Bulbs Recycling Pickup in New Berlin, WI', href: QUOTE, phoneLabel: 'Schedule a Light Bulbs Recycling Pickup' },
+    primary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     phone: { label: 'Call: (262) 798-3040', tel: 'tel:+12627983040', phoneLabel: 'Call (262) 798-3040' },
     bodyWidth: 720,
   },
