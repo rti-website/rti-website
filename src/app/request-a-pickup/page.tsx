@@ -32,7 +32,7 @@ export const generateMetadata = () => pageMetadata({
 })
 
 const FORM_TOP = 610
-const FORM_H = 1380 // the business notice on top makes this column ~120 taller than Contact Us'
+const FORM_H = 1466 // the business notice on top makes this column ~120 taller than Contact Us'
 const FOOTER_TOP = FORM_TOP + FORM_H
 
 export default async function PickupPage() {

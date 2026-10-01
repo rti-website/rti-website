@@ -119,7 +119,7 @@ export const HERO_LOCATIONS: readonly { label: string; state?: string; service?:
  *   Email        email     required, lowercased on save
  *   Phone        tel       required, US format accepted loosely, stored as +1XXXXXXXXXX
  *   Company      text      required
- *   Address      text      optional              } back from the frame
+ *   Address      text      required since 1 Oct  } back from the frame
  *   City         text      required              } (6365:1082) on Asim's
  *   State        text      required, a US state  } instruction, 23 Sep 2026;
  *                          ("MN" or "Minnesota", stored as "MN")
@@ -132,6 +132,9 @@ export const HERO_LOCATIONS: readonly { label: string; state?: string; service?:
  *                          relabelled as the frame draws it; still `service`,
  *                          so the hero preselect keeps working.
  *   Is it for?   select    Commercial (default since 24 Sep 2026) or Residential
+ *   How did you hear about us?  select, required (Asim, 1 Oct 2026), from
+ *                          HEARD below; saved as the lead's `referral`, which
+ *                          the lead email and Admin -> Leads already show
  *   Message      textarea  optional, max 2000 chars
  *   Consent      checkbox  required: "I agree to be contacted by Recycle Technologies"
  *
@@ -164,12 +167,16 @@ export const FORM = {
     zip:       { label: 'Zip code',         placeholder: '--' },
     service:   { label: 'What would you like to recycle?', placeholder: 'Select or type' },
     audience:  { label: 'Is it for?',       placeholder: '' },
+    heard:     { label: 'How did you hear about us?', placeholder: 'Select an option' },
     message:   { label: 'Message',          placeholder: 'Let us know what you’d like to recycle, your preferred timing, or any other details.' },
   },
   /** "Is it for?" — the first is the default. Commercial since 24 Sep 2026
    *  (Asim: "by default place Commercial in the form, not Residential"); the
    *  frame drew Residential first. */
   audiences: ['Commercial', 'Residential'] as const,
+  /** "How did you hear about us?" (Asim, 1 Oct 2026). Saved as written, so a
+   *  renamed option is a new answer in the lead reports from then on. */
+  heard: ['Google search', 'Google or online ad', 'Social media', 'Referral or word of mouth', 'Returning customer', 'Other'],
   consent: 'I agree to be contacted by Recycle Technologies',
   messageMax: 2000,
   submit: 'Send Message',
@@ -187,10 +194,12 @@ export const FORM = {
     email: 'Please check the email address.',
     phone: 'Please enter a US phone number, e.g. (763) 559-5130.',
     company: 'Please enter your company name.',
+    address: 'Please enter your street address.',
     city: 'Please enter your city.',
     usState: 'Please enter a US state, e.g. MN or Minnesota.',
     zipCode: 'Please enter a 5 digit ZIP code.',
     recycle: 'Please choose or type what you would like to recycle.',
+    heard: 'Please tell us how you heard about us.',
     tooLong: 'Please keep the message under {max} characters.',
     consent: 'Please tick the box so we can contact you.',
     failed: 'Something went wrong. Please try again.',

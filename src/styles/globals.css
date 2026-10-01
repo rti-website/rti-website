@@ -589,3 +589,23 @@ input[type="search"]::-webkit-search-decoration {
     box-shadow: 0 4px 10px -6px rgba(11, 31, 58, 0.4);
   }
 }
+
+/* ===========================================================================
+   TAWK.TO CHAT ON PHONES: THE ICON ONLY (1 Oct 2026, Asim).
+
+   On a phone the widget's greeting card ("Hi! How can we help?" with the
+   "I have a question" and "Tell me more" buttons) and its "We Are Here!"
+   attention grabber sit over the page. Below lg only the round chat icon
+   shows; tapping it still opens the chat as before. Desktop is unchanged.
+
+   Tawk draws each part in its own iframe with inline `display:block
+   !important`, which no stylesheet can beat, so the WRAPPER divs are hidden
+   instead: #message-preview (the greeting) and #chat-bubble (the grabber).
+   #min-widget (the icon) and the open chat window are left alone.
+   =========================================================================== */
+@media (width < 64rem) {
+  #message-preview,
+  #chat-bubble {
+    display: none !important;
+  }
+}

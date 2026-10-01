@@ -57,10 +57,12 @@ export const generateMetadata = () => pageMetadata({
  *  on the FAQ band — and once the ZIP hint could appear under City / State /
  *  Zip (up to ~55px), it pushed the button under the band, which paints over
  *  it. 1234 is the frame's 100 below again, and room for the hint.
+ *  1324 since 1 Oct 2026: "How did you hear about us?" made the column 1124
+ *  (measure-sections: needs 1224), plus the 100.
  *  Re-measure: `node scripts/measure-sections.mjs --route contact-us`, then
  *  add the 100. */
 const FORM_TOP = 610
-const FORM_H = 1234
+const FORM_H = 1324
 const FAQ_TOP = FORM_TOP + FORM_H
 const FAQ_H = 715.52
 const CTA_TOP = FAQ_TOP + FAQ_H

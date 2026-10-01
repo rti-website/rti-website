@@ -32,9 +32,10 @@ import type { AddressSuggestion } from '@/app/api/address/route'
  *
  * VALIDATION, IN THE BROWSER — the same rules /api/leads enforces, so most
  * mistakes are caught before a round trip. Everything is required except the
- * street address and the message (Asim, 23 Sep 2026): names 2 to 60
- * characters, a real email, a US phone number (10 digits, or 11 starting with
- * 1, in any punctuation), company, city, a US state ("MN" or "Minnesota"), a
+ * message (Asim, 23 Sep 2026; the street address too since 1 Oct 2026):
+ * names 2 to 60 characters, a real email, a US phone number (10 digits, or 11
+ * starting with 1, in any punctuation), company, address, city, a US state
+ * ("MN" or "Minnesota"), a
  * 5 digit ZIP, what to recycle, and the consent box; the message is capped at
  * 2000 characters with a counter. The server repeats every check and is the
  * one that decides; a field it rejects gets focus and its message.
@@ -83,7 +84,7 @@ const ROW = 'flex w-full flex-col gap-[16px] lg:flex-row lg:items-start lg:gap-[
 const FIELD = 'flex w-full min-w-px flex-col gap-[8px] lg:flex-1'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
-type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'address' | 'city' | 'state' | 'zip' | 'service' | 'audience' | 'message' | 'consent'
+type FieldName = 'firstName' | 'lastName' | 'email' | 'phone' | 'company' | 'address' | 'city' | 'state' | 'zip' | 'service' | 'audience' | 'referral' | 'message' | 'consent'
 
 /** The words, from Admin -> Pages -> Contact Us (src/data/contact.ts). */
 type Form = typeof FORM_DEFAULTS
@@ -108,10 +109,12 @@ function check(v: (k: FieldName) => string, consent: boolean, form: Form): { fie
   // Business only since 24 Sep 2026: a Residential enquiry has no company
   // field on screen, so nothing to require.
   if (v('audience') !== 'Residential' && !v('company')) return { field: 'company', message: E.company }
+  if (!v('address')) return { field: 'address', message: E.address }
   if (!v('city')) return { field: 'city', message: E.city }
   if (!stateCode(v('state'))) return { field: 'state', message: E.usState }
   if (!/^\d{5}$/.test(v('zip'))) return { field: 'zip', message: E.zipCode }
   if (!v('service')) return { field: 'service', message: E.recycle }
+  if (!v('referral')) return { field: 'referral', message: E.heard }
   if (v('message').length > form.messageMax) return { field: 'message', message: E.tooLong.replace('{max}', String(form.messageMax)) }
   if (!consent) return { field: 'consent', message: E.consent }
   return null
@@ -397,6 +400,7 @@ export function ContactForm({
           zip: value('zip'),
           service: value('service'),
           audience: value('audience'),
+          referral: value('referral'),
           message: value('message'),
           consent,
           website: value('website'),
@@ -467,7 +471,7 @@ export function ContactForm({
 
       {/* Suggestions as the visitor types (29 Sep 2026): picking one fills
           City, State and Zip too. See AddressField below. */}
-      <AddressField f={F.address} onPick={pickAddress} />
+      <AddressField f={F.address} onPick={pickAddress} invalid={invalid('address')} onEdit={() => setBad(null)} />
 
       {/* City / State / Zip — three across at lg, stacked on a phone — and the
           ZIP hint under them. The hint's box is empty (no height) until there
@@ -530,6 +534,23 @@ export function ContactForm({
       {/* Under the row with "Is it for?" (Asim, 29 Sep 2026: "move these
           precautions below the is this for place"). */}
       {!pickup && !business && <ResidentialHelp mode="residential" {...help} />}
+
+      {/* How did you hear about us? Required (Asim, 1 Oct 2026). On the form
+          rather than a pop-up after sending: a question asked after the lead
+          is in gets skipped, and this way every lead carries the answer. Posts
+          as `referral`, which the lead email and Admin -> Leads already show. */}
+      <div className={FIELD}>
+        <label htmlFor="contact-referral" className={LABEL}>{F.heard.label}<Req /></label>
+        <div className="relative">
+          <select id="contact-referral" name="referral" required defaultValue="" aria-invalid={invalid('referral')}
+            onChange={() => setBad(null)}
+            className={`${INPUT} appearance-none pr-[44px] invalid:text-muted`}>
+            <option value="" disabled>{F.heard.placeholder}</option>
+            {FORM.heard.map((o) => <option key={o} value={o} className="text-ink">{o}</option>)}
+          </select>
+          <Chevron />
+        </div>
+      </div>
 
       <div className="flex w-full flex-col gap-[8px]">
         <label htmlFor="contact-message" className={LABEL}>{F.message.label}</label>
@@ -595,7 +616,12 @@ export function ContactForm({
  * autoComplete "off" so the browser's own address list does not open on top
  * of ours.
  */
-function AddressField({ f, onPick }: { f: { label: string; placeholder: string }; onPick: (a: AddressSuggestion) => void }) {
+function AddressField({ f, onPick, invalid, onEdit }: {
+  f: { label: string; placeholder: string }
+  onPick: (a: AddressSuggestion) => void
+  invalid?: boolean
+  onEdit?: () => void
+}) {
   const [items, setItems] = useState<AddressSuggestion[]>([])
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(-1)
@@ -606,6 +632,7 @@ function AddressField({ f, onPick }: { f: { label: string; placeholder: string }
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current) }, [])
 
   function onInput(e: React.FormEvent<HTMLInputElement>) {
+    onEdit?.()
     const q = e.currentTarget.value.trim()
     if (timer.current) clearTimeout(timer.current)
     if (q.length < 3) { ask.current++; setItems([]); setOpen(false); return }
@@ -644,9 +671,10 @@ function AddressField({ f, onPick }: { f: { label: string; placeholder: string }
 
   return (
     <div className={FIELD}>
-      <label htmlFor="contact-address" className={LABEL}>{f.label}</label>
+      {/* Required since 1 Oct 2026 (Asim: "add * in form in address also"). */}
+      <label htmlFor="contact-address" className={LABEL}>{f.label}<Req /></label>
       <div className="relative">
-        <input id="contact-address" name="address" type="text" maxLength={200} autoComplete="off"
+        <input id="contact-address" name="address" type="text" required maxLength={200} autoComplete="off" aria-invalid={invalid}
           role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={listId}
           aria-activedescendant={open && active >= 0 ? `${listId}-${active}` : undefined}
           placeholder={f.placeholder} className={INPUT}

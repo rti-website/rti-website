@@ -88,6 +88,9 @@ function validateSpecForm(p: Payload, copy: ContactCopy):
   // Business only since 24 Sep 2026: the form does not show Company Name for
   // a Residential enquiry, so it is only required for the rest.
   if (str(p.audience) !== 'Residential' && !str(p.company)) return { ok: false, field: 'company', error: E.company }
+  // The street address too since 1 Oct 2026 (Asim). `??` covers copy saved
+  // in the admin before the message existed.
+  if (!str(p.address)) return { ok: false, field: 'address', error: E.address ?? 'Please enter your street address.' }
   if (!str(p.city)) return { ok: false, field: 'city', error: E.city }
   // Stored as the postal code ("Minnesota" -> "MN"), so every lead reads alike.
   const state = stateCode(str(p.state))
@@ -114,6 +117,10 @@ function validateSpecForm(p: Payload, copy: ContactCopy):
   const service = picks.join(', ').slice(0, 300)
   if (!service) return { ok: false, field: 'service', error: E.recycle }
 
+  // How did you hear about us? Required since 1 Oct 2026 (Asim). Any answer
+  // is kept as given (the details loop below saves it as `referral`).
+  if (!str(p.referral)) return { ok: false, field: 'referral', error: E.heard ?? 'Please tell us how you heard about us.' }
+
   const message = str(p.message) || null
   if (message && message.length > FORM.messageMax) {
     return { ok: false, field: 'message', error: E.tooLong.replace('{max}', String(FORM.messageMax)) }
@@ -138,6 +145,7 @@ function validateSpecForm(p: Payload, copy: ContactCopy):
   details.zip = zip
   const audience = str(p.audience)
   if ((FORM.audiences as readonly string[]).includes(audience)) details.audience = audience
+  details.referral = str(p.referral).slice(0, LIMITS.referral ?? 80)
   return { ok: true, name: `${first} ${last}`, phone, zip, service, message, details }
 }
 
