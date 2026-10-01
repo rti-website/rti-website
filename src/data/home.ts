@@ -139,7 +139,7 @@ export const HOME_WHY_CHOOSE = {
     'Our convenient local and nationwide mail-in recycling options make electronics '
     + 'recycling near you simple, secure, and environmentally responsible.',
   ],
-  estimateButton: 'Get a Free Estimate',
+  estimateButton: 'Get a Quote', // was "Get a Free Estimate" (Asim, 1 Oct 2026)
   aboutButton: 'Read More About Us',
   stats: [
     { v: '18M+',   l: 'Lbs of E-Waste Recycled' },
@@ -190,7 +190,7 @@ export const HOME_CASE_STUDIES = {
     'strengthen data security, and recover value from retired hardware.',
   ],
   allButton: 'View All Stories',
-  estimateButton: 'Get a Free Estimate',
+  estimateButton: 'Get a Quote', // was "Get a Free Estimate" (Asim, 1 Oct 2026)
   readStory: 'Read Story',
 }
 

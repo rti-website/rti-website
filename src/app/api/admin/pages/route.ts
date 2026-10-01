@@ -100,15 +100,23 @@ export const GET = guard(async () => {
     migrated = false
   }
   const byKey = new Map(rows.map((r) => [r.key, r]))
-  const docs = DOC_KEYS.map((key) => {
-    const d = DOCS[key] as { title: string; group: string; urls: string[]; note?: string }
+  const docs = DOC_KEYS.flatMap((key) => {
+    const d = DOCS[key] as { title: string; group: string; urls: string[]; note?: string; pages?: { title: string; url: string; group: string; note?: string }[] }
     const r = byKey.get(key)
-    return {
+    const row = {
       key, title: d.title, group: d.group, urls: d.urls, note: d.note ?? null,
       status: r?.has_draft ? 'draft' : r && r.edits > 0 ? 'published' : 'original',
       draftUpdatedAt: r?.draft_updated_at ?? null, draftBy: r?.draft_by ?? null,
       publishedAt: r?.published_at ?? null, publishedBy: r?.published_by ?? null,
     }
+    /* A page a document builds besides its own (the two facility pages, the
+       quote and pickup pages): a row of its own that opens the document on
+       that page (1 Oct 2026). `docKey` is what opens; `key` stays unique. */
+    const extra = (d.pages ?? []).map((p) => ({
+      ...row, key: `${key}@${p.url}`, docKey: key, title: p.title, group: p.group, note: p.note ?? null,
+      urls: [p.url, ...d.urls.filter((u) => u !== p.url)],
+    }))
+    return [row, ...extra]
   })
   return json({ docs, others: await others(), migrated })
 }, { role: ['administrator', 'editor', 'ads'] })

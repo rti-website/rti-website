@@ -173,6 +173,13 @@ type Doc = {
   data: () => unknown
   /** One line under the title in the list. */
   note?: string
+  /**
+   * Pages this document builds that get a row of their own in the list (1 Oct
+   * 2026, Asim: the Wisconsin facility page "is not available in the pages").
+   * Each row opens this same document, previewing that page, and the page's
+   * title and description are edited here (SEO_OWNER).
+   */
+  pages?: { title: string; url: string; group: Group; note?: string }[]
 }
 
 const SKIP = /(SEO|TODO|^URL$|_START$)/i
@@ -205,7 +212,11 @@ export const DOCS = {
     note: 'The case study cards also show on the homepage and the Compliance Center.' },
   'compliance-center': { title: 'Compliance Center', group: 'Main pages', urls: ['/compliance-center/'], data: mod(complianceCenter) },
   contact: { title: 'Contact Us', group: 'Main pages', urls: ['/contact-us/', '/', '/quote/', '/request-a-pickup/'], data: mod(contact),
-    note: 'The form (labels, options, messages) and facility cards. The service and location options also feed the homepage quote picker; the facility cards also show in the footer.' },
+    note: 'The form (labels, options, messages) and facility cards. The service and location options also feed the homepage quote picker; the facility cards also show in the footer.',
+    pages: [
+      { title: 'Get a Quote', url: '/quote/', group: 'Main pages', note: 'Built from the Contact Us copy (the form and facility cards); opens that document, previewing this page.' },
+      { title: 'Schedule a Pickup', url: '/request-a-pickup/', group: 'Main pages', note: 'Built from the Contact Us copy (the form and facility cards); opens that document, previewing this page.' },
+    ] },
   downloads: { title: 'Downloads', group: 'Main pages', urls: ['/downloads/'], data: mod(downloads) },
   faqs: { title: 'FAQs', group: 'Main pages', urls: ['/faqs/'], data: mod(faqs, ['ALL_FAQS']) },
   guides: { title: 'ITAD Recycling Guides', group: 'Main pages', urls: ['/itad-recycling-guides/'], data: mod(guides) },
@@ -359,7 +370,11 @@ export const DOCS = {
 
   /* ------------------------------------------------------- shared blocks -- */
   facilities: { title: 'Facilities (Minnesota and Wisconsin)', group: 'Shared blocks', urls: ['/minnesota-recycling/', '/wisconsin-recycling/', '/all-locations/', '/contact-us/'], data: mod(facilities, ['FACILITIES']),
-    note: 'The two facility pages, plus facility details wherever else they show.' },
+    note: 'The two facility pages, plus facility details wherever else they show.',
+    pages: [
+      { title: 'Minnesota Facility (Blaine)', url: '/minnesota-recycling/', group: 'Location pages', note: 'Opens "Facilities (Minnesota and Wisconsin)", previewing this page. The Minnesota card and page copy are under Minnesota.' },
+      { title: 'Wisconsin Facility (New Berlin)', url: '/wisconsin-recycling/', group: 'Location pages', note: 'Opens "Facilities (Minnesota and Wisconsin)", previewing this page. The Wisconsin card and page copy are under Wisconsin.' },
+    ] },
   certifications: { title: 'Certifications (shared)', group: 'Shared blocks', urls: ['/', '/light-bulbs/', '/services/', '/industries/'], data: mod(certifications, ['R2_DIRECTORY']),
     note: 'Certification logos and copy used on the homepage, the services and industries pages, every service, industry and state page, and the footer.' },
   'site-header': { title: 'Navbar and header (every page)', group: 'Shared blocks', urls: ['/'], data: mod(nav, ['MAIL_IN']),
@@ -406,6 +421,8 @@ export type PageMeta = { url: string; title: string; description: string }
  */
 export const SEO_OWNER: Record<string, DocKey> = (() => {
   const out: Record<string, DocKey> = {}
+  // A page given its own row (`pages`) belongs to that document first, even a shared one.
+  for (const k of DOC_KEYS) for (const p of (DOCS[k] as Doc).pages ?? []) if (!out[p.url]) out[p.url] = k
   const own = DOC_KEYS.filter((k) => (DOCS[k] as Doc).group !== 'Shared blocks' && k !== 'not-found')
   for (const k of own) { const u = DOCS[k].urls[0]; if (u && !out[u]) out[u] = k }
   for (const k of own) for (const u of DOCS[k].urls) if (!out[u]) out[u] = k

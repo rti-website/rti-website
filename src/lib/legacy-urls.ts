@@ -41,3 +41,20 @@ export function fixLegacyUrl(s: string | null | undefined): string | null {
   if (!s) return null
   return fixLegacyUrls(s)
 }
+
+/**
+ * Our own absolute image URL as a site path, for next/image — 1 Oct 2026.
+ *
+ * The SEO crawl of 29 Sep found two post heroes answering 400:
+ *   /_next/image/?url=https://www.recycletechnologies.com/wp-content/uploads/...
+ * A post's og_image_url is stored absolute (it is also the og:image, which
+ * must stay absolute), and next/image refuses an absolute URL on a host that
+ * is not in images.remotePatterns, even our own. The picture itself is fine
+ * at its path, so the hero gets the path. Other hosts are left as they are.
+ */
+const OWN_ORIGIN = /^https?:\/\/(?:www\.)?recycletechnologies\.com(?=\/)/i
+
+export function localImagePath(s: string | null | undefined): string | null {
+  const url = fixLegacyUrl(s)
+  return url ? url.replace(OWN_ORIGIN, '') : null
+}

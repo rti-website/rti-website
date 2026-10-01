@@ -168,6 +168,15 @@ export type TrackingRuntime = {
   gtm: string | null
   /** Load gtag.js directly — only when GTM is off but GA4/Ads IDs are set. */
   gtag: boolean
+  /**
+   * Send to the GA4 ID set in the admin directly, beside GTM (1 Oct 2026).
+   * Management's GA4 property (G-13FJ6FH9J8) is not the one the GTM
+   * container feeds (G-95GWN35JEP), and Asim chose to have the site send to
+   * it itself rather than change GTM. Page views come from its own config;
+   * cta_click is sent to it with send_to, so nothing reaches the GTM
+   * property twice. Do not also add this ID to GTM: it would count twice.
+   */
+  ga4Direct: boolean
   ga4Id: string
   adsId: string
   adsLabel: string
@@ -185,6 +194,7 @@ export async function trackingRuntime(): Promise<TrackingRuntime> {
   return {
     gtm,
     gtag: allowed && !gtm && Boolean(t.ga4Id || t.adsConversionId),
+    ga4Direct: allowed && Boolean(gtm && t.ga4Id),
     ga4Id: t.ga4Id,
     adsId: t.adsConversionId,
     adsLabel: t.adsConversionLabel,
@@ -218,6 +228,18 @@ export async function trackingRuntime(): Promise<TrackingRuntime> {
  * page and link text to /api/call-click/ with sendBeacon, which survives the
  * page being left. See src/app/api/call-click/route.ts for what is kept.
  *
+ * CTA CLICKS (1 Oct 2026, management's "CTA Tracking Specification"). One
+ * more delegated capture-phase listener: a click on a link or button whose
+ * visible text is one of the four site-wide calls to action pushes
+ *   { event: 'cta_click', cta_label: '<the label>', page: '<path>' }
+ * and, when the GA4 ID is sent to directly, gtag('event', 'cta_click', …)
+ * to that ID. Exactly one event per click: one listener, the nearest link or
+ * button. Labels: Schedule a Pickup, Get a Quote, Contact Us, and Call Us
+ * Now, which the site has as every tel: link (Asim's choice; there is no
+ * button with that text). Matched on the text as shown, ignoring case,
+ * spacing and arrows, so it works wherever the buttons appear, including
+ * pages built later. Navigation and dialing are untouched.
+ *
  * CALLS FROM WEBSITE (27 Sep 2026). After the Ads tag, one
  *   gtag('config', 'AW-…/<label>', { phone_conversion_number: '<number>' })
  * per number set under Google & Tracking. With GTM off they follow the site's
@@ -232,7 +254,7 @@ export async function trackingRuntime(): Promise<TrackingRuntime> {
  */
 export function trackingBootstrap(rt: TrackingRuntime): string {
   const C = JSON.stringify({
-    gtm: rt.gtm, gtag: rt.gtag, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel, calls: rt.calls,
+    gtm: rt.gtm, gtag: rt.gtag, ga4d: rt.ga4Direct, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel, calls: rt.calls,
     keys: ATTRIBUTION_KEYS, cookie: ATTR_COOKIE, maxAge: ATTR_MAX_AGE,
   }).replace(/</g, '\\u003c')
   return `(function(){var C=${C},w=window,d=document;w.dataLayer=w.dataLayer||[];w.__rtiTracking=C;
@@ -245,6 +267,11 @@ w.__rtiAttr=cur}catch(e){}
 w.dataLayer.push({rti_ga4_id:C.ga4,rti_ads_conversion_id:C.ads,rti_ads_conversion_number:(C.ads||'').replace(/^AW-/,''),rti_ads_conversion_label:C.label});
 d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!t)return;var n=t.getAttribute('href').slice(4),b=JSON.stringify({number:n,page:location.href,label:(t.textContent||'').trim().slice(0,80)});
 w.dataLayer.push({event:'click_to_call',phone_number:n,page_url:location.href});try{if(navigator.sendBeacon)navigator.sendBeacon('/api/call-click/',new Blob([b],{type:'application/json'}));else fetch('/api/call-click/',{method:'POST',headers:{'content-type':'application/json'},body:b,keepalive:true})}catch(x){}},true);
+var CTA={'schedule a pickup':'Schedule a Pickup','get a quote':'Get a Quote','contact us':'Contact Us','call us now':'Call Us Now'};
+d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a,button'):null;if(!t||meta('rti:tracking')==='off')return;
+var l=CTA[((t.getAttribute('data-cta')||t.innerText||t.textContent||'')+'').toLowerCase().replace(/[^a-z ]+/g,' ').replace(/\\s+/g,' ').trim()];
+if(!l&&t.matches('a[href^="tel:"]'))l='Call Us Now';if(!l)return;var pg=location.pathname;
+w.dataLayer.push({event:'cta_click',cta_label:l,page:pg});if((C.ga4d||(C.gtag&&C.ga4))&&typeof w.gtag==='function')w.gtag('event','cta_click',{send_to:C.ga4,cta_label:l,page:pg})},true);
 function meta(n){var e=d.querySelector('meta[name="'+n+'"]');return e?e.getAttribute('content'):null}
 w.__rtiPageView=function(){var ev={event:'page_view_custom',page_type:meta('rti:page-type')||'page',page_name:meta('rti:page-name')||d.title,
 page_category:meta('rti:page-category')||'',page_url:location.href,analytics_excluded:meta('rti:analytics')==='exclude',tracking_disabled:meta('rti:tracking')==='off'};
@@ -256,6 +283,8 @@ j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(C.gtm);d.
 else if(C.gtag){w.gtag=function(){w.dataLayer.push(arguments)};var g=d.createElement('script');g.async=true;
 g.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(C.ga4||C.ads);d.head.appendChild(g);w.gtag('js',new Date());
 if(C.ga4)w.gtag('config',C.ga4);if(C.ads)w.gtag('config',C.ads)}
+if(C.ga4d){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};var h=d.createElement('script');h.async=true;
+h.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(C.ga4);d.head.appendChild(h);w.gtag('js',new Date());w.gtag('config',C.ga4)}
 if((C.gtm||C.gtag)&&C.ads&&C.calls.length){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};
 C.calls.forEach(function(c){w.gtag('config',C.ads+'/'+c.label,{phone_conversion_number:c.number})})}}
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else start()})();`

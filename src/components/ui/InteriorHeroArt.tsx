@@ -137,6 +137,10 @@ export function InteriorHeroArt({
   tone?: HeroTone
 } = {}) {
   const photo = src ?? SHARED_HERO
+  /* A post hero set in the admin to a picture on another site: next/image only
+     optimises hosts listed in remotePatterns and answers 400 for the rest, so
+     it is drawn as is. Our own pictures arrive as paths (localImagePath). */
+  const external = /^https?:\/\//i.test(photo)
   const wide = tone === 'classic' ? 1935 : 1920
   const navy = washes?.navy ?? { x: 0, w: 1920 }
   const green = washes?.green ?? { x: 0, w: wide }
@@ -159,6 +163,7 @@ export function InteriorHeroArt({
           alt=""
           fill
           priority
+          unoptimized={external}
           sizes="(width < 64rem) 100vw, 1920px"
           className={`object-cover ${fillBox?.flip ? 'lg:-scale-x-100' : ''}`}
           style={fillBox?.opacity !== undefined ? { opacity: fillBox.opacity } : undefined}
@@ -189,7 +194,7 @@ export function InteriorHeroArt({
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden [container-type:size] lg:hidden">
           {ph.under && tone !== 'teal' && <div className="absolute inset-0" style={{ backgroundImage: NAVY(0.6) }} />}
           <div className="absolute" style={{ left: q(ph.x), top: q(ph.y), width: q(ph.w), height: q(ph.h) }}>
-            <Image src={photo} alt="" fill priority sizes="(width < 64rem) 200vw, 1px" className="object-cover"
+            <Image src={photo} alt="" fill priority unoptimized={external} sizes="(width < 64rem) 200vw, 1px" className="object-cover"
               style={fillBox?.opacity !== undefined ? { opacity: fillBox.opacity } : undefined} />
             {fillBox?.overlay && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
           </div>

@@ -42,6 +42,8 @@ import { ICON_CHOICES, fieldKind, getAt, humanize, isHiddenKey, shapeOf, type Fi
 
 type DocSummary = {
   key: string; title: string; group: string; urls: string[]; note: string | null
+  /** A page row that opens another document (the facility pages, 1 Oct 2026): that document's key. */
+  docKey?: string
   /** 'elsewhere': a page whose words are edited on another admin screen. */
   status: 'original' | 'published' | 'draft' | 'elsewhere'
   draftUpdatedAt: string | null; draftBy: string | null; publishedAt: string | null; publishedBy: string | null
@@ -82,7 +84,9 @@ export function Pages({ onToast, onFocusChange, onManage, readOnly = false }: {
   /** Opens the screen that edits a page Pages only lists (a post, a location…). */
   onManage?: (where: Manage, id: number | null) => void
 }) {
-  const [open, setOpen] = useState<string | null>(null)
+  /** The document open in the editor, and the page its preview starts on. */
+  const [open, setOpenState] = useState<{ key: string; url?: string } | null>(null)
+  const setOpen = useCallback((key: string | null, url?: string) => setOpenState(key ? { key, url } : null), [])
   /* The editor gets the whole window (Asim, 27 Sep 2026: "hide the blue
      side bar so it has more space"): the admin rail and page header fold
      away, as in the post editor's full screen, and come back on the list. */
@@ -90,7 +94,7 @@ export function Pages({ onToast, onFocusChange, onManage, readOnly = false }: {
     onFocusChange?.(open !== null)
     return () => onFocusChange?.(false)
   }, [open, onFocusChange])
-  if (open) return <main className="a-sheet a-pgsheet"><PageEditor key={open} docKey={open} onClose={() => setOpen(null)} onOpenDoc={setOpen} onToast={onToast} readOnly={readOnly} /></main>
+  if (open) return <main className="a-sheet a-pgsheet"><PageEditor key={`${open.key}${open.url ?? ''}`} docKey={open.key} initialUrl={open.url} onClose={() => setOpen(null)} onOpenDoc={(k) => setOpen(k)} onToast={onToast} readOnly={readOnly} /></main>
   return <main className="a-sheet"><PageList onOpen={setOpen} onManage={onManage} readOnly={readOnly} /></main>
 }
 
@@ -114,7 +118,7 @@ const fromOther = (o: Other): DocSummary => ({
   manage: o.manage, id: o.id, live: o.live, updatedAt: o.updatedAt,
 })
 
-function PageList({ onOpen, onManage, readOnly = false }: { onOpen: (key: string) => void; onManage?: (where: Manage, id: number | null) => void; readOnly?: boolean }) {
+function PageList({ onOpen, onManage, readOnly = false }: { onOpen: (key: string, url?: string) => void; onManage?: (where: Manage, id: number | null) => void; readOnly?: boolean }) {
   const [docs, setDocs] = useState<DocSummary[] | null>(null)
   const [migrated, setMigrated] = useState(true)
   const [error, setError] = useState('')
@@ -133,7 +137,7 @@ function PageList({ onOpen, onManage, readOnly = false }: { onOpen: (key: string
   }, [])
   /** A row's own action: the editor for a document, the right screen for the rest. */
   const act = (d: DocSummary) => {
-    if (d.status !== 'elsewhere') onOpen(d.key)
+    if (d.status !== 'elsewhere') onOpen(d.docKey ?? d.key, d.docKey ? d.urls[0] : undefined)
     else if (d.manage && d.manage !== 'code') onManage?.(d.manage, d.id ?? null)
   }
   useEffect(() => { void load() }, [load])
@@ -297,8 +301,10 @@ function StatusPill({ d }: { d: DocSummary }) {
 
 /* ================================================================ editor == */
 
-function PageEditor({ docKey, onClose, onOpenDoc, onToast, readOnly = false }: {
+function PageEditor({ docKey, initialUrl, onClose, onOpenDoc, onToast, readOnly = false }: {
   docKey: string; onClose: () => void; onToast: (m: string) => void; readOnly?: boolean
+  /** Which of the document's pages the preview starts on (a page row's own URL). */
+  initialUrl?: string
   /** Opens another document (a shared block the preview click landed in). */
   onOpenDoc: (key: string) => void
 }) {
@@ -327,9 +333,9 @@ function PageEditor({ docKey, onClose, onOpenDoc, onToast, readOnly = false }: {
   const adopt = useCallback((s: DocState, reloadFrame = true) => {
     docRef.current = s
     setDoc(s); setData(s.current); setSaved(JSON.stringify(s.current))
-    setUrl((u) => u || s.urls[0] || '')
+    setUrl((u) => u || (initialUrl && s.urls.includes(initialUrl) ? initialUrl : s.urls[0]) || '')
     if (reloadFrame) setFrameKey((k) => k + 1)
-  }, [])
+  }, [initialUrl])
 
   useEffect(() => {
     void (async () => {

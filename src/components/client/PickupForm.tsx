@@ -63,6 +63,8 @@ export function PickupForm({ text: PICKUP }: { text: PickupText }) {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           type: 'quote',
+          // Stored as the enquiry's form type (Admin -> Enquiries), 1 Oct 2026.
+          form: 'pickup',
           name,
           email: value('email'),
           phone: value('phone'),

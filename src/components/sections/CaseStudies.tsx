@@ -61,12 +61,13 @@ export async function CaseStudies({ top = 7483 - HOME_BELOW_TESTIMONIALS_SHIFT, 
         <Eyebrow>{HOME_CASE_STUDIES.eyebrow}</Eyebrow>
         <div className="flex h-[64.5px] items-center max-lg:h-auto"><Title className="text-center">{HOME_CASE_STUDIES.title}</Title></div>
         <Lead className="text-center">
-          {HOME_CASE_STUDIES.lead[0]}<br className="max-lg:hidden" />
+          {HOME_CASE_STUDIES.lead[0]}{' '}<br className="max-lg:hidden" />
           {HOME_CASE_STUDIES.lead[1]}
         </Lead>
         <div className="flex items-center justify-center gap-[12px] max-lg:w-full max-lg:flex-col">
           <Btn href={href('/case-studies/')} variant="colored" className="max-lg:w-full max-lg:justify-center">{HOME_CASE_STUDIES.allButton}</Btn>
-          <Btn href={QUOTE_HREF} variant="coloredWhite" className="max-lg:w-full max-lg:justify-center">{HOME_CASE_STUDIES.estimateButton}</Btn>
+          {/* Outlined in the brand teal since 1 Oct 2026 (Asim: "add a button outline around it"). */}
+          <Btn href={QUOTE_HREF} variant="coloredWhite" className="border border-brand max-lg:w-full max-lg:justify-center">{HOME_CASE_STUDIES.estimateButton}</Btn>
         </div>
       </CenterBox>
 

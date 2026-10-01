@@ -2,7 +2,7 @@ import 'server-only'
 import { cache as perRequest } from 'react'
 import { q } from '@/lib/db'
 import type { ContentMeta } from '@/lib/content'
-import { fixLegacyUrl, fixLegacyUrls } from '@/lib/legacy-urls'
+import { fixLegacyUrl, fixLegacyUrls, localImagePath } from '@/lib/legacy-urls'
 import { tidyPostHtml } from '@/lib/post-html'
 import REDIRECTS from '../../data/redirects.json'
 
@@ -117,7 +117,9 @@ function toPost(r: Row): DbPost {
     // fixLegacyUrl(s): the imported rows carry "recycletechnologies.comwp-content"
     // (no slash after the domain) — see src/lib/legacy-urls.ts, 26 Sep 2026.
     image: fixLegacyUrl(str(r.og_image_url)) ?? undefined,
-    heroImage: fixLegacyUrl(str(r.og_image_url)) ?? undefined,
+    // The hero goes through next/image, which 400s on an absolute URL to our
+    // own host (not in remotePatterns) — so it gets the path. 1 Oct 2026.
+    heroImage: localImagePath(str(r.og_image_url)) ?? undefined,
     category: str(r.category_name) ?? undefined,
     readingTime: `${Number(r.reading_minutes ?? 1)} min read`,
     source: r.source === 'wordpress' ? 'wordpress' : 'editor',

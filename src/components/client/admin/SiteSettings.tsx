@@ -97,9 +97,11 @@ function TrackingSettingsCard({ canEdit, onToast }: { canEdit: boolean; onToast:
         {field('adsConversionLabel', 'Conversion Label', 'XXXXXXXXXXXX')}
       </div>
       <p className="a-hint">
-        With GTM on, these IDs are handed to GTM in the dataLayer (<span className="a-mono">rti_ga4_id</span>,{' '}
-        <span className="a-mono">rti_ads_conversion_id</span>, <span className="a-mono">rti_ads_conversion_label</span>) for its
-        tags to use. With GTM off, the site loads Google&rsquo;s tag itself with them. A successful enquiry always fires{' '}
+        The GA4 Measurement ID is sent to directly by the site, beside GTM: page views and the{' '}
+        <span className="a-mono">cta_click</span> event (Schedule a Pickup, Get a Quote, Contact Us, Call Us Now) go to it.
+        Do not also add the same ID inside GTM, or it counts twice. The Google Ads IDs are handed to GTM in the dataLayer
+        (<span className="a-mono">rti_ads_conversion_id</span>, <span className="a-mono">rti_ads_conversion_label</span>); with GTM
+        off, the site loads Google&rsquo;s tag itself with them. A successful enquiry always fires{' '}
         <span className="a-mono">generate_lead</span>.
       </p>
 
