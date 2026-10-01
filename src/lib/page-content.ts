@@ -3,7 +3,7 @@ import { cache as perRequest } from 'react'
 import { draftMode } from 'next/headers'
 import { q } from '@/lib/db'
 import { applyPatch, type Patch } from '@/lib/content-patch'
-import { DOCS, type DocData, type DocKey } from '@/content/registry'
+import { docData, type DocData, type DocKey } from '@/content/registry'
 
 /**
  * Page copy with the admin's edits laid over it (Admin -> Pages, 27 Sep 2026).
@@ -64,7 +64,7 @@ export async function isPreview(): Promise<boolean> {
 const merged = perRequest(async (key: DocKey, preview: boolean) => {
   const row = (await rows()).get(key)
   const patch = row ? (preview && row.draft ? row.draft : row.published) : null
-  return applyPatch(DOCS[key].data(), patch)
+  return applyPatch(docData(key), patch)
 })
 
 export async function content<K extends DocKey>(key: K): Promise<DocData<K>> {

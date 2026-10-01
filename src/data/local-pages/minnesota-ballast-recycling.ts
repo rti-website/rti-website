@@ -296,7 +296,7 @@ export const MINNESOTA_BALLAST_RECYCLING: LocalPage = {
             { label: "Light Bulb Recycling", href: href('/minnesota-recycling/light-bulb-recycling/') },
             { label: "Battery Recycling", href: href('/minnesota-recycling/battery-recycling/') },
             { label: "Electronic Recycling", href: href('/minnesota-recycling/electronic-recycling/') },
-            { label: "Television Recycling", href: href('/minnesota-recycling/tv-recycling/') },
+            { label: "Television Recycling", href: href('/tv-recycling-in-minnesota/') },
             { label: "Airbag Recycling", href: href('/minnesota-recycling/airbag-recycling/') },
             { label: "Mail-In Program", href: href('/mail-in-recycling/') },
             { label: "All Recycle Technologies Locations", href: href('/all-locations/') },

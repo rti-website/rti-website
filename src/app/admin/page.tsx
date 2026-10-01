@@ -1,5 +1,5 @@
 import '@/styles/admin.css'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { AdminApp } from '@/components/client/admin/AdminApp'
 
 /**
@@ -13,7 +13,7 @@ import { AdminApp } from '@/components/client/admin/AdminApp'
  * admin.css is imported here rather than in globals.css so none of it is
  * downloaded by a visitor reading a blog post.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/admin/',
   title: 'RTI Publisher',
   description: 'Content administration for recycletechnologies.com.',

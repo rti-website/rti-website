@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -49,7 +49,7 @@ const GRID_TOP = HERO_TOP + HERO_H
 const CTA_TOP  = GRID_TOP + H.grid
 const FOOTER_TOP = CTA_TOP + H.cta
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/case-studies/',
   title: SEO.title,
   description: SEO.description,

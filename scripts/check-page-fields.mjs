@@ -67,7 +67,14 @@ async function jsonReq(p, method = 'GET', body) {
 const src = fs.readFileSync(path.join(ROOT, 'src/lib/content-patch.ts'), 'utf8')
 const HIDDEN = new Set([...src.match(/const HIDDEN_KEYS = new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]))
 const VALUE_ONLY = new Set([...src.match(/const VALUE_ONLY = new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]))
-const hidden = (k, v) => !(VALUE_ONLY.has(k) && v !== null && typeof v === 'object') && (HIDDEN.has(k) || /(^|_)(SEO|TODO)/i.test(k) || /^todo/i.test(k))
+const NUMBER_ONLY = new Set([...src.match(/const NUMBER_ONLY = new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]))
+const ICON_CHOICES = [...src.match(/const ICON_CHOICES = \[([\s\S]*?)\]/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1])
+const SHOWN = new Set([...src.match(/const SHOWN = new Set\(\[([\s\S]*?)\]\)/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]))
+const shownPath = (p) => !!p && (SHOWN.has(shape(p)) || /(^|\.)cards\.\*\.kind$/.test(shape(p)))
+const hidden = (k, v, p) => typeof v === 'string' && shownPath(p) ? false
+  : NUMBER_ONLY.has(k) ? typeof v !== 'string'
+  : k === 'icon' && typeof v === 'string' && !v.includes('/') ? !ICON_CHOICES.includes(v)
+  : !(VALUE_ONLY.has(k) && v !== null && typeof v === 'object') && (HIDDEN.has(k) || /(^|_)(SEO|TODO)/i.test(k) || /^todo/i.test(k))
 const IMAGE_RE = /\.(png|jpe?g|webp|gif|svg|avif)(\?.*)?$/i
 const kindOf = (k, v) => (IMAGE_RE.test(v) || /^(image|photo|src|logo|icon|picture|thumbnail|avatar|poster)$/i.test(k) ? 'image'
   : /^(href|link|to)$/i.test(k) || (/^(\/|https?:\/\/|mailto:|#)/.test(v) && !/\s/.test(v)) ? 'link' : 'text')
@@ -83,7 +90,7 @@ const shape = (p) => p.split('.').map((s) => (/^\d+$/.test(s) ? '*' : s)).join('
 function fields(v, p = '', k = '', out = []) {
   if (typeof v === 'string') { if (!/^\d+:\d+$/.test(v) && v.trim()) out.push({ path: p, key: k, value: v, kind: kindOf(k, v) }) }
   else if (Array.isArray(v)) v.forEach((x, i) => fields(x, p ? `${p}.${i}` : String(i), k, out))
-  else if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) if (!hidden(kk, x)) fields(x, p ? `${p}.${kk}` : kk, kk, out)
+  else if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) if (!hidden(kk, x, p ? `${p}.${kk}` : kk)) fields(x, p ? `${p}.${kk}` : kk, kk, out)
   return out
 }
 function setAt(root, p, val) {

@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -67,7 +67,7 @@ const CASE_TOP  = LAW_TOP + H.law
 const DL_TOP    = CASE_TOP + H.cases
 const FOOTER_TOP = DL_TOP + H.dl
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/compliance-center/',
   title: SEO.title,
   description: SEO.description,

@@ -28,7 +28,7 @@ const ROUTES = [
   '/sustainability/', '/blog/', '/itad-recycling-guides/', '/compliance-center/',
   '/case-studies/', '/faqs/', '/downloads/', '/certifications/', '/light-bulbs/',
   '/tv-recycling/', '/battery-recycling/', '/ballasts/', '/hard-drive-destruction-services/',
-  '/paper-shredding-services/', '/on-site-off-site-shredding/', '/phone-shredding-service/',
+  '/paper-shredding-services/', '/off-site-shredding/', '/phone-shredding-service/',
   '/mail-in-recycling/', '/electronics-recycling-kit/', '/airbag-recycling/', '/industries/automotive-fleet/',
   '/industries/education/', '/industries/financial-services-banking/',
   '/industries/government-municipal/', '/industries/manufacturing-industrial/',

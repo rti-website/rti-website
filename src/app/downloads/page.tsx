@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -57,7 +57,7 @@ const LISTS_TOP  = CERTS_TOP + H.certs
 const SHIP_TOP   = LISTS_TOP + H.lists
 const FOOTER_TOP = SHIP_TOP + H.ship
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/downloads/',
   title: SEO.title,
   description: SEO.description,

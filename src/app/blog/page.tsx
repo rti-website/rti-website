@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -38,7 +38,7 @@ const HERO_TOP = 140
 const HERO_H = 470
 const LIST_TOP = HERO_TOP + HERO_H
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/blog/',
   title: LIVE_SEO.title,
   description: LIVE_SEO.description,

@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -66,7 +66,7 @@ const GOALS_TOP  = REPORT_TOP + H.report
 const CTA_TOP    = GOALS_TOP + H.goals
 const FOOTER_TOP = CTA_TOP + H.cta
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/sustainability/',
   title: SEO.title,
   description: SEO.description,

@@ -291,7 +291,7 @@ export const WISCONSIN_BALLAST_RECYCLING: LocalPage = {
             { label: "Light Bulb Recycling", href: href('/wisconsin-recycling/light-bulb-recycling/') },
             { label: "Battery Recycling", href: href('/wisconsin-recycling/battery-recycling/') },
             { label: "Electronic Recycling", href: href('/wisconsin-recycling/electronic-recycling/') },
-            { label: "Television Recycling", href: href('/wisconsin-recycling/tv-recycling/') },
+            { label: "Television Recycling", href: href('/tv-recycling-in-wisconsin/') },
             { label: "Airbag Recycling", href: href('/wisconsin-recycling/airbag-recycling/') },
             { label: "Mail-In Program", href: href('/mail-in-recycling/') },
             { label: "All Recycle Technologies Locations", href: href('/all-locations/') },

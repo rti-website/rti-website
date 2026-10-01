@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { FOOTER_H } from '@/lib/layout'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
@@ -42,7 +42,7 @@ import { content } from '@/lib/page-content'
  * pattern you would guess (/electronic-recycle/, /paper-shredding-services/).
  * See src/data/services.ts.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/services/',
   title: 'Recycling Services | Call (800) 969-5166',
   description:

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { CategoryArchive } from '@/components/blocks/CategoryArchive'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { dbCategories, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
 import { categoryPagePath, pageCount, pageNumberParam } from '@/lib/blog-index'
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
   const cat = (await dbCategories()).find((c) => c.slug === slug && c.source === 'wordpress')
   if (page === null || !cat) return {}
   const pages = pageCount((await dbPostsInCategory(cat.slug)).length)
-  return buildMetadata({
+  return pageMetadata({
     url: categoryPagePath(cat.slug, page),
     /* Same reasoning as /blog/page/[n]/: page 1 keeps the category's own
        description, and pages 2+ get a short one that names the page, so an

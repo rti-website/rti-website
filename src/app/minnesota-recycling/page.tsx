@@ -1,4 +1,4 @@
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { LocationDetailPage } from '@/components/sections/locations/LocationDetailPage'
 import { MINNESOTA } from '@/data/facilities'
 import { loadLocations, materialLinks } from '@/lib/service-locations'
@@ -17,7 +17,7 @@ import { content } from '@/lib/page-content'
  * in four of the five bands. Re-measure with
  *   node scripts/measure-sections.mjs --route minnesota-recycling --port <p>
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: MINNESOTA.url,
   title: MINNESOTA.liveSeo.title,
   description: MINNESOTA.liveSeo.description,

@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -54,7 +54,7 @@ const TRUST_TOP   = CALLOUT_TOP + H.callout
 const CTA_TOP     = TRUST_TOP + H.trust
 const FOOTER_TOP  = CTA_TOP + H.cta
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/why-choose-us/',
   title: SEO.title,
   description: SEO.description,

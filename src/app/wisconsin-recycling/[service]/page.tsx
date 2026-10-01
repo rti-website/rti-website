@@ -4,7 +4,7 @@ import { LocalServicePage } from '@/components/sections/locations/LocalServicePa
 import { findServicePage, offeredServices, servicePageMetadata } from '@/lib/service-location-route'
 import { LOCAL_FACILITY_PAGES, localDocKey, localFacilityPage, type LocalPage } from '@/data/local-pages'
 import { content } from '@/lib/page-content'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { CountyPage } from '@/components/sections/locations/CountyPage'
 import { countyDocKey, countyPage, countySlugs } from '@/data/county-pages'
 
@@ -41,9 +41,9 @@ type Props = { params: Promise<{ service: string }> }
 export async function generateMetadata({ params }: Props) {
   const { service } = await params
   const county = countyPage(SITE, service)
-  if (county) return buildMetadata({ url: county.url, title: county.seo.title, description: county.seo.description })
+  if (county) return pageMetadata({ url: county.url, title: county.seo.title, description: county.seo.description })
   const local = localFacilityPage(SITE, service)
-  if (local) return buildMetadata({ url: local.url, title: local.seo.title, description: local.seo.description })
+  if (local) return pageMetadata({ url: local.url, title: local.seo.title, description: local.seo.description })
   return servicePageMetadata(await findServicePage(SITE, service, false))
 }
 

@@ -5,7 +5,7 @@ import { Dialog, ConfirmDialog } from './Dialog'
 import { MediaLibrary } from './MediaLibrary'
 import { SplitGrip, useSplit } from './Split'
 import { getJSON, sendJSON } from './api'
-import { fieldKind, getAt, humanize, isHiddenKey, shapeOf, type FieldKind } from '@/lib/content-patch'
+import { ICON_CHOICES, fieldKind, getAt, humanize, isHiddenKey, shapeOf, type FieldKind } from '@/lib/content-patch'
 
 /**
  * Admin -> Pages (Asim, 27 Sep 2026: "make pages here from where we can access
@@ -26,6 +26,18 @@ import { fieldKind, getAt, humanize, isHiddenKey, shapeOf, type FieldKind } from
  * section added to a page in code shows up here with no admin work. What is
  * hidden (layout switches, ids, Figma nodes, SEO) is decided in
  * src/lib/content-patch.ts, shared with the server so the two cannot disagree.
+ *
+ * CLICK TO EDIT (1 Oct 2026, Asim: "when user click on the part of the page
+ * on the right side it open the editable place in the left side"). A click
+ * in the preview finds the field holding the words (or picture) clicked,
+ * opens its section, scrolls to it and puts the cursor in it. Words that
+ * live in a shared block (navbar, footer, location directory…) name that
+ * block, with a button to open it. "Click to edit" off lets the preview be
+ * used as a normal page again.
+ *
+ * TITLE AND DESCRIPTION (1 Oct 2026): every page's <title> and meta
+ * description are the first section of its document (META), empty meaning
+ * "the page's own". See src/lib/page-meta.ts.
  */
 
 type DocSummary = {
@@ -78,7 +90,7 @@ export function Pages({ onToast, onFocusChange, onManage, readOnly = false }: {
     onFocusChange?.(open !== null)
     return () => onFocusChange?.(false)
   }, [open, onFocusChange])
-  if (open) return <main className="a-sheet a-pgsheet"><PageEditor docKey={open} onClose={() => setOpen(null)} onToast={onToast} readOnly={readOnly} /></main>
+  if (open) return <main className="a-sheet a-pgsheet"><PageEditor key={open} docKey={open} onClose={() => setOpen(null)} onOpenDoc={setOpen} onToast={onToast} readOnly={readOnly} /></main>
   return <main className="a-sheet"><PageList onOpen={setOpen} onManage={onManage} readOnly={readOnly} /></main>
 }
 
@@ -285,7 +297,11 @@ function StatusPill({ d }: { d: DocSummary }) {
 
 /* ================================================================ editor == */
 
-function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: string; onClose: () => void; onToast: (m: string) => void; readOnly?: boolean }) {
+function PageEditor({ docKey, onClose, onOpenDoc, onToast, readOnly = false }: {
+  docKey: string; onClose: () => void; onToast: (m: string) => void; readOnly?: boolean
+  /** Opens another document (a shared block the preview click landed in). */
+  onOpenDoc: (key: string) => void
+}) {
   const [doc, setDoc] = useState<DocState | null>(null)
   const [data, setData] = useState<Json | null>(null)
   const [saved, setSaved] = useState('')
@@ -297,10 +313,19 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
   const [frameKey, setFrameKey] = useState(0)
   const [device, setDevice] = useState<'desktop' | 'phone'>('desktop')
   const [filter, setFilter] = useState('')
+  const [pickMode, setPickMode] = useState(true)
+  /** Where a preview click landed when it was not in this document. */
+  const [elsewhere, setElsewhere] = useState<{ key: string; title: string; text: string } | null>(null)
+  /** Each page's own title and description as the site renders them, for the META placeholders. */
+  const [ownMeta, setOwnMeta] = useState<Record<string, { title: string; description: string }>>({})
+  const formRef = useRef<HTMLDivElement>(null)
+  const docRef = useRef<DocState | null>(null)
+  const sharedDocs = useRef<Map<string, DocState>>(new Map())
 
   const dirty = data !== null && JSON.stringify(data) !== saved
 
   const adopt = useCallback((s: DocState, reloadFrame = true) => {
+    docRef.current = s
     setDoc(s); setData(s.current); setSaved(JSON.stringify(s.current))
     setUrl((u) => u || s.urls[0] || '')
     if (reloadFrame) setFrameKey((k) => k + 1)
@@ -313,6 +338,68 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
       adopt(r.data)
     })()
   }, [docKey, adopt])
+
+  /* The page's own title and description, read off the page itself, so an
+     empty META field can show what it leaves in place. Fetched once, before
+     any edit to them is saved. */
+  const metaUrls = doc ? metaUrlsOf(doc.current) : ''
+  useEffect(() => {
+    if (!metaUrls) return
+    let gone = false
+    void Promise.all(metaUrls.split('\n').map(async (u) => {
+      try {
+        const html = await (await fetch(u, { credentials: 'same-origin' })).text()
+        const d = new DOMParser().parseFromString(html, 'text/html')
+        return [u, { title: d.title.trim(), description: d.querySelector('meta[name="description"]')?.getAttribute('content')?.trim() ?? '' }] as const
+      } catch { return null }
+    })).then((rows) => { if (!gone) setOwnMeta(Object.fromEntries(rows.filter((r) => r !== null))) })
+    return () => { gone = true }
+  }, [metaUrls])
+
+  /** Opens the field at `path` in the form: its section, scrolled to, the cursor in it, a flash. */
+  const jump = useCallback((path: string) => {
+    setFilter('')
+    setElsewhere(null)
+    // After the filter clears and the section renders.
+    setTimeout(() => {
+      const form = formRef.current
+      if (!form) return
+      let el: HTMLElement | null = null
+      for (let p = path; p && !el; p = p.split('.').slice(0, -1).join('.')) {
+        el = form.querySelector<HTMLElement>(`[data-path="${CSS.escape(p)}"]`)
+      }
+      if (!el) return
+      for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null) d.open = true
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      const input = el.querySelector<HTMLElement>('textarea, input:not([type=hidden]), select')
+      input?.focus({ preventScroll: true })
+      el.classList.remove('a-pgflash'); void el.offsetWidth; el.classList.add('a-pgflash')
+    }, 30)
+  }, [])
+
+  /** A click in the preview: find what was clicked, here or in a shared block. */
+  const pick = useCallback(async (hit: PreviewHit) => {
+    const d = docRef.current
+    if (!d) return
+    const rendered = d.rendered ? new Set(d.rendered) : null
+    const here = findField(d.current, hit, rendered)
+    if (here && here.score >= 100) { jump(here.path); return }
+    let best: { key: string; title: string; score: number } | null = null
+    for (const key of SHARED_SEARCH) {
+      if (key === d.key) continue
+      let s = sharedDocs.current.get(key)
+      if (!s) {
+        const r = await getJSON<DocState>('/pages/doc', new URLSearchParams({ key }))
+        if (!r.ok) continue
+        s = r.data; sharedDocs.current.set(key, s)
+      }
+      const m = findField(s.current, hit, s.rendered ? new Set(s.rendered) : null)
+      if (m && (!best || m.score > best.score)) best = { key, title: s.title, score: m.score }
+    }
+    if (here && (!best || here.score >= best.score)) { jump(here.path); return }
+    if (best) { setElsewhere({ key: best.key, title: best.title, text: hit.text.slice(0, 80) }); formRef.current?.scrollIntoView({ block: 'start' }); return }
+    onToast(hit.text ? 'That part of the page is not editable text (it is built from other pages or the design).' : 'Nothing editable there. Click on words or a picture.')
+  }, [jump, onToast])
 
   /* Unsaved work is not lost to a closed tab. */
   useEffect(() => {
@@ -364,7 +451,7 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
   if (!doc || data === null) return <p className="a-hint">Loading…</p>
 
   const rendered = doc.rendered ? new Set(doc.rendered) : null
-  const sections = Object.entries(data as Record<string, Json>).filter(([k, v]) => !isHiddenKey(k, v) && visible(v, k, rendered))
+  const sections = Object.entries(data as Record<string, Json>).filter(([k, v]) => !isHiddenKey(k, v, k) && visible(v, k, rendered))
     .sort(([a], [b]) => rank(a) - rank(b))
   const isObjDoc = typeof data === 'object' && !Array.isArray(data)
   const previewable = doc.urls.length > 0
@@ -393,8 +480,17 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
       </div>
 
       <div ref={splitRef} className={`a-pggrid${splitDragging ? ' dragging' : ''}`} style={splitStyle}>
-        <div className="a-pgform">
+        <div className="a-pgform" ref={formRef}>
           {doc.note && <div className="a-note"><span>{doc.note}</span></div>}
+          {elsewhere && (
+            <div className="a-note a-pgelse">
+              <span>&ldquo;{elsewhere.text}{elsewhere.text.length >= 80 ? '…' : ''}&rdquo; is edited in <b>{elsewhere.title}</b>, a block shared by many pages.</span>
+              <span style={{ display: 'flex', gap: 6 }}>
+                <button className="a-btn sm p" onClick={() => (dirty ? onToast('Save or undo your changes here first.') : onOpenDoc(elsewhere.key))}>Open it</button>
+                <button className="a-btn sm" onClick={() => setElsewhere(null)}>Close</button>
+              </span>
+            </div>
+          )}
           <div className="a-hint" style={{ marginBottom: 12 }}>
             Desktop sections on this site are laid out to the design, so much longer text can crowd or clip a section.
             Save the draft and check the preview, on Desktop and Phone, before publishing.
@@ -405,10 +501,12 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
           {/* disabled: every box, list button and picture picker at once. */}
           <fieldset disabled={readOnly} style={{ border: 0, padding: 0, margin: 0, minWidth: 0, display: 'contents' }}>
           {sections.map(([k, v]) => (
-            <details key={k} className="a-card a-pgsec" open={sections.length <= 3 || !!f}>
+            <details key={k} className="a-card a-pgsec" open={sections.length <= 3 || !!f || k === 'META'}>
               <summary>{sectionTitle(k, sections.map(([x]) => x))}</summary>
-              <Node value={v} def={getAt(doc.defaults, k) as Json | undefined} live={getAt(doc.live, k) as Json | undefined}
-                path={k} name={k} depth={0} rendered={rendered} filter={f} set={setAt} onPick={setPicking} />
+              {k === 'META'
+                ? <MetaFields value={v as Json[]} def={getAt(doc.defaults, k) as Json[] | undefined} own={ownMeta} filter={f} set={setAt} />
+                : <Node value={v} def={getAt(doc.defaults, k) as Json | undefined} live={getAt(doc.live, k) as Json | undefined}
+                    path={k} name={k} depth={0} rendered={rendered} filter={f} set={setAt} onPick={setPicking} />}
             </details>
           ))}
           </fieldset>
@@ -431,6 +529,9 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
                     </select>
                   : <span className="a-mono" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{url}</span>}
                 <span className="a-spacer" />
+                <label className="a-pgpick" title="Click words or a picture in the preview to edit them on the left. Off: the preview works like the real page.">
+                  <input type="checkbox" checked={pickMode} onChange={(e) => setPickMode(e.target.checked)} /> Click to edit
+                </label>
                 <div className="a-seg" role="group" aria-label="Preview size">
                   <button className={`a-btn sm${device === 'desktop' ? ' p' : ''}`} onClick={() => setDevice('desktop')}>Desktop</button>
                   <button className={`a-btn sm${device === 'phone' ? ' p' : ''}`} onClick={() => setDevice('phone')}>Phone</button>
@@ -445,7 +546,7 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
           {previewable && (
             <>
               {dirty && <div className="a-pgstale">The preview shows the last saved draft. Save to see your latest changes.</div>}
-              <PreviewFrame key={`${frameKey}:${url}`} url={url} device={device} />
+              <PreviewFrame key={`${frameKey}:${url}`} url={url} device={device} onPick={pickMode ? pick : null} />
             </>
           )}
         </aside>
@@ -515,8 +616,45 @@ function PageEditor({ docKey, onClose, onToast, readOnly = false }: { docKey: st
  * 1440 wide (the site scales its 1920 board to the window) and is shrunk to
  * the panel; Phone renders at 390.
  */
-function PreviewFrame({ url, device }: { url: string; device: 'desktop' | 'phone' }) {
+function PreviewFrame({ url, device, onPick }: { url: string; device: 'desktop' | 'phone'; onPick: ((hit: PreviewHit) => void) | null }) {
   const box = useRef<HTMLDivElement>(null)
+  const frame = useRef<HTMLIFrameElement>(null)
+  const [loaded, setLoaded] = useState(0)
+  const pickRef = useRef(onPick)
+  useEffect(() => { pickRef.current = onPick }, [onPick])
+  /* Click to edit: an outline on what the pointer is over, and a click
+     reports what was clicked instead of following a link. Same origin (the
+     preview is this site), so the frame's document is reachable. Re-attached
+     on every load (a page the visitor navigated to in the frame too). */
+  useEffect(() => {
+    const doc = frame.current?.contentDocument
+    if (!doc || !loaded || !onPick) return
+    const style = doc.createElement('style')
+    style.textContent = '.rti-pick{outline:2px solid #1b7a3d!important;outline-offset:2px!important;cursor:pointer!important}'
+    doc.head.appendChild(style)
+    let over: Element | null = null
+    const move = (e: Event) => {
+      const t = e.target as Element | null
+      if (over === t) return
+      over?.classList.remove('rti-pick'); over = t && t !== doc.body && t !== doc.documentElement ? t : null
+      over?.classList.add('rti-pick')
+    }
+    const click = (e: MouseEvent) => {
+      const t = e.target as HTMLElement | null
+      if (!t) return
+      // Links and sending a form are stopped; an accordion, a tab or a
+      // Load More still works, so what it opens can be clicked next.
+      if (t.closest('a[href], [type="submit"], form button:not([type="button"])')) { e.preventDefault(); e.stopPropagation() }
+      pickRef.current?.(hitOf(t))
+    }
+    doc.addEventListener('mouseover', move, true)
+    doc.addEventListener('click', click, true)
+    return () => {
+      doc.removeEventListener('mouseover', move, true)
+      doc.removeEventListener('click', click, true)
+      over?.classList.remove('rti-pick'); style.remove()
+    }
+  }, [loaded, onPick])
   const [size, setSize] = useState({ w: 0, h: 0 })
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -535,7 +673,7 @@ function PreviewFrame({ url, device }: { url: string; device: 'desktop' | 'phone
     <div ref={box} className="a-pgframe">
       {loading && <div className="a-pgload">Loading preview…</div>}
       {size.w > 0 && (
-        <iframe title="Page preview" src={src} onLoad={() => setLoading(false)}
+        <iframe ref={frame} title="Page preview" src={src} onLoad={() => { setLoading(false); setLoaded((n) => n + 1) }}
           style={{
             width: W, height: size.h / scale, transform: `scale(${scale})`, transformOrigin: '0 0',
             marginLeft: device === 'phone' ? Math.max(0, (size.w - W * scale) / 2) : 0,
@@ -558,7 +696,7 @@ function Node(p: NodeProps) {
   if (typeof value === 'string') return <StringField {...p} value={value} />
   if (Array.isArray(value)) return <ListField {...p} value={value} />
   if (value && typeof value === 'object') {
-    const entries = Object.entries(value).filter(([k, v]) => !isHiddenKey(k, v) && visible(v, `${path}.${k}`, p.rendered))
+    const entries = Object.entries(value).filter(([k, v]) => !isHiddenKey(k, v, `${path}.${k}`) && visible(v, `${path}.${k}`, p.rendered))
     if (!entries.length) return null
     return (
       <div className={p.depth > 0 ? 'a-pgobj' : ''}>
@@ -580,12 +718,16 @@ function StringField({ value, def, path, name, filter, set, onPick }: NodeProps 
   const changed = typeof def === 'string' && def !== value
   const h1 = /^h1/i.test(name)
   return (
-    <div className="a-field a-pgfield">
+    <div className="a-field a-pgfield" data-path={path}>
       <label>
         {label}
         {changed && <button type="button" className="a-pgreset" title={`Original: ${def}`} onClick={() => set(path, def as string)}>changed · undo</button>}
       </label>
-      {kind === 'long' ? (
+      {kind === 'choice' ? (
+        <select className="a-inp" value={value} onChange={(e) => set(path, e.target.value)}>
+          {[...new Set([value, ...ICON_CHOICES])].map((o) => <option key={o} value={o}>{humanize(o)}</option>)}
+        </select>
+      ) : kind === 'long' ? (
         <textarea className="a-inp" rows={Math.min(10, Math.max(2, Math.ceil(value.length / 70)))} value={value} onChange={(e) => set(path, e.target.value)} />
       ) : kind === 'image' ? (
         <div className="a-pgimg">
@@ -614,13 +756,25 @@ function ListField(p: NodeProps & { value: Json[] }) {
     const next = [...value]; const [x] = next.splice(i, 1); next.splice(i + d, 0, x!); set(path, next)
   }
   const add = () => { if (template !== undefined) set(path, [...value, blank(template)]) }
+  /* Items that are pages (a hidden `url`): renamed, reordered or removed,
+     never added here, since a page is made in code. */
+  const fixed = isRecord(template) && typeof template.url === 'string'
+  /* A list mixing kinds of item (a location page's blocks): Add offers each. */
+  const pool = [...(Array.isArray(p.def) ? p.def : []), ...value].filter(isRecord)
+  const kinds = [...new Set(pool.map((x) => x.kind).filter((k): k is string => typeof k === 'string'))]
+  const [addKind, setAddKind] = useState('')
+  const addOf = (k: string) => {
+    const t = [...pool].reverse().find((x) => x.kind === k)
+    if (t) set(path, [...value, blank(t)])
+  }
   const remove = (i: number) => set(path, value.filter((_, j) => j !== i))
   const itemName = (i: number) => {
     const v = value[i]
     const t = v && typeof v === 'object' && !Array.isArray(v)
-      ? Object.entries(v).find(([k, x]) => typeof x === 'string' && x && !isHiddenKey(k, x) && fieldKind(k, x) === 'text')?.[1]
+      ? Object.entries(v).find(([k, x]) => typeof x === 'string' && x && !isHiddenKey(k, x) && fieldKind(k, x) !== 'image' && fieldKind(k, x) !== 'link')?.[1]
       : typeof v === 'string' ? v : null
-    return `${i + 1}. ${typeof t === 'string' ? (t.length > 60 ? `${t.slice(0, 60)}…` : t) : ''}`
+    const kind = isRecord(v) && typeof v.kind === 'string' && kinds.length > 1 ? `[${KIND_NAMES[v.kind] ?? humanize(v.kind)}] ` : ''
+    return `${i + 1}. ${kind}${typeof t === 'string' ? (t.length > 60 ? `${t.slice(0, 60)}…` : t) : ''}`
   }
   if (p.filter && !label.toLowerCase().includes(p.filter)) {
     // Filter inside the items instead of hiding the whole list.
@@ -629,7 +783,7 @@ function ListField(p: NodeProps & { value: Json[] }) {
   }
   return (
     <div className="a-pglist">
-      <div className="a-pglisthead"><span>{label}</span><span className="a-hint">{value.length} item{value.length === 1 ? '' : 's'}</span></div>
+      <div className="a-pglisthead" data-path={path}><span>{label}</span><span className="a-hint">{value.length} item{value.length === 1 ? '' : 's'}</span></div>
       {value.map((v, i) => (
         <div key={i} className="a-pgitem">
           <div className="a-pgitemhead">
@@ -643,7 +797,14 @@ function ListField(p: NodeProps & { value: Json[] }) {
             def={Array.isArray(p.def) ? p.def[i] : undefined} live={Array.isArray(p.live) ? p.live[i] : undefined} />
         </div>
       ))}
-      {template !== undefined && <button type="button" className="a-btn sm" onClick={add}>+ Add {plain ? 'line' : 'item'}</button>}
+      {template !== undefined && !fixed && kinds.length > 1 ? (
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <select className="a-inp" style={{ height: 30, width: 'auto' }} value={addKind || kinds[0]} onChange={(e) => setAddKind(e.target.value)} aria-label="Kind of block to add">
+            {kinds.map((k) => <option key={k} value={k}>{KIND_NAMES[k] ?? humanize(k)}</option>)}
+          </select>
+          <button type="button" className="a-btn sm" onClick={() => addOf(addKind || kinds[0]!)}>+ Add block</button>
+        </div>
+      ) : template !== undefined && !fixed && <button type="button" className="a-btn sm" onClick={add}>+ Add {plain ? 'line' : 'item'}</button>}
     </div>
   )
 }
@@ -652,6 +813,7 @@ function ListField(p: NodeProps & { value: Json[] }) {
 
 /** Does this value have anything the editor shows? */
 function visible(v: Json, path: string, rendered: Set<string> | null): boolean {
+  if (path === 'META' || path.startsWith('META.')) return true   // the page's title and description, never on the page itself
   if (typeof v === 'string') {
     if (/^\d+:\d+$/.test(v)) return false          // a Figma node id
     return !rendered || rendered.has(shapeOf(path))
@@ -660,7 +822,7 @@ function visible(v: Json, path: string, rendered: Set<string> | null): boolean {
     if (v.length === 0) return !rendered || [...rendered].some((s) => s.startsWith(`${shapeOf(path)}.`) || s === `${shapeOf(path)}.*`)
     return v.some((x, i) => visible(x, `${path}.${i}`, rendered))
   }
-  if (v && typeof v === 'object') return Object.entries(v).some(([k, x]) => !isHiddenKey(k, x) && visible(x, `${path}.${k}`, rendered))
+  if (v && typeof v === 'object') return Object.entries(v).some(([k, x]) => !isHiddenKey(k, x, `${path}.${k}`) && visible(x, `${path}.${k}`, rendered))
   return false
 }
 
@@ -677,7 +839,7 @@ function put(root: Json, segs: string[], value: Json): Json {
 
 /** A new list item shaped like `t`: its words emptied, its pictures, links and switches kept. */
 function blank(t: Json, key = ''): Json {
-  if (typeof t === 'string') { const k = fieldKind(key, t); return k === 'image' || k === 'link' || isHiddenKey(key, t) ? t : '' }
+  if (typeof t === 'string') { const k = fieldKind(key, t); return k === 'image' || k === 'link' || k === 'choice' || isHiddenKey(key, t) ? t : '' }
   if (Array.isArray(t)) return t.length && typeof t[0] === 'string' ? [''] : t.map((x) => blank(x, key))
   if (t && typeof t === 'object') return Object.fromEntries(Object.entries(t).map(([k, v]) => [k, isHiddenKey(k, v) ? v : blank(v, k)]))
   return t
@@ -689,8 +851,8 @@ function blank(t: Json, key = ''): Json {
  * above the hero; the top of the page comes first and the closing call to
  * action last. Anything not listed keeps its place in between.
  */
-const FIRST = ['MAIN_NAV', 'TOP_BAR', 'HEADER_CTA', 'MOBILE_NAV', 'HERO', 'HOME_HERO', 'FAQ_HERO', 'SERVICES_HERO', 'INTRO', 'STORY', 'NOTICE']
-const LAST = ['FAQ_INTRO', 'FAQ', 'FAQS', 'HOME_FAQ', 'FAQ_HEAD', 'RELATED', 'CTA', 'HOME_CTA', 'SERVICES_CTA']
+const FIRST = ['META', 'MAIN_NAV', 'TOP_BAR', 'HEADER_CTA', 'MOBILE_NAV', 'HERO', 'HOME_HERO', 'FAQ_HERO', 'SERVICES_HERO', 'INTRO', 'STORY', 'NOTICE']
+const LAST = ['FAQ_INTRO', 'FAQ', 'FAQS', 'HOME_FAQ', 'FAQ_HEAD', 'RELATED', 'CTA', 'HOME_CTA', 'SERVICES_CTA', 'faq', 'after', 'cta']
 function rank(k: string): number {
   const f = FIRST.indexOf(k); if (f >= 0) return f - 100
   const l = LAST.indexOf(k); if (l >= 0) return 100 + l
@@ -706,6 +868,23 @@ const SECTION_NAMES: Record<string, string> = {
   COL_2: 'Footer links, column 2', FOOTER_TEXT: 'Footer words', FOOTER_NEWSLETTER: 'Footer newsletter box',
   SERVICE_GROUPS: 'Service cards', SERVICE_PAGE_TEXT: 'Service page text (every service page)',
   MINNESOTA: 'Minnesota facility', WISCONSIN: 'Wisconsin facility', DETAIL_COPY: 'Facility page labels',
+  META: 'Page title and meta description (Google)',
+  // The location and landing pages (src/data/local-pages/types.ts).
+  hero: 'Hero (top of the page)', bands: 'Page sections', faq: 'FAQ', after: 'Sections after the FAQ',
+  cta: 'Closing call to action', stats: 'Stats strip', about: 'About section', certBody: 'Certifications band text',
+  // The county and area pages (src/data/county-pages/).
+  servicesHeading: 'Service options heading', sections: 'More sections', company: 'Company card', items: 'Items we accept',
+  features: 'Feature cards', sights: 'Top sights',
+  COUNTY_SERVICES: 'Service cards (pickup, drop-off, mail-in)', COUNTY_CTA: 'Free estimate banner', COUNTY_ITEMS: 'Items We Accept',
+  COUNTY_FEATURE_ICONS: 'Feature card icons', COUNTY_LINE_ICONS: 'Hours and phone icons',
+  DIRECTORY_COPY: 'Location directory', BODY: 'Page text',
+}
+
+/** What a location page's block kinds are called in the form. */
+const KIND_NAMES: Record<string, string> = {
+  text: 'Paragraphs', h3: 'Sub-heading', card: 'Single card', cards: 'Rows of cards', info: 'Service table',
+  bullets: 'Bullet cards', chips: 'Link pills', button: 'Button', buttons: 'Two buttons', banner: 'Pickup banner',
+  items: 'Items We Accept', features: 'Feature cards', sights: 'Top sights',
 }
 
 /**
@@ -726,3 +905,123 @@ function fieldLabel(path: string): string {
   return last.length ? last.join(' · ') : humanize(path.split('.').pop() ?? path)
 }
 
+
+const isRecord = (v: unknown): v is Record<string, Json> => !!v && typeof v === 'object' && !Array.isArray(v)
+
+/* ------------------------------------------------------ title and meta -- */
+
+/** The URLs whose title and description a document carries, one per line (an effect dependency). */
+function metaUrlsOf(data: Json): string {
+  const m = isRecord(data) ? data.META : null
+  return Array.isArray(m) ? m.filter(isRecord).map((x) => String(x.url)).join('\n') : ''
+}
+
+/**
+ * The META section: per page, its <title> (60 characters, the SEO sheet's
+ * limit) and meta description (160). Empty keeps the page's own, which is
+ * shown in grey with a button to start from it.
+ */
+function MetaFields({ value, def, own, filter, set }: {
+  value: Json[]; def: Json[] | undefined; own: Record<string, { title: string; description: string }>
+  filter: string; set: (path: string, v: Json) => void
+}) {
+  return (
+    <div>
+      <p className="a-hint" style={{ marginTop: 0 }}>
+        What Google shows for the page. Leave a box empty to keep the page&rsquo;s own (shown in grey). Agree changes with the SEO team.
+      </p>
+      {value.map((m, i) => {
+        if (!isRecord(m)) return null
+        const url = String(m.url)
+        const page = own[url]
+        const box = (key: 'title' | 'description', label: string, max: number) => {
+          const v = typeof m[key] === 'string' ? (m[key] as string) : ''
+          const was = isRecord(def?.[i]) ? (def![i] as Record<string, Json>)[key] : ''
+          if (filter && !(label.toLowerCase().includes(filter) || v.toLowerCase().includes(filter) || (page?.[key] ?? '').toLowerCase().includes(filter))) return null
+          const n = (v || page?.[key] || '').length
+          return (
+            <div className="a-field a-pgfield" data-path={`META.${i}.${key}`}>
+              <label>
+                {label}
+                <span className={`a-hint${n > max ? ' a-pgover' : ''}`} style={{ marginLeft: 'auto' }}>{n}/{max}</span>
+                {v !== was && <button type="button" className="a-pgreset" title="Back to the page's own" onClick={() => set(`META.${i}.${key}`, (was as string) ?? '')}>changed · undo</button>}
+              </label>
+              {key === 'title'
+                ? <input className="a-inp" value={v} placeholder={page?.title ?? 'The page’s own title'} onChange={(e) => set(`META.${i}.${key}`, e.target.value)} />
+                : <textarea className="a-inp" rows={3} value={v} placeholder={page?.description ?? 'The page’s own description'} onChange={(e) => set(`META.${i}.${key}`, e.target.value)} />}
+              {!v && page?.[key] && (
+                <div><button type="button" className="a-btn sm" style={{ marginTop: 6 }} onClick={() => set(`META.${i}.${key}`, page[key])}>Start from the current {key}</button></div>
+              )}
+            </div>
+          )
+        }
+        return (
+          <div key={url} className={value.length > 1 ? 'a-pgitem' : ''}>
+            {value.length > 1 && <div className="a-pgitemhead"><span className="a-mono a-hint">{url}</span></div>}
+            {box('title', 'Meta title', 60)}
+            {box('description', 'Meta description', 160)}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+/* -------------------------------------------------------- click to edit -- */
+
+/** What was clicked in the preview: its words, or the picture's file. */
+type PreviewHit = { text: string; src: string }
+
+/** The shared blocks a click is looked for in when it is not in the open document. */
+const SHARED_SEARCH = ['site-header', 'site-footer', 'locations-directory', 'county-shared', 'certifications', 'facilities', 'contact', 'services', 'case-studies', 'home']
+
+function hitOf(el: HTMLElement): PreviewHit {
+  const img = el instanceof HTMLImageElement ? el : el.querySelector('img')
+  let src = ''
+  if (img && (!el.innerText?.trim() || el === img)) {
+    src = img.getAttribute('src') ?? ''
+    // next/image: /_next/image?url=%2Fimages%2F…&w=…
+    if (src.includes('/_next/image')) src = new URL(src, location.origin).searchParams.get('url') ?? src
+  }
+  return { text: (el.innerText ?? el.textContent ?? '').trim(), src }
+}
+
+const flat = (s: string) => s
+  .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\*\*|__|^#+\s*|^[-*]\s+/gm, '')
+  .replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, '-')
+  .replace(/\s+/g, ' ').trim().toLowerCase()
+
+/**
+ * The field holding what was clicked, scored: 100 the same words, 80 the
+ * field holds the clicked words (a word in a sentence the page splits up),
+ * 60 the clicked block holds the field (a card clicked on its padding: the
+ * longest field in it wins). A picture matches its file.
+ */
+function findField(data: Json, hit: PreviewHit, rendered: Set<string> | null): { path: string; score: number } | null {
+  const t = flat(hit.text)
+  const src = hit.src.split('?')[0]
+  let best: { path: string; score: number } | null = null
+  const consider = (path: string, score: number) => { if (!best || score > best.score) best = { path, score } }
+  const walk = (v: Json, path: string, key: string) => {
+    if (typeof v === 'string') {
+      if (!v.trim() || /^\d+:\d+$/.test(v) || !visible(v, path, rendered)) return
+      const kind = fieldKind(key, v)
+      if (kind === 'image') { if (src && (v === src || src.endsWith(v) || v.endsWith(src))) consider(path, 100); return }
+      if (kind === 'link' || !t) return
+      const f = flat(v)
+      if (!f) return
+      if (f === t) consider(path, 100)
+      else if (t.length >= 3 && f.includes(t)) consider(path, 80 - Math.min(19, (f.length - t.length) / 100))
+      else if (f.length >= 4 && t.length < 2000 && t.includes(f)) consider(path, 60 + Math.min(19, f.length / 100))
+      return
+    }
+    if (Array.isArray(v)) { v.forEach((x, i) => walk(x, `${path}.${i}`, key)); return }
+    if (isRecord(v)) for (const [k, x] of Object.entries(v)) {
+      const p = path ? `${path}.${k}` : k
+      if (k === 'META' && !path) continue
+      if (!isHiddenKey(k, x, p)) walk(x, p, k)
+    }
+  }
+  walk(data, '', '')
+  return best
+}

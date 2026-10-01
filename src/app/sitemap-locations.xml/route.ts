@@ -2,6 +2,10 @@ import { absolute } from '@/lib/urls'
 import { SERVICE_SLUGS } from '@/data/service-locations'
 import { isPartnerHub, loadLocations, pageUrl } from '@/lib/service-locations'
 import { localFacilityPage as fixedFacilityPage } from '@/data/local-pages'
+import REDIRECTS from '../../../data/redirects.json'
+
+/** A URL that 301s elsewhere is never listed (the MN and WI TV pages, 1 Oct 2026). */
+const REDIRECTED = new Set(REDIRECTS.map((r) => r.source))
 
 /**
  * /sitemap-locations.xml — the location pages' own sitemap, as the SEO brief
@@ -29,7 +33,7 @@ export async function GET(): Promise<Response> {
       // The fixed Blaine / New Berlin pages of 27 Sep 2026 are in /sitemap.xml already.
       if (fixedFacilityPage(site.slug, svc)) continue
       const page = all.pages.find((p) => p.site === site.slug && p.service === svc)
-      if (page?.published && site.published) urls.push({ loc: absolute(pageUrl(site, svc)), lastmod: page.updatedAt })
+      if (page?.published && site.published && !REDIRECTED.has(pageUrl(site, svc))) urls.push({ loc: absolute(pageUrl(site, svc)), lastmod: page.updatedAt })
     }
   }
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')

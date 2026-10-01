@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { FOOTER_H } from '@/lib/layout'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
@@ -25,7 +25,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * hint (see the note in src/app/contact-us/page.tsx). Re-measure with
  * `node scripts/measure-sections.mjs --route quote`.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/quote/',
   title: QUOTE_PAGE.seo.title,
   description: QUOTE_PAGE.seo.description,

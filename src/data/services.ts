@@ -186,7 +186,7 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
     cards: [
       { l1: 'Hard Drive',  l2: 'Destruction', blurb: 'Secure destruction and recycling of retired hard drives.', icon: '/images/home/svc-harddrive.png', iw: 36, ih: 27, photo: '/images/home/svc-photo-harddrive.webp', cut: CUTS.harddrive, href: href('/hard-drive-destruction-services/'), homeBlurb: 'Secure destruction and responsible recycling of hard drives.' },
       { l1: 'Paper',       l2: 'Shredding',   blurb: 'Secure shredding and recycling of confidential documents.',        icon: '/images/home/svc-paper.png',     iw: 33, ih: 30, photo: '/images/home/svc-photo-paper.webp', cut: CUTS.paper, href: href('/paper-shredding-services/'), homeBlurb: 'Secure shredding and recycling of confidential paper.' },
-      { l1: 'On-Site & Off-Site', l2: 'Shredding', blurb: 'Documents shredded at your location, or collected and shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', cut: CUTS.offsite, href: href('/on-site-off-site-shredding/'), homeBlurb: 'On-site or off-site shredding for confidential documents.' },
+      { l1: 'On-Site & Off-Site', l2: 'Shredding', blurb: 'Documents shredded at your location, or collected and shredded at our facility.',   icon: '/images/home/svc-offsite.png',   iw: 30, ih: 29, photo: '/images/home/svc-photo-offsite.webp', cut: CUTS.offsite, href: href('/off-site-shredding/'), homeBlurb: 'On-site or off-site shredding for confidential documents.' },
       // Back on the cards 30 Sep 2026 (menu only from 21 Sep): the redrawn
       // /services/ frame draws four Destruction cards (6948:11304), and Asim
       // asked for it "both in home page and in main service page".

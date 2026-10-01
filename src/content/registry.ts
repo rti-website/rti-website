@@ -113,7 +113,6 @@ import { WISCONSIN_LIGHT_BULB_RECYCLING } from '@/data/local-pages/wisconsin-lig
 import { WISCONSIN_ON_SITE_OFF_SITE_SHREDDING } from '@/data/local-pages/wisconsin-on-site-off-site-shredding'
 import { WISCONSIN_PAPER_SHREDDING } from '@/data/local-pages/wisconsin-paper-shredding'
 import { WISCONSIN_PHONE_SHREDDING } from '@/data/local-pages/wisconsin-phone-shredding'
-import { WISCONSIN_TV_RECYCLING } from '@/data/local-pages/wisconsin-tv-recycling'
 import { MINNESOTA_AIRBAG_RECYCLING } from '@/data/local-pages/minnesota-airbag-recycling'
 import { MINNESOTA_BALLAST_RECYCLING } from '@/data/local-pages/minnesota-ballast-recycling'
 import { MINNESOTA_BATTERY_RECYCLING } from '@/data/local-pages/minnesota-battery-recycling'
@@ -123,7 +122,6 @@ import { MINNESOTA_LIGHT_BULB_RECYCLING } from '@/data/local-pages/minnesota-lig
 import { MINNESOTA_ON_SITE_OFF_SITE_SHREDDING } from '@/data/local-pages/minnesota-on-site-off-site-shredding'
 import { MINNESOTA_PAPER_SHREDDING } from '@/data/local-pages/minnesota-paper-shredding'
 import { MINNESOTA_PHONE_SHREDDING } from '@/data/local-pages/minnesota-phone-shredding'
-import { MINNESOTA_TV_RECYCLING } from '@/data/local-pages/minnesota-tv-recycling'
 import { CHICAGO_AIRBAG_RECYCLING } from '@/data/local-pages/chicago-airbag-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
@@ -140,6 +138,8 @@ import * as nav from '@/lib/nav'
 import * as siteFooter from '@/data/site-footer'
 import * as emails from '@/data/emails'
 import * as notFound from '@/data/not-found'
+import * as countyShared from '@/data/county-pages/shared'
+import { DIRECTORY_COPY } from '@/data/county-pages/directory'
 import { mdxDoc } from './mdx-docs'
 
 /**
@@ -226,7 +226,7 @@ export const DOCS = {
   'tv-recycling': { title: 'TV Recycling', group: 'Service pages', urls: ['/tv-recycling/'], data: mod(tvRecycling) },
   'hard-drive-destruction': { title: 'Hard Drive Destruction', group: 'Service pages', urls: ['/hard-drive-destruction-services/'], data: mod(hardDriveDestruction) },
   'paper-shredding': { title: 'Paper Shredding', group: 'Service pages', urls: ['/paper-shredding-services/'], data: mod(paperShredding) },
-  'off-site-shredding': { title: 'On-Site & Off-Site Shredding', group: 'Service pages', urls: ['/on-site-off-site-shredding/'], data: mod(offSiteShredding) },
+  'off-site-shredding': { title: 'On-Site & Off-Site Shredding', group: 'Service pages', urls: ['/off-site-shredding/'], data: mod(offSiteShredding) },
   'phone-shredding': { title: 'Phone Shredding', group: 'Service pages', urls: ['/phone-shredding-service/'], data: mod(phoneShredding) },
   'mail-in-recycling': { title: 'Mail-In Recycling', group: 'Service pages', urls: ['/mail-in-recycling/'], data: mod(mailInRecycling) },
   'electronics-recycling-kit': { title: 'Electronics Recycling Kit', group: 'Service pages', urls: ['/electronics-recycling-kit/'], data: mod(electronicsRecyclingKit) },
@@ -274,7 +274,6 @@ export const DOCS = {
   'local/wisconsin-recycling-on-site-off-site-shredding': { title: "On-Site & Off-Site Shredding in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_ON_SITE_OFF_SITE_SHREDDING.url], data: one(WISCONSIN_ON_SITE_OFF_SITE_SHREDDING) },
   'local/wisconsin-recycling-paper-shredding': { title: "Paper Shredding Services in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PAPER_SHREDDING.url], data: one(WISCONSIN_PAPER_SHREDDING) },
   'local/wisconsin-recycling-phone-shredding': { title: "Phone Shredding Service in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PHONE_SHREDDING.url], data: one(WISCONSIN_PHONE_SHREDDING) },
-  'local/wisconsin-recycling-tv-recycling': { title: "Television Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_TV_RECYCLING.url], data: one(WISCONSIN_TV_RECYCLING) },
   'local/minnesota-recycling-airbag-recycling': { title: "Airbag Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_AIRBAG_RECYCLING.url], data: one(MINNESOTA_AIRBAG_RECYCLING) },
   'local/minnesota-recycling-ballast-recycling': { title: "Ballast Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_BALLAST_RECYCLING.url], data: one(MINNESOTA_BALLAST_RECYCLING) },
   'local/minnesota-recycling-battery-recycling': { title: "Battery Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_BATTERY_RECYCLING.url], data: one(MINNESOTA_BATTERY_RECYCLING) },
@@ -284,7 +283,6 @@ export const DOCS = {
   'local/minnesota-recycling-on-site-off-site-shredding': { title: "On-Site & Off-Site Shredding in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_ON_SITE_OFF_SITE_SHREDDING.url], data: one(MINNESOTA_ON_SITE_OFF_SITE_SHREDDING) },
   'local/minnesota-recycling-paper-shredding': { title: "Paper Shredding Services in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PAPER_SHREDDING.url], data: one(MINNESOTA_PAPER_SHREDDING) },
   'local/minnesota-recycling-phone-shredding': { title: "Phone Shredding Service in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PHONE_SHREDDING.url], data: one(MINNESOTA_PHONE_SHREDDING) },
-  'local/minnesota-recycling-tv-recycling': { title: "Television Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_TV_RECYCLING.url], data: one(MINNESOTA_TV_RECYCLING) },
   'local/airbag-recycling-chicago': { title: "Airbag Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_AIRBAG_RECYCLING.url], data: one(CHICAGO_AIRBAG_RECYCLING) },
   'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
   'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
@@ -367,6 +365,10 @@ export const DOCS = {
   'site-header': { title: 'Navbar and header (every page)', group: 'Shared blocks', urls: ['/'], data: mod(nav, ['MAIL_IN']),
     note: 'The navbar: menu labels and links, the top bar, the buttons, and the About, Industries and Blogs menu text. The Services menu items come from "Services page".' },
   'site-footer': { title: 'Footer (every page)', group: 'Shared blocks', urls: ['/'], data: mod(siteFooter) },
+  'county-shared': { title: 'Location pages: shared blocks', group: 'Shared blocks', urls: [ANOKA.url, BLAINE.url, '/fort-worth-texas/'], data: mod(countyShared),
+    note: 'On every county and area location page: the three service cards (pickup, drop-off, mail-in), the Free Estimate banner, the Items We Accept lists, and the card and line icons.' },
+  'locations-directory': { title: 'Location directory (footer and facility pages)', group: 'Shared blocks', urls: ['/minnesota-recycling/', '/wisconsin-recycling/', '/'], data: one({ DIRECTORY_COPY }),
+    note: 'The Recycling Locations columns at the foot of every page, and the Counties We Serve cards on the Minnesota and Wisconsin pages. Rename, reorder or remove links here; new location pages are added by the developers.' },
   emails: { title: 'Residential auto-reply email', group: 'Shared blocks', urls: [], data: mod(emails),
     note: 'Sent to residential enquiries. No page preview: send a test enquiry after publishing.' },
 } satisfies Record<string, Doc>
@@ -385,7 +387,43 @@ export type DocData<K extends DocKey> = ReturnType<(typeof DOCS)[K]['data']>
 export const DOC_KEYS = Object.keys(DOCS) as DocKey[]
 export const isDocKey = (k: unknown): k is DocKey => typeof k === 'string' && Object.hasOwn(DOCS, k)
 
+/* ------------------------------------------------------- page titles -- */
+
+/**
+ * A page's <title> and meta description as Admin -> Pages edits them (1 Oct
+ * 2026, Asim: "add the title description of page in pages so content writer
+ * can edit that from pages"). Empty means the page keeps its own (url-map,
+ * the SEO sheet in src/data/page-seo.ts, or its data file); src/lib/
+ * page-meta.ts lays a filled one over that.
+ */
+export type PageMeta = { url: string; title: string; description: string }
+
+/**
+ * Which document carries each page's title and description: the document
+ * whose first URL it is (the page it is about), else the first document
+ * listing it at all. Shared blocks never do: their URLs are only where they
+ * can be previewed.
+ */
+export const SEO_OWNER: Record<string, DocKey> = (() => {
+  const out: Record<string, DocKey> = {}
+  const own = DOC_KEYS.filter((k) => (DOCS[k] as Doc).group !== 'Shared blocks' && k !== 'not-found')
+  for (const k of own) { const u = DOCS[k].urls[0]; if (u && !out[u]) out[u] = k }
+  for (const k of own) for (const u of DOCS[k].urls) if (!out[u]) out[u] = k
+  return out
+})()
+
+/** The pages a document carries the title and description of. */
+export const metaUrls = (key: DocKey) => (DOCS[key].urls as readonly string[]).filter((u) => SEO_OWNER[u] === key)
+
+/** A document's data as content() and the editor see it: the module's, plus META. */
+export function docData(key: DocKey): unknown {
+  const data = DOCS[key].data() as Record<string, unknown>
+  const urls = metaUrls(key)
+  if (!urls.length || Array.isArray(data)) return data
+  return { META: urls.map((url): PageMeta => ({ url, title: '', description: '' })), ...data }
+}
+
 /** Plain JSON copy of a document's defaults (what the editor starts from). */
 export function defaultsOf(key: DocKey): unknown {
-  return JSON.parse(JSON.stringify(DOCS[key].data()))
+  return JSON.parse(JSON.stringify(docData(key)))
 }

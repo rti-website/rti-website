@@ -3,6 +3,7 @@ import { cache as perRequest } from 'react'
 import { q } from '@/lib/db'
 import type { ContentMeta } from '@/lib/content'
 import { fixLegacyUrl, fixLegacyUrls } from '@/lib/legacy-urls'
+import { tidyPostHtml } from '@/lib/post-html'
 import REDIRECTS from '../../data/redirects.json'
 
 /**
@@ -120,7 +121,8 @@ function toPost(r: Row): DbPost {
     category: str(r.category_name) ?? undefined,
     readingTime: `${Number(r.reading_minutes ?? 1)} min read`,
     source: r.source === 'wordpress' ? 'wordpress' : 'editor',
-    html: fixLegacyUrls(String(r.content_html ?? '')),
+    // tidyPostHtml: one H1 per post, no nofollow on our own links (1 Oct 2026).
+    html: tidyPostHtml(fixLegacyUrls(String(r.content_html ?? ''))),
     canonical: fixLegacyUrl(str(r.canonical_url)),
     noindex: r.robots_index === false,
     inSitemap: r.in_sitemap !== false,

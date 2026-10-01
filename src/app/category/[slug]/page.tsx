@@ -1,5 +1,5 @@
 import { CategoryArchive } from '@/components/blocks/CategoryArchive'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { dbCategories, liveDbCategories } from '@/lib/posts-db'
 
 /**
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const cat = (await dbCategories()).find((c) => c.slug === slug && c.source === 'wordpress')
   if (!cat) return {}
-  return buildMetadata({
+  return pageMetadata({
     url: `/category/${cat.slug}/`,
     title: `${cat.name} | Recycle Technologies`,
     description: cat.description

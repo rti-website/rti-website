@@ -123,6 +123,8 @@ const request = (doc: string) => `${href('/contact-us/')}?document=${encodeURICo
 
 export const DOCS = {
   label: '6386:1350',
+  /** The link line on every card, as on /downloads/ (editable here since 1 Oct 2026). */
+  action: 'Request Download',
   eyebrow: 'DOWNLOADS',
   heading: 'Reference Documents',
   lead: 'Documentation for your procurement, compliance, or IT teams.',

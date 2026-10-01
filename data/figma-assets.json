@@ -2289,6 +2289,13 @@
       "node": "7155:19415",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Landing page photo, shared by the pages that draw it (about). Landing pages (30 Sep 2026, src/data/landing-pages/); URL expires about 7 Oct."
+    },
+    {
+      "to": "public/images/locations/rti-card-logo.png",
+      "id": "f70454bb-c134-4240-9854-97ea90852c2b/a85f0.png",
+      "node": "7174:8086",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "RTI logo (green wordmark) on the location cards, /all-locations/ Extended Operations and Additional Facilities Nationwide (1 Oct 2026); URL expires about 8 Oct."
     }
   ]
 }

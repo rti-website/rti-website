@@ -128,7 +128,7 @@ export async function ReferenceDocs({ top, height }: { top: number; height: numb
       <BandHeader eyebrow={DOCS.eyebrow} heading={DOCS.heading} lead={DOCS.lead} />
 
       <div className="flex items-start gap-[24px] max-lg:w-full max-lg:flex-col max-lg:gap-[16px]">
-        {DOCS.cards.map((c) => <DownloadTile key={c.title} card={c} />)}
+        {DOCS.cards.map((c) => <DownloadTile key={c.title} card={c} action={DOCS.action} />)}
       </div>
     </Section>
   )

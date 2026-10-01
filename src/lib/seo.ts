@@ -54,9 +54,20 @@ export type SeoInput = {
   }
 }
 
-export function buildMetadata(raw: SeoInput): Metadata {
+/**
+ * `edited`: the title and description a content writer set in Admin ->
+ * Pages (1 Oct 2026, Asim: "add the title description of page in pages so
+ * content writer can edit that"). They win over the sheet and the page's
+ * own; an empty one leaves the page's own. See src/lib/page-meta.ts.
+ */
+export function buildMetadata(raw: SeoInput, edited?: { title?: string; description?: string } | null): Metadata {
   const sheet = PAGE_SEO[raw.url]
-  const input: SeoInput = sheet ? { ...raw, title: sheet.title, description: sheet.description } : raw
+  const base: SeoInput = sheet ? { ...raw, title: sheet.title, description: sheet.description } : raw
+  const input: SeoInput = {
+    ...base,
+    title: edited?.title?.trim() || base.title,
+    description: edited?.description?.trim() || base.description,
+  }
   const canonical = input.canonicalOverride
     ? absolute(input.canonicalOverride)
     : absolute(input.url)

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props) {
   const page = pageNumberParam(n)
   if (page === null) return {}
   const pages = pageCount((await blogCards()).length)
-  return buildMetadata({
+  return pageMetadata({
     url: blogPagePath(page),
     /*
      * NOT `${LIVE_SEO.title} — Page N`, AND NOT `${LIVE_SEO.description} Page

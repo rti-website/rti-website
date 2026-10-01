@@ -1,12 +1,17 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
 import { pageMetadata } from '@/lib/page-meta'
 import { content } from '@/lib/page-content'
-import { CONTENT } from '@/data/tv-recycling'
+import { CONTENT } from '@/data/off-site-shredding'
 
 /**
- * Television Recycling — Figma 6142:2048 "Service Details".
+ * On-Site & Off-Site Shredding — Figma 6142:2048 "Service Details".
  *
- * All the copy lives in src/data/tv-recycling.ts; the layout is the shared
+ * Back at /off-site-shredding/, its WordPress URL, since 1 Oct 2026
+ * (management, via Asim). It was at /on-site-off-site-shredding/ from 30 Sep
+ * to 1 Oct; that URL now 301s here (data/url-map.csv). The copy still covers
+ * both on-site and off-site.
+ *
+ * All the copy lives in src/data/off-site-shredding.ts; the layout is the shared
  * ServiceDetailPage. `layout` carries the only two per-page numbers: the
  * heights of the two prose blocks, measured in a browser against this page's
  * real copy (Figma sizes them 495 and 579 around placeholder text).
@@ -20,6 +25,6 @@ export const generateMetadata = () => pageMetadata({
 
 export default async function Page() {
   // The copy with the admin's edits (Admin -> Pages); metadata above stays on the static import.
-  const { CONTENT: copy } = await content('tv-recycling')
-  return <ServiceDetailPage content={copy} layout={{ intro: 834, process: 743, accept: 759 }} />
+  const { CONTENT: copy } = await content('off-site-shredding')
+  return <ServiceDetailPage content={copy} layout={{ intro: 797, process: 623, accept: 560 }} />
 }

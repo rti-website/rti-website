@@ -69,10 +69,10 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   const STEPS_TOP  = MAT_TOP + L.mat
   const FAQ_TOP    = STEPS_TOP + L.steps
   const COUNTIES_TOP = FAQ_TOP + L.faq
-  const CTA_TOP    = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota').length)
+  const [{ DETAIL_COPY }, { DIRECTORY_COPY }] = await Promise.all([content('facilities'), content('locations-directory')])
+  const CTA_TOP    = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota', DIRECTORY_COPY.groups).length)
   const FOOTER_TOP = CTA_TOP + CTA_H
 
-  const { DETAIL_COPY } = await content('facilities')
   const crumbs = [
     { label: DETAIL_COPY.crumbs.home,      href: href('/') },
     { label: DETAIL_COPY.crumbs.locations, href: href('/all-locations/') },

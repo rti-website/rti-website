@@ -34,6 +34,11 @@ export type ContentMeta = {
   updated?: string
   image?: string
   /**
+   * Keep the page out of search: a robots noindex tag and no sitemap entry
+   * (/thank-you/, 1 Oct 2026, management).
+   */
+  noindex?: boolean
+  /**
    * Post-only, all optional — the blog detail frame (6491:6032) prints a
    * category, a reading time and its own hero photograph above the headline.
    * A post without them renders the same page with those lines absent.

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
 import { href } from '@/lib/urls'
@@ -15,7 +16,7 @@ import { content } from '@/lib/page-content'
  * Desktop: pt90 pb100, an 820px centred heading block, then a 1250px grid of
  * 613px cards two to a row, 24 apart both ways; the ninth card sits alone on
  * the left. Each card is a 110px navy-to-green header (the pin disc and the
- * city at 21px, and on Chicago a "Drop-off Location" label at the right) over
+ * city at 21px, the RTI logo in a white box at the right since 1 Oct 2026) over
  * a white body with two rows: the partner's name and street address, and its
  * phone. The hours row, the hairline and the "Materials Accepted" chips were
  * taken out of the frame.
@@ -68,13 +69,13 @@ export async function NationwideFacilities({ top, height, links = {}, block = 'N
       {/* A grid, so the two cards in a row are the same height whichever one
           wraps its address. */}
       <ul className={`grid w-full grid-cols-1 gap-[20px] lg:gap-[24px] ${single ? 'lg:w-[613px]' : 'lg:w-[1250px] lg:grid-cols-[613px_613px]'}`}>
-        {NATIONWIDE.facilities.map((f) => <Card key={f.name} f={f} hub={f.slug ? links[f.slug]?.hub : undefined} />)}
+        {NATIONWIDE.facilities.map((f) => <Card key={f.name} f={f} logo={NATIONWIDE.logo} hub={f.slug ? links[f.slug]?.hub : undefined} />)}
       </ul>
     </Section>
   )
 }
 
-function Card({ f, hub }: { f: NationwideFacility; hub?: string }) {
+function Card({ f, hub, logo }: { f: NationwideFacility; hub?: string; logo?: { src: string; alt: string } }) {
   const rows = [
     { glyph: 'pin' as const,   text: f.address },
     { glyph: 'phone' as const, text: f.phone },
@@ -107,6 +108,14 @@ function Card({ f, hub }: { f: NationwideFacility; hub?: string }) {
         </div>
         {/* "Drop-off Location" — 6902:15978 (13.5) / 6902:15980 (10). */}
         {f.badge && <span className="shrink-0 whitespace-nowrap font-sans text-[10px] font-medium leading-normal text-white lg:text-[13.5px]">{f.badge}</span>}
+        {/* The RTI logo — 7174:8085: a white 96 x 36 box, r5, the logo 84 x 20
+            in its centre. The phone (no frame) takes it at 75%, 72 x 27,
+            in proportion to the 72px header. */}
+        {logo?.src && (
+          <span className="grid h-[27px] w-[72px] shrink-0 place-items-center rounded-[4px] bg-white lg:h-[36px] lg:w-[96px] lg:rounded-[5px]">
+            <Image src={logo.src} alt={logo.alt} width={84} height={20} className="h-[15px] w-[63px] object-cover lg:h-[20px] lg:w-[84px]" />
+          </span>
+        )}
       </div>
 
       {/* Body — 6833:3009 / 6896:15937 */}

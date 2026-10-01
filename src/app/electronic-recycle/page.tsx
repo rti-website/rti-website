@@ -1,5 +1,5 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { content } from '@/lib/page-content'
 import { loadLocations, servicePlaces } from '@/lib/service-locations'
 import { CONTENT } from '@/data/electronics-recycling'
@@ -13,7 +13,7 @@ import { CONTENT } from '@/data/electronics-recycling'
  * real copy (Figma sizes them 495 and 579 around placeholder text).
  * Re-measure with `node scripts/measure-service-pages.mjs` after a copy change.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: CONTENT.url,
   title: CONTENT.liveSeo.title,
   description: CONTENT.liveSeo.description,

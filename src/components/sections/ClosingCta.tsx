@@ -177,7 +177,10 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           href={content.secondary.href}
           variant="white"
           external={content.secondary.external}
-          className={`w-full justify-center lg:w-auto ${n ? 'border border-white max-lg:h-[46px]' : ''}`}
+          /* Outlined white on every page since 1 Oct 2026 (Asim: "add a
+             white outline outside the pickup button"); it was bare text on
+             the gradient. */
+          className={`w-full justify-center border border-white lg:w-auto ${n ? 'max-lg:h-[46px]' : ''}`}
         >
           {content.secondary.label}
         </Btn>

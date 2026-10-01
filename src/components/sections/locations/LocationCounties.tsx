@@ -32,10 +32,10 @@ export function countiesHeight(cards: number): number {
 }
 
 export async function LocationCounties({ top, f }: { top: number; f: Facility }) {
-  const { DETAIL_COPY } = await content('facilities')
+  const [{ DETAIL_COPY }, { DIRECTORY_COPY }] = await Promise.all([content('facilities'), content('locations-directory')])
   const copy = DETAIL_COPY.counties
   const state = f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota'
-  const cards = countyCards(state)
+  const cards = countyCards(state, DIRECTORY_COPY.groups)
   return (
     <Section top={top} height={`calc(${countiesHeight(cards.length)}px + var(${COUNTIES_DELTA_VAR}, 0px))`} label="7079:6388"
       className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">

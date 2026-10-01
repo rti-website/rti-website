@@ -8,7 +8,6 @@ import { WISCONSIN_LIGHT_BULB_RECYCLING } from './wisconsin-light-bulb-recycling
 import { WISCONSIN_ON_SITE_OFF_SITE_SHREDDING } from './wisconsin-on-site-off-site-shredding'
 import { WISCONSIN_PAPER_SHREDDING } from './wisconsin-paper-shredding'
 import { WISCONSIN_PHONE_SHREDDING } from './wisconsin-phone-shredding'
-import { WISCONSIN_TV_RECYCLING } from './wisconsin-tv-recycling'
 import { MINNESOTA_AIRBAG_RECYCLING } from './minnesota-airbag-recycling'
 import { MINNESOTA_BALLAST_RECYCLING } from './minnesota-ballast-recycling'
 import { MINNESOTA_BATTERY_RECYCLING } from './minnesota-battery-recycling'
@@ -18,7 +17,6 @@ import { MINNESOTA_LIGHT_BULB_RECYCLING } from './minnesota-light-bulb-recycling
 import { MINNESOTA_ON_SITE_OFF_SITE_SHREDDING } from './minnesota-on-site-off-site-shredding'
 import { MINNESOTA_PAPER_SHREDDING } from './minnesota-paper-shredding'
 import { MINNESOTA_PHONE_SHREDDING } from './minnesota-phone-shredding'
-import { MINNESOTA_TV_RECYCLING } from './minnesota-tv-recycling'
 import { CHICAGO_AIRBAG_RECYCLING } from './chicago-airbag-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from './chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from './chicago-battery-recycling'
@@ -33,9 +31,12 @@ import { CHICAGO_ELECTRONIC_RECYCLING } from './chicago-electronic-recycling'
 export type { LocalPage } from './types'
 
 /**
- * The location service pages of 30 Sep 2026 (see types.ts), 29 of them:
- * ten each for Chicago and Minnesota (Blaine), nine for Wisconsin (New
- * Berlin). The tenth Wisconsin frame, Hard Drive Destruction, is missing
+ * The location service pages of 30 Sep 2026 (see types.ts), 27 of them:
+ * ten for Chicago, nine for Minnesota (Blaine), eight for Wisconsin (New
+ * Berlin). The Minnesota and Wisconsin TV pages were built too and taken out
+ * on 1 Oct 2026 (management): /minnesota-recycling/tv-recycling/ and
+ * /wisconsin-recycling/tv-recycling/ 301 to /tv-recycling-in-minnesota/ and
+ * /tv-recycling-in-wisconsin/, the WordPress pages (data/url-map.csv). The tenth Wisconsin frame, Hard Drive Destruction, is missing
  * from the Figma file: its link opens a second copy of the electronics frame
  * ("duplicate section in source PDF" in the frame's own name).
  *
@@ -52,7 +53,6 @@ export const LOCAL_PAGES: LocalPage[] = [
   WISCONSIN_ON_SITE_OFF_SITE_SHREDDING,
   WISCONSIN_PAPER_SHREDDING,
   WISCONSIN_PHONE_SHREDDING,
-  WISCONSIN_TV_RECYCLING,
   MINNESOTA_AIRBAG_RECYCLING,
   MINNESOTA_BALLAST_RECYCLING,
   MINNESOTA_BATTERY_RECYCLING,
@@ -62,7 +62,6 @@ export const LOCAL_PAGES: LocalPage[] = [
   MINNESOTA_ON_SITE_OFF_SITE_SHREDDING,
   MINNESOTA_PAPER_SHREDDING,
   MINNESOTA_PHONE_SHREDDING,
-  MINNESOTA_TV_RECYCLING,
   CHICAGO_AIRBAG_RECYCLING,
   CHICAGO_BALLAST_RECYCLING,
   CHICAGO_BATTERY_RECYCLING,
@@ -87,7 +86,6 @@ export const LOCAL_FACILITY_PAGES: Record<'minnesota' | 'wisconsin', Record<stri
     'on-site-off-site-shredding': MINNESOTA_ON_SITE_OFF_SITE_SHREDDING,
     'paper-shredding': MINNESOTA_PAPER_SHREDDING,
     'phone-shredding': MINNESOTA_PHONE_SHREDDING,
-    'tv-recycling': MINNESOTA_TV_RECYCLING,
   },
   wisconsin: {
     'airbag-recycling': WISCONSIN_AIRBAG_RECYCLING,
@@ -98,7 +96,6 @@ export const LOCAL_FACILITY_PAGES: Record<'minnesota' | 'wisconsin', Record<stri
     'on-site-off-site-shredding': WISCONSIN_ON_SITE_OFF_SITE_SHREDDING,
     'paper-shredding': WISCONSIN_PAPER_SHREDDING,
     'phone-shredding': WISCONSIN_PHONE_SHREDDING,
-    'tv-recycling': WISCONSIN_TV_RECYCLING,
   },
 }
 

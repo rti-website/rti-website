@@ -84,7 +84,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const entries = [
     ...staticPages.map((u) => sitemapEntry(u, u === '/blog/' ? newest(listed) : pageLastModified(u))),
-    ...allContent().map((e) => sitemapEntry(e.url, e.updated ?? e.date)),
+    // Never a noindexed page (/thank-you/, 1 Oct 2026).
+    ...allContent().filter((e) => !e.noindex).map((e) => sitemapEntry(e.url, e.updated ?? e.date)),
     ...listed.map((p) => sitemapEntry(p.url, p.updated ?? p.date)),
     ...categories.map((c) => sitemapEntry(c.path, newest(inCategory.get(c.slug) ?? []))),
     // Pagination, for /blog/ and for each archive. Deep posts are otherwise

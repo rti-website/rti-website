@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { FOOTER_H } from '@/lib/layout'
@@ -47,7 +47,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * industries — the same "only five distinct cards" tell src/data/industries.ts
  * already records about the desktop frame. Flagged for Aqeel, not acted on.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/industries/',
   title: SEO.title,
   description: SEO.description,

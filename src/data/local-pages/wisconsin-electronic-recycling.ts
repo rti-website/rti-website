@@ -282,7 +282,7 @@ export const WISCONSIN_ELECTRONIC_RECYCLING: LocalPage = {
           kind: "chips",
           links: [
             { label: "Battery Recycling", href: href('/wisconsin-recycling/battery-recycling/') },
-            { label: "Television Recycling", href: href('/wisconsin-recycling/tv-recycling/') },
+            { label: "Television Recycling", href: href('/tv-recycling-in-wisconsin/') },
             { label: "Paper Shredding", href: href('/wisconsin-recycling/paper-shredding/') },
             { label: "Mail-In Program", href: href('/mail-in-recycling/') },
             { label: "All Recycle Technologies Locations", href: href('/all-locations/') },

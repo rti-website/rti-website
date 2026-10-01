@@ -177,6 +177,34 @@ export const DIRECTORY: DirectoryGroup[] = [
 /** The most links any column may carry: the footer band is a fixed height at lg (DIRECTORY_H). */
 export const DIRECTORY_MAX_LINKS = 7
 
+/**
+ * THE DIRECTORY'S WORDS, FOR ADMIN -> PAGES (1 Oct 2026; Asim: "make every
+ * part of the page editable"). The headings, link labels and facility-page
+ * card labels, with each page's address (`url`, which the editor does not
+ * show or change) instead of the page itself. LocationDirectory and the
+ * Counties We Serve cards draw from this, as edited: a column or link the
+ * editor removes is gone, a reorder is kept. Which pages exist is still
+ * the code's (DIRECTORY above).
+ */
+export type DirectoryCopyLink = { url: string; label: string; card: string }
+export type DirectoryCopyGroup = {
+  heading: string
+  url?: string
+  card?: string
+  state: 'Minnesota' | 'Wisconsin' | null
+  links: DirectoryCopyLink[]
+}
+export const DIRECTORY_COPY: { title: string; seeAll: string; groups: DirectoryCopyGroup[] } = {
+  title: 'Recycling Locations',
+  seeAll: 'See all',
+  groups: DIRECTORY.map((g) => ({
+    heading: g.heading,
+    ...(g.page ? { url: g.page.url, card: g.card ?? g.heading } : {}),
+    state: g.state,
+    links: g.links.map((x) => ({ url: x.page.url, label: x.label, card: x.card })),
+  })),
+}
+
 /** One card of Counties We Serve. */
 export type CountyCard = { label: string; href: string }
 
@@ -186,14 +214,20 @@ export type CountyCard = { label: string; href: string }
  * the frame's Carver, St. Louis and Stearns have no page and are not drawn),
  * then its city and service pages in directory order.
  */
-export function countyCards(state: 'Minnesota' | 'Wisconsin'): CountyCard[] {
-  const groups = DIRECTORY.filter((g) => g.state === state)
-  const heads = groups.filter((g) => g.page).map((g) => ({ label: g.card ?? g.heading, href: href(g.page!.url), county: /County/.test(g.heading) }))
+export function countyCards(state: 'Minnesota' | 'Wisconsin', all: DirectoryCopyGroup[] = DIRECTORY_COPY.groups): CountyCard[] {
+  const groups = all.filter((g) => g.state === state)
+  // County or not, and the frame's order, by the code's label for that
+  // page, so a renamed card keeps its place.
+  const codeLabel = new Map(DIRECTORY.filter((g) => g.page).map((g) => [g.page!.url, g.card ?? g.heading]))
+  const heads = groups.filter((g) => g.url).map((g) => {
+    const was = codeLabel.get(g.url!) ?? g.heading
+    return { label: g.card || g.heading, href: href(g.url!), was, county: /County/.test(was) }
+  })
   const FRAME_ORDER = ['Hennepin County', 'Ramsey County', 'Dakota County', 'Anoka County', 'Washington County', 'Scott County', 'Olmsted County']
-  const rank = (x: { label: string }) => { const i = FRAME_ORDER.indexOf(x.label); return i < 0 ? FRAME_ORDER.length : i }
+  const rank = (x: { was: string }) => { const i = FRAME_ORDER.indexOf(x.was); return i < 0 ? FRAME_ORDER.length : i }
   const counties = heads.filter((h) => h.county).sort((a, b) => rank(a) - rank(b))
   const cities = heads.filter((h) => !h.county)
-  const pages = groups.flatMap((g) => g.links.map((x) => ({ label: x.card, href: href(x.page.url) })))
+  const pages = groups.flatMap((g) => g.links.map((x) => ({ label: x.card || x.label, href: href(x.url) })))
   return [...counties, ...cities, ...pages].map(({ label, href: h }) => ({ label, href: h }))
 }
 

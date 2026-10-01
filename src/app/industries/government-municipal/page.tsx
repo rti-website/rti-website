@@ -1,5 +1,5 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { content } from '@/lib/page-content'
 import { CONTENT } from '@/data/industries/government-municipal'
 
@@ -12,7 +12,7 @@ import { CONTENT } from '@/data/industries/government-municipal'
  * per-page number, the height of the challenges block, measured against this
  * page's real copy. Re-measure with `npm run measure -- --write`.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: CONTENT.url,
   title: CONTENT.liveSeo.title,
   description: CONTENT.liveSeo.description,

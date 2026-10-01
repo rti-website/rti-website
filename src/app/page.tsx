@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
 import { Certifications } from '@/components/sections/Certifications'
@@ -39,7 +39,7 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  * Tomorrow." The migration plan requires H1s ported verbatim and the staging
  * crawl diffs them, so this will surface as a blocking difference at gate 2.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/',
   title: 'E-Waste, Electronics & Industrial Recycling Services',
   description:

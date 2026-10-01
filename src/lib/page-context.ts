@@ -18,7 +18,7 @@ export type PageType =
 const SERVICES = new Set([
   '/electronic-recycle/', '/battery-recycling/', '/light-bulbs/', '/ballasts/', '/tv-recycling/',
   '/airbag-recycling/', '/hard-drive-destruction-services/', '/paper-shredding-services/',
-  '/on-site-off-site-shredding/', '/phone-shredding-service/', '/it-asset-disposition/', '/mail-in-recycling/',
+  '/off-site-shredding/', '/phone-shredding-service/', '/it-asset-disposition/', '/mail-in-recycling/',
   '/electronics-recycling-kit/',
 ])
 const RESOURCES = new Set([

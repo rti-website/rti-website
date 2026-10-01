@@ -64,6 +64,7 @@ if (!fs.existsSync(SRC)) {
 const rows = parseCsv(fs.readFileSync(SRC, 'utf8'))
 const keep = new Set()
 const redirects = []
+const caseRedirects = []
 const errors = []
 
 for (const r of rows) {
@@ -75,7 +76,20 @@ for (const r of rows) {
   const to = normalise(r.new_url)
   if (!to) { errors.push(`301 row with no new_url: ${from}`); continue }
   if (to === from) { errors.push(`Redirect to itself: ${from}`); continue }
+  // Next matches redirect sources without regard to case, so a source that
+  // differs from its destination only in case would match the destination
+  // too and loop. Those go to data/case-redirects.json, which src/proxy.ts
+  // serves with an exact, case-sensitive comparison (1 Oct 2026).
+  if (to.toLowerCase() === from.toLowerCase()) { caseRedirects.push({ source: from, destination: to, statusCode: 301 }); continue }
   redirects.push({ source: from, destination: to, statusCode: 301 })
+}
+
+// A source that matches a page's URL in another case would take the page
+// over (case-insensitive matching, above).
+const keepLower = new Map([...keep].map((u) => [u.toLowerCase(), u]))
+for (const r of redirects) {
+  const page = keepLower.get(r.source.toLowerCase())
+  if (page) errors.push(`Source ${r.source} matches the page ${page} (Next ignores case): it would redirect the page itself`)
 }
 
 // --- integrity checks that must pass before the file is written -------------
@@ -113,6 +127,16 @@ if (errors.length) {
 }
 
 fs.writeFileSync(OUT, JSON.stringify(redirects, null, 2) + '\n')
+fs.writeFileSync(path.join(ROOT, 'data', 'case-redirects.json'), JSON.stringify(caseRedirects, null, 2) + '\n')
+{
+  const proxySrc = fs.existsSync(path.join(ROOT, 'src', 'proxy.ts')) ? fs.readFileSync(path.join(ROOT, 'src', 'proxy.ts'), 'utf8') : ''
+  const missing = caseRedirects.filter((r) => !proxySrc.includes(`'${r.source}'`))
+  if (missing.length) {
+    console.error(`\n  Add to the matcher in src/proxy.ts: ${missing.map((r) => `'${r.source}'`).join(', ')}\n`)
+    process.exit(1)
+  }
+}
+if (caseRedirects.length) console.log(`  ${caseRedirects.length} case-only redirect(s) -> data/case-redirects.json (served by src/proxy.ts)`)
 console.log(`  ${redirects.length} redirects -> ${path.relative(ROOT, OUT)}`)
 console.log(`  ${keep.size} KEEP URLs`)
 

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { allContent, byUrl, toSegments } from '@/lib/content'
 import { allDbPosts, dbPostBySlug } from '@/lib/posts-db'
 import { ImportedArticle } from '@/components/blocks/ImportedArticle'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { ArticleTemplate } from '@/components/blocks/ArticleTemplate'
 import { LocationTemplate } from '@/components/blocks/LocationTemplate'
 import { PageTemplate } from '@/components/blocks/PageTemplate'
@@ -70,22 +70,23 @@ type Props = { params: Promise<{ slug: string[] }> }
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const area = catchAllLocationPage('/' + slug.join('/'))
-  if (area) return buildMetadata({ url: area.url, title: area.seo.title, description: area.seo.description })
+  if (area) return pageMetadata({ url: area.url, title: area.seo.title, description: area.seo.description })
   const entry = byUrl('/' + slug.join('/'))
   if (entry) {
-    return buildMetadata({
+    return pageMetadata({
       url: entry.url,
       title: entry.title,
       description: entry.description,
       image: entry.image,
       publishedTime: entry.date,
       modifiedTime: entry.updated,
+      noindex: entry.noindex,
     })
   }
 
   const post = slug.length === 1 && slug[0] ? await dbPostBySlug(slug[0]) : null
   if (!post) return {}
-  return buildMetadata({
+  return pageMetadata({
     url: post.url,
     // These came off the live page at import, so the title and description a
     // migrated post ships with are the ones Google already has.
@@ -144,7 +145,7 @@ export default async function CatchAllPage({ params }: Props) {
          with the same components. */
       const key = MDX_DOC_BY_URL[entry.url]
       const doc = key ? ((await content(key)) as { BODY?: string[] }) : null
-      const edited = key && doc && JSON.stringify(doc) !== JSON.stringify(DOCS[key].data())
+      const edited = key && doc && JSON.stringify(doc.BODY) !== JSON.stringify((DOCS[key].data() as { BODY?: string[] }).BODY)
       return (
         <PageTemplate entry={entry}>
           {edited ? <Markdown source={(doc.BODY ?? []).join('\n\n')} /> : <Body />}

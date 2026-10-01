@@ -1,4 +1,4 @@
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { content } from '@/lib/page-content'
 import { LandingServicePage } from '@/components/sections/locations/LandingServicePage'
 import { landingDocKey } from '@/data/landing-pages'
@@ -11,7 +11,7 @@ import { LANDING_WISCONSIN_LIGHT_BULBS as PAGE } from '@/data/landing-pages/wisc
  * any page.tsx that sets noindex). Reachable only by its URL. Copy in
  * src/data/landing-pages/wisconsin-light-bulbs.ts, build in LandingServicePage.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: PAGE.url,
   title: PAGE.seo.title,
   description: PAGE.seo.description,

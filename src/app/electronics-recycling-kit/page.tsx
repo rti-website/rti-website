@@ -1,5 +1,5 @@
 import { ServiceDetailPage } from '@/components/sections/service/ServiceDetailPage'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { content } from '@/lib/page-content'
 import { CONTENT } from '@/data/electronics-recycling-kit'
 
@@ -12,7 +12,7 @@ import { CONTENT } from '@/data/electronics-recycling-kit'
  * `layout` is measured, not guessed: after a copy change rebuild, start the
  * server and run `node scripts/measure-service-pages.mjs --write`.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: CONTENT.url,
   title: CONTENT.liveSeo.title,
   description: CONTENT.liveSeo.description,

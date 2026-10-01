@@ -360,6 +360,16 @@ const nationwide = (
 ): NationwideFacility => ({ name, address, phone, phoneOrder, slug })
 
 /**
+ * The Recycle Technologies logo at the right of every card header in the two
+ * sections below — Figma 7174:8085 (the white 96 x 36 box, r5) and 7174:8086
+ * (the logo, 84 x 20, centred), added to the frames 1 Oct 2026 (Asim: "add
+ * the rti logo in these cards"). The green-wordmark version, not the header's
+ * (public/images/logo.png). No phone frame draws it; NationwideFacilities
+ * scales the box to the phone header.
+ */
+const CARD_LOGO = { src: '/images/locations/rti-card-logo.png', alt: 'Recycle Technologies' }
+
+/**
  * "Extended Operations" — its own section above Additional Facilities
  * Nationwide on /all-locations/ (management, via Asim, 30 Sep 2026:
  * "Extended Operations, Chicago card beneath it"). Chicago moved out of the
@@ -371,6 +381,7 @@ export const EXTENDED = {
   heading: 'Extended Operations',
   lead: 'Beyond our Minnesota and Wisconsin facilities, Recycle Technologies also serves businesses in and around Chicago, Illinois.',
   leadMobile: 'Recycle Technologies also serves businesses in and around Chicago.',
+  logo: CARD_LOGO,
   facilities: [
     /* Chicago, Illinois — 6896:15675. The card opens its page,
        /electronic-recycling-chicago/ (src/data/local-pages/). */
@@ -384,6 +395,7 @@ export const NATIONWIDE = {
   heading: 'Additional Facilities Nationwide',
   lead: 'Our network is growing beyond Minnesota and Wisconsin — drop off electronics, batteries, and bulbs at any of these locations.',
   leadMobile: 'Our network is growing beyond Minnesota and Wisconsin.',
+  logo: CARD_LOGO,
   /* The board's order (6833:2668), two to a row: Lewisburg · Greenwood /
      Ocala · Johnson City / Atlanta · Ontario / Phoenix · Fort Worth. Chicago
      led the list until 30 Sep 2026, when it moved up to EXTENDED above.

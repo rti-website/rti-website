@@ -1,4 +1,4 @@
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { LocationDetailPage } from '@/components/sections/locations/LocationDetailPage'
 import { WISCONSIN } from '@/data/facilities'
 import { loadLocations, materialLinks } from '@/lib/service-locations'
@@ -16,7 +16,7 @@ import { content } from '@/lib/page-content'
  * and the frame grew to fit. Heights measured 22 Sep 2026; re-measure with
  *   node scripts/measure-sections.mjs --route wisconsin-recycling --port <p>
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: WISCONSIN.url,
   title: WISCONSIN.liveSeo.title,
   description: WISCONSIN.liveSeo.description,

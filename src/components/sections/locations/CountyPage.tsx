@@ -8,7 +8,11 @@ import { FOOTER_H } from '@/lib/layout'
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { breadcrumbNode, graph, serviceNode } from '@/lib/schema'
 import type { AboutBlock, AreaSection, CompanyLine, CountyPage as Page } from '@/data/county-pages/types'
-import { COUNTY_CTA, COUNTY_FEATURE_ICONS, COUNTY_ITEMS, COUNTY_LINE_ICONS, COUNTY_SERVICES } from '@/data/county-pages/shared'
+import { content } from '@/lib/page-content'
+import type { DocData } from '@/content/registry'
+
+/** The blocks every county and area page shares (src/data/county-pages/shared.ts), as Admin -> Pages has them. */
+type Shared = DocData<'county-shared'>
 
 /**
  * A county recycling page — the eleven of 29 Sep 2026 (Figma
@@ -27,7 +31,8 @@ import { COUNTY_CTA, COUNTY_FEATURE_ICONS, COUNTY_ITEMS, COUNTY_LINE_ICONS, COUN
  * colour in export; they are drawn as the Figma preview shows them, white on
  * teal and teal on white.
  */
-export function CountyPage({ page }: { page: Page }) {
+export async function CountyPage({ page }: { page: Page }) {
+  const shared = await content('county-shared')
   const trail = [
     { name: 'Home', url: '/' },
     { name: 'Locations', url: '/all-locations/' },
@@ -43,10 +48,10 @@ export function CountyPage({ page }: { page: Page }) {
       <main>
         <Hero page={page} />
         <About page={page} />
-        <Services heading={page.servicesHeading} />
-        <Cta />
-        {(page.sections ?? legacySections(page)).map((s, i) => <Section key={i} section={s} wrap={!!page.sections} />)}
-        {page.company && <Company company={page.company} />}
+        <Services heading={page.servicesHeading} shared={shared} />
+        <Cta shared={shared} />
+        {(page.sections ?? legacySections(page)).map((s, i) => <Section key={i} section={s} wrap={!!page.sections} shared={shared} />)}
+        {page.company && <Company company={page.company} shared={shared} />}
       </main>
       <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
         <Footer top={0} />
@@ -72,10 +77,10 @@ function legacySections(page: Page): AreaSection[] {
   return out
 }
 
-function Section({ section: s, wrap }: { section: AreaSection; wrap: boolean }) {
+function Section({ section: s, wrap, shared }: { section: AreaSection; wrap: boolean; shared: Shared }) {
   switch (s.kind) {
-    case 'items': return <Items heading={s.heading} wrap={wrap} />
-    case 'features': return <Features cards={s.cards} />
+    case 'items': return <Items heading={s.heading} wrap={wrap} groups={shared.COUNTY_ITEMS} />
+    case 'features': return <Features cards={s.cards} icons={shared.COUNTY_FEATURE_ICONS} />
     case 'sights': return <Sights sights={s} />
     case 'text': return <TextSection heading={s.heading} blocks={s.blocks} />
   }
@@ -225,12 +230,12 @@ function Block({ block }: { block: AboutBlock }) {
  * Section - Service Options (7016:9108): three cards, stacked on the phone.
  * Some area frames put a heading over them, 24 above the cards (7060:4075).
  */
-function Services({ heading }: { heading?: string }) {
+function Services({ heading, shared }: { heading?: string; shared: Shared }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       {heading && <h2 className="mb-[16px] text-center font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] lg:mb-[24px] lg:text-[32px] lg:leading-[normal]">{heading}</h2>}
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1272px] lg:flex-row lg:gap-[24px]">
-        {COUNTY_SERVICES.map((s) => (
+        {shared.COUNTY_SERVICES.map((s) => (
           <div key={s.title} className="flex flex-col gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] lg:min-h-[285px] lg:w-[408px] lg:gap-[16px] lg:px-[30px] lg:py-[32px]">
             <span className="grid size-[44px] place-items-center rounded-full bg-brand lg:size-[48px]">
               <Image src={s.icon} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />
@@ -261,7 +266,8 @@ function Services({ heading }: { heading?: string }) {
 /* ------------------------------------------------------------------- cta -- */
 
 /** Section - CTA Banner (7016:9109): 165.39deg on the board, 135.74deg on the phone. */
-function Cta() {
+function Cta({ shared }: { shared: Shared }) {
+  const COUNTY_CTA = shared.COUNTY_CTA
   return (
     <section className="bg-[linear-gradient(135.74deg,#0b1f3a_7.2464%,#1b7a3d_79.71%)] px-[20px] py-[56px] lg:bg-[linear-gradient(165.39deg,#0b1f3a_7.2464%,#1b7a3d_79.71%)] lg:px-0 lg:py-[80px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[16px] text-center lg:w-[900px] lg:gap-[20px]">
@@ -289,12 +295,12 @@ function Pill({ children }: { children: React.ReactNode }) {
  * frames (7060:4119, phone 7060:5836) let them wrap in a 1200 column (350 on
  * the phone) and centre each line, `wrap`.
  */
-function Items({ heading, wrap = false }: { heading: string; wrap?: boolean }) {
+function Items({ heading, wrap = false, groups }: { heading: string; wrap?: boolean; groups: Shared['COUNTY_ITEMS'] }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[30px] lg:w-[1282px] lg:gap-[40px]">
         <h2 className="text-center font-sans text-[22px] font-semibold leading-[normal] text-[#132119] lg:text-[32px]">{heading}</h2>
-        {COUNTY_ITEMS.map((g) => (
+        {groups.map((g) => (
           <div key={g.title} className="flex w-full flex-col items-center gap-[12px] lg:gap-[16px]">
             <h3 className="text-center font-sans text-[16px] font-medium leading-[normal] text-brand lg:text-[19px]">{g.title}</h3>
             {wrap ? (
@@ -326,14 +332,14 @@ function Items({ heading, wrap = false }: { heading: string; wrap?: boolean }) {
  * last card (Document Shredding Minnesota's fifth, 7073:8142) sits in the
  * middle. The four icons repeat in order.
  */
-function Features({ cards }: { cards: { title: string; text: string }[] }) {
+function Features({ cards, icons }: { cards: { title: string; text: string }[]; icons: string[] }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1264px] lg:flex-row lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-[24px] lg:gap-y-[40px]">
         {cards.map((c, i) => (
           <div key={c.title} className="flex flex-col gap-[12px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:w-[620px] lg:gap-[14px] lg:p-[32px]">
             <span className="grid size-[44px] place-items-center rounded-full bg-brand lg:size-[48px]">
-              <Image src={COUNTY_FEATURE_ICONS[i % COUNTY_FEATURE_ICONS.length]!} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />
+              <Image src={icons[i % icons.length]!} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />
             </span>
             <h2 className="font-sans text-[17px] font-medium leading-[normal] text-[#132119] lg:text-[20px]">{c.title}</h2>
             <p className="font-roboto text-[13.5px] leading-[1.55] text-[#7e7e7e] lg:text-[15px] lg:leading-[1.6]">{c.text}</p>
@@ -370,7 +376,7 @@ function Sights({ sights }: { sights: { heading: string; items: string[] } }) {
 /* --------------------------------------------------------------- company -- */
 
 /** Section - Company Info (7016:9112): one card, text left and hours right on the board. */
-function Company({ company: c }: { company: NonNullable<Page['company']> }) {
+function Company({ company: c, shared }: { company: NonNullable<Page['company']>; shared: Shared }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[20px] rounded-[14px] border border-[#e6e6e6] bg-white px-[26px] py-[30px] lg:max-w-none lg:w-[1059px] lg:flex-row lg:items-center lg:gap-[60px] lg:rounded-[16px] lg:px-[48px] lg:py-[40px]">
@@ -382,7 +388,7 @@ function Company({ company: c }: { company: NonNullable<Page['company']> }) {
         <ul className="flex flex-col gap-[12px] lg:w-[340px] lg:gap-[10px]">
           {c.lines.map((l) => (
             <li key={l.text} className="flex items-center gap-[10px] font-roboto text-[14px] leading-[normal] text-[#132119] lg:text-[15px]">
-              <Image src={COUNTY_LINE_ICONS[lineIcon(l)]} alt="" width={18} height={18} className="size-[17px] shrink-0 lg:size-[18px]" />
+              <Image src={shared.COUNTY_LINE_ICONS[lineIcon(l)]} alt="" width={18} height={18} className="size-[17px] shrink-0 lg:size-[18px]" />
               {l.kind === 'phone' ? <a href={`tel:${l.tel}`} className="hover:text-brand">{l.text}</a>
                 : l.kind === 'email' ? <a href={`mailto:${l.text}`} className="hover:text-brand">{l.text}</a>
                 : l.text}
@@ -399,7 +405,7 @@ function Company({ company: c }: { company: NonNullable<Page['company']> }) {
  * mail-in cities' card (7084:67703) by the manager's name and number too,
  * with the phone by the email address.
  */
-function lineIcon(l: CompanyLine): keyof typeof COUNTY_LINE_ICONS {
+function lineIcon(l: CompanyLine): keyof Shared['COUNTY_LINE_ICONS'] {
   if (l.kind === 'phone') return l.icon ?? 'phone'
   if (l.kind === 'email') return 'phone'
   return 'hours'

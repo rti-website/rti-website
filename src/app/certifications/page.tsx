@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -47,7 +47,7 @@ const ACCT_TOP  = CERTS_TOP + H.certs
 const CTA_TOP   = ACCT_TOP + H.acct
 const FOOTER_TOP = CTA_TOP + H.cta
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/certifications/',
   title: SEO.title,
   description: SEO.description,

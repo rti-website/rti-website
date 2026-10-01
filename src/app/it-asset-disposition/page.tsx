@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -54,7 +54,7 @@ const FEATURES_TOP = PROCESS_TOP + H.process
 const PICKUP_TOP   = FEATURES_TOP + H.features
 const FOOTER_TOP   = PICKUP_TOP + H.pickup
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/it-asset-disposition/',
   title: SEO.title,
   description: SEO.description,

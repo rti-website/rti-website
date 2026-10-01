@@ -41,9 +41,16 @@ const HIDDEN_KEYS = new Set([
   'schema', 'url', 'todo', 'key', 'variant', 'arrows', 'wide', 'external', 'noPicker', 'align',
   'tel', 'mapQuery', 'embed', 'lat', 'lng', 'zip', 'state', 'color', 'accent', 'size', 'position',
   'object', 'objectPosition', 'crop', 'group', 'category', 'type', 'date', 'updated',
-  'service', 'areaServed', 'stars', 'order', 'sort', 'bands', 'phoneSkip', 'phoneStack', 'compact',
-  'board', 'phoneFrame', 'node', 'nodes', 'width', 'height', 'w', 'h', 'top', 'left', 'className',
+  'service', 'areaServed', 'stars', 'order', 'sort', 'phoneSkip', 'phoneStack', 'compact',
+  'board', 'phoneFrame', 'node', 'nodes', 'className',
 ])
+
+/**
+ * Sizes and positions (`w`, `h`, `top`...), hidden when they hold a number.
+ * The same key holding words is copy: the county pages' `{ h: 'Why Choose
+ * Us?' }` is a heading (hidden by mistake until 1 Oct 2026).
+ */
+const NUMBER_ONLY = new Set(['width', 'height', 'w', 'h', 'top', 'left'])
 
 /**
  * Keys hidden only when they hold a plain value (`state: 'MN'`, `service:
@@ -53,18 +60,40 @@ const HIDDEN_KEYS = new Set([
  */
 const VALUE_ONLY = new Set(['state', 'zip', 'service', 'type', 'group', 'category', 'kind', 'size', 'position', 'color'])
 
-export function isHiddenKey(key: string, value?: unknown): boolean {
+/**
+ * Paths (as shapes) that show although their key is hidden elsewhere: words
+ * a page prints where the same key is a matching id on other pages. The
+ * Resources page's card labels and dates, and the "PDF" on download cards
+ * (`cards.*.kind`; a location page's block `kind` is its type, 1 Oct 2026); a case study's
+ * `category` stays hidden, it is what the filter matches on.
+ */
+const SHOWN = new Set(['GUIDES.cards.*.category', 'ARTICLES.rows.*.category', 'ARTICLES.rows.*.date'])
+
+/** `path`: the key's full path in the document, where the caller knows it. */
+export function isHiddenKey(key: string, value?: unknown, path?: string): boolean {
+  if (path && typeof value === 'string' && (SHOWN.has(shapeOf(path)) || /(^|\.)cards\.\*\.kind$/.test(shapeOf(path)))) return false
+  if (NUMBER_ONLY.has(key)) return typeof value !== 'string'
   if (VALUE_ONLY.has(key) && value !== null && typeof value === 'object') return false
+  // A glyph drawn by name ('hours', 'arrow'): the code picks the drawing, so
+  // only the names the editor can offer as a choice show (ICON_CHOICES).
+  if (key === 'icon' && typeof value === 'string' && !value.includes('/') && !ICON_CHOICES.includes(value)) return true
   return HIDDEN_KEYS.has(key) || /(^|_)(SEO|TODO)/i.test(key) || /^todo/i.test(key)
 }
 
-export type FieldKind = 'text' | 'long' | 'image' | 'link'
+/**
+ * The card icons of the location and landing pages (src/data/local-pages/
+ * types.ts, IconName), offered as a dropdown (1 Oct 2026).
+ */
+export const ICON_CHOICES = ['shield', 'truck', 'clock', 'check', 'lock', 'mail', 'factory', 'file', 'leaf', 'phone', 'pin', 'users']
+
+export type FieldKind = 'text' | 'long' | 'image' | 'link' | 'choice'
 
 const IMAGE_RE = /\.(png|jpe?g|webp|gif|svg|avif)(\?.*)?$/i
 const LONG_KEYS = /^(body|text|a|answer|lead|intro|description|desc|note|notes|outro|quote|summary|excerpt|paragraph|copy|detail|details|footnote|blurb)$/i
 
 /** How the editor draws a string field. */
 export function fieldKind(key: string, value: string): FieldKind {
+  if (key === 'icon' && ICON_CHOICES.includes(value)) return 'choice'
   if (IMAGE_RE.test(value) || /^(image|photo|src|logo|icon|picture|thumbnail|avatar|poster)$/i.test(key)) return 'image'
   if (/^(href|link|to)$/i.test(key) || (/^(\/|https?:\/\/|mailto:|#)/.test(value) && !/\s/.test(value))) return 'link'
   return LONG_KEYS.test(key) || value.length > 90 ? 'long' : 'text'
@@ -110,11 +139,10 @@ export function cleanLike(template: unknown, value: unknown): unknown {
   if (template === null) return value === null ? null : undefined
   if (Array.isArray(template)) {
     if (!Array.isArray(value)) return undefined
-    const item = template[0]
-    if (item === undefined) return value.filter((v) => typeof v === 'string').slice(0, MAX_ITEMS)
+    if (template[0] === undefined) return value.filter((v) => typeof v === 'string').slice(0, MAX_ITEMS)
     const out: unknown[] = []
     for (const v of value.slice(0, MAX_ITEMS)) {
-      const c = cleanLike(item, v)
+      const c = cleanLike(templateFor(template, v), v)
       if (c !== undefined) out.push(c)
     }
     return out
@@ -137,6 +165,30 @@ export function cleanLike(template: unknown, value: unknown): unknown {
     return out
   }
   return undefined
+}
+
+/**
+ * Which item of a default list a value is shaped like. A list can mix kinds
+ * of item (a location page's blocks: text, cards, a table, bullets...), so
+ * an item is matched to a default of its own kind (`kind`, `type` or
+ * `layout`), else to the one sharing the most keys, else the first.
+ */
+function templateFor(list: unknown[], v: unknown): unknown {
+  if (!isObj(v)) return list.find((t) => typeof t === typeof v && Array.isArray(t) === Array.isArray(v)) ?? list[0]
+  const objs = list.filter(isObj)
+  if (!objs.length) return list[0]
+  for (const k of ['kind', 'type', 'layout']) {
+    if (typeof v[k] !== 'string') continue
+    const same = objs.find((t) => t[k] === v[k])
+    if (same) return same
+  }
+  let best = objs[0]!, score = -1
+  for (const t of objs) {
+    const keys = Object.keys(t)
+    const s = keys.filter((k) => k in v).length * 2 - keys.filter((k) => !(k in v)).length
+    if (s > score) { best = t; score = s }
+  }
+  return best
 }
 
 /* ------------------------------------------------------------------ apply -- */
@@ -208,12 +260,12 @@ export function diffPatch(defaults: unknown, edited: unknown): Patch {
     if (isObj(d)) {
       if (!isObj(e)) return
       for (const k of Object.keys(d)) {
-        if (isHiddenKey(k, d[k])) continue
+        if (isHiddenKey(k, d[k], join(path, k))) continue
         walk(d[k], e[k], join(path, k))
       }
       // A plain copy key added to an object that did not have it.
       for (const k of Object.keys(e)) {
-        if (k in d || isHiddenKey(k, e[k]) || typeof e[k] !== 'string' || e[k] === '') continue
+        if (k in d || isHiddenKey(k, e[k], join(path, k)) || typeof e[k] !== 'string' || e[k] === '') continue
         out[join(path, k)] = (e[k] as string).slice(0, MAX_TEXT)
       }
       return
@@ -254,7 +306,7 @@ export function editableFields(data: unknown): Field[] {
   function walk(v: unknown, path: string, key: string) {
     if (typeof v === 'string') { out.push({ path, key, kind: fieldKind(key, v) }); return }
     if (Array.isArray(v)) { v.forEach((x, i) => walk(x, join(path, String(i)), key)); return }
-    if (isObj(v)) for (const [k, x] of Object.entries(v)) if (!isHiddenKey(k, x)) walk(x, join(path, k), k)
+    if (isObj(v)) for (const [k, x] of Object.entries(v)) if (!isHiddenKey(k, x, join(path, k))) walk(x, join(path, k), k)
   }
 }
 

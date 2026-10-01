@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { FOOTER_H } from '@/lib/layout'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
@@ -41,7 +41,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * !! H1 !! Live is "contact us" in lowercase; built as designed, like every
  * other page in this project.
  */
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/contact-us/',
   title: LIVE_SEO.title,
   description: LIVE_SEO.description,

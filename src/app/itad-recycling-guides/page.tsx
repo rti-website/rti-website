@@ -1,6 +1,6 @@
 import { Canvas } from '@/components/design/Frame'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
@@ -52,7 +52,7 @@ const GUIDES_TOP = HERO_TOP + HERO_H
 const DOCS_TOP   = GUIDES_TOP + H.guides
 const FOOTER_TOP = DOCS_TOP + H.docs
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/itad-recycling-guides/',
   title: SEO.title,
   description: SEO.description,

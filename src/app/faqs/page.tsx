@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { InteriorHeroArt } from '@/components/ui/InteriorHeroArt'
 import { Accordion } from '@/components/client/Accordion'
 import { FOOTER_H } from '@/lib/layout'
-import { buildMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/page-meta'
 import { absolute, href } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph } from '@/lib/schema'
 import { FAQ_SEO, allFaqs } from '@/data/faqs'
@@ -35,7 +35,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * frame alternates its four.
  */
 
-export const metadata = buildMetadata({
+export const generateMetadata = () => pageMetadata({
   url: '/faqs/',
   title: FAQ_SEO.title,
   description: FAQ_SEO.description,

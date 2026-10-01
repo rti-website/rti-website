@@ -5,8 +5,13 @@
     "statusCode": 301
   },
   {
-    "source": "/off-site-shredding/",
-    "destination": "/on-site-off-site-shredding/",
+    "source": "/on-site-off-site-shredding/",
+    "destination": "/off-site-shredding/",
+    "statusCode": 301
+  },
+  {
+    "source": "/mobile-shredding-service/",
+    "destination": "/off-site-shredding/",
     "statusCode": 301
   },
   {
@@ -632,6 +637,106 @@
   {
     "source": "/e-waste-recycling-whats-next/",
     "destination": "/social-responsibility-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/tv-recycling/",
+    "destination": "/tv-recycling-in-wisconsin/",
+    "statusCode": 301
+  },
+  {
+    "source": "/minnesota-recycling/tv-recycling/",
+    "destination": "/tv-recycling-in-minnesota/",
+    "statusCode": 301
+  },
+  {
+    "source": "/electronics.html",
+    "destination": "/electronic-recycle/",
+    "statusCode": 301
+  },
+  {
+    "source": "/mail-in/",
+    "destination": "/mail-in-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/lightbulb-mail-in/",
+    "destination": "/mail-in-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/local-recycling-services/",
+    "destination": "/all-locations/",
+    "statusCode": 301
+  },
+  {
+    "source": "/contact.html",
+    "destination": "/contact-us/",
+    "statusCode": 301
+  },
+  {
+    "source": "/minnesota-recycling/blaine/",
+    "destination": "/minnesota-recycling/ramsey/blaine/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/new-berlin/",
+    "destination": "/wisconsin-recycling/new-berlin-recycling-center/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/waukesha/",
+    "destination": "/wisconsin-recycling/waukesha-recycling-center/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/milwaukee-recycling/",
+    "destination": "/wisconsin-recycling/milwaukee/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/madison-2/",
+    "destination": "/wisconsin-recycling/madison/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/electronic-recycling-appleton-2/",
+    "destination": "/wisconsin-recycling/appleton-electronic-recycling-center/",
+    "statusCode": 301
+  },
+  {
+    "source": "/e-waste-recycling-2/",
+    "destination": "/electronic-recycle/",
+    "statusCode": 301
+  },
+  {
+    "source": "/reduce-reuse-recycle-re-examine-2/",
+    "destination": "/reduce-reuse-recycle-re-examine/",
+    "statusCode": 301
+  },
+  {
+    "source": "/hp-laptop-battery-recycling-proper-way-to-dispose-of-your-e-waste/",
+    "destination": "/hp-laptop-battery-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/reviving-the-spark-what-is-electric-vehicle-battery-recycling/",
+    "destination": "/electric-vehicle-battery-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/dispose-of-fire-extinguishers/",
+    "destination": "/dispose-of-fire-extinguisher/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wi-computer_recycling.htm",
+    "destination": "/wisconsin-recycling/electronic-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wi_lamp_recycling.htm",
+    "destination": "/wisconsin-recycling/light-bulb-recycling/",
     "statusCode": 301
   }
 ]

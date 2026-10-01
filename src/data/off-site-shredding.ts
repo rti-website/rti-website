@@ -3,15 +3,16 @@ import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
- * /on-site-off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc.
+ * /off-site-shredding/ — copy from the "Off-Site and On-Site Shredding" doc.
  *
- * Moved from /off-site-shredding/ on 30 Sep 2026, and renamed to name both
- * services (Asim: "change this url and add both onsite and offsite shredding
- * in it"). The old URL 301s here. The file keeps its name so the Admin ->
- * Pages document keeps its key and any published edits.
+ * Moved to /on-site-off-site-shredding/ on 30 Sep 2026 (Asim: "change this
+ * url and add both onsite and offsite shredding in it"), and back to its
+ * WordPress URL on 1 Oct 2026 on management's instruction. The copy still
+ * names both services. /on-site-off-site-shredding/ 301s here. The file keeps
+ * its name so the Admin -> Pages document keeps its key and published edits.
  */
 export const CONTENT: ServicePageContent = {
-  url: '/on-site-off-site-shredding/',
+  url: '/off-site-shredding/',
   liveSeo: {
     // New with the URL, 30 Sep 2026, in the old title's pattern.
     title: 'On-Site & Off-Site Shredding Services | Call (800) 969-5166',

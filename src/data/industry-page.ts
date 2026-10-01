@@ -39,7 +39,7 @@ export const SERVICE_LINKS = {
   itad:         href('/it-asset-disposition/'),
   hardDrive:    href('/hard-drive-destruction-services/'),
   paper:        href('/paper-shredding-services/'),
-  offSite:      href('/on-site-off-site-shredding/'),
+  offSite:      href('/off-site-shredding/'),
   battery:      href('/battery-recycling/'),
   lightBulbs:   href('/light-bulbs/'),
   ballasts:     href('/ballasts/'),

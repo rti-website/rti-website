@@ -9,17 +9,20 @@ import type { CountyPage } from '../types'
  *
  * The frame's copy word for word; "our online form" and "this form" link to
  * the quote form. The hero photo is the one the Hennepin board uses (same
- * file, 7058:3977). No WordPress title or description survived for this URL,
- * so the SEO pair follows the Oconomowoc page's pattern.
+ * file, 7058:3977). Title: the WordPress one (management, 1 Oct 2026).
  */
 export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
   url: "/wisconsin-recycling/new-berlin-recycling-center/",
   state: "Wisconsin",
   county: "New Berlin",
   figma: { board: "7058:3972", phone: "7059:4033" },
+  // 1 Oct 2026 (management): the WordPress title back, and no "EPA certified".
+  // The WordPress description did not survive in any export we have (the URL
+  // 301'd at launch), so this one follows the other county pages' WordPress
+  // descriptions until the original turns up.
   seo: {
-    title: "New Berlin Recycling Center | Recycle Technologies",
-    description: "EPA certified recycling center in New Berlin, WI for electronics, light bulbs, batteries and more, open five days a week. Call +1 262-798-3040 for a free quote.",
+    title: "Recycling Center in New Berlin | Call (800) 969-5166",
+    description: "Recycling center in New Berlin receiving electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",
   },
   hero: {
     h1: "New Berlin Recycling Center",
@@ -33,7 +36,7 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
     heading: "About New Berlin Recycling Center",
     blocks: [
       { h: "Convenience at the expense of the planet is not convenient at all" },
-      { p: "Welcome to the New Berlin Recycling Center, where we redefine convenience by putting the planet first. As an EPA Certified and State Contracted facility, we uphold the highest standards of environmental responsibility. With AAA NAID certification for data destruction and certifications from R2 and RiOS, we ensure your recyclables are handled with utmost care and security." },
+      { p: "Welcome to the New Berlin Recycling Center, where we redefine convenience by putting the planet first. As a State Contracted facility, we uphold the highest standards of environmental responsibility. With AAA NAID certification for data destruction and certifications from R2 and RiOS, we ensure your recyclables are handled with utmost care and security." },
       { h: "A Legacy of Responsible Recycling" },
       { p: "For over 30 years, Recycle Technologies has been a leader in responsible recycling, setting an example in the industry. We strictly adhere to all EPA policies, fostering a safe and responsible work culture. Our commitment to the Circular Economy not only reduces your carbon footprint but also minimizes the need for virgin resources. Join us in the revolution for sustainable growth and make a tangible impact on the environment." },
       { h: "Convenient Access to Recycling Services" },
