@@ -149,7 +149,7 @@ export const HOME_WHY_CHOOSE = {
   estimateButton: 'Get a Quote', // was "Get a Free Estimate" (Asim, 1 Oct 2026)
   aboutButton: 'Read More About Us',
   stats: [
-    { v: '18M+',   l: 'Lbs of E-Waste Recycled' },
+    { v: '100M+',  l: 'Lbs of E-Waste Recycled' }, // was 18M+ (Asim, 2 Oct 2026)
     { v: '95%',    l: 'Diversion Rate' },
     { v: '1,500+', l: 'Businesses Served' },
     { v: '2.3M+',  l: 'Devices Destroyed' },
@@ -377,13 +377,14 @@ export const GOOGLE_RATING = { score: '4.9', outOf: 5, count: 13 }
  *
  * !! THESE ARE THE DESIGN FILE'S NUMBERS, NOT A SOURCE WE HAVE SEEN. Four
  * specific claims on the homepage (2.3M devices destroyed, 950,000 wiped,
- * 18M lbs recycled, 4,200 tons CO2 avoided). Flagged to Asim to confirm
+ * 100M lbs recycled (Asim's figure, 2 Oct 2026; was 18M), 4,200 tons CO2
+ * avoided). Flagged to Asim to confirm
  * against RTI's own records before they go live.
  */
 export const IMPACT_STATS = [
   { n: '2.3M+',    l: 'Devices Destroyed' },
   { n: '950,000+', l: 'Data-Bearing Devices Securely Wiped' },
-  { n: '18M+',     l: 'Lbs of E-Waste Recycled' },
+  { n: '100M+',    l: 'Lbs of E-Waste Recycled' }, // was 18M+ (Asim, 2 Oct 2026)
   { n: '4,200+',   l: 'Tons of CO2 Emissions Avoided' },
 ]
 

@@ -39,7 +39,8 @@ export const HERO = {
 export const DIFFERENTIATORS = {
   eyebrow: 'What Sets Us Apart',
   heading: 'Why Choose Recycle Technologies',
-  lead: 'Three things set us apart from a typical recycling vendor.',
+  // "Four" since the NAID AAA card was added (2 Oct 2026).
+  lead: 'Four things set us apart from a typical recycling vendor.',
   cards: [
     {
       glyph: 'rosette' as const,
@@ -63,6 +64,14 @@ export const DIFFERENTIATORS = {
        * should fix the doc — this is the second doc that has made this mistake.
        */
       body: 'Our Blaine, Minnesota facilities are R2v3 certified for responsible electronics recycling, with our New Berlin, Wisconsin facility pursuing the same certification.',
+    },
+    {
+      /* Added 2 Oct 2026. The content writer first added it in Admin -> Pages
+         on live; Asim moved it into the code so it ships with the four-in-a-row
+         layout (WhyDifferentiators). */
+      glyph: 'shield' as const,
+      title: 'NAID AAA Certified',
+      body: 'Our data destruction services are backed by NAID AAA certification for secure destruction of sensitive information.',
     },
   ],
 }
