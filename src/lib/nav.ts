@@ -115,7 +115,9 @@ export const TOP_BAR = {
    * assuming it goes back. The same swap was made on the three "Find
    * Locations" CTAs in the service page data, for the same reason.
    */
-  dropOff: { label: 'Drop Off Locations', href: href('/all-locations/') },
+  // Back to /dropoff/ on 2 Oct 2026, now the page is built (Asim: "we have to
+  // make the drop off page"). The main nav's "Locations" stays /all-locations/.
+  dropOff: { label: 'Drop Off Locations', href: href('/dropoff/') },
   phoneMn: { label: 'MN:+1-763-559-5130', tel: 'tel:+17635595130' },
   phoneWi: { label: 'WI:+1-262-798-3040', tel: 'tel:+12627983040' },
   /* The top bar's button: "Schedule a Pickup" since 30 Sep 2026 (Asim: the

@@ -41,37 +41,31 @@ export const DIFFERENTIATORS = {
   heading: 'Why Choose Recycle Technologies',
   // "Four" since the NAID AAA card was added (2 Oct 2026).
   lead: 'Four things set us apart from a typical recycling vendor.',
+  /* The four cards rewritten 2 Oct 2026 (Asim's copy): Secure & Compliant,
+     Easy & Reliable, Responsible Recovery, and the certifications card. They
+     replace Minority-Owned, Since 1993, R2v3 Certified and NAID AAA
+     Certified (those points still appear in the callout and trust sections
+     below and on About Us). */
   cards: [
     {
+      glyph: 'shield' as const,
+      title: 'Secure & Compliant',
+      body: 'Your equipment and sensitive materials are handled through secure, documented processes that help protect your data and support your compliance requirements.',
+    },
+    {
+      glyph: 'truck' as const,
+      title: 'Easy & Reliable',
+      body: 'From pickup to final processing, we make recycling and destruction simple with dependable service tailored to your materials, location, and volume.',
+    },
+    {
+      glyph: 'doc' as const,
+      title: 'Responsible Recovery',
+      body: 'We recover valuable materials and components wherever possible, helping you reduce waste, conserve resources, and meet your environmental goals.',
+    },
+    {
       glyph: 'rosette' as const,
-      title: 'Minority-Owned',
-      body: 'We’re proud to be the only Minority-Owned document destruction and recycling company in the Midwest, serving our communities with integrity and accountability.',
-    },
-    {
-      glyph: 'clock' as const,
-      title: 'Since 1993',
-      body: 'With more than three decades of experience in responsible recycling and shredding, we’ve built lasting relationships with customers across the Midwest.',
-    },
-    {
-      glyph: 'shield' as const,
-      title: 'R2v3 Certified',
-      /**
-       * THE DOC IS WRONG HERE and the frame is right. The doc's card reads
-       * "Our Blaine, Minnesota, and Wisconsin facilities are R2v3-certified",
-       * which would claim certification for New Berlin. The About Us doc, the
-       * Certifications doc, this same frame's own footnote and the live site all
-       * say Wisconsin is *pursuing* it. The frame's wording is built. Musaveer
-       * should fix the doc — this is the second doc that has made this mistake.
-       */
-      body: 'Our Blaine, Minnesota facilities are R2v3 certified for responsible electronics recycling, with our New Berlin, Wisconsin facility pursuing the same certification.',
-    },
-    {
-      /* Added 2 Oct 2026. The content writer first added it in Admin -> Pages
-         on live; Asim moved it into the code so it ships with the four-in-a-row
-         layout (WhyDifferentiators). */
-      glyph: 'shield' as const,
-      title: 'NAID AAA Certified',
-      body: 'Our data destruction services are backed by NAID AAA certification for secure destruction of sensitive information.',
+      title: 'R2v3, RIOS & NAID AAA Certified',
+      body: 'Our certifications demonstrate our commitment to responsible electronics recycling, quality management, and secure information destruction through recognized industry standards.',
     },
   ],
 }

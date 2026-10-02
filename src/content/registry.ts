@@ -3,6 +3,7 @@ import * as home from '@/data/home'
 import * as about from '@/data/about'
 import * as services from '@/data/services'
 import * as whyChooseUs from '@/data/why-choose-us'
+import * as dropoff from '@/data/dropoff'
 import * as sustainability from '@/data/sustainability'
 import * as certificationsPage from '@/data/certifications-page'
 import * as caseStudies from '@/data/case-studies'
@@ -206,6 +207,7 @@ export const DOCS = {
   services: { title: 'Services page', group: 'Main pages', urls: ['/services/', '/', '/light-bulbs/'], data: mod(services),
     note: 'The service cards here also fill the homepage service tabs and the Services menu. "Service page text" is the shared labels on every service page (breadcrumb, location picker, FAQ heading).' },
   'why-choose-us': { title: 'Why Choose Us', group: 'Main pages', urls: ['/why-choose-us/'], data: mod(whyChooseUs) },
+  dropoff: { title: 'Drop-off Locations', group: 'Main pages', urls: ['/dropoff/'], data: mod(dropoff, ['SEO']) },
   sustainability: { title: 'Sustainability', group: 'Main pages', urls: ['/sustainability/'], data: mod(sustainability) },
   'certifications-page': { title: 'Certifications page', group: 'Main pages', urls: ['/certifications/'], data: mod(certificationsPage) },
   'case-studies': { title: 'Case Studies', group: 'Main pages', urls: ['/case-studies/', '/'], data: mod(caseStudies, ['COMPLIANCE_CASE_IDS']),

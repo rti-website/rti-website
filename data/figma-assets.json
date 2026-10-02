@@ -2373,6 +2373,55 @@
       "node": "7195:3480",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Why Choose Us hero, right photo (Pickup Visual, the RTI truck), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/pin-white.svg",
+      "id": "d0e91880-be46-4c05-bf63-863a4545d165/5f32d.svg",
+      "node": "7208:13900",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ white pin in the location card header disc (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/pin.svg",
+      "id": "d0e91880-be46-4c05-bf63-863a4545d165/3780c.svg",
+      "node": "7208:13909",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ address row icon (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/phone.svg",
+      "id": "d0e91880-be46-4c05-bf63-863a4545d165/4997e.svg",
+      "node": "7208:13916",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ phone row icon (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/clock.svg",
+      "id": "d0e91880-be46-4c05-bf63-863a4545d165/f8fbf.svg",
+      "node": "7208:13921",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ hours row icon (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/check.svg",
+      "id": "d0e91880-be46-4c05-bf63-863a4545d165/d6f36.svg",
+      "node": "7208:13927",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ accepted items row icon (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/search-pin.svg",
+      "id": "68c67996-cc32-4d35-9093-a2a35a4956b6/2bcc4.svg",
+      "node": "7206:3224",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ pin glyph in the finder search bar (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/dropoff/map-pin.svg",
+      "id": "68c67996-cc32-4d35-9093-a2a35a4956b6/db874.svg",
+      "node": "7206:3232",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "/dropoff/ teal pin on the illustrative map (2 Oct 2026); URL expires about 9 Oct."
     }
   ]
 }

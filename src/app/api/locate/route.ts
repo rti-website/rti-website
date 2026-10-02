@@ -141,5 +141,7 @@ export async function POST(req: Request): Promise<Response> {
     .map((slug) => ({ slug, miles: Math.round(milesBetween(where!, FACILITY_POINTS[slug])) }))
     .sort((a, b) => a.miles - b.miles)
 
-  return NextResponse.json({ ok: true, found: true, q, label: where.label, results })
+  // `point` since 2 Oct 2026: the /dropoff/ finder measures to its ten
+  // locations itself, in the browser (DropoffFinder). `results` is unchanged.
+  return NextResponse.json({ ok: true, found: true, q, label: where.label, results, point: { lat: where.lat, lng: where.lng } })
 }

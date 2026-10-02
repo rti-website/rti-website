@@ -15,11 +15,6 @@
     "statusCode": 301
   },
   {
-    "source": "/dropoff/",
-    "destination": "/all-locations/",
-    "statusCode": 301
-  },
-  {
     "source": "/about-us/",
     "destination": "/about-us-commercial-recycling-solutions/",
     "statusCode": 301
