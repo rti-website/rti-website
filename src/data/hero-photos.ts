@@ -19,6 +19,8 @@ import type { HeroFill, HeroTone, HeroWashes } from '@/components/ui/InteriorHer
  * before then.
  */
 export type HeroPhoto = {
+  /** Drawn side by side in place of `image` when set — see HeroPanels. */
+  panels?: { src: string }[]
   image: string
   imageFill: HeroFill
   washes?: HeroWashes
@@ -104,8 +106,18 @@ export const HERO_PHOTOS = {
   minnesota: deep('/images/pages/hero-minnesota.png', -372, { x: 0, y: -103, w: 815, h: 459, under: true }),
   wisconsin: deep('/images/pages/hero-wisconsin.png', -372, { x: 0, y: -103, w: 815, h: 459, under: true }),
 
-  /* 6472:3934. Phone 6687:3526. */
-  whyChooseUs: deep('/images/pages/hero-why-choose-us-v2.png', -422, { x: -75, y: -42, w: 582, h: 328 }),
+  /* 7195:3472 since 2 Oct 2026: three photos side by side (drop-off, mail-in,
+     pickup) — Asim: "change the hero image in why choose us and also adjust
+     it in mobile version". `panels` wins; the old single photo stays as the
+     fallback the type needs. Was 6472:3934, phone 6687:3526. */
+  whyChooseUs: {
+    ...deep('/images/pages/hero-why-choose-us-v2.png', -422, { x: -75, y: -42, w: 582, h: 328 }),
+    panels: [
+      { src: '/images/pages/why-hero-dropoff.png' },
+      { src: '/images/pages/why-hero-mailin.png' },
+      { src: '/images/pages/why-hero-pickup.png' },
+    ],
+  },
 
   /* 6472:3949. Phone 6695:3648. */
   certifications: deep('/images/pages/hero-certifications-v2.png', -422, { x: -53.66, y: 0, w: 497.317, h: 280 }),

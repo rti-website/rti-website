@@ -2352,6 +2352,27 @@
       "node": "I7184:3375;7184:3320",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Play button (116, teal ring and triangle) on the homepage How It Works video card, 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/pages/why-hero-dropoff.png",
+      "id": "9b48a389-9df0-42f5-a87e-1a16ca695cb9/239ee.png",
+      "node": "7195:3478",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why Choose Us hero, left photo (Drop-off Visual), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/pages/why-hero-mailin.png",
+      "id": "9b48a389-9df0-42f5-a87e-1a16ca695cb9/3b545.png",
+      "node": "7195:3479",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why Choose Us hero, middle photo (Mail-in Visual), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/pages/why-hero-pickup.png",
+      "id": "9b48a389-9df0-42f5-a87e-1a16ca695cb9/7934d.png",
+      "node": "7195:3480",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Why Choose Us hero, right photo (Pickup Visual, the RTI truck), 2 Oct 2026; URL expires about 9 Oct."
     }
   ]
 }

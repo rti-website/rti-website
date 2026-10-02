@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
 import { InteriorHeroArt, type HeroFill, type HeroTone, type HeroWashes } from '@/components/ui/InteriorHeroArt'
+import { HeroPanels } from '@/components/ui/HeroPanels'
 
 export type Crumb = { label: string; href: string | null }
 
@@ -28,7 +29,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, h1OneLine, lead, pickupCta, cta, secondaryCta, label, image, imageFill, washes, tone, top = 140, size,
+  crumbs, h1, h1OneLine, lead, pickupCta, cta, secondaryCta, label, image, imageFill, washes, tone, panels, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -54,6 +55,8 @@ export function ServiceHero({
   image?: string
   /** Draw `image` as a raw Figma image fill — see HeroFill in InteriorHeroArt. */
   imageFill?: HeroFill
+  /** Photos side by side instead of `image` — see HeroPanels (Why Choose Us, 2 Oct 2026). */
+  panels?: { src: string }[]
   /** The washes' position, when the frame moves them — see HeroWashes. */
   washes?: HeroWashes
   /** Which washes the frame draws — see HeroTone. The 28 Sep 2026 heroes are 'deep'. */
@@ -104,7 +107,9 @@ export function ServiceHero({
         `fill`; it is a no-op then.
       */}
       <div className="max-lg:absolute max-lg:inset-0 max-lg:[&_.design-box]:absolute! max-lg:[&_.design-box]:inset-0! lg:contents">
-        <InteriorHeroArt src={image} fill={imageFill} washes={washes} tone={tone} />
+        {panels?.length
+          ? <HeroPanels images={panels} />
+          : <InteriorHeroArt src={image} fill={imageFill} washes={washes} tone={tone} />}
       </div>
 
       {/* Content column — 6199:4945 at x319 y113, w946, gap 20; 6638:10147..
