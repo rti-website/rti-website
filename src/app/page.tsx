@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
+import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_HOW_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
 import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
@@ -24,7 +24,7 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  *   Our Services    6532:2049      y1679   h969   (x319, w1282) — the enquiry card in the tab column since 25 Sep 2026
  *   Impact figures  6873:13941     y2798   h154   (x319, w1282) — new 25 Sep 2026; below moves +413 in all
  *   Industries      6023:12500     y2689   h887
- *   How It Works    6040:18591     y3726   h559
+ *   How It Works    6040:18591     y3726   h938   — the video card (2 Oct 2026); was 559; below moves +379
  *   Why Choose Us   6065:21652     y4435   h532   (x320, w1280)
  *   Locations       6024:14077     y5117   h1472
  *   Testimonials    6024:14149     y6739   h698   — four cards (25 Sep 2026); was 594; below moves +104 more
@@ -51,7 +51,7 @@ export default function HomePage() {
     /* 10391 is the frame's height with its 681px footer; `681 - FOOTER_H`
        trades that for the built footer. It was a literal 60 (681 - 621) until
        the footer grew to 755 on 23 Sep 2026. */
-    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - (681 - FOOTER_H)} grow={HOME_SERVICES_DELTA_VAR}>
+    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_HOW_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - (681 - FOOTER_H)} grow={HOME_SERVICES_DELTA_VAR}>
       <Header />
       <main>
         <Hero />

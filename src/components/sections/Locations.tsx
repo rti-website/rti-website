@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_HOW_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { content } from '@/lib/page-content'
@@ -33,7 +33,7 @@ export async function Locations() {
   const { LOCATION_CARDS, HOME_LOCATIONS } = await content('home')
   return (
     <Section
-      top={5117 - HOME_BELOW_SERVICES_SHIFT}
+      top={5117 - HOME_BELOW_HOW_SHIFT}
       height={1472}
       label="6024:14077"
       overflow="visible"

@@ -113,6 +113,13 @@ export const HOME_HOW_IT_WORKS = {
   lead: 'Responsible recycling made simple — from ordering your kit to receiving your '
     + 'recycling documentation.',
   button: 'Get a Quote',
+  /* The video card (7184:3248), 2 Oct 2026. */
+  tagline: 'Certified E-Waste Recycling. ITAD. Data Destruction. Shredding',
+  watch: 'Watch Video',
+  /** public/videos/rti-explainer.mp4 — the RTI explainer (v8, 63 s), 720p
+   *  for the web. Replace the file to change the video. */
+  video: '/videos/rti-explainer.mp4',
+  videoTitle: 'Recycle Technologies explainer video',
 }
 
 /**

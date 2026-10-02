@@ -148,29 +148,34 @@ export const CERTS: CertCard[] = [
     body: 'The Fair Credit Reporting Act requires proper disposal of consumer report information — directly relevant to our shredding and hard drive destruction services.',
   },
   {
-    // The badge artwork reads "HIPPA" — see the note at the top of this file.
-    logo: { src: `${L}/hipaa.svg`, w: 80.97, h: 33.42, fit: 'fill' },
+    // The black wordmark the homepage strip uses since 2 Oct 2026 (Figma
+    // 7182:8234; Asim: "we change some logos style so we have to change that
+    // in all places"). The artwork still reads "HIPPA" — see the note at the
+    // top of this file.
+    logo: { src: '/images/certs/hipaa-wordmark.svg', w: 95, h: 22, fit: 'contain' },
     name: 'HIPAA',
     title: 'Health Insurance Portability and Accountability Act (HIPAA)',
     // Corrected — the frame's sentence was the GLBA card's.
     body: 'The Health Insurance Portability and Accountability Act requires healthcare organizations to safeguard patients’ health information, including when the records and devices holding it are disposed of.',
   },
   {
-    logo: { src: `${L}/facta.png`, w: 72, h: 26, crop: { left: -5.76, top: -107.89, w: 111.52, h: 315.79 } },
+    // The strip's black wordmark since 2 Oct 2026 (Figma 7182:8193).
+    logo: { src: '/images/certs/facta.svg', w: 94, h: 21, fit: 'contain' },
     name: 'FACTA',
     title: 'Fair and Accurate Credit Transactions Act (FACTA)',
     body: 'The FACTA Disposal Rule requires businesses to take reasonable measures when disposing of consumer report information.',
   },
   {
-    // Same artwork as the certifications strip's NIST mark (same Figma image).
-    logo: { src: '/images/certs/9.png', w: 77, h: 20, fit: 'cover' },
+    // The strip's NIST SP 800-88 badge since 2 Oct 2026 (Figma 7182:8229).
+    logo: { src: '/images/certs/nist-800-88.png', w: 58, h: 48, fit: 'contain' },
     name: 'NIST',
     title: 'National Institute of Standards and Technology (NIST)',
     // Corrected — the frame's sentence was the FACTA card's with the name swapped.
     body: 'NIST Special Publication 800-88, Guidelines for Media Sanitization, is the federal reference for clearing, purging, and destroying data on storage media.',
   },
   {
-    logo: { src: `${L}/glba.png`, w: 78, h: 20, fit: 'fill' },
+    // The strip's black wordmark since 2 Oct 2026 (Figma 7182:8224).
+    logo: { src: '/images/certs/glba.svg', w: 80, h: 22, fit: 'contain' },
     name: 'GLBA',
     title: 'Gramm-Leach-Bliley Act (GLBA)',
     body: 'The Gramm-Leach-Bliley Act requires safeguarding and secure disposal of consumers’ financial information handled by covered institutions.',

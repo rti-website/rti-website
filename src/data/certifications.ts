@@ -94,8 +94,10 @@ export const CERT_LOGOS: Logo[] = [
   { src: '/images/certs/1.png', w: 44.601593, h: 46.459991, o: '', name: 'R2v3 certified', href: R2_DIRECTORY },
   /* 2 — 6695:3635, RIOS */
   { src: '/images/certs/2.png', w: 67.619995, h: 31.739996, o: '', name: 'RIOS certified' },
-  /* 3 — 6695:3646, labelled FACTA; see the note above */
-  { src: '/images/certs/3.png', w: 85.763351, h: 30.288174, o: '', name: 'FACTA' },
+  /* 3 — FACTA. A black wordmark since 2 Oct 2026 (7182:8193, 94x21): the
+     designer restyled the strip's text marks as one black family (FACTA,
+     RCRA, FCRA, GLBA, HIPPA). Was the raster 3.png (6695:3646). */
+  { src: '/images/certs/facta.svg', w: 94, h: 21, o: '', name: 'FACTA' },
   /* 4 — 6695:5832, RCRA wordmark. Fourth since 22 Sep 2026; it was sixth.
      The Figma vector export wrapped the paths in the whole clipped page — a
      #2F2F2F backdrop and an opacity group — so the file here is those same
@@ -114,36 +116,23 @@ export const CERT_LOGOS: Logo[] = [
   { src: '/images/certs/5.png', w: 43.931847,  h: 45.777725, o: '', name: 'NAID AAA certified' },
   /* 7 — 6695:5838, FCRA wordmark, same treatment as 6.svg */
   { src: '/images/certs/7.svg', w: 69,         h: 20.699999, o: '', name: 'FCRA' },
-  /* 8 — 6721:5861, GLBA. New on 22 Sep 2026.
-     8-black.png, NOT 8.png — Asim, 22 Sep 2026: "make the GLBA colour black".
-     The Figma export is the blue wordmark on an opaque white ground; the
-     -black file is the same pixels with every non-white one turned to #000
-     and the ground made transparent (scripts/recolour-glba.py is the recipe,
-     so a re-export from Figma can be re-blacked in one command). A CSS
-     filter would have been simpler and wrong: brightness(0) on an opaque
-     export paints the white ground black too. */
-  { src: '/images/certs/8-black.png', w: 86,   h: 22, o: '', name: 'GLBA' },
-  /* 9 — 6754:2597, NIST. Added 22 Sep 2026.
-     DRAWN 128x34 IN FIGMA, RENDERED 83x22 — Asim, 22 Sep 2026: "the size of
-     NIST and HIPPA same as other logo". The designer placed these two at
-     their raw export size, half again the height of every other mark on the
-     strip. Set to the wordmark height RCRA and FCRA use (22), aspect kept.
-     The file is unchanged; only the drawn size is. */
-  { src: '/images/certs/9.png', w: 82.82,      h: 22, o: '', name: 'NIST' },
-  /* 10 — 6754:2594, the badge the designer drew as "HIPPA".
-     !! THE ARTWORK IS MISSPELLED. The statute is HIPAA — Health Insurance
-     Portability and Accountability Act. The exported badge reads HIPPA, and
-     that is what will render, because this is a picture of a word and there is
-     no way to correct it in code. It is the same misspelling that is already
-     in the footer of all three case-study PDFs.
-     Shipping it means a misspelled compliance badge on the homepage of a
-     company that recycles hospital equipment. Aqeel has to re-export it; the
-     `name` below is spelt correctly so at least the alt text and the link
-     label are right. Flagged to Asim 22 Sep 2026. */
-  /* Drawn 121.45x50.13, rendered 72.7x30 — same instruction as NIST above.
-     30 is the badge height RIOS and IEEE sit at; a badge is heavier than a
-     wordmark, so it gets the badge height rather than 22. Aspect kept. */
-  { src: '/images/certs/10.svg', w: 72.68,     h: 30, o: '', name: 'HIPAA' },
+  /* 8 — NIST SP 800-88 badge, 7182:8229, 63x52. Since 2 Oct 2026 (Asim:
+     "we change some logos style"): the badge replaces the plain NIST
+     wordmark (9.png, 6754:2597) and now sits BEFORE GLBA, as the frame
+     orders them. */
+  { src: '/images/certs/nist-800-88.png', w: 63, h: 52, o: '', name: 'NIST SP 800-88' },
+  /* 9 — GLBA, 7182:8224, a black wordmark 80x22 since 2 Oct 2026. Was the
+     blue export recoloured to 8-black.png (22 Sep, "make the GLBA colour
+     black"); the designer now draws it black, so no recolouring is needed. */
+  { src: '/images/certs/glba.svg', w: 80, h: 22, o: '', name: 'GLBA' },
+  /* 10 — 7182:8234, a black wordmark 95x22 since 2 Oct 2026, in place of the
+     blue badge (10.svg).
+     !! STILL MISSPELLED. The artwork reads HIPPA; the statute is HIPAA
+     (Health Insurance Portability and Accountability Act). It is a picture
+     of a word, so code cannot correct it: Aqeel has to fix the layer and it
+     re-exports. The `name` is spelt correctly so the alt text is right.
+     Flagged to Asim 22 Sep and again 2 Oct 2026. */
+  { src: '/images/certs/hipaa-wordmark.svg', w: 95, h: 22, o: '', name: 'HIPAA' },
 ]
 
 /**

@@ -285,7 +285,7 @@ export const QUOTE_PAGE = {
   lead: 'Tell us what you need to recycle or shred and we will send a fast, no obligation quote.',
   form: {
     eyebrow: 'Get a Quote',
-    heading: 'Request Your Free Quote',
+    heading: 'Get a Quote', // was "Request Your Free Quote" (CTA wording sheet, 2 Oct 2026)
     lead: 'Fill out the short form below and our team will get back to you within one business day.',
   },
 }
@@ -296,8 +296,11 @@ export const PICKUP_PAGE = {
     title: 'Request a pickup - Recycle Technologies',
     description: 'Request a pickup for recycling your electronic waste. Recycle Technologies offers efficient pickup services. Request a pickup now for a cleaner environment.',
   },
-  crumbs: [{ label: 'Home', href: href('/') }, { label: 'Request a pickup', href: null }],
-  h1: 'Request a pickup',
+  // H1 "Schedule a Pickup" since 2 Oct 2026 (management, CTA wording sheet:
+  // one name for the CTA everywhere). Was WordPress's "Request a pickup";
+  // the URL, title and description are unchanged.
+  crumbs: [{ label: 'Home', href: href('/') }, { label: 'Schedule a Pickup', href: null }],
+  h1: 'Schedule a Pickup',
   lead: 'Business pickup for electronics, batteries, lamps, paper and more, from our licensed Minnesota and Wisconsin facilities.',
   form: {
     eyebrow: 'Schedule a Pickup',

@@ -28,9 +28,15 @@ export async function WhyDifferentiators({ top, height }: { top: number; height:
       </div>
 
       {/* Cards — 6379:1042 / 6638:8766. */}
-      <ul className="flex w-full flex-col items-stretch gap-[16px] lg:w-auto lg:flex-row lg:items-start lg:gap-[24px]">
+      {/* ONE ROW HOWEVER MANY CARDS — Asim, 2 Oct 2026: the content writer
+          added a fourth card (NAID AAA Certified) in Admin -> Pages and it
+          ran off the right edge, because each card was a fixed 410. The row
+          is now the frame's 1278 and the cards share it: three are the
+          frame's 410 each, four are 301.5. Equal heights (stretch), so a
+          shorter card does not end early. */}
+      <ul className="flex w-full flex-col items-stretch gap-[16px] lg:w-[1278px] lg:flex-row lg:gap-[24px]">
         {DIFFERENTIATORS.cards.map((c) => (
-          <li key={c.title} className="grad-card flex w-full flex-col items-start gap-[16px] rounded-[16px] border-0 bg-card p-[24px] lg:w-[410px] lg:shrink-0 lg:rounded-[12px] lg:border lg:border-line lg:bg-white lg:p-[32px]">
+          <li key={c.title} className="grad-card flex w-full flex-col items-start gap-[16px] rounded-[16px] border-0 bg-card p-[24px] lg:min-w-0 lg:flex-1 lg:rounded-[12px] lg:border lg:border-line lg:bg-white lg:p-[32px]">
             <span className="grad-card__disc grid size-[48px] shrink-0 place-items-center rounded-full bg-brand fill-white transition-colors">
               <Mark glyph={c.glyph} size={22} />
             </span>

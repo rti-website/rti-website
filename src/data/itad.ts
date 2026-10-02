@@ -150,7 +150,7 @@ export const FEATURES = {
  */
 export const PICKUP = {
   eyebrow: 'Get Started',
-  heading: 'Book a Pickup Today',
+  heading: 'Schedule a Pickup', // was "Book a Pickup Today" (CTA wording sheet, 2 Oct 2026)
   lead: 'Call us at +1-800-969-5166 or get a free estimate by filling out the form below.',
   fields: {
     firstName: { label: 'First Name',     placeholder: 'Jane' },

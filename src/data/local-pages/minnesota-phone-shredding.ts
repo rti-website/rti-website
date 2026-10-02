@@ -142,7 +142,7 @@ export const MINNESOTA_PHONE_SHREDDING: LocalPage = {
           rows: [
             [
               {
-                title: "Request a Quote",
+                title: "Get a Quote",
                 body: [
                   "Describe what you're retiring, roughly how many devices and what types, and get a quote.",
                 ],

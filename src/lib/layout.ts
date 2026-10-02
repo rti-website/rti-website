@@ -144,6 +144,18 @@ export const HOME_SERVICES_GROWTH = 969 + 150 + 154 - 860
 export const HOME_BELOW_SERVICES_SHIFT = HOME_BELOW_CERT_SHIFT - HOME_SERVICES_GROWTH
 
 /**
+ * How It Works was redrawn on 2 Oct 2026: four steps (6040:18591 at 559) became
+ * a heading, a 1070x602 video card and a button (the same node, now 938). Why
+ * Choose Us and everything under it move down by the difference, which keeps
+ * the frame's 150 between sections.
+ */
+export const HOME_HOW_H = 938
+export const HOME_HOW_GROWTH = HOME_HOW_H - 559
+
+/** What every homepage section below How It Works subtracts from its Figma y. */
+export const HOME_BELOW_HOW_SHIFT = HOME_BELOW_SERVICES_SHIFT - HOME_HOW_GROWTH
+
+/**
  * The CSS custom property that carries the OPEN tab's height difference on the
  * homepage: 0px with the Recycling tab (two rows of cards, the 1133 the frame
  * draws), -398px with either one-row tab. ServiceTabs sets it on the canvas;
@@ -170,7 +182,7 @@ export const HOME_TESTIMONIALS_GROWTH = 698 - 594
    Our Services). Keep in step with TESTIMONIALS_H in Testimonials.tsx. */
 
 /** What Client's Stories subtracts from its Figma y. */
-export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_SERVICES_SHIFT - HOME_TESTIMONIALS_GROWTH
+export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_HOW_SHIFT - HOME_TESTIMONIALS_GROWTH
 
 /**
  * Client's Stories grew on 21 Sep 2026 too: the three-up row (6026:14726, 885)

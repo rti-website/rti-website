@@ -162,7 +162,7 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
           rows: [
             [
               {
-                title: "Request a Quote",
+                title: "Get a Quote",
                 body: ["Contact Recycle Technologies to describe your paper volume and which option fits."],
               },
               {

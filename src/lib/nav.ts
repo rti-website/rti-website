@@ -63,6 +63,14 @@ export const MAIL_IN: NavItem = {
 }
 
 /**
+ * The EZ on the Earth kit store (all kits, "44 Recycling Kits Results Found"),
+ * with UTM tags so EZ's analytics credit this site. For "Buy Recycling Kits"
+ * links, which promise the store rather than the EZ homepage (management, CTA
+ * wording sheet, 2 Oct 2026).
+ */
+export const KIT_STORE = 'https://ezontheearth.com/collections/all?utm_source=recycletechnologies&utm_medium=referral&utm_campaign=kits'
+
+/**
  * THE TOP-BAR NUMBERS ARE THE FACILITY LINES since 23 Sep 2026 — Asim: "add
  * this numbers in navbar for their respective locations", pointing at the
  * facility cards (src/data/contact.ts FACILITIES): Blaine, MN +1-763-559-5130

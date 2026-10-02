@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_HOW_SHIFT } from '@/lib/layout'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
 import { QUOTE_HREF, href } from '@/lib/urls'
@@ -44,7 +44,7 @@ export async function WhyChooseUs() {
   })
   return (
     <Section
-      top={4435 - HOME_BELOW_SERVICES_SHIFT}
+      top={4435 - HOME_BELOW_HOW_SHIFT}
       left={320}
       width={1280}
       height={532}

@@ -162,7 +162,7 @@ export const MINNESOTA_PAPER_SHREDDING: LocalPage = {
           rows: [
             [
               {
-                title: "Request a Quote",
+                title: "Get a Quote",
                 body: [
                   "Contact Recycle Technologies to describe your paper volume and shredding needs and get a free quote.",
                 ],

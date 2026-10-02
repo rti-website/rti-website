@@ -2296,6 +2296,62 @@
       "node": "7174:8086",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "RTI logo (green wordmark) on the location cards, /all-locations/ Extended Operations and Additional Facilities Nationwide (1 Oct 2026); URL expires about 8 Oct."
+    },
+    {
+      "to": "public/images/certs/facta.svg",
+      "id": "cf228806-ee17-463d-808a-c5ad8b2c0be4/1fd1b.svg",
+      "node": "7182:8193",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "FACTA black wordmark, certifications strip and /certifications/ card (2 Oct 2026 restyle); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/certs/nist-800-88.png",
+      "id": "cf228806-ee17-463d-808a-c5ad8b2c0be4/7bae4.png",
+      "node": "7182:8229",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "NIST SP 800-88 compliance badge, certifications strip and /certifications/ card (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/certs/glba.svg",
+      "id": "cf228806-ee17-463d-808a-c5ad8b2c0be4/13bc3.svg",
+      "node": "7182:8224",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "GLBA black wordmark, certifications strip and /certifications/ card (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/certs/hipaa-wordmark.svg",
+      "id": "cf228806-ee17-463d-808a-c5ad8b2c0be4/88384.svg",
+      "node": "7182:8234",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "The black wordmark the designer drew as HIPPA (misspelled: the statute is HIPAA), certifications strip and /certifications/ card (2 Oct 2026); URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/home/how-video/glow-285.svg",
+      "id": "0e023326-f7d4-4fc4-9aa2-36809ed6bc33/897f4.svg",
+      "node": "7184:3249",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage How It Works video card, soft glow (Ellipse 54, blur baked in), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/home/how-video/glow-491.svg",
+      "id": "0e023326-f7d4-4fc4-9aa2-36809ed6bc33/03ff2.svg",
+      "node": "7184:3250",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage How It Works video card, soft glow (Ellipses 57 to 59), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/home/how-video/glow-285-soft.svg",
+      "id": "0e023326-f7d4-4fc4-9aa2-36809ed6bc33/33a33.svg",
+      "node": "7184:3256",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Homepage How It Works video card, soft glow (Ellipse 55), 2 Oct 2026; URL expires about 9 Oct."
+    },
+    {
+      "to": "public/images/icons/play-116.svg",
+      "id": "0e023326-f7d4-4fc4-9aa2-36809ed6bc33/2e212.svg",
+      "node": "I7184:3375;7184:3320",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Play button (116, teal ring and triangle) on the homepage How It Works video card, 2 Oct 2026; URL expires about 9 Oct."
     }
   ]
 }

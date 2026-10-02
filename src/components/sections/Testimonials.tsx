@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { HOME_BELOW_SERVICES_SHIFT } from '@/lib/layout'
+import { HOME_BELOW_HOW_SHIFT } from '@/lib/layout'
 import { Box, CenterBox, Section } from '@/components/design/Frame'
 import { Eyebrow, Title } from '@/components/ui/Bits'
 import type { Testimonial } from '@/data/home'
@@ -59,7 +59,7 @@ export async function Testimonials() {
   const { TESTIMONIALS, HOME_TESTIMONIALS } = await content('home')
   return (
     <Section
-      top={6739 - HOME_BELOW_SERVICES_SHIFT}
+      top={6739 - HOME_BELOW_HOW_SHIFT}
       height={TESTIMONIALS_H}
       label="6024:14149"
       className="flex flex-col items-center gap-[24px] bg-[#f5f5f5] px-[20px] py-[48px] lg:block lg:p-0"

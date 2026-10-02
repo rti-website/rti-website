@@ -1,5 +1,5 @@
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
-import { MAIL_IN } from '@/lib/nav'
+import { KIT_STORE } from '@/lib/nav'
 
 /**
  * What every county frame draws the same (Figma BVtf2AOuUOcYbiMIlcKmbC,
@@ -28,15 +28,20 @@ export const COUNTY_SERVICES = [
     text: 'Can’t drop off? No worries! Purchase our recycling kits online and mail in your electronics.',
     links: [
       { label: 'Mail In Your Electronics', href: href('/mail-in-recycling/'), external: false },
-      { label: 'Buy Recycling Kits', href: MAIL_IN.href, external: true },
+      // The kit store with UTM tags, not the EZ homepage (management, CTA
+      // wording sheet, 2 Oct 2026).
+      { label: 'Buy Recycling Kits', href: KIT_STORE, external: true },
     ],
   },
 ]
 
 /** Section - CTA Banner (7016:9109). */
 export const COUNTY_CTA = {
-  heading: 'Get A Free Estimate Today',
-  body: 'Get Started and Request your Quote Today',
+  // Only three CTAs on the site: Schedule a Pickup, Get a Quote, Contact Us
+  // (management, CTA wording sheet, 2 Oct 2026). Was "Get A Free Estimate
+  // Today" / "Get Started and Request your Quote Today".
+  heading: 'Ready to Recycle? Get a Quote Today',
+  body: 'Tell us what you have and we’ll take it from there.',
   button: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
