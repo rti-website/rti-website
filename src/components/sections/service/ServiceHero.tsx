@@ -29,7 +29,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, h1OneLine, lead, pickupCta, cta, secondaryCta, label, image, imageFill, washes, tone, panels, top = 140, size,
+  crumbs, h1, h1OneLine, lead, pickupCta, cta, ctaFill = 'colored', secondaryCta, label, image, imageFill, washes, tone, panels, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -73,6 +73,8 @@ export function ServiceHero({
   /** "Schedule a Pickup", drawn first, where the location picker was. */
   pickupCta?: { label: string; href: string }
   cta?: { label: string; href: string; external?: boolean }
+  /** `cta`'s fill: teal (default), or white with teal text (Wisconsin, 6744:8394, 5 Oct 2026). */
+  ctaFill?: 'colored' | 'whiteFill'
   /** A second, outlined button after `cta` (state landing pages, 24 Sep 2026). */
   secondaryCta?: { label: string; href: string; external?: boolean }
   label?: string
@@ -173,9 +175,9 @@ export function ServiceHero({
             {cta && (
               <Btn
                 href={cta.href}
-                variant="colored"
+                variant={ctaFill}
                 external={cta.external}
-                className="max-lg:w-full max-lg:justify-center"
+                className={`max-lg:w-full max-lg:justify-center ${ctaFill === 'whiteFill' ? 'border border-white backdrop-blur-[4px]' : ''}`}
               >
                 {cta.label}
               </Btn>

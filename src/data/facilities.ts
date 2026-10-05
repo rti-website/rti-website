@@ -61,7 +61,26 @@ export type Facility = {
   liveSeo: { title: string; description: string }
   /** The live H1, kept for the url-map row; the hero draws the design's. */
   liveH1: string
-  hero: { h1: string; lead: string; leadShort: string }
+  hero: {
+    h1: string; lead: string; leadShort: string
+    /** The hero's two buttons (Wisconsin, 5 Oct 2026, 6744:8394): white "Schedule a Pickup", outlined "Get a Quote". */
+    buttons?: { primary: { label: string; href: string }; secondary: { label: string; href: string } }
+  }
+  /**
+   * "Our <state> Recycling Center" — the bar under the hero linking the
+   * center's own page (Wisconsin, 6744:8794, 5 Oct 2026). Absent: no bar.
+   */
+  center?: {
+    eyebrow: string
+    name: string
+    href: string
+    addressLabel: string
+    address: string
+    phoneLabel: string
+    phone: string
+    primary: string
+    secondary: string
+  }
   address: string
   /** No zip, for the quick-info bar and the phone frame. */
   addressShort: string
@@ -242,18 +261,35 @@ export const WISCONSIN: Facility = {
   liveH1: 'Recycling in Wisconsin',
   hero: {
     h1: 'Recycling in Wisconsin', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
-    lead: '2815 South 171st Street, New Berlin, WI 53151, Pursuing R2v3',
-    leadShort: '2815 South 171st Street, New Berlin, WI, Pursuing R2v3',
+    // New lead and two buttons, Figma 6744:8394 (Asim, 5 Oct 2026). No phone frame; the phone uses the same lead.
+    lead: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',
+    leadShort: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',
+    buttons: {
+      primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
+      secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
+    },
+  },
+  // 6744:8794 (5 Oct 2026). The frame's "2815S" is a typo for "2815 S".
+  center: {
+    eyebrow: 'Our Wisconsin Recycling Center',
+    name: 'New Berlin Recycling Center',
+    href: href('/wisconsin-recycling/new-berlin-recycling-center/'),
+    addressLabel: 'Address:',
+    address: '2815 S 171st St, New Berlin, WI 53151',
+    phoneLabel: 'Phone:',
+    phone: '262-798-3040',
+    primary: 'View Center',
+    secondary: 'Get Directions',
   },
   address: WI_CONTACT.address,
   addressShort: '2815 South 171st Street, New Berlin, WI',
   phone: WI_CONTACT.phone,
   email: WI_CONTACT.email,
-  hours: 'Mon–Fri 8:00 AM–4:30 PM',      // FRAME — unconfirmed
-  hoursShort: 'Mon–Fri 8:00 AM–4:30 PM', // FRAME — unconfirmed
-  /* "Pursuing", not "Certified" — the one fact on these pages the site is
-     sure of. See the note in claude/why-choose-us-page.md. */
-  cert: { status: 'Pursuing R2v3', badge: 'Pursuing R2v3', certified: false },
+  // 5 Oct 2026, Figma 6744:8392: 7:30 to 4:00 (as the New Berlin page and the
+  // drop-off page already say) and R2v3 Certified (was "Pursuing R2v3").
+  hours: 'Mon–Fri 7:30 AM–4:00 PM',
+  hoursShort: 'Mon–Fri 7:30 AM–4:00 PM',
+  cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified', certified: true },
   /* !! The card no longer says "Pursuing R2v3" — Asim, 23 Sep 2026, swapped
      the pill for the NAID AAA badge. The status still shows on the facility
      page itself (quick-info bar and hero lead). The NAID AAA claim carries
@@ -262,7 +298,8 @@ export const WISCONSIN: Facility = {
   badgeLogo: { src: '/images/home/stat-r2.png', alt: 'R2v3 certified', w: 38, h: 40, href: R2_DIRECTORY },
   mapLabel: 'New Berlin, WI',
   mapsHref: maps(WI_CONTACT.address),
-  materialsLead: 'The New Berlin, Wisconsin facility currently accepts electronics, batteries, TVs, and paper shredding, with more services expanding as R2v3 certification is finalized.',
+  // The "as R2v3 certification is finalized" ending dropped 5 Oct 2026: the facility is now shown as certified.
+  materialsLead: 'The New Berlin, Wisconsin facility currently accepts electronics, batteries, TVs, and paper shredding.',
   materials: [M.electronics, M.batteries, M.tv, M.paper],
   directions: {
     intro: 'Enter via the main lot on South 171st Street. Staff will direct you to the drop-off bay upon arrival.', // FRAME

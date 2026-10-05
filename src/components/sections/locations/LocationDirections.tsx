@@ -32,15 +32,43 @@ const BTN = 'btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008
 
 export async function LocationDirections({ top, height, f }: { top: number; height: number; f: Facility }) {
   const { DETAIL_COPY } = await content('facilities')
-  const tel = `tel:${f.phone.replace(/[^+\d]/g, '')}`
   return (
     <Section top={top} height={height} label="6744:8795" className="flex flex-col items-center bg-[#fcfcfc] px-[20px] py-[44px] lg:px-0 lg:py-[70px]">
+      <DirectionsPanel
+        heading={DETAIL_COPY.directions.heading}
+        primary={DETAIL_COPY.directions.primary}
+        secondary={DETAIL_COPY.directions.secondary}
+        name={f.name} address={f.address} phone={f.phone} mapsHref={f.mapsHref}
+        intro={f.directions.intro} introShort={f.directions.introShort} rows={f.directions.rows}
+      />
+    </Section>
+  )
+}
+
+export type DirectionsCopy = {
+  heading: string
+  intro: string
+  introShort: string
+  rows: { label: string; value: string }[]
+  primary: string
+  secondary: string
+}
+
+/**
+ * The 1282 row without its section, so a flow page can draw it too: the New
+ * Berlin center page (7233:9372, "Drop off here", 5 Oct 2026).
+ */
+export function DirectionsPanel({ heading, intro, introShort, rows, primary, secondary, name, address, phone, mapsHref }: DirectionsCopy & {
+  name: string; address: string; phone: string; mapsHref: string
+}) {
+  const tel = `tel:${phone.replace(/[^+\d]/g, '')}`
+  return (
       <div className="flex w-full flex-col gap-[20px] lg:w-[1282px] lg:flex-row lg:items-start lg:gap-[32px]">
         {/* Map panel — 6746:2528 / 6751:2576: Google's map of the address. */}
         <div className="relative h-[200px] w-full shrink-0 overflow-hidden rounded-[16px] bg-[#eaf4f5] lg:h-[380px] lg:w-[700px]">
           <iframe
-            src={mapEmbed(f.address)}
-            title={`Map of ${f.name}, ${f.address}`}
+            src={mapEmbed(address)}
+            title={`Map of ${name}, ${address}`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             className="absolute inset-0 size-full border-0"
@@ -49,12 +77,12 @@ export async function LocationDirections({ top, height, f }: { top: number; heig
 
         {/* Getting here — 6746:2537 */}
         <div className="flex w-full flex-col gap-[16px] lg:w-[550px] lg:gap-[20px]">
-          <h2 className="font-sans text-[24px] font-semibold leading-[29px] text-heading max-lg:text-center lg:text-[28px] lg:leading-normal">{DETAIL_COPY.directions.heading}</h2>
-          <p className="font-roboto text-[15px] leading-[22px] text-muted max-lg:text-center lg:hidden">{f.directions.introShort}</p>
-          <p className="font-roboto text-[15.5px] leading-[1.65] text-muted max-lg:hidden">{f.directions.intro}</p>
+          <h2 className="font-sans text-[24px] font-semibold leading-[29px] text-heading max-lg:text-center lg:text-[28px] lg:leading-normal">{heading}</h2>
+          <p className="font-roboto text-[15px] leading-[22px] text-muted max-lg:text-center lg:hidden">{introShort}</p>
+          <p className="font-roboto text-[15.5px] leading-[1.65] text-muted max-lg:hidden">{intro}</p>
 
           <dl className="flex flex-col gap-[12px] rounded-[12px] bg-[#eaf4f5] p-[24px] text-[14px] max-lg:hidden">
-            {f.directions.rows.map((r) => (
+            {rows.map((r) => (
               <div key={r.label} className="flex h-[20px] items-start justify-between">
                 <dt className="font-roboto text-muted">{r.label}</dt>
                 <dd className="font-sans font-medium text-heading">{r.value}</dd>
@@ -63,17 +91,16 @@ export async function LocationDirections({ top, height, f }: { top: number; heig
           </dl>
 
           <div className="flex flex-col gap-[10px] lg:flex-row lg:gap-[14px] lg:pt-[6px]">
-            <a href={f.mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
-              <span className="whitespace-nowrap">{DETAIL_COPY.directions.primary}</span>
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
+              <span className="whitespace-nowrap">{primary}</span>
               <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </a>
             <a href={tel} className={`${BTN} border border-brand bg-transparent text-brand hover:bg-brand-soft`}>
-              <span className="whitespace-nowrap">{DETAIL_COPY.directions.secondary}</span>
+              <span className="whitespace-nowrap">{secondary}</span>
               <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </a>
           </div>
         </div>
       </div>
-    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -10,6 +10,18 @@ import type { CountyPage } from '../types'
  * The frame's copy word for word; "our online form" and "this form" link to
  * the quote form. The hero photo is the one the Hennepin board uses (same
  * file, 7058:3977). Title: the WordPress one (management, 1 Oct 2026).
+ *
+ * 5 Oct 2026, frame 7233:8238 (Asim: "we add some new thing so add it in
+ * the page"): a photo of its own (7233:8243, under a 20% black veil and a
+ * navy wash from the left), a new lead, a second button, "Wisconsin" in the
+ * breadcrumb, the quick-info bar (7233:9339) and the map row "Drop off here"
+ * (7233:9372). Not taken from the frame, on purpose:
+ *   - Hours: the frame's "Mon–Fri, confirmed hours" is a placeholder; the
+ *     page's own contact card says 7:30 am to 4:00 pm, so the bar does too.
+ *   - The map row's copy is the Blaine template's (99th Lane NE, I-35W); it
+ *     carries the Wisconsin facility's real directions instead.
+ *   - About still says "State Contracted", without "EPA Certified" (1 Oct).
+ *   - The CTA banner keeps the 2 Oct wording ("Ready to Recycle? …").
  */
 export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
   url: "/wisconsin-recycling/new-berlin-recycling-center/",
@@ -27,10 +39,37 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
   hero: {
     h1: "New Berlin Recycling Center",
     crumb: "New Berlin Recycling Center",
-    lead: "Recycle technologies is the one-stop solution to your recycling needs.",
-    image: '/images/locations/county/hennepin.png',
+    parent: { label: "Wisconsin", href: href('/wisconsin-recycling/') },
+    lead: "Drop off electronics and batteries, or schedule a business pickup across southeast Wisconsin",
+    image: '/images/locations/county/new-berlin.png',
     imageTop: -372,
+    overlay: 'linear-gradient(90deg, rgba(5,29,59,0.35) 0%, rgba(5,29,59,0.24) 60%, rgba(5,29,59,0) 100%), linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2))',
+    // No phone frame: a navy veil so the two-line lead reads on the busy photo.
+    phoneOverlay: 'rgba(11,31,58,0.45)',
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+    secondary: { label: "Get a Quote", href: QUOTE_HREF },
+  },
+  quickInfo: [
+    { glyph: 'pin',   label: "Address",      value: "2815 S 171st St, New Berlin, WI 53151", href: "https://www.google.com/maps/dir/?api=1&destination=2815+S+171st+St%2C+New+Berlin%2C+WI+53151" },
+    { glyph: 'phone', label: "Phone",        value: "262-798-3040", href: "tel:+12627983040" },
+    { glyph: 'clock', label: "Hours",        value: "Mon–Fri 7:30 AM–4:00 PM" },
+    { glyph: 'badge', label: "Getting Here", value: "Main lot off S 171st St, near I-43" },
+  ],
+  directions: {
+    heading: "Drop off here",
+    intro: "Enter via the main lot on South 171st Street. Staff will direct you to the drop-off bay upon arrival.",
+    introShort: "Enter via the main lot on South 171st Street. Staff will direct you to the drop-off bay upon arrival.",
+    rows: [
+      { label: "Nearest Highway",   value: "I-43 & College Ave" },
+      { label: "Parking",           value: "Free on-site parking" },
+      { label: "Drop-off Entrance", value: "Rear loading area" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "New Berlin Recycling Center",
+    address: "2815 South 171st Street, New Berlin, WI 53151",
+    tel: "+12627983040",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=2815+South+171st+Street%2C+New+Berlin%2C+WI+53151",
   },
   about: {
     heading: "About New Berlin Recycling Center",

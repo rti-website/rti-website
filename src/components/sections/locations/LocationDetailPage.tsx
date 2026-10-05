@@ -5,6 +5,7 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
+import { LocationCenterBar } from '@/components/sections/locations/LocationCenterBar'
 import { LocationQuickInfo } from '@/components/sections/locations/LocationQuickInfo'
 import { LocationDirections } from '@/components/sections/locations/LocationDirections'
 import { LocationMaterials } from '@/components/sections/locations/LocationMaterials'
@@ -25,6 +26,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  *   Section        Node        Figma h     built     why
  *   Header         —           140         140
  *   Hero           6744:8394   470         470       ServiceHero, as every interior page
+ *   Center bar     6744:8794   219         L.center  Wisconsin only (5 Oct 2026), LocationCenterBar
  *   Quick info     6744:8794   198         L.info
  *   Directions     6744:8795   520         L.map
  *   Materials      6744:8796   467 / 486   L.mat     Wisconsin's lead wraps to two lines
@@ -53,7 +55,11 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * node; the page needs nothing here beyond the heights going out as custom
  * properties that only apply at lg.
  */
-export type LocationLayout = { info: number; map: number; mat: number; steps: number; faq: number }
+export type LocationLayout = {
+  /** The "Our <state> Recycling Center" bar (6744:8794), when the facility has `center`. */
+  center?: number
+  info: number; map: number; mat: number; steps: number; faq: number
+}
 
 const HERO_TOP = 140
 const HERO_H = 470
@@ -63,7 +69,9 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   /** Material id -> this facility's published service page (Admin -> Locations). */
   links?: Record<string, string>
 }) {
-  const INFO_TOP   = HERO_TOP + HERO_H
+  const CENTER_TOP = HERO_TOP + HERO_H
+  const CENTER_H   = f.center ? (L.center ?? 0) : 0
+  const INFO_TOP   = CENTER_TOP + CENTER_H
   const MAP_TOP    = INFO_TOP + L.info
   const MAT_TOP    = MAP_TOP + L.map
   const STEPS_TOP  = MAT_TOP + L.mat
@@ -88,7 +96,9 @@ export async function LocationDetailPage({ f, layout: L, links }: {
           /* 6745:6485 — the phone frame drops the zip and the state's full name. */
           lead={<><span className="lg:hidden">{f.hero.leadShort}</span><span className="max-lg:hidden">{f.hero.lead}</span></>}
           {...(f.state === 'Wisconsin' ? HERO_PHOTOS.wisconsin : HERO_PHOTOS.minnesota)}
+          {...(f.hero.buttons ? { cta: f.hero.buttons.primary, ctaFill: 'whiteFill' as const, secondaryCta: f.hero.buttons.secondary } : {})}
         />
+        {f.center && <LocationCenterBar top={CENTER_TOP} height={CENTER_H} f={f} />}
         <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
         <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />
         <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />

@@ -94,6 +94,36 @@ export type CountyPage = {
     /** A tint over the photo on the phone. */
     phoneOverlay?: string
     button: { label: string; href: string }
+    /**
+     * A second, outlined white button after `button`. With it, `button` is
+     * drawn white with teal text, as the New Berlin frame draws the pair
+     * (7233:8240, 5 Oct 2026).
+     */
+    secondary?: { label: string; href: string }
+    /** A breadcrumb between Locations and the page ("Wisconsin" on New Berlin, 7233:8249). */
+    parent?: { label: string; href: string }
+  }
+  /**
+   * The quick-info bar under the hero (New Berlin, 7233:9339, 5 Oct 2026):
+   * the facility pages' bar. `glyph` is the icon: pin, phone, clock or badge.
+   */
+  quickInfo?: { glyph: 'pin' | 'phone' | 'clock' | 'badge'; label: string; value: string; href?: string }[]
+  /**
+   * The map and directions row after the quick-info bar (New Berlin,
+   * 7233:9372): the facility pages' "Getting Here" row with its own heading.
+   */
+  directions?: {
+    heading: string
+    intro: string
+    introShort: string
+    rows: { label: string; value: string }[]
+    primary: string
+    secondary: string
+    name: string
+    address: string
+    /** The "Call This Location" number, dialable (+1…). */
+    tel: string
+    mapsHref: string
   }
   about: { heading: string; blocks: AboutBlock[] }
   /** The heading some frames draw over the Service Options cards ("Recycling Services"). */

@@ -30,7 +30,7 @@ export default async function WisconsinFacilityPage() {
   return (
     <LocationDetailPage
       f={f} links={links}
-      layout={{ info: 200, map: 520, mat: 503, steps: 532, faq: 486 }}
+      layout={{ center: 219, info: 200, map: 520, mat: 503, steps: 532, faq: 486 }}
     />
   )
 }

@@ -635,6 +635,11 @@
     "statusCode": 301
   },
   {
+    "source": "/tesla-battery-recycling/",
+    "destination": "/tesla-battery-recycling-secrets/",
+    "statusCode": 301
+  },
+  {
     "source": "/wisconsin-recycling/tv-recycling/",
     "destination": "/tv-recycling-in-wisconsin/",
     "statusCode": 301

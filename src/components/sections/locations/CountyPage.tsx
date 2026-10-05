@@ -4,6 +4,8 @@ import { FlowCanvas } from '@/components/design/Frame'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { Btn } from '@/components/ui/Bits'
+import { QuickInfoBar } from '@/components/sections/locations/LocationQuickInfo'
+import { DirectionsPanel } from '@/components/sections/locations/LocationDirections'
 import { FOOTER_H } from '@/lib/layout'
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { breadcrumbNode, graph, serviceNode } from '@/lib/schema'
@@ -33,11 +35,7 @@ type Shared = DocData<'county-shared'>
  */
 export async function CountyPage({ page }: { page: Page }) {
   const shared = await content('county-shared')
-  const trail = [
-    { name: 'Home', url: '/' },
-    { name: 'Locations', url: '/all-locations/' },
-    { name: page.hero.crumb, url: page.url },
-  ]
+  const trail = trailOf(page).map((c) => ({ name: c.label, url: c.href ?? page.url }))
   const schema = graph(
     breadcrumbNode(trail),
     serviceNode({ name: page.service ?? 'Electronics Recycling', url: page.url, description: page.seo.description, areaServed: [page.areaServed ?? `${page.county}, ${page.state}`] }),
@@ -47,6 +45,18 @@ export async function CountyPage({ page }: { page: Page }) {
       <Header />
       <main>
         <Hero page={page} />
+        {page.quickInfo && (
+          /* 7233:9339 — the facility pages' bar, white band, py50. */
+          <section data-figma="7233:9339" className="flex flex-col items-center bg-white px-[20px] py-[32px] lg:px-0 lg:py-[50px]">
+            <QuickInfoBar items={page.quickInfo.map((q) => ({ ...q, external: q.href?.startsWith('http') }))} />
+          </section>
+        )}
+        {page.directions && (
+          /* 7233:9372 — the facility pages' map row, #fcfcfc, py70. */
+          <section data-figma="7233:9372" className="flex flex-col items-center bg-[#fcfcfc] px-[20px] py-[44px] lg:px-0 lg:py-[70px]">
+            <DirectionsPanel {...page.directions} phone={page.directions.tel} />
+          </section>
+        )}
         <About page={page} />
         <Services heading={page.servicesHeading} shared={shared} />
         <Cta shared={shared} />
@@ -118,7 +128,7 @@ function Rich({ text }: { text: string }) {
 function Hero({ page }: { page: Page }) {
   const h = page.hero
   return (
-    <section data-figma={page.figma.board} className="relative h-[276px] overflow-hidden bg-navy lg:h-[470px]">
+    <section data-figma={page.figma.board} className={`relative overflow-hidden bg-navy lg:h-[470px] ${h.secondary ? 'h-[310px]' : 'h-[276px]'}`}>
       <div aria-hidden="true" className="absolute left-[-223px] top-[-108px] h-[494px] w-[878px] lg:left-1/2 lg:top-[var(--img-t)] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2"
         style={{ '--img-t': `${h.imageTop ?? -372}px` } as React.CSSProperties}>
         {h.image && <Image src={h.image} alt="" fill priority sizes="(width < 64rem) 878px, 1920px" className="object-cover" />}
@@ -153,12 +163,23 @@ function Hero({ page }: { page: Page }) {
           {h.lead}
         </p>
         {/* Phone 7015:14008: a 40px button, 14px, no arrow. */}
-        <Link href={h.button.href}
-          className="btn-pop mt-[16px] inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] bg-brand px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px] lg:hidden">
-          {h.button.label}
-        </Link>
-        <div className="max-lg:hidden lg:mt-[12px]">
-          <Btn href={h.button.href} variant="colored" className="backdrop-blur-[4px]">{h.button.label}</Btn>
+        <div className="mt-[16px] flex gap-[10px] lg:hidden">
+          <Link href={h.button.href}
+            className={`btn-pop inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4px] ${h.secondary ? 'border border-white bg-white text-brand' : 'bg-brand text-white'}`}>
+            {h.button.label}
+          </Link>
+          {h.secondary && (
+            <Link href={h.secondary.href}
+              className="btn-pop inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] border border-white px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px]">
+              {h.secondary.label}
+            </Link>
+          )}
+        </div>
+        {/* 7233:9331 — with a second button the pair is white (teal text) and
+            outlined white, 14 apart, 12 under the lead. */}
+        <div className="max-lg:hidden lg:mt-[12px] lg:flex lg:gap-[14px]">
+          <Btn href={h.button.href} variant={h.secondary ? 'whiteFill' : 'colored'} className={`backdrop-blur-[4px] ${h.secondary ? 'border border-white' : ''}`}>{h.button.label}</Btn>
+          {h.secondary && <Btn href={h.secondary.href} variant="white" className="border border-white backdrop-blur-[4px]">{h.secondary.label}</Btn>}
         </div>
       </div>
     </section>
@@ -166,10 +187,11 @@ function Hero({ page }: { page: Page }) {
 }
 
 /** Home / Locations / <page>, as the board's breadcrumb reads. */
-function trailOf(page: Page) {
+function trailOf(page: Page): { label: string; href: string | null }[] {
   return [
     { label: 'Home', href: href('/') },
     { label: 'Locations', href: href('/all-locations/') },
+    ...(page.hero.parent ? [{ label: page.hero.parent.label, href: page.hero.parent.href }] : []),
     { label: page.hero.crumb, href: null },
   ]
 }
