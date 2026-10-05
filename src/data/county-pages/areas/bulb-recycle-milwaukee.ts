@@ -15,11 +15,11 @@ export const BULB_RECYCLE_MILWAUKEE: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:68161", phone: "7084:68472" },
   seo: {
-    title: "Bulb Recycling in Milwaukee | Call (800) 969-5166",
+    title: 'Milwaukee, WI Bulb Recycling: Fluorescent Tubes & CFLs',
     description: "Bulb recycling Milwaukee for linear fluorescents, CFLs, metal halide lamps, induction lights, and pin-based bulbs, accepted through approved handling steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Bulb Recycling In Milwaukee",
+    h1: 'Bulb Recycling in Milwaukee, WI',
     crumb: "Bulb Recycling In Milwaukee",
     lead: "Get the fluorescent bulb recycling services in Milwaukee Wisconsin customized to your individual and company needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_IN_MINNEAPOLIS: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7068:5214", phone: "7068:5966" },
   seo: {
-    title: "Battery Recycling in Minneapolis | Call (800) 969-5166",
+    title: 'Battery Recycling in Minneapolis, MN | Recycle Technologies',
     description: "Battery recycling Minneapolis for lithium iron phosphate packs, zinc chloride cells, silver zinc units, and sealed energy modules, received through approved handling steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Battery Recycling Minneapolis",
+    h1: 'Battery Recycling in Minneapolis, MN',
     crumb: "Battery Recycling Minneapolis",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Minneapolis from your trusted local partner.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

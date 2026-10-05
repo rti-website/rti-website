@@ -6,7 +6,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/hard-drive-destruction-services/',
   liveSeo: {
-    title: 'Commercial Hard Drive Destruction Services | Call (800) 969-5166',
+    title: 'Hard Drive Destruction Services | Certified Data Destruction',
     description: 'Commercial hard drive destruction for businesses, offices & organizations. Securely destroy HDDs, SSDs and data storage devices with verified service.',
   },
   proposedSeo: {
@@ -16,7 +16,7 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Hard Drive Destruction',
     // Matches the live H1 exactly — no gate 2 conflict on this page.
-    h1: 'Hard Drive Destruction Services',
+    h1: 'Certified Hard Drive Destruction Services',
     lead: 'Deleting files or reformatting a drive does not remove the data stored on it. Recycle Technologies provides secure hard drive destruction for businesses in Minnesota and Wisconsin, physically destroying hard disk drives, solid-state drives, and other data-bearing storage media so the information on them cannot be recovered.',
     cta: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     ...HERO_PHOTOS.hardDrive, // 28 Sep 2026 frame — see src/data/hero-photos.ts

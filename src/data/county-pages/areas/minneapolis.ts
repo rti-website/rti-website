@@ -14,11 +14,11 @@ export const MINNEAPOLIS: CountyPage = {
   county: "Minneapolis",
   figma: { board: "7084:80751", phone: "7084:81055" },
   seo: {
-    title: "Recycling Services in Minneapolis | (800) 969-5166",
+    title: 'Minneapolis, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling services in Minneapolis supporting electronics, batteries, lighting waste, paper output, secure handling, and processing. Call (800) 969-5166",
   },
   hero: {
-    h1: "Recycling Solutions for All! in Minneapolis",
+    h1: 'Electronics Recycling in Minneapolis, MN',
     crumb: "Recycling Solutions for All! in Minneapolis",
     lead: "Let’s revolutionize the way you dispose of your electronic waste with Recycle Technologies.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

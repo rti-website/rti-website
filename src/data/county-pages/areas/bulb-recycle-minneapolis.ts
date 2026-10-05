@@ -15,11 +15,11 @@ export const BULB_RECYCLE_MINNEAPOLIS: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7069:5352", phone: "7069:6110" },
   seo: {
-    title: "Bulb Recycling Minneapolis Minnesota | Call (800) 969-5166",
+    title: 'Minneapolis, MN Bulb Recycling: Fluorescent Tubes & CFLs',
     description: "Bulb recycling Minneapolis Minnesota for fluorescent tubes, CFLs, LEDs, and HID lamps, received, packed, and routed through approved handling steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Bulb Recycling In Minneapolis Minnesota", // WordPress H1, restored 30 Sep 2026 (Asim)
+    h1: 'Bulb Recycling in Minneapolis, MN', // WordPress H1, restored 30 Sep 2026 (Asim)
     crumb: "Bulb Recycling In Minneapolis Minnesota",
     lead: "Bulb recycling services in Minneapolis, Minnesota, customized to your individual and company needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

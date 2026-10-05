@@ -11,13 +11,13 @@ export const WISCONSIN_BATTERY_RECYCLING: LocalPage = {
   url: href('/wisconsin-recycling/battery-recycling/'),
   figma: { board: "7118:4979", phone: "7118:5396" },
   seo: {
-    title: "Battery Recycling in New Berlin, Wisconsin | Recycle Technologies",
+    title: 'Battery Recycling in New Berlin, WI | Recycle Technologies',
     description: "Drop off, business pickup or mail in spent batteries at our New Berlin, Wisconsin facility. Alkaline, lithium-ion, lead-acid, NiCd and EV batteries sorted by chemistry and recycled in-house since 1993.",
   },
   schema: { service: "Battery Recycling", areaServed: ["New Berlin, WI", "Wisconsin"] },
   hero: {
     crumb: "Battery Recycling in New Berlin, Wisconsin",
-    h1: "Battery Recycling in New Berlin, Wisconsin",
+    h1: 'Battery Recycling in New Berlin, WI',
     body: [
       "Used batteries, alkaline, lithium-ion, lead-acid, and more, contain materials that can be hazardous if crushed, damaged, or left to leak, and shouldn't go in the trash or curbside recycling bin. Recycle Technologies collects and recycles batteries for households, businesses, and organizations at its New Berlin, Wisconsin facility, giving the area a documented way to clear out spent batteries instead of letting them accumulate. Individuals can drop batteries off at the New Berlin location or use the nationwide Mail-In Program, while businesses can schedule a pickup.",
     ],

@@ -18,7 +18,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * (CLAUDE.md rule 6), the doc's proposals are parked for the second wave.
  */
 export const LIVE_SEO = {
-  title: 'Commercial Battery Recycling | Lithium, Alkaline | Call Now',
+  title: 'Battery Recycling Near Me: Lithium, Lead Acid & More',
   description:
     'Commercial battery recycling for businesses, offices & facilities. Recycle non-hazardous '
     + 'batteries from electronics and devices with reliable service.',
@@ -43,7 +43,7 @@ export const HERO = {
     { label: 'Our Services', href: href('/services/') },
     { label: 'Battery Recycling', href: null },
   ],
-  h1: 'BATTERY RECYCLING', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+  h1: 'Commercial Battery Recycling Services', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead:
     'Recycle Technologies collects and recycles batteries for businesses and organizations, '
     + 'ensuring spent batteries are sorted and processed rather than sitting in storage or '

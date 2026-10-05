@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_APPLETON: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7066:7045", phone: "7066:7798" },
   seo: {
-    title: "Battery Recycling in Appleton | Call (800) 969-5166",
+    title: 'Battery Recycling in Appleton, WI | Recycle Technologies',
     description: "Battery recycling Appleton for alkaline cells, zinc air batteries, lithium coin cells, and sealed backup units, received and processed under approved rules. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Battery Recycling Appleton",
+    h1: 'Battery Recycling in Appleton, WI',
     crumb: "Battery Recycling Appleton",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Appleton from your trusted local partner.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

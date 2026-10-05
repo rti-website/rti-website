@@ -14,11 +14,11 @@ export const ST_CLOUD_RECYCLING_CENTER: CountyPage = {
   county: "St. Cloud",
   figma: { board: "7069:8951", phone: "7069:10090" },
   seo: {
-    title: "Recycling Center in St Cloud | Call (800) 969-5166",
+    title: 'St Cloud, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center St Cloud offering electronics intake, device clearing, lamp handling, battery acceptance, and secure shredding services. Call (800) 969-5166.",
   },
   hero: {
-    h1: "St Cloud Recycling Center",
+    h1: 'Electronics Recycling in St Cloud, MN',
     crumb: "St Cloud Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

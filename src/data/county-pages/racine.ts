@@ -16,11 +16,11 @@ export const RACINE: CountyPage = {
   county: "Racine County",
   figma: { board: "7063:7899", phone: "7063:9029" },
   seo: {
-    title: "Recycling Center in Racine County | Call (800) 969-5166",
+    title: 'Racine County, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Racine County coordinating acceptance of electronics, lamp waste, varied battery categories, paper materials, and approved discard streams. Call (800) 969-5166",
   },
   hero: {
-    h1: "Racine County Recycling Center",
+    h1: 'Electronics Recycling in Racine County, WI',
     crumb: "Racine County Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/racine.png',

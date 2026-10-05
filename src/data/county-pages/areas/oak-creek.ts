@@ -14,11 +14,11 @@ export const OAK_CREEK: CountyPage = {
   county: "Oak Creek",
   figma: { board: "7063:5721", phone: "7063:6851" },
   seo: {
-    title: "Recycling Center in Oak Creek | Call (800) 969-5166",
+    title: 'Oak Creek, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Oak Creek handling printers, switches, power adapters, lamps, and mixed electronics, accepted through documented intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Oak Creek Recycling Center",
+    h1: 'Electronics Recycling in Oak Creek, WI',
     crumb: "Oak Creek Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

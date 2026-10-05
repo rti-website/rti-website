@@ -16,11 +16,11 @@ export const OLMSTED: CountyPage = {
   county: "Olmsted County",
   figma: { board: "7067:7797", phone: "7067:8953" },
   seo: {
-    title: "Recycling Center in Olmsted County | Call (800) 969-5166",
+    title: 'Olmsted County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Olmsted County handling electronics, batteries, lamps, devices, and records through approved acceptance and processing methods. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Olmsted County Recycling Center",
+    h1: 'Electronics Recycling in Olmsted County, MN',
     crumb: "Olmsted County Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/olmsted.png',

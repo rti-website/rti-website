@@ -15,7 +15,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/airbag-recycling/',
   liveSeo: {
-    title: 'Commercial Airbag Recycling | Deployed & Undeployed',
+    title: 'Airbag Disposal: Deployed & Undeployed Recycling',
     description: 'Commercial airbag recycling for auto shops, dealerships & facilities. Recycle deployed and undeployed vehicle airbags with a reliable recycling service.',
   },
   proposedSeo: {
@@ -26,7 +26,7 @@ export const CONTENT: ServicePageContent = {
     ...HERO_PHOTOS.airbag, // 28 Sep 2026 frame — see src/data/hero-photos.ts
     crumb: 'Airbag Recycling',
     // Live H1 is "Airbag Recycling" — this page's only difference is "Services".
-    h1: 'Airbag Recycling', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'Airbag Recycling and Disposal for Auto Businesses', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides certified airbag disposal for deployed and undeployed units, serving auto shops, dealerships, and fleet operators with a reliable, compliant recycling process.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
   },

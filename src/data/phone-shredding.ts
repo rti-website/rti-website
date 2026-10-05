@@ -6,7 +6,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/phone-shredding-service/',
   liveSeo: {
-    title: 'Phone Shredding Services | Call (800) 969-5166',
+    title: 'Cell Phone Shredding for Business | Secure Destruction',
     description: 'Phone shredding services providing physical destruction of mobile devices, SIM cards, memory chips, and handheld electronics to prevent data exposure. Call (800) 969-5166',
   },
   proposedSeo: {
@@ -17,7 +17,7 @@ export const CONTENT: ServicePageContent = {
     ...HERO_PHOTOS.phone, // 28 Sep 2026 frame — see src/data/hero-photos.ts
     crumb: 'Phone Shredding',
     // Matches the live H1 exactly — no gate 2 conflict on this page.
-    h1: 'Phone Shredding Services',
+    h1: 'Secure Cell Phone Shredding Services',
     lead: 'Recycle Technologies provides secure, off-site phone shredding and recycling for businesses and offices, collecting old or broken cell phones and processing them at a dedicated facility with a Certificate of Recycling issued afterward.',
     cta: { label: 'Schedule a Pickup', href: PICKUP_HREF },
   },

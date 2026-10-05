@@ -16,11 +16,11 @@ export const WASHINGTON_MN: CountyPage = {
   county: "Washington County",
   figma: { board: "7072:5904", phone: "7072:7060" },
   seo: {
-    title: "Recycling Center in Washington County MN | Call (800) 969-5166",
+    title: 'Washington County, MN: Electronics, Battery & Bulb Recycling',
     description: "Recycling center in Washington County MN accepting electronics, batteries, lighting, paper, and approved materials from homes and facilities. Call (800) 969-5166",
   },
   hero: {
-    h1: "Washington County Recycling Center, MN",
+    h1: 'Electronics Recycling in Washington County, MN',
     crumb: "Washington County Recycling Center, MN",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/washington-mn.png',

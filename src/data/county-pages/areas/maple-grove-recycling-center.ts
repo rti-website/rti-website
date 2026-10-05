@@ -14,11 +14,11 @@ export const MAPLE_GROVE_RECYCLING_CENTER: CountyPage = {
   county: "Maple Grove",
   figma: { board: "7068:6601", phone: "7068:7731" },
   seo: {
-    title: "Recycling Center In Maple Grove | Call (800) 969-5166",
+    title: 'Maple Grove, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Maple Grove receiving electronic equipment, spent batteries, lighting waste, paper materials, and organized material intake. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Maple Grove Recycling Center",
+    h1: 'Electronics Recycling in Maple Grove, MN',
     crumb: "Maple Grove Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

@@ -15,11 +15,11 @@ export const FORT_WORTH_TEXAS: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:78708", phone: "7084:79033" },
   seo: {
-    title: "Recycling Services in Texas | Call (800) 969-5166",
+    title: 'Fort Worth Recycling Center: Lamps, Batteries & E-Waste',
     description: "Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166",
   },
   hero: {
-    h1: "Fort Worth, Texas",
+    h1: 'Recycle Technologies Fort Worth, TX',
     crumb: "Fort Worth, Texas",
     lead: "Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

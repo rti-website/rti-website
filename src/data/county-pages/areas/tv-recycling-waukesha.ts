@@ -15,11 +15,11 @@ export const TV_RECYCLING_WAUKESHA: CountyPage = {
   service: "TV Recycling",
   figma: { board: "7065:6051", phone: "7065:6805" },
   seo: {
-    title: "TV Recycling in Waukesha | Call (800) 969-5166",
+    title: 'Waukesha, WI TV Recycling: CRT, LCD & LED',
     description: "TV recycling Waukesha for flat-panel sets, smart displays, projection units, gaming screens, and television hardware, received through controlled intake procedures. Call (800) 969-5166.",
   },
   hero: {
-    h1: "TV Recycling in Waukesha",
+    h1: 'TV Recycling in Waukesha, WI',
     crumb: "TV Recycling in Waukesha",
     lead: "Make retiring your old TVs easier by collaborating with your trusted TV recycling partner in Waukesha Wisconsin.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

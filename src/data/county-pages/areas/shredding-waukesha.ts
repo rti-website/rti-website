@@ -15,11 +15,11 @@ export const SHREDDING_WAUKESHA: CountyPage = {
   service: "Document Shredding",
   figma: { board: "7084:81791", phone: "7084:82072" },
   seo: {
-    title: "Shredding Service in Waukesha | Call (800) 969-5166",
+    title: 'Waukesha Paper Shredding & Document Destruction',
     description: "Shredding service Waukesha for documents, invoices, manuals, and confidential papers, destroyed through controlled procedures with recorded completion. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Waukesha Shredding Service",
+    h1: 'Paper Shredding in Waukesha, WI',
     crumb: "Waukesha Shredding Service",
     lead: "Recycle Technologies safe and cost-effective Service of Paper Shredding Waukesha, lets you safely dispose of your confidential information securely and efficiently.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

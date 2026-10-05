@@ -16,11 +16,11 @@ export const SHREDDING_MINNESOTA: CountyPage = {
   service: "Document Shredding",
   figma: { board: "7073:7429", phone: "7073:8254" },
   seo: {
-    title: "Document Shredding Minnesota | Call (800) 969-5166",
+    title: 'Paper Shredding in Minnesota | Recycle Technologies',
     description: "Document shredding in Minnesota for records and confidential documents. Call (800) 969-5166 for document shredding today.",
   },
   hero: {
-    h1: "Document Shredding Minnesota",
+    h1: 'Paper Shredding Services in Minnesota',
     crumb: "Document Shredding Minnesota",
     lead: "We offer fast, reliable and cost effective shredding services in Minnesota",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

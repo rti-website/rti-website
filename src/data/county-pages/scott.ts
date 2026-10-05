@@ -14,11 +14,11 @@ export const SCOTT: CountyPage = {
   county: "Scott County",
   figma: { board: '7027:21105', phone: '7027:21663' },
   seo: {
-    title: "Recycling Services in Scott County | Call (800) 969-5166",
+    title: 'Scott County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling services Scott County arranging intake for electronics, lighting scrap, assorted battery formats, paper loads, and approved materials. Call (800) 969-5166",
   },
   hero: {
-    h1: "Scott County Recycling",
+    h1: 'Electronics Recycling in Scott County, MN',
     crumb: "Scott County Recycling",
     lead: "Scott County Recycling Providing reliable and certified electronics recycling services at individual and business levels",
     image: '/images/locations/county/scott.png',

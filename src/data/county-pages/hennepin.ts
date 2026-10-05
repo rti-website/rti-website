@@ -16,11 +16,11 @@ export const HENNEPIN: CountyPage = {
   county: "Hennepin County",
   figma: { board: "7071:5697", phone: "7071:6868" },
   seo: {
-    title: "Recycling Center in Hennepin County | Call (800) 969-5166",
+    title: 'Hennepin County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Hennepin County receiving electronics, computers, lamps, batteries, and devices, managed through documented intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Hennepin County Recycling Center",
+    h1: 'Electronics Recycling in Hennepin County, MN',
     crumb: "Hennepin County Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/hennepin.png',

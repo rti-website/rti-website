@@ -14,11 +14,11 @@ export const CALUMET: CountyPage = {
   county: "Calumet County",
   figma: { board: '7023:18867', phone: '7023:19407' },
   seo: {
-    title: "Material Recycling in Calumet | Call (800) 969-5166",
+    title: 'Calumet County, WI Recycling: Electronics & Batteries',
     description: "Material recycling in Calumet handling accepted electronics, spent lamps, mixed battery formats, document paper, and approved items. Call (800) 969-5166",
   },
   hero: {
-    h1: "Calumet Recycling", // WordPress H1, restored 30 Sep 2026 (Asim)
+    h1: 'Electronics Recycling in Calumet County, WI', // WordPress H1, restored 30 Sep 2026 (Asim)
     crumb: "Calumet Recycling",
     lead: "Calumet Recycling Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/calumet.png',

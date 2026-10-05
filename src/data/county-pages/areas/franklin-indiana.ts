@@ -15,11 +15,11 @@ export const FRANKLIN_INDIANA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:70384", phone: "7084:70710" },
   seo: {
-    title: "Recycling Services in Franklin IN | Call (800) 969-5166",
+    title: 'Franklin, IN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling services Franklin Indiana handling electronics, retired lighting, varied battery categories, paper materials, and approved items through scheduled intake. Call (800) 969-5166",
   },
   hero: {
-    h1: "Franklin, Indiana",
+    h1: 'Electronics Recycling in Franklin, IN',
     crumb: "Franklin, Indiana",
     lead: "Recycling services Franklin Indiana handling electronics, retired lighting, varied battery categories, paper materials, and approved items through scheduled intake. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

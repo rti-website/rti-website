@@ -11,13 +11,13 @@ export const MINNESOTA_BATTERY_RECYCLING: LocalPage = {
   url: href('/minnesota-recycling/battery-recycling/'),
   figma: { board: "7122:7667", phone: "7122:8089" },
   seo: {
-    title: "Battery Recycling in Blaine, Minnesota | Recycle Technologies",
+    title: 'Battery Recycling in Blaine, MN | Recycle Technologies',
     description: "Drop off, business pickup or mail in spent batteries at our R2v3 certified Blaine, Minnesota facility. Alkaline, lithium-ion, lead-acid, NiCd and EV batteries sorted and recycled in-house since 1993.",
   },
   schema: { service: "Battery Recycling", areaServed: ["Blaine, MN", "Minnesota"] },
   hero: {
     crumb: "Battery Recycling in Blaine, Minnesota",
-    h1: "Battery Recycling in Blaine, Minnesota",
+    h1: 'Battery Recycling in Blaine, MN',
     body: [
       "Used batteries, including alkaline, lithium-ion, lead-acid, and more, contain materials that can be hazardous if crushed, damaged, or left to leak, and shouldn't go in the trash or curbside recycling bin.",
       "Recycle Technologies collects and recycles batteries for households, businesses, and organizations at its Blaine, Minnesota facility, giving the area a documented way to clear out spent batteries instead of letting them accumulate or end up in the trash. Individuals can drop batteries off at the Blaine location or use the nationwide Mail-In Program, while businesses can schedule a pickup.",

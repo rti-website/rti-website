@@ -15,16 +15,16 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/ballasts/',
   liveSeo: {
-    title: 'Ballast Recycling Services | PCB & Non-PCB | Recycle Technologies',
+    title: 'Ballast Recycling: PCB & Non-PCB | Recycle Technologies',
     description: 'Recycle Technologies recycles PCB, non-PCB, electronic, and magnetic ballasts for businesses, with EPA-approved processing and a Certificate of Recycling.',
   },
   proposedSeo: {
-    title: 'Ballast Recycling Services | PCB & Non-PCB | Recycle Technologies',
+    title: 'Ballast Recycling: PCB & Non-PCB | Recycle Technologies',
     description: 'Recycle Technologies recycles PCB, non-PCB, electronic, and magnetic ballasts for businesses, with EPA-approved processing and a Certificate of Recycling.',
   },
   hero: {
     crumb: 'Ballasts Recycling',
-    h1: 'Ballasts Recycling',
+    h1: 'Ballast Recycling Services',
     lead: 'Recycle Technologies accepts PCB, non-PCB, electronic, and magnetic ballasts from commercial and industrial facilities, processing hazardous components through an EPA-approved incineration facility and reclaiming non-hazardous metals like copper and steel.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
     ...HERO_PHOTOS.ballasts, // 28 Sep 2026 frame — see src/data/hero-photos.ts

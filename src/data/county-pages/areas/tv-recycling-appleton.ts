@@ -15,11 +15,11 @@ export const TV_RECYCLING_APPLETON: CountyPage = {
   service: "TV Recycling",
   figma: { board: "7084:71892", phone: "7084:72198" },
   seo: {
-    title: "TV Recycling in Appleton WI | Call (800) 969-5166",
+    title: 'Appleton, WI TV Recycling: CRT, LCD & LED',
     description: "TV recycling Appleton WI for LCD screens, OLED units, plasma panels, rear-projection sets, and flat displays, received through documented intake steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "TV Recycling in Appleton WI",
+    h1: 'TV Recycling in Appleton, WI',
     crumb: "TV Recycling in Appleton WI",
     lead: "Make retiring your old TVs easier by collaborating with your trusted TV recycling partner in Appleton Wisconsin.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

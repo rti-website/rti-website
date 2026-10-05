@@ -15,11 +15,11 @@ export const OCALA_FLORIDA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:68694", phone: "7084:69020" },
   seo: {
-    title: "Recycling Services in Ocala | Call (800) 969-5166",
+    title: 'Ocala Recycling Center: Lamps, Batteries & E-Waste',
     description: "Recycling services Ocala coordinating receipt of electronics, lamp debris, mixed battery groups, paper volumes, and approved items for proper routing. Call (800) 969-5166",
   },
   hero: {
-    h1: "Ocala, Florida",
+    h1: 'Recycle Technologies Ocala, FL',
     crumb: "Ocala, Florida",
     lead: "Recycling services Ocala coordinating receipt of electronics, lamp debris, mixed battery groups, paper volumes, and approved items for proper routing. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

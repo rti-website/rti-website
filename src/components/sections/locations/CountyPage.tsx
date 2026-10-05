@@ -156,7 +156,7 @@ function Hero({ page }: { page: Page }) {
             ))}
           </ol>
         </nav>
-        <h1 className="w-full max-w-[310px] font-sans text-[28px] font-semibold leading-[1.2] text-white lg:max-w-[var(--h1-w)] lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]"
+        <h1 className="w-full max-w-[310px] text-balance font-sans text-[28px] font-semibold leading-[1.2] text-white lg:max-w-[var(--h1-w)] lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]"
           style={{ '--h1-w': `${h.h1Width ?? 1156}px` } as React.CSSProperties}>
           {h.h1}
         </h1>

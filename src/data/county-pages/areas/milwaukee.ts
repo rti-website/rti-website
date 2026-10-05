@@ -14,11 +14,11 @@ export const MILWAUKEE: CountyPage = {
   county: "Milwaukee",
   figma: { board: "7060:6298", phone: "7060:7393" },
   seo: {
-    title: "Recycling Center in Milwaukee | Call (800) 969-5166",
+    title: 'Milwaukee, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Milwaukee coordinating drop-off and collection for electronics, lighting units, assorted batteries, paper stock, and approved items. Call (800) 969-5166",
   },
   hero: {
-    h1: "Recycling Center in Milwaukee",
+    h1: 'Electronics Recycling in Milwaukee, WI',
     crumb: "Recycling Center in Milwaukee",
     lead: "Let’s revolutionize the way you dispose of your electronic waste with Recycle Technologies.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

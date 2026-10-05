@@ -6,7 +6,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/paper-shredding-services/',
   liveSeo: {
-    title: 'Paper Shredding | Document Destruction | (800) 969-5166',
+    title: 'Paper Shredding Services for MN & WI Businesses',
     description: 'Commercial paper shredding covering files, records, reports, and office paperwork using controlled destruction to reduce exposure risks. Call (800) 969-5166',
   },
   proposedSeo: {
@@ -16,7 +16,7 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Paper Shredding',
     // Live H1 is "Paper Shredding".
-    h1: 'Paper Shredding', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'Secure Paper Shredding Services', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides secure paper shredding for businesses and offices in Minnesota and Wisconsin, destroying confidential documents and recycling the shredded material afterward.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
     ...HERO_PHOTOS.paper, // 28 Sep 2026 frame — see src/data/hero-photos.ts

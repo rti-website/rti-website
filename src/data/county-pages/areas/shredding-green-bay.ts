@@ -15,11 +15,11 @@ export const SHREDDING_GREEN_BAY: CountyPage = {
   service: "Document Shredding",
   figma: { board: "7073:10267", phone: "7073:10990" },
   seo: {
-    title: "Shredding Services in Green Bay - Recycle Technologies",
+    title: 'Paper Shredding in Green Bay, WI | Recycle Technologies',
     description: "Secure shredding services in Green Bay & its surroundings at Recycle Technologies. AAA NAID-certified paper shredding ensures ultimate data protection in Green Bay.",
   },
   hero: {
-    h1: "Shredding Services in Green Bay",
+    h1: 'Paper Shredding Services in Green Bay, WI',
     crumb: "Shredding Services in Green Bay",
     lead: "Provides shredding services in Green Bay, WI businesses. At reasonable prices.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

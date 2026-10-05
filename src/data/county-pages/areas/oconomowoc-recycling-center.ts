@@ -14,11 +14,11 @@ export const OCONOMOWOC_RECYCLING_CENTER: CountyPage = {
   county: "Oconomowoc",
   figma: { board: "7064:4524", phone: "7064:5657" },
   seo: {
-    title: "Oconomowoc Recycling Center | Recycle Technologies",
+    title: 'Oconomowoc, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Get Peace of mind by recycling with us. Please review all items we accept and do not accept in our recycling center. For Free Quote, Contact Us.",
   },
   hero: {
-    h1: "Oconomowoc Recycling Center",
+    h1: 'Electronics Recycling in Oconomowoc, WI',
     crumb: "Oconomowoc Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

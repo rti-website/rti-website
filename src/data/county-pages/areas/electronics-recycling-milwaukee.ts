@@ -14,11 +14,11 @@ export const ELECTRONICS_RECYCLING_MILWAUKEE: CountyPage = {
   county: "Milwaukee",
   figma: { board: "7063:4317", phone: "7063:5083" },
   seo: {
-    title: "Electronics Recycling in Milwaukee, WI | Call (800) 969-5166",
+    title: 'Milwaukee, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Electronics recycling Milwaukee WI managing computers, screens, servers, office equipment, and retired devices through structured recovery. Call (800) 969-5166",
   },
   hero: {
-    h1: "Electronics Recycling Milwaukee, WI",
+    h1: 'Electronics Recycling in Milwaukee, WI',
     crumb: "Electronics Recycling Milwaukee, WI",
     lead: "Providing reliable and certified electronics recycling services at individual and business levels.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

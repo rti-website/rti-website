@@ -14,11 +14,11 @@ export const WASHINGTON_WI: CountyPage = {
   county: "Washington County",
   figma: { board: '7020:15552', phone: '7020:16107' },
   seo: {
-    title: "Recycling Center Washington County WI | Call (800) 969-5166",
+    title: 'Recycling in Washington County, WI | Recycle Technologies',
     description: "Recycling center Washington County WI accepting circuit boards, cables, lamps, dry cell batteries, and small equipment, managed through approved intake procedures. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Washington County Recycling Center, WI",
+    h1: 'Electronics Recycling in Washington County, WI',
     crumb: "Washington County Recycling Center, WI",
     lead: "Recycle Technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/washington-wi.png',

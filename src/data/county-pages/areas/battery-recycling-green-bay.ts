@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_GREEN_BAY: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7084:81270", phone: "7084:81575" },
   seo: {
-    title: "Battery Recycling in Green Bay | Call (800) 969-5166",
+    title: 'Battery Recycling in Green Bay, WI | Recycle Technologies',
     description: "Battery recycling Green Bay drop-off and collection for power packs, backup cells, sealed units, and mixed chemistries from local users. Call (800) 969-5166",
   },
   hero: {
-    h1: "Battery Recycling Green Bay",
+    h1: 'Battery Recycling in Green Bay, WI',
     crumb: "Battery Recycling Green Bay",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Green Bay",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

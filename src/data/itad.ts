@@ -33,7 +33,7 @@ import { QUOTE_HREF, href } from '@/lib/urls'
  */
 
 export const SEO = {
-  title: 'IT Asset Disposition | Call (800) 969-5166',
+  title: 'IT Asset Disposition (ITAD) Services | Recycle Technologies',
   description:
     'IT asset disposition for retired laptops, servers, storage hardware, networking equipment, and office technology. Call (800) 969-5166 to arrange service.',
 }
@@ -44,7 +44,7 @@ export const HERO = {
     { label: 'Home', href: href('/') },
     { label: 'ITAD', href: null },
   ],
-  h1: 'IT Asset Disposition',
+  h1: 'Secure ITAD Services for Your Business',
   // Asim, 24 Sep 2026 (the doc's dash as a comma, like every other hero).
   lead: 'Secure, documented, and fully compliant IT asset disposition, from decommissioning to certified data destruction. Every device is tracked, every outcome is recorded, and nothing leaves your control until it’s verifiably handled.',
   image: '/images/itad/hero.png',

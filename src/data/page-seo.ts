@@ -112,7 +112,7 @@ const SHEET_SEO: Record<string, PageSeo> = {
   },
   // #13 Mail-In Recycling Program
   "/mail-in-recycling/": {
-    title: "Mail-In Recycling Program | Recycle Technologies",
+    title: 'Mail-In Recycling Kits: Electronics, Bulbs & Batteries',
     description: "Order a kit, pack your e-waste, ship it in, and get a certificate of recycling with our easy nationwide mail-in program.",
     focusKeyword: "mail-in recycling program",
   },
@@ -272,35 +272,35 @@ const SHEET_SEO: Record<string, PageSeo> = {
  */
 const RESTORED: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "E-Waste, Electronics & Industrial Recycling Services",
+    title: 'Recycle Technologies: Electronics Recycling, ITAD & Shredding',
     description: "Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics. Call (800) 969-5166.",
   },
   "/wisconsin-recycling/": {
-    title: "Recycling in Wisconsin | Call (800) 969-5166",
+    title: 'Electronics Recycling in Wisconsin | Recycle Technologies',
     description: "Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.",
   },
   "/minnesota-recycling/": {
-    title: "Recycling Center in Minnesota | Call (800) 969-5166",
+    title: 'Electronics Recycling in Minnesota | Recycle Technologies',
     description: "Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",
   },
   "/it-asset-disposition/": {
-    title: "IT Asset Disposition | Call (800) 969-5166",
+    title: 'IT Asset Disposition (ITAD) Services | Recycle Technologies',
     description: "IT asset disposition for retired laptops, servers, storage hardware, networking equipment, and office technology. Call (800) 969-5166 to arrange service.",
   },
   "/all-locations/": {
-    title: "Electronics Recycling in USA | Recycle technologies",
+    title: 'Recycling Drop-Off Locations Near You | Recycle Technologies',
     description: "Explore electronics recycling facility in USA. Drop-off your E-waste: old TVs, printers, computer, phones, monitors, small appliances, and more at one platform in your area.",
   },
   "/hard-drive-destruction-services/": {
-    title: "Commercial Hard Drive Destruction Services | Call (800) 969-5166",
+    title: 'Hard Drive Destruction Services | Certified Data Destruction',
     description: "Commercial hard drive destruction for businesses, offices & organizations. Securely destroy HDDs, SSDs and data storage devices with verified service.",
   },
   "/airbag-recycling/": {
-    title: "Commercial Airbag Recycling | Deployed & Undeployed",
+    title: 'Airbag Disposal: Deployed & Undeployed Recycling',
     description: "Commercial airbag recycling for auto shops, dealerships & facilities. Recycle deployed and undeployed vehicle airbags with a reliable recycling service.",
   },
   "/battery-recycling/": {
-    title: "Commercial Battery Recycling | Lithium, Alkaline | Call Now",
+    title: 'Battery Recycling Near Me: Lithium, Lead Acid & More',
     description: "Commercial battery recycling for businesses, offices & facilities. Recycle non-hazardous batteries from electronics and devices with reliable service.",
   },
   "/recycle-symbol/": {
@@ -308,11 +308,11 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     description: "This guide will break down the most common recycling symbols, which will help you understand it much better and what you are supposed to do with each symbol.",
   },
   "/tv-recycling/": {
-    title: "Commercial TV Recycling | LCD, LED | Call (800) 969-5166",
+    title: 'TV Recycling Near Me: CRT, LCD, LED & Plasma Disposal',
     description: "Commercial TV recycling for businesses, offices, and facilities. Recycle LCD, LED, plasma & flat-screen TVs. Call (800) 969-5166.",
   },
   "/light-bulbs/": {
-    title: "Commercial Light Bulb Recycling | CFL, LED | (800) 969-5166",
+    title: 'Fluorescent Tube & Light Bulb Recycling for Business',
     description: "Commercial light bulb recycling for businesses, facilities, and organizations. Recycle fluorescent, CFL, LED & other lamps. Call (800) 969-5166.",
   },
   "/contact-us/": {
@@ -320,11 +320,11 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     description: "Contact Us- for Recycle Technologies' safe recycling and shredding services in MN & WI. A reliable and eco-friendly waste management solutions.",
   },
   "/paper-shredding-services/": {
-    title: "Paper Shredding | Document Destruction | (800) 969-5166",
+    title: 'Paper Shredding Services for MN & WI Businesses',
     description: "Commercial paper shredding covering files, records, reports, and office paperwork using controlled destruction to reduce exposure risks. Call (800) 969-5166",
   },
   "/electronic-recycle/": {
-    title: "Commercial Electronic Recycling | Call (800) 969-5166 Today",
+    title: 'Electronics Recycling Near Me: Drop-Off & Mail-In',
     description: "Commercial electronics recycling for businesses, offices & facilities. Recycle computers, servers, monitors & more with reliable e-waste pickup.",
   },
   "/services/": {
@@ -332,7 +332,7 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     description: "Recycling services for electronics, batteries, light bulbs, paper, shredding, and more. Call (800) 969-5166 for recycling services today.",
   },
   "/about-us-commercial-recycling-solutions/": {
-    title: "Commercial recycling | Recycling solution | Recycle technologies",
+    title: 'Commercial Recycling Solutions',
     description: "Recycle Technologies Offering full-service commercial recycling as a recycling solution for e-waste, batteries, and lightbulbs in Minnesota and Wisconsin.",
   },
   "/category/news/": {
@@ -340,12 +340,12 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     description: "Explore the ever-evolving landscape of US Recycling & E-waste through Recycle Technologies – delivering the latest updates for a sustainable tomorrow.",
   },
   "/blog/": {
-    title: "Recyling & E-waste recycling trends Blog | Recycle Technologies",
+    title: 'Recyling & E-waste recycling trends Blog',
     description: "Stay updated with our blog on recycling and E-waste trends. From emerging technologies to consumer behaviors, gain valuable insights into the evolving world.",
   },
   // At /on-site-off-site-shredding/ 30 Sep to 1 Oct 2026, back on /off-site-shredding/ since (see src/data/off-site-shredding.ts).
   "/off-site-shredding/": {
-    title: "On-Site & Off-Site Shredding Services | Call (800) 969-5166",
+    title: 'Off-Site Shredding Services | Secure Document Destruction',
     description: "On-site and off-site shredding for confidential paperwork, shredded at your location or collected and securely destroyed at our certified facilities. Call (800) 969-5166",
   },
   "/faqs/": {

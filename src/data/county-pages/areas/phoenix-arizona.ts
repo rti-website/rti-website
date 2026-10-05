@@ -15,11 +15,11 @@ export const PHOENIX_ARIZONA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:76092", phone: "7084:76418" },
   seo: {
-    title: "Recycling Services in Arizona | Call (800) 969-5166",
+    title: 'Phoenix Recycling Center: Lamps, Batteries & E-Waste',
     description: "Recycling services Arizona coordinating collection of electronics, lighting waste, battery types, paper materials, and approved items statewide. Call (800) 969-5166",
   },
   hero: {
-    h1: "Phoenix, Arizona",
+    h1: 'Recycle Technologies Phoenix, AZ',
     crumb: "Phoenix, Arizona",
     lead: "Recycling services Arizona coordinating collection of electronics, lighting waste, battery types, paper materials, and approved items statewide. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

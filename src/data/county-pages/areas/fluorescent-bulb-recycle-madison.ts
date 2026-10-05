@@ -15,11 +15,11 @@ export const FLUORESCENT_BULB_RECYCLE_MADISON: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7067:6396", phone: "7067:7155" },
   seo: {
-    title: "Bulb Recycling in Madison WI | Call (800) 969-5166",
+    title: 'Madison, WI Bulb Recycling: Fluorescent Tubes & CFLs',
     description: "Bulb recycling Madison WI collecting spent CFLs, linear lamps, specialty lighting, and commercial bulb waste from offices and facilities. Call (800) 969-5166",
   },
   hero: {
-    h1: "Bulb Recycling in Madison WI",
+    h1: 'Bulb Recycling in Madison, WI',
     crumb: "Bulb Recycling in Madison WI",
     lead: "Get the fluorescent bulb recycling services in Madison Wisconsin customized to your individual and company needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

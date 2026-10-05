@@ -6,7 +6,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/tv-recycling/',
   liveSeo: {
-    title: 'Commercial TV Recycling | LCD, LED | Call (800) 969-5166',
+    title: 'TV Recycling Near Me: CRT, LCD, LED & Plasma Disposal',
     description: 'Commercial TV recycling for businesses, offices, and facilities. Recycle LCD, LED, plasma & flat-screen TVs. Call (800) 969-5166.',
   },
   proposedSeo: {
@@ -16,7 +16,7 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Television Recycling',
     // Live H1 is "TV RECYCLING".
-    h1: 'TV RECYCLING', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'TV Recycling and Disposal', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies provides commercial television recycling for businesses, offices, and facilities, handling CRT, LCD, LED, plasma, and flat-screen TVs so hazardous components are properly managed rather than sent to a landfill.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
     ...HERO_PHOTOS.tv, // 28 Sep 2026 frame — see src/data/hero-photos.ts

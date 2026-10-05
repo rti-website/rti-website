@@ -14,11 +14,11 @@ export const BURNSVILLE_RECYCLING_CENTER: CountyPage = {
   county: "Burnsville",
   figma: { board: "7072:8134", phone: "7072:9262" },
   seo: {
-    title: "Recycling Center in Burnsville | (800) 969-5166",
+    title: 'Burnsville, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Burnsville accepting electronic equipment, spent power cells, lighting waste, paper materials, and managed material intake. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Burnsville Recycling Center",
+    h1: 'Electronics Recycling in Burnsville, MN',
     crumb: "Burnsville Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

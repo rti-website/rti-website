@@ -14,11 +14,11 @@ export const PLYMOUTH_RECYCLING_CENTER: CountyPage = {
   county: "Plymouth",
   figma: { board: "7070:5559", phone: "7070:6688" },
   seo: {
-    title: "Recycling Center in Plymouth | (800) 969-5166",
+    title: 'Plymouth, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Plymouth providing intake for electronic hardware, battery packs, lighting components, paper streams, and regulated material flow. Call (800) 969-5166",
   },
   hero: {
-    h1: "Plymouth Recycling Center",
+    h1: 'Electronics Recycling in Plymouth, MN',
     crumb: "Plymouth Recycling Center",
     lead: "Recycle Technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

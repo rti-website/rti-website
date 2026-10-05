@@ -16,7 +16,7 @@ export const TV_RECYCLING_IN_MINNESOTA: CountyPage = {
   service: "TV Recycling",
   figma: { board: "7084:71425", phone: "7084:71702" },
   seo: {
-    title: "TV Recycling in Minnesota | Call (800) 969-5166",
+    title: 'TV Recycling in Minnesota | Recycle Technologies',
     description: "TV recycling in Minnesota homes and facilities trust for disposal of flat screens, broken units, outdated models, and large televisions. Call (800) 969-5166",
   },
   hero: {

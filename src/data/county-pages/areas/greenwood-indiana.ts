@@ -15,11 +15,11 @@ export const GREENWOOD_INDIANA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:67597", phone: "7084:67924" },
   seo: {
-    title: "Recycling Services in Greenwood | Call (800) 969-5166",
+    title: 'Greenwood Recycling Center: Lamps, Batteries & E-Waste',
     description: "Recycling services Greenwood organizing drop-off and pickup for electronics, lighting debris, battery groups, paper materials, and approved waste streams. Call (800) 969-5166",
   },
   hero: {
-    h1: "Greenwood, Indiana",
+    h1: 'Recycle Technologies Greenwood, IN',
     crumb: "Greenwood, Indiana",
     lead: "Recycling services Greenwood organizing drop-off and pickup for electronics, lighting debris, battery groups, paper materials, and approved waste streams. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

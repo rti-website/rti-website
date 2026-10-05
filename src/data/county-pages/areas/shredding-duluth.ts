@@ -15,11 +15,11 @@ export const SHREDDING_DULUTH: CountyPage = {
   service: "Document Shredding",
   figma: { board: "7084:75619", phone: "7084:75899" },
   seo: {
-    title: "Shredding Service in Duluth | Call (800) 969-5166",
+    title: 'Duluth Paper Shredding & Document Destruction',
     description: "Duluth shredding service for secure disposal of business paperwork, archived files, and sensitive documents with scheduled pickup options. Call (800) 969-5166",
   },
   hero: {
-    h1: "Duluth Shredding Service",
+    h1: 'Paper Shredding in Duluth, MN',
     crumb: "Duluth Shredding Service",
     lead: "Recycle Technologies offers a secure Paper Shredding Service in Duluth that come directly to your office or home, no matter where you’re located in Duluth",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

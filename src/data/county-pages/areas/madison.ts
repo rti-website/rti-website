@@ -14,11 +14,11 @@ export const MADISON: CountyPage = {
   county: "Madison",
   figma: { board: "7066:4869", phone: "7066:5998" },
   seo: {
-    title: "Recycling Center in Madison | Call (800) 969-5166",
+    title: 'Madison, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Madison managing electronics intake, lighting waste, battery assortments, paper volumes, and approved material streams. Call (800) 969-5166",
   },
   hero: {
-    h1: "Madison Recycling Center",
+    h1: 'Electronics Recycling in Madison, WI',
     crumb: "Madison Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

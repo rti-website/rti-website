@@ -16,7 +16,7 @@ export const LIVE_SEO = {
    * title but no description; the description below is the live one and the
    * row has been completed.
    */
-  title: 'Electronics Recycling in USA | Recycle technologies',
+  title: 'Recycling Drop-Off Locations Near You | Recycle Technologies',
   description: 'Explore electronics recycling facility in USA. Drop-off your E-waste: old TVs, printers, computer, phones, monitors, small appliances, and more at one platform in your area.',
 }
 
@@ -37,7 +37,7 @@ export const HERO = {
     { label: 'Home',      href: href('/') },
     { label: 'Locations', href: null },
   ],
-  h1: 'All Locations', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+  h1: 'Find a Drop-Off Location Near You', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   /* The frame's lead since 25 Sep 2026 (6472:3926 / 6747:2576) — Asim: "make
      it exactly like the figma". It replaces his own 23 Sep line, "Two
      licensed facilities, nationwide Mail-In reach, and pickup and drop-off

@@ -14,11 +14,11 @@ export const GREEN_BAY_RECYCLING: CountyPage = {
   county: "Green Bay",
   figma: { board: "7084:78181", phone: "7084:78489" },
   seo: {
-    title: "Recycling Center in Green Bay | Call (800) 969-5166",
+    title: 'Green Bay, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Green Bay accepting electronics, lamps, batteries, computers, and devices, managed through verified intake and processing procedures. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Green Bay Recycling Center Recycling Solutions for All!", // WordPress H1, restored 30 Sep 2026 (Asim)
+    h1: 'Electronics Recycling in Green Bay, WI', // WordPress H1, restored 30 Sep 2026 (Asim)
     crumb: "Green Bay Recycling Center Recycling Solutions for All!",
     lead: "Recycling Solutions for All! Let’s revolutionize the way you dispose of your electronic waste with Recycle Technologies.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_ST_PAUL: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7084:77660", phone: "7084:77965" },
   seo: {
-    title: "Battery Recycling in St. Paul | Call (800) 969-5166",
+    title: 'Battery Recycling in St. Paul, MN | Recycle Technologies',
     description: "Battery recycling in St. Paul for power tool batteries, medical batteries, backup batteries, and small energy units. Call (800) 969-5166 to schedule service.",
   },
   hero: {
-    h1: "Battery Recycling St. Paul",
+    h1: 'Battery Recycling in St. Paul, MN',
     crumb: "Battery Recycling St. Paul",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in St. Paul from your trusted local partner.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

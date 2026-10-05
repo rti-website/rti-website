@@ -14,11 +14,11 @@ export const EAST_BETHEL: CountyPage = {
   county: "East Bethel",
   figma: { board: "7084:79268", phone: "7084:79779" },
   seo: {
-    title: "Recycling in East Bethel | Call (800) 969-5166",
+    title: 'East Bethel, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling East Bethel for consoles, modems, power cords, ink units, and small electronics, received through verified intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "East Bethel Recycling",
+    h1: 'Electronics Recycling in East Bethel, MN',
     crumb: "East Bethel Recycling",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

@@ -277,7 +277,7 @@ export const CTA = {
  *  WordPress ones from data/url-map.csv, word for word (CLAUDE.md rule 6). */
 export const QUOTE_PAGE = {
   seo: {
-    title: 'Get Quote related to Recycling & Shredding | Recycle Technologies',
+    title: 'Get Quote related to Recycling & Shredding',
     description: 'Request a quote for personalized Recycling, E-waste and Shredding services with Recycle Technologies. Eco-friendly solutions tailored to your recycling needs.',
   },
   crumbs: [{ label: 'Home', href: href('/') }, { label: 'Get A Quote', href: null }],

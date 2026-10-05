@@ -14,11 +14,11 @@ export const LAKEVILLE_RECYCLING_CENTER: CountyPage = {
   county: "Lakeville",
   figma: { board: "7084:76654", phone: "7084:77188" },
   seo: {
-    title: "Recycling Center in Lakeville | (800) 969-5166",
+    title: 'Lakeville, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Lakeville supporting collection of electronic hardware, spent batteries, lighting materials, paper output, and controlled processing. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Lakeville Recycling Center",
+    h1: 'Electronics Recycling in Lakeville, MN',
     crumb: "Lakeville Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

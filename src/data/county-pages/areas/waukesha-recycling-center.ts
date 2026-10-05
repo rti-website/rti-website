@@ -14,11 +14,11 @@ export const WAUKESHA_RECYCLING_CENTER: CountyPage = {
   county: "Waukesha",
   figma: { board: "7061:4179", phone: "7061:5273" },
   seo: {
-    title: "Recycling Center in Waukesha | Call (800) 969-5166",
+    title: 'Waukesha, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Waukesha providing intake for electronics, lamps, batteries, devices, and records, processed under approved handling steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Waukesha Recycling Center",
+    h1: 'Electronics Recycling in Waukesha, WI',
     crumb: "Waukesha Recycling Center",
     lead: "Recycling in Waukesha, we provide our service here as well.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

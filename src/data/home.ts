@@ -67,8 +67,9 @@ export const HOME_HERO = {
      (RTI-Backup-vs-Live-Audit, tab Title and H1 changes). Was phone "Certified
      E-Waste Recycling and ITAD", board "Certified E-Waste Recycling & IT Assets
      Disposition". When both wordings are the same the hero prints it once. */
-  h1Phone: { l1: 'PAVE THE WAY', l2: 'For A Cleaner Future' },
-  h1Board: { l1: 'PAVE THE WAY', l2: 'For A Cleaner Future' },
+  /* 6 Oct 2026: the SEO team's new H1 ("RTI Priority A - New Titles & H1s"). */
+  h1Phone: { l1: 'Certified Electronics Recycling', l2: 'and Data Destruction Since 1993' },
+  h1Board: { l1: 'Certified Electronics Recycling', l2: 'and Data Destruction Since 1993' },
   /* Lead — 6023:13164. Board only: the phone frame has no lead. */
   lead: 'Recycle Technologies provides certified e-waste recycling, ITAD, data destruction, and '
     + 'shredding solutions that keep electronics out of landfills and valuable materials in '

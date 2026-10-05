@@ -14,11 +14,11 @@ export const RAMSEY: CountyPage = {
   county: "Ramsey County",
   figma: { board: '7031:22236', phone: '7031:22581' },
   seo: {
-    title: "Recycling in Ramsey | Call (800) 969-5166",
+    title: 'Ramsey, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling Ramsey for tablets, desktops, routers, small appliances, lamps, and dry cell batteries, received through controlled intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Ramsey Recycling",
+    h1: 'Electronics Recycling in Ramsey, MN',
     crumb: "Ramsey Recycling",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/ramsey.png',

@@ -22,7 +22,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * signs off.
  */
 export const LIVE_SEO = {
-  title: 'Commercial Electronic Recycling | Call (800) 969-5166 Today',
+  title: 'Electronics Recycling Near Me: Drop-Off & Mail-In',
   description:
     'Commercial electronics recycling for businesses, offices & facilities. Recycle computers, servers, monitors & more with reliable e-waste pickup.',
 }
@@ -46,7 +46,7 @@ export const HERO = {
     { label: 'Our Services', href: href('/services/') },
     { label: 'Electronic Recycling', href: null },
   ],
-  h1: 'Electronic Recycling', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+  h1: 'Recycle Your Electronics: Drop Off or Mail In', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
   lead:
     'Recycle Technologies collects and processes electronics for businesses and '
     + 'organizations, breaking devices down into their base materials instead of '

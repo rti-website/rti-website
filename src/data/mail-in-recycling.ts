@@ -25,16 +25,16 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/mail-in-recycling/',
   liveSeo: {
-    title: 'Mail-In Recycling Program | Recycle Technologies',
+    title: 'Mail-In Recycling Kits: Electronics, Bulbs & Batteries',
     description: 'Recycle Technologies’ Mail-In Program lets you ship eligible materials for recycling from anywhere, without a local drop-off or pickup.',
   },
   proposedSeo: {
-    title: 'Mail-In Recycling Program | Recycle Technologies',
+    title: 'Mail-In Recycling Kits: Electronics, Bulbs & Batteries',
     description: 'Recycle Technologies’ Mail-In Program lets you ship eligible materials for recycling from anywhere, without a local drop-off or pickup.',
   },
   hero: {
     crumb: 'Mail-In Recycling Program',
-    h1: 'Mail-In Recycling Program',
+    h1: 'Mail-In Recycling Kits for Homes and Businesses',
     lead: 'Recycle Technologies’ Mail-In Program gives customers outside its local drop-off and pickup areas a way to send eligible materials for recycling, including items purchased online and shipped in when a nearby option isn’t available.',
     // The doc's "Get Quote" (24 Sep 2026), worded like every other quote button.
     cta: { label: 'Get a Quote', href: QUOTE_HREF },

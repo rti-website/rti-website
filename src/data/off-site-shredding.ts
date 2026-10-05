@@ -15,7 +15,7 @@ export const CONTENT: ServicePageContent = {
   url: '/off-site-shredding/',
   liveSeo: {
     // New with the URL, 30 Sep 2026, in the old title's pattern.
-    title: 'On-Site & Off-Site Shredding Services | Call (800) 969-5166',
+    title: 'Off-Site Shredding Services | Secure Document Destruction',
     description: 'On-site and off-site shredding for confidential paperwork, shredded at your location or collected and securely destroyed at our certified facilities. Call (800) 969-5166',
   },
   proposedSeo: {
@@ -27,7 +27,7 @@ export const CONTENT: ServicePageContent = {
     // Live H1 is "Off-Site Shredding Services". The doc covers BOTH off-site and
     // on-site, which is a scope change as well as a wording one — worth raising
     // with Rizwan separately from the other H1 diffs.
-    h1: 'On-Site & Off-Site Shredding Services', // 30 Sep 2026, with the new URL (was the WordPress "Off-Site Shredding Services")
+    h1: 'Secure Off-Site Document Shredding', // 30 Sep 2026, with the new URL (was the WordPress "Off-Site Shredding Services")
     h1OneLine: true, // Asim, 30 Sep 2026: "Services" on the first line too
     lead: 'Recycle Technologies provides secure shredding for businesses handling confidential paperwork, with an off-site option that transports documents to a shredding facility and an on-site option that shreds documents at your location.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },

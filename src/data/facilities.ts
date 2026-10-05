@@ -204,12 +204,12 @@ export const MINNESOTA: Facility = {
   name: MN_CONTACT.name,
   /* Verbatim from the live page, captured 22 Sep 2026. */
   liveSeo: {
-    title: 'Recycling Center in Minnesota | Call (800) 969-5166',
+    title: 'Electronics Recycling in Minnesota | Recycle Technologies',
     description: 'Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.',
   },
-  liveH1: 'Recycling Center in Minnesota',
+  liveH1: 'Recycling and Shredding Across Minnesota',
   hero: {
-    h1: 'Recycling Center in Minnesota', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'Recycling and Shredding Across Minnesota', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     // New lead and the two buttons, as on Wisconsin (Asim, 5 Oct 2026: "do this thing in
     // Recycling Center in Minnesota in the same design"). H1 and photo unchanged.
     lead: 'Electronics, battery and light bulb recycling for homes and businesses across Minnesota',
@@ -273,12 +273,12 @@ export const WISCONSIN: Facility = {
   name: WI_CONTACT.name,
   /* Verbatim from the live page, captured 22 Sep 2026. */
   liveSeo: {
-    title: 'Recycling in Wisconsin | Call (800) 969-5166',
+    title: 'Electronics Recycling in Wisconsin | Recycle Technologies',
     description: 'Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.',
   },
-  liveH1: 'Recycling in Wisconsin',
+  liveH1: 'Recycling and Shredding Across Wisconsin',
   hero: {
-    h1: 'Recycling in Wisconsin', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'Recycling and Shredding Across Wisconsin', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     // New lead and two buttons, Figma 6744:8394 (Asim, 5 Oct 2026). No phone frame; the phone uses the same lead.
     lead: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',
     leadShort: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',

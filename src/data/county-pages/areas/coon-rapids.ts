@@ -14,11 +14,11 @@ export const COON_RAPIDS: CountyPage = {
   county: "Coon Rapids",
   figma: { board: "7071:10183", phone: "7071:11278" },
   seo: {
-    title: "Recycling in Coon Rapids | (800) 969-5166",
+    title: 'Coon Rapids, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling in Coon Rapids covering electronic equipment, spent batteries, lighting waste, paper materials, and secure drop-off options. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Coon Rapids Recycling",
+    h1: 'Electronics Recycling in Coon Rapids, MN',
     crumb: "Coon Rapids Recycling",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

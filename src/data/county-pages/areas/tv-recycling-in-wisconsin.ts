@@ -16,11 +16,11 @@ export const TV_RECYCLING_IN_WISCONSIN: CountyPage = {
   service: "TV Recycling",
   figma: { board: "7084:70946", phone: "7084:71229" },
   seo: {
-    title: "TV Recycling in Wisconsin | Call (800) 969-5166",
+    title: 'TV Recycling in Wisconsin | Recycle Technologies',
     description: "TV recycling Wisconsin for smart televisions, LCD panels, plasma screens, CRT units, and display equipment, accepted through verified intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "TV Recycling In Wisconsin",
+    h1: 'TV Recycling in Wisconsin',
     crumb: "TV Recycling In Wisconsin",
     lead: "Are you one of these people looking to get rid of your old televisions? Then you must consider the option of recycling it.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

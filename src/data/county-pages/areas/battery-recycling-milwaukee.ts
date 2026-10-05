@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_MILWAUKEE: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7061:6297", phone: "7061:7050" },
   seo: {
-    title: "Non-Hazardous Battery Recycling in Milwaukee | Call (800) 969-5166",
+    title: 'Battery Recycling in Milwaukee, WI | Recycle Technologies',
     description: "Non-hazardous battery recycling Milwaukee for dry cells, sealed units, backup packs, and consumer batteries accepted through organized recovery. Call (800) 969-5166",
   },
   hero: {
-    h1: "Non-Hazardous Battery Recycling Milwaukee",
+    h1: 'Battery Recycling in Milwaukee, WI',
     crumb: "Non-Hazardous Battery Recycling Milwaukee",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Milwaukee from your trusted local partner.",
     h1Width: 1306,

@@ -15,11 +15,11 @@ export const SHREDDING_ST_PAUL: CountyPage = {
   service: "Document Shredding",
   figma: { board: "7073:8942", phone: "7073:9662" },
   seo: {
-    title: "Shredding Service in St. Paul | (800) 969-5166",
+    title: 'St. Paul Paper Shredding & Document Destruction',
     description: "Shredding service in St. Paul for secure disposal of paper files, records, and printed materials from offices and organizations. Call (800) 969-5166",
   },
   hero: {
-    h1: "St. Paul Shredding Service",
+    h1: 'Paper Shredding in St. Paul, MN',
     crumb: "St. Paul Shredding Service",
     lead: "Recycle Technologies offers a secure Paper Shredding Service in St. Paul that come directly to your office or home, no matter where you’re located in St. Paul",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

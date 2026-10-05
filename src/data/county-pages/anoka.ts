@@ -16,11 +16,11 @@ export const ANOKA: CountyPage = {
   county: "Anoka County",
   figma: { board: "7071:7957", phone: "7071:9111" },
   seo: {
-    title: "Recycling Center in Anoka County | (800) 969-5166",
+    title: 'Anoka County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Anoka County managing electronics, batteries, lamps, paper, and controlled materials for local organizations. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Anoka County Recycling Center",
+    h1: 'Electronics Recycling in Anoka County, MN',
     crumb: "Anoka County Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/anoka.png',

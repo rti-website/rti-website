@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_WAUKESHA: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7065:4662", phone: "7065:5415" },
   seo: {
-    title: "Battery Recycling in Waukesha | Call (800) 969-5166",
+    title: 'Battery Recycling in Waukesha, WI | Recycle Technologies',
     description: "Battery recycling Waukesha for lithium primary cells, nickel cadmium packs, silver oxide batteries, and sealed power units, handled through approved processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Battery Recycling Waukesha",
+    h1: 'Battery Recycling in Waukesha, WI',
     crumb: "Battery Recycling Waukesha",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Waukesha",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

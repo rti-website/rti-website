@@ -23,11 +23,11 @@ export const BLAINE: CountyPage = {
   county: "Blaine",
   figma: { board: "7060:4041", phone: "7060:5211" },
   seo: {
-    title: "Recycling Services in Blaine | (800) 969-5166",
+    title: 'Blaine Recycling Center: Hours, Drop-Off & Pickup',
     description: "Recycling Services in Blaine offering collection for electronic items, battery units, lighting remnants, paper materials, and managed processing support. Call (800) 969-5166",
   },
   hero: {
-    h1: "Blaine Recycling",
+    h1: 'Recycle Technologies Blaine, MN',
     crumb: "Blaine Recycling",
     parent: { label: "Minnesota", href: href('/minnesota-recycling/') },
     lead: "Drop off electronics, batteries and lamps, or schedule a business pickup across the Twin Cities",

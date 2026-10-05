@@ -14,11 +14,11 @@ export const DAKOTA: CountyPage = {
   county: "Dakota County",
   figma: { board: '7031:26237', phone: '7031:26790' },
   seo: {
-    title: "Recycling Center in Dakota County | (800) 969-5166",
+    title: 'Dakota County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Dakota County providing intake for e-waste, lighting waste, used batteries, paper streams, and controlled material processing. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Dakota County Recycling Center",
+    h1: 'Electronics Recycling in Dakota County, MN',
     crumb: "Dakota County Recycling Center",
     lead: "Dakota County Recycling Center Recycle technologies is the one-stop solution to your recycling needs.",
     image: '/images/locations/county/dakota.png',

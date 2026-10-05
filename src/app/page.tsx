@@ -41,7 +41,7 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  */
 export const generateMetadata = () => pageMetadata({
   url: '/',
-  title: 'E-Waste, Electronics & Industrial Recycling Services',
+  title: 'Recycle Technologies: Electronics Recycling, ITAD & Shredding',
   description:
     'Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics. Call (800) 969-5166.',
 })

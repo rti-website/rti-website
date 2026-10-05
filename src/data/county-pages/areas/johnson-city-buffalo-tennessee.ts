@@ -15,11 +15,11 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:69820", phone: "7084:70147" },
   seo: {
-    title: "Recycling Services in Johnson City Buffalo | Call (800) 969-5166",
+    title: 'Johnson City Recycling Center: Lamps, Batteries & E-Waste',
     description: "Recycling services Johnson City Buffalo supporting intake of electronic equipment, lighting waste, battery varieties, paper materials, and approved items. Call (800) 969-5166",
   },
   hero: {
-    h1: "Johnson City (Buffalo), Tennessee",
+    h1: 'Recycle Technologies Johnson City, TN',
     crumb: "Johnson City (Buffalo), Tennessee",
     lead: "Recycling services Johnson City Buffalo supporting intake of electronic equipment, lighting waste, battery varieties, paper materials, and approved items. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

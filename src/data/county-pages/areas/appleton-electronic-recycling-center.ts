@@ -14,11 +14,11 @@ export const APPLETON_ELECTRONIC_RECYCLING_CENTER: CountyPage = {
   county: "Appleton",
   figma: { board: "7065:7442", phone: "7065:8210" },
   seo: {
-    title: "Appleton Electronic Recycling | Call (800) 969-5166",
+    title: 'Appleton, WI Recycling: Electronics, Batteries & Bulbs',
     description: "Electronic recycling Appleton for desktops, laptops, network switches, circuit cards, and peripherals, received through documented intake and approved processing. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Appleton Electronic Recycling",
+    h1: 'Electronics Recycling in Appleton, WI',
     crumb: "Appleton Electronic Recycling",
     lead: "Providing reliable and certified electronics recycling services at individual and business levels.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

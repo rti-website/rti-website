@@ -14,11 +14,11 @@ export const BLOOMINGTON_RECYCLING_CENTER: CountyPage = {
   county: "Bloomington",
   figma: { board: "7069:6751", phone: "7069:7892" },
   seo: {
-    title: "Recycling Center in Bloomington | Call (800) 969-5166",
+    title: 'Bloomington, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Bloomington supporting intake of electronic assets, battery units, lighting materials, paper flow, and material processing. (800) 969-5166.",
   },
   hero: {
-    h1: "Bloomington Recycling Center",
+    h1: 'Electronics Recycling in Bloomington, MN',
     crumb: "Bloomington Recycling Center",
     lead: "Recycle Technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

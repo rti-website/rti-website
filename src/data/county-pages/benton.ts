@@ -14,11 +14,11 @@ export const BENTON: CountyPage = {
   county: "Benton County",
   figma: { board: '7037:27359', phone: '7037:27902' },
   seo: {
-    title: "Recycling Center in Benton County | (800) 969-5166",
+    title: 'Benton County, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center in Benton County supporting electronic equipment, spent batteries, lighting waste, paper streams, and secure material handling. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Benton County Recycling",
+    h1: 'Electronics Recycling in Benton County, MN',
     crumb: "Benton County Recycling",
     lead: "Benton County Recycling provides reliable and certified electronics recycling services at individual and business levels",
     image: '/images/locations/county/benton.png',

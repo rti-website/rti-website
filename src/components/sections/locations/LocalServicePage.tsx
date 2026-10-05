@@ -78,7 +78,7 @@ function Hero({ page }: { page: LocalPage }) {
             <li aria-current="page">{h.crumb}</li>
           </ol>
         </nav>
-        <h1 className="font-sans text-[28px] font-semibold leading-[1.2] text-white lg:text-[60px]">{h.h1}</h1>
+        <h1 className="text-balance font-sans text-[28px] font-semibold leading-[1.2] text-white lg:text-[60px]">{h.h1}</h1>
         <div className="flex w-full flex-col gap-[12px] font-roboto text-[13.5px] leading-[1.4] text-white/90 lg:text-[17px]">
           {h.body.map((t) => <p key={t}>{t}</p>)}
         </div>

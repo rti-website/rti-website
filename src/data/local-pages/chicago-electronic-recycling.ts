@@ -11,13 +11,13 @@ export const CHICAGO_ELECTRONIC_RECYCLING: LocalPage = {
   url: href('/electronic-recycling-chicago/'),
   figma: { board: "7158:6338", phone: "7158:6757" },
   seo: {
-    title: "Electronics Recycling in Chicago, Illinois | Recycle Technologies",
+    title: 'Chicago Electronics Recycling & Business Pickup',
     description: "Commercial electronics and e-waste recycling for Chicago businesses, with pickup, drop-off, ITAD and hard drive destruction through our certified process.",
   },
   schema: { service: "Electronic Recycling", areaServed: ["Chicago, IL"] },
   hero: {
     crumb: "Electronics Recycling in Chicago, Illinois",
-    h1: "Electronics Recycling in Chicago, Illinois",
+    h1: 'Electronics Recycling in Chicago and Northern Illinois',
     body: [
       "Recycle Technologies provides electronics recycling services to businesses and residents in the Chicago area.",
       "Recycle Technologies does not operate a facility or drop-off point in Chicago. Businesses in the Chicago area are served through scheduled commercial pickup, while residents and small-volume customers can use the mail-in program for eligible electronics.",

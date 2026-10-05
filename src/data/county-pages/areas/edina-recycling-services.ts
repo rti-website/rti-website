@@ -14,11 +14,11 @@ export const EDINA_RECYCLING_SERVICES: CountyPage = {
   county: "Edina",
   figma: { board: "7084:74545", phone: "7084:75114" },
   seo: {
-    title: "Recycling Services in Edina | Call (800) 969-5166",
+    title: 'Edina, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling services Edina for electronics, batteries, lamps, devices, and paper, handled through approved intake and processing steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Edina Recycling Services",
+    h1: 'Electronics Recycling in Edina, MN',
     crumb: "Edina Recycling Services",
     lead: "Providing reliable and certified electronics recycling services at individual and business levels",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

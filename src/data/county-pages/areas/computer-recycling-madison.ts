@@ -15,11 +15,11 @@ export const COMPUTER_RECYCLING_MADISON: CountyPage = {
   service: "Computer Recycling",
   figma: { board: "7084:80230", phone: "7084:80535" },
   seo: {
-    title: "Eco-Friendly Computer Recycling Madison WI | (800) 969-5166",
+    title: 'Computer Recycling in Madison, WI | Recycle Technologies',
     description: "Eco-friendly computer recycling Madison Wisconsin for laptops, all-in-ones, thin clients, storage arrays, and peripherals, received and processed under approved handling steps. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Environmental-Friendly Computer Recycling in Madison Wisconsin",
+    h1: 'Computer Recycling in Madison, WI',
     crumb: "Environmental-Friendly Computer Recycling in Madison Wisconsin",
     lead: "Recycle Technologies – Bringing you innovative computer recycling solutions all across Madison, Wisconsin.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

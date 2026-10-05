@@ -33,11 +33,11 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
   // 301'd at launch), so this one follows the other county pages' WordPress
   // descriptions until the original turns up.
   seo: {
-    title: "Recycling Center in New Berlin | Call (800) 969-5166",
+    title: 'New Berlin Recycling Center: Hours, Drop-Off & Pickup',
     description: "Recycling center in New Berlin receiving electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",
   },
   hero: {
-    h1: "New Berlin Recycling Center",
+    h1: 'Recycle Technologies New Berlin, WI',
     crumb: "New Berlin Recycling Center",
     parent: { label: "Wisconsin", href: href('/wisconsin-recycling/') },
     lead: "Drop off electronics and batteries, or schedule a business pickup across southeast Wisconsin",

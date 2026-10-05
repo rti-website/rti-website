@@ -14,11 +14,11 @@ export const MINNETONKA_RECYCLING_CENTER: CountyPage = {
   county: "Minnetonka",
   figma: { board: "7070:7735", phone: "7070:8865" },
   seo: {
-    title: "Recycling Center in Minnetonka | Call (800) 969-5166",
+    title: 'Minnetonka, MN Recycling: Electronics, Batteries & Bulbs',
     description: "Recycling center Minnetonka receiving phones, routers, circuit boards, ink cartridges, and small devices, accepted through controlled intake and processing. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Minnetonka Recycling Center",
+    h1: 'Electronics Recycling in Minnetonka, MN',
     crumb: "Minnetonka Recycling Center",
     lead: "Recycle technologies is the one-stop solution to your recycling needs.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },

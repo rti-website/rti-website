@@ -130,7 +130,7 @@ export function ServiceHero({
           </ol>
         </nav>
 
-        <h1 className={`w-full text-center font-sans font-semibold text-white lg:w-auto lg:text-left ${h1OneLine ? 'lg:whitespace-nowrap ' : ''}${large
+        <h1 className={`w-full text-balance text-center font-sans font-semibold text-white lg:w-auto lg:text-left ${h1OneLine ? 'lg:whitespace-nowrap ' : ''}${large
           ? 'text-[32px] leading-[1.2] lg:mb-[8px] lg:text-[70px] lg:leading-[84.7px] lg:tracking-[-2.03px]'
           : 'text-[28px] leading-[1.18] lg:text-[60px] lg:leading-[70px] lg:tracking-[-1.5px]'}`}>
           {h1.includes('\n')

@@ -6,7 +6,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export const CONTENT: ServicePageContent = {
   url: '/light-bulbs/',
   liveSeo: {
-    title: 'Commercial Light Bulb Recycling | CFL, LED | (800) 969-5166',
+    title: 'Fluorescent Tube & Light Bulb Recycling for Business',
     description: 'Commercial light bulb recycling for businesses, facilities, and organizations. Recycle fluorescent, CFL, LED & other lamps. Call (800) 969-5166.',
   },
   proposedSeo: {
@@ -16,7 +16,7 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Light Bulb Recycling',
     // Live H1 is "LIGHT BULB RECYCLING" — see the gate 2 note in the build docs.
-    h1: 'LIGHT BULB RECYCLING', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    h1: 'Fluorescent Tube and Light Bulb Recycling', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
     lead: 'Recycle Technologies has recycled fluorescent lamps and other light bulbs since 1993, processing everything at its own Minnesota and Wisconsin facilities rather than sending materials through a broker.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
     ...HERO_PHOTOS.lightBulbs, // 28 Sep 2026 frame — see src/data/hero-photos.ts

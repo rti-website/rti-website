@@ -15,11 +15,11 @@ export const BATTERY_RECYCLING_MADISON: CountyPage = {
   service: "Battery Recycling",
   figma: { board: "7067:5007", phone: "7067:5760" },
   seo: {
-    title: "Battery Recycling in Madison | Call (800) 969-5166",
+    title: 'Battery Recycling in Madison, WI | Recycle Technologies',
     description: "Battery recycling Madison for household and commercial batteries, including alkaline, lithium, nickel-based, and button cells, accepted for proper processing. Call (800) 969-5166.",
   },
   hero: {
-    h1: "Battery Recycling Madison",
+    h1: 'Battery Recycling in Madison, WI',
     crumb: "Battery Recycling Madison",
     lead: "Take the burden off your shoulders by getting reliable battery recycling services in Madison from your trusted local partner.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
