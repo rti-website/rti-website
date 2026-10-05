@@ -100,6 +100,8 @@ export type CountyPage = {
      * (7233:8240, 5 Oct 2026).
      */
     secondary?: { label: string; href: string }
+    /** A third button, outlined like `secondary` (Blaine, 5 Oct 2026: directions, pickup, quote). */
+    third?: { label: string; href: string }
     /** A breadcrumb between Locations and the page ("Wisconsin" on New Berlin, 7233:8249). */
     parent?: { label: string; href: string }
   }
@@ -109,6 +111,11 @@ export type CountyPage = {
    */
   quickInfo?: { glyph: 'pin' | 'phone' | 'clock' | 'badge'; label: string; value: string; href?: string }[]
   /**
+   * A highlighted note between the quick-info bar and the map (Blaine, 5 Oct
+   * 2026: "Two buildings: use the right one"). `icon` per line: electronics or bulbs.
+   */
+  notice?: { title: string; lines: { icon: 'electronics' | 'bulbs'; text: string }[] }
+  /**
    * The map and directions row after the quick-info bar (New Berlin,
    * 7233:9372): the facility pages' "Getting Here" row with its own heading.
    */
@@ -116,7 +123,10 @@ export type CountyPage = {
     heading: string
     intro: string
     introShort: string
+    /** Label and value rows in a plate; empty for none (Blaine). */
     rows: { label: string; value: string }[]
+    /** A second paragraph under the intro (Blaine: "Near I-35W …"). */
+    note?: string
     primary: string
     secondary: string
     name: string

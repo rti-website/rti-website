@@ -50,6 +50,8 @@ export type DirectionsCopy = {
   intro: string
   introShort: string
   rows: { label: string; value: string }[]
+  /** A second paragraph under the intro, on both widths (Blaine's county page). */
+  note?: string
   primary: string
   secondary: string
 }
@@ -58,7 +60,7 @@ export type DirectionsCopy = {
  * The 1282 row without its section, so a flow page can draw it too: the New
  * Berlin center page (7233:9372, "Drop off here", 5 Oct 2026).
  */
-export function DirectionsPanel({ heading, intro, introShort, rows, primary, secondary, name, address, phone, mapsHref }: DirectionsCopy & {
+export function DirectionsPanel({ heading, intro, introShort, rows, note, primary, secondary, name, address, phone, mapsHref }: DirectionsCopy & {
   name: string; address: string; phone: string; mapsHref: string
 }) {
   const tel = `tel:${phone.replace(/[^+\d]/g, '')}`
@@ -81,14 +83,16 @@ export function DirectionsPanel({ heading, intro, introShort, rows, primary, sec
           <p className="font-roboto text-[15px] leading-[22px] text-muted max-lg:text-center lg:hidden">{introShort}</p>
           <p className="font-roboto text-[15.5px] leading-[1.65] text-muted max-lg:hidden">{intro}</p>
 
-          <dl className="flex flex-col gap-[12px] rounded-[12px] bg-[#eaf4f5] p-[24px] text-[14px] max-lg:hidden">
+          {note && <p className="font-roboto text-[15px] leading-[22px] text-heading max-lg:text-center lg:text-[15.5px] lg:leading-[1.65]">{note}</p>}
+
+          {rows.length > 0 && <dl className="flex flex-col gap-[12px] rounded-[12px] bg-[#eaf4f5] p-[24px] text-[14px] max-lg:hidden">
             {rows.map((r) => (
               <div key={r.label} className="flex h-[20px] items-start justify-between">
                 <dt className="font-roboto text-muted">{r.label}</dt>
                 <dd className="font-sans font-medium text-heading">{r.value}</dd>
               </div>
             ))}
-          </dl>
+          </dl>}
 
           <div className="flex flex-col gap-[10px] lg:flex-row lg:gap-[14px] lg:pt-[6px]">
             <a href={mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>

@@ -51,6 +51,7 @@ export async function CountyPage({ page }: { page: Page }) {
             <QuickInfoBar items={page.quickInfo.map((q) => ({ ...q, external: q.href?.startsWith('http') }))} />
           </section>
         )}
+        {page.notice && <Notice notice={page.notice} />}
         {page.directions && (
           /* 7233:9372 — the facility pages' map row, #fcfcfc, py70. */
           <section data-figma="7233:9372" className="flex flex-col items-center bg-[#fcfcfc] px-[20px] py-[44px] lg:px-0 lg:py-[70px]">
@@ -128,7 +129,7 @@ function Rich({ text }: { text: string }) {
 function Hero({ page }: { page: Page }) {
   const h = page.hero
   return (
-    <section data-figma={page.figma.board} className={`relative overflow-hidden bg-navy lg:h-[470px] ${h.secondary ? 'h-[310px]' : 'h-[276px]'}`}>
+    <section data-figma={page.figma.board} className={`relative overflow-hidden bg-navy lg:h-[470px] ${h.third ? 'h-[350px]' : h.secondary ? 'h-[310px]' : 'h-[276px]'}`}>
       <div aria-hidden="true" className="absolute left-[-223px] top-[-108px] h-[494px] w-[878px] lg:left-1/2 lg:top-[var(--img-t)] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2"
         style={{ '--img-t': `${h.imageTop ?? -372}px` } as React.CSSProperties}>
         {h.image && <Image src={h.image} alt="" fill priority sizes="(width < 64rem) 878px, 1920px" className="object-cover" />}
@@ -163,27 +164,38 @@ function Hero({ page }: { page: Page }) {
           {h.lead}
         </p>
         {/* Phone 7015:14008: a 40px button, 14px, no arrow. */}
-        <div className="mt-[16px] flex gap-[10px] lg:hidden">
-          <Link href={h.button.href}
+        <div className="mt-[16px] flex flex-wrap justify-center gap-[10px] lg:hidden">
+          <HeroLink href={h.button.href}
             className={`btn-pop inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4px] ${h.secondary ? 'border border-white bg-white text-brand' : 'bg-brand text-white'}`}>
             {h.button.label}
-          </Link>
-          {h.secondary && (
-            <Link href={h.secondary.href}
-              className="btn-pop inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] border border-white px-[18px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px]">
-              {h.secondary.label}
-            </Link>
-          )}
+          </HeroLink>
+          {[h.secondary, h.third].filter((b): b is { label: string; href: string } => !!b).map((b) => (
+            <HeroLink key={b.label} href={b.href}
+              className="btn-pop inline-flex h-[40px] items-center justify-center gap-[8px] rounded-[8px] border border-white px-[14px] font-roboto text-[14px] font-medium leading-[22.523px] tracking-[-0.0801px] text-white backdrop-blur-[4px]">
+              {b.label}
+            </HeroLink>
+          ))}
         </div>
         {/* 7233:9331 — with a second button the pair is white (teal text) and
             outlined white, 14 apart, 12 under the lead. */}
         <div className="max-lg:hidden lg:mt-[12px] lg:flex lg:gap-[14px]">
-          <Btn href={h.button.href} variant={h.secondary ? 'whiteFill' : 'colored'} className={`backdrop-blur-[4px] ${h.secondary ? 'border border-white' : ''}`}>{h.button.label}</Btn>
-          {h.secondary && <Btn href={h.secondary.href} variant="white" className="border border-white backdrop-blur-[4px]">{h.secondary.label}</Btn>}
+          <Btn href={h.button.href} external={isExternal(h.button.href)} variant={h.secondary ? 'whiteFill' : 'colored'} className={`backdrop-blur-[4px] ${h.secondary ? 'border border-white' : ''}`}>{h.button.label}</Btn>
+          {[h.secondary, h.third].filter((b): b is { label: string; href: string } => !!b).map((b) => (
+            <Btn key={b.label} href={b.href} external={isExternal(b.href)} variant="white" className="border border-white backdrop-blur-[4px]">{b.label}</Btn>
+          ))}
         </div>
       </div>
     </section>
   )
+}
+
+const isExternal = (u: string) => /^https?:\/\//.test(u)
+
+/** A hero button: Google Maps directions open in a new tab, everything else is a site link. */
+function HeroLink({ href: to, className, children }: { href: string; className: string; children: React.ReactNode }) {
+  return isExternal(to)
+    ? <a href={to} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
+    : <Link href={to} className={className}>{children}</Link>
 }
 
 /** Home / Locations / <page>, as the board's breadcrumb reads. */
@@ -194,6 +206,35 @@ function trailOf(page: Page): { label: string; href: string | null }[] {
     ...(page.hero.parent ? [{ label: page.hero.parent.label, href: page.hero.parent.href }] : []),
     { label: page.hero.crumb, href: null },
   ]
+}
+
+/* ---------------------------------------------------------------- notice -- */
+
+const NOTICE_ICON = { electronics: '/images/locations/mat-electronics.svg', bulbs: '/images/locations/mat-bulbs.svg' }
+
+/**
+ * A highlighted note under the quick-info bar (Blaine, 5 Oct 2026: "Two
+ * buildings: use the right one"). The 1282 column, a #eaf4f5 plate, each line
+ * with the materials tiles' teal icon box.
+ */
+function Notice({ notice }: { notice: NonNullable<Page['notice']> }) {
+  return (
+    <section className="bg-white px-[20px] pb-[32px] lg:px-0 lg:pb-[50px]">
+      <div className="mx-auto flex w-full flex-col gap-[14px] rounded-[16px] border border-[#cfe5e7] bg-[#eaf4f5] px-[21px] py-[21px] lg:w-[1282px] lg:px-[36px] lg:py-[28px]">
+        <h2 className="font-sans text-[18px] font-semibold leading-[normal] text-[#132119] lg:text-[20px]">{notice.title}</h2>
+        <ul className="flex flex-col gap-[12px]">
+          {notice.lines.map((l) => (
+            <li key={l.text} className="flex items-center gap-[12px] font-roboto text-[14.5px] leading-[1.45] text-[#132119] lg:text-[15.5px]">
+              <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] bg-brand">
+                <Image src={NOTICE_ICON[l.icon]} alt="" width={18} height={18} unoptimized className="size-[17px]" />
+              </span>
+              {l.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
 }
 
 /* ----------------------------------------------------------------- about -- */

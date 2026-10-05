@@ -210,8 +210,26 @@ export const MINNESOTA: Facility = {
   liveH1: 'Recycling Center in Minnesota',
   hero: {
     h1: 'Recycling Center in Minnesota', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
-    lead: '1525 99th Ln NE, Blaine, Minnesota 55449, R2v3 Certified',
-    leadShort: '1525 99th Ln NE, Blaine, MN, R2v3 Certified',
+    // New lead and the two buttons, as on Wisconsin (Asim, 5 Oct 2026: "do this thing in
+    // Recycling Center in Minnesota in the same design"). H1 and photo unchanged.
+    lead: 'Electronics, battery and light bulb recycling for homes and businesses across Minnesota',
+    leadShort: 'Electronics, battery and light bulb recycling for homes and businesses across Minnesota',
+    buttons: {
+      primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
+      secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
+    },
+  },
+  // The center bar, as Wisconsin's (6744:8794). Blaine's page is /minnesota-recycling/ramsey/blaine/.
+  center: {
+    eyebrow: 'Our Minnesota Recycling Center',
+    name: 'Blaine Recycling Center',
+    href: href('/minnesota-recycling/ramsey/blaine/'),
+    addressLabel: 'Address:',
+    address: '1525 99th Ln NE, Blaine, MN 55449',
+    phoneLabel: 'Phone:',
+    phone: '763-559-5130',
+    primary: 'View Center',
+    secondary: 'Get Directions',
   },
   address: MN_CONTACT.address,
   addressShort: '1525 99th Ln NE, Blaine, MN',
