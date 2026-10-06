@@ -48,7 +48,7 @@ import { content as pageContent } from '@/lib/page-content'
 const HERO_TOP = 140
 const HERO_H = 470
 /** The step strip under the hero (Mail-In, 6 Oct 2026): py40 + a 96 card row. */
-const HERO_STEPS_H = 260
+const HERO_STEPS_H = 200
 /** White space the design leaves between mid-page sections. */
 const GAP = 150
 const ACCEPT_H_DEFAULT = 446.36
@@ -276,10 +276,12 @@ export async function ServiceDetailPage({
  * Three step cards under the hero — Figma 7246:10418 "Mail In" (6 Oct 2026),
  * used on Mail-In and the six kit-tip service pages.
  *
- * A 260 band on #f7fafa, three 497x160 cards (1.5px #deeaeb, r16) with an
- * 81 wide arrow between them, 1653 in all, centred. Each card: a 106 #e5f3f0
- * tile (r28) holding the 60px line icon, then STEP n (Inter 15/20 bold
- * #049c88) over the step in Inter 23/30 bold #102d30.
+ * Figma's colours, icons and arrow, at a smaller size (Asim, 7 Oct 2026:
+ * the 1653 row of 497x160 cards ran to the window's edges): a 200 band on
+ * #f7fafa, the 1282 column, three 390x128 cards (3 x 390 + 2 x 56 = 1282) (1.5px #deeaeb, r16)
+ * with a 56 gap holding the arrow. Each card: an 84 #e5f3f0 tile (r22) with
+ * the 60px icon frame at 0.8, then STEP n (Inter 13/20 bold #049c88) over
+ * the step in Inter 19/25 bold #102d30.
  *
  * MOBILE: no phone frame. The cards stack full width, the tile drops to 84,
  * the arrows go.
@@ -294,18 +296,24 @@ const STEP_ICONS = {
 
 function HeroSteps({ top, steps }: { top: number; steps: NonNullable<ServicePageContent['heroSteps']> }) {
   return (
-    <Section top={top} height={HERO_STEPS_H} label="7246:10448" className="flex flex-col items-center bg-[#f7fafa] px-[20px] py-[28px] lg:justify-center lg:px-0 lg:py-[50px]">
-      <ol className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:gap-0">
+    <Section top={top} height={HERO_STEPS_H} label="7246:10448" className="flex flex-col items-center bg-[#f7fafa] px-[20px] py-[28px] lg:justify-center lg:px-0 lg:py-[36px]">
+      {/* The 1282 content column, like every other band (Asim, 7 Oct 2026:
+          the 1653 Figma row ran to the window's edges). */}
+      <ol className="flex w-full flex-col gap-[12px] lg:w-[1282px] lg:flex-row lg:gap-0">
         {steps.map((s, i) => {
           const icon = STEP_ICONS[s.glyph] ?? STEP_ICONS.package
           return (
             <li key={s.label} className="flex items-center lg:items-stretch">
               {i > 0 ? (
-                <Image src="/images/steps/step-arrow.svg" alt="" width={81} height={160} unoptimized className="hidden lg:block" />
+                // The 81x160 connector at its own size, cropped to the 56x128 gap
+                // (the arrow sits in its middle).
+                <span className="hidden shrink-0 items-center justify-center overflow-hidden lg:flex lg:h-[128px] lg:w-[56px]">
+                  <Image src="/images/steps/step-arrow.svg" alt="" width={81} height={160} unoptimized className="max-w-none shrink-0" />
+                </span>
               ) : null}
-              <div className="flex w-full items-center gap-[18px] rounded-[16px] border-[1.5px] border-[#deeaeb] bg-[#f7fafa] px-[16px] py-[16px] lg:h-[160px] lg:w-[497px] lg:items-start lg:gap-[34px] lg:px-[27.5px] lg:py-[31.5px]">
-                <span className="relative size-[84px] shrink-0 rounded-[22px] bg-[#e5f3f0] lg:size-[106px] lg:rounded-[28px]">
-                  <span className="absolute left-1/2 top-1/2 size-[60px] -translate-x-1/2 -translate-y-1/2 overflow-clip max-lg:scale-[0.85]">
+              <div className="flex w-full items-center gap-[18px] rounded-[16px] border-[1.5px] border-[#deeaeb] bg-[#f7fafa] px-[16px] py-[16px] lg:h-[128px] lg:w-[390px] lg:gap-[20px] lg:px-[22px] lg:py-[22px]">
+                <span className="relative size-[84px] shrink-0 rounded-[22px] bg-[#e5f3f0] lg:size-[84px] lg:rounded-[22px]">
+                  <span className="absolute left-1/2 top-1/2 size-[60px] -translate-x-1/2 -translate-y-1/2 scale-[0.85] overflow-clip lg:scale-[0.8]">
                     <span className={`absolute ${icon.box}`}>
                       <span className={`absolute ${icon.bleed}`}>
                         <Image src={icon.src} alt="" width={icon.w} height={icon.h} unoptimized className="block size-full max-w-none" />
@@ -313,9 +321,9 @@ function HeroSteps({ top, steps }: { top: number; steps: NonNullable<ServicePage
                     </span>
                   </span>
                 </span>
-                <span className="flex min-w-px flex-col gap-[4px] lg:gap-[7.5px] lg:pt-[7px]">
-                  <span className="font-inter text-[13px] font-bold uppercase leading-[20px] text-[#049c88] lg:text-[15px]">{s.label || `Step ${i + 1}`}</span>
-                  <span className="font-inter text-[18px] font-bold leading-[24px] text-[#102d30] text-balance lg:w-[323px] lg:text-[23px] lg:leading-[30px]">{s.text}</span>
+                <span className="flex min-w-px flex-col gap-[4px]">
+                  <span className="font-inter text-[13px] font-bold uppercase leading-[20px] text-[#049c88]">{s.label || `Step ${i + 1}`}</span>
+                  <span className="font-inter text-[18px] font-bold leading-[24px] text-[#102d30] text-balance lg:text-[19px] lg:leading-[25px]">{s.text}</span>
                 </span>
               </div>
             </li>
