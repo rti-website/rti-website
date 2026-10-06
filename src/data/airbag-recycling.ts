@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { kitService, KIT_COLLECTIONS } from '@/data/kit-tips'
 
 /**
  * /airbag-recycling/ — copy from the "Airbag Recycling" doc, geometry from
@@ -78,13 +79,7 @@ export const CONTENT: ServicePageContent = {
     { q: 'Do I get documentation after my airbags are recycled?', a: 'Yes. A certificate of recycling is issued once disposal is complete.' },
     { q: 'Is pickup available for individuals as well as businesses?', a: 'Pickup service is offered exclusively to commercial clients; individuals can use drop-off or mail-back options instead.' },
   ],
-  cta: {
-    heading: 'Get Your Airbags Off Your Hands',
-    body: [
-      'Recycle Technologies also handles electronics recycling and battery recycling for shops and facilities managing multiple waste streams.',
-      'Stop storing liability. Get a quote or schedule a pickup and get your airbags recycled the right way. Pickup service is exclusively available to commercial clients.',
-    ],
-    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
-  },
+  // Kit tip, step strip and closing band — the EZ on the Earth kit links
+  // sheet and the Battery wireframe, 6 Oct 2026 (src/data/kit-tips.ts).
+  ...kitService({ few: 'airbags', kit: 'an airbag recycling kit', noun: 'Airbags', href: KIT_COLLECTIONS.airbags }),
 }

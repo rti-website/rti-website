@@ -1,6 +1,8 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
+import { KitTip, type KitTipCopy } from '@/components/ui/KitTip'
 
 /**
  * The closing CTA band that ends every page — Figma 6107:2950 in the file
@@ -89,6 +91,10 @@ export type CtaContent = {
   narrow?: boolean
   /** A shorter body for the phone (narrow only). */
   bodyMobile?: string
+  /** A link after the body ("Questions? Contact us."), the service pages of 6 Oct 2026. */
+  contact?: { label: string; href: string }
+  /** The mail-in kit tip under the buttons, over a thin rule (6 Oct 2026). */
+  tip?: KitTipCopy
 }
 
 /**
@@ -157,6 +163,7 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
       ) : (
         <p className="relative w-full text-center font-roboto text-[15px] leading-[22px] text-white/80 lg:w-[1084px] lg:text-[17.018px] lg:leading-[27.654px]">
           {body}
+          {content.contact && <>{' '}<Link href={content.contact.href} className="font-medium text-white underline underline-offset-2 hover:text-white/80">{content.contact.label}</Link></>}
         </p>
       )}
 
@@ -185,6 +192,11 @@ export function ClosingCtaBand({ content }: { content: CtaContent }) {
           {content.secondary.label}
         </Btn>
       </div>
+      {content.tip && (
+        <div className="relative w-full border-t border-white/20 pt-[16px] lg:w-[760px] lg:pt-[18px]">
+          <KitTip tip={content.tip} className="justify-center text-center lg:mx-auto lg:w-fit" />
+        </div>
+      )}
     </div>
   )
 }

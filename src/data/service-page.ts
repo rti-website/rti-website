@@ -1,3 +1,4 @@
+import type { KitTipCopy } from '@/components/ui/KitTip'
 import type { HeroFill, HeroTone, HeroWashes } from '@/components/ui/InteriorHeroArt'
 
 /**
@@ -77,7 +78,26 @@ export type ServicePageContent = {
      * know the location, so they show [Get a Quote] [Schedule a Pickup].
      */
     secondaryCta?: Cta
+    /**
+     * A white, off-site first button in place of Schedule a Pickup, followed by
+     * an outlined Get a Quote (Mail-In, 6 Oct 2026: "Order a Recycling Kit"
+     * opens the EZ on the Earth kit store). Pickup is left out of this hero.
+     */
+    kitCta?: Cta
   }
+
+  /**
+   * Three numbered step cards in a strip under the hero (Mail-In, 6 Oct
+   * 2026). `icon` is a local-pages icon name (white on the teal circle).
+   */
+  heroSteps?: { icon: 'mail' | 'lock' | 'truck' | 'check' | 'file'; label: string; text: string }[]
+
+  /**
+   * The mail-in kit tip (6 Oct 2026, the EZ on the Earth kit links sheet):
+   * under the hero buttons and at the foot of the closing band. With it the
+   * hero leads with Schedule a Pickup (white) and Get a Quote (outlined).
+   */
+  kitTip?: KitTipCopy
 
   /** Prose block one — text left, photo right. */
   intro: {
@@ -169,6 +189,10 @@ export type ServicePageContent = {
      */
     headingWidth?: number
     body: string[]
+    /** A link after the body ("Questions? Contact us."), 6 Oct 2026. */
+    contact?: { label: string; href: string }
+    /** Overrides the page's kitTip in the closing band. */
+    tip?: KitTipCopy
     primary: Cta
     secondary: Cta
   }

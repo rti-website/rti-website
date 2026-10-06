@@ -29,7 +29,7 @@ export type Crumb = { label: string; href: string | null }
  * is hidden rather than removed and the crumb links stay in the DOM.
  */
 export function ServiceHero({
-  crumbs, h1, h1OneLine, lead, pickupCta, cta, ctaFill = 'colored', secondaryCta, label, image, imageFill, washes, tone, panels, top = 140, size,
+  crumbs, h1, h1OneLine, lead, pickupCta, cta, ctaFill = 'colored', secondaryCta, note, centerY = false, label, image, imageFill, washes, tone, panels, top = 140, size,
 }: {
   crumbs: Crumb[]
   /**
@@ -73,6 +73,8 @@ export function ServiceHero({
   /** "Schedule a Pickup", drawn first, where the location picker was. */
   pickupCta?: { label: string; href: string }
   cta?: { label: string; href: string; external?: boolean }
+  /** A line under the buttons (the mail-in kit tip on the service pages, 6 Oct 2026). */
+  note?: React.ReactNode
   /** `cta`'s fill: teal (default), or white with teal text (Wisconsin, 6744:8394, 5 Oct 2026). */
   ctaFill?: 'colored' | 'whiteFill'
   /** A second, outlined button after `cta` (state landing pages, 24 Sep 2026). */
@@ -92,6 +94,12 @@ export function ServiceHero({
    * lead at 15/1.5 in 273, 10 apart. Every other page leaves it unset.
    */
   size?: 'large'
+  /**
+   * Centre the text block in the 470 band, the same space above and below
+   * (Asim, 6 Oct 2026, the service pages). Desktop only; the phone band is
+   * already a centred flex column.
+   */
+  centerY?: boolean
 }) {
   const large = size === 'large'
   return (
@@ -116,7 +124,7 @@ export function ServiceHero({
 
       {/* Content column — 6199:4945 at x319 y113, w946, gap 20; 6638:10147..
           on the phone, where the column is centred and the crumbs are gone. */}
-      <Box x={319} y={large ? 139 : 113} w={946} className={`flex flex-col items-start max-lg:items-center ${large ? 'gap-[10px] lg:gap-0' : 'gap-[20px]'}`}>
+      <Box x={319} y={large ? 139 : centerY ? 235 : 113} w={946} className={`flex flex-col items-start max-lg:items-center ${centerY && !large ? 'lg:-translate-y-1/2' : ''} ${large ? 'gap-[10px] lg:gap-0' : 'gap-[20px]'}`}>
         <nav aria-label="Breadcrumb" className={`max-lg:hidden ${large ? 'lg:mb-[21px] lg:pl-[3px]' : ''}`}>
           <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
             {crumbs.map((c, i) => (
@@ -195,6 +203,7 @@ export function ServiceHero({
             )}
           </div>
         )}
+        {note}
       </Box>
     </Section>
   )

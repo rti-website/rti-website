@@ -1,6 +1,6 @@
 import { NextResponse, after } from 'next/server'
 import { one } from '@/lib/db'
-import { mailConfigured, notifyAddress, sendMail } from '@/lib/mail'
+import { mailConfigured, notifyAddress, notifyRecipients, sendMail } from '@/lib/mail'
 import { toE164 } from '@/lib/phone'
 import { stateCode } from '@/lib/us-address'
 import { FORM, SERVICE_INTEREST, matchService } from '@/data/contact'
@@ -10,7 +10,7 @@ import { publishedContent } from '@/lib/page-content'
 import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
 import { leadNotification } from '@/lib/lead-email'
 import { locateLead } from '@/lib/lead-location'
-import { isLeadFormKey } from '@/lib/lead-forms'
+import { isLeadFormKey, leadFormKey } from '@/lib/lead-forms'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -314,13 +314,18 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   // --------------------------------------------------------------- notify --
-  const to = notifyAddress()
+  // Business enquiries to Christine, Usman in CC (6 Oct 2026); see notifyRecipients.
+  const { to, cc } = notifyRecipients({
+    form: leadFormKey({ type, details, source_page: sourcePage }),
+    audience: details.audience,
+  })
   let notified = false
   if (to && mailConfigured()) {
     // The table layout Asim sent on 24 Sep 2026 — see src/lib/lead-email.ts.
     const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id })
     const result = await sendMail({
       to,
+      ...(cc ? { cc } : {}),
       subject: mail.subject,
       text: mail.text,
       html: mail.html,

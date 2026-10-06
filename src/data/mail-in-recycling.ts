@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
 import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { KIT_STORE } from '@/lib/nav'
 
 /**
  * /mail-in-recycling/ — copy from the "Mail-In Recycling Program" doc.
@@ -35,11 +36,19 @@ export const CONTENT: ServicePageContent = {
   hero: {
     crumb: 'Mail-In Recycling Program',
     h1: 'Mail-In Recycling Kits for Homes and Businesses',
-    lead: 'Recycle Technologies’ Mail-In Program gives customers outside its local drop-off and pickup areas a way to send eligible materials for recycling, including items purchased online and shipped in when a nearby option isn’t available.',
-    // The doc's "Get Quote" (24 Sep 2026), worded like every other quote button.
+    // 6 Oct 2026 (Asim's wireframe): new lead; "Order a Recycling Kit" (the EZ on the Earth
+    // store, with its utm tags) then "Get a Quote"; Schedule a Pickup removed from this hero.
+    lead: 'Outside our pickup and drop-off areas? Order a kit, fill it with batteries, bulbs or electronics, and ship it back for certified recycling.',
     cta: { label: 'Get a Quote', href: QUOTE_HREF },
+    kitCta: { label: 'Order a Recycling Kit', href: KIT_STORE, external: true },
     ...HERO_PHOTOS.mailIn, // 28 Sep 2026 frame — see src/data/hero-photos.ts
   },
+  // The strip under the hero (6 Oct 2026, the wireframe's "optional strip").
+  heroSteps: [
+    { icon: 'mail',  label: 'Step 1', text: 'Order the kit for your material' },
+    { icon: 'lock',  label: 'Step 2', text: 'Fill and seal it using the packing steps' },
+    { icon: 'truck', label: 'Step 3', text: 'Ship it back and get a certificate' },
+  ],
   intro: {
     heading: 'What Is the Mail-In Recycling Program?',
     body: [

@@ -45,6 +45,8 @@ function transport(): Transporter | null {
 
 export type Mail = {
   to: string
+  /** Copied in (comma separated, like `to`). */
+  cc?: string
   subject: string
   text: string
   /** Optional HTML body; `text` is always sent too, for clients that want it. */
@@ -70,6 +72,7 @@ export async function sendMail(mail: Mail): Promise<{ sent: boolean; reason?: st
     await t.sendMail({
       from: mail.from ?? process.env.MAIL_FROM ?? process.env.SMTP_USER,
       to: mail.to,
+      ...(mail.cc ? { cc: mail.cc } : {}),
       subject: mail.subject,
       text: mail.text,
       ...(mail.html ? { html: mail.html } : {}),
@@ -91,4 +94,35 @@ export async function sendMail(mail: Mail): Promise<{ sent: boolean; reason?: st
  */
 export function notifyAddress(): string | null {
   return process.env.LEAD_NOTIFY_TO?.trim() || null
+}
+
+/**
+ * Who a new enquiry's notification goes to, and who is copied in.
+ * Asim, 6 Oct 2026: business (commercial) enquiries go to Christine with
+ * Usman in CC; residential ones stay with Usman.
+ *
+ *   LEAD_NOTIFY_TO_COMMERCIAL / LEAD_NOTIFY_CC_COMMERCIAL  business enquiries
+ *     ("Commercial" on Contact Us and Get a Quote, "Business" on the ITAD
+ *     pickup form, every Schedule a Pickup)
+ *   LEAD_NOTIFY_TO_RESIDENTIAL / LEAD_NOTIFY_CC_RESIDENTIAL
+ *   LEAD_NOTIFY_TO_QUOTE / _PICKUP / _CONTACT (and the _CC_ ones)  per form
+ *   LEAD_NOTIFY_TO / LEAD_NOTIFY_CC                        everything else
+ *
+ * The first one set wins, in that order (audience, then form, then the
+ * general one). To and CC are picked separately, so a CC can be set on its
+ * own. All comma separated. An address already in To is dropped from CC.
+ */
+export function notifyRecipients(lead: { form?: string | null; audience?: string | null }): { to: string | null; cc: string | null } {
+  const env = (k: string) => process.env[k]?.trim() || null
+  const aud = lead.audience === 'Residential' ? 'RESIDENTIAL'
+    : lead.audience === 'Commercial' || lead.audience === 'Business' ? 'COMMERCIAL'
+    : null
+  const form = lead.form ? lead.form.toUpperCase() : null
+  const pick = (base: string) =>
+    (aud && env(`${base}_${aud}`)) || (form && env(`${base}_${form}`)) || env(base)
+  const to = pick('LEAD_NOTIFY_TO')
+  const list = (v: string | null) => (v ?? '').split(',').map((a) => a.trim()).filter(Boolean)
+  const toList = list(to).map((a) => a.toLowerCase())
+  const cc = list(pick('LEAD_NOTIFY_CC')).filter((a) => !toList.includes(a.toLowerCase()))
+  return { to, cc: cc.length ? cc.join(', ') : null }
 }

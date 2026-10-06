@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { kitService, KIT_COLLECTIONS } from '@/data/kit-tips'
 
 /**
  * /ballasts/ — copy from the "Ballast Recycling" doc, geometry from 6142:2048.
@@ -82,15 +83,9 @@ export const CONTENT: ServicePageContent = {
     { q: 'Do I get documentation after my ballasts are recycled?', a: 'Yes. Recycle Technologies issues a Certificate of Recycling once processing is complete.' },
     { q: 'Can I recycle ballasts if I’m not near a Minnesota or Wisconsin facility?', a: 'Yes. Ballasts can also be sent through Recycle Technologies’ mail-in recycling program.' },
   ],
-  cta: {
-    heading: 'Ready to Recycle Your Ballasts?',
-    body: [
-      'If your business has used or retired ballasts to dispose of, request a pickup or get a quote to get started.',
-      'Pickup service is available exclusively for commercial customers; if you’re a residential customer, you can find a nearby drop-off location or order a mail-in recycling kit instead.',
-    ],
-    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
-  },
+  // Kit tip, step strip and closing band — the EZ on the Earth kit links
+  // sheet and the Battery wireframe, 6 Oct 2026 (src/data/kit-tips.ts).
+  ...kitService({ few: 'ballasts', kit: 'a ballasts recycling kit', noun: 'Ballasts', href: KIT_COLLECTIONS.ballasts }),
   todo: [
     'Case studies and customer testimonials are marked "to be added" in the doc.',
   ],

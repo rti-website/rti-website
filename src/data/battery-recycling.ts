@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { kitService, KIT_COLLECTIONS } from '@/data/kit-tips'
 
 /**
  * /battery-recycling/ — all page copy.
@@ -149,17 +150,7 @@ export const FAQ_INTRO = {
 }
 
 /* ------------------------------------------------------------ closing CTA --*/
-export const CTA = {
-  heading: 'Ready to Recycle Responsibly?',
-  body: [
-    'Whether you’re a business retiring old IT equipment or an individual clearing out a '
-    + 'closet, Recycle Technologies can help you recycle it properly. Businesses can schedule '
-    + 'a pickup or get a quote; individuals can find a drop-off location or order a mail-in '
-    + 'recycling kit.',
-  ],
-  primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-  secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
-}
+// The closing CTA moved into kitService() (src/data/kit-tips.ts), 6 Oct 2026.
 
 /**
  * The page object the shared ServiceDetailPage renders. The constants above are
@@ -176,6 +167,8 @@ export const CONTENT: ServicePageContent = {
   accept: ACCEPT,
   process: PROCESS,
   faqs: FAQS,
-  cta: CTA,
+  // Kit tip, step strip and closing band — the EZ on the Earth kit links
+  // sheet and the Battery wireframe, 6 Oct 2026 (src/data/kit-tips.ts).
+  ...kitService({ few: 'batteries', kit: 'a battery recycling kit', noun: 'Batteries', href: KIT_COLLECTIONS.batteries }),
   placesTitle: 'Battery Recycling Near You',
 }

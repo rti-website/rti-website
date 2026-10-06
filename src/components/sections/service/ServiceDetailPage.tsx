@@ -1,6 +1,7 @@
 import { FOOTER_H } from '@/lib/layout'
 import { ServiceLocationsBand, placesBandHeight, type Place } from '@/components/sections/service/ServiceLocationsBand'
-import { Canvas } from '@/components/design/Frame'
+import { Canvas, Section } from '@/components/design/Frame'
+import Image from 'next/image'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { CASE_STUDIES_H, CaseStudies } from '@/components/sections/CaseStudies'
@@ -13,6 +14,7 @@ import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
 import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { Btn } from '@/components/ui/Bits'
+import { KitTip } from '@/components/ui/KitTip'
 import { content as pageContent } from '@/lib/page-content'
 
 /**
@@ -45,6 +47,8 @@ import { content as pageContent } from '@/lib/page-content'
 
 const HERO_TOP = 140
 const HERO_H = 470
+/** The step strip under the hero (Mail-In, 6 Oct 2026): py40 + a 96 card row. */
+const HERO_STEPS_H = 176
 /** White space the design leaves between mid-page sections. */
 const GAP = 150
 const ACCEPT_H_DEFAULT = 446.36
@@ -84,7 +88,8 @@ export async function ServiceDetailPage({
   const acceptH    = layout.accept ?? ACCEPT_H_DEFAULT
   const faqH       = layout.faq ?? FAQ_H_DEFAULT
   const certH      = layout.certifications ?? CERT_H_DEFAULT
-  const introTop   = HERO_TOP + HERO_H
+  const stepsH     = content.heroSteps?.length ? HERO_STEPS_H : 0
+  const introTop   = HERO_TOP + HERO_H + stepsH
   const acceptTop  = introTop + layout.intro + GAP
   // The industry frames have no second prose block, so that section and the
   // gap after it drop out of the stack entirely.
@@ -124,7 +129,7 @@ export async function ServiceDetailPage({
      carry ?service=); anything else it had (a kit, a pickup) gives way. */
   const own = [hero.cta, hero.secondaryCta].find((c) => c && /quote/i.test(c.label))
   const heroQuote = hero.cta ? { label: 'Get a Quote', href: own?.href ?? QUOTE_HREF } : undefined
-  const heroPickup = hero.cta ? { label: 'Schedule a Pickup', href: PICKUP_HREF } : undefined
+  const heroPickup = hero.cta && !hero.kitCta ? { label: 'Schedule a Pickup', href: PICKUP_HREF } : undefined
 
   return (
     <Canvas height={Math.round(footerTop + FOOTER_H)}>
@@ -132,6 +137,7 @@ export async function ServiceDetailPage({
       <main>
         <ServiceHero
           label="6142:2050"
+          centerY
           crumbs={hero.trail ?? [
             { label: text.crumbs.home,     href: href('/') },
             { label: text.crumbs.services, href: href('/services/') },
@@ -141,12 +147,20 @@ export async function ServiceDetailPage({
           h1OneLine={hero.h1OneLine}
           lead={hero.lead}
           pickupCta={heroPickup}
-          cta={heroQuote}
+          {...(hero.kitCta
+            ? { cta: { ...hero.kitCta, external: true }, ctaFill: 'whiteFill' as const, secondaryCta: heroQuote ?? { label: 'Get a Quote', href: QUOTE_HREF } }
+            : content.kitTip
+              /* The kit-tip pages (6 Oct 2026): Schedule a Pickup first and white,
+                 Get a Quote outlined, the kit tip under them. */
+              ? { pickupCta: undefined, cta: heroPickup, ctaFill: 'whiteFill' as const, secondaryCta: heroQuote, note: <KitTip tip={content.kitTip} className="max-lg:justify-center max-lg:text-center lg:mt-[-4px]" /> }
+              : { cta: heroQuote })}
           image={hero.image}
           imageFill={hero.imageFill}
           washes={hero.washes}
           tone={hero.tone}
         />
+
+        {content.heroSteps?.length ? <HeroSteps top={HERO_TOP + HERO_H} steps={content.heroSteps} /> : null}
 
         <ServiceSplit
           top={introTop} height={layout.intro} media="right" label="6197:4463"
@@ -251,9 +265,35 @@ export async function ServiceDetailPage({
           items={faqs}
         />
 
-        <ServicesCta top={ctaTop} label="6146:2431" content={content.cta} />
+        <ServicesCta top={ctaTop} label="6146:2431" content={content.kitTip ? { ...content.cta, tip: content.cta.tip ?? content.kitTip } : content.cta} />
       </main>
       <Footer top={footerTop} />
     </Canvas>
+  )
+}
+
+/**
+ * Three step cards under the hero — Mail-In, 6 Oct 2026 (Asim's wireframe:
+ * "Step 1 · Order the kit for your material" and so on). The 1282 column, a
+ * white band, cards in the site's #e6e6e6 border with a small teal icon and
+ * the step number over a 17px line. Stacked on the phone.
+ */
+function HeroSteps({ top, steps }: { top: number; steps: NonNullable<ServicePageContent['heroSteps']> }) {
+  return (
+    <Section top={top} height={HERO_STEPS_H} label="mail-in-steps" className="flex flex-col items-center bg-white px-[20px] py-[28px] lg:px-0 lg:py-[40px]">
+      <ol className="flex w-full flex-col gap-[12px] lg:w-[1282px] lg:flex-row lg:gap-[24px]">
+        {steps.map((s, i) => (
+          <li key={s.label} className="flex flex-1 items-center gap-[14px] rounded-[14px] border border-[#e6e6e6] bg-white px-[20px] py-[18px] lg:h-[96px] lg:px-[24px]">
+            <span className="grid size-[44px] shrink-0 place-items-center rounded-full bg-brand">
+              <Image src={`/images/locations/local-pages/icons/${s.icon}.svg`} alt="" width={22} height={22} unoptimized className="size-[20px]" />
+            </span>
+            <span className="flex flex-col gap-[2px]">
+              <span className="font-roboto text-[12.5px] font-medium uppercase tracking-[0.6px] text-brand">{s.label || `Step ${i + 1}`}</span>
+              <span className="font-sans text-[16px] font-medium leading-[1.3] text-heading lg:text-[17px]">{s.text}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </Section>
   )
 }

@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { kitService, KIT_COLLECTIONS } from '@/data/kit-tips'
 
 /** /tv-recycling/ — copy from the "Television Recycling" doc, geometry from 6142:2048. */
 export const CONTENT: ServicePageContent = {
@@ -67,12 +68,7 @@ export const CONTENT: ServicePageContent = {
     { q: 'Can I schedule a television pickup?', a: 'Yes. After receiving a quote, you can book a pickup slot for your location.' },
     { q: 'Where does Recycle Technologies provide television recycling services?', a: 'Pickup and facility-based recycling are available in Minnesota and Wisconsin. Customers outside that service area can use the mail-in recycling program instead.' },
   ],
-  cta: {
-    heading: 'Ready to Recycle Your Televisions?',
-    body: [
-      'If your business has retired televisions to dispose of, schedule a pickup or get a quote to get started. Pickup service is available only to commercial clients; residential customers can use a nearby drop-off location or order a mail-in recycling kit instead.',
-    ],
-    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
-  },
+  // Kit tip, step strip and closing band — the EZ on the Earth kit links
+  // sheet and the Battery wireframe, 6 Oct 2026 (src/data/kit-tips.ts).
+  ...kitService({ few: 'TVs', kit: 'an electronics recycling kit', noun: 'TVs', href: KIT_COLLECTIONS.electronics }),
 }

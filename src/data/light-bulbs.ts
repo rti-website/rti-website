@@ -1,6 +1,7 @@
 import type { ServicePageContent } from '@/data/service-page'
-import { QUOTE_HREF, PICKUP_HREF } from '@/lib/urls'
+import { QUOTE_HREF } from '@/lib/urls'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { kitService, KIT_COLLECTIONS } from '@/data/kit-tips'
 
 /** /light-bulbs/ — copy from the "Light Bulb Recycling" doc, geometry from 6142:2048. */
 export const CONTENT: ServicePageContent = {
@@ -59,19 +60,8 @@ export const CONTENT: ServicePageContent = {
     { q: 'Do the bulbs get sent to a landfill?', a: 'No. Recycle Technologies processes collected bulbs directly at its own Minnesota and Wisconsin facilities rather than outsourcing or landfilling them.' },
     { q: 'Will I receive documentation that my bulbs were recycled?', a: 'Customers using the mail-in program can access a certificate online after their kit is processed.' },
   ],
-  cta: {
-    heading: 'Ready to Recycle Your Light Bulbs?',
-    body: [
-      // The cross-sell line that used to sit here — "Related service: Ballast
-      // Recycling, for the PCB- and DEHP-containing capacitors often found
-      // alongside fluorescent fixtures" — came out on Asim's instruction,
-      // 22 Sep 2026. It read as a footnote in the middle of a closing CTA.
-      // Ballast Recycling is still reachable from the Services menu and the
-      // /services/ catalogue, so no link is lost.
-      'Whether you need a commercial pickup or want to ship bulbs through the mail-in program, Recycle Technologies can get your used or spent lighting into a documented recycling process. Get a quote or schedule a pickup to get started.',
-    ],
-    primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
-  },
+  // Kit tip, step strip and closing band — the EZ on the Earth kit links
+  // sheet and the Battery wireframe, 6 Oct 2026 (src/data/kit-tips.ts).
+  ...kitService({ few: 'light bulbs', kit: 'a bulb recycling kit', noun: 'Light Bulbs', href: KIT_COLLECTIONS.bulbs }),
   placesTitle: 'Light Bulb Recycling Near You',
 }
