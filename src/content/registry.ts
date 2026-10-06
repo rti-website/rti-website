@@ -49,9 +49,7 @@ import { RACINE } from '@/data/county-pages/racine'
 import { WASHINGTON_WI } from '@/data/county-pages/washington-wi'
 import { BLAINE } from '@/data/county-pages/areas/blaine'
 import { MILWAUKEE } from '@/data/county-pages/areas/milwaukee'
-import { WAUKESHA_RECYCLING_CENTER } from '@/data/county-pages/areas/waukesha-recycling-center'
 import { BATTERY_RECYCLING_MILWAUKEE } from '@/data/county-pages/areas/battery-recycling-milwaukee'
-import { ELECTRONICS_RECYCLING_MILWAUKEE } from '@/data/county-pages/areas/electronics-recycling-milwaukee'
 import { OAK_CREEK } from '@/data/county-pages/areas/oak-creek'
 import { OCONOMOWOC_RECYCLING_CENTER } from '@/data/county-pages/areas/oconomowoc-recycling-center'
 import { WAUKESHA_ELECTRONIC_RECYCLING } from '@/data/county-pages/areas/waukesha-electronic-recycling'
@@ -275,9 +273,7 @@ export const DOCS = {
      URLs on the county template (src/data/county-pages/areas/). */
   'area/blaine': { title: "Blaine Recycling", group: 'Location pages', urls: [BLAINE.url], data: one(BLAINE) },
   'area/milwaukee': { title: "Recycling Center in Milwaukee", group: 'Location pages', urls: [MILWAUKEE.url], data: one(MILWAUKEE) },
-  'area/waukesha-recycling-center': { title: "Waukesha Recycling Center", group: 'Location pages', urls: [WAUKESHA_RECYCLING_CENTER.url], data: one(WAUKESHA_RECYCLING_CENTER) },
   'area/battery-recycling-milwaukee': { title: "Non-Hazardous Battery Recycling Milwaukee", group: 'Location pages', urls: [BATTERY_RECYCLING_MILWAUKEE.url], data: one(BATTERY_RECYCLING_MILWAUKEE) },
-  'area/electronics-recycling-milwaukee': { title: "Electronics Recycling Milwaukee, WI", group: 'Location pages', urls: [ELECTRONICS_RECYCLING_MILWAUKEE.url], data: one(ELECTRONICS_RECYCLING_MILWAUKEE) },
   'area/oak-creek': { title: "Oak Creek Recycling Center", group: 'Location pages', urls: [OAK_CREEK.url], data: one(OAK_CREEK) },
   'local/wisconsin-recycling-airbag-recycling': { title: "Airbag Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_AIRBAG_RECYCLING.url], data: one(WISCONSIN_AIRBAG_RECYCLING) },
   'local/wisconsin-recycling-ballast-recycling': { title: "Ballast Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_BALLAST_RECYCLING.url], data: one(WISCONSIN_BALLAST_RECYCLING) },

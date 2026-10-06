@@ -66,7 +66,7 @@
   },
   {
     "source": "/electronics-recycling-in-minneapolis/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/minneapolis/",
     "statusCode": 301
   },
   {
@@ -101,7 +101,7 @@
   },
   {
     "source": "/light-bulb-recycling-minneapolis/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/bulb-recycle-minneapolis/",
     "statusCode": 301
   },
   {
@@ -121,7 +121,7 @@
   },
   {
     "source": "/minnesota-recycling/computer-recycle-minneapolis/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/minneapolis/",
     "statusCode": 301
   },
   {
@@ -136,7 +136,7 @@
   },
   {
     "source": "/minnesota-recycling/electronic-recycling-minneapolis/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/minneapolis/",
     "statusCode": 301
   },
   {
@@ -151,7 +151,7 @@
   },
   {
     "source": "/minnesota-recycling/hennepin-county-recycling-center/minneapolis-recycling-center/",
-    "destination": "/minnesota-recycling/",
+    "destination": "/minnesota-recycling/minneapolis/",
     "statusCode": 301
   },
   {
@@ -546,7 +546,7 @@
   },
   {
     "source": "/wisconsin-recycling/computer-recycle-milwaukee/",
-    "destination": "/wisconsin-recycling/",
+    "destination": "/wisconsin-recycling/milwaukee/",
     "statusCode": 301
   },
   {
@@ -567,6 +567,11 @@
   {
     "source": "/wisconsin-recycling/electronics-recycling-green-bay/",
     "destination": "/wisconsin-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/wisconsin-recycling/electronics-recycling-milwaukee/",
+    "destination": "/wisconsin-recycling/milwaukee/",
     "statusCode": 301
   },
   {
@@ -605,6 +610,11 @@
     "statusCode": 301
   },
   {
+    "source": "/wisconsin-recycling/waukesha-recycling-center/",
+    "destination": "/wisconsin-recycling/waukesha-electronic-recycling/",
+    "statusCode": 301
+  },
+  {
     "source": "/paper-shredding/",
     "destination": "/paper-shredding-services/",
     "statusCode": 301
@@ -637,6 +647,11 @@
   {
     "source": "/tesla-battery-recycling/",
     "destination": "/tesla-battery-recycling-secrets/",
+    "statusCode": 301
+  },
+  {
+    "source": "/recycling-fluorescent-bulbs/",
+    "destination": "/light-bulbs/",
     "statusCode": 301
   },
   {
@@ -686,7 +701,7 @@
   },
   {
     "source": "/wisconsin-recycling/waukesha/",
-    "destination": "/wisconsin-recycling/waukesha-recycling-center/",
+    "destination": "/wisconsin-recycling/waukesha-electronic-recycling/",
     "statusCode": 301
   },
   {

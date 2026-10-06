@@ -1,9 +1,7 @@
 import type { CountyPage } from '../types'
 import { BLAINE } from './blaine'
 import { MILWAUKEE } from './milwaukee'
-import { WAUKESHA_RECYCLING_CENTER } from './waukesha-recycling-center'
 import { BATTERY_RECYCLING_MILWAUKEE } from './battery-recycling-milwaukee'
-import { ELECTRONICS_RECYCLING_MILWAUKEE } from './electronics-recycling-milwaukee'
 import { OAK_CREEK } from './oak-creek'
 import { OCONOMOWOC_RECYCLING_CENTER } from './oconomowoc-recycling-center'
 import { WAUKESHA_ELECTRONIC_RECYCLING } from './waukesha-electronic-recycling'
@@ -64,8 +62,11 @@ import { NEW_BERLIN_RECYCLING_CENTER } from './new-berlin-recycling-center'
  * like the county pages; every other one by the [...slug] catch-all.
  */
 export const AREA_PAGES: CountyPage[] = [
-  BLAINE, MILWAUKEE, WAUKESHA_RECYCLING_CENTER, BATTERY_RECYCLING_MILWAUKEE,
-  ELECTRONICS_RECYCLING_MILWAUKEE, OAK_CREEK, OCONOMOWOC_RECYCLING_CENTER, WAUKESHA_ELECTRONIC_RECYCLING,
+  // WAUKESHA_RECYCLING_CENTER and ELECTRONICS_RECYCLING_MILWAUKEE came out on
+  // 6 Oct 2026: both 301 now (the SEO redirect plan, url-map.csv), to
+  // /wisconsin-recycling/waukesha-electronic-recycling/ and /wisconsin-recycling/milwaukee/.
+  BLAINE, MILWAUKEE, BATTERY_RECYCLING_MILWAUKEE,
+  OAK_CREEK, OCONOMOWOC_RECYCLING_CENTER, WAUKESHA_ELECTRONIC_RECYCLING,
   BATTERY_RECYCLING_WAUKESHA, TV_RECYCLING_WAUKESHA, APPLETON_ELECTRONIC_RECYCLING_CENTER, MADISON,
   BATTERY_RECYCLING_APPLETON, BATTERY_RECYCLING_MADISON, FLUORESCENT_BULB_RECYCLE_MADISON, BATTERY_RECYCLING_IN_MINNEAPOLIS,
   MAPLE_GROVE_RECYCLING_CENTER, BULB_RECYCLE_MINNEAPOLIS, BLOOMINGTON_RECYCLING_CENTER, ST_CLOUD_RECYCLING_CENTER,
@@ -82,9 +83,7 @@ export const AREA_PAGES: CountyPage[] = [
 export type AreaDocKey =
   | 'area/blaine'
   | 'area/milwaukee'
-  | 'area/waukesha-recycling-center'
   | 'area/battery-recycling-milwaukee'
-  | 'area/electronics-recycling-milwaukee'
   | 'area/oak-creek'
   | 'area/oconomowoc-recycling-center'
   | 'area/waukesha-electronic-recycling'
@@ -132,8 +131,8 @@ export type AreaDocKey =
   | 'area/new-berlin-recycling-center'
 
 export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
-  [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'], [WAUKESHA_RECYCLING_CENTER, 'area/waukesha-recycling-center'],
-  [BATTERY_RECYCLING_MILWAUKEE, 'area/battery-recycling-milwaukee'], [ELECTRONICS_RECYCLING_MILWAUKEE, 'area/electronics-recycling-milwaukee'], [OAK_CREEK, 'area/oak-creek'],
+  [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'],
+  [BATTERY_RECYCLING_MILWAUKEE, 'area/battery-recycling-milwaukee'], [OAK_CREEK, 'area/oak-creek'],
   [OCONOMOWOC_RECYCLING_CENTER, 'area/oconomowoc-recycling-center'], [WAUKESHA_ELECTRONIC_RECYCLING, 'area/waukesha-electronic-recycling'], [BATTERY_RECYCLING_WAUKESHA, 'area/battery-recycling-waukesha'],
   [TV_RECYCLING_WAUKESHA, 'area/tv-recycling-waukesha'], [APPLETON_ELECTRONIC_RECYCLING_CENTER, 'area/appleton-electronic-recycling-center'], [MADISON, 'area/madison'],
   [BATTERY_RECYCLING_APPLETON, 'area/battery-recycling-appleton'], [BATTERY_RECYCLING_MADISON, 'area/battery-recycling-madison'], [FLUORESCENT_BULB_RECYCLE_MADISON, 'area/fluorescent-bulb-recycle-madison'],

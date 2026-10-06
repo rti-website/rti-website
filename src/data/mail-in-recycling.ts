@@ -45,9 +45,9 @@ export const CONTENT: ServicePageContent = {
   },
   // The strip under the hero (6 Oct 2026, the wireframe's "optional strip").
   heroSteps: [
-    { icon: 'mail',  label: 'Step 1', text: 'Order the kit for your material' },
-    { icon: 'lock',  label: 'Step 2', text: 'Fill and seal it using the packing steps' },
-    { icon: 'truck', label: 'Step 3', text: 'Ship it back and get a certificate' },
+    { glyph: 'package', label: 'Step 1', text: 'Order the kit for your material' },
+    { glyph: 'package', label: 'Step 2', text: 'Fill and seal it using the packing steps' },
+    { glyph: 'shield',  label: 'Step 3', text: 'Ship it back and get a certificate' },
   ],
   intro: {
     heading: 'What Is the Mail-In Recycling Program?',

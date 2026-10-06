@@ -10,6 +10,7 @@ import { ServicesCta } from '@/components/sections/services/ServicesCta'
 import { SEO } from '@/data/industries'
 import { content } from '@/lib/page-content'
 import { HERO_PHOTOS } from '@/data/hero-photos'
+import { PICKUP_HREF, QUOTE_HREF } from '@/lib/urls'
 
 /**
  * All Industries — a 1:1 build of Figma frame 6246:1006 (1920 x 3068).
@@ -72,6 +73,10 @@ export default async function IndustriesPage() {
           crumbs={HERO.crumbs}
           h1={HERO.h1}
           lead={HERO.lead}
+          // Schedule a Pickup + Get a Quote, as on each industry page (6 Oct 2026).
+          pickupCta={{ label: 'Schedule a Pickup', href: PICKUP_HREF }}
+          cta={{ label: 'Get a Quote', href: QUOTE_HREF }}
+          centerY
           {...HERO_PHOTOS.industries}
         />
 

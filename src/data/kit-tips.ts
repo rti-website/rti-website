@@ -24,9 +24,9 @@ export const KIT_COLLECTIONS = {
 } as const
 
 export const SERVICE_STEPS: NonNullable<ServicePageContent['heroSteps']> = [
-  { icon: 'file',  label: 'Step 1', text: 'Request a pickup or quote' },
-  { icon: 'truck', label: 'Step 2', text: 'We collect, or you drop off' },
-  { icon: 'check', label: 'Step 3', text: 'Certified recycling and certificate' },
+  { glyph: 'package', label: 'Step 1', text: 'Request a pickup or quote' },
+  { glyph: 'package', label: 'Step 2', text: 'We collect, or you drop off' },
+  { glyph: 'shield',  label: 'Step 3', text: 'Certified recycling and certificate' },
 ]
 
 type KitPage = {

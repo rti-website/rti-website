@@ -112,8 +112,10 @@ export function industryPage(input: {
       lead: input.lead,
       image: input.heroImage,
       ...input.heroPhoto,
-      // Figma's industry hero has no button row; the docs' "[Get a Quote]" is
-      // served by the closing CTA instead of adding one the design lacks.
+      // Schedule a Pickup + Get a Quote in the hero (Asim, 6 Oct 2026). Figma's
+      // industry hero had no button row; ServiceDetailPage turns this quote
+      // link into the same pair every service page shows.
+      cta: { label: 'Get a Quote', href: QUOTE_HREF },
     },
     intro: {
       heading: input.challengesHeading,

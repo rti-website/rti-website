@@ -1,6 +1,12 @@
 import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
+/*
+ * NOT BUILT SINCE 6 OCT 2026. This URL 301s to /wisconsin-recycling/milwaukee/
+ * (the SEO team's redirect plan, data/url-map.csv) and the page is out of
+ * AREA_PAGES, the directory and Admin -> Pages. The copy stays here only as
+ * the source for anything that still has to move into the kept page.
+ */
 /**
  * Electronics Recycling Milwaukee, WI, /wisconsin-recycling/electronics-recycling-milwaukee/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7063:4317, phone 7063:5083 (29 Sep 2026).

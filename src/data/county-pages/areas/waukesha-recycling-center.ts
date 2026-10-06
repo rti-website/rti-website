@@ -1,6 +1,12 @@
 import { PICKUP_HREF } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
+/*
+ * NOT BUILT SINCE 6 OCT 2026. This URL 301s to /wisconsin-recycling/waukesha-electronic-recycling/
+ * (the SEO team's redirect plan, data/url-map.csv) and the page is out of
+ * AREA_PAGES, the directory and Admin -> Pages. The copy stays here only as
+ * the source for anything that still has to move into the kept page.
+ */
 /**
  * Waukesha Recycling Center, /wisconsin-recycling/waukesha-recycling-center/
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7061:4179, phone 7061:5273 (29 Sep 2026).

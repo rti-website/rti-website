@@ -67,7 +67,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /electronic-recycling-des-moines/,legacy,,,301,/electronic-recycle/,,,,FALSE,FALSE
 /electronic-recycling-minnesota/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /electronic-recycling-wisconsin/,legacy,,,301,/wisconsin-recycling/electronic-recycling/,,,,FALSE,FALSE
-/electronics-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/electronics-recycling-in-minneapolis/,legacy,,,301,/minnesota-recycling/minneapolis/,,,,FALSE,FALSE
 /electronics-recycling-in-minneapolis/electronic-recycling-in-rochester/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /electronics-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/electronic-recycling/,,,,FALSE,FALSE
 /fort-worth-texas/,location,,,KEEP,/fort-worth-texas/,"Fort Worth Recycling Center: Lamps, Batteries & E-Waste","Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166","Recycle Technologies Fort Worth, TX",TRUE,TRUE
@@ -79,7 +79,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /kennesaw-georgia/,location,,,KEEP,/kennesaw-georgia/,"Kennesaw, GA Recycling Center: Lamps, Batteries & E-Waste","Recycling services Kennesaw coordinating acceptance of electronics, lamp remnants, battery assortments, paper loads, and approved materials for processing. Call (800) 969-5166","Recycle Technologies Kennesaw, GA (Atlanta Area)",TRUE,TRUE
 /lewisburg-tennessee/,legacy,,,301,/mail-in-recycling/,,,,FALSE,FALSE
 /light-bulb-recycling-in-wisconsin/,legacy,,,301,/wisconsin-recycling/light-bulb-recycling/,,,,FALSE,FALSE
-/light-bulb-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/light-bulb-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/bulb-recycle-minneapolis/,,,,FALSE,FALSE
 /locations/,legacy,,,301,/all-locations/,,,,FALSE,FALSE
 /minnesota-recycling/anoka-county-recycling/,location,,,KEEP,/minnesota-recycling/anoka-county-recycling/,"Anoka County, MN Recycling: Electronics, Batteries & Bulbs","Recycling center in Anoka County managing electronics, batteries, lamps, paper, and controlled materials for local organizations. Call (800) 969-5166.","Electronics Recycling in Anoka County, MN",TRUE,TRUE
 /minnesota-recycling/battery-recycling-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
@@ -89,7 +89,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/,location,,,KEEP,/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/,"St Cloud, MN Recycling: Electronics, Batteries & Bulbs","Recycling center St Cloud offering electronics intake, device clearing, lamp handling, battery acceptance, and secure shredding services. Call (800) 969-5166.","Electronics Recycling in St Cloud, MN",TRUE,TRUE
 /minnesota-recycling/bulb-recycle-minneapolis/,location,,,KEEP,/minnesota-recycling/bulb-recycle-minneapolis/,"Minneapolis, MN Bulb Recycling: Fluorescent Tubes & CFLs","Bulb recycling Minneapolis Minnesota for fluorescent tubes, CFLs, LEDs, and HID lamps, received, packed, and routed through approved handling steps. Call (800) 969-5166.","Bulb Recycling in Minneapolis, MN",TRUE,TRUE
 /minnesota-recycling/computer-recycle-duluth/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/computer-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/computer-recycle-minneapolis/,legacy,,,301,/minnesota-recycling/minneapolis/,,,,FALSE,FALSE
 /minnesota-recycling/coon-rapids/,location,,,KEEP,/minnesota-recycling/coon-rapids/,"Coon Rapids, MN Recycling: Electronics, Batteries & Bulbs","Recycling in Coon Rapids covering electronic equipment, spent batteries, lighting waste, paper materials, and secure drop-off options. Call (800) 969-5166.","Electronics Recycling in Coon Rapids, MN",TRUE,TRUE
 /minnesota-recycling/dakota-county/,location,,,KEEP,/minnesota-recycling/dakota-county/,"Dakota County, MN Recycling: Electronics, Batteries & Bulbs","Recycling center in Dakota County providing intake for e-waste, lighting waste, used batteries, paper streams, and controlled material processing. Call (800) 969-5166.","Electronics Recycling in Dakota County, MN",TRUE,TRUE
 /minnesota-recycling/dakota-county/burnsville-recycling-center/,location,,,KEEP,/minnesota-recycling/dakota-county/burnsville-recycling-center/,"Burnsville, MN Recycling: Electronics, Batteries & Bulbs","Recycling center in Burnsville accepting electronic equipment, spent power cells, lighting waste, paper materials, and managed material intake. Call (800) 969-5166.","Electronics Recycling in Burnsville, MN",TRUE,TRUE
@@ -98,13 +98,13 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /minnesota-recycling/east-bethel/,location,,,KEEP,/minnesota-recycling/east-bethel/,"East Bethel, MN Recycling: Electronics, Batteries & Bulbs","Recycling East Bethel for consoles, modems, power cords, ink units, and small electronics, received through verified intake and processing steps. Call (800) 969-5166.","Electronics Recycling in East Bethel, MN",TRUE,TRUE
 /minnesota-recycling/electronic-recycling-duluth/,location,,,KEEP,/minnesota-recycling/electronic-recycling-duluth/,"Duluth, MN Recycling: Electronics, Batteries & Bulbs","Sustainable electronic recycling Duluth Minnesota for POS terminals, barcode scanners, AV gear, and tablets, managed through verified intake steps. Call (800) 969-5166.","Electronics Recycling in Duluth, MN",TRUE,TRUE
 /minnesota-recycling/electronic-recycling-in-woodbury/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
-/minnesota-recycling/electronic-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/electronic-recycling-minneapolis/,legacy,,,301,/minnesota-recycling/minneapolis/,,,,FALSE,FALSE
 /minnesota-recycling/electronic-recycling-st-paul/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/,"Hennepin County, MN Recycling: Electronics, Batteries & Bulbs","Recycling center Hennepin County receiving electronics, computers, lamps, batteries, and devices, managed through documented intake and processing steps. Call (800) 969-5166.","Electronics Recycling in Hennepin County, MN",TRUE,TRUE
 /minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/,"Edina, MN Recycling: Electronics, Batteries & Bulbs","Recycling services Edina for electronics, batteries, lamps, devices, and paper, handled through approved intake and processing steps. Call (800) 969-5166.","Electronics Recycling in Edina, MN",TRUE,TRUE
 /minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/,"Maple Grove, MN Recycling: Electronics, Batteries & Bulbs","Recycling center in Maple Grove receiving electronic equipment, spent batteries, lighting waste, paper materials, and organized material intake. Call (800) 969-5166.","Electronics Recycling in Maple Grove, MN",TRUE,TRUE
-/minnesota-recycling/hennepin-county-recycling-center/minneapolis-recycling-center/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
+/minnesota-recycling/hennepin-county-recycling-center/minneapolis-recycling-center/,legacy,,,301,/minnesota-recycling/minneapolis/,,,,FALSE,FALSE
 /minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/,"Minnetonka, MN Recycling: Electronics, Batteries & Bulbs","Recycling center Minnetonka receiving phones, routers, circuit boards, ink cartridges, and small devices, accepted through controlled intake and processing. Call (800) 969-5166.","Electronics Recycling in Minnetonka, MN",TRUE,TRUE
 /minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/,location,,,KEEP,/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/,"Plymouth, MN Recycling: Electronics, Batteries & Bulbs","Recycling center in Plymouth providing intake for electronic hardware, battery packs, lighting components, paper streams, and regulated material flow. Call (800) 969-5166","Electronics Recycling in Plymouth, MN",TRUE,TRUE
 /minnesota-recycling/hennepin-county-recycling-center/richfield-recycling-services/,legacy,,,301,/minnesota-recycling/,,,,FALSE,FALSE
@@ -208,13 +208,13 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /wisconsin-recycling/bulb-recycle-milwaukee/,location,,,KEEP,/wisconsin-recycling/bulb-recycle-milwaukee/,"Milwaukee, WI Bulb Recycling: Fluorescent Tubes & CFLs","Bulb recycling Milwaukee for linear fluorescents, CFLs, metal halide lamps, induction lights, and pin-based bulbs, accepted through approved handling steps. Call (800) 969-5166.","Bulb Recycling in Milwaukee, WI",TRUE,TRUE
 /wisconsin-recycling/calumet-county/,location,,,KEEP,/wisconsin-recycling/calumet-county/,"Calumet County, WI Recycling: Electronics & Batteries","Material recycling in Calumet handling accepted electronics, spent lamps, mixed battery formats, document paper, and approved items. Call (800) 969-5166","Electronics Recycling in Calumet County, WI",TRUE,TRUE
 /wisconsin-recycling/calumet-county/appleton-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
-/wisconsin-recycling/computer-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
+/wisconsin-recycling/computer-recycle-milwaukee/,legacy,,,301,/wisconsin-recycling/milwaukee/,,,,FALSE,FALSE
 /wisconsin-recycling/computer-recycling-madison/,location,,,KEEP,/wisconsin-recycling/computer-recycling-madison/,"Computer Recycling in Madison, WI | Recycle Technologies","Eco-friendly computer recycling Madison Wisconsin for laptops, all-in-ones, thin clients, storage arrays, and peripherals, received and processed under approved handling steps. Call (800) 969-5166.","Computer Recycling in Madison, WI",TRUE,TRUE
 /wisconsin-recycling/electronic-recycling-appleton/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/electronic-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/electronic-recycling-madison/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/electronics-recycling-green-bay/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
-/wisconsin-recycling/electronics-recycling-milwaukee/,location,,,KEEP,/wisconsin-recycling/electronics-recycling-milwaukee/,"Milwaukee, WI Recycling: Electronics, Batteries & Bulbs","Electronics recycling Milwaukee WI managing computers, screens, servers, office equipment, and retired devices through structured recovery. Call (800) 969-5166","Electronics Recycling in Milwaukee, WI",TRUE,TRUE
+/wisconsin-recycling/electronics-recycling-milwaukee/,location,,,301,/wisconsin-recycling/milwaukee/,,,,FALSE,FALSE
 /wisconsin-recycling/fluorescent-bulb-recycle-madison/,location,,,KEEP,/wisconsin-recycling/fluorescent-bulb-recycle-madison/,"Madison, WI Bulb Recycling: Fluorescent Tubes & CFLs","Bulb recycling Madison WI collecting spent CFLs, linear lamps, specialty lighting, and commercial bulb waste from offices and facilities. Call (800) 969-5166","Bulb Recycling in Madison, WI",TRUE,TRUE
 /wisconsin-recycling/fond-du-lac-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/green-bay-recycling/,location,,,KEEP,/wisconsin-recycling/green-bay-recycling/,"Green Bay, WI Recycling: Electronics, Batteries & Bulbs","Recycling center Green Bay accepting electronics, lamps, batteries, computers, and devices, managed through verified intake and processing procedures. Call (800) 969-5166.","Electronics Recycling in Green Bay, WI",TRUE,TRUE
@@ -234,7 +234,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /wisconsin-recycling/washington-county-recycling-center/,location,,,KEEP,/wisconsin-recycling/washington-county-recycling-center/,"Recycling in Washington County, WI | Recycle Technologies","Recycling center Washington County WI accepting circuit boards, cables, lamps, dry cell batteries, and small equipment, managed through approved intake procedures. Call (800) 969-5166.","Electronics Recycling in Washington County, WI",TRUE,TRUE
 /wisconsin-recycling/washington-county-recycling-center/wood-bury-recycling/,legacy,,,301,/wisconsin-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/waukesha-electronic-recycling/,location,,,KEEP,/wisconsin-recycling/waukesha-electronic-recycling/,"Waukesha, WI Recycling: Electronics, Batteries & Bulbs","Sustainable electronic recycling Waukesha Wisconsin for servers, desktops, tablets, network gear, and components, managed through verified intake and processing steps. Call (800) 969-5166.","Electronics Recycling in Waukesha, WI",TRUE,TRUE
-/wisconsin-recycling/waukesha-recycling-center/,location,,,KEEP,/wisconsin-recycling/waukesha-recycling-center/,"Waukesha, WI Recycling: Electronics, Batteries & Bulbs","Recycling center Waukesha providing intake for electronics, lamps, batteries, devices, and records, processed under approved handling steps. Call (800) 969-5166.","Electronics Recycling in Waukesha, WI",TRUE,TRUE
+/wisconsin-recycling/waukesha-recycling-center/,location,,,301,/wisconsin-recycling/waukesha-electronic-recycling/,,,,FALSE,FALSE
 /paper-shredding/,legacy,,,301,/paper-shredding-services/,,,,FALSE,FALSE
 /hard-drive-destruction-service/,legacy,,,301,/hard-drive-destruction-services/,,,,FALSE,FALSE
 /battery-recycling-chicago/,location,,,KEEP,/battery-recycling-chicago/,"Battery Recycling in Chicago, Illinois | Recycle Technologies","Commercial battery recycling for Chicago businesses by scheduled pickup, with a mail-in program for residents. Processed at our R2v3 certified Midwest facilities since 1993.","Battery Recycling in Chicago, Illinois",TRUE,TRUE
@@ -250,6 +250,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /reduce-reuse-recycle-re-examine-guide/,post,,,301,/reduce-reuse-recycle-re-examine/,,,,FALSE,FALSE
 /e-waste-recycling-whats-next/,post,,,301,/social-responsibility-recycling/,,,,FALSE,FALSE
 /tesla-battery-recycling/,post,,,301,/tesla-battery-recycling-secrets/,,,,FALSE,FALSE
+/recycling-fluorescent-bulbs/,post,,,301,/light-bulbs/,,,,FALSE,FALSE
 /wisconsin-recycling/airbag-recycling/,location,,,KEEP,/wisconsin-recycling/airbag-recycling/,Airbag Recycling in Wisconsin | Recycle Technologies,"Undeployed airbags hold explosive chemicals like sodium azide, so they can't be tossed in the garbage.",Airbag Recycling in Wisconsin,TRUE,FALSE
 /wisconsin-recycling/ballast-recycling/,location,,,KEEP,/wisconsin-recycling/ballast-recycling/,Ballast Recycling in Wisconsin | Recycle Technologies,"Old lighting ballasts can contain hazardous parts, including capacitors with PCBs and DEHP, so they don't belong in the garbage.",Ballast Recycling in Wisconsin,TRUE,FALSE
 /wisconsin-recycling/on-site-off-site-shredding/,location,,,KEEP,/wisconsin-recycling/on-site-off-site-shredding/,"On-Site & Off-Site Shredding in New Berlin, Wisconsin | Recycle Technologies","When a business needs confidential paper destroyed, there are two ways to do it: bring the shredding to you, or take your documents to the shredding.","On-Site & Off-Site Shredding in New Berlin, Wisconsin",TRUE,FALSE
@@ -278,7 +279,7 @@ old_url,type,organic_clicks_16m,backlinks,action,new_url,title,meta_description,
 /contact.html,legacy,,,301,/contact-us/,,,,FALSE,FALSE
 /minnesota-recycling/blaine/,location,,,301,/minnesota-recycling/ramsey/blaine/,,,,FALSE,FALSE
 /wisconsin-recycling/new-berlin/,location,,,301,/wisconsin-recycling/new-berlin-recycling-center/,,,,FALSE,FALSE
-/wisconsin-recycling/waukesha/,location,,,301,/wisconsin-recycling/waukesha-recycling-center/,,,,FALSE,FALSE
+/wisconsin-recycling/waukesha/,location,,,301,/wisconsin-recycling/waukesha-electronic-recycling/,,,,FALSE,FALSE
 /wisconsin-recycling/milwaukee-recycling/,location,,,301,/wisconsin-recycling/milwaukee/,,,,FALSE,FALSE
 /wisconsin-recycling/madison-2/,location,,,301,/wisconsin-recycling/madison/,,,,FALSE,FALSE
 /wisconsin-recycling/electronic-recycling-appleton-2/,location,,,301,/wisconsin-recycling/appleton-electronic-recycling-center/,,,,FALSE,FALSE

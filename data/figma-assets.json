@@ -2429,6 +2429,27 @@
       "node": "7233:8243",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "New Berlin Recycling Center hero photo, 1920x1081 at y-372 under a 20% black veil. 5 Oct 2026; URL expires about 12 Oct."
+    },
+    {
+      "to": "public/images/steps/package-plus.svg",
+      "id": "075a8778-078a-4646-a4ce-ada96c9691ab/60282.svg",
+      "node": "7246:10456",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Step card icon: package with plus (Mail In 7246:10418, steps 1 and 2). 6 Oct 2026; URL expires about 13 Oct."
+    },
+    {
+      "to": "public/images/steps/shield-check.svg",
+      "id": "075a8778-078a-4646-a4ce-ada96c9691ab/409a2.svg",
+      "node": "7246:10482",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Step card icon: shield with check (Mail In 7246:10418, step 3). 6 Oct 2026; URL expires about 13 Oct."
+    },
+    {
+      "to": "public/images/steps/step-arrow.svg",
+      "id": "075a8778-078a-4646-a4ce-ada96c9691ab/2dd90.svg",
+      "node": "7246:10460",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Step connector arrow, 81x160 (Mail In 7246:10418). 6 Oct 2026; URL expires about 13 Oct."
     }
   ]
 }

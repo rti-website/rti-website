@@ -34,10 +34,8 @@ import { SHREDDING_MINNESOTA } from './areas/shredding-minnesota'
 import { TV_RECYCLING_IN_MINNESOTA } from './areas/tv-recycling-in-minnesota'
 import { MILWAUKEE } from './areas/milwaukee'
 import { BATTERY_RECYCLING_MILWAUKEE } from './areas/battery-recycling-milwaukee'
-import { ELECTRONICS_RECYCLING_MILWAUKEE } from './areas/electronics-recycling-milwaukee'
 import { BULB_RECYCLE_MILWAUKEE } from './areas/bulb-recycle-milwaukee'
 import { OAK_CREEK } from './areas/oak-creek'
-import { WAUKESHA_RECYCLING_CENTER } from './areas/waukesha-recycling-center'
 import { WAUKESHA_ELECTRONIC_RECYCLING } from './areas/waukesha-electronic-recycling'
 import { BATTERY_RECYCLING_WAUKESHA } from './areas/battery-recycling-waukesha'
 import { TV_RECYCLING_WAUKESHA } from './areas/tv-recycling-waukesha'
@@ -135,12 +133,12 @@ export const DIRECTORY: DirectoryGroup[] = [
   /* ------------------------------------------------------------ Wisconsin */
   { heading: 'Milwaukee', page: MILWAUKEE, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_MILWAUKEE, 'Battery Recycling', 'Battery Recycling Milwaukee'),
-    l(ELECTRONICS_RECYCLING_MILWAUKEE, 'Electronics Recycling', 'Electronics Recycling Milwaukee'),
     l(BULB_RECYCLE_MILWAUKEE, 'Bulb Recycling', 'Bulb Recycling Milwaukee'),
     l(OAK_CREEK, 'Oak Creek'),
   ] },
-  { heading: 'Waukesha', page: WAUKESHA_RECYCLING_CENTER, state: 'Wisconsin', links: [
-    l(WAUKESHA_ELECTRONIC_RECYCLING, 'Electronic Recycling', 'Electronic Recycling Waukesha'),
+  // The Waukesha heading links to the electronic recycling page since the
+  // recycling center page 301s there (SEO redirect plan, 6 Oct 2026).
+  { heading: 'Waukesha', page: WAUKESHA_ELECTRONIC_RECYCLING, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_WAUKESHA, 'Battery Recycling', 'Battery Recycling Waukesha'),
     l(TV_RECYCLING_WAUKESHA, 'TV Recycling', 'TV Recycling Waukesha'),
     l(SHREDDING_WAUKESHA, 'Shredding Service', 'Shredding Waukesha'),

@@ -88,9 +88,10 @@ export type ServicePageContent = {
 
   /**
    * Three numbered step cards in a strip under the hero (Mail-In, 6 Oct
-   * 2026). `icon` is a local-pages icon name (white on the teal circle).
+   * 2026). `glyph` is one of the Figma 7246:10418 step icons (a hidden key,
+   * so the admin edits the words but cannot pick an icon the card lacks).
    */
-  heroSteps?: { icon: 'mail' | 'lock' | 'truck' | 'check' | 'file'; label: string; text: string }[]
+  heroSteps?: { glyph: 'package' | 'shield'; label: string; text: string }[]
 
   /**
    * The mail-in kit tip (6 Oct 2026, the EZ on the Earth kit links sheet):

@@ -48,7 +48,7 @@ import { content as pageContent } from '@/lib/page-content'
 const HERO_TOP = 140
 const HERO_H = 470
 /** The step strip under the hero (Mail-In, 6 Oct 2026): py40 + a 96 card row. */
-const HERO_STEPS_H = 176
+const HERO_STEPS_H = 260
 /** White space the design leaves between mid-page sections. */
 const GAP = 150
 const ACCEPT_H_DEFAULT = 446.36
@@ -273,26 +273,54 @@ export async function ServiceDetailPage({
 }
 
 /**
- * Three step cards under the hero — Mail-In, 6 Oct 2026 (Asim's wireframe:
- * "Step 1 · Order the kit for your material" and so on). The 1282 column, a
- * white band, cards in the site's #e6e6e6 border with a small teal icon and
- * the step number over a 17px line. Stacked on the phone.
+ * Three step cards under the hero — Figma 7246:10418 "Mail In" (6 Oct 2026),
+ * used on Mail-In and the six kit-tip service pages.
+ *
+ * A 260 band on #f7fafa, three 497x160 cards (1.5px #deeaeb, r16) with an
+ * 81 wide arrow between them, 1653 in all, centred. Each card: a 106 #e5f3f0
+ * tile (r28) holding the 60px line icon, then STEP n (Inter 15/20 bold
+ * #049c88) over the step in Inter 23/30 bold #102d30.
+ *
+ * MOBILE: no phone frame. The cards stack full width, the tile drops to 84,
+ * the arrows go.
  */
+const STEP_ICONS = {
+  // Group 7246:10456 sits at 13.33/6.67/6.67/8.33% of its 60 frame; the SVG
+  // carries its own stroke bleed (-2.55% / -2.71%).
+  package: { src: '/images/steps/package-plus.svg', w: 50.6, h: 53.6, box: 'inset-[6.67%_6.67%_8.33%_13.33%]', bleed: 'inset-[-2.55%_-2.71%]' },
+  // Group 7246:10482: 18.33/8.33%, bleed -2.8% / -3.68%.
+  shield:  { src: '/images/steps/shield-check.svg', w: 40.8, h: 52.8, box: 'inset-[8.33%_18.33%]',          bleed: 'inset-[-2.8%_-3.68%]' },
+} as const
+
 function HeroSteps({ top, steps }: { top: number; steps: NonNullable<ServicePageContent['heroSteps']> }) {
   return (
-    <Section top={top} height={HERO_STEPS_H} label="mail-in-steps" className="flex flex-col items-center bg-white px-[20px] py-[28px] lg:px-0 lg:py-[40px]">
-      <ol className="flex w-full flex-col gap-[12px] lg:w-[1282px] lg:flex-row lg:gap-[24px]">
-        {steps.map((s, i) => (
-          <li key={s.label} className="flex flex-1 items-center gap-[14px] rounded-[14px] border border-[#e6e6e6] bg-white px-[20px] py-[18px] lg:h-[96px] lg:px-[24px]">
-            <span className="grid size-[44px] shrink-0 place-items-center rounded-full bg-brand">
-              <Image src={`/images/locations/local-pages/icons/${s.icon}.svg`} alt="" width={22} height={22} unoptimized className="size-[20px]" />
-            </span>
-            <span className="flex flex-col gap-[2px]">
-              <span className="font-roboto text-[12.5px] font-medium uppercase tracking-[0.6px] text-brand">{s.label || `Step ${i + 1}`}</span>
-              <span className="font-sans text-[16px] font-medium leading-[1.3] text-heading lg:text-[17px]">{s.text}</span>
-            </span>
-          </li>
-        ))}
+    <Section top={top} height={HERO_STEPS_H} label="7246:10448" className="flex flex-col items-center bg-[#f7fafa] px-[20px] py-[28px] lg:justify-center lg:px-0 lg:py-[50px]">
+      <ol className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:gap-0">
+        {steps.map((s, i) => {
+          const icon = STEP_ICONS[s.glyph] ?? STEP_ICONS.package
+          return (
+            <li key={s.label} className="flex items-center lg:items-stretch">
+              {i > 0 ? (
+                <Image src="/images/steps/step-arrow.svg" alt="" width={81} height={160} unoptimized className="hidden lg:block" />
+              ) : null}
+              <div className="flex w-full items-center gap-[18px] rounded-[16px] border-[1.5px] border-[#deeaeb] bg-[#f7fafa] px-[16px] py-[16px] lg:h-[160px] lg:w-[497px] lg:items-start lg:gap-[34px] lg:px-[27.5px] lg:py-[31.5px]">
+                <span className="relative size-[84px] shrink-0 rounded-[22px] bg-[#e5f3f0] lg:size-[106px] lg:rounded-[28px]">
+                  <span className="absolute left-1/2 top-1/2 size-[60px] -translate-x-1/2 -translate-y-1/2 overflow-clip max-lg:scale-[0.85]">
+                    <span className={`absolute ${icon.box}`}>
+                      <span className={`absolute ${icon.bleed}`}>
+                        <Image src={icon.src} alt="" width={icon.w} height={icon.h} unoptimized className="block size-full max-w-none" />
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span className="flex min-w-px flex-col gap-[4px] lg:gap-[7.5px] lg:pt-[7px]">
+                  <span className="font-inter text-[13px] font-bold uppercase leading-[20px] text-[#049c88] lg:text-[15px]">{s.label || `Step ${i + 1}`}</span>
+                  <span className="font-inter text-[18px] font-bold leading-[24px] text-[#102d30] text-balance lg:w-[323px] lg:text-[23px] lg:leading-[30px]">{s.text}</span>
+                </span>
+              </div>
+            </li>
+          )
+        })}
       </ol>
     </Section>
   )
