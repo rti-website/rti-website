@@ -8,6 +8,8 @@ import { allDbPosts, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
 import { blogPagePath, categoryPagePath, pageCount, pageSlice } from '@/lib/blog-index'
 import { LOCAL_FACILITY_URLS as FIXED_FACILITY_URLS } from '@/data/local-pages'
 import { COUNTY_URLS } from '@/data/county-pages'
+import { sitemapRank } from '@/lib/sitemap-priority'
+import { absolute } from '@/lib/urls'
 
 /**
  * Only KEEP URLs. Never a redirected URL, never a noindexed URL — a sitemap
@@ -58,6 +60,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = ['/', ...explicitRoutes(), ...FIXED_FACILITY_URLS, ...COUNTY_URLS]
   const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
   const listed = posts.filter((p) => p.inSitemap && !p.noindex)
+  const locationPaths = new Set([...FIXED_FACILITY_URLS, ...COUNTY_URLS])
+  const postPaths = new Set(listed.map((p) => p.url))
 
   /*
    * EVERY URL CARRIES A <lastmod> — 26 Sep 2026. The SEO team's audit found
@@ -98,6 +102,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       Array.from({ length: pageCount(c.count) - 1 }, (_, i) =>
         sitemapEntry(categoryPagePath(c.slug, i + 2), newest(pageSlice(inCategory.get(c.slug) ?? [], i + 2))))),
   ].map((e) => ({ ...e, lastModified: e.lastModified ?? BUILD_TIME }))
+    // changefreq and priority, the SEO team's scheme (9 Oct 2026, lib/sitemap-priority.ts).
+    .map((e) => {
+      const p = e.url.slice(absolute('/').length - 1)
+      return { ...e, ...sitemapRank(p, { location: locationPaths.has(p) || /-chicago\/$/.test(p), post: postPaths.has(p) }) }
+    })
 
   /* A slug can arrive twice — content/posts/recycle-symbol.mdx and the imported
      row for the same URL both exist while the migration is half done. First
