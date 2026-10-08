@@ -95,6 +95,20 @@ import { MINNEAPOLIS } from '@/data/county-pages/areas/minneapolis'
 import { BATTERY_RECYCLING_GREEN_BAY } from '@/data/county-pages/areas/battery-recycling-green-bay'
 import { SHREDDING_WAUKESHA } from '@/data/county-pages/areas/shredding-waukesha'
 import { NEW_BERLIN_RECYCLING_CENTER } from '@/data/county-pages/areas/new-berlin-recycling-center'
+import { SHEBOYGAN } from '@/data/county-pages/areas/sheboygan'
+import { TV_RECYCLING_GREEN_BAY } from '@/data/county-pages/areas/tv-recycling-green-bay'
+import { FOND_DU_LAC_RECYCLING } from '@/data/county-pages/areas/fond-du-lac-recycling'
+import { APPLETON_RECYCLING } from '@/data/county-pages/areas/appleton-recycling'
+import { ROSEVILLE } from '@/data/county-pages/areas/roseville'
+import { ELECTRONIC_RECYCLING_IN_WOODBURY } from '@/data/county-pages/areas/electronic-recycling-in-woodbury'
+import { BROOKLYN_PARK_RECYCLING_CENTER } from '@/data/county-pages/areas/brooklyn-park-recycling-center'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from '@/data/county-pages/areas/light-bulb-recycling-minneapolis'
+import { SHREDDING_WISCONSIN } from '@/data/county-pages/areas/shredding-wisconsin'
+import { SHREDDING_ROCHESTER } from '@/data/county-pages/areas/shredding-rochester'
+import { LEWISBURG_TENNESSEE } from '@/data/county-pages/areas/lewisburg-tennessee'
+import { RECYCLING_KITS_OHIO } from '@/data/county-pages/areas/recycling-kits'
+import { RECYCLING_KITS_FLORIDA } from '@/data/county-pages/areas/recycling-kits'
+import { ONTARIO_CALIFORNIA } from '@/data/county-pages/areas/ontario-california'
 import { LANDING_WISCONSIN_BATTERY_RECYCLING } from '@/data/landing-pages/wisconsin-battery-recycling'
 import { LANDING_WISCONSIN_ELECTRONIC_RECYCLE } from '@/data/landing-pages/wisconsin-electronic-recycle'
 import { LANDING_WISCONSIN_LIGHT_BULBS } from '@/data/landing-pages/wisconsin-light-bulbs'
@@ -312,6 +326,20 @@ export const DOCS = {
   'landing/electronic-recycle-Chicago': { title: "Electronics Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_ELECTRONIC_RECYCLE.url], data: one(LANDING_CHICAGO_ELECTRONIC_RECYCLE) },
   'landing/light-bulbs-Chicago': { title: "Light Bulb Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_LIGHT_BULBS.url], data: one(LANDING_CHICAGO_LIGHT_BULBS) },
   'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
+  'area/sheboygan': { title: "Sheboygan Recycling", group: 'Location pages', urls: [SHEBOYGAN.url], data: one(SHEBOYGAN) },
+  'area/tv-recycling-green-bay': { title: "TV Recycling in Green Bay", group: 'Location pages', urls: [TV_RECYCLING_GREEN_BAY.url], data: one(TV_RECYCLING_GREEN_BAY) },
+  'area/fond-du-lac-recycling': { title: "Fond du Lac Recycling Service", group: 'Location pages', urls: [FOND_DU_LAC_RECYCLING.url], data: one(FOND_DU_LAC_RECYCLING) },
+  'area/appleton-recycling': { title: "Appleton Recycling (Calumet County)", group: 'Location pages', urls: [APPLETON_RECYCLING.url], data: one(APPLETON_RECYCLING) },
+  'area/roseville': { title: "Roseville Recycling Center", group: 'Location pages', urls: [ROSEVILLE.url], data: one(ROSEVILLE) },
+  'area/electronic-recycling-in-woodbury': { title: "Electronic Recycling in Woodbury", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_IN_WOODBURY.url], data: one(ELECTRONIC_RECYCLING_IN_WOODBURY) },
+  'area/brooklyn-park-recycling-center': { title: "Brooklyn Park Recycling Center", group: 'Location pages', urls: [BROOKLYN_PARK_RECYCLING_CENTER.url], data: one(BROOKLYN_PARK_RECYCLING_CENTER) },
+  'area/light-bulb-recycling-minneapolis': { title: "Light Bulb Recycling Minneapolis", group: 'Location pages', urls: [LIGHT_BULB_RECYCLING_MINNEAPOLIS.url], data: one(LIGHT_BULB_RECYCLING_MINNEAPOLIS) },
+  'area/shredding-wisconsin': { title: "Paper Shredding Wisconsin", group: 'Location pages', urls: [SHREDDING_WISCONSIN.url], data: one(SHREDDING_WISCONSIN) },
+  'area/shredding-rochester': { title: "Rochester Shredding Service", group: 'Location pages', urls: [SHREDDING_ROCHESTER.url], data: one(SHREDDING_ROCHESTER) },
+  'area/lewisburg-tennessee': { title: "Lewisburg, Tennessee", group: 'Location pages', urls: [LEWISBURG_TENNESSEE.url], data: one(LEWISBURG_TENNESSEE) },
+  'area/recycling-kits-in-ohio': { title: "Recycling Kits in Ohio", group: 'Location pages', urls: [RECYCLING_KITS_OHIO.url], data: one(RECYCLING_KITS_OHIO) },
+  'area/recycling-kits-in-florida': { title: "Recycling Kits in Florida", group: 'Location pages', urls: [RECYCLING_KITS_FLORIDA.url], data: one(RECYCLING_KITS_FLORIDA) },
+  'area/ontario-california': { title: "Ontario, California", group: 'Location pages', urls: [ONTARIO_CALIFORNIA.url], data: one(ONTARIO_CALIFORNIA) },
   'area/oconomowoc-recycling-center': { title: "Oconomowoc Recycling Center", group: 'Location pages', urls: [OCONOMOWOC_RECYCLING_CENTER.url], data: one(OCONOMOWOC_RECYCLING_CENTER) },
   'area/waukesha-electronic-recycling': { title: "Sustainable Electronic Recycling in Waukesha WI", group: 'Location pages', urls: [WAUKESHA_ELECTRONIC_RECYCLING.url], data: one(WAUKESHA_ELECTRONIC_RECYCLING) },
   'area/battery-recycling-waukesha': { title: "Battery Recycling Waukesha", group: 'Location pages', urls: [BATTERY_RECYCLING_WAUKESHA.url], data: one(BATTERY_RECYCLING_WAUKESHA) },

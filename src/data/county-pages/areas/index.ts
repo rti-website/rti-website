@@ -47,6 +47,20 @@ import { MINNEAPOLIS } from './minneapolis'
 import { BATTERY_RECYCLING_GREEN_BAY } from './battery-recycling-green-bay'
 import { SHREDDING_WAUKESHA } from './shredding-waukesha'
 import { NEW_BERLIN_RECYCLING_CENTER } from './new-berlin-recycling-center'
+import { SHEBOYGAN } from './sheboygan'
+import { TV_RECYCLING_GREEN_BAY } from './tv-recycling-green-bay'
+import { FOND_DU_LAC_RECYCLING } from './fond-du-lac-recycling'
+import { APPLETON_RECYCLING } from './appleton-recycling'
+import { ROSEVILLE } from './roseville'
+import { ELECTRONIC_RECYCLING_IN_WOODBURY } from './electronic-recycling-in-woodbury'
+import { BROOKLYN_PARK_RECYCLING_CENTER } from './brooklyn-park-recycling-center'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './light-bulb-recycling-minneapolis'
+import { SHREDDING_WISCONSIN } from './shredding-wisconsin'
+import { SHREDDING_ROCHESTER } from './shredding-rochester'
+import { LEWISBURG_TENNESSEE } from './lewisburg-tennessee'
+import { RECYCLING_KITS_OHIO } from './recycling-kits'
+import { RECYCLING_KITS_FLORIDA } from './recycling-kits'
+import { ONTARIO_CALIFORNIA } from './ontario-california'
 
 /**
  * THE AREA PAGES (29 Sep 2026): 49 old WordPress location pages that had been
@@ -78,6 +92,10 @@ export const AREA_PAGES: CountyPage[] = [
   LAKEVILLE_RECYCLING_CENTER, BATTERY_RECYCLING_ST_PAUL, GREEN_BAY_RECYCLING, FORT_WORTH_TEXAS,
   EAST_BETHEL, COMPUTER_RECYCLING_MADISON, MINNEAPOLIS, BATTERY_RECYCLING_GREEN_BAY,
   SHREDDING_WAUKESHA, NEW_BERLIN_RECYCLING_CENTER,
+  // The 8 Oct 2026 batch: thirteen more old URLs back on this template
+  // (Figma 7052:28731 / 7052:34333), copy from the old WordPress pages.
+  SHEBOYGAN, TV_RECYCLING_GREEN_BAY, FOND_DU_LAC_RECYCLING, APPLETON_RECYCLING, ROSEVILLE, ELECTRONIC_RECYCLING_IN_WOODBURY, BROOKLYN_PARK_RECYCLING_CENTER, LIGHT_BULB_RECYCLING_MINNEAPOLIS, SHREDDING_WISCONSIN, SHREDDING_ROCHESTER, LEWISBURG_TENNESSEE, RECYCLING_KITS_OHIO, RECYCLING_KITS_FLORIDA,
+  ONTARIO_CALIFORNIA,
 ]
 
 export type AreaDocKey =
@@ -129,6 +147,20 @@ export type AreaDocKey =
   | 'area/battery-recycling-green-bay'
   | 'area/shredding-waukesha'
   | 'area/new-berlin-recycling-center'
+  | 'area/sheboygan'
+  | 'area/tv-recycling-green-bay'
+  | 'area/fond-du-lac-recycling'
+  | 'area/appleton-recycling'
+  | 'area/roseville'
+  | 'area/electronic-recycling-in-woodbury'
+  | 'area/brooklyn-park-recycling-center'
+  | 'area/light-bulb-recycling-minneapolis'
+  | 'area/shredding-wisconsin'
+  | 'area/shredding-rochester'
+  | 'area/lewisburg-tennessee'
+  | 'area/recycling-kits-in-ohio'
+  | 'area/recycling-kits-in-florida'
+  | 'area/ontario-california'
 
 export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'],
@@ -149,4 +181,18 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [COMPUTER_RECYCLING_MADISON, 'area/computer-recycling-madison'], [MINNEAPOLIS, 'area/minneapolis'], [BATTERY_RECYCLING_GREEN_BAY, 'area/battery-recycling-green-bay'],
   [SHREDDING_WAUKESHA, 'area/shredding-waukesha'],
   [NEW_BERLIN_RECYCLING_CENTER, 'area/new-berlin-recycling-center'],
+  [SHEBOYGAN, 'area/sheboygan'],
+  [TV_RECYCLING_GREEN_BAY, 'area/tv-recycling-green-bay'],
+  [FOND_DU_LAC_RECYCLING, 'area/fond-du-lac-recycling'],
+  [APPLETON_RECYCLING, 'area/appleton-recycling'],
+  [ROSEVILLE, 'area/roseville'],
+  [ELECTRONIC_RECYCLING_IN_WOODBURY, 'area/electronic-recycling-in-woodbury'],
+  [BROOKLYN_PARK_RECYCLING_CENTER, 'area/brooklyn-park-recycling-center'],
+  [LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'area/light-bulb-recycling-minneapolis'],
+  [SHREDDING_WISCONSIN, 'area/shredding-wisconsin'],
+  [SHREDDING_ROCHESTER, 'area/shredding-rochester'],
+  [LEWISBURG_TENNESSEE, 'area/lewisburg-tennessee'],
+  [RECYCLING_KITS_OHIO, 'area/recycling-kits-in-ohio'],
+  [RECYCLING_KITS_FLORIDA, 'area/recycling-kits-in-florida'],
+  [ONTARIO_CALIFORNIA, 'area/ontario-california'],
 ])

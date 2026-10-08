@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -46,6 +46,14 @@ export const PHOENIX_ARIZONA: CountyPage = {
       { p: "Our processes not only reclaim valuable materials but also minimize ecological damage. As environmental advocates, we continually innovate in waste management, offering comprehensive services that cater to both businesses and consumers. Choosing us means supporting a cleaner, healthier, and sustainable future. You can do so by contacting Jack Ocampo, our Arizona branch manager, at 602-276-4278 for more information." },
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
+    ] },
+    // 8 Oct 2026: links to the nearby locations (the Ontario content doc).
+    { kind: 'text', heading: "Nearby Recycle Technologies Locations", blocks: [
+      { list: [
+        { title: "Ontario, California", text: "805 E Francis St, Ontario, CA 91761", href: href('/ontario-california/') },
+        { title: "Fort Worth, Texas", text: "", href: href('/fort-worth-texas/') },
+        { title: "All Locations", text: "", href: href('/all-locations/') },
+      ] },
     ] },
   ],
   company: {

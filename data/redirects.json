@@ -90,18 +90,8 @@
     "statusCode": 301
   },
   {
-    "source": "/lewisburg-tennessee/",
-    "destination": "/mail-in-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/light-bulb-recycling-in-wisconsin/",
     "destination": "/wisconsin-recycling/light-bulb-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/light-bulb-recycling-minneapolis/",
-    "destination": "/minnesota-recycling/bulb-recycle-minneapolis/",
     "statusCode": 301
   },
   {
@@ -130,22 +120,12 @@
     "statusCode": 301
   },
   {
-    "source": "/minnesota-recycling/electronic-recycling-in-woodbury/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/minnesota-recycling/electronic-recycling-minneapolis/",
     "destination": "/minnesota-recycling/minneapolis/",
     "statusCode": 301
   },
   {
     "source": "/minnesota-recycling/electronic-recycling-st-paul/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
   },
@@ -175,11 +155,6 @@
     "statusCode": 301
   },
   {
-    "source": "/minnesota-recycling/ramsey/roseville/",
-    "destination": "/minnesota-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/minnesota-recycling/washington-county/oakdale-recycling-services/",
     "destination": "/minnesota-recycling/",
     "statusCode": 301
@@ -187,11 +162,6 @@
   {
     "source": "/news/",
     "destination": "/category/news/",
-    "statusCode": 301
-  },
-  {
-    "source": "/ontario-california/",
-    "destination": "/mail-in-recycling/",
     "statusCode": 301
   },
   {
@@ -236,11 +206,6 @@
   },
   {
     "source": "/recycling-kits-in-delaware/",
-    "destination": "/mail-in-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/recycling-kits-in-florida/",
     "destination": "/mail-in-recycling/",
     "statusCode": 301
   },
@@ -366,11 +331,6 @@
   },
   {
     "source": "/recycling-kits-in-north-dakota/",
-    "destination": "/mail-in-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/recycling-kits-in-ohio/",
     "destination": "/mail-in-recycling/",
     "statusCode": 301
   },
@@ -505,16 +465,6 @@
     "statusCode": 301
   },
   {
-    "source": "/shredding-minnesota/rochester/",
-    "destination": "/paper-shredding-services/",
-    "statusCode": 301
-  },
-  {
-    "source": "/shredding-wisconsin/",
-    "destination": "/paper-shredding-services/",
-    "statusCode": 301
-  },
-  {
     "source": "/shredding-wisconsin/appleton/",
     "destination": "/paper-shredding-services/",
     "statusCode": 301
@@ -537,11 +487,6 @@
   {
     "source": "/tv-recycling-des-moines/",
     "destination": "/tv-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/wisconsin-recycling/calumet-county/appleton-recycling/",
-    "destination": "/wisconsin-recycling/",
     "statusCode": 301
   },
   {
@@ -575,22 +520,7 @@
     "statusCode": 301
   },
   {
-    "source": "/wisconsin-recycling/fond-du-lac-recycling/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
     "source": "/wisconsin-recycling/madison/electronic-recycling/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/wisconsin-recycling/sheboygan/",
-    "destination": "/wisconsin-recycling/",
-    "statusCode": 301
-  },
-  {
-    "source": "/wisconsin-recycling/tv-recycling-green-bay/",
     "destination": "/wisconsin-recycling/",
     "statusCode": 301
   },

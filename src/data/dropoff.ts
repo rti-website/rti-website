@@ -119,8 +119,8 @@ export const LOCATIONS: DropoffLocation[] = [
     hours: 'Monday to Thursday, 8:30 AM to 2:30 PM; Friday, 8:30 AM to 1:30 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     body: `You can drop off accepted items during our regular working hours, Monday to Thursday, 8:30 AM to 2:30 PM; Friday, 8:30 AM to 1:30 PM. ${CONFIRM}`,
-    // /ontario-california/ 301s to Mail-In; no page of its own yet.
-    url: null,
+    // Its own page since 8 Oct 2026.
+    url: href('/ontario-california/'),
   },
   {
     name: 'Phoenix, Arizona', kind: 'rti',

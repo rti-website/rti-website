@@ -7,8 +7,9 @@ import { Btn } from '@/components/ui/Bits'
 import { QuickInfoBar } from '@/components/sections/locations/LocationQuickInfo'
 import { DirectionsPanel } from '@/components/sections/locations/LocationDirections'
 import { FOOTER_H } from '@/lib/layout'
-import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
-import { breadcrumbNode, graph, serviceNode } from '@/lib/schema'
+import { PICKUP_HREF, QUOTE_HREF, absolute, href } from '@/lib/urls'
+import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
+import { SITE } from '@/lib/site'
 import type { AboutBlock, AreaSection, CompanyLine, CountyPage as Page } from '@/data/county-pages/types'
 import { content } from '@/lib/page-content'
 import type { DocData } from '@/content/registry'
@@ -39,6 +40,8 @@ export async function CountyPage({ page }: { page: Page }) {
   const schema = graph(
     breadcrumbNode(trail),
     serviceNode({ name: page.service ?? 'Electronics Recycling', url: page.url, description: page.seo.description, areaServed: [page.areaServed ?? `${page.county}, ${page.state}`] }),
+    ...(page.schema ? [recyclingCenterNode(page)] : []),
+    ...(page.sections ?? []).flatMap((s) => s.kind === 'faq' ? [faqNode(s.items)] : []),
   )
   return (
     <FlowCanvas>
@@ -72,6 +75,23 @@ export async function CountyPage({ page }: { page: Page }) {
   )
 }
 
+/** The page's own facility as a RecyclingCenter (a LocalBusiness), from `schema`. */
+function recyclingCenterNode(page: Page) {
+  const b = page.schema!
+  return {
+    '@type': 'RecyclingCenter',
+    '@id': `${absolute(page.url)}#facility`,
+    name: b.name,
+    url: absolute(page.url),
+    parentOrganization: { '@id': `${SITE.origin}/#organization` },
+    address: { '@type': 'PostalAddress', streetAddress: b.street, addressLocality: b.locality, addressRegion: b.region, postalCode: b.postalCode, addressCountry: 'US' },
+    telephone: b.telephone,
+    ...(b.email ? { email: b.email } : {}),
+    geo: { '@type': 'GeoCoordinates', latitude: b.geo.lat, longitude: b.geo.lng },
+    openingHoursSpecification: b.hours.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
+  }
+}
+
 /** Split a list into rows of n, for the rows the frames draw. */
 function rows<T>(list: T[], n: number): T[][] {
   const out: T[][] = []
@@ -94,6 +114,8 @@ function Section({ section: s, wrap, shared }: { section: AreaSection; wrap: boo
     case 'features': return <Features cards={s.cards} icons={shared.COUNTY_FEATURE_ICONS} />
     case 'sights': return <Sights sights={s} />
     case 'text': return <TextSection heading={s.heading} blocks={s.blocks} />
+    case 'products': return <Products heading={s.heading} items={s.items} />
+    case 'faq': return <TextSection heading={s.heading} blocks={[{ list: s.items.map((x) => ({ title: x.q, text: x.a })) }]} />
   }
 }
 
@@ -101,16 +123,19 @@ function Section({ section: s, wrap, shared }: { section: AreaSection; wrap: boo
  * Old copy with its links: "[this form](quote)" -> the quote form,
  * "[this form](pickup)" -> the pickup form (a sentence about pickups),
  * "[Click here](mailin)" -> /mail-in-recycling/. See types.ts.
+ * "[TV recycling services](/tv-recycling/)" -> that page on this site (8 Oct
+ * 2026, for the old copy's links to pages that are live here; through href()).
  */
 const RICH_HREF = { quote: QUOTE_HREF, pickup: PICKUP_HREF, mailin: href('/mail-in-recycling/') }
 function Rich({ text }: { text: string }) {
-  const parts = text.split(/(\[[^\]]+\]\((?:quote|pickup|mailin)\))/)
+  const parts = text.split(/(\[[^\]]+\]\((?:quote|pickup|mailin|\/[a-z0-9\-/]*)\))/)
   return (
     <>
       {parts.map((part, i) => {
-        const m = /^\[([^\]]+)\]\((quote|pickup|mailin)\)$/.exec(part)
+        const m = /^\[([^\]]+)\]\((quote|pickup|mailin|\/[a-z0-9\-/]*)\)$/.exec(part)
         if (!m) return part
-        return <Link key={i} href={RICH_HREF[m[2] as keyof typeof RICH_HREF]} className="text-brand underline-offset-2 hover:underline">{m[1]}</Link>
+        const to = m[2]!.startsWith('/') ? href(m[2]!) : RICH_HREF[m[2] as keyof typeof RICH_HREF]
+        return <Link key={i} href={to} className="text-brand underline-offset-2 hover:underline">{m[1]}</Link>
       })}
     </>
   )
@@ -408,6 +433,34 @@ function Features({ cards, icons }: { cards: { title: string; text: string }[]; 
             <p className="font-roboto text-[13.5px] leading-[1.55] text-[#7e7e7e] lg:text-[15px] lg:leading-[1.6]">{c.text}</p>
           </div>
         ))}
+      </div>
+    </section>
+  )
+}
+
+/* -------------------------------------------------------------- products -- */
+
+/**
+ * Recycling kit cards (Ohio and Florida kit pages, 8 Oct 2026): the feature
+ * cards' plate, three a row on the board, stacked on the phone; each kit's
+ * name and its two links to the EZ on the Earth product page, new tab.
+ */
+function Products({ heading, items }: { heading: string; items: { title: string; href: string }[] }) {
+  return (
+    <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
+      <div className="mx-auto flex w-full max-w-[350px] flex-col items-center gap-[20px] lg:max-w-none lg:w-[1282px] lg:gap-[30px]">
+        <h2 className="text-center font-sans text-[21px] font-semibold leading-[normal] text-[#132119] lg:text-[32px]">{heading}</h2>
+        <ul className="flex w-full flex-col gap-[16px] lg:flex-row lg:flex-wrap lg:justify-center lg:gap-[24px]">
+          {items.map((p) => (
+            <li key={p.href} className="flex flex-col gap-[16px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:w-[400px] lg:p-[28px]">
+              <h3 className="font-sans text-[16px] font-medium leading-[1.4] text-[#132119] lg:flex-1 lg:text-[18px]">{p.title}</h3>
+              <div className="flex flex-wrap gap-[10px]">
+                <Btn href={p.href} external variant="colored" className="max-lg:h-[42px] max-lg:px-[18px]">Add to Cart</Btn>
+                <Btn href={p.href} external variant="bordered" className="max-lg:h-[42px] max-lg:px-[18px]">Learn More</Btn>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

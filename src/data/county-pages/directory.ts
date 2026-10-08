@@ -60,6 +60,19 @@ import { GREENWOOD_INDIANA } from './areas/greenwood-indiana'
 import { FRANKLIN_INDIANA } from './areas/franklin-indiana'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from './areas/johnson-city-buffalo-tennessee'
 import { FORT_WORTH_TEXAS } from './areas/fort-worth-texas'
+import { SHEBOYGAN } from './areas/sheboygan'
+import { TV_RECYCLING_GREEN_BAY } from './areas/tv-recycling-green-bay'
+import { FOND_DU_LAC_RECYCLING } from './areas/fond-du-lac-recycling'
+import { APPLETON_RECYCLING } from './areas/appleton-recycling'
+import { ROSEVILLE } from './areas/roseville'
+import { ELECTRONIC_RECYCLING_IN_WOODBURY } from './areas/electronic-recycling-in-woodbury'
+import { BROOKLYN_PARK_RECYCLING_CENTER } from './areas/brooklyn-park-recycling-center'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './areas/light-bulb-recycling-minneapolis'
+import { SHREDDING_WISCONSIN } from './areas/shredding-wisconsin'
+import { SHREDDING_ROCHESTER } from './areas/shredding-rochester'
+import { LEWISBURG_TENNESSEE } from './areas/lewisburg-tennessee'
+import { RECYCLING_KITS_OHIO, RECYCLING_KITS_FLORIDA } from './areas/recycling-kits'
+import { ONTARIO_CALIFORNIA } from './areas/ontario-california'
 import { LOCATION_PAGES } from './index'
 
 /**
@@ -101,34 +114,40 @@ export const DIRECTORY: DirectoryGroup[] = [
   { heading: 'Hennepin County', page: HENNEPIN, state: 'Minnesota', links: [
     l(BLOOMINGTON_RECYCLING_CENTER, 'Bloomington'), l(EDINA_RECYCLING_SERVICES, 'Edina'),
     l(MAPLE_GROVE_RECYCLING_CENTER, 'Maple Grove'), l(MINNETONKA_RECYCLING_CENTER, 'Minnetonka'),
-    l(PLYMOUTH_RECYCLING_CENTER, 'Plymouth'),
+    l(PLYMOUTH_RECYCLING_CENTER, 'Plymouth'), l(BROOKLYN_PARK_RECYCLING_CENTER, 'Brooklyn Park'),
   ] },
   { heading: 'Anoka County', page: ANOKA, state: 'Minnesota', links: [
     l(BLAINE, 'Blaine'), l(COON_RAPIDS, 'Coon Rapids'), l(EAST_BETHEL, 'East Bethel'),
   ] },
   { heading: 'Ramsey County', page: RAMSEY, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_ST_PAUL, 'St. Paul Battery Recycling'), l(SHREDDING_ST_PAUL, 'St. Paul Shredding'),
+    l(ROSEVILLE, 'Roseville'),
   ] },
   { heading: 'Dakota County', page: DAKOTA, state: 'Minnesota', links: [
     l(BURNSVILLE_RECYCLING_CENTER, 'Burnsville'), l(LAKEVILLE_RECYCLING_CENTER, 'Lakeville'),
   ] },
-  { heading: 'Washington County, MN', card: 'Washington County', page: WASHINGTON_MN, state: 'Minnesota', links: [] },
+  { heading: 'Washington County, MN', card: 'Washington County', page: WASHINGTON_MN, state: 'Minnesota', links: [
+    l(ELECTRONIC_RECYCLING_IN_WOODBURY, 'Woodbury', 'Electronic Recycling Woodbury'),
+  ] },
   { heading: 'Scott County', page: SCOTT, state: 'Minnesota', links: [] },
-  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [] },
+  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [
+    l(SHREDDING_ROCHESTER, 'Rochester Shredding', 'Shredding Rochester'),
+  ] },
   { heading: 'Benton County', page: BENTON, state: 'Minnesota', links: [
     l(ST_CLOUD_RECYCLING_CENTER, 'St. Cloud'),
   ] },
   { heading: 'Minneapolis', page: MINNEAPOLIS, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_IN_MINNEAPOLIS, 'Battery Recycling', 'Battery Recycling Minneapolis'),
     l(BULB_RECYCLE_MINNEAPOLIS, 'Bulb Recycling', 'Bulb Recycling Minneapolis'),
+    l(LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'Light Bulb Recycling', 'Light Bulb Recycling Minneapolis'),
   ] },
-  { heading: 'Duluth', state: 'Minnesota', links: [
-    l(ELECTRONIC_RECYCLING_DULUTH, 'Electronic Recycling', 'Electronic Recycling Duluth'),
-    l(SHREDDING_DULUTH, 'Shredding Service', 'Shredding Duluth'),
-  ] },
+  // Duluth had its own column until 8 Oct 2026; its two pages moved here to
+  // make room in the 21-column band for the Tennessee and Recycling Kits columns.
   { heading: 'Minnesota', state: 'Minnesota', links: [
     l(SHREDDING_MINNESOTA, 'Document Shredding', 'Document Shredding Minnesota'),
     l(TV_RECYCLING_IN_MINNESOTA, 'TV Recycling', 'TV Recycling Minnesota'),
+    l(ELECTRONIC_RECYCLING_DULUTH, 'Duluth Electronic Recycling', 'Electronic Recycling Duluth'),
+    l(SHREDDING_DULUTH, 'Duluth Shredding', 'Shredding Duluth'),
   ] },
   /* ------------------------------------------------------------ Wisconsin */
   { heading: 'Milwaukee', page: MILWAUKEE, state: 'Wisconsin', links: [
@@ -153,22 +172,35 @@ export const DIRECTORY: DirectoryGroup[] = [
   { heading: 'Green Bay', page: GREEN_BAY_RECYCLING, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_GREEN_BAY, 'Battery Recycling', 'Battery Recycling Green Bay'),
     l(SHREDDING_GREEN_BAY, 'Shredding Services', 'Shredding Green Bay'),
+    l(TV_RECYCLING_GREEN_BAY, 'TV Recycling', 'TV Recycling Green Bay'),
   ] },
-  { heading: 'Appleton', page: APPLETON_ELECTRONIC_RECYCLING_CENTER, state: 'Wisconsin', links: [
-    l(BATTERY_RECYCLING_APPLETON, 'Battery Recycling', 'Battery Recycling Appleton'),
-    l(TV_RECYCLING_APPLETON, 'TV Recycling', 'TV Recycling Appleton'),
+  // Appleton had its own column until 8 Oct 2026; its pages moved under
+  // Calumet County (with the new /calumet-county/appleton-recycling/) to make
+  // room in the 21-column band.
+  { heading: 'Calumet County', page: CALUMET, state: 'Wisconsin', links: [
+    l(APPLETON_ELECTRONIC_RECYCLING_CENTER, 'Appleton Electronics', 'Appleton'),
+    l(APPLETON_RECYCLING, 'Appleton Recycling'),
+    l(BATTERY_RECYCLING_APPLETON, 'Appleton Battery Recycling', 'Battery Recycling Appleton'),
+    l(TV_RECYCLING_APPLETON, 'Appleton TV Recycling', 'TV Recycling Appleton'),
   ] },
-  { heading: 'Calumet County', page: CALUMET, state: 'Wisconsin', links: [] },
   { heading: 'Racine County', page: RACINE, state: 'Wisconsin', links: [] },
   { heading: 'Washington County, WI', card: 'Washington County', page: WASHINGTON_WI, state: 'Wisconsin', links: [] },
   { heading: 'Wisconsin', state: 'Wisconsin', links: [
     l(TV_RECYCLING_IN_WISCONSIN, 'TV Recycling', 'TV Recycling Wisconsin'),
+    l(SHREDDING_WISCONSIN, 'Document Shredding', 'Document Shredding Wisconsin'),
+    l(SHEBOYGAN, 'Sheboygan'), l(FOND_DU_LAC_RECYCLING, 'Fond du Lac'),
   ] },
   /* ------------------------------------------- mail-in cities, nationwide */
   { heading: 'Mail-In Recycling', state: null, links: [
     l(PHOENIX_ARIZONA, 'Phoenix, AZ'), l(OCALA_FLORIDA, 'Ocala, FL'), l(KENNESAW_GEORGIA, 'Kennesaw, GA'),
     l(GREENWOOD_INDIANA, 'Greenwood, IN'), l(FRANKLIN_INDIANA, 'Franklin, IN'),
-    l(JOHNSON_CITY_BUFFALO_TENNESSEE, 'Johnson City, TN'), l(FORT_WORTH_TEXAS, 'Fort Worth, TX'),
+    l(FORT_WORTH_TEXAS, 'Fort Worth, TX'), l(ONTARIO_CALIFORNIA, 'Ontario, CA'),
+  ] },
+  { heading: 'Tennessee', state: null, links: [
+    l(JOHNSON_CITY_BUFFALO_TENNESSEE, 'Johnson City, TN'), l(LEWISBURG_TENNESSEE, 'Lewisburg, TN'),
+  ] },
+  { heading: 'Recycling Kits', state: null, links: [
+    l(RECYCLING_KITS_OHIO, 'Ohio', 'Recycling Kits Ohio'), l(RECYCLING_KITS_FLORIDA, 'Florida', 'Recycling Kits Florida'),
   ] },
 ]
 

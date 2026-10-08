@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -45,6 +45,14 @@ export const FORT_WORTH_TEXAS: CountyPage = {
       { p: "What sets Recycle Technologies apart is our unwavering commitment to sustainability. Together with our subsidiaries, Lighting Resources and EZ on the Earth, we lead the way in advanced recycling practices. Utilizing cutting-edge technology, we maximize the recovery of valuable materials, dramatically reducing landfill waste and environmental harm. We are passionate about turning e-waste and other discarded materials into reusable resources, championing a circular economy. Our innovative methods reclaim precious materials while minimizing ecological damage. As devoted guardians of the environment, we continuously strive to improve our waste management techniques, providing comprehensive services to both businesses and consumers. By partnering with us, you’re supporting a cleaner, healthier, and more sustainable world. For more information, reach out to Anne Rayl, our Texas branch manager, at 817-921-1440. Let’s join forces to make a significant difference!" },
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
+    ] },
+    // 8 Oct 2026: links to the nearby locations (the Ontario content doc).
+    { kind: 'text', heading: "Nearby Recycle Technologies Locations", blocks: [
+      { list: [
+        { title: "Ontario, California", text: "805 E Francis St, Ontario, CA 91761", href: href('/ontario-california/') },
+        { title: "Phoenix, Arizona", text: "", href: href('/phoenix-arizona/') },
+        { title: "All Locations", text: "", href: href('/all-locations/') },
+      ] },
     ] },
   ],
   company: {

@@ -464,7 +464,8 @@ export const NATIONWIDE = {
     nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),
     nationwide('Johnson City, TN', '300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'),
     nationwide('Atlanta, GA',      '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'),
-    nationwide('Ontario, CA',      '805 East Francis Street, Ontario, CA 91761',          '(888) 923-7252', 1, 'ontario-ca'),
+    // Ontario's card opens its own page, like Chicago's (8 Oct 2026).
+    { ...nationwide('Ontario, CA', '805 East Francis Street, Ontario, CA 91761', '(888) 923-7252', 1, 'ontario-ca'), href: href('/ontario-california/') },
     nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'),
     nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'),
   ],

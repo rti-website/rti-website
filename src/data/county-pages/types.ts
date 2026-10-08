@@ -57,6 +57,18 @@ export type AreaSection =
   /** Heading and blocks, drawn like About ("Battery Disposal Services in …"). */
   | { kind: 'text'; heading: string; blocks: AboutBlock[] }
   | { kind: 'sights'; heading: string; items: string[] }
+  /**
+   * Recycling kit cards (the Ohio and Florida kit pages, 8 Oct 2026): each
+   * kit's name with Learn More and Add to Cart, both to its EZ on the Earth
+   * product page, as the old WordPress page linked them. No Figma frame draws
+   * these; they take the feature cards' look.
+   */
+  | { kind: 'products'; heading: string; items: { title: string; href: string }[] }
+  /**
+   * Questions and answers in the About list's bordered card (Ontario, 8 Oct
+   * 2026), with FAQPage markup in the page's JSON-LD.
+   */
+  | { kind: 'faq'; heading: string; items: { q: string; a: string }[] }
 
 /** One line of the contact card. `icon` is the one the frame draws, when it is not the kind's own. */
 export type CompanyLine =
@@ -146,6 +158,22 @@ export type CountyPage = {
   features?: { title: string; text: string }[]
   /** Absent on Ramsey. */
   sights?: { heading: string; items: string[] }
+  /**
+   * JSON-LD only, never drawn (the key is hidden from Admin -> Pages): a
+   * RecyclingCenter node for a page that is an RTI facility of its own
+   * (Ontario, CA, 8 Oct 2026), like the facility nodes of Blaine and New Berlin.
+   */
+  schema?: {
+    name: string
+    street: string
+    locality: string
+    region: string
+    postalCode: string
+    telephone: string
+    email?: string
+    geo: { lat: number; lng: number }
+    hours: { days: string[]; opens: string; closes: string }[]
+  }
   /** The contact card; absent on the pages whose frame ends without one. */
   company?: {
     name: string
