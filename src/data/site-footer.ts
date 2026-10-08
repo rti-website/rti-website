@@ -37,7 +37,8 @@ export const COL_1: FooterGroup[] = [
     links: [
       { l: 'Home',            h: href('/') },
       { l: 'About',           h: href('/about-us-commercial-recycling-solutions/') },
-      { l: 'Mail In Program', h: 'https://ezontheearth.com/', external: true },
+      // The Mail-In landing page, like the Services menu (7 Oct 2026).
+      { l: 'Mail In Program', h: href('/mail-in-recycling/') },
       { l: 'All Locations',   h: href('/all-locations/') },
     ],
   },

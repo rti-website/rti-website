@@ -212,11 +212,13 @@ export const SERVICE_GROUPS: ServiceGroup[] = [
       // "add the electronic recycling kit service in both the home page
       // services and also in service home page").
       { l1: 'Electronic', l2: 'Recycling Kit', blurb: 'Order online and mail in your unwanted electronics.', icon: '/images/home/svc-electronics.png', iw: 36, ih: 36, photo: '/images/home/svc-photo-electronics.webp', cut: CUTS.kit, href: href('/electronics-recycling-kit/'), homeBlurb: 'Order a kit online and mail in your electronics.' },
-      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', cut: CUTS.mailin, href: 'https://ezontheearth.com/', external: true, homeBlurb: 'Nationwide mail-in program for eligible materials.' },
-      // "About the Mail-In Program" (/mail-in-recycling/) came out of the
-      // menu on 25 Sep 2026 — Asim: "remove the about mail in program from
-      // here, just keep the page". The page stays, and the industry pages'
-      // Mail-In Program rows still link it.
+      { l1: 'Mail-In',    l2: 'Program',       blurb: 'Countrywide mail-in option for eligible recycling materials.',     icon: '/images/home/svc-mailin.png',      iw: 34, ih: 34, photo: '/images/home/svc-photo-mailin.webp', cut: CUTS.mailin, href: href('/mail-in-recycling/'), homeBlurb: 'Nationwide mail-in program for eligible materials.' },
+      // Mail-In Program opens the Mail-In landing page, /mail-in-recycling/
+      // (management, 7 Oct 2026: "Homepage > Services > Mail-In Program >
+      // Link to the Landing Page"). It went to ezontheearth.com until then;
+      // the landing page's own Order a Recycling Kit button still goes to the
+      // kit store. This one card feeds the homepage Services tab, the
+      // /services/ catalogue and the header's Services menu.
     ],
   },
 ]
