@@ -2,25 +2,26 @@ import { href } from '@/lib/urls'
 import { type LocalPage, PICKUP, QUOTE, tel } from './types'
 
 /**
- * On-Site & Off-Site Shredding in Blaine, Minnesota — /minnesota-recycling/on-site-off-site-shredding/
+ * Off-Site Shredding in Blaine, Minnesota — /minnesota-recycling/off-site-shredding/
+ * Moved from /minnesota-recycling/on-site-off-site-shredding/ on 9 Oct 2026; the old URL 301s here.
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7124:9526, phone 7124:9966 (30 Sep 2026).
  * The frame's copy word for word; see `todo` for what the build had to settle.
  * Generated from the frame, then checked by eye against it.
  */
-export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
-  url: href('/minnesota-recycling/on-site-off-site-shredding/'),
+export const MINNESOTA_OFF_SITE_SHREDDING: LocalPage = {
+  url: href('/minnesota-recycling/off-site-shredding/'),
   figma: { board: "7124:9526", phone: "7124:9966" },
   seo: {
-    title: "On-Site & Off-Site Shredding in Blaine, Minnesota | Recycle Technologies",
-    description: "When a business needs confidential paper destroyed, there are two ways to do it: bring the shredding to you, or take your documents to the shredding.",
+    title: "Off-Site Shredding in Blaine, Minnesota | Recycle Technologies",
+    description: "Secure off-site document shredding at Recycle Technologies in Blaine, Minnesota, destroyed under documented security with a certificate of destruction.",
   },
-  schema: { service: "On-Site & Off-Site Shredding", areaServed: ["Blaine, MN", "Minnesota"] },
+  schema: { service: "Off-Site Shredding", areaServed: ["Blaine, MN", "Minnesota"] },
   hero: {
-    crumb: "On-Site & Off-Site Shredding in Blaine, Minnesota",
-    h1: "On-Site & Off-Site Shredding in Blaine, Minnesota",
+    crumb: "Off-Site Shredding in Blaine, Minnesota",
+    h1: "Off-Site Shredding in Blaine, Minnesota",
     body: [
-      "When a business needs confidential paper destroyed, there are two ways to do it: bring the shredding to you, or take your documents to the shredding. Recycle Technologies offers both from its Blaine, Minnesota facility: off-site shredding that transports your documents to our facility in secure vehicles, and on-site shredding that destroys them at your location.",
-      "Off-site service is typically the more cost-effective option for large volumes; it can save businesses up to 40% compared to on-site service. On-site appeals to businesses that want to watch destruction happen on their own premises. Either way, confidential paper never leaves your control unshredded, and the shredded material is recycled afterward.",
+      "When a business needs confidential paper destroyed, Recycle Technologies offers off-site shredding from its Blaine, Minnesota facility: a team collects your documents in secure vehicles and transports them to our facility, where they're destroyed under documented security.",
+      "Off-site service is a cost-effective option for large volumes. Confidential paper never leaves your control unshredded, and the shredded material is recycled afterward.",
     ],
     primary: QUOTE,
     secondary: PICKUP,
@@ -28,14 +29,14 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
   bands: [
     {
       figma: "7124:9591",
-      heading: "Shredding Options in Blaine",
+      heading: "Off-Site Shredding Service in Blaine",
       grey: false,
       blocks: [
         {
           kind: "text",
           body: [
-            "With off-site shredding, a team collects your documents in secure vehicles and transports them to the Blaine shredding facility, where they're destroyed under documented security. With on-site shredding, a shredding truck arrives at your location and destroys the documents there without transporting them anywhere first.",
-            "The right choice depends on how much paper you have and how you want it handled. Many businesses across the Minneapolis-Saint Paul metro use off-site service for regular volume and on-site service for high-sensitivity purges.",
+            "With off-site shredding, a team collects your documents in secure vehicles and transports them to the Blaine shredding facility, where they're destroyed under documented security. The shredded material is then recycled, and you receive a certificate of destruction for your records.",
+            "Many businesses across the Minneapolis-Saint Paul metro use off-site service for regular volume as well as one-time purges.",
           ],
         },
       ],
@@ -58,7 +59,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
             },
             {
               label: "Business Service",
-              value: "Off-site collection and on-site shredding cover roughly a 100-mile radius around the Blaine facility, scheduled as recurring service or one-time jobs.",
+              value: "Off-site collection covers roughly a 100-mile radius around the Blaine facility, scheduled as recurring service or one-time jobs.",
             },
             {
               label: "Mail-In",
@@ -115,13 +116,13 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     },
     {
       figma: "7124:9641",
-      heading: "On-Site & Off-Site Shredding for Blaine Businesses",
+      heading: "Off-Site Shredding for Blaine Businesses",
       grey: false,
       blocks: [
         {
           kind: "text",
           body: [
-            "Offices, healthcare providers, financial firms, law offices, schools, and government agencies within roughly 100 miles of Blaine use this service for both routine shredding and major cleanouts. Off-site collection in secure vehicles keeps costs down on large volumes, while on-site service gives compliance-sensitive organizations witnessed destruction. Both end with a certificate of destruction for your records.",
+            "Offices, healthcare providers, financial firms, law offices, schools, and government agencies within roughly 100 miles of Blaine use this service for both routine shredding and major cleanouts. Off-site collection in secure vehicles keeps costs down on large volumes, and every job ends with a certificate of destruction for your records.",
           ],
         },
         {
@@ -141,7 +142,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     },
     {
       figma: "7124:9653",
-      heading: "How On-Site & Off-Site Shredding Work",
+      heading: "How Off-Site Shredding Works",
       grey: true,
       blocks: [
         {
@@ -150,7 +151,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
             [
               {
                 title: "Get a Quote",
-                body: ["Contact Recycle Technologies to describe your paper volume and which option fits."],
+                body: ["Contact Recycle Technologies to describe your paper volume and whether you need recurring service or a one-time job."],
               },
             ],
           ],
@@ -168,16 +169,16 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
             [
               {
                 title: "Schedule Your Service",
-                body: ["Choose off-site or on-site shredding and set a collection or service date."],
+                body: ["Set a collection date for recurring service or a one-time job."],
               },
               {
-                title: "Collection or On-Location Shredding",
+                title: "Secure Collection",
                 body: [
-                  "For off-site service, a team collects your documents in secure vehicles. For on-site service, a shredding truck arrives at your location and destroys documents there directly.",
+                  "A team collects your documents from your door in secure vehicles with controlled handling.",
                 ],
               },
               {
-                title: "Transport and Destruction (Off-Site Only)",
+                title: "Transport and Destruction",
                 body: [
                   "Collected documents are transported to the Blaine shredding facility for destruction under documented security.",
                 ],
@@ -213,16 +214,16 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
               },
               {
                 icon: "shield",
-                title: "Two Options, One Standard",
+                title: "One Documented Standard",
                 body: [
-                  "Whether documents are destroyed at your location or ours, the same documented security and the same certificate back the job.",
+                  "Every job gets the same documented security and the same certificate of destruction.",
                 ],
               },
               {
                 icon: "lock",
                 title: "Secure Transport",
                 body: [
-                  "Off-site documents travel in secure vehicles with controlled handling from your door to destruction.",
+                  "Documents travel in secure vehicles with controlled handling from your door to destruction.",
                 ],
               },
             ],
@@ -252,7 +253,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
         {
           kind: "text",
           body: [
-            "The Blaine facility is the Twin Cities metro's local shredding point, businesses from Minneapolis to Saint Paul and across the northern suburbs schedule off-site collection or on-site truck visits instead of managing sensitive paper disposal themselves.",
+            "The Blaine facility is the Twin Cities metro's local shredding point, businesses from Minneapolis to Saint Paul and across the northern suburbs schedule off-site collection instead of managing sensitive paper disposal themselves.",
           ],
         },
       ],
@@ -263,20 +264,20 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     heading: "Frequently Asked Questions",
     items: [
       {
-        q: "What’s the difference between off-site and on-site shredding?",
-        a: "With off-site shredding, your documents are collected in secure vehicles and destroyed at our Blaine facility. With on-site shredding, a shredding truck comes to your location and destroys the documents there. Off-site typically costs less; on-site lets you witness destruction.",
+        q: "How does off-site shredding work?",
+        a: "A team collects your documents in secure vehicles and transports them to the Blaine shredding facility, where they are destroyed under documented security. The shredded material is recycled, and you receive a certificate of destruction for your records.",
       },
       {
         q: "Is off-site shredding secure if my documents leave the office?",
         a: "Yes. Off-site documents travel in secure vehicles with controlled handling from your door to destruction, and they are destroyed at the Blaine facility under documented security. Confidential paper never leaves your control unshredded, and the job ends with a certificate of destruction.",
       },
       {
-        q: "How much can off-site shredding save compared to on-site?",
-        a: "Off-site service is typically the more cost-effective option for large volumes and can save businesses up to 40% compared to on-site service. Contact Recycle Technologies at +1-763-559-5130 to describe your paper volume and get a quote.",
+        q: "Is off-site shredding cost-effective for large volumes?",
+        a: "Yes. Off-site service is a cost-effective option for large volumes, whether you need recurring service or a one-time cleanout. Contact Recycle Technologies at +1-763-559-5130 to describe your paper volume and get a quote.",
       },
       {
         q: "Can my business schedule a pickup?",
-        a: "Yes. Off-site collection and on-site shredding cover roughly a 100-mile radius around the Blaine facility, scheduled as recurring service or one-time jobs.",
+        a: "Yes. Off-site collection covers roughly a 100-mile radius around the Blaine facility, scheduled as recurring service or one-time jobs.",
       },
       {
         q: "What if we're not near Blaine?",
@@ -284,7 +285,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
       },
       {
         q: "Do I get proof that my documents were destroyed?",
-        a: "Yes. Once shredding is complete, you receive a certificate of destruction for your records, whether documents were destroyed at your location or ours.",
+        a: "Yes. Once shredding is complete, you receive a certificate of destruction for your records.",
       },
     ],
   },
@@ -328,7 +329,7 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
   cta: {
     heading: "Schedule Shredding in Blaine, Minnesota",
     body: [
-      "Choose off-site collection or an on-site shredding truck visit anywhere in the Twin Cities metro. Contact Recycle Technologies at +1-763-559-5130 to schedule shredding in Blaine, Minnesota.",
+      "Schedule off-site collection anywhere in the Twin Cities metro. Contact Recycle Technologies at +1-763-559-5130 to schedule shredding in Blaine, Minnesota.",
     ],
     primary: QUOTE,
     secondary: tel("Call: +1-763-559-5130", "+17635595130"),
@@ -337,5 +338,6 @@ export const MINNESOTA_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
   todo: [
     "FAQ answers written for the build from the page's own copy (the frames draw these closed): 5 of 6. Confirm or replace.",
     "SEO title and description written for the build (the frames give none).",
+    "Moved from the on-site/off-site URL on 9 Oct 2026 (SEO sheet \"Technical Fixes 09/10/26\"); on-site wording removed.",
   ],
 }

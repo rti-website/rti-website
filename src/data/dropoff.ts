@@ -184,8 +184,8 @@ export const LOCATIONS: DropoffLocation[] = [
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     note: APPOINTMENT,
     body: `Please call before you visit to confirm our working hours. ${CONFIRM}`,
-    // /lewisburg-tennessee/ 301s to Mail-In; no page of its own yet.
-    url: null,
+    // Its own page since 8 Oct 2026.
+    url: href('/lewisburg-tennessee/'),
   },
 ]
 

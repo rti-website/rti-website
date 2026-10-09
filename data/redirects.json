@@ -585,13 +585,28 @@
     "statusCode": 301
   },
   {
+    "source": "/wisconsin-recycling/on-site-off-site-shredding/",
+    "destination": "/wisconsin-recycling/off-site-shredding/",
+    "statusCode": 301
+  },
+  {
     "source": "/wisconsin-recycling/tv-recycling/",
     "destination": "/tv-recycling-in-wisconsin/",
     "statusCode": 301
   },
   {
+    "source": "/minnesota-recycling/on-site-off-site-shredding/",
+    "destination": "/minnesota-recycling/off-site-shredding/",
+    "statusCode": 301
+  },
+  {
     "source": "/minnesota-recycling/tv-recycling/",
     "destination": "/tv-recycling-in-minnesota/",
+    "statusCode": 301
+  },
+  {
+    "source": "/on-site-off-site-shredding-chicago/",
+    "destination": "/off-site-shredding-chicago/",
     "statusCode": 301
   },
   {
@@ -682,6 +697,21 @@
   {
     "source": "/wi_lamp_recycling.htm",
     "destination": "/wisconsin-recycling/light-bulb-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/document-destruction-services-and-its-importance-in-todays-world-2/",
+    "destination": "/document-destruction-services-and-its-importance-in-todays-world/",
+    "statusCode": 301
+  },
+  {
+    "source": "/recycle-technologies-complete-e-waste/",
+    "destination": "/the-basics-of-e-waste-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/what-to-do-with-old-phones-for-a-greener-future/",
+    "destination": "/what-to-do-with-old-phones/",
     "statusCode": 301
   }
 ]

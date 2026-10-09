@@ -148,6 +148,12 @@ export type CountyPage = {
     mapsHref: string
   }
   about: { heading: string; blocks: AboutBlock[] }
+  /**
+   * Leave out the shared Service Options cards (Lewisburg, 9 Oct 2026: the
+   * page's own "Ways to recycle" list replaces them, so business pickup and
+   * the mail-in program are not each described twice).
+   */
+  noServices?: boolean
   /** The heading some frames draw over the Service Options cards ("Recycling Services"). */
   servicesHeading?: string
   /** The sections after the CTA banner, when the page has its own order (the area pages). */

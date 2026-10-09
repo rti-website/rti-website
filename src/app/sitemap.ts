@@ -4,12 +4,14 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { allContent } from '@/lib/content'
 import { sitemapEntry } from '@/lib/seo'
-import { allDbPosts, dbPostsInCategory, liveDbCategories } from '@/lib/posts-db'
-import { blogPagePath, categoryPagePath, pageCount, pageSlice } from '@/lib/blog-index'
+import { allDbPosts } from '@/lib/posts-db'
 import { LOCAL_FACILITY_URLS as FIXED_FACILITY_URLS } from '@/data/local-pages'
 import { COUNTY_URLS } from '@/data/county-pages'
 import { sitemapRank } from '@/lib/sitemap-priority'
 import { absolute } from '@/lib/urls'
+import REDIRECTS from '../../data/redirects.json'
+
+const REDIRECTED = new Set(REDIRECTS.map((r) => r.source.toLowerCase()))
 
 /**
  * Only KEEP URLs. Never a redirected URL, never a noindexed URL — a sitemap
@@ -58,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      ("yes, index them"), though nothing in the menus links to them. */
   // The eleven county pages (29 Sep 2026) live in the same [service] folders.
   const staticPages = ['/', ...explicitRoutes(), ...FIXED_FACILITY_URLS, ...COUNTY_URLS]
-  const [posts, categories] = await Promise.all([allDbPosts(), liveDbCategories()])
+  const posts = await allDbPosts()
   const listed = posts.filter((p) => p.inSitemap && !p.noindex)
   const locationPaths = new Set([...FIXED_FACILITY_URLS, ...COUNTY_URLS])
   const postPaths = new Set(listed.map((p) => p.url))
@@ -82,26 +84,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
    */
   const newest = (ps: { updated?: string; date?: string }[]): string | undefined =>
     ps.map((p) => p.updated ?? p.date).filter((x): x is string => Boolean(x)).sort().at(-1)
-  const inCategory = new Map(await Promise.all(
-    categories.map(async (c) => [c.slug, (await dbPostsInCategory(c.slug)).filter((p) => p.inSitemap && !p.noindex)] as const),
-  ))
 
   const entries = [
     ...staticPages.map((u) => sitemapEntry(u, u === '/blog/' ? newest(listed) : pageLastModified(u))),
     // Never a noindexed page (/thank-you/, 1 Oct 2026).
     ...allContent().filter((e) => !e.noindex).map((e) => sitemapEntry(e.url, e.updated ?? e.date)),
     ...listed.map((p) => sitemapEntry(p.url, p.updated ?? p.date)),
-    ...categories.map((c) => sitemapEntry(c.path, newest(inCategory.get(c.slug) ?? []))),
-    // Pagination, for /blog/ and for each archive. Deep posts are otherwise
-    // several clicks from anything Google has a reason to crawl.
-    ...Array.from({ length: pageCount(posts.length) - 1 }, (_, i) =>
-      sitemapEntry(blogPagePath(i + 2), newest(pageSlice(listed, i + 2)))),
-    ...categories.flatMap((c) =>
-      // c.count is counted through post_categories, which is the same set the
-      // archive route lists — see dbPostsInCategory().
-      Array.from({ length: pageCount(c.count) - 1 }, (_, i) =>
-        sitemapEntry(categoryPagePath(c.slug, i + 2), newest(pageSlice(inCategory.get(c.slug) ?? [], i + 2))))),
-  ].map((e) => ({ ...e, lastModified: e.lastModified ?? BUILD_TIME }))
+    /* 9 Oct 2026, SEO sheet "Technical Fixes 09/10/26" (Other Fixes): the
+       category archives (/category/<slug>/) and every /blog/page/N/ and
+       /category/<slug>/page/N/ page are no longer listed. The pages stay live
+       and linked from /blog/; the sitemap lists only real pages. */
+  ]
+    // A URL that 301s is never listed: the duplicate posts redirected the same
+    // day are still rows in the database.
+    .filter((e) => !REDIRECTED.has(e.url.slice(absolute('/').length - 1).toLowerCase()))
+    .filter((e) => !/^\/category\/|\/page\/\d+\/$/.test(e.url.slice(absolute('/').length - 1)))
+    .map((e) => ({ ...e, lastModified: e.lastModified ?? BUILD_TIME }))
     // changefreq and priority, the SEO team's scheme (9 Oct 2026, lib/sitemap-priority.ts).
     .map((e) => {
       const p = e.url.slice(absolute('/').length - 1)

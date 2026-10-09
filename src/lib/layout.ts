@@ -181,8 +181,15 @@ export const HOME_TESTIMONIALS_GROWTH = 698 - 594
    controls, no rating line, and no figures under them (those moved up under
    Our Services). Keep in step with TESTIMONIALS_H in Testimonials.tsx. */
 
+/**
+ * The mail-in band between Our Strategic National Network and the reviews
+ * (9 Oct 2026, SEO sheet "Technical Fixes"): no frame; the reviews and
+ * everything under them move down by its height. MailInBand.tsx draws it.
+ */
+export const HOME_MAILIN_H = 200
+
 /** What Client's Stories subtracts from its Figma y. */
-export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_HOW_SHIFT - HOME_TESTIMONIALS_GROWTH
+export const HOME_BELOW_TESTIMONIALS_SHIFT = HOME_BELOW_HOW_SHIFT - HOME_TESTIMONIALS_GROWTH - HOME_MAILIN_H
 
 /**
  * Client's Stories grew on 21 Sep 2026 too: the three-up row (6026:14726, 885)

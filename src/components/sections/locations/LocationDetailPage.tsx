@@ -100,7 +100,9 @@ export async function LocationDetailPage({ f, layout: L, links }: {
         />
         {f.center && <LocationCenterBar top={CENTER_TOP} height={CENTER_H} f={f} />}
         <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
-        <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />
+        {/* Minnesota's "Getting Here" moved to the Blaine page (/minnesota-recycling/ramsey/blaine/),
+            9 Oct 2026, SEO sheet "Technical Fixes": its layout gives the row 0 height. */}
+        {L.map > 0 && <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />}
         <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />
         <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />
         <LocationFaq        top={FAQ_TOP}   height={L.faq}   f={f} />

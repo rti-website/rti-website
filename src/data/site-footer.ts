@@ -10,7 +10,7 @@ import { href } from '@/lib/urls'
 
 /** Words that were written straight into the footer markup. */
 export const FOOTER_TEXT = {
-  about: 'Recycle Technologies has been providing services to the community since 1993. We are a Midwest-based recycling and shredding company.',
+  about: 'Recycle Technologies has been providing services to the community since 1993. We are a Midwest-based recycling and shredding company with locations across the US.',
   connectHeading: 'Connect with Us',
   chatPrompt: 'Hi! How can we help?',
   /* The chat card's two buttons since 30 Sep 2026 (Figma 6778:4359, phone

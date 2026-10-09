@@ -2,25 +2,26 @@ import { href } from '@/lib/urls'
 import { type LocalPage, PICKUP, QUOTE, tel } from './types'
 
 /**
- * On-Site & Off-Site Shredding in New Berlin, Wisconsin — /wisconsin-recycling/on-site-off-site-shredding/
+ * Off-Site Shredding in New Berlin, Wisconsin — /wisconsin-recycling/off-site-shredding/
+ * Moved from /wisconsin-recycling/on-site-off-site-shredding/ on 9 Oct 2026; the old URL 301s here.
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7119:6480, phone 7119:6923 (30 Sep 2026).
  * The frame's copy word for word; see `todo` for what the build had to settle.
  * Generated from the frame, then checked by eye against it.
  */
-export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
-  url: href('/wisconsin-recycling/on-site-off-site-shredding/'),
+export const WISCONSIN_OFF_SITE_SHREDDING: LocalPage = {
+  url: href('/wisconsin-recycling/off-site-shredding/'),
   figma: { board: "7119:6480", phone: "7119:6923" },
   seo: {
-    title: "On-Site & Off-Site Shredding in New Berlin, Wisconsin | Recycle Technologies",
-    description: "When a business needs confidential paper destroyed, there are two ways to do it: bring the shredding to you, or take your documents to the shredding.",
+    title: "Off-Site Shredding in New Berlin, Wisconsin | Recycle Technologies",
+    description: "Secure off-site document shredding at Recycle Technologies in New Berlin, Wisconsin, destroyed under documented security with a certificate of destruction.",
   },
-  schema: { service: "On-Site & Off-Site Shredding", areaServed: ["New Berlin, WI", "Wisconsin"] },
+  schema: { service: "Off-Site Shredding", areaServed: ["New Berlin, WI", "Wisconsin"] },
   hero: {
-    crumb: "On-Site & Off-Site Shredding in New Berlin, Wisconsin",
-    h1: "On-Site & Off-Site Shredding in New Berlin, Wisconsin",
+    crumb: "Off-Site Shredding in New Berlin, Wisconsin",
+    h1: "Off-Site Shredding in New Berlin, Wisconsin",
     body: [
-      "When a business needs confidential paper destroyed, there are two ways to do it: bring the shredding to you, or take your documents to the shredding. Recycle Technologies offers both from its New Berlin, Wisconsin facility: off-site shredding that transports your documents to our facility in secure vehicles, and on-site shredding that destroys them at your location with a mobile shredding truck.",
-      "Off-site service is typically the more cost-effective option for large volumes. It can save businesses up to 40% compared to on-site service. On-site appeals to businesses that want to watch destruction happen on their own premises. Either way, confidential paper never leaves your control unshredded, and the shredded material is recycled afterward.",
+      "When a business needs confidential paper destroyed, Recycle Technologies offers off-site shredding from its New Berlin, Wisconsin facility: a team collects your documents in secure vehicles and transports them to our facility, where they are destroyed under documented security.",
+      "Off-site service is a cost-effective option for large volumes. Confidential paper never leaves your control unshredded, and the shredded material is recycled afterward.",
     ],
     primary: QUOTE,
     secondary: PICKUP,
@@ -28,21 +29,21 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
   bands: [
     {
       figma: "7119:6545",
-      heading: "On-Site & Off-Site Shredding Services in New Berlin",
+      heading: "Off-Site Shredding Services in New Berlin",
       grey: false,
       blocks: [
         {
           kind: "text",
           body: [
-            "With off-site shredding, a team collects your documents in secure vehicles and transports them to the New Berlin shredding facility, where they are destroyed under documented security. With on-site shredding, a shredding truck arrives at your location and destroys the documents there without transporting them anywhere first.",
-            "The right choice depends on how much paper you have and how you want it handled. Many businesses across the Milwaukee metro use off-site service for regular volume and on-site service for high-sensitivity purges.",
+            "With off-site shredding, a team collects your documents in secure vehicles and transports them to the New Berlin shredding facility, where they are destroyed under documented security. The shredded material is then recycled, and you receive a certificate of destruction for your records.",
+            "Many businesses across the Milwaukee metro use off-site service for regular volume as well as one-time purges.",
           ],
         },
         {
           kind: "card",
           title: "New Berlin Is a Local Recycling Facility",
           body: [
-            "Recycle Technologies handles on-site and off-site shredding at its New Berlin, Wisconsin facility, just off I-43 near College Avenue. Whether the truck comes to you or your documents come to us, everything stays with a local Wisconsin team.",
+            "Recycle Technologies handles off-site shredding at its New Berlin, Wisconsin facility, just off I-43 near College Avenue. From collection to destruction, everything stays with a local Wisconsin team.",
           ],
         },
         { kind: "h3", text: "New Berlin Location and Service Information" },
@@ -65,7 +66,7 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
               {
                 title: "Commercial Pickup",
                 body: [
-                  "Off-site collection and on-site shredding visits for businesses cover roughly a 100-mile radius around the New Berlin facility, scheduled as recurring service or one-time jobs. Scheduled service is exclusive to commercial customers.",
+                  "Off-site collection for businesses covers roughly a 100-mile radius around the New Berlin facility, scheduled as recurring service or one-time jobs. Scheduled service is exclusive to commercial customers.",
                 ],
               },
             ],
@@ -134,20 +135,20 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     },
     {
       figma: "7119:6608",
-      heading: "On-Site & Off-Site Shredding for New Berlin Businesses",
+      heading: "Off-Site Shredding for New Berlin Businesses",
       grey: true,
       blocks: [
         {
           kind: "text",
           body: [
-            "Offices, healthcare providers, financial firms, law offices, schools, and government agencies within roughly 100 miles of New Berlin use this service for both routine shredding and major cleanouts. Off-site collection in secure vehicles keeps costs down on large volumes, while on-site service gives compliance-sensitive organizations witnessed destruction. Both end with a certificate of destruction for your records.",
+            "Offices, healthcare providers, financial firms, law offices, schools, and government agencies within roughly 100 miles of New Berlin use this service for both routine shredding and major cleanouts. Off-site collection in secure vehicles keeps costs down on large volumes, and every job ends with a certificate of destruction for your records.",
           ],
         },
       ],
     },
     {
       figma: "7119:6613",
-      heading: "On-Site & Off-Site Shredding for New Berlin Residents",
+      heading: "Off-Site Shredding for New Berlin Residents",
       grey: false,
       blocks: [
         {
@@ -156,29 +157,29 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
             "This service is built for businesses handling confidential paperwork. Individuals with personal documents to destroy can call the New Berlin facility about a drop-off or the Mail-In Program.",
           ],
         },
-        { kind: "h3", text: "How On-Site & Off-Site Shredding Work" },
+        { kind: "h3", text: "How Off-Site Shredding Works" },
         {
           kind: "cards",
           rows: [
             [
               {
                 title: "Get a Quote",
-                body: ["Contact Recycle Technologies to describe your paper volume and which option fits."],
+                body: ["Contact Recycle Technologies to describe your paper volume and whether you need recurring service or a one-time job."],
               },
               {
                 title: "Schedule Your Service",
-                body: ["Choose off-site or on-site shredding and set a collection or service date."],
+                body: ["Set a collection date for recurring service or a one-time job."],
               },
               {
-                title: "Collection or On-Location Shredding",
+                title: "Secure Collection",
                 body: [
-                  "For off-site service, a team collects your documents in secure vehicles. For on-site service, a shredding truck arrives at your location and destroys documents there directly.",
+                  "A team collects your documents from your door in secure vehicles with controlled handling.",
                 ],
               },
             ],
             [
               {
-                title: "Transport and Destruction (Off-Site Only)",
+                title: "Transport and Destruction",
                 body: [
                   "Collected documents are transported to the New Berlin shredding facility for destruction under documented security.",
                 ],
@@ -207,9 +208,9 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
             [
               {
                 icon: "shield",
-                title: "Two Options, One Standard",
+                title: "One Documented Standard",
                 body: [
-                  "Whether documents are destroyed at your location or ours, the same documented security and the same certificate back the job.",
+                  "Every job gets the same documented security and the same certificate of destruction.",
                 ],
               },
               {
@@ -223,15 +224,15 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
                 icon: "lock",
                 title: "Secure Transport",
                 body: [
-                  "Off-site documents travel in secure vehicles with controlled handling from your door to destruction.",
+                  "Documents travel in secure vehicles with controlled handling from your door to destruction.",
                 ],
               },
             ],
             [
               {
                 icon: "factory",
-                title: "Witnessed Destruction Available",
-                body: ["On-site service lets your team watch documents get destroyed on your own premises."],
+                title: "Local Wisconsin Facility",
+                body: ["Documents are destroyed at the New Berlin facility, just off I-43 near College Avenue, by a local Wisconsin team."],
               },
               {
                 icon: "clock",
@@ -253,7 +254,7 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
         {
           kind: "text",
           body: [
-            "The New Berlin facility is the Milwaukee metro's local shredding point. Businesses from downtown Milwaukee to Waukesha, Brookfield, and the surrounding suburbs schedule off-site collection or on-site truck visits instead of managing sensitive paper disposal themselves. National providers serve the area too, but Recycle Technologies pairs both shredding options with its own licensed Wisconsin facility and audited certifications.",
+            "The New Berlin facility is the Milwaukee metro's local shredding point. Businesses from downtown Milwaukee to Waukesha, Brookfield, and the surrounding suburbs schedule off-site collection instead of managing sensitive paper disposal themselves. National providers serve the area too, but Recycle Technologies pairs off-site shredding with its own licensed Wisconsin facility and audited certifications.",
           ],
         },
       ],
@@ -264,28 +265,28 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     heading: "Frequently Asked Questions",
     items: [
       {
-        q: "What is the difference between on-site and off-site shredding?",
-        a: "With off-site shredding, your documents are collected in secure vehicles and destroyed at our New Berlin facility. With on-site shredding, a shredding truck comes to your location and destroys the documents there. Off-site typically costs less; on-site lets you witness destruction.",
+        q: "How does off-site shredding work?",
+        a: "A team collects your documents in secure vehicles and transports them to the New Berlin shredding facility, where they are destroyed under documented security. The shredded material is recycled, and you receive a certificate of destruction for your records.",
       },
       {
         q: "Is off-site shredding secure if my documents leave the office?",
         a: "Yes. Off-site documents travel in secure vehicles with controlled handling from your door to destruction at the New Berlin facility, where they are destroyed under documented security. You receive a certificate of destruction once shredding is complete.",
       },
       {
-        q: "How much can off-site shredding save compared to on-site?",
-        a: "Off-site shredding can save businesses up to 40% compared to on-site service and is typically the more cost-effective option for large volumes. Call (262) 798-3040 to describe your paper volume and get a quote.",
+        q: "Is off-site shredding cost-effective for large volumes?",
+        a: "Yes. Off-site shredding is a cost-effective option for large volumes, whether you need recurring service or a one-time cleanout. Call (262) 798-3040 to describe your paper volume and get a quote.",
       },
       {
         q: "Can my business schedule a pickup?",
-        a: "Yes. Off-site collection and on-site shredding visits cover roughly a 100-mile radius around the New Berlin facility, scheduled as recurring service or one-time jobs. Scheduled service is exclusive to commercial customers.",
+        a: "Yes. Off-site collection covers roughly a 100-mile radius around the New Berlin facility, scheduled as recurring service or one-time jobs. Scheduled service is exclusive to commercial customers.",
       },
       {
         q: "What if we are not near New Berlin?",
-        a: "Scheduled off-site collection and on-site visits cover roughly a 100-mile radius around New Berlin. Outside that area, the nationwide Mail-In Program is available; call (262) 798-3040 to confirm the best option for your documents.",
+        a: "Scheduled off-site collection covers roughly a 100-mile radius around New Berlin. Outside that area, the nationwide Mail-In Program is available; call (262) 798-3040 to confirm the best option for your documents.",
       },
       {
         q: "Do I get proof that my documents were destroyed?",
-        a: "Yes. Once shredding is complete, you receive a certificate of destruction for your records, whether the job was done on-site or off-site.",
+        a: "Yes. Once shredding is complete, you receive a certificate of destruction for your records.",
       },
     ],
   },
@@ -327,10 +328,10 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
     },
   ],
   cta: {
-    heading: "Schedule On-Site & Off-Site Shredding in New Berlin, Wisconsin",
+    heading: "Schedule Off-Site Shredding in New Berlin, Wisconsin",
     body: [
-      "Choose off-site collection or an on-site shredding truck visit anywhere in the Milwaukee metro.",
-      "Get a Quote | Schedule On-Site & Off-Site Shredding in New Berlin, Wisconsin | Call (262) 798-3040",
+      "Schedule off-site collection anywhere in the Milwaukee metro.",
+      "Get a Quote | Schedule Off-Site Shredding in New Berlin, Wisconsin | Call (262) 798-3040",
     ],
     primary: QUOTE,
     secondary: tel("Call: (262) 798-3040", "+12627983040"),
@@ -339,5 +340,6 @@ export const WISCONSIN_ON_SITE_OFF_SITE_SHREDDING: LocalPage = {
   todo: [
     "FAQ answers written for the build from the page's own copy (the frames draw these closed): 5 of 6. Confirm or replace.",
     "SEO title and description written for the build (the frames give none).",
+    "Moved from the on-site/off-site URL on 9 Oct 2026 (SEO sheet \"Technical Fixes 09/10/26\"); on-site wording removed.",
   ],
 }

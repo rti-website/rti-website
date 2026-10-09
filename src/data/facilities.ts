@@ -360,7 +360,7 @@ export const DETAIL_COPY = {
     primary: 'Get Directions',
     secondary: 'Call This Location',
   },
-  materials: { eyebrow: 'Materials Accepted', heading: 'What This Location Accepts' },
+  materials: { eyebrow: 'Materials Accepted', heading: 'What This Location Accepts', services: 'All services at this location' },
   steps: { eyebrow: 'What to Expect', heading: 'Dropping Off at This Location' },
   faq: { eyebrow: 'Location FAQ', heading: 'Questions About This Location' },
   /** Section - Counties We Serve (7079:6388, 29 Sep 2026). {state} is the facility's state. */

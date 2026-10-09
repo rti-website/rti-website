@@ -44,6 +44,8 @@ export const HERO = {
      options across Minnesota and Wisconsin, find the option that works for
      you." Put that back here if he prefers it. */
   lead: 'Recycle Technologies has been providing services to the community since 1993.',
+  /** 9 Oct 2026, SEO sheet "Technical Fixes" (Other Fixes, Kit link): under the hero, and again in the closing band. */
+  kitTip: { lead: 'Not near us?', link: 'Order a mail-in recycling kit', href: href('/mail-in-recycling/') },
 }
 
 /** Finder — 6377:967. Heading, search bar and the map. */
@@ -133,6 +135,8 @@ export const CTA = {
   narrow: true,
   primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
   secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+  /** 9 Oct 2026, SEO sheet "Technical Fixes": the kit link under the buttons. */
+  tip: { lead: 'Not near us?', link: 'Order a mail-in recycling kit', href: href('/mail-in-recycling/') },
 }
 
 /** Gaps between Figma 6374:4194 and the Locations doc, for Aqeel and Musaveer. */

@@ -191,9 +191,14 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
   const sent = `Sent ${submittedAt(l.submittedAt ?? new Date())}${d.consent ? ' · Consent given' : ''}`
   /* The subject names the form (29 Sep 2026), after the old WordPress
      "Request a Pickup/Quote Form submitted on Recycle Technologies". */
+  /* The subject ends with the COMPANY name, not the person's (Christine
+     Hanson, 9 Oct 2026, on the first Chicago lead: "make it so the Subject
+     line lists Company Name not the persons name"). A residential enquiry
+     has no company, so it keeps the person's name, then the email. */
+  const who = l.company?.trim() || name || l.email || 'no name given'
   const subject = form && !intro
-    ? `${form} Form submitted on Recycle Technologies: ${name || l.email || 'no name given'}`
-    : `${base.subject}: ${name || l.email || 'no name given'}`
+    ? `${form} Form submitted on Recycle Technologies: ${who}`
+    : `${base.subject}: ${who}`
   const link = l.id ? `${SITE.origin}/admin/?lead=${l.id}` : null
 
   const text = [head.title, '', ...sectionsText(sections), sent].join('\n')

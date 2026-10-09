@@ -335,6 +335,11 @@ export const CHICAGO_ELECTRONIC_RECYCLING: LocalPage = {
             { label: "Light Bulb Recycling", href: href('/light-bulb-recycling-chicago/') },
             { label: "Ballast Recycling", href: href('/ballast-recycling-chicago/') },
             { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-chicago/') },
+            // 9 Oct 2026, SEO sheet "Technical Fixes" (Orphan Pages): these four had no internal link.
+            { label: "Airbag Recycling", href: href('/airbag-recycling-chicago/') },
+            { label: "Paper Shredding", href: href('/paper-shredding-chicago/') },
+            { label: "Phone Shredding", href: href('/phone-shredding-chicago/') },
+            { label: "Off-Site Shredding", href: href('/off-site-shredding-chicago/') },
             { label: "All Locations", href: href('/all-locations/') },
           ],
         },

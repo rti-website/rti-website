@@ -1,5 +1,5 @@
 import { Canvas } from '@/components/design/Frame'
-import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_HOW_GROWTH, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
+import { FOOTER_H, HOME_BELOW_CERT_SHIFT, HOME_CASES_GROWTH, HOME_HOW_GROWTH, HOME_MAILIN_H, HOME_SERVICES_DELTA_VAR, HOME_SERVICES_GROWTH, HOME_TESTIMONIALS_GROWTH } from '@/lib/layout'
 import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
@@ -10,6 +10,7 @@ import { Industries } from '@/components/sections/Industries'
 import { HowItWorks } from '@/components/sections/HowItWorks'
 import { WhyChooseUs } from '@/components/sections/WhyChooseUs'
 import { Locations } from '@/components/sections/Locations'
+import { MailInBand } from '@/components/sections/MailInBand'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
@@ -27,6 +28,7 @@ import { FaqCtaFooter } from '@/components/sections/FaqCtaFooter'
  *   How It Works    6040:18591     y3726   h938   — the video card (2 Oct 2026); was 559; below moves +379
  *   Why Choose Us   6065:21652     y4435   h532   (x320, w1280)
  *   Locations       6024:14077     y5117   h1472
+ *   Mail-in band    —              y6589   h200   — 9 Oct 2026 (SEO sheet); below moves +200
  *   Testimonials    6024:14149     y6739   h698   — four cards (25 Sep 2026); was 594; below moves +104 more
  *   Case Studies    6557:12903     y7483   h934   — was 6026:14726, 885; below moves +49 more
  *   FAQ/CTA/Footer  6044:20133     y8518   h1873
@@ -51,7 +53,7 @@ export default function HomePage() {
     /* 10391 is the frame's height with its 681px footer; `681 - FOOTER_H`
        trades that for the built footer. It was a literal 60 (681 - 621) until
        the footer grew to 755 on 23 Sep 2026. */
-    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_HOW_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH - HOME_BELOW_CERT_SHIFT - (681 - FOOTER_H)} grow={HOME_SERVICES_DELTA_VAR}>
+    <Canvas height={10391 + HOME_SERVICES_GROWTH + HOME_HOW_GROWTH + HOME_TESTIMONIALS_GROWTH + HOME_CASES_GROWTH + HOME_MAILIN_H - HOME_BELOW_CERT_SHIFT - (681 - FOOTER_H)} grow={HOME_SERVICES_DELTA_VAR}>
       <Header />
       <main>
         <Hero />
@@ -76,6 +78,7 @@ export default function HomePage() {
           <HowItWorks />
           <WhyChooseUs />
           <Locations />
+          <MailInBand />
           <Testimonials />
           <CaseStudies />
           <FaqCtaFooter />

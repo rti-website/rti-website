@@ -5,6 +5,7 @@ import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { LOCAL_FACILITY_PAGES, LOCAL_SERVICE_LABEL } from '@/data/local-pages'
 
 /**
  * "What This Location Accepts" — Figma 6744:8796 (Minnesota, six tiles) /
@@ -36,6 +37,10 @@ export async function LocationMaterials({ top, height, f, links = {} }: {
   links?: Record<string, string>
 }) {
   const { DETAIL_COPY } = await content('facilities')
+  const site = f.slug.replace(/-recycling$/, '') as keyof typeof LOCAL_FACILITY_PAGES
+  const services = Object.entries(LOCAL_FACILITY_PAGES[site] ?? {})
+    .sort(([a], [b]) => Object.keys(LOCAL_SERVICE_LABEL).indexOf(a) - Object.keys(LOCAL_SERVICE_LABEL).indexOf(b))
+    .map(([svc, p]) => ({ label: LOCAL_SERVICE_LABEL[svc] ?? svc, href: p.url }))
   return (
     <Section top={top} height={height} label="6744:8796" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">
@@ -68,6 +73,21 @@ export async function LocationMaterials({ top, height, f, links = {} }: {
           )
         })}
       </ul>
+
+      {/* 9 Oct 2026 (SEO sheet, Orphan Pages): a link to every service page
+          of this facility, so none of them is an orphan. */}
+      {services.length > 0 && (
+        <nav aria-label={DETAIL_COPY.materials.services} className="flex w-full flex-col items-center gap-[12px] lg:w-[1100px]">
+          <p className="font-sans text-[15px] font-semibold text-heading lg:text-[16px]">{DETAIL_COPY.materials.services}</p>
+          <ul className="flex flex-wrap justify-center gap-[8px] lg:gap-[10px]">
+            {services.map((s) => (
+              <li key={s.href}>
+                <Link href={s.href} className="inline-flex h-[34px] items-center rounded-full border border-[#cfe5e7] bg-white px-[14px] font-sans text-[13px] font-medium text-heading transition-colors hover:border-brand hover:text-brand lg:h-[36px] lg:px-[16px] lg:text-[13.5px]">{s.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </Section>
   )
 }

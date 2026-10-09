@@ -162,6 +162,16 @@ export const HOME_WHY_CHOOSE = {
    LOCATION_CARDS below. Copy: Asim, 23 Sep 2026 — Chicago is "expanded
    operations", not a licensed facility. The banner button opens /resources/
    (Asim, 23 Sep 2026). */
+/**
+ * The mail-in band under Our Strategic National Network (9 Oct 2026, SEO
+ * sheet "Technical Fixes 09/10/26", Other Fixes: "Add band after the
+ * locations section"). Drawn by src/components/sections/MailInBand.tsx.
+ */
+export const HOME_MAILIN_BAND = {
+  text: 'Outside our service area? Ship it to us with a mail-in recycling kit.',
+  button: { label: 'See mail-in kits', href: href('/mail-in-recycling/') },
+}
+
 export const HOME_LOCATIONS = {
   eyebrow: 'Where We Serve',
   title: 'Our Strategic National Network',

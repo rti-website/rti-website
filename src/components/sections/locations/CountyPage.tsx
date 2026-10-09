@@ -62,7 +62,7 @@ export async function CountyPage({ page }: { page: Page }) {
           </section>
         )}
         <About page={page} />
-        <Services heading={page.servicesHeading} shared={shared} />
+        {!page.noServices && <Services heading={page.servicesHeading} shared={shared} />}
         <Cta shared={shared} />
         {(page.sections ?? legacySections(page)).map((s, i) => <Section key={i} section={s} wrap={!!page.sections} shared={shared} />)}
         {page.company && <Company company={page.company} shared={shared} />}

@@ -348,8 +348,9 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     title: 'Off-Site Shredding Services | Secure Document Destruction',
     description: "On-site and off-site shredding for confidential paperwork, shredded at your location or collected and securely destroyed at our certified facilities. Call (800) 969-5166",
   },
+  // 9 Oct 2026, SEO sheet "Technical Fixes" (Title Fixes): "Too short".
   "/faqs/": {
-    title: "FAQs - Recycle Technologies",
+    title: "Recycling FAQs: Drop-Off, Pickup & Pricing",
     description: "Explore FAQs about recycling technologies. Discover why recycling is crucial, what items are considered electronics, and how recycling can make a difference.",
   },
 }

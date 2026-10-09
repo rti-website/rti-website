@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 /**
  * The mail-in kit tip under a service page's hero buttons and in its closing
  * band — "Not near any of our locations, or have a few batteries only? Order a
@@ -26,7 +28,10 @@ export function KitTip({ tip, className = '' }: { tip: KitTipCopy; className?: s
       </svg>
       <span>
         {tip.lead}{' '}
-        <a href={tip.href} target="_blank" rel="noopener noreferrer" className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</a>
+        {/* A link on this site (/mail-in-recycling/) opens in the same tab. */}
+        {tip.href.startsWith('/')
+          ? <Link href={tip.href} className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</Link>
+          : <a href={tip.href} target="_blank" rel="noopener noreferrer" className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</a>}
         {tip.after ? <>{' '}{tip.after}</> : null}
       </span>
     </p>

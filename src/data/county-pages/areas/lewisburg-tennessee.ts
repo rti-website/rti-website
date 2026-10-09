@@ -3,63 +3,101 @@ import type { CountyPage } from '../types'
 
 /**
  * Lewisburg, Tennessee, /lewisburg-tennessee/
- * Built 8 Oct 2026 on the county template, Figma BVtf2AOuUOcYbiMIlcKmbC board
- * 7052:28731, phone 7052:34333, laid out like Johnson City (Buffalo), TN: the
- * old page had no hero heading, so the H1 and lead follow that page (H1
- * "Recycle Technologies Lewisburg, TN", lead = the meta description). The old
- * WordPress page's copy word for word (15 Sep 2026 backup), except: "Our
- * Environmental Responsibility" was on it twice in two wordings; the first
- * is kept. The contact card is its Business Pick-Up Service contact.
+ * Built 8 Oct 2026 on the county template (Figma BVtf2AOuUOcYbiMIlcKmbC board
+ * 7052:28731, phone 7052:34333), laid out like Johnson City (Buffalo), TN.
+ *
+ * 9 Oct 2026: rewritten for the SEO team's "Lewisburg Page Issues 2026-10-10"
+ * sheet, issue by issue:
+ *   1  drop-off: the address, "call for hours" and the appointment note in the
+ *      quick-info bar and the Ways to Recycle list (no hours on record yet;
+ *      the drop-off page says the same);
+ *   2  no "local ... in Minnesota since 1993" card, and the site footer's
+ *      "Midwest-based" line now adds "with locations across the US";
+ *   3  Lewisburg specifics: address, pickup contact, drop-off, accepted
+ *      items, how to book;
+ *   4  "Lewisburg, Tennessee" kept to the H1, the lead area and the first
+ *      paragraph; natural wording after that;
+ *   5  a plain list of accepted items, naming the bulb types;
+ *   6  a new title (service and location) and a one sentence description;
+ *   7  each phone number says what it is for;
+ *   8  one Business Pick-Up block (the shared Service Options cards are left
+ *      out, `noServices`) and the mail-in program in one place;
+ *   9  sections in order: ways to recycle and what we accept, then the
+ *      services, then why choose us;
+ *  10  the external "Buy Recycling Kits" link (EZ on the Earth, in the shared
+ *      cards) is gone with them; the mail-in link goes to /mail-in-recycling/.
  */
+const MAPS = "https://www.google.com/maps/dir/?api=1&destination=1580+Old+Columbia+Rd%2C+Lewisburg%2C+TN+37091"
+
 export const LEWISBURG_TENNESSEE: CountyPage = {
   url: "/lewisburg-tennessee/",
   state: "Tennessee",
   county: "Lewisburg",
   figma: { board: "7052:28731", phone: "7052:34333" },
   seo: {
-    title: 'Recycling Services in Lewisburg | Call (800) 969-5166',
-    description: "Recycling services Lewisburg directing intake of electronic equipment, lamp remnants, diverse battery groups, paper stock, and approved discards. Call (800) 969-5166",
+    title: 'Recycling in Lewisburg, TN: Bulbs, Batteries & E-Waste',
+    description: "Recycle fluorescent and LED bulbs, batteries and electronics in Lewisburg, Tennessee, with business pickup, drop-off by appointment or a mail-in kit.",
   },
   hero: {
     h1: 'Recycle Technologies Lewisburg, TN',
     crumb: "Lewisburg, Tennessee",
-    lead: "Recycling services Lewisburg directing intake of electronic equipment, lamp remnants, diverse battery groups, paper stock, and approved discards. Call (800) 969-5166",
+    lead: "Bulb, battery and electronics recycling in Lewisburg, Tennessee: business pickup, drop-off by appointment, or a mail-in kit.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },
   },
+  quickInfo: [
+    { glyph: 'pin',   label: "Address",                  value: "1580 Old Columbia Rd, Lewisburg, TN 37091", href: MAPS },
+    { glyph: 'phone', label: "Pickups and drop-off",     value: "931-334-1265", href: "tel:+19313341265" },
+    { glyph: 'clock', label: "Drop-off hours",           value: "Call for hours; by appointment" },
+    { glyph: 'phone', label: "General questions",        value: "(800) 969-5166", href: "tel:+18009695166" },
+  ],
   about: {
-    heading: "Electronics Recycling Services in Lewisburg, Tennessee",
+    heading: "Recycling in Lewisburg, Tennessee",
     blocks: [
-      { p: "Recycle Technologies is proud to offer premier electronics recycling services in Lewisburg, Tennessee. We manage a wide array of electronic items, from old computers and laptops to televisions, mobile phones, and large office equipment, treating each piece with meticulous attention." },
-      { p: "Our cutting-edge process involves breaking down these devices to recover valuable components like rare earth metals, thus greatly reducing the environmental footprint of electronic waste. Acknowledging the serious risks posed by improper e-waste disposal, we are committed to encouraging responsible practices throughout Tennessee. Our services cater to both businesses and individuals looking to responsibly clear out their spaces while complying with environmental guidelines and fostering sustainable habits. Join us in making a significant positive impact on our community." },
-      { h: "Battery Recycling Services in Lewisburg, Tennessee" },
-      { p: "In Lewisburg, Tennessee, Recycle Technologies provides essential battery recycling services that ensure the safe disposal of all battery types. From common household batteries to substantial industrial ones, our thorough program guarantees that each component is carefully processed and recycled." },
-      { p: "Our expert team works diligently to prevent hazardous substances from polluting the environment while recovering valuable materials for reuse. By opting for Recycle Technologies, you contribute to reducing landfill waste and promoting sustainable resource management. Help us make a lasting environmental difference and lead the way toward a greener future for Tennessee and beyond." },
+      { p: "Recycle Technologies recycles light bulbs, batteries and electronics for businesses and residents in Lewisburg, Tennessee and the surrounding area, from our site at 1580 Old Columbia Road. Bring materials in by appointment, book a business pickup, or mail them to us in a prepaid kit." },
+      { h: "Three ways to recycle" },
+      { list: [
+        { title: "Business pickup", text: "We collect from offices, stores, warehouses and other facilities. Call Keith Holt, Transfer Manager, on 931-334-1265, or [request a pickup online](pickup)." },
+        { title: "Drop-off", text: "Bring your materials to 1580 Old Columbia Road. Call 931-334-1265 first to confirm the hours and book a drop-off time." },
+        { title: "Mail-in kit", text: "Order a prepaid kit, fill it and drop it at the nearest FedEx. [See the mail-in program](mailin)." },
+      ] },
+      { h: "What we accept" },
+      { list: [
+        { title: "Light bulbs and lamps", text: "Fluorescent tubes, CFLs, LED, HID, U-shaped and circular lamps, halogen and incandescent bulbs, and broken fluorescent lamps." },
+        { title: "Ballasts", text: "PCB and non-PCB ballasts." },
+        { title: "Batteries", text: "Alkaline, lithium ion, lithium metal, nickel cadmium, nickel metal hydride and lead acid batteries." },
+        { title: "Electronics", text: "Computers, laptops, monitors, TVs, phones, printers, servers and other office equipment." },
+      ] },
+      { p: "Not sure about an item? Call 931-334-1265 before you bring it in, or [get a quote](quote)." },
     ],
   },
   sections: [
+    { kind: 'text', heading: "Our Recycling Services", blocks: [
+      { h: "Electronics Recycling" },
+      { p: "We take old computers, laptops, televisions, phones and large office equipment, and break them down to recover valuable materials such as metals and circuit boards. Businesses and households can clear out old equipment while staying within environmental rules, and nothing goes to a landfill." },
+      { h: "Battery Recycling" },
+      { p: "From household batteries to large industrial units, every battery is sorted and processed so that hazardous materials stay out of the environment and the metals inside can be reused. Tape the terminals of lithium and rechargeable batteries before transport." },
+      { h: "Light Bulb Recycling" },
+      { p: "Fluorescent bulbs contain mercury and cannot go in the trash. We recycle fluorescent, CFL, LED and other lamps safely, keeping harmful materials out of landfills, and we take anything from a single box of tubes to a full relamping project." },
+    ] },
+    { kind: 'text', heading: "Why Choose Recycle Technologies", blocks: [] },
     { kind: 'features', cards: [
-      { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
+      { title: "Recycling Since 1993", text: "More than 30 years of recycling experience, with locations across the US, including this site in Lewisburg serving customers in Tennessee." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
       { title: "Custom Recycling Services", text: "Get one item or hundreds of them, we can recycle everything based on your personalized requirements." },
       { title: "Quick Booking and Pickup", text: "You can get a free quote by filling out the form, and our team will be at your doorstep in no time for a pickup." },
     ] },
-    { kind: 'text', heading: "Bulb Recycling Services in Lewisburg, Tennessee", blocks: [
-      { p: "If you have a drawer full of dead light bulbs in Lewisburg, Tennessee, Recycle Technologies has a hassle-free solution for you. Disposing of these bulbs properly can be tricky, but we’re here to make it easy." },
-      { p: "Our service offers safe and eco-friendly recycling for fluorescent bulbs across Tennessee. Whether you’re in Lewisburg or elsewhere in the state, we ensure that old bulbs are disposed of in a responsible and environmentally friendly manner. Choosing our Bulb Recycling service means convenience for you and a better environment, as we keep harmful materials out of landfills. Together, we can create a brighter and greener future for everyone!" },
-      { h2: "Our Environmental Responsibility" },
-      { p: "What distinguishes Recycle Technologies? Alongside our subsidiaries, Lighting Resources and EZ on the Earth, we are at the forefront of advanced recycling techniques. Using the latest technology, we maximize the recovery of materials, significantly cutting down on landfill waste and environmental damage. Our firm commitment to sustainability converts e-waste and other materials into reusable resources, supporting a circular economy." },
-      { p: "Our innovative methods not only reclaim valuable materials but also minimize ecological harm. As dedicated stewards of the environment, we continuously push forward in waste management, offering comprehensive services to both businesses and consumers. Partnering with us means you’re supporting a cleaner, healthier, and more sustainable future. For more details, visit our website. Let’s make a difference together!" },
-      { h: "Mail in Program" },
-      { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx. [Buy Recycling Kits](mailin)" },
+    { kind: 'text', heading: "Our Environmental Responsibility", blocks: [
+      { p: "Alongside our subsidiaries, Lighting Resources and EZ on the Earth, we use the latest recycling technology to recover as much material as possible, cutting landfill waste and environmental damage. E-waste and other materials become reusable resources, supporting a circular economy." },
     ] },
   ],
+  noServices: true,
   company: {
     name: "Business Pick-Up Service",
-    text: "For business pickup services contact the person below.",
+    text: "To book a business pickup or a drop-off time in Lewisburg, contact our Transfer Manager.",
     lines: [
-      { kind: 'person', text: "Keith Holt" },
-      { kind: 'phone', text: "931-334-1265", tel: "+19313341265", icon: 'hours' },
+      { kind: 'person', text: "Keith Holt, Transfer Manager" },
+      { kind: 'phone', text: "Pickups and drop-off: 931-334-1265", tel: "+19313341265", icon: 'hours' },
       { kind: 'email', text: "dispatch@recycletechnologies.com" },
     ],
   },

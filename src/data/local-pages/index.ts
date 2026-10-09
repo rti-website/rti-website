@@ -5,7 +5,7 @@ import { WISCONSIN_BALLAST_RECYCLING } from './wisconsin-ballast-recycling'
 import { WISCONSIN_BATTERY_RECYCLING } from './wisconsin-battery-recycling'
 import { WISCONSIN_ELECTRONIC_RECYCLING } from './wisconsin-electronic-recycling'
 import { WISCONSIN_LIGHT_BULB_RECYCLING } from './wisconsin-light-bulb-recycling'
-import { WISCONSIN_ON_SITE_OFF_SITE_SHREDDING } from './wisconsin-on-site-off-site-shredding'
+import { WISCONSIN_OFF_SITE_SHREDDING } from './wisconsin-off-site-shredding'
 import { WISCONSIN_PAPER_SHREDDING } from './wisconsin-paper-shredding'
 import { WISCONSIN_PHONE_SHREDDING } from './wisconsin-phone-shredding'
 import { MINNESOTA_AIRBAG_RECYCLING } from './minnesota-airbag-recycling'
@@ -14,7 +14,7 @@ import { MINNESOTA_BATTERY_RECYCLING } from './minnesota-battery-recycling'
 import { MINNESOTA_ELECTRONIC_RECYCLING } from './minnesota-electronic-recycling'
 import { MINNESOTA_HARD_DRIVE_DESTRUCTION } from './minnesota-hard-drive-destruction'
 import { MINNESOTA_LIGHT_BULB_RECYCLING } from './minnesota-light-bulb-recycling'
-import { MINNESOTA_ON_SITE_OFF_SITE_SHREDDING } from './minnesota-on-site-off-site-shredding'
+import { MINNESOTA_OFF_SITE_SHREDDING } from './minnesota-off-site-shredding'
 import { MINNESOTA_PAPER_SHREDDING } from './minnesota-paper-shredding'
 import { MINNESOTA_PHONE_SHREDDING } from './minnesota-phone-shredding'
 import { CHICAGO_AIRBAG_RECYCLING } from './chicago-airbag-recycling'
@@ -22,7 +22,7 @@ import { CHICAGO_BALLAST_RECYCLING } from './chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from './chicago-battery-recycling'
 import { CHICAGO_HARD_DRIVE_DESTRUCTION } from './chicago-hard-drive-destruction'
 import { CHICAGO_LIGHT_BULB_RECYCLING } from './chicago-light-bulb-recycling'
-import { CHICAGO_ON_SITE_OFF_SITE_SHREDDING } from './chicago-on-site-off-site-shredding'
+import { CHICAGO_OFF_SITE_SHREDDING } from './chicago-off-site-shredding'
 import { CHICAGO_PAPER_SHREDDING } from './chicago-paper-shredding'
 import { CHICAGO_PHONE_SHREDDING } from './chicago-phone-shredding'
 import { CHICAGO_TV_RECYCLING } from './chicago-tv-recycling'
@@ -50,7 +50,7 @@ export const LOCAL_PAGES: LocalPage[] = [
   WISCONSIN_BATTERY_RECYCLING,
   WISCONSIN_ELECTRONIC_RECYCLING,
   WISCONSIN_LIGHT_BULB_RECYCLING,
-  WISCONSIN_ON_SITE_OFF_SITE_SHREDDING,
+  WISCONSIN_OFF_SITE_SHREDDING,
   WISCONSIN_PAPER_SHREDDING,
   WISCONSIN_PHONE_SHREDDING,
   MINNESOTA_AIRBAG_RECYCLING,
@@ -59,7 +59,7 @@ export const LOCAL_PAGES: LocalPage[] = [
   MINNESOTA_ELECTRONIC_RECYCLING,
   MINNESOTA_HARD_DRIVE_DESTRUCTION,
   MINNESOTA_LIGHT_BULB_RECYCLING,
-  MINNESOTA_ON_SITE_OFF_SITE_SHREDDING,
+  MINNESOTA_OFF_SITE_SHREDDING,
   MINNESOTA_PAPER_SHREDDING,
   MINNESOTA_PHONE_SHREDDING,
   CHICAGO_AIRBAG_RECYCLING,
@@ -67,7 +67,7 @@ export const LOCAL_PAGES: LocalPage[] = [
   CHICAGO_BATTERY_RECYCLING,
   CHICAGO_HARD_DRIVE_DESTRUCTION,
   CHICAGO_LIGHT_BULB_RECYCLING,
-  CHICAGO_ON_SITE_OFF_SITE_SHREDDING,
+  CHICAGO_OFF_SITE_SHREDDING,
   CHICAGO_PAPER_SHREDDING,
   CHICAGO_PHONE_SHREDDING,
   CHICAGO_TV_RECYCLING,
@@ -83,7 +83,7 @@ export const LOCAL_FACILITY_PAGES: Record<'minnesota' | 'wisconsin', Record<stri
     'electronic-recycling': MINNESOTA_ELECTRONIC_RECYCLING,
     'hard-drive-destruction': MINNESOTA_HARD_DRIVE_DESTRUCTION,
     'light-bulb-recycling': MINNESOTA_LIGHT_BULB_RECYCLING,
-    'on-site-off-site-shredding': MINNESOTA_ON_SITE_OFF_SITE_SHREDDING,
+    'off-site-shredding': MINNESOTA_OFF_SITE_SHREDDING,
     'paper-shredding': MINNESOTA_PAPER_SHREDDING,
     'phone-shredding': MINNESOTA_PHONE_SHREDDING,
   },
@@ -93,10 +93,28 @@ export const LOCAL_FACILITY_PAGES: Record<'minnesota' | 'wisconsin', Record<stri
     'battery-recycling': WISCONSIN_BATTERY_RECYCLING,
     'electronic-recycling': WISCONSIN_ELECTRONIC_RECYCLING,
     'light-bulb-recycling': WISCONSIN_LIGHT_BULB_RECYCLING,
-    'on-site-off-site-shredding': WISCONSIN_ON_SITE_OFF_SITE_SHREDDING,
+    'off-site-shredding': WISCONSIN_OFF_SITE_SHREDDING,
     'paper-shredding': WISCONSIN_PAPER_SHREDDING,
     'phone-shredding': WISCONSIN_PHONE_SHREDDING,
   },
+}
+
+/**
+ * Short names for the facility pages' "All services at this location" links
+ * (9 Oct 2026, SEO sheet "Technical Fixes", Orphan Pages: hard drive, paper,
+ * phone and off-site shredding had no link from /minnesota-recycling/ or
+ * /wisconsin-recycling/).
+ */
+export const LOCAL_SERVICE_LABEL: Record<string, string> = {
+  'electronic-recycling': 'Electronic Recycling',
+  'battery-recycling': 'Battery Recycling',
+  'light-bulb-recycling': 'Light Bulb Recycling',
+  'ballast-recycling': 'Ballast Recycling',
+  'airbag-recycling': 'Airbag Recycling',
+  'hard-drive-destruction': 'Hard Drive Destruction',
+  'paper-shredding': 'Paper Shredding',
+  'off-site-shredding': 'Off-Site Shredding',
+  'phone-shredding': 'Phone Shredding',
 }
 
 export function localFacilityPage(site: string, service: string): LocalPage | null {

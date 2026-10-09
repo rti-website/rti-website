@@ -23,8 +23,23 @@
  *     broken picture on the old site too. The <img> is dropped, along with a
  *     link that only wraps it (those link to the same missing file) and a
  *     <figure> left empty. The list is data/dead-legacy-images.json.
+ *
+ *  4. NO INTERNAL LINKS THAT REDIRECT (9 Oct 2026, SEO sheet "Technical
+ *     Fixes 09/10/26", Redirects tab: 187 links in posts pointed at URLs that
+ *     301). A link to this site whose path is a redirect in data/redirects.json
+ *     (or data/case-redirects.json) points straight at the destination; a
+ *     path without its trailing slash gets one first ("/i" -> "/i/"), as the
+ *     server would. Query and #hash are kept. Applies to every post, so a
+ *     redirect added later is followed too.
+ *
+ *  5. NO PAGE BUILDER CODE (same sheet, Other Fixes): Divi's [et_pb_...]
+ *     shortcodes left in /better-recycling/ and
+ *     /five-every-day-items-to-recycle/ were printed as text. They are
+ *     removed; an [et_pb_image src=... alt=...] becomes the <img> it stood for.
  */
 import DEAD from '../../data/dead-legacy-images.json'
+import REDIRECTS from '../../data/redirects.json'
+import CASE_REDIRECTS from '../../data/case-redirects.json'
 
 const OWN_HREF = /^(?:\/(?!\/)|#|https?:\/\/(?:[a-z0-9-]+\.)*recycletechnologies\.com(?:[/?#]|$))/i
 
@@ -40,13 +55,72 @@ function deadImage(img: string): boolean {
   return DEAD_IMAGES.has(p)
 }
 
+/* ---------------------------------------------------------- 4. redirects -- */
+
+const REDIRECT_TO = new Map<string, string>()
+for (const r of REDIRECTS as { source: string; destination: string }[]) REDIRECT_TO.set(r.source.toLowerCase(), r.destination)
+const CASE_TO = new Map<string, string>((CASE_REDIRECTS as { source: string; destination: string }[]).map((r) => [r.source, r.destination]))
+
+const OWN_ABS = /^https?:\/\/(?:[a-z0-9-]+\.)*recycletechnologies\.com(?=[/?#]|$)/i
+
+/** Where a path ends up after the site's redirects, or null when it does not redirect. */
+function finalPath(path: string): string | null {
+  let p = path
+  // The server adds the trailing slash to a page path ("/i" -> "/i/"); a file keeps its extension.
+  const slashed = (x: string) => (x.endsWith('/') || /\.[a-z0-9]{2,5}$/i.test(x) ? x : `${x}/`)
+  let moved = false
+  for (let hop = 0; hop < 5; hop++) {
+    const next = CASE_TO.get(p) ?? REDIRECT_TO.get(p.toLowerCase()) ?? REDIRECT_TO.get(slashed(p).toLowerCase())
+    if (next && next !== p) { p = next; moved = true; continue }
+    if (!moved && slashed(p) !== p) { p = slashed(p); moved = true }
+    break
+  }
+  return moved ? p : null
+}
+
+function followRedirects(href: string): string {
+  const abs = OWN_ABS.exec(href)
+  const rest = abs ? href.slice(abs[0].length) || '/' : href
+  if (!rest.startsWith('/') || rest.startsWith('//')) return href
+  const m = /^([^?#]*)(.*)$/.exec(rest)!
+  const to = finalPath(m[1]!)
+  return to ? `${to}${m[2]}` : href
+}
+
+/* ------------------------------------------------------------- 5. et_pb -- */
+
+const SHORTCODE = /\[\/?et_pb_[a-z_]*(?:[^\]"]|"[^"]*")*\]/gi
+const attr = (code: string, name: string) => new RegExp(`\\b${name}=\\\\?"(.*?)\\\\?"`, 'i').exec(code)?.[1] ?? ''
+
+function stripPageBuilder(html: string): string {
+  if (!/\[\/?et_pb_/i.test(html)) return html
+  // Inside a <script> (the posts' JSON-LD) the shortcodes are just removed:
+  // nothing there is shown, and markup would break the JSON.
+  const scripts: string[] = []
+  const out = html.replace(/<script\b[\s\S]*?<\/script>/gi, (sc) => {
+    scripts.push(sc.replace(/\[\/?et_pb_[a-z_]*(?:[^\]"\\]|\\"(?:[^"\\]|\\.)*?\\"|"[^"]*")*\]/gi, ''))
+    return `\u0000${scripts.length - 1}\u0000`
+  })
+    .replace(SHORTCODE, (code) => {
+      if (!/^\[et_pb_image\b/i.test(code)) return ''
+      const src = attr(code, 'src')
+      if (!src) return ''
+      const alt = attr(code, 'alt').replace(/"/g, '&quot;')
+      return `<img src="${src}" alt="${alt}" loading="lazy" />`
+    })
+    .replace(/<p>(?:\s|&nbsp;|\u00a0)*<\/p>/gi, '')
+  return out.replace(/\u0000(\d+)\u0000/g, (_m, i: string) => scripts[Number(i)]!)
+}
+
 export function tidyPostHtml(html: string): string {
   if (!html) return html
-  return html
+  return stripPageBuilder(html)
     .replace(/<a\b[^>]*>\s*(<img\b[^>]*>)\s*<\/a>/gi, (whole, img: string) => (deadImage(img) ? '' : whole))
     .replace(/<img\b[^>]*>/gi, (img) => (deadImage(img) ? '' : img))
     .replace(/<figure\b[^>]*>\s*<\/figure>/gi, '')
     .replace(/<(\/?)h1(?=[\s>])/gi, '<$1h2')
+    // 4. links that redirect point at their destination.
+    .replace(/(<a\b[^>]*?\shref\s*=\s*)(["'])(.*?)\2/gi, (_m, pre: string, q: string, h: string) => `${pre}${q}${followRedirects(h.trim())}${q}`)
     .replace(/<a\b[^>]*>/gi, (tag) => {
       if (!/\bnofollow\b/i.test(tag)) return tag
       const href = /\shref\s*=\s*(["'])(.*?)\1/i.exec(tag)?.[2]?.trim() ?? ''

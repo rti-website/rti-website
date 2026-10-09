@@ -52,12 +52,19 @@ export const BLAINE: CountyPage = {
       { icon: 'bulbs',       text: "Lamps: 10040 Davenport St NE, dock on the west side" },
     ],
   },
+  // 9 Oct 2026, SEO sheet "Technical Fixes": the Minnesota page's "Getting Here"
+  // section moved here (its heading, intro and rows, src/data/facilities.ts),
+  // and taken off /minnesota-recycling/. The accepted items line stays as the note.
   directions: {
-    heading: "Drop off here",
-    intro: "Electronics, batteries, light bulbs, ballasts, paper shredding, hard drives",
-    introShort: "Electronics, batteries, light bulbs, ballasts, paper shredding, hard drives",
-    note: "Near I-35W and 99th Ave NE. Free parking",
-    rows: [],
+    heading: "Getting Here",
+    intro: "Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area — a team member will meet you to log your materials.",
+    introShort: "Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area.",
+    note: "Accepted here: electronics, batteries, light bulbs, ballasts, paper shredding, hard drives",
+    rows: [
+      { label: "Nearest Highway",   value: "I-35W & 99th Ave NE" },
+      { label: "Parking",           value: "Free on-site parking" },
+      { label: "Drop-off Entrance", value: "Rear loading area" },
+    ],
     primary: "Get Directions",
     secondary: "Call This Location",
     name: "Blaine Recycling",
@@ -91,6 +98,13 @@ export const BLAINE: CountyPage = {
       "North Oaks Golf Club",
       "Crooked Lake",
       "Peltier Lake",
+    ] },
+    // 9 Oct 2026, SEO sheet "Technical Fixes": an FAQ, the same questions the
+    // New Berlin facility page (/wisconsin-recycling/) answers, for Blaine.
+    { kind: 'faq', heading: "Frequently Asked Questions", items: [
+      { q: "Do I need an appointment to drop off at the Blaine facility?", a: "Drop-off requirements vary by material and quantity. Call +1-763-559-5130 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged — large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call +1-763-559-5130 with a description of what you plan to bring and we will confirm any charges before you make the trip." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location and service required — request a quote to get started." },
     ] },
   ],
   company: {

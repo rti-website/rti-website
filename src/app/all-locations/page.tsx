@@ -3,6 +3,7 @@ import { FOOTER_H } from '@/lib/layout'
 import { pageMetadata } from '@/lib/page-meta'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
+import { KitTip } from '@/components/ui/KitTip'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { LocationsFinder } from '@/components/sections/locations/LocationsFinder'
@@ -98,6 +99,7 @@ export default async function LocationsPage() {
             frame's "Resources" is a slip. */}
         <ServiceHero
           label="6374:4196" crumbs={HERO.crumbs} h1={HERO.h1} lead={HERO.lead} size="large"
+          note={HERO.kitTip ? <KitTip tip={HERO.kitTip} className="max-lg:justify-center max-lg:text-center" /> : undefined}
           {...HERO_PHOTOS.locations}
         />
         <LocationsFinder   top={FINDER_TOP} height={H.finder} />
