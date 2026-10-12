@@ -96,6 +96,15 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
       "Minooka Park",
       "Harley-Davidson Museum",
     ] },
+    // F-04, 12 Oct 2026 ("RTI State & Country Pages Content Corrections"): the sheet's six FAQs, word for word.
+    { kind: 'faq', heading: "Frequently Asked Questions", items: [
+      { q: "Where is the New Berlin Recycling Center and when is it open?", a: "We are at 2815 S 171st St, New Berlin, WI 53151, near I-43 and College Ave. Hours are Monday to Friday, 7:30 AM to 4:00 PM, and we are closed on weekends. Enter through the main lot off South 171st Street, follow signs to the rear loading area, and use the free on-site parking. Call 262-798-3040 with questions." },
+      { q: "What can I drop off at the New Berlin center?", a: "We accept electronics such as computers, laptops, TVs, printers, phones and circuit boards, plus batteries, light bulbs and ballasts, appliances and paper shredding. See the full Items We Accept list on this page, and call us before bringing large or unusual items so we can confirm we can take them." },
+      { q: "Do I need to check in or make an appointment before dropping off?", a: "Yes, you need to make a prior appointment for a smooth process. If you have a large load or a business volume, call 262-798-3040 or schedule a pickup so we can plan for it." },
+      { q: "Is there a charge to recycle at the New Berlin facility?", a: "Pricing depends on what you bring and how much. Wisconsin's E-Cycle law has manufacturers fund recycling of covered household electronics but does not guarantee free recycling at every collection site, so fees can apply by item type. Call 262-798-3040 or request a free quote for exact pricing before you come." },
+      { q: "Can my business schedule a pickup from New Berlin?", a: "Yes. We offer pickup recycling for businesses across southeast Wisconsin and use load bars and straps to secure materials in transit. Schedule a pickup online or call 262-798-3040. After processing, we issue a Certificate of Recycling or Shredding for your records." },
+      { q: "Which certifications does the New Berlin facility hold, and what proof do I receive?", a: "The New Berlin Recycling Center is R2v3 certified, and Recycle Technologies also holds RIOS and NAID AAA certifications for data destruction. Each item is logged at intake, and you receive a Certificate of Recycling or Shredding when processing is complete. Our zero-landfill commitment means your materials are not sent to a landfill." },
+    ] },
   ],
   company: {
     name: "Recycle Technologies",

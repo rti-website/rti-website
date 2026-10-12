@@ -279,8 +279,9 @@ const RESTORED: Record<string, { title: string; description: string }> = {
     title: 'Electronics Recycling in Wisconsin | Recycle Technologies',
     description: "Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.",
   },
+  // M-02, 12 Oct 2026 ("RTI State & Country Pages Content Corrections").
   "/minnesota-recycling/": {
-    title: 'Electronics Recycling in Minnesota | Recycle Technologies',
+    title: 'MN Electronics Recycling & Shredding | Recycle Technologies',
     description: "Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.",
   },
   "/it-asset-disposition/": {

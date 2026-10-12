@@ -179,22 +179,6 @@ const STEPS = [
   },
 ]
 
-function faqs(town: string, phone: string): Facility['faqs'] {
-  return [
-    {
-      q: `Do I need an appointment to drop off at the ${town} facility?`,
-      a: `Drop-off requirements vary by material and quantity. Call ${phone} before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged — large or commercial loads in particular go faster when the loading area is expecting you.`,
-    },
-    {
-      q: 'Is there a fee for dropping off at this location?',
-      a: `Fees depend on the material and the quantity. Call ${phone} with a description of what you plan to bring and we will confirm any charges before you make the trip.`,
-    },
-    {
-      q: 'Can businesses schedule a bulk pickup from this facility?',
-      a: `Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location and service required — request a quote to get started.`,
-    },
-  ]
-}
 
 export const MINNESOTA: Facility = {
   slug: 'minnesota-recycling',
@@ -204,16 +188,17 @@ export const MINNESOTA: Facility = {
   name: MN_CONTACT.name,
   /* Verbatim from the live page, captured 22 Sep 2026. */
   liveSeo: {
-    title: 'Electronics Recycling in Minnesota | Recycle Technologies',
+    title: 'MN Electronics Recycling & Shredding | Recycle Technologies', // M-02, 12 Oct 2026
     description: 'Recycling center in Minnesota handling electronics, batteries, lamps, paper, and secure material processing for businesses and facilities. Call (800) 969-5166.',
   },
-  liveH1: 'Recycling and Shredding Across Minnesota',
+  liveH1: 'Certified Electronics Recycling & Shredding in Minnesota',
   hero: {
-    h1: 'Recycling and Shredding Across Minnesota', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    // 12 Oct 2026, "RTI State & Country Pages Content Corrections" sheet: new H1 and subtitle.
+    h1: 'Certified Electronics Recycling & Shredding in Minnesota', // M-01 (was the WordPress "Recycling and Shredding Across Minnesota")
     // New lead and the two buttons, as on Wisconsin (Asim, 5 Oct 2026: "do this thing in
     // Recycling Center in Minnesota in the same design"). H1 and photo unchanged.
-    lead: 'Electronics, battery and light bulb recycling for homes and businesses across Minnesota',
-    leadShort: 'Electronics, battery and light bulb recycling for homes and businesses across Minnesota',
+    lead: 'R2v3, RIOS, and NAID AAA certified electronics, battery, light bulb, and hard drive recycling plus secure shredding, with a certificate for every job.', // M-03
+    leadShort: 'R2v3, RIOS, and NAID AAA certified electronics, battery, light bulb, and hard drive recycling plus secure shredding, with a certificate for every job.',
     buttons: {
       primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
       secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
@@ -256,7 +241,14 @@ export const MINNESOTA: Facility = {
     ],
   },
   steps: STEPS,
-  faqs: faqs('Blaine', MN_CONTACT.phone),
+  // M-10, 12 Oct 2026: the sheet's five Minnesota FAQs, word for word.
+  faqs: [
+    { q: 'Can residential customers get pick-up service in Minnesota?', a: 'No! Recycle Technologies offers pick-up services only for commercial clients (businesses). Residential customers can either drop off their e-waste at their nearby facility or subscribe to our nationwide mail-in program.' },
+    { q: 'What does the Blaine facility accept?', a: 'Our Blaine center takes electronics, batteries, light bulbs, ballasts, paper shredding and hard drive destruction, and also offers airbag recycling, off-site shredding and phone shredding. Drop-off is Monday to Friday, 7:30 AM to 4:00 PM at 1525 99th Ln NE, Blaine, MN 55449. Businesses can also schedule a pickup.' },
+    { q: 'How should Minnesota businesses manage used lamps and batteries?', a: 'Minnesota classes used lamps and hazardous-waste batteries as universal waste, a reduced-requirement category regulated by the MPCA. Keep them in closed, labeled containers, out of the trash, and avoid crushing lamps on site, which the state restricts. County programs oversee hazardous waste generators in the Twin Cities area, and the MPCA oversees Greater Minnesota, so confirm your local reporting rules.' },
+    { q: 'Can you securely destroy hard drives and confidential documents in Minnesota?', a: 'Yes. Our Blaine facility offers hard drive destruction, paper shredding, off-site shredding, and phone shredding, backed by NAID AAA certification for data destruction. Each job is logged at intake and ends with a Certificate of Recycling or Shredding that you can keep as proof for audits and compliance records.' },
+    { q: 'Which areas of Minnesota do you serve?', a: 'We serve the Twin Cities metro and beyond, including Hennepin, Ramsey, Dakota, Anoka, Washington and Scott counties, plus Minneapolis, Bloomington, Rochester, St. Cloud and Duluth. Residents can drop off in Blaine, businesses can schedule a pickup, and mail-in kits are available for everyone else. Find your county under Counties We Serve.' },
+  ],
   cta: {
     heading: 'Ready to Bring Materials to Blaine?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if Blaine isn’t convenient.',
@@ -276,12 +268,13 @@ export const WISCONSIN: Facility = {
     title: 'Electronics Recycling in Wisconsin | Recycle Technologies',
     description: 'Recycling Wisconsin for electronics, computers, lamps, batteries, televisions, and devices, accepted through documented intake and processing procedures. Call (800) 969-5166.',
   },
-  liveH1: 'Recycling and Shredding Across Wisconsin',
+  liveH1: 'Certified Electronics Recycling & Shredding in Wisconsin',
   hero: {
-    h1: 'Recycling and Shredding Across Wisconsin', // WordPress H1, restored 29 Sep 2026 (RTI-Backup-vs-Live-Audit, Title and H1 changes)
+    // 12 Oct 2026, "RTI State & Country Pages Content Corrections" sheet: new H1 and subtitle.
+    h1: 'Certified Electronics Recycling & Shredding in Wisconsin', // W-02 (was the WordPress "Recycling and Shredding Across Wisconsin")
     // New lead and two buttons, Figma 6744:8394 (Asim, 5 Oct 2026). No phone frame; the phone uses the same lead.
-    lead: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',
-    leadShort: 'Electronics, battery and light bulb recycling for homes and businesses across Wisconsin',
+    lead: 'R2v3, RIOS and NAID AAA certified recycling, data destruction and shredding for Wisconsin businesses and households, with every item logged at intake and a certificate issued on completion.', // W-03
+    leadShort: 'R2v3, RIOS and NAID AAA certified recycling, data destruction and shredding for Wisconsin businesses and households, with every item logged at intake and a certificate issued on completion.',
     buttons: {
       primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
       secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
@@ -329,7 +322,14 @@ export const WISCONSIN: Facility = {
     ],
   },
   steps: STEPS,
-  faqs: faqs('New Berlin', WI_CONTACT.phone),
+  // W-10, 12 Oct 2026: the sheet's five Wisconsin FAQs, word for word.
+  faqs: [
+    { q: 'Does Recycle Technologies serve both businesses and residential customers in Wisconsin?', a: 'Yes! Both businesses and residential customers can use our services. We offer a commercial pick-up facility for businesses recycling their electronics, while our residential customers can benefit from our drop-off facility or our nationwide mail-in program.' },
+    { q: 'What does Recycle Technologies accept in Wisconsin?', a: 'Our facility in New Berlin takes electronics, batteries, TVs, and paper shredding. Residents can drop off Monday to Friday, 7:30 AM to 4:00 PM, and businesses can schedule a pickup.' },
+    { q: 'How should Wisconsin businesses handle used batteries and fluorescent lamps?', a: 'Wisconsin treats most used lamps and batteries as universal waste. Keep them in closed, labeled containers ("Used Lamps" or "Used Batteries"), date them, train the staff who handle them, and send them for recycling within one year. We collect and recycle both, so you do not have to manage disposal on your own.' },
+    { q: 'How do I know my materials were recycled responsibly?', a: 'Every item is logged at intake, so its path through our facility is documented from the start. When processing is complete, we issue a Certificate of Recycling or Shredding for your records. Our New Berlin facility is R2v3-certified; we hold RIOS and NAID AAA certifications, and we operate under a zero-landfill commitment.' },
+    { q: 'Which parts of Wisconsin do you serve?', a: 'From New Berlin, we serve Milwaukee, Waukesha, Racine, Washington County, Madison, Green Bay, and Calumet County (Appleton), along with other communities across the state. Businesses can request a pickup, residents can drop off in New Berlin, and mail-in recycling kits cover everyone else. Choose your area under Counties We Serve for local details.' },
+  ],
   cta: {
     heading: 'Ready to Bring Materials to New Berlin?',
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if New Berlin isn’t convenient.',
