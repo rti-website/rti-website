@@ -62,7 +62,8 @@ export type SeoInput = {
  */
 export function buildMetadata(raw: SeoInput, edited?: { title?: string; description?: string } | null): Metadata {
   const sheet = PAGE_SEO[raw.url]
-  const base: SeoInput = sheet ? { ...raw, title: sheet.title, description: sheet.description } : raw
+  // Field by field: a sheet may set only the title or only the description (14 Oct 2026).
+  const base: SeoInput = sheet ? { ...raw, title: sheet.title || raw.title, description: sheet.description || raw.description } : raw
   const input: SeoInput = {
     ...base,
     title: edited?.title?.trim() || base.title,

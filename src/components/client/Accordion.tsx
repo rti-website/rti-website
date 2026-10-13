@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { Fragment, useState, type ReactNode } from 'react'
+import Link from 'next/link'
 
 /**
  * A question, with an answer when one has been written. Pages that still have
@@ -109,11 +110,36 @@ export function Accordion({ items, gap = 14, variant = 'plain', idPrefix = 'faq'
             >
               {/* TODO(content): pages whose copy doc has no answers yet still
                   fall through to this line. Musaveer to supply per page. */}
-              {a ?? 'Answer copy to be supplied.'}
+              {a ? withLinks(a) : 'Answer copy to be supplied.'}
             </div>
           </li>
         )
       })}
     </ul>
   )
+}
+
+/**
+ * Links inside an answer, written `[words](/path/)` (the state page FAQs,
+ * 14 Oct 2026: "we add links in it"). A site path becomes a Next <Link>; an
+ * https link opens as a plain anchor. Anything else stays text, so an answer
+ * with ordinary brackets in it reads as before.
+ */
+function withLinks(text: string): ReactNode {
+  const parts: ReactNode[] = []
+  const re = /\[([^\]]+)\]\((\/[^)\s]*|https:\/\/[^)\s]+)\)/g
+  let last = 0
+  let m: RegExpExecArray | null
+  while ((m = re.exec(text))) {
+    if (m.index > last) parts.push(text.slice(last, m.index))
+    const [, label, href] = m
+    const cls = 'font-medium text-brand underline underline-offset-2 hover:text-heading'
+    parts.push(href!.startsWith('/')
+      ? <Link key={m.index} href={href!} className={cls}>{label}</Link>
+      : <a key={m.index} href={href!} className={cls}>{label}</a>)
+    last = m.index + m[0].length
+  }
+  if (!parts.length) return text
+  if (last < text.length) parts.push(text.slice(last))
+  return parts.map((p, i) => <Fragment key={i}>{p}</Fragment>)
 }

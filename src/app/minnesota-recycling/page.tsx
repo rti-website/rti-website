@@ -28,8 +28,8 @@ export default async function MinnesotaFacilityPage() {
     <LocationDetailPage
       f={f}
       /* Redrawn 13 Oct 2026 (Figma 7329:6088): the frame's band heights, services and counties as measured (py90 kept); center 219 is the
-         unchanged center bar; faq 720 leaves room for the longest answer open (measured 12 Oct). */
-      layout={{ center: 219, info: 198, mat: 622, counties: 813, cta: 442, mailIn: 230, faq: 720 }}
+         unchanged center bar; faq 672 leaves room for the longest answer open (14 Oct FAQs, measured 581 + py90). */
+      layout={{ center: 219, info: 198, mat: 622, counties: 813, cta: 442, mailIn: 230, faq: 672 }}
     />
   )
 }

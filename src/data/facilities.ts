@@ -292,12 +292,14 @@ export const MINNESOTA: Facility = {
   // 14 Oct 2026: the SEO team's five Minnesota FAQs, word for word, from their FAQPage schema
   // (recycle_technologies_minnesota_faq_schema.json). The page's FAQPage JSON-LD is built from
   // this list, so what is shown and what is marked up stay the same. Was M-10 (12 Oct sheet).
+  // Links from the "State Pages" content doc, same day: a [words](/path/) in an answer is a
+  // link on the page (Accordion) and plain words in the JSON-LD.
   faqs: [
-    { q: 'What electronics can businesses recycle in Minnesota?', a: 'Recycle Technologies handles electronics, batteries, light bulbs, ballasts, and other approved materials. Contact us to confirm accepted items.' },
+    { q: 'What electronics can businesses recycle in Minnesota?', a: 'Recycle Technologies handles electronics, batteries, light bulbs, ballasts, and other approved materials. [Contact us](/contact-us/) to confirm accepted items.' },
     { q: 'Do you offer business electronics recycling pickup in Minnesota?', a: 'Yes. Business pickup is available across Minnesota. Request a quote to arrange collection.' },
     { q: 'Can you provide certificates for electronics recycling and data destruction?', a: 'Yes, we provide certificates for electronics recycling and data destruction.' },
-    { q: 'Do you offer hard drive and document shredding in Minnesota?', a: 'Yes. Recycle Technologies offers hard drive and paper shredding services, including off-site shredding options. Contact us to discuss your requirements.' },
-    { q: 'Can I use a mail-in recycling kit if pickup is unavailable?', a: 'Yes. Prepaid mail-in kits let you ship eligible items to Recycle Technologies from outside its pickup area. Check kit options and accepted materials before ordering.' },
+    { q: 'Do you offer hard drive and document shredding in Minnesota?', a: 'Yes. Recycle Technologies offers hard drive and [paper shredding services](/paper-shredding-services/), including off-site shredding options. Contact us to discuss your requirements.' },
+    { q: 'Can I use a mail-in recycling kit if pickup is unavailable?', a: 'Yes. Prepaid [mail-in kits](/mail-in-recycling/) let you ship eligible items to Recycle Technologies from outside its pickup area. Check kit options and accepted materials before ordering.' },
   ],
   cta: {
     heading: 'Ready to Bring Materials to Blaine?',
@@ -436,13 +438,13 @@ export const WISCONSIN: Facility = {
   steps: STEPS,
   // 14 Oct 2026: the SEO team's five Wisconsin FAQs, word for word, from their FAQPage schema
   // (recycle_technologies_faq_schema-_winsconsin.json). The page's FAQPage JSON-LD is built from
-  // this list. Was W-10 (12 Oct sheet).
+  // this list. Was W-10 (12 Oct sheet). Links from the "State Pages" content doc, same day.
   faqs: [
     { q: 'What electronics can I recycle in Wisconsin?', a: 'Recycle Technologies accepts a range of electronics, computers, batteries, and other approved materials. Contact the team to confirm acceptance of specific items.' },
-    { q: 'Does Recycle Technologies offer business pickup in Wisconsin?', a: 'Yes. Scheduled business pickup is available within the service area, subject to location and collection requirements. Request a quote to confirm availability.' },
+    { q: 'Does Recycle Technologies offer business pickup in Wisconsin?', a: 'Yes. Scheduled business pickup is available within the service area, subject to location and collection requirements. [Request a quote](/quote/#contact-form) to confirm availability.' },
     { q: 'Can I receive a certificate after electronics recycling or shredding?', a: 'Yes. Recycle Technologies issues applicable Certificates of Recycling or Shredding after processing is complete.' },
     { q: 'Does Recycle Technologies offer hard drive and paper shredding?', a: 'Yes. Businesses can arrange secure phone, hard drive, and paper shredding services. Contact the team to discuss your materials and service requirements.' },
-    { q: 'What if my business is outside the pickup area?', a: 'A prepaid mail-in kit may be suitable for eligible materials. Review available kits and shipping instructions before sending your items.' },
+    { q: 'What if my business is outside the pickup area?', a: 'A prepaid [mail-in kit](/mail-in-recycling/) may be suitable for eligible materials. Review available kits and shipping instructions before sending your items.' },
   ],
   cta: {
     heading: 'Ready to Bring Materials to New Berlin?',

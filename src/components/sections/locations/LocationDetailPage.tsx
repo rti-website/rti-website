@@ -30,7 +30,7 @@ import { faqNode, graph } from '@/lib/schema'
  *   Counties       7329:6198 / 5809        803 / 671      StateCounties (no Load More)
  *   Pickup CTA     7329:6279 / 5864        442            StateCta
  *   Mail-in        7329:6286 / 5871        230            StateMailIn
- *   FAQ            7329:6292 / 5877        591            LocationFaq, 720 (room for an open answer)
+ *   FAQ            7329:6292 / 5877        591            LocationFaq, 672 (room for an open answer)
  *   Footer         —                       681            681
  *
  * Gone with the redraw: Getting Here, the drop-off steps and the closing
@@ -98,9 +98,9 @@ export async function LocationDetailPage({ f, layout: L }: { f: Facility; layout
         <LocationFaq       top={FAQ_TOP}      height={L.faq}      f={f} />
       </main>
       <Footer top={FOOTER_TOP} />
-      {/* FAQPage JSON-LD from the same list the FAQ section shows (14 Oct 2026). */}
+      {/* FAQPage JSON-LD from the same list the FAQ section shows (14 Oct 2026); answer links as plain words. */}
       {f.faqs.length > 0 && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: graph(faqNode(f.faqs)) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: graph(faqNode(f.faqs.map((x) => ({ q: x.q, a: x.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') })))) }} />
       )}
     </Canvas>
   )
