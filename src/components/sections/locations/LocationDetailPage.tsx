@@ -4,7 +4,6 @@ import { href } from '@/lib/urls'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
-import { CTA_H, ClosingCta } from '@/components/sections/ClosingCta'
 import { LocationCenterBar } from '@/components/sections/locations/LocationCenterBar'
 import { LocationQuickInfo } from '@/components/sections/locations/LocationQuickInfo'
 import { LocationDirections } from '@/components/sections/locations/LocationDirections'
@@ -33,13 +32,12 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  *   Steps          6744:8797   525         L.steps
  *   FAQ            6744:8798   473.26      L.faq
  *   Counties       7079:6388   620         + Load More   LocationCounties, 29 Sep 2026
- *   Closing CTA    6744:8799   373.05      CTA_H     the shared band, see below
+ *   Closing CTA    6744:8799   373.05      —         removed 12 Oct 2026 (management)
  *   Footer         —           681         681
  *
- * THE CTA IS THE SHARED BAND, NOT THE FRAME'S 373. Asim, 16 Sep 2026: "do it
- * exactly like this in all pages" — every page ends in ClosingCta at CTA_H.
- * The frame drew a shorter version of the same thing; the copy and the two
- * buttons are its own.
+ * NO CLOSING CTA since 12 Oct 2026. It was the shared band (ClosingCta,
+ * Asim 16 Sep 2026); management asked for "Ready to Bring Materials to ..."
+ * to come off both state pages, so the footer follows Counties We Serve.
  *
  * Heights are per-facility, in `layout`, because Wisconsin's materials lead
  * wraps to two lines. Measured 22 Sep 2026 with
@@ -78,8 +76,9 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   const FAQ_TOP    = STEPS_TOP + L.steps
   const COUNTIES_TOP = FAQ_TOP + L.faq
   const [{ DETAIL_COPY }, { DIRECTORY_COPY }] = await Promise.all([content('facilities'), content('locations-directory')])
-  const CTA_TOP    = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota', DIRECTORY_COPY.groups).length)
-  const FOOTER_TOP = CTA_TOP + CTA_H
+  // No closing CTA since 12 Oct 2026 (see the note in the JSX): the footer
+  // follows Counties We Serve.
+  const FOOTER_TOP = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota', DIRECTORY_COPY.groups).length)
 
   const crumbs = [
     { label: DETAIL_COPY.crumbs.home,      href: href('/') },
@@ -100,20 +99,23 @@ export async function LocationDetailPage({ f, layout: L, links }: {
         />
         {f.center && <LocationCenterBar top={CENTER_TOP} height={CENTER_H} f={f} />}
         <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
-        {/* Minnesota's "Getting Here" moved to the Blaine page (/minnesota-recycling/ramsey/blaine/),
-            9 Oct 2026, SEO sheet "Technical Fixes": its layout gives the row 0 height. */}
-        {L.map > 0 && <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />}
-        <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />
-        <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />
+        {/* 12 Oct 2026, management: "remove Getting Here, What This Location
+            Accepts, the 3 drop-off steps and Ready to Bring Materials to...
+            from both state pages, since that content belongs on the Blaine and
+            New Berlin pages". Both layouts give map, mat and steps 0 height, and
+            a band with 0 height is not rendered. (Minnesota's Getting Here had
+            already moved to the Blaine page on 9 Oct, SEO sheet "Technical
+            Fixes".) The closing "Ready to Bring Materials to ..." band is gone
+            too; Blaine and New Berlin have their own. */}
+        {L.map > 0   && <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />}
+        {L.mat > 0   && <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />}
+        {L.steps > 0 && <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />}
         <LocationFaq        top={FAQ_TOP}   height={L.faq}   f={f} />
         <LocationCounties   top={COUNTIES_TOP} f={f} />
-        {/* Everything under Counties We Serve rides one positioned wrapper
-            whose top is what Load More has added (COUNTIES_DELTA_VAR), as on
-            the homepage under Our Services. Below lg it is an ordinary block. */}
-        <div className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0 lg:top-[var(--counties-delta,0px)]">
-          <ClosingCta top={CTA_TOP} label="6744:8799" content={f.cta} />
-        </div>
       </main>
+      {/* Everything under Counties We Serve rides one positioned wrapper whose
+          top is what Load More has added (COUNTIES_DELTA_VAR), as on the
+          homepage under Our Services. Below lg it is an ordinary block. */}
       <div className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0 lg:top-[var(--counties-delta,0px)]">
         <Footer top={FOOTER_TOP} />
       </div>

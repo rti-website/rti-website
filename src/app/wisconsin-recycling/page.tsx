@@ -30,8 +30,9 @@ export default async function WisconsinFacilityPage() {
   return (
     <LocationDetailPage
       f={f} links={links}
-      /* mat 641 since 9 Oct 2026: the "All services at this location" links under the tiles (measured). faq 720 since 12 Oct 2026: five FAQs, room for the longest answer open (measured 719). */
-      layout={{ center: 219, info: 200, map: 520, mat: 641, steps: 532, faq: 720 }}
+      /* faq 720 since 12 Oct 2026: five FAQs, room for the longest answer open (measured 719).
+         map, mat and steps 0 since 12 Oct 2026 (management): Getting Here, What This Location Accepts and the drop-off steps are off the state pages; that content is on the New Berlin page. */
+      layout={{ center: 219, info: 200, map: 0, mat: 0, steps: 0, faq: 720 }}
     />
   )
 }
