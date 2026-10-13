@@ -1,7 +1,6 @@
 import { pageMetadata } from '@/lib/page-meta'
 import { LocationDetailPage } from '@/components/sections/locations/LocationDetailPage'
 import { WISCONSIN } from '@/data/facilities'
-import { loadLocations, materialLinks } from '@/lib/service-locations'
 import { content } from '@/lib/page-content'
 
 /**
@@ -22,17 +21,14 @@ export const generateMetadata = () => pageMetadata({
   description: WISCONSIN.liveSeo.description,
 })
 
-// Async since 24 Sep 2026: the material tiles link to this facility's
-// published service pages (Admin -> Locations), read at build time.
 export default async function WisconsinFacilityPage() {
-  const [all, { WISCONSIN: f }] = await Promise.all([loadLocations(), content('facilities')])
-  const links = materialLinks(all, 'wisconsin')
+  const { WISCONSIN: f } = await content('facilities')
   return (
     <LocationDetailPage
-      f={f} links={links}
-      /* faq 720 since 12 Oct 2026: five FAQs, room for the longest answer open (measured 719).
-         map, mat and steps 0 since 12 Oct 2026 (management): Getting Here, What This Location Accepts and the drop-off steps are off the state pages; that content is on the New Berlin page. */
-      layout={{ center: 219, info: 200, map: 0, mat: 0, steps: 0, faq: 720 }}
+      f={f}
+      /* Redrawn 13 Oct 2026 (Figma 7329:5698): the frame's band heights, services and counties as measured (py90 kept); center 219 is the
+         unchanged center bar; faq 720 leaves room for the longest answer open (measured 12 Oct). */
+      layout={{ center: 219, info: 198, mat: 646, counties: 688, cta: 442, mailIn: 230, faq: 720 }}
     />
   )
 }

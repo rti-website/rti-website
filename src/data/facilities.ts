@@ -113,6 +113,52 @@ export type Facility = {
   steps: { title: string; body: string; bodyShort: string }[]
   faqs: { q: string; a: string }[]
   cta: CtaContent
+  /** The state page redesign of 13 Oct 2026 (see StateHub). */
+  hub: StateHub
+}
+
+/**
+ * THE STATE PAGES' NEW SECTIONS — Figma "Location Details - Minnesota New"
+ * 7329:6088 (phone 7329:6801) and "- Wisconsin New" 7329:5698 (phone
+ * 7329:6503), 13 Oct 2026. Asim: "keep this section [the center bar] same as
+ * the old one in both the pages ... and update the other".
+ *
+ *   materials  "Recycling and shredding services in <state>": eight tiles,
+ *              each linking the state's own service page (`service` is the
+ *              key in LOCAL_FACILITY_PAGES, so an edited label keeps its link)
+ *   counties   one card per county (or group of counties) with a chip per
+ *              city or service page; replaces the old card grid + Load More
+ *   cta        the navy to green "Schedule ... Pickup" band
+ *   mailIn     the light band with the mail-in kit button
+ *   faqHeading the FAQ title, which the two frames word differently
+ *
+ * Every chip is a page that exists (checked 13 Oct 2026 against
+ * src/data/county-pages); the labels are the frame's, word for word.
+ */
+export type StateHub = {
+  materials: { heading: string; lead: string; tiles: { label: string; icon: string; service: string }[] }
+  counties: { lead: string; groups: { heading: string; chips: { label: string; href: string }[] }[] }
+  cta: { heading: string; body: string; primary: { label: string; href: string }; secondary: { label: string; href: string } }
+  mailIn: { heading: string; body: string; button: { label: string; href: string } }
+  faqHeading: string
+}
+
+/** The eight service tiles, the same on both frames (7329:6150 / 7329:5761). */
+const I = '/images/locations'
+const STATE_TILES: StateHub['materials']['tiles'] = [
+  { label: 'Electronics',        icon: `${I}/state-electronics.svg`, service: 'electronic-recycling' },
+  { label: 'Batteries',          icon: `${I}/state-batteries.svg`,   service: 'battery-recycling' },
+  { label: 'Light bulbs',        icon: `${I}/state-bulbs.svg`,       service: 'light-bulb-recycling' },
+  { label: 'Ballasts',           icon: `${I}/state-ballasts.svg`,    service: 'ballast-recycling' },
+  { label: 'Airbags',            icon: `${I}/state-ballasts.svg`,    service: 'airbag-recycling' },
+  { label: 'Paper shredding',    icon: `${I}/state-paper.svg`,       service: 'paper-shredding' },
+  { label: 'Phone shredding',    icon: `${I}/state-lock.svg`,        service: 'phone-shredding' },
+  { label: 'Off-site shredding', icon: `${I}/state-lock.svg`,        service: 'off-site-shredding' },
+]
+const chip = (label: string, url: string) => ({ label, href: href(url) })
+const STATE_CTA_BUTTONS = {
+  primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
+  secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
 }
 
 /*
@@ -217,12 +263,14 @@ export const MINNESOTA: Facility = {
     secondary: 'Get Directions',
   },
   address: MN_CONTACT.address,
-  addressShort: '1525 99th Ln NE, Blaine, MN',
+  addressShort: '1525 99th Ln NE, Blaine, MN 55449', // 7329:6128, 13 Oct 2026
   cardAddress: '1525 99th Ln NE, Blaine, MN 55449', // 6744:2472, 25 Sep 2026
   phone: MN_CONTACT.phone,
   email: MN_CONTACT.email,
-  hours: 'Mon–Fri 8:30 AM–4:30 PM · 2nd & 4th Sat 9 AM–1 PM', // FRAME — unconfirmed
-  hoursShort: 'Mon–Fri 8:30 AM–4:30 PM',                        // FRAME — unconfirmed
+  // 13 Oct 2026, Figma 7329:6143: 7:30 to 4:00, as the Blaine page says (was
+  // the old frame's unconfirmed 8:30 to 4:30 plus two Saturdays).
+  hours: 'Mon–Fri 7:30 AM–4:00 PM',
+  hoursShort: 'Mon–Fri 7:30 AM–4:00 PM',
   cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified', certified: true },
   /* stat-r2.png is the R2v3 mark on a transparent ground (the hero stats
      strip's own file); the certifications page's r2v3.png has a white one. */
@@ -254,6 +302,68 @@ export const MINNESOTA: Facility = {
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if Blaine isn’t convenient.',
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+  },
+  hub: {
+    materials: {
+      heading: 'Recycling and shredding services in Minnesota',
+      lead: 'One certified provider for what leaves your building, from old lamps to retired hard drives.',
+      tiles: STATE_TILES,
+    },
+    counties: {
+      lead: 'Pick your county to see the cities and services available there.',
+      groups: [
+        { heading: 'Hennepin County', chips: [
+          chip('Minneapolis', '/minnesota-recycling/minneapolis/'),
+          chip('Bloomington', '/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/'),
+          chip('Edina', '/minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/'),
+          chip('Maple Grove', '/minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/'),
+          chip('Minnetonka', '/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/'),
+          chip('Plymouth', '/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/'),
+          chip('Brooklyn Park', '/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/'),
+          chip('Hennepin County', '/minnesota-recycling/hennepin-county-recycling-center/'),
+        ] },
+        { heading: 'Anoka County', chips: [
+          chip('Blaine', '/minnesota-recycling/ramsey/blaine/'),
+          chip('Coon Rapids', '/minnesota-recycling/coon-rapids/'),
+          chip('East Bethel', '/minnesota-recycling/east-bethel/'),
+          chip('Anoka County', '/minnesota-recycling/anoka-county-recycling/'),
+        ] },
+        { heading: 'Ramsey County', chips: [
+          chip('St. Paul batteries', '/minnesota-recycling/battery-recycling-st-paul/'),
+          chip('St. Paul shredding', '/shredding-minnesota/st-paul/'),
+          chip('Roseville', '/minnesota-recycling/ramsey/roseville/'),
+          chip('Ramsey County', '/minnesota-recycling/ramsey/'),
+        ] },
+        { heading: 'Dakota County', chips: [
+          chip('Burnsville', '/minnesota-recycling/dakota-county/burnsville-recycling-center/'),
+          chip('Lakeville', '/minnesota-recycling/dakota-county/lakeville-recycling-center/'),
+          chip('Dakota County', '/minnesota-recycling/dakota-county/'),
+        ] },
+        { heading: 'Washington County, MN', chips: [
+          chip('Woodbury', '/minnesota-recycling/electronic-recycling-in-woodbury/'),
+          chip('Washington County, MN', '/minnesota-recycling/washington-county/'),
+        ] },
+        { heading: 'Scott · Olmsted · Benton Counties', chips: [
+          chip('Scott County', '/minnesota-recycling/scott-county/'),
+          chip('Rochester shredding', '/shredding-minnesota/rochester/'),
+          chip('St. Cloud', '/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/'),
+        ] },
+        { heading: 'St. Louis County', chips: [
+          chip('Duluth', '/minnesota-recycling/electronic-recycling-duluth/'),
+        ] },
+      ],
+    },
+    cta: {
+      heading: 'Schedule Business Recycling Pickup in Minnesota',
+      body: 'Clear out retired electronics, batteries, lamps, and confidential documents with scheduled business collection. Get a quote for your materials, confirm service availability, and arrange pickup with the required documentation.',
+      ...STATE_CTA_BUTTONS,
+    },
+    mailIn: {
+      heading: 'Need Recycling Outside Our Minnesota Pickup Area?',
+      body: 'Use a prepaid mail-in kit to ship eligible electronics and other accepted materials to Recycle Technologies. Review available kits, accepted items, and shipping instructions before sending your materials.',
+      button: { label: 'Explore Mail-In Recycling Kits', href: href('/mail-in-recycling/') },
+    },
+    faqHeading: 'FAQs',
   },
 }
 
@@ -293,7 +403,7 @@ export const WISCONSIN: Facility = {
     secondary: 'Get Directions',
   },
   address: WI_CONTACT.address,
-  addressShort: '2815 South 171st Street, New Berlin, WI',
+  addressShort: '2815 S 171st St, New Berlin, WI 53151', // 7329:5739, 13 Oct 2026
   phone: WI_CONTACT.phone,
   email: WI_CONTACT.email,
   // 5 Oct 2026, Figma 6744:8392: 7:30 to 4:00 (as the New Berlin page and the
@@ -335,6 +445,55 @@ export const WISCONSIN: Facility = {
     body: 'Schedule a commercial pickup, plan your drop-off, or explore our nationwide Mail-In Program if New Berlin isn’t convenient.',
     primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+  },
+  hub: {
+    materials: {
+      heading: 'Recycling and shredding services in Wisconsin',
+      lead: 'One provider for what leaves your building, from old lamps to retired hard drives. Recycle Technologies offers electronics recycling, battery recycling, and secure shredding services for Wisconsin businesses.',
+      tiles: STATE_TILES,
+    },
+    counties: {
+      lead: 'Explore the county and city pages below to find the locations and recycling services relevant to your business. Contact us to confirm pickup availability for your address.',
+      groups: [
+        { heading: 'Waukesha County', chips: [
+          chip('New Berlin', '/wisconsin-recycling/new-berlin-recycling-center/'),
+          chip('Waukesha', '/wisconsin-recycling/waukesha-electronic-recycling/'),
+          chip('Oconomowoc', '/wisconsin-recycling/oconomowoc-recycling-center/'),
+        ] },
+        { heading: 'Milwaukee County', chips: [
+          chip('Milwaukee', '/wisconsin-recycling/milwaukee/'),
+          chip('Oak Creek', '/wisconsin-recycling/milwaukee/oak-creek/'),
+        ] },
+        { heading: 'Dane County', chips: [
+          chip('Madison', '/wisconsin-recycling/madison/'),
+        ] },
+        { heading: 'Brown County', chips: [
+          chip('Green Bay', '/wisconsin-recycling/green-bay-recycling/'),
+          chip('Green Bay TV Recycling', '/wisconsin-recycling/tv-recycling-green-bay/'),
+        ] },
+        { heading: 'Outagamie and Calumet Counties', chips: [
+          chip('Appleton', '/wisconsin-recycling/appleton-electronic-recycling-center/'),
+          chip('Calumet County', '/wisconsin-recycling/calumet-county/'),
+        ] },
+        { heading: 'Sheboygan, Fond du Lac, Racine and Washington Counties', chips: [
+          chip('Sheboygan', '/wisconsin-recycling/sheboygan/'),
+          chip('Fond du Lac', '/wisconsin-recycling/fond-du-lac-recycling/'),
+          chip('Racine', '/wisconsin-recycling/racine/'),
+          chip('Washington County, WI', '/wisconsin-recycling/washington-county-recycling-center/'),
+        ] },
+      ],
+    },
+    cta: {
+      heading: 'Schedule Your Wisconsin Recycling Pickup',
+      body: 'Clear out retired electronics, batteries, lamps, and confidential documents with a scheduled business collection. Tell us what needs recycling, where it is located, and the approximate quantity to receive a quote and confirm the next steps.',
+      ...STATE_CTA_BUTTONS,
+    },
+    mailIn: {
+      heading: 'Need Recycling Outside Your Local Area?',
+      body: 'Use a prepaid mail-in kit to send eligible materials to Recycle Technologies without arranging an on-site collection. Choose the appropriate kit and check its accepted materials before shipping.',
+      button: { label: 'View Mail-In Kits', href: href('/mail-in-recycling/') },
+    },
+    faqHeading: 'Frequently Asked Questions',
   },
 }
 

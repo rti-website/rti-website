@@ -2450,6 +2450,62 @@
       "node": "7246:10460",
       "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
       "name": "Step connector arrow, 81x160 (Mail In 7246:10418). 6 Oct 2026; URL expires about 13 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-minnesota-v3.jpg",
+      "id": "eeaf4eb7-f98b-4a42-9441-e6aa8a961df2/d5194.png",
+      "node": "7329:6093",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Minnesota state page hero photo (Location Details - Minnesota New, 7329:6088), 1920x579 object-cover; phone 7329:6816. JPEG despite the .png export name. 13 Oct 2026; URL expires about 20 Oct."
+    },
+    {
+      "to": "public/images/pages/hero-wisconsin-v3.jpg",
+      "id": "6bf7c4d3-8cc9-47bd-b360-d0fb35384e81/171ab.png",
+      "node": "7329:5703",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "Wisconsin state page hero photo (7329:5698), drawn mirrored at 1920x579; phone 7329:6522 unmirrored at 815x459, y-103. JPEG. 13 Oct 2026; URL expires about 20 Oct."
+    },
+    {
+      "to": "public/images/locations/state-electronics.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/a564c.svg",
+      "node": "7329:6153",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles (7329:6150): Electronics icon, white, 20px. 13 Oct 2026."
+    },
+    {
+      "to": "public/images/locations/state-batteries.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/7e0cb.svg",
+      "node": "7329:6159",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles: Batteries icon. 13 Oct 2026."
+    },
+    {
+      "to": "public/images/locations/state-bulbs.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/e6d19.svg",
+      "node": "7329:6165",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles: Light bulbs icon. 13 Oct 2026."
+    },
+    {
+      "to": "public/images/locations/state-ballasts.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/1c564.svg",
+      "node": "7329:6170",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles: Ballasts icon, also the Airbags tile (7329:6176). 13 Oct 2026."
+    },
+    {
+      "to": "public/images/locations/state-paper.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/52a32.svg",
+      "node": "7329:6182",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles: Paper shredding icon. 13 Oct 2026."
+    },
+    {
+      "to": "public/images/locations/state-lock.svg",
+      "id": "1e9e2db1-3a00-4f2a-adaa-b826d23abd83/daeeb.svg",
+      "node": "7329:6188",
+      "fileKey": "BVtf2AOuUOcYbiMIlcKmbC",
+      "name": "State pages' services tiles: padlock icon, Phone shredding and Off-site shredding (7329:6194). 13 Oct 2026."
     }
   ]
 }

@@ -2,7 +2,6 @@ import { Section } from '@/components/design/Frame'
 import { GLYPHS } from '@/components/ui/Glyph'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
-import { R2_DIRECTORY } from '@/data/certifications'
 
 /**
  * Quick-info bar — Figma 6744:8794 (Minnesota) / 6746:8487 (Wisconsin).
@@ -17,6 +16,8 @@ import { R2_DIRECTORY } from '@/data/certifications'
  * which is why the two pages differ: Wisconsin's longer address pushes the
  * others right.
  *
+ * 13 Oct 2026 (7329:6119 / 7329:5730): three items, Address, Phone, Hours.
+ *
  * MOBILE — 6750:8517. The plate becomes a 350px card with the four items
  * stacked, 18 apart, tiles at 38 with a 17px glyph.
  */
@@ -24,12 +25,12 @@ export async function LocationQuickInfo({ top, height, f }: { top: number; heigh
   const { DETAIL_COPY } = await content('facilities')
   const items: QuickInfoItem[] = [
     { glyph: 'pin' as const,   label: DETAIL_COPY.quickInfo.address, value: f.addressShort },
-    { glyph: 'phone' as const, label: DETAIL_COPY.quickInfo.phone,   value: f.phone, href: `tel:${f.phone.replace(/[^+\d]/g, '')}` },
+    // The frames of 13 Oct 2026 print the number without +1 (7329:6135); the
+    // center bar's copy is that form. The link dials the full number.
+    { glyph: 'phone' as const, label: DETAIL_COPY.quickInfo.phone,   value: f.center?.phone ?? f.phone, href: `tel:${f.phone.replace(/[^+\d]/g, '')}` },
     { glyph: 'clock' as const, label: DETAIL_COPY.quickInfo.hours,   value: f.hoursShort },
-    // A certified facility's status opens SERI's directory listing (new tab),
-    // like every R2v3 mark on the site (25 Sep 2026). "Pursuing R2v3" does not.
-    { glyph: 'badge' as const, label: DETAIL_COPY.quickInfo.cert,    value: f.cert.status,
-      href: f.cert.certified ? R2_DIRECTORY : undefined, external: true },
+    // No Certification item since 13 Oct 2026: the redrawn state pages
+    // (7329:6119 / 7329:5730) carry Address, Phone and Hours only.
   ]
   return (
     <Section top={top} height={height} label="6744:8794" className="flex flex-col items-center bg-white px-[20px] py-[32px] lg:px-0 lg:py-[50px]">

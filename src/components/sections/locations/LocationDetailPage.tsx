@@ -1,20 +1,14 @@
 import { Canvas } from '@/components/design/Frame'
-import { COUNTIES_DELTA_VAR, FOOTER_H } from '@/lib/layout'
+import { FOOTER_H } from '@/lib/layout'
 import { href } from '@/lib/urls'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
-import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { LocationCenterBar } from '@/components/sections/locations/LocationCenterBar'
 import { LocationQuickInfo } from '@/components/sections/locations/LocationQuickInfo'
-import { LocationDirections } from '@/components/sections/locations/LocationDirections'
-import { LocationMaterials } from '@/components/sections/locations/LocationMaterials'
-import { LocationSteps } from '@/components/sections/locations/LocationSteps'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
-import { LocationCounties, countiesHeight } from '@/components/sections/locations/LocationCounties'
-import { countyCards } from '@/data/county-pages/directory'
+import { StateHero, StateMaterials, StateCounties, StateCta, StateMailIn } from '@/components/sections/locations/StateSections'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
-import { HERO_PHOTOS } from '@/data/hero-photos'
 
 /**
  * A facility page — Figma "Location Details - Minnesota" 6744:8392 and
@@ -22,32 +16,36 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  * twice. One component, two routes: /minnesota-recycling/ and
  * /wisconsin-recycling/.
  *
- *   Section        Node        Figma h     built     why
- *   Header         —           140         140
- *   Hero           6744:8394   470         470       ServiceHero, as every interior page
- *   Center bar     6744:8794   219         L.center  Wisconsin only (5 Oct 2026), LocationCenterBar
- *   Quick info     6744:8794   198         L.info
- *   Directions     6744:8795   520         L.map
- *   Materials      6744:8796   467 / 486   L.mat     Wisconsin's lead wraps to two lines
- *   Steps          6744:8797   525         L.steps
- *   FAQ            6744:8798   473.26      L.faq
- *   Counties       7079:6388   620         + Load More   LocationCounties, 29 Sep 2026
- *   Closing CTA    6744:8799   373.05      —         removed 12 Oct 2026 (management)
- *   Footer         —           681         681
+ *   REDRAWN 13 Oct 2026 — "Location Details - Minnesota New" 7329:6088 and
+ *   "- Wisconsin New" 7329:5698 (phones 7329:6801 / 7329:6503). Asim: keep the
+ *   center bar as it was, update the rest.
  *
- * NO CLOSING CTA since 12 Oct 2026. It was the shared band (ClosingCta,
- * Asim 16 Sep 2026); management asked for "Ready to Bring Materials to ..."
- * to come off both state pages, so the footer follows Counties We Serve.
+ *   Section        Node (MN / WI)          board h        built
+ *   Header         —                       140            140
+ *   Hero           7329:6090 / 5700        579            StateHero
+ *   Center bar     6744:8794               219            LocationCenterBar, unchanged
+ *   Quick info     7329:6119 / 5730        198            LocationQuickInfo (3 items)
+ *   Services       7329:6144 / 5755        610 / 629      StateMaterials
+ *   Counties       7329:6198 / 5809        803 / 671      StateCounties (no Load More)
+ *   Pickup CTA     7329:6279 / 5864        442            StateCta
+ *   Mail-in        7329:6286 / 5871        230            StateMailIn
+ *   FAQ            7329:6292 / 5877        591            LocationFaq, 720 (room for an open answer)
+ *   Footer         —                       681            681
  *
- * Heights are per-facility, in `layout`, because Wisconsin's materials lead
- * wraps to two lines. Measured 22 Sep 2026 with
- * `node scripts/measure-sections.mjs --route <slug>` — the doc copy runs a
- * few pixels past the frame in four of the five bands.
+ * Gone with the redraw: Getting Here, the drop-off steps and the closing
+ * "Ready to Bring Materials" band (already off since 12 Oct), the old
+ * "What This Location Accepts" tiles and the county card grid with Load More.
  *
- * !! H1 !! The live pages say "Recycling Center in Minnesota" and "Recycling
- * in Wisconsin"; the frames say "Minnesota Facility" / "Wisconsin Facility".
- * Built as designed, like every interior page, and carried into gate 2 with
- * the rest — see the H1 CONFLICT notes on the service pages.
+ * Heights are per-facility, in `layout`: the two frames' services and county
+ * bands differ. Re-measure with
+ * `node scripts/measure-sections.mjs --route <slug>`.
+ *
+ * !! H1 AND LEAD !! The 13 Oct frames say "Electronics Recycling and
+ * Shredding in <state>" with their own lead and FAQ questions. The page keeps
+ * the H1, lead and FAQs of the "RTI State & Country Pages Content
+ * Corrections" sheet (12 Oct 2026, M-01/M-03/M-10, W-02/W-03/W-10), which
+ * management signed off and the url-map rows carry. Change f.hero / f.faqs in
+ * src/data/facilities.ts to switch.
  *
  * MOBILE — "Location Details - Mobile" 6747:2787. Each section answers its own
  * node; the page needs nothing here beyond the heights going out as custom
@@ -56,29 +54,27 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 export type LocationLayout = {
   /** The "Our <state> Recycling Center" bar (6744:8794), when the facility has `center`. */
   center?: number
-  info: number; map: number; mat: number; steps: number; faq: number
+  info: number
+  /** 13 Oct 2026 bands (StateSections): services, counties, pickup CTA, mail-in. */
+  mat: number; counties: number; cta: number; mailIn: number
+  faq: number
 }
 
 const HERO_TOP = 140
-const HERO_H = 470
+/** 579 since 13 Oct 2026 (7329:6090); was 470. */
+const HERO_H = 579
 
-export async function LocationDetailPage({ f, layout: L, links }: {
-  f: Facility; layout: LocationLayout
-  /** Material id -> this facility's published service page (Admin -> Locations). */
-  links?: Record<string, string>
-}) {
-  const CENTER_TOP = HERO_TOP + HERO_H
-  const CENTER_H   = f.center ? (L.center ?? 0) : 0
-  const INFO_TOP   = CENTER_TOP + CENTER_H
-  const MAP_TOP    = INFO_TOP + L.info
-  const MAT_TOP    = MAP_TOP + L.map
-  const STEPS_TOP  = MAT_TOP + L.mat
-  const FAQ_TOP    = STEPS_TOP + L.steps
-  const COUNTIES_TOP = FAQ_TOP + L.faq
-  const [{ DETAIL_COPY }, { DIRECTORY_COPY }] = await Promise.all([content('facilities'), content('locations-directory')])
-  // No closing CTA since 12 Oct 2026 (see the note in the JSX): the footer
-  // follows Counties We Serve.
-  const FOOTER_TOP = COUNTIES_TOP + countiesHeight(countyCards(f.state === 'Wisconsin' ? 'Wisconsin' : 'Minnesota', DIRECTORY_COPY.groups).length)
+export async function LocationDetailPage({ f, layout: L }: { f: Facility; layout: LocationLayout }) {
+  const CENTER_TOP   = HERO_TOP + HERO_H
+  const CENTER_H     = f.center ? (L.center ?? 0) : 0
+  const INFO_TOP     = CENTER_TOP + CENTER_H
+  const MAT_TOP      = INFO_TOP + L.info
+  const COUNTIES_TOP = MAT_TOP + L.mat
+  const CTA_TOP      = COUNTIES_TOP + L.counties
+  const MAILIN_TOP   = CTA_TOP + L.cta
+  const FAQ_TOP      = MAILIN_TOP + L.mailIn
+  const FOOTER_TOP   = FAQ_TOP + L.faq
+  const { DETAIL_COPY } = await content('facilities')
 
   const crumbs = [
     { label: DETAIL_COPY.crumbs.home,      href: href('/') },
@@ -87,38 +83,20 @@ export async function LocationDetailPage({ f, layout: L, links }: {
   ]
 
   return (
-    <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)} grow={COUNTIES_DELTA_VAR}>
+    <Canvas height={Math.round(FOOTER_TOP + FOOTER_H)}>
       <Header />
       <main>
-        <ServiceHero
-          label="6744:8394" crumbs={crumbs} h1={f.hero.h1}
-          /* 6745:6485 — the phone frame drops the zip and the state's full name. */
-          lead={<><span className="lg:hidden">{f.hero.leadShort}</span><span className="max-lg:hidden">{f.hero.lead}</span></>}
-          {...(f.state === 'Wisconsin' ? HERO_PHOTOS.wisconsin : HERO_PHOTOS.minnesota)}
-          {...(f.hero.buttons ? { cta: f.hero.buttons.primary, ctaFill: 'whiteFill' as const, secondaryCta: f.hero.buttons.secondary } : {})}
-        />
+        <StateHero f={f} crumbs={crumbs} top={HERO_TOP} height={HERO_H} />
+        {/* Kept exactly as it was (Asim, 13 Oct 2026). */}
         {f.center && <LocationCenterBar top={CENTER_TOP} height={CENTER_H} f={f} />}
-        <LocationQuickInfo  top={INFO_TOP}  height={L.info}  f={f} />
-        {/* 12 Oct 2026, management: "remove Getting Here, What This Location
-            Accepts, the 3 drop-off steps and Ready to Bring Materials to...
-            from both state pages, since that content belongs on the Blaine and
-            New Berlin pages". Both layouts give map, mat and steps 0 height, and
-            a band with 0 height is not rendered. (Minnesota's Getting Here had
-            already moved to the Blaine page on 9 Oct, SEO sheet "Technical
-            Fixes".) The closing "Ready to Bring Materials to ..." band is gone
-            too; Blaine and New Berlin have their own. */}
-        {L.map > 0   && <LocationDirections top={MAP_TOP}   height={L.map}   f={f} />}
-        {L.mat > 0   && <LocationMaterials  top={MAT_TOP}   height={L.mat}   f={f} links={links} />}
-        {L.steps > 0 && <LocationSteps      top={STEPS_TOP} height={L.steps} f={f} />}
-        <LocationFaq        top={FAQ_TOP}   height={L.faq}   f={f} />
-        <LocationCounties   top={COUNTIES_TOP} f={f} />
+        <LocationQuickInfo top={INFO_TOP}     height={L.info}     f={f} />
+        <StateMaterials    top={MAT_TOP}      height={L.mat}      f={f} />
+        <StateCounties     top={COUNTIES_TOP} height={L.counties} f={f} />
+        <StateCta          top={CTA_TOP}      height={L.cta}      f={f} />
+        <StateMailIn       top={MAILIN_TOP}   height={L.mailIn}   f={f} />
+        <LocationFaq       top={FAQ_TOP}      height={L.faq}      f={f} />
       </main>
-      {/* Everything under Counties We Serve rides one positioned wrapper whose
-          top is what Load More has added (COUNTIES_DELTA_VAR), as on the
-          homepage under Our Services. Below lg it is an ordinary block. */}
-      <div className="transition-[top] duration-300 ease-out lg:absolute lg:inset-x-0 lg:top-[var(--counties-delta,0px)]">
-        <Footer top={FOOTER_TOP} />
-      </div>
+      <Footer top={FOOTER_TOP} />
     </Canvas>
   )
 }

@@ -27,7 +27,9 @@ export async function LocationFaq({ top, height, f }: { top: number; height: num
     <Section top={top} height={height} label="6744:8798" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[40px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[10px] text-center lg:w-[780px]">
         <Eyebrow>{DETAIL_COPY.faq.eyebrow}</Eyebrow>
-        <h2 className="font-sans text-[24px] font-semibold leading-[28px] text-black lg:text-[36px] lg:leading-normal">{DETAIL_COPY.faq.heading}</h2>
+        {/* The frames of 13 Oct 2026 title it per page: "FAQs" (7329:6296),
+            "Frequently Asked Questions" (7329:5881); 22/1.25 on the phone. */}
+        <h2 className="font-sans text-[22px] font-semibold leading-[1.25] text-black lg:text-[36px] lg:leading-normal">{f.hub.faqHeading || DETAIL_COPY.faq.heading}</h2>
       </div>
       <div className="w-full lg:w-[900px]">
         <Accordion items={f.faqs} gap={15} variant="ring" idPrefix={`faq-${f.slug}`} />
