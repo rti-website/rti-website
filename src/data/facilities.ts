@@ -289,13 +289,15 @@ export const MINNESOTA: Facility = {
     ],
   },
   steps: STEPS,
-  // M-10, 12 Oct 2026: the sheet's five Minnesota FAQs, word for word.
+  // 14 Oct 2026: the SEO team's five Minnesota FAQs, word for word, from their FAQPage schema
+  // (recycle_technologies_minnesota_faq_schema.json). The page's FAQPage JSON-LD is built from
+  // this list, so what is shown and what is marked up stay the same. Was M-10 (12 Oct sheet).
   faqs: [
-    { q: 'Can residential customers get pick-up service in Minnesota?', a: 'No! Recycle Technologies offers pick-up services only for commercial clients (businesses). Residential customers can either drop off their e-waste at their nearby facility or subscribe to our nationwide mail-in program.' },
-    { q: 'What does the Blaine facility accept?', a: 'Our Blaine center takes electronics, batteries, light bulbs, ballasts, paper shredding and hard drive destruction, and also offers airbag recycling, off-site shredding and phone shredding. Drop-off is Monday to Friday, 7:30 AM to 4:00 PM at 1525 99th Ln NE, Blaine, MN 55449. Businesses can also schedule a pickup.' },
-    { q: 'How should Minnesota businesses manage used lamps and batteries?', a: 'Minnesota classes used lamps and hazardous-waste batteries as universal waste, a reduced-requirement category regulated by the MPCA. Keep them in closed, labeled containers, out of the trash, and avoid crushing lamps on site, which the state restricts. County programs oversee hazardous waste generators in the Twin Cities area, and the MPCA oversees Greater Minnesota, so confirm your local reporting rules.' },
-    { q: 'Can you securely destroy hard drives and confidential documents in Minnesota?', a: 'Yes. Our Blaine facility offers hard drive destruction, paper shredding, off-site shredding, and phone shredding, backed by NAID AAA certification for data destruction. Each job is logged at intake and ends with a Certificate of Recycling or Shredding that you can keep as proof for audits and compliance records.' },
-    { q: 'Which areas of Minnesota do you serve?', a: 'We serve the Twin Cities metro and beyond, including Hennepin, Ramsey, Dakota, Anoka, Washington and Scott counties, plus Minneapolis, Bloomington, Rochester, St. Cloud and Duluth. Residents can drop off in Blaine, businesses can schedule a pickup, and mail-in kits are available for everyone else. Find your county under Counties We Serve.' },
+    { q: 'What electronics can businesses recycle in Minnesota?', a: 'Recycle Technologies handles electronics, batteries, light bulbs, ballasts, and other approved materials. Contact us to confirm accepted items.' },
+    { q: 'Do you offer business electronics recycling pickup in Minnesota?', a: 'Yes. Business pickup is available across Minnesota. Request a quote to arrange collection.' },
+    { q: 'Can you provide certificates for electronics recycling and data destruction?', a: 'Yes, we provide certificates for electronics recycling and data destruction.' },
+    { q: 'Do you offer hard drive and document shredding in Minnesota?', a: 'Yes. Recycle Technologies offers hard drive and paper shredding services, including off-site shredding options. Contact us to discuss your requirements.' },
+    { q: 'Can I use a mail-in recycling kit if pickup is unavailable?', a: 'Yes. Prepaid mail-in kits let you ship eligible items to Recycle Technologies from outside its pickup area. Check kit options and accepted materials before ordering.' },
   ],
   cta: {
     heading: 'Ready to Bring Materials to Blaine?',
@@ -432,13 +434,15 @@ export const WISCONSIN: Facility = {
     ],
   },
   steps: STEPS,
-  // W-10, 12 Oct 2026: the sheet's five Wisconsin FAQs, word for word.
+  // 14 Oct 2026: the SEO team's five Wisconsin FAQs, word for word, from their FAQPage schema
+  // (recycle_technologies_faq_schema-_winsconsin.json). The page's FAQPage JSON-LD is built from
+  // this list. Was W-10 (12 Oct sheet).
   faqs: [
-    { q: 'Does Recycle Technologies serve both businesses and residential customers in Wisconsin?', a: 'Yes! Both businesses and residential customers can use our services. We offer a commercial pick-up facility for businesses recycling their electronics, while our residential customers can benefit from our drop-off facility or our nationwide mail-in program.' },
-    { q: 'What does Recycle Technologies accept in Wisconsin?', a: 'Our facility in New Berlin takes electronics, batteries, TVs, and paper shredding. Residents can drop off Monday to Friday, 7:30 AM to 4:00 PM, and businesses can schedule a pickup.' },
-    { q: 'How should Wisconsin businesses handle used batteries and fluorescent lamps?', a: 'Wisconsin treats most used lamps and batteries as universal waste. Keep them in closed, labeled containers ("Used Lamps" or "Used Batteries"), date them, train the staff who handle them, and send them for recycling within one year. We collect and recycle both, so you do not have to manage disposal on your own.' },
-    { q: 'How do I know my materials were recycled responsibly?', a: 'Every item is logged at intake, so its path through our facility is documented from the start. When processing is complete, we issue a Certificate of Recycling or Shredding for your records. Our New Berlin facility is R2v3-certified; we hold RIOS and NAID AAA certifications, and we operate under a zero-landfill commitment.' },
-    { q: 'Which parts of Wisconsin do you serve?', a: 'From New Berlin, we serve Milwaukee, Waukesha, Racine, Washington County, Madison, Green Bay, and Calumet County (Appleton), along with other communities across the state. Businesses can request a pickup, residents can drop off in New Berlin, and mail-in recycling kits cover everyone else. Choose your area under Counties We Serve for local details.' },
+    { q: 'What electronics can I recycle in Wisconsin?', a: 'Recycle Technologies accepts a range of electronics, computers, batteries, and other approved materials. Contact the team to confirm acceptance of specific items.' },
+    { q: 'Does Recycle Technologies offer business pickup in Wisconsin?', a: 'Yes. Scheduled business pickup is available within the service area, subject to location and collection requirements. Request a quote to confirm availability.' },
+    { q: 'Can I receive a certificate after electronics recycling or shredding?', a: 'Yes. Recycle Technologies issues applicable Certificates of Recycling or Shredding after processing is complete.' },
+    { q: 'Does Recycle Technologies offer hard drive and paper shredding?', a: 'Yes. Businesses can arrange secure phone, hard drive, and paper shredding services. Contact the team to discuss your materials and service requirements.' },
+    { q: 'What if my business is outside the pickup area?', a: 'A prepaid mail-in kit may be suitable for eligible materials. Review available kits and shipping instructions before sending your items.' },
   ],
   cta: {
     heading: 'Ready to Bring Materials to New Berlin?',

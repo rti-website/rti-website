@@ -9,6 +9,7 @@ import { LocationFaq } from '@/components/sections/locations/LocationFaq'
 import { StateHero, StateMaterials, StateCounties, StateCta, StateMailIn } from '@/components/sections/locations/StateSections'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { faqNode, graph } from '@/lib/schema'
 
 /**
  * A facility page — Figma "Location Details - Minnesota" 6744:8392 and
@@ -97,6 +98,10 @@ export async function LocationDetailPage({ f, layout: L }: { f: Facility; layout
         <LocationFaq       top={FAQ_TOP}      height={L.faq}      f={f} />
       </main>
       <Footer top={FOOTER_TOP} />
+      {/* FAQPage JSON-LD from the same list the FAQ section shows (14 Oct 2026). */}
+      {f.faqs.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: graph(faqNode(f.faqs)) }} />
+      )}
     </Canvas>
   )
 }
