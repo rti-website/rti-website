@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -20,7 +20,9 @@ export const GREENWOOD_INDIANA: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Greenwood, IN',
-    crumb: "Greenwood, Indiana",
+    crumb: "Greenwood",
+    /* Home / Locations / Indiana / Greenwood (14 Oct 2026, the state hub brief). */
+    parent: { label: "Indiana", href: href('/indiana-recycling/') },
     lead: "Recycling services Greenwood organizing drop-off and pickup for electronics, lighting debris, battery groups, paper materials, and approved waste streams. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

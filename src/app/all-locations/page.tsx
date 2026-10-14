@@ -10,6 +10,7 @@ import { LocationsFinder } from '@/components/sections/locations/LocationsFinder
 import { LocationCards } from '@/components/sections/locations/LocationCards'
 import { NationwideFacilities, type SiteLinks } from '@/components/sections/locations/NationwideFacilities'
 import { loadLocations, materialLinks } from '@/lib/service-locations'
+import { StateHubLinks } from '@/components/sections/locations/StateHubLinks'
 import { LocationsCoverage } from '@/components/sections/locations/LocationsCoverage'
 import { LIVE_SEO } from '@/data/locations'
 import { content } from '@/lib/page-content'
@@ -27,6 +28,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
  *   Hero           6374:4196   470        470
  *   Finder         6377:967    822        H.finder  map now full width, list gone
  *   Cards          6743:2450   696.05     H.cards   NEW 22 Sep 2026 — two facility cards (redrawn 25 Sep)
+ *   States         —           —          H.states  NEW 14 Oct 2026 — the nine state hubs (the hub brief)
  *   Extended       —           —          H.extended NEW 30 Sep 2026 — "Extended Operations", the Chicago card (management)
  *   Nationwide     6831:2663   1634       H.nation  NEW 24 Sep 2026 — the eight partner sites (Chicago moved up 30 Sep)
  *   Coverage       6377:968    493        H.cover   doc paragraphs differ
@@ -58,6 +60,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 const H = {
   finder: 822,    // Figma 822 — the revised frame, map at full width
   cards:  712,    // Figma 696.05 (redrawn 25 Sep 2026: no hours, no chips) — measured; the lead sets a line longer than drawn
+  states: 707,    // "Recycling by State" (14 Oct 2026, no frame) — measured
   extended: 530,  // "Extended Operations" (30 Sep 2026, no frame) — measured: the card ends at 520
   nation: 1375,   // Figma 1634 with nine cards; eight since Chicago moved up to Extended (30 Sep 2026): measured 1275 + pb100
   cover:  491,    // Figma 493 — the doc's second paragraph is two pixels shorter
@@ -68,7 +71,8 @@ const HERO_TOP = 140
 const HERO_H = 470
 const FINDER_TOP = HERO_TOP + HERO_H
 const CARDS_TOP  = FINDER_TOP + H.finder
-const EXT_TOP    = CARDS_TOP + H.cards
+const STATES_TOP = CARDS_TOP + H.cards
+const EXT_TOP    = STATES_TOP + H.states
 const NATION_TOP = EXT_TOP + H.extended
 const COVER_TOP  = NATION_TOP + H.nation
 const CTA_TOP    = COVER_TOP + H.cover
@@ -104,6 +108,7 @@ export default async function LocationsPage() {
         />
         <LocationsFinder   top={FINDER_TOP} height={H.finder} />
         <LocationCards     top={CARDS_TOP}  height={H.cards} />
+        <StateHubLinks     top={STATES_TOP} height={H.states} />
         <NationwideFacilities top={EXT_TOP} height={H.extended} block="EXTENDED" />
         <NationwideFacilities top={NATION_TOP} height={H.nation} links={links} />
         <LocationsCoverage top={COVER_TOP}  height={H.cover} />

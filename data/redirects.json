@@ -80,6 +80,11 @@
     "statusCode": 301
   },
   {
+    "source": "/franklin-indiana/",
+    "destination": "/greenwood-indiana/",
+    "statusCode": 301
+  },
+  {
     "source": "/https-www-recycletechnologies-com-ballasts/",
     "destination": "/ballasts/",
     "statusCode": 301

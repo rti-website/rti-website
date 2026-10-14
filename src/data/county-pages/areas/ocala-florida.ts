@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -20,7 +20,9 @@ export const OCALA_FLORIDA: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Ocala, FL',
-    crumb: "Ocala, Florida",
+    crumb: "Ocala",
+    /* Home / Locations / Florida / Ocala (14 Oct 2026, the state hub brief). */
+    parent: { label: "Florida", href: href('/florida-recycling/') },
     lead: "Recycling services Ocala coordinating receipt of electronics, lamp debris, mixed battery groups, paper volumes, and approved items for proper routing. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

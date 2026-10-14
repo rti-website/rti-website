@@ -20,7 +20,9 @@ export const FORT_WORTH_TEXAS: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Fort Worth, TX',
-    crumb: "Fort Worth, Texas",
+    crumb: "Fort Worth",
+    /* Home / Locations / Texas / Fort Worth (14 Oct 2026, the state hub brief). */
+    parent: { label: "Texas", href: href('/texas-recycling/') },
     lead: "Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

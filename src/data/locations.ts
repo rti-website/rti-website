@@ -95,6 +95,18 @@ export const FINDER = {
 /** The finder's copy, as LocationFinder (client) takes it in props. */
 export type Finder = typeof FINDER
 
+/**
+ * Recycling by State (14 Oct 2026, the state hub brief: "/all-locations/
+ * links to all 9 state hubs"). No frame: the county card style of the state
+ * pages. The nine links come from src/data/state-hubs.ts (ALL_STATE_HUBS).
+ */
+export const STATES = {
+  eyebrow: 'Recycling by State',
+  heading: 'Find Recycling Services in Your State',
+  lead: 'Choose your state to see our local facility, the services available there, the counties we serve, and how to schedule a pickup.',
+  link: 'View state page',
+}
+
 /** Coverage — 6377:968. Same two-column shape as the About Us story section. */
 export const COVERAGE = {
   eyebrow: 'Coverage',

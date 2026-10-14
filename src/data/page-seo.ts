@@ -424,7 +424,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/wisconsin-recycling/battery-recycling-green-bay/": { description: "Battery recycling Green Bay drop-off and collection for power packs, backup cells, sealed units, and mixed chemistries from local users." }, // 06
   "/wisconsin-recycling/racine/": { description: "Recycling center Racine County coordinating acceptance of electronics, lamp waste, varied battery categories, paper materials, and approved discard" }, // 06
   "/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/": { description: "Recycling center Minnetonka receiving phones, routers, circuit boards, ink cartridges, and small devices, accepted through controlled intake" }, // 06
-  "/franklin-indiana/": { description: "Recycling services Franklin Indiana handling electronics, retired lighting, varied battery categories, paper materials, and approved items through" }, // 06
   "/wisconsin-recycling/madison/": { description: "Recycling center Madison managing electronics intake, lighting waste, battery assortments, paper volumes, and approved material streams." }, // 06
   "/all-locations/": { description: "Explore electronics recycling facility in USA. Drop-off your E-waste: old TVs, printers, computer, phones, monitors, small appliances, and more at one" }, // 06
   "/minnesota-recycling/east-bethel/": { description: "Recycling East Bethel for consoles, modems, power cords, ink units, and small electronics, received through verified intake and processing steps." }, // 06

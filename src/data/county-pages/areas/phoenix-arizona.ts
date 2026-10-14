@@ -20,7 +20,9 @@ export const PHOENIX_ARIZONA: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Phoenix, AZ',
-    crumb: "Phoenix, Arizona",
+    crumb: "Phoenix",
+    /* Home / Locations / Arizona / Phoenix (14 Oct 2026, the state hub brief). */
+    parent: { label: "Arizona", href: href('/arizona-recycling/') },
     lead: "Recycling services Arizona coordinating collection of electronics, lighting waste, battery types, paper materials, and approved items statewide. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

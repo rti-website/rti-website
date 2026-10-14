@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow } from '@/components/ui/Bits'
 import type { Crumb } from '@/components/sections/service/ServiceHero'
-import type { Facility } from '@/data/facilities'
+import type { StatePageLike } from '@/data/facilities'
 import { localFacilityPage } from '@/data/local-pages'
 import { content } from '@/lib/page-content'
 import { href } from '@/lib/urls'
@@ -26,10 +26,16 @@ import { href } from '@/lib/urls'
  * every band is an ordinary block in flow.
  */
 
+/** The frame node a band answers to: Wisconsin's, Minnesota's, or for a state hub (no frame) the band's name. */
+function figma(f: StatePageLike, wi: string, mn: string, band: string): string {
+  return f.slug === 'wisconsin-recycling' ? wi : f.slug === 'minnesota-recycling' ? mn : `hub-${band}`
+}
+
 /* ------------------------------------------------------------------ hero -- */
 
 /** The hero photos, with where each frame puts them. */
-const PHOTOS: Record<Facility['slug'], { src: string; flip: boolean; phone?: { y: number; w: number; h: number } }> = {
+type Photo = { src: string; flip: boolean; phone?: { y: number; w: number; h: number } }
+const PHOTOS: Record<string, Photo> = {
   // 7329:6093 / phone 7329:6816: the photo covers the band on both.
   'minnesota-recycling': { src: '/images/pages/hero-minnesota-v3.jpg', flip: false },
   // 7329:5703 is mirrored on the board (rotate-180 + -scale-y-100); the phone
@@ -48,11 +54,12 @@ const PHOTOS: Record<Facility['slug'], { src: string; flip: boolean; phone?: { y
  * buttons; they are kept on the phone, full width, as on every other hero of
  * the site (the center bar under it has its own).
  */
-export function StateHero({ f, crumbs, top, height }: { f: Facility; crumbs: Crumb[]; top: number; height: number }) {
-  const p = PHOTOS[f.slug]
+export function StateHero({ f, crumbs, top, height }: { f: StatePageLike; crumbs: Crumb[]; top: number; height: number }) {
+  // The state hubs (14 Oct 2026) have no frame of their own: their `photo`, under the same washes.
+  const p: Photo = PHOTOS[f.slug] ?? f.photo ?? PHOTOS['minnesota-recycling']!
   const b = f.hero.buttons
   return (
-    <Section top={top} height={height} label={f.slug === 'wisconsin-recycling' ? '7329:5700' : '7329:6090'}
+    <Section top={top} height={height} label={figma(f, '7329:5700', '7329:6090', 'hero')}
       className="flex flex-col items-center bg-navy px-[20px] pb-[24px] pt-[72px] max-lg:min-h-[310px] lg:block lg:p-0">
       <Box x={0} y={0} w={1920} h={height} fill className="pointer-events-none overflow-hidden">
         <div
@@ -112,21 +119,24 @@ export function StateHero({ f, crumbs, top, height }: { f: Facility; crumbs: Cru
  * Phone (7329:6856): py44 px20, gap 24, the title at 24/1.25 and the lead at
  * 14/1.55, two tiles a row 12 apart (px16 py20, a 40px box, 13px label).
  */
-export async function StateMaterials({ f, top, height }: { f: Facility; top: number; height: number }) {
+export async function StateMaterials({ f, top, height }: { f: StatePageLike; top: number; height: number }) {
   const { DETAIL_COPY } = await content('facilities')
   const m = f.hub.materials
   const site = f.slug.replace(/-recycling$/, '')
   return (
-    <Section top={top} height={height} label={f.slug === 'wisconsin-recycling' ? '7329:5755' : '7329:6144'}
+    <Section top={top} height={height} label={figma(f, '7329:5755', '7329:6144', 'services')}
       className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div className="flex w-full flex-col items-center gap-[24px] text-center lg:w-[780px] lg:gap-[10px]">
         <Eyebrow>{DETAIL_COPY.materials.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[24px] font-semibold leading-[1.25] text-black lg:text-[36px] lg:leading-normal">{m.heading}</h2>
         <p className="font-roboto text-[14px] leading-[1.55] text-[#7d7d7d] lg:text-[16px] lg:leading-normal lg:text-[#7e7e7e]">{m.lead}</p>
       </div>
-      <ul className="grid w-full grid-cols-2 gap-[12px] lg:w-[1276px] lg:grid-cols-4 lg:gap-[20px]">
+      {/* Four to a row at 304 (Minnesota and Wisconsin: two full rows of eight).
+          A hub's nine (14 Oct 2026) centre the ninth on its row; on the phone
+          the odd last tile spans both columns. */}
+      <ul className="grid w-full grid-cols-2 gap-[12px] lg:flex lg:w-[1276px] lg:flex-wrap lg:justify-center lg:gap-[20px]">
         {m.tiles.map((t) => {
-          const page = localFacilityPage(site, t.service)
+          const page = t.href ? { url: t.href } : localFacilityPage(site, t.service)
           const tile = 'flex h-full w-full flex-col items-center gap-[10px] rounded-[12px] bg-[#eaf4f5] px-[16px] py-[20px] text-center lg:gap-[12px] lg:px-[20px] lg:py-[24px]'
           const inner = (
             <>
@@ -137,7 +147,7 @@ export async function StateMaterials({ f, top, height }: { f: Facility; top: num
             </>
           )
           return (
-            <li key={t.service} className="flex">
+            <li key={t.service} className="flex odd:last:col-span-2 lg:w-[304px]">
               {page
                 ? <Link href={href(page.url)} className={`${tile} transition-colors hover:bg-[#dcefef]`}>{inner}</Link>
                 : <span className={tile}>{inner}</span>}
@@ -160,20 +170,21 @@ export async function StateMaterials({ f, top, height }: { f: Facility; top: num
  *
  * Phone (7329:6912): one card a row, 24 apart, p20, the county at 16px.
  */
-export async function StateCounties({ f, top, height }: { f: Facility; top: number; height: number }) {
+export async function StateCounties({ f, top, height }: { f: StatePageLike; top: number; height: number }) {
   const { DETAIL_COPY } = await content('facilities')
   const c = f.hub.counties
   return (
-    <Section top={top} height={height} label={f.slug === 'wisconsin-recycling' ? '7329:5809' : '7329:6198'}
+    <Section top={top} height={height} label={figma(f, '7329:5809', '7329:6198', 'counties')}
       className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[44px] lg:px-0 lg:py-[90px]">
       <div id="counties-we-serve" className="flex w-full scroll-mt-[140px] flex-col items-center gap-[24px] text-center lg:w-[780px] lg:gap-[10px]">
         <Eyebrow>{DETAIL_COPY.counties.eyebrow}</Eyebrow>
         <h2 className="font-sans text-[24px] font-semibold leading-[1.25] text-black lg:text-[36px] lg:leading-normal">{DETAIL_COPY.counties.heading}</h2>
         <p className="font-roboto text-[14px] leading-[1.55] text-[#7e7e7e] lg:w-[674px] lg:text-[16px] lg:leading-normal">{c.lead}</p>
       </div>
-      <ul className="grid w-full grid-cols-1 gap-[24px] lg:w-[1276px] lg:grid-cols-3 lg:gap-[20px]">
+      {/* A hub with one or two counties (14 Oct 2026) centres its cards. */}
+      <ul className={`grid w-full grid-cols-1 gap-[24px] lg:w-[1276px] lg:gap-[20px] ${c.groups.length < 3 ? 'lg:flex lg:justify-center' : 'lg:grid-cols-3'}`}>
         {c.groups.map((g) => (
-          <li key={g.heading} className="flex flex-col gap-[14px] rounded-[12px] border border-[#e0e7ea] bg-white p-[20px] lg:p-[24px]">
+          <li key={g.heading} className="flex flex-col gap-[14px] lg:w-[412px] rounded-[12px] border border-[#e0e7ea] bg-white p-[20px] lg:p-[24px]">
             <h3 className="font-sans text-[16px] font-semibold leading-[1.3] text-navy lg:text-[17px]">{g.heading}</h3>
             <ul className="flex flex-wrap gap-[8px]">
               {g.chips.map((ch) => (
@@ -202,10 +213,10 @@ export async function StateCounties({ f, top, height }: { f: Facility; top: numb
  * Phone (7329:6995): py56 px20, 18 apart, 24/1.25 and 14/1.55, the buttons
  * full width and 46 tall, 10 apart.
  */
-export function StateCta({ f, top, height }: { f: Facility; top: number; height: number }) {
+export function StateCta({ f, top, height }: { f: StatePageLike; top: number; height: number }) {
   const c = f.hub.cta
   return (
-    <Section top={top} height={height} label={f.slug === 'wisconsin-recycling' ? '7329:5864' : '7329:6279'}
+    <Section top={top} height={height} label={figma(f, '7329:5864', '7329:6279', 'cta')}
       className="flex flex-col items-center justify-center gap-[18px] bg-[linear-gradient(119.6deg,#0b1f3a_7.25%,#1b7a3d_79.71%)] px-[20px] py-[56px] lg:gap-[20px] lg:bg-[linear-gradient(159.73deg,#0b1f3a_7.25%,#1b7a3d_79.71%)] lg:p-0">
       <h2 className="w-full text-center font-sans text-[24px] font-semibold leading-[1.25] text-white lg:w-[686px] lg:text-[36px] lg:leading-[1.2]">{c.heading}</h2>
       <p className="w-full text-center font-roboto text-[14px] leading-[1.55] text-white/80 lg:w-[686px] lg:text-[16px] lg:leading-[1.6]">{c.body}</p>
@@ -227,10 +238,10 @@ export function StateCta({ f, top, height }: { f: Facility; top: number; height:
  * Phone (7329:7001): py44 px20, 14 apart, 24/1.25 and 14/1.55, the button full
  * width and 46 tall.
  */
-export function StateMailIn({ f, top, height }: { f: Facility; top: number; height: number }) {
+export function StateMailIn({ f, top, height }: { f: StatePageLike; top: number; height: number }) {
   const m = f.hub.mailIn
   return (
-    <Section top={top} height={height} label={f.slug === 'wisconsin-recycling' ? '7329:5871' : '7329:6286'}
+    <Section top={top} height={height} label={figma(f, '7329:5871', '7329:6286', 'mail-in')}
       className="flex flex-col items-start gap-[14px] bg-[#eaf4f5] px-[20px] py-[44px] lg:flex-row lg:items-center lg:justify-between lg:gap-0 lg:px-[322px] lg:py-[64px]">
       <div className="flex w-full flex-col gap-[14px] lg:w-[820px] lg:gap-[12px]">
         <h2 className="font-sans text-[24px] font-semibold leading-[1.25] text-navy lg:text-[32px] lg:leading-[1.2]">{m.heading}</h2>

@@ -1,4 +1,4 @@
-import { PICKUP_HREF, QUOTE_HREF } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -40,7 +40,9 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Lewisburg, TN',
-    crumb: "Lewisburg, Tennessee",
+    crumb: "Lewisburg",
+    /* Home / Locations / Tennessee / Lewisburg (14 Oct 2026, the state hub brief). */
+    parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
     lead: "Bulb, battery and electronics recycling in Lewisburg, Tennessee: business pickup, drop-off by appointment, or a mail-in kit.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },

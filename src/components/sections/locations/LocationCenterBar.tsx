@@ -23,7 +23,7 @@ import type { Facility } from '@/data/facilities'
  */
 const BTN = 'btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4px] transition-colors lg:h-[48.05px]'
 
-export function LocationCenterBar({ top, height, f }: { top: number; height: number; f: Facility }) {
+export function LocationCenterBar({ top, height, f }: { top: number; height: number; f: Pick<Facility, 'center' | 'mapsHref'> }) {
   const c = f.center
   if (!c) return null
   return (

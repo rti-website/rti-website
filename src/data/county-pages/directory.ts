@@ -57,7 +57,6 @@ import { PHOENIX_ARIZONA } from './areas/phoenix-arizona'
 import { OCALA_FLORIDA } from './areas/ocala-florida'
 import { KENNESAW_GEORGIA } from './areas/kennesaw-georgia'
 import { GREENWOOD_INDIANA } from './areas/greenwood-indiana'
-import { FRANKLIN_INDIANA } from './areas/franklin-indiana'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from './areas/johnson-city-buffalo-tennessee'
 import { FORT_WORTH_TEXAS } from './areas/fort-worth-texas'
 import { SHEBOYGAN } from './areas/sheboygan'
@@ -193,7 +192,7 @@ export const DIRECTORY: DirectoryGroup[] = [
   /* ------------------------------------------- mail-in cities, nationwide */
   { heading: 'Mail-In Recycling', state: null, links: [
     l(PHOENIX_ARIZONA, 'Phoenix, AZ'), l(OCALA_FLORIDA, 'Ocala, FL'), l(KENNESAW_GEORGIA, 'Kennesaw, GA'),
-    l(GREENWOOD_INDIANA, 'Greenwood, IN'), l(FRANKLIN_INDIANA, 'Franklin, IN'),
+    l(GREENWOOD_INDIANA, 'Greenwood, IN'),
     l(FORT_WORTH_TEXAS, 'Fort Worth, TX'), l(ONTARIO_CALIFORNIA, 'Ontario, CA'),
   ] },
   { heading: 'Tennessee', state: null, links: [

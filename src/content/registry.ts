@@ -78,7 +78,6 @@ import { BULB_RECYCLE_MILWAUKEE } from '@/data/county-pages/areas/bulb-recycle-m
 import { OCALA_FLORIDA } from '@/data/county-pages/areas/ocala-florida'
 import { KENNESAW_GEORGIA } from '@/data/county-pages/areas/kennesaw-georgia'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from '@/data/county-pages/areas/johnson-city-buffalo-tennessee'
-import { FRANKLIN_INDIANA } from '@/data/county-pages/areas/franklin-indiana'
 import { TV_RECYCLING_IN_WISCONSIN } from '@/data/county-pages/areas/tv-recycling-in-wisconsin'
 import { TV_RECYCLING_IN_MINNESOTA } from '@/data/county-pages/areas/tv-recycling-in-minnesota'
 import { TV_RECYCLING_APPLETON } from '@/data/county-pages/areas/tv-recycling-appleton'
@@ -146,6 +145,7 @@ import { CHICAGO_PHONE_SHREDDING } from '@/data/local-pages/chicago-phone-shredd
 import { CHICAGO_TV_RECYCLING } from '@/data/local-pages/chicago-tv-recycling'
 import { CHICAGO_ELECTRONIC_RECYCLING } from '@/data/local-pages/chicago-electronic-recycling'
 import * as facilities from '@/data/facilities'
+import { ARIZONA_HUB, CALIFORNIA_HUB, FLORIDA_HUB, GEORGIA_HUB, INDIANA_HUB, TENNESSEE_HUB, TEXAS_HUB } from '@/data/state-hubs'
 import * as certifications from '@/data/certifications'
 import * as nav from '@/lib/nav'
 import * as siteFooter from '@/data/site-footer'
@@ -268,6 +268,14 @@ export const DOCS = {
   /* ------------------------------------------------- state landing pages -- */
 
   /* ------------------------------------------------------ location pages -- */
+  /* The seven state hubs (14 Oct 2026, src/data/state-hubs.ts). */
+  'hub/arizona': { title: 'Arizona (state page)', group: 'Location pages', urls: [ARIZONA_HUB.url], data: one(ARIZONA_HUB) },
+  'hub/california': { title: 'California (state page)', group: 'Location pages', urls: [CALIFORNIA_HUB.url], data: one(CALIFORNIA_HUB) },
+  'hub/florida': { title: 'Florida (state page)', group: 'Location pages', urls: [FLORIDA_HUB.url], data: one(FLORIDA_HUB) },
+  'hub/georgia': { title: 'Georgia (state page)', group: 'Location pages', urls: [GEORGIA_HUB.url], data: one(GEORGIA_HUB) },
+  'hub/indiana': { title: 'Indiana (state page)', group: 'Location pages', urls: [INDIANA_HUB.url], data: one(INDIANA_HUB) },
+  'hub/tennessee': { title: 'Tennessee (state page)', group: 'Location pages', urls: [TENNESSEE_HUB.url], data: one(TENNESSEE_HUB) },
+  'hub/texas': { title: 'Texas (state page)', group: 'Location pages', urls: [TEXAS_HUB.url], data: one(TEXAS_HUB) },
   /* Chicago, Blaine and New Berlin: reached by URL and from ads, not from
      the menus. ("City pages" until 27 Sep 2026.) */
   /* The county pages (29 Sep 2026): the Items We Accept pills, service cards
@@ -367,7 +375,6 @@ export const DOCS = {
   'area/ocala-florida': { title: "Ocala, Florida", group: 'Location pages', urls: [OCALA_FLORIDA.url], data: one(OCALA_FLORIDA) },
   'area/kennesaw-georgia': { title: "Kennesaw, Georgia", group: 'Location pages', urls: [KENNESAW_GEORGIA.url], data: one(KENNESAW_GEORGIA) },
   'area/johnson-city-buffalo-tennessee': { title: "Johnson City (Buffalo), Tennessee", group: 'Location pages', urls: [JOHNSON_CITY_BUFFALO_TENNESSEE.url], data: one(JOHNSON_CITY_BUFFALO_TENNESSEE) },
-  'area/franklin-indiana': { title: "Franklin, Indiana", group: 'Location pages', urls: [FRANKLIN_INDIANA.url], data: one(FRANKLIN_INDIANA) },
   'area/tv-recycling-in-wisconsin': { title: "TV Recycling In Wisconsin", group: 'Location pages', urls: [TV_RECYCLING_IN_WISCONSIN.url], data: one(TV_RECYCLING_IN_WISCONSIN) },
   'area/tv-recycling-in-minnesota': { title: "TV Recycling in Minnesota", group: 'Location pages', urls: [TV_RECYCLING_IN_MINNESOTA.url], data: one(TV_RECYCLING_IN_MINNESOTA) },
   'area/tv-recycling-appleton': { title: "TV Recycling in Appleton WI", group: 'Location pages', urls: [TV_RECYCLING_APPLETON.url], data: one(TV_RECYCLING_APPLETON) },

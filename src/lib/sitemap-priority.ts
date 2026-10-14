@@ -59,6 +59,14 @@ const EXACT: Record<string, Rank> = {
   // Location hubs
   '/minnesota-recycling/': m(0.7),
   '/wisconsin-recycling/': m(0.7),
+  // The seven state hubs (14 Oct 2026), the same as Minnesota and Wisconsin.
+  '/arizona-recycling/': m(0.7),
+  '/california-recycling/': m(0.7),
+  '/florida-recycling/': m(0.7),
+  '/georgia-recycling/': m(0.7),
+  '/indiana-recycling/': m(0.7),
+  '/tennessee-recycling/': m(0.7),
+  '/texas-recycling/': m(0.7),
   '/shredding-minnesota/': m(0.7),
   '/shredding-wisconsin/': m(0.7),
   // Legal

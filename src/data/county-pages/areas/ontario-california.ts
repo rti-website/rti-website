@@ -34,7 +34,9 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
   },
   hero: {
     h1: 'Recycling Services in Ontario, California',
-    crumb: "Ontario, California",
+    crumb: "Ontario",
+    /* Home / Locations / California / Ontario (14 Oct 2026, the state hub brief). */
+    parent: { label: "California", href: href('/california-recycling/') },
     lead: "Responsible recycling for lamps, ballasts, batteries and electronics, for businesses and residents across the Inland Empire and Southern California.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },

@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -20,7 +20,9 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Johnson City, TN',
-    crumb: "Johnson City (Buffalo), Tennessee",
+    crumb: "Johnson City",
+    /* Home / Locations / Tennessee / Johnson City (14 Oct 2026, the state hub brief). */
+    parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
     lead: "Recycling services Johnson City Buffalo supporting intake of electronic equipment, lighting waste, battery varieties, paper materials, and approved items. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

@@ -1,7 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { Accordion } from '@/components/client/Accordion'
-import type { Facility } from '@/data/facilities'
+import type { StatePageLike } from '@/data/facilities'
 import { content } from '@/lib/page-content'
 
 /**
@@ -21,7 +21,7 @@ import { content } from '@/lib/page-content'
  *
  * MOBILE — 6751:8477: px20 / py44, the list at full width 12 apart.
  */
-export async function LocationFaq({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationFaq({ top, height, f }: { top: number; height: number; f: Pick<StatePageLike, 'slug' | 'faqs' | 'hub'> }) {
   const { DETAIL_COPY } = await content('facilities')
   return (
     <Section top={top} height={height} label="6744:8798" className="flex flex-col items-center gap-[24px] bg-white px-[20px] py-[44px] lg:gap-[40px] lg:px-0 lg:py-[90px]">

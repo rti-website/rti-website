@@ -136,11 +136,27 @@ export type Facility = {
  * src/data/county-pages); the labels are the frame's, word for word.
  */
 export type StateHub = {
-  materials: { heading: string; lead: string; tiles: { label: string; icon: string; service: string }[] }
+  /** `href` (the state hubs of 14 Oct 2026) links the tile there instead of the state's own service page. */
+  materials: { heading: string; lead: string; tiles: { label: string; icon: string; service: string; href?: string }[] }
   counties: { lead: string; groups: { heading: string; chips: { label: string; href: string }[] }[] }
   cta: { heading: string; body: string; primary: { label: string; href: string }; secondary: { label: string; href: string } }
   mailIn: { heading: string; body: string; button: { label: string; href: string } }
   faqHeading: string
+}
+
+/**
+ * What the state page sections read (src/components/sections/locations/
+ * StateSections.tsx, LocationFaq): a facility page (MINNESOTA, WISCONSIN) or
+ * one of the state hubs of 14 Oct 2026 (src/data/state-hubs.ts).
+ */
+export type StatePageLike = {
+  slug: string
+  state: string
+  hero: Facility['hero']
+  hub: StateHub
+  faqs: Facility['faqs']
+  /** The hero photo, when the page has no Figma frame of its own (the hubs). */
+  photo?: { src: string; flip: boolean }
 }
 
 /** The eight service tiles, the same on both frames (7329:6150 / 7329:5761). */

@@ -21,7 +21,7 @@ import { content } from '@/lib/page-content'
  * MOBILE — 6750:8517. The plate becomes a 350px card with the four items
  * stacked, 18 apart, tiles at 38 with a 17px glyph.
  */
-export async function LocationQuickInfo({ top, height, f }: { top: number; height: number; f: Facility }) {
+export async function LocationQuickInfo({ top, height, f }: { top: number; height: number; f: Pick<Facility, 'addressShort' | 'center' | 'phone' | 'hoursShort'> }) {
   const { DETAIL_COPY } = await content('facilities')
   const items: QuickInfoItem[] = [
     { glyph: 'pin' as const,   label: DETAIL_COPY.quickInfo.address, value: f.addressShort },

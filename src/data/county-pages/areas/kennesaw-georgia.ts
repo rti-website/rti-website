@@ -1,4 +1,4 @@
-import { PICKUP_HREF } from '@/lib/urls'
+import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
@@ -20,7 +20,9 @@ export const KENNESAW_GEORGIA: CountyPage = {
   },
   hero: {
     h1: 'Recycle Technologies Kennesaw, GA (Atlanta Area)',
-    crumb: "Kennesaw, Georgia",
+    crumb: "Kennesaw",
+    /* Home / Locations / Georgia / Kennesaw (14 Oct 2026, the state hub brief). */
+    parent: { label: "Georgia", href: href('/georgia-recycling/') },
     lead: "Recycling services Kennesaw coordinating acceptance of electronics, lamp remnants, battery assortments, paper loads, and approved materials for processing. Call (800) 969-5166",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

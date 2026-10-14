@@ -2,6 +2,7 @@ import { absolute } from '@/lib/urls'
 import { SERVICE_SLUGS } from '@/data/service-locations'
 import { isPartnerHub, loadLocations, pageUrl } from '@/lib/service-locations'
 import { localFacilityPage as fixedFacilityPage } from '@/data/local-pages'
+import { STATE_HUBS } from '@/data/state-hubs'
 import REDIRECTS from '../../../data/redirects.json'
 
 /** A URL that 301s elsewhere is never listed (the MN and WI TV pages, 1 Oct 2026). */
@@ -26,7 +27,9 @@ export const revalidate = 300
 
 export async function GET(): Promise<Response> {
   const all = await loadLocations()
-  const urls: { loc: string; lastmod: string | null }[] = []
+  /* The seven state hubs (14 Oct 2026, the hub brief: "add all 7 hubs to
+     sitemap.xml and sitemap-locations.xml"). They are in /sitemap.xml too. */
+  const urls: { loc: string; lastmod: string | null }[] = STATE_HUBS.map((h) => ({ loc: absolute(h.url), lastmod: null }))
   for (const site of all.sites) {
     if (isPartnerHub(site) && site.published) urls.push({ loc: absolute(site.hubPath), lastmod: site.updatedAt })
     for (const svc of SERVICE_SLUGS) {
