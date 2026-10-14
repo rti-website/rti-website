@@ -4,7 +4,6 @@ import { href } from '@/lib/urls'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { LocationCenterBar } from '@/components/sections/locations/LocationCenterBar'
-import { LocationQuickInfo } from '@/components/sections/locations/LocationQuickInfo'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
 import { StateHero, StateMaterials, StateCounties, StateCta, StateMailIn } from '@/components/sections/locations/StateSections'
 import type { HubSite, StateHubPage as Hub } from '@/data/state-hubs'
@@ -19,8 +18,8 @@ import { faqNode, graph } from '@/lib/schema'
  *
  *   Header         140
  *   Hero           579        StateHero; Home / Locations / <state>
- *   Center card    L.center   LocationCenterBar, "View Center" to the facility page   } once per
- *   Quick info     L.info     LocationQuickInfo: address, phone, hours               } facility
+ *   Center card    L.center   LocationCenterBar, once per facility: "View Center" to the
+ *                             facility page, its address, phone and hours in the same card
  *   Services       L.mat      StateMaterials, nine tiles to the national pages
  *   Counties       L.counties StateCounties, the city chip to the facility page
  *   Pickup CTA     L.cta      StateCta
@@ -28,14 +27,13 @@ import { faqNode, graph } from '@/lib/schema'
  *   FAQ            L.faq      LocationFaq, with FAQPage JSON-LD
  *   Footer         681
  *
- * Tennessee has two facilities, so two center cards and two quick-info bars
- * (Lewisburg, then Johnson City). The facility pages keep their own URLs;
+ * Tennessee has two facilities, so two cards (Lewisburg, then Johnson City). The facility pages keep their own URLs;
  * their breadcrumb runs Home / Locations / <state> / <city>, the state
  * linking back here (hero.parent in src/data/county-pages/areas/).
  *
  * Re-measure with `node scripts/measure-sections.mjs --route <slug>`.
  */
-export type HubLayout = { center: number; info: number; mat: number; counties: number; cta: number; mailIn: number; faq: number }
+export type HubLayout = { center: number; mat: number; counties: number; cta: number; mailIn: number; faq: number }
 
 const HERO_TOP = 140
 const HERO_H = 579
@@ -57,7 +55,7 @@ function asFacility(s: HubSite) {
 
 export async function StateHubPage({ f, layout: L }: { f: Hub; layout: HubLayout }) {
   const { DETAIL_COPY } = await content('facilities')
-  const PER_SITE = L.center + L.info
+  const PER_SITE = L.center
   const SITES_TOP    = HERO_TOP + HERO_H
   const MAT_TOP      = SITES_TOP + PER_SITE * f.sites.length
   const COUNTIES_TOP = MAT_TOP + L.mat
@@ -80,10 +78,7 @@ export async function StateHubPage({ f, layout: L }: { f: Hub; layout: HubLayout
         {f.sites.map((s, i) => {
           const top = SITES_TOP + PER_SITE * i
           const site = asFacility(s)
-          return [
-            <LocationCenterBar key={`c${i}`} top={top}            height={L.center} f={site} />,
-            <LocationQuickInfo key={`i${i}`} top={top + L.center} height={L.info}   f={site} />,
-          ]
+          return <LocationCenterBar key={i} top={top} height={L.center} f={site} />
         })}
         <StateMaterials top={MAT_TOP}      height={L.mat}      f={f} />
         <StateCounties  top={COUNTIES_TOP} height={L.counties} f={f} />

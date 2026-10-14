@@ -27,9 +27,9 @@ export default async function MinnesotaFacilityPage() {
   return (
     <LocationDetailPage
       f={f}
-      /* Redrawn 13 Oct 2026 (Figma 7329:6088): the frame's band heights, services and counties as measured (py90 kept); center 219 is the
-         unchanged center bar; faq 672 leaves room for the longest answer open (14 Oct FAQs, measured 581 + py90). */
-      layout={{ center: 219, info: 198, mat: 622, counties: 813, cta: 442, mailIn: 230, faq: 672 }}
+      /* Redrawn 13 Oct 2026 (Figma 7329:6088): the frame's band heights, services and counties as measured (py90 kept); center 296 is the
+         one center card with address, phone and hours (14 Oct 2026, was 219 + a 198 quick-info band); faq 672 leaves room for the longest answer open (14 Oct FAQs, measured 581 + py90). */
+      layout={{ center: 296, mat: 622, counties: 813, cta: 442, mailIn: 230, faq: 672 }}
     />
   )
 }

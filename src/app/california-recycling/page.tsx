@@ -19,6 +19,7 @@ export default async function CaliforniaHubPage() {
   return <StateHubPage f={f} layout={LAYOUT} />
 }
 
-/* Measured 14 Oct 2026 (scripts/measure-sections.mjs): center 219 and cta 442 as on Minnesota;
+/* Measured 14 Oct 2026 (scripts/measure-sections.mjs): center 296 is the one card with address,
+   phone and hours (Aaqib); cta 442 as on Minnesota;
    faq leaves room for the longest answer open. */
-const LAYOUT = { center: 219, info: 199, mat: 812, counties: 495, cta: 442, mailIn: 230, faq: 672 }
+const LAYOUT = { center: 296, mat: 812, counties: 495, cta: 442, mailIn: 230, faq: 672 }

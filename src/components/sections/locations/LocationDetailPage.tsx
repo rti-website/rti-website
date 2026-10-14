@@ -4,7 +4,6 @@ import { href } from '@/lib/urls'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { LocationCenterBar } from '@/components/sections/locations/LocationCenterBar'
-import { LocationQuickInfo } from '@/components/sections/locations/LocationQuickInfo'
 import { LocationFaq } from '@/components/sections/locations/LocationFaq'
 import { StateHero, StateMaterials, StateCounties, StateCta, StateMailIn } from '@/components/sections/locations/StateSections'
 import type { Facility } from '@/data/facilities'
@@ -24,8 +23,9 @@ import { faqNode, graph } from '@/lib/schema'
  *   Section        Node (MN / WI)          board h        built
  *   Header         —                       140            140
  *   Hero           7329:6090 / 5700        579            StateHero
- *   Center bar     6744:8794               219            LocationCenterBar, unchanged
- *   Quick info     7329:6119 / 5730        198            LocationQuickInfo (3 items)
+ *   Center card    6744:8794               219+198        LocationCenterBar, with Address / Phone / Hours
+ *                                                         inside it since 14 Oct 2026 (one card; the
+ *                                                         separate quick-info band is gone)
  *   Services       7329:6144 / 5755        610 / 629      StateMaterials
  *   Counties       7329:6198 / 5809        803 / 671      StateCounties (no Load More)
  *   Pickup CTA     7329:6279 / 5864        442            StateCta
@@ -53,9 +53,8 @@ import { faqNode, graph } from '@/lib/schema'
  * properties that only apply at lg.
  */
 export type LocationLayout = {
-  /** The "Our <state> Recycling Center" bar (6744:8794), when the facility has `center`. */
-  center?: number
-  info: number
+  /** The "Our <state> Recycling Center" card (6744:8794) with its address, phone and hours. */
+  center: number
   /** 13 Oct 2026 bands (StateSections): services, counties, pickup CTA, mail-in. */
   mat: number; counties: number; cta: number; mailIn: number
   faq: number
@@ -67,9 +66,8 @@ const HERO_H = 579
 
 export async function LocationDetailPage({ f, layout: L }: { f: Facility; layout: LocationLayout }) {
   const CENTER_TOP   = HERO_TOP + HERO_H
-  const CENTER_H     = f.center ? (L.center ?? 0) : 0
-  const INFO_TOP     = CENTER_TOP + CENTER_H
-  const MAT_TOP      = INFO_TOP + L.info
+  const CENTER_H     = f.center ? L.center : 0
+  const MAT_TOP      = CENTER_TOP + CENTER_H
   const COUNTIES_TOP = MAT_TOP + L.mat
   const CTA_TOP      = COUNTIES_TOP + L.counties
   const MAILIN_TOP   = CTA_TOP + L.cta
@@ -88,9 +86,8 @@ export async function LocationDetailPage({ f, layout: L }: { f: Facility; layout
       <Header />
       <main>
         <StateHero f={f} crumbs={crumbs} top={HERO_TOP} height={HERO_H} />
-        {/* Kept exactly as it was (Asim, 13 Oct 2026). */}
+        {/* One card: the center and its address, phone and hours (Aaqib, 14 Oct 2026). */}
         {f.center && <LocationCenterBar top={CENTER_TOP} height={CENTER_H} f={f} />}
-        <LocationQuickInfo top={INFO_TOP}     height={L.info}     f={f} />
         <StateMaterials    top={MAT_TOP}      height={L.mat}      f={f} />
         <StateCounties     top={COUNTIES_TOP} height={L.counties} f={f} />
         <StateCta          top={CTA_TOP}      height={L.cta}      f={f} />

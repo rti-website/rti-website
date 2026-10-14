@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
 import { GLYPHS } from '@/components/ui/Glyph'
 import type { Facility } from '@/data/facilities'
+import { content } from '@/lib/page-content'
+import type { QuickInfoItem } from '@/components/sections/locations/LocationQuickInfo'
 
 /**
  * "Our Wisconsin Recycling Center" — Figma 6744:8794 on the Wisconsin
@@ -19,38 +21,80 @@ import type { Facility } from '@/data/facilities'
  * removed on the Minnesota and Wisconsin pages; the address and phone are on
  * the center's own page and in the quick-info bar.
  *
- * MOBILE: no phone frame. The plate stacks, the buttons go full width.
+ * 14 Oct 2026 (Aaqib): ONE CARD per facility. The Address / Phone / Hours
+ * bar that sat in a band of its own under this one (LocationQuickInfo) moves
+ * into this card, under a hairline, on the Minnesota and Wisconsin pages and
+ * all seven state hubs ("make it like the previous design ... so we have one
+ * card"). Same items and labels as that bar; the phone dials.
+ *
+ * MOBILE: no phone frame. The plate stacks, the buttons go full width, the
+ * three details stack under them.
  */
 const BTN = 'btn-pop inline-flex h-[46px] items-center justify-center gap-[8.008px] rounded-[8px] px-[28.029px] font-roboto text-[15.016px] font-medium leading-[22.523px] tracking-[-0.0801px] backdrop-blur-[4px] transition-colors lg:h-[48.05px]'
 
-export function LocationCenterBar({ top, height, f }: { top: number; height: number; f: Pick<Facility, 'center' | 'mapsHref'> }) {
+export async function LocationCenterBar({ top, height, f }: {
+  top: number; height: number
+  f: Pick<Facility, 'center' | 'mapsHref' | 'addressShort' | 'phone' | 'hoursShort'>
+}) {
   const c = f.center
   if (!c) return null
+  const { DETAIL_COPY } = await content('facilities')
+  const items: QuickInfoItem[] = [
+    { glyph: 'pin',   label: DETAIL_COPY.quickInfo.address, value: f.addressShort },
+    { glyph: 'phone', label: DETAIL_COPY.quickInfo.phone,   value: c.phone || f.phone, href: `tel:${f.phone.replace(/[^+\d]/g, '')}` },
+    { glyph: 'clock', label: DETAIL_COPY.quickInfo.hours,   value: f.hoursShort },
+  ]
   return (
     <Section top={top} height={height} label="6744:8794" className="flex flex-col items-center bg-[#f3f3f3] px-[20px] py-[32px] lg:px-0 lg:py-[50px]">
-      <div className="flex w-full flex-col gap-[20px] rounded-[16px] border border-[#e6e6e6] bg-[#fcfcfc] px-[21px] py-[21px] lg:w-[1282px] lg:flex-row lg:items-center lg:justify-between lg:gap-[24px] lg:px-[36px] lg:py-[28px]">
-        <div className="flex items-start gap-[12px] lg:min-w-px lg:flex-1 lg:items-center lg:gap-[14px]">
-          <span className="grid size-[38px] shrink-0 place-items-center rounded-[10px] bg-[#eaf4f5] lg:size-[40px]">
-            <svg viewBox="0 0 16 16" className="size-[17px] fill-brand lg:size-[18px]" aria-hidden="true"><path d={GLYPHS.pin} /></svg>
-          </span>
-          <div className="flex min-w-px flex-col gap-[2px] leading-normal">
-            <p className="font-roboto text-[12px] text-muted">{c.eyebrow}</p>
-            <Link href={c.href} className="font-sans text-[17px] font-medium text-brand underline decoration-from-font underline-offset-2 hover:text-brand/80 lg:text-[18px]">
-              {c.name}
+      <div className="flex w-full flex-col rounded-[16px] border border-[#e6e6e6] bg-[#fcfcfc] px-[21px] py-[21px] lg:w-[1282px] lg:px-[36px] lg:py-[28px]">
+        <div className="flex flex-col gap-[20px] lg:flex-row lg:items-center lg:justify-between lg:gap-[24px]">
+          <div className="flex items-start gap-[12px] lg:min-w-px lg:flex-1 lg:items-center lg:gap-[14px]">
+            <span className="grid size-[38px] shrink-0 place-items-center rounded-[10px] bg-[#eaf4f5] lg:size-[40px]">
+              <svg viewBox="0 0 16 16" className="size-[17px] fill-brand lg:size-[18px]" aria-hidden="true"><path d={GLYPHS.pin} /></svg>
+            </span>
+            <div className="flex min-w-px flex-col gap-[2px] leading-normal">
+              <p className="font-roboto text-[12px] text-muted">{c.eyebrow}</p>
+              <Link href={c.href} className="font-sans text-[17px] font-medium text-brand underline decoration-from-font underline-offset-2 hover:text-brand/80 lg:text-[18px]">
+                {c.name}
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-[10px] lg:shrink-0 lg:flex-row lg:gap-[14px]">
+            <Link href={c.href} className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
+              <span className="whitespace-nowrap">{c.primary}</span>
+              <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </Link>
+            <a href={f.mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-transparent text-brand hover:bg-brand-soft`}>
+              <span className="whitespace-nowrap">{c.secondary}</span>
+              <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
+            </a>
           </div>
         </div>
 
-        <div className="flex flex-col gap-[10px] lg:shrink-0 lg:flex-row lg:gap-[14px] lg:pt-[6px]">
-          <Link href={c.href} className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
-            <span className="whitespace-nowrap">{c.primary}</span>
-            <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
-          </Link>
-          <a href={f.mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-transparent text-brand hover:bg-brand-soft`}>
-            <span className="whitespace-nowrap">{c.secondary}</span>
-            <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
-          </a>
-        </div>
+        {/* Address, Phone, Hours — the old quick-info bar, inside the card. */}
+        <ul className="mt-[20px] flex flex-col gap-[16px] border-t border-[#e6e6e6] pt-[20px] lg:mt-[24px] lg:flex-row lg:items-center lg:justify-between lg:gap-[24px] lg:pt-[24px]">
+          {items.map((it) => {
+            const inner = (
+              <>
+                <span className="grid size-[36px] shrink-0 place-items-center rounded-[10px] bg-[#eaf4f5]">
+                  <svg viewBox="0 0 16 16" className="size-[16px] fill-brand" aria-hidden="true"><path d={GLYPHS[it.glyph]} /></svg>
+                </span>
+                <span className="flex min-w-px flex-col gap-[2px]">
+                  <span className="font-roboto text-[12px] uppercase leading-normal text-muted">{it.label}</span>
+                  <span className="font-sans text-[14.5px] font-medium leading-normal text-heading">{it.value}</span>
+                </span>
+              </>
+            )
+            return (
+              <li key={it.label} className="min-w-px">
+                {it.href
+                  ? <a href={it.href} className="flex items-center gap-[12px] hover:[&_span:last-child]:text-brand">{inner}</a>
+                  : <div className="flex items-center gap-[12px]">{inner}</div>}
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </Section>
   )
