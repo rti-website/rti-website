@@ -1,48 +1,165 @@
 import { absolute } from '@/lib/urls'
-import { SERVICE_SLUGS } from '@/data/service-locations'
-import { isPartnerHub, loadLocations, pageUrl } from '@/lib/service-locations'
-import { localFacilityPage as fixedFacilityPage } from '@/data/local-pages'
-import { STATE_HUBS } from '@/data/state-hubs'
 import REDIRECTS from '../../../data/redirects.json'
 
-/** A URL that 301s elsewhere is never listed (the MN and WI TV pages, 1 Oct 2026). */
+/**
+ * /sitemap-locations.xml — the location pages' own sitemap. robots.txt lists
+ * it next to /sitemap.xml.
+ *
+ * 14 Oct 2026: replaced with the SEO team's hand-made list (Aaqib: "upload
+ * this sitemap"), grouped and in their order: the hub pages, Chicago, the
+ * Minnesota and Wisconsin county and city pages, and the mail-in locations.
+ * The seven state hubs of the same day are added after the hub pages, as the
+ * hub brief asks ("add all 7 hubs to sitemap.xml and sitemap-locations.xml").
+ * All 77 of their URLs answered 200 on live when this was written.
+ *
+ * Until now this file was built from Admin -> Locations (published partner
+ * hubs and service pages); those are no longer listed here. Every page is
+ * still in /sitemap.xml.
+ *
+ * To add or remove a page, edit GROUPS. A URL that 301s elsewhere is never
+ * written out, so a later redirect in url-map.csv drops it on its own.
+ */
+const GROUPS: { group: string; urls: string[] }[] = [
+  { group: "Hub pages", urls: [
+    "/all-locations/",
+    "/minnesota-recycling/",
+    "/wisconsin-recycling/",
+    "/mail-in-recycling/"
+  ] },
+  { group: "State hubs (14 Oct 2026)", urls: [
+    "/arizona-recycling/",
+    "/california-recycling/",
+    "/florida-recycling/",
+    "/georgia-recycling/",
+    "/indiana-recycling/",
+    "/tennessee-recycling/",
+    "/texas-recycling/"
+  ] },
+  { group: "Chicago", urls: [
+    "/electronic-recycling-chicago/"
+  ] },
+  { group: "Minnesota: Hennepin County", urls: [
+    "/minnesota-recycling/hennepin-county-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/edina-recycling-services/",
+    "/minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/"
+  ] },
+  { group: "Minnesota: Anoka County", urls: [
+    "/minnesota-recycling/anoka-county-recycling/",
+    "/minnesota-recycling/ramsey/blaine/",
+    "/minnesota-recycling/coon-rapids/",
+    "/minnesota-recycling/east-bethel/"
+  ] },
+  { group: "Minnesota: Ramsey County", urls: [
+    "/minnesota-recycling/ramsey/",
+    "/minnesota-recycling/battery-recycling-st-paul/",
+    "/shredding-minnesota/st-paul/",
+    "/minnesota-recycling/ramsey/roseville/"
+  ] },
+  { group: "Minnesota: Dakota County", urls: [
+    "/minnesota-recycling/dakota-county/",
+    "/minnesota-recycling/dakota-county/burnsville-recycling-center/",
+    "/minnesota-recycling/dakota-county/lakeville-recycling-center/"
+  ] },
+  { group: "Minnesota: Washington County", urls: [
+    "/minnesota-recycling/washington-county/",
+    "/minnesota-recycling/electronic-recycling-in-woodbury/"
+  ] },
+  { group: "Minnesota: Scott County", urls: [
+    "/minnesota-recycling/scott-county/"
+  ] },
+  { group: "Minnesota: Olmsted County", urls: [
+    "/minnesota-recycling/olmsted-county/",
+    "/shredding-minnesota/rochester/"
+  ] },
+  { group: "Minnesota: Benton County", urls: [
+    "/minnesota-recycling/benton-county-recycling/",
+    "/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/"
+  ] },
+  { group: "Minnesota: Minneapolis", urls: [
+    "/minnesota-recycling/minneapolis/",
+    "/minnesota-recycling/battery-recycling-in-minneapolis/",
+    "/minnesota-recycling/bulb-recycle-minneapolis/",
+    "/light-bulb-recycling-minneapolis/"
+  ] },
+  { group: "Minnesota: statewide services", urls: [
+    "/shredding-minnesota/",
+    "/tv-recycling-in-minnesota/",
+    "/minnesota-recycling/electronic-recycling-duluth/",
+    "/shredding-minnesota/duluth/"
+  ] },
+  { group: "Wisconsin: Milwaukee County", urls: [
+    "/wisconsin-recycling/milwaukee/",
+    "/wisconsin-recycling/battery-recycling-milwaukee/",
+    "/wisconsin-recycling/bulb-recycle-milwaukee/",
+    "/wisconsin-recycling/milwaukee/oak-creek/"
+  ] },
+  { group: "Wisconsin: Waukesha County", urls: [
+    "/wisconsin-recycling/waukesha-electronic-recycling/",
+    "/wisconsin-recycling/battery-recycling-waukesha/",
+    "/wisconsin-recycling/tv-recycling-waukesha/",
+    "/shredding-wisconsin/waukesha/",
+    "/wisconsin-recycling/oconomowoc-recycling-center/",
+    "/wisconsin-recycling/new-berlin-recycling-center/"
+  ] },
+  { group: "Wisconsin: Madison", urls: [
+    "/wisconsin-recycling/madison/",
+    "/wisconsin-recycling/battery-recycling-madison/",
+    "/wisconsin-recycling/fluorescent-bulb-recycle-madison/",
+    "/wisconsin-recycling/computer-recycling-madison/"
+  ] },
+  { group: "Wisconsin: Green Bay", urls: [
+    "/wisconsin-recycling/green-bay-recycling/",
+    "/wisconsin-recycling/battery-recycling-green-bay/",
+    "/shredding-wisconsin/green-bay/",
+    "/wisconsin-recycling/tv-recycling-green-bay/"
+  ] },
+  { group: "Wisconsin: Calumet County", urls: [
+    "/wisconsin-recycling/calumet-county/",
+    "/wisconsin-recycling/appleton-electronic-recycling-center/",
+    "/wisconsin-recycling/calumet-county/appleton-recycling/",
+    "/wisconsin-recycling/battery-recycling-appleton/",
+    "/wisconsin-recycling/tv-recycling-appleton/"
+  ] },
+  { group: "Wisconsin: Racine and Washington County", urls: [
+    "/wisconsin-recycling/racine/",
+    "/wisconsin-recycling/washington-county-recycling-center/"
+  ] },
+  { group: "Wisconsin: statewide services and cities", urls: [
+    "/tv-recycling-in-wisconsin/",
+    "/shredding-wisconsin/",
+    "/wisconsin-recycling/sheboygan/",
+    "/wisconsin-recycling/fond-du-lac-recycling/"
+  ] },
+  { group: "Mail-in recycling locations", urls: [
+    "/phoenix-arizona/",
+    "/ocala-florida/",
+    "/kennesaw-georgia/",
+    "/greenwood-indiana/",
+    "/fort-worth-texas/",
+    "/ontario-california/",
+    "/johnson-city-buffalo-tennessee/",
+    "/lewisburg-tennessee/",
+    "/recycling-kits-in-ohio/",
+    "/recycling-kits-in-florida/"
+  ] },
+]
+
 const REDIRECTED = new Set(REDIRECTS.map((r) => r.source))
 
-/**
- * /sitemap-locations.xml — the location pages' own sitemap, as the SEO brief
- * asks (24 Sep 2026): every PUBLISHED partner hub (/locations/<site>/) and
- * every PUBLISHED service page, at any site. Drafts are never in it. The
- * Minnesota and Wisconsin hubs are the facility pages, already in
- * /sitemap.xml. robots.txt lists both files.
- *
- * Static, like /sitemap.xml, and regenerated every five minutes: a page
- * published or taken down in Admin -> Locations shows here within five
- * minutes. revalidatePath() from the admin save does NOT refresh a static
- * route handler (tested 24 Sep 2026: the pages updated at once, this file
- * did not), so the time based period is what keeps it current; without it
- * the file would only change on the next deploy.
- */
 export const dynamic = 'force-static'
-export const revalidate = 300
 
-export async function GET(): Promise<Response> {
-  const all = await loadLocations()
-  /* The seven state hubs (14 Oct 2026, the hub brief: "add all 7 hubs to
-     sitemap.xml and sitemap-locations.xml"). They are in /sitemap.xml too. */
-  const urls: { loc: string; lastmod: string | null }[] = STATE_HUBS.map((h) => ({ loc: absolute(h.url), lastmod: null }))
-  for (const site of all.sites) {
-    if (isPartnerHub(site) && site.published) urls.push({ loc: absolute(site.hubPath), lastmod: site.updatedAt })
-    for (const svc of SERVICE_SLUGS) {
-      // The fixed Blaine / New Berlin pages of 27 Sep 2026 are in /sitemap.xml already.
-      if (fixedFacilityPage(site.slug, svc)) continue
-      const page = all.pages.find((p) => p.site === site.slug && p.service === svc)
-      if (page?.published && site.published && !REDIRECTED.has(pageUrl(site, svc))) urls.push({ loc: absolute(pageUrl(site, svc)), lastmod: page.updatedAt })
-    }
-  }
+export function GET(): Response {
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${esc(u.loc)}</loc>${u.lastmod ? `<lastmod>${new Date(u.lastmod).toISOString()}</lastmod>` : ''}</url>`).join('\n')}
+${GROUPS.map((g) => {
+    const rows = g.urls.filter((u) => !REDIRECTED.has(u)).map((u) => `  <url><loc>${esc(absolute(u))}</loc></url>`)
+    return rows.length ? `  <!-- ${g.group} -->\n${rows.join('\n')}` : ''
+  }).filter(Boolean).join('\n\n')}
 </urlset>
 `
   return new Response(body, { headers: { 'content-type': 'application/xml; charset=utf-8' } })
