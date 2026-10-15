@@ -46,7 +46,8 @@ export const PATCH = guard(async ({ user, req }) => {
   const set = (col: string, value: unknown) => { params.push(value); sets.push(`${col} = $${params.length}`) }
 
   for (const col of ['title', 'meta_title', 'meta_description', 'excerpt', 'focus_keyword'] as const) {
-    if (input[col] !== undefined) set(col, input[col])
+    // All NOT NULL DEFAULT '' (db/001_init.sql): a null from the client is stored as ''.
+    if (input[col] !== undefined) set(col, input[col] ?? '')
   }
   for (const col of ['robots_index', 'robots_follow', 'allow_ai_answers', 'in_sitemap'] as const) {
     if (input[col] !== undefined) set(col, input[col])

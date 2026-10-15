@@ -28,6 +28,9 @@ const FIELDS = [
   'schema_custom', 'seo_score', 'readability_score',
 ] as const
 
+/** Text columns declared NOT NULL DEFAULT '' (db/001_init.sql). Never written as null. */
+const NOT_NULL_TEXT = new Set<string>(['meta_title', 'meta_description', 'focus_keyword'])
+
 const slugify = (s: string) =>
   s.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').slice(0, 80)
 
@@ -89,9 +92,13 @@ export const PUT = guard(async ({ req }) => {
         try { v = JSON.parse(v) } catch { return json({ error: 'Custom schema is not valid JSON.' }, 400) }
       }
       v = v === null ? null : JSON.stringify(v)
-    } else if (typeof v === 'string' && v.trim() === '' && col !== 'meta_title' && col !== 'meta_description') {
-      // Blank means "unset" for every optional field; the two that are NOT NULL
-      // keep their empty string.
+    } else if (NOT_NULL_TEXT.has(col)) {
+      // NOT NULL in db/001_init.sql: blank is stored as '' (an empty focus
+      // keyword used to become null and the whole save failed with "null value
+      // in column focus_keyword", 16 Oct 2026; 303 posts have no keyword).
+      v = v == null ? '' : String(v)
+    } else if (typeof v === 'string' && v.trim() === '') {
+      // Blank means "unset" for every optional field.
       v = null
     }
     set(col, v)
