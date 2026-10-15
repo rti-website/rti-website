@@ -1,6 +1,7 @@
 import { revalidatePath } from 'next/cache'
 import { q, one, tx } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
+import { refreshPost } from '@/lib/revalidate-post'
 import { deriveContent, slugify, type PostJSON } from '@/lib/post-content'
 
 type PostPatch = {
@@ -153,6 +154,10 @@ export const PATCH = guard(async ({ user, req }) => {
                    ORDER BY created_at DESC OFFSET 20)`, [id])
     }
   })
+
+  // Saving a published post updates the live page now (15 Oct 2026); before,
+  // only Publish did, so edits waited for the next deploy.
+  if (existing.status === 'published') refreshPost(req, [existing.slug, newSlug])
 
   return json({
     ok: true,

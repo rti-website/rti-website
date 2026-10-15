@@ -1,5 +1,6 @@
 import { one, q, tx } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
+import { refreshPost } from '@/lib/revalidate-post'
 
 /**
  * Every SEO field on one post — read, and write.
@@ -147,6 +148,10 @@ export const PUT = guard(async ({ req }) => {
 
     return updated
   })
+
+  // A published post's new title, description etc. go live now, not at the
+  // next deploy (15 Oct 2026). Drafts have no live page.
+  if (existing.status === 'published') refreshPost(req, [existing.slug, newSlug])
 
   return json({ post: row })
 }, { role: ['administrator', 'editor', 'seo'] })
