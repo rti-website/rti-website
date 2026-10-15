@@ -305,7 +305,10 @@ function SeoEditor({ postId, canEdit, onBack, onToast }: {
     setBusy(false)
     if (!r.ok) { onToast(r.error); return }
     setDirty(false)
-    onToast('SEO saved')
+    // A published post's page is refreshed by the save itself (api/admin/seo/[id]).
+    onToast(post.status === 'published'
+      ? `Saved and published. The live page at /${String(post.slug ?? '')}/ now shows it.`
+      : 'SEO saved. It goes live when the post is published.')
   }
 
   if (error) return <main className="a-sheet"><Retry error={error} onRetry={onBack} /></main>
@@ -329,8 +332,11 @@ function SeoEditor({ postId, canEdit, onBack, onToast }: {
           <span className="a-pill sched">Imported — rule 6 applies</span>
         )}
         {canEdit && (
+          /* 16 Oct 2026 (Aaqib): say plainly that saving a published post's
+             SEO publishes it; the server refreshes the live page on save. */
           <button className="a-btn p" disabled={busy || !dirty} onClick={() => void save()}>
-            {busy ? 'Saving…' : dirty ? 'Save SEO' : 'Saved'}
+            {busy ? (post.status === 'published' ? 'Publishing…' : 'Saving…') : !dirty ? (post.status === 'published' ? 'Published' : 'Saved')
+              : post.status === 'published' ? 'Save & publish' : 'Save SEO'}
           </button>
         )}
       </div>

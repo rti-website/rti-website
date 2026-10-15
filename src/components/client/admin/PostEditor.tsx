@@ -148,6 +148,8 @@ export function PostEditor({
 }) {
   const [post, setPost] = useState<Post | null>(null)
   const [saving, setSaving] = useState<'idle' | 'saving' | 'saved'>('idle')
+  /** A published post with saved edits the live page does not show yet (16 Oct 2026). */
+  const [unpublished, setUnpublished] = useState(false)
   const [error, setError] = useState('')
   /* The toolbar's link and picture buttons used to be window.prompt(). See the
      note at the top of Dialog.tsx for why they are not any more. */
@@ -289,6 +291,7 @@ export function PostEditor({
     setSaving('saved')
   }, [editor, onToast, readOnly])
   useEffect(() => { editor?.setEditable(!readOnly) }, [editor, readOnly])
+  useEffect(() => { if (saving === 'saved' && post?.status === 'published') setUnpublished(true) }, [saving, post?.status])
 
   const queueSave = useCallback(() => {
     clearTimeout(saveTimer.current)
@@ -438,7 +441,8 @@ export function PostEditor({
     const data = await res.json()
     if (!res.ok) { onToast(data.error ?? 'Could not publish.'); return }
     setPost((p) => (p ? { ...p, status: data.status } : p))
-    onToast(action === 'publish' ? `Published — live at ${data.path}` : 'Moved back to draft')
+    setUnpublished(false)
+    onToast(action === 'publish' ? `Published. The live page at ${data.path} now shows your changes.` : 'Moved back to draft')
   }
 
   if (error) return <div className="a-sheet"><div className="a-err">{error}</div></div>
@@ -790,12 +794,12 @@ export function PostEditor({
           <span className="a-dotsep" />
           <span className="a-tnum">{Math.max(1, Math.round(words / 225))} min read</span>
           <span className="a-dotsep" />
-          <span>{saving === 'saving' ? 'Saving…' : saving === 'saved' ? 'Saved' : 'All changes saved'}</span>
+          <span>{saving === 'saving' ? 'Saving…' : unpublished ? 'Saved. Press Publish changes to put it on the live site' : saving === 'saved' ? 'Saved' : 'All changes saved'}</span>
         </div>
 
         <div className="a-actionbar">
           <button className="a-btn" onClick={onClose}>Back to posts</button>
-          {!readOnly && <button className="a-btn" onClick={() => void save()}>Save now</button>}
+          {!readOnly && <button className="a-btn" onClick={() => void save()}>Save</button>}
           <span className="a-spacer" />
           <span className={`a-pill ${post.status === 'published' ? 'live' : post.status === 'scheduled' ? 'sched' : 'draft'}`}>
             {post.status === 'published' ? 'Published' : post.status === 'scheduled' ? 'Scheduled' : 'Draft'}
@@ -803,8 +807,14 @@ export function PostEditor({
           {readOnly ? (
             <span className="a-hint">View only: your account cannot change posts.</span>
           ) : canPublish ? (
+            /* A published post keeps both: "Publish changes" puts what is saved
+               on the live page (16 Oct 2026, Aaqib: "add the publish button
+               with save"); "Move to draft" takes it off the site. */
             post.status === 'published'
-              ? <button className="a-btn" onClick={() => void publish('unpublish')}>Move to draft</button>
+              ? <>
+                  <button className="a-btn" onClick={() => void publish('unpublish')}>Move to draft</button>
+                  <button className="a-btn go" onClick={() => void publish('publish')}>Publish changes</button>
+                </>
               : <button className="a-btn go" onClick={() => void publish('publish')}>Publish</button>
           ) : (
             <span className="a-hint">Ask an editor to publish this.</span>

@@ -1,7 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { q, one, tx } from '@/lib/db'
 import { guard, json, body } from '@/lib/admin-route'
-import { refreshPost } from '@/lib/revalidate-post'
 import { deriveContent, slugify, type PostJSON } from '@/lib/post-content'
 
 type PostPatch = {
@@ -155,9 +154,9 @@ export const PATCH = guard(async ({ user, req }) => {
     }
   })
 
-  // Saving a published post updates the live page now (15 Oct 2026); before,
-  // only Publish did, so edits waited for the next deploy.
-  if (existing.status === 'published') refreshPost(req, [existing.slug, newSlug])
+  // Saving (and the editor's autosave) only writes the database. A published
+  // post's live page changes when someone presses "Publish changes"
+  // (./publish), so half-typed edits never reach visitors (16 Oct 2026).
 
   return json({
     ok: true,
