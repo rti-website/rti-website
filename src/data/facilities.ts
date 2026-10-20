@@ -640,14 +640,14 @@ export const NATIONWIDE = {
      phone (a copy and paste slip). The phone frame (6834:2668) has Ontario's
      own, and that is what is used here. */
   facilities: [
-    nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'),
-    nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'),
-    nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'),
-    nationwide('Johnson City, TN', '300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'),
-    nationwide('Atlanta, GA',      '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'),
-    // Ontario's card opens its own page, like Chicago's (8 Oct 2026).
+    { ...nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'), href: href('/lewisburg-tennessee/') },
+    { ...nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'), href: href('/greenwood-indiana/') },
+    { ...nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'), href: href('/ocala-florida/') },
+    { ...nationwide('Johnson City, TN', '300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'), href: href('/johnson-city-buffalo-tennessee/') },
+    { ...nationwide('Atlanta, GA',      '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'), href: href('/kennesaw-georgia/') },
+    // Every card opens its facility page (Ontario 8 Oct 2026, the rest 21 Oct 2026, Aaqib: "make all these facilities clickable").
     { ...nationwide('Ontario, CA', '805 East Francis Street, Ontario, CA 91761', '(888) 923-7252', 1, 'ontario-ca'), href: href('/ontario-california/') },
-    nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'),
-    nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'),
+    { ...nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(480) 393-5729', 2, 'phoenix-az'), href: href('/phoenix-arizona/') },
+    { ...nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'), href: href('/fort-worth-texas/') },
   ],
 }

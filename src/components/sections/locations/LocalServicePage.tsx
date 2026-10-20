@@ -5,7 +5,7 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { Accordion } from '@/components/client/Accordion'
 import { FOOTER_H } from '@/lib/layout'
-import { href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
 import { ICON_SRC, type LocalBand, type LocalBlock, type LocalCard, type LocalPage, type Link as L } from '@/data/local-pages/types'
 
@@ -196,7 +196,11 @@ function Block({ block: b }: { block: LocalBlock }) {
             <h2 className="font-sans text-[21px] font-semibold leading-[normal] text-[#132119] lg:text-[26px]">{b.heading}</h2>
             {b.body.map((t) => <p key={t} className="font-sans text-[14px] leading-[normal] text-[#474747] lg:text-[16px]">{t}</p>)}
           </div>
-          <Link href={b.link.href} className="btn-pop flex w-full shrink-0 items-center justify-center rounded-[8px] bg-brand px-[28px] py-[14.5px] font-sans text-[16px] font-medium leading-[normal] text-white lg:w-auto lg:text-[15px]">{b.link.label}</Link>
+          <div className="flex w-full shrink-0 flex-col gap-[12px] lg:w-auto lg:flex-row lg:gap-[16px]">
+            <Link href={b.link.href} className="btn-pop flex w-full shrink-0 items-center justify-center rounded-[8px] bg-brand px-[28px] py-[14.5px] font-sans text-[16px] font-medium leading-[normal] text-white lg:w-auto lg:text-[15px]">{b.link.label}</Link>
+            {/* A pickup banner also offers the quote (21 Oct 2026). */}
+            {isPickup(b.link) && <Link href={QUOTE_HREF} className="btn-pop flex w-full shrink-0 items-center justify-center rounded-[8px] border border-brand bg-white px-[28px] py-[14.5px] font-sans text-[16px] font-medium leading-[normal] text-brand lg:w-auto lg:text-[15px]">Get a Quote</Link>}
+          </div>
         </div>
       )
     case 'button':
@@ -258,6 +262,10 @@ export function Cta({ cta: c }: { cta: LocalPage['cta'] }) {
           {c.line && <p className="font-sans text-[18px] font-medium leading-[26px]">{c.line}</p>}
           <div className="flex w-full flex-col items-center gap-[12px] lg:w-auto lg:flex-row lg:gap-[16px]">
             <CtaBtn link={c.primary} filled />
+            {/* Schedule a Pickup always comes with Get a Quote (Aaqib, 21 Oct
+                2026): when the pair is pickup and a phone line, the quote
+                button goes between them. */}
+            {isPickup(c.primary) && !isQuote(c.secondary) && <CtaBtn link={{ label: 'Get a Quote', href: QUOTE_HREF }} />}
             <CtaBtn link={c.secondary} />
           </div>
           {c.footnote && <p className="font-roboto text-[13px] leading-[normal] text-white/90">{c.footnote}</p>}
@@ -266,6 +274,9 @@ export function Cta({ cta: c }: { cta: LocalPage['cta'] }) {
     </section>
   )
 }
+
+const isPickup = (l: L) => l.href.includes('/request-a-pickup/')
+const isQuote = (l: L) => l.href.includes('/quote/')
 
 function CtaBtn({ link, filled = false }: { link: L; filled?: boolean }) {
   const cls = `btn-pop flex h-[48px] w-full items-center justify-center gap-[10px] rounded-[8px] px-[20px] font-roboto text-[16px] font-medium leading-[normal] lg:w-auto lg:px-[28px] lg:text-[15px] ${filled ? 'bg-white text-brand' : 'border border-white text-white'}`

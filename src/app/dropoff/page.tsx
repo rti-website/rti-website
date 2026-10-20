@@ -107,6 +107,7 @@ export default async function DropoffPage() {
             <div className="mt-[24px] flex w-full flex-col gap-[12px] lg:hidden">
               <a href="#find" className="btn-pop inline-flex h-[48px] w-full items-center justify-center rounded-[8px] bg-brand font-roboto text-[15px] font-medium text-white">{C.HERO.findButton}</a>
               <Link href={C.HERO.pickupButton.href} className="btn-pop inline-flex h-[48px] w-full items-center justify-center rounded-[8px] border border-white font-roboto text-[15px] font-medium text-white">{C.HERO.pickupButton.label}</Link>
+              <Link href={C.HERO.quoteButton.href} className="btn-pop inline-flex h-[48px] w-full items-center justify-center rounded-[8px] border border-white font-roboto text-[15px] font-medium text-white">{C.HERO.quoteButton.label}</Link>
             </div>
           </div>
         </section>

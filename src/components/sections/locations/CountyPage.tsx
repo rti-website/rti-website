@@ -152,7 +152,10 @@ function Rich({ text }: { text: string }) {
  * no breadcrumb.
  */
 function Hero({ page }: { page: Page }) {
-  const h = page.hero
+  /* Every Schedule a Pickup goes with a Get a Quote (Aaqib, 21 Oct 2026: "have
+     to make the cta same in all places"): a hero whose one button is the
+     pickup form takes the quote button as its second, drawn as the pair. */
+  const h = { ...page.hero, secondary: page.hero.secondary ?? (page.hero.button.href.includes('/request-a-pickup/') ? { label: 'Get a Quote', href: QUOTE_HREF } : undefined) }
   return (
     <section data-figma={page.figma.board} className={`relative overflow-hidden bg-navy lg:h-[470px] ${h.third ? 'h-[350px]' : h.secondary ? 'h-[310px]' : 'h-[276px]'}`}>
       <div aria-hidden="true" className="absolute left-[-223px] top-[-108px] h-[494px] w-[878px] lg:left-1/2 lg:top-[var(--img-t)] lg:h-[1081px] lg:w-[1920px] lg:-translate-x-1/2"

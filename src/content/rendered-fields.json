@@ -3792,6 +3792,8 @@
     "HERO.lead",
     "HERO.pickupButton.href",
     "HERO.pickupButton.label",
+    "HERO.quoteButton.href",
+    "HERO.quoteButton.label",
     "ITEMS.eyebrow",
     "ITEMS.heading",
     "ITEMS.intro",

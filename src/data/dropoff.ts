@@ -27,6 +27,8 @@ export const HERO = {
   lead: 'Residents and businesses can drop off electronics, batteries, light bulbs, and more at Recycle Technologies (RTI) locations across the country. Accepted items vary by location, so check the location details below or call before you visit. There is no drop-off site in Chicago, but we offer scheduled commercial pickup there.',
   findButton: 'Find a Location',
   pickupButton: { label: 'Schedule a Pickup', href: PICKUP_HREF },
+  /* Pickup always with a quote button (21 Oct 2026); phone hero only, as the pickup button. */
+  quoteButton: { label: 'Get a Quote', href: QUOTE_HREF },
 }
 
 /** Find a Drop-off Location — 7206:3216. */
