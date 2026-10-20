@@ -35,7 +35,7 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
   county: "Lewisburg",
   figma: { board: "7052:28731", phone: "7052:34333" },
   seo: {
-    title: 'Recycling in Lewisburg, TN: Bulbs, Batteries & E-Waste',
+    title: "Recycling in Lewisburg, Tennessee | Call (800) 969-5166",
     description: "Recycle fluorescent and LED bulbs, batteries and electronics in Lewisburg, Tennessee, with business pickup, drop-off by appointment or a mail-in kit.",
   },
   hero: {
@@ -43,16 +43,33 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
     crumb: "Lewisburg",
     /* Home / Locations / Tennessee / Lewisburg (14 Oct 2026, the state hub brief). */
     parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
-    lead: "Bulb, battery and electronics recycling in Lewisburg, Tennessee: business pickup, drop-off by appointment, or a mail-in kit.",
+    lead: "Tennessee Main Receiving and Administration Facility, 1580 Old Columbia Road, Lewisburg, TN 37091",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },
   },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
   quickInfo: [
-    { glyph: 'pin',   label: "Address",                  value: "1580 Old Columbia Rd, Lewisburg, TN 37091", href: MAPS },
-    { glyph: 'phone', label: "Pickups and drop-off",     value: "931-334-1265", href: "tel:+19313341265" },
-    { glyph: 'clock', label: "Drop-off hours",           value: "Call for hours; by appointment" },
-    { glyph: 'phone', label: "General questions",        value: "(800) 969-5166", href: "tel:+18009695166" },
+    { glyph: 'pin',   label: "Address", value: "1580 Old Columbia Road, Lewisburg, TN 37091", href: "https://www.google.com/maps/dir/?api=1&destination=1580+Old+Columbia+Road%2C+Lewisburg%2C+TN+37091" },
+    { glyph: 'phone', label: "Phone (office)", value: "615-214-4768", href: "tel:+16152144768" },
+    { glyph: 'phone', label: "Keith's cell", value: "931-334-1265", href: "tel:+19313341265" },
+    { glyph: 'clock', label: "Hours", value: "Mon to Fri, 8am to 4pm" },
   ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on Old Columbia Road. Staff will direct you to the drop-off area when you arrive.",
+    introShort: "Enter via the main lot on Old Columbia Road. Staff will direct you to the drop-off area when you arrive.",
+    rows: [
+      { label: "Nearest Highway", value: "State Route 417 (W Ellington Parkway)" },
+      { label: "Parking", value: "I-65 exit 32, then Mooresville Hwy. About 1.5 acres of level gravel parking, 3 dock doors, 2 bay doors." },
+      { label: "Drop-off Entrance", value: "I-65 exit 32, then Mooresville Hwy. About 1.5 acres of level gravel parking, 3 dock doors, 2 bay doors." },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Tennessee Main Receiving and Administration Facility",
+    address: "1580 Old Columbia Road, Lewisburg, TN 37091",
+    tel: "+16152144768",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=1580+Old+Columbia+Road%2C+Lewisburg%2C+TN+37091",
+  },
   about: {
     heading: "Recycling in Lewisburg, Tennessee",
     blocks: [
@@ -74,6 +91,9 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Lamps, e-waste, batteries, ballasts, mercury devices, airbags. Call about anything else." }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "I-65 exit 32, then Mooresville Hwy. About 1.5 acres of level gravel parking, 3 dock doors, 2 bay doors." }] },
     { kind: 'text', heading: "Our Recycling Services", blocks: [
       { h: "Electronics Recycling" },
       { p: "We take old computers, laptops, televisions, phones and large office equipment, and break them down to recover valuable materials such as metals and circuit boards. Businesses and households can clear out old equipment while staying within environmental rules, and nothing goes to a landfill." },
@@ -92,6 +112,13 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
     { kind: 'text', heading: "Our Environmental Responsibility", blocks: [
       { p: "Alongside our subsidiaries, Lighting Resources and EZ on the Earth, we use the latest recycling technology to recover as much material as possible, cutting landfill waste and environmental damage. E-waste and other materials become reusable resources, supporting a circular economy." },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (629) 240-1860 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Lewisburg facility?", a: "Drop-off requirements vary by material and quantity. Call (629) 240-1860 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Marshall County", text: "" }] }] },
   ],
   noServices: true,
   company: {

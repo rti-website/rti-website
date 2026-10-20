@@ -15,7 +15,7 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:69820", phone: "7084:70147" },
   seo: {
-    title: 'Johnson City Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Johnson City, Tennessee | Call (800) 969-5166",
     description: "Recycling services Johnson City Buffalo supporting intake of electronic equipment, lighting waste, battery varieties, paper materials, and approved items. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,30 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
     crumb: "Johnson City",
     /* Home / Locations / Tennessee / Johnson City (14 Oct 2026, the state hub brief). */
     parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
-    lead: "Recycling services Johnson City Buffalo supporting intake of electronic equipment, lighting waste, battery varieties, paper materials, and approved items. Call (800) 969-5166",
+    lead: "Tennessee Bulb and Airbag Processing Facility, 300 Boggs Lane, Johnson City, TN 37604",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "2212 Buffalo Rd #210 or 300 Boggs Lane, Johnson City, TN", href: "https://www.google.com/maps/dir/?api=1&destination=300+Boggs+Lane%2C+Johnson+City%2C+TN+37604" },
+    { glyph: 'phone', label: "Phone", value: "423-328-7012", href: "tel:+14233287012" },
+    { glyph: 'clock', label: "Hours", value: "Mon to Fri, 7:30am to 3:30pm. Closed on scheduled holidays." },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on Boggs Lane. Staff will direct you to the drop-off area when you arrive.",
+    introShort: "Enter via the main lot on Boggs Lane. Staff will direct you to the drop-off area when you arrive.",
+    rows: [
+      { label: "Nearest Highway", value: "Interstate 26 (I-26)" },
+      { label: "Parking", value: "I-26 exit 24, main entrance, 7 dock doors" },
+      { label: "Drop-off Entrance", value: "I-26 exit 24, main entrance, 7 dock doors" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Tennessee Bulb and Airbag Processing Facility",
+    address: "300 Boggs Lane, Johnson City, TN 37604",
+    tel: "+14233287012",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=300+Boggs+Lane%2C+Johnson+City%2C+TN+37604",
   },
   about: {
     heading: "Electronics Recycling Services in Johnson City (Buffalo), Tennessee",
@@ -36,6 +58,9 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Lamps, batteries, ballasts, electronics, TVs, mercury devices, PCBs, aerosols" }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "I-26 exit 24, main entrance, 7 dock doors" }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -50,6 +75,13 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (423) 328-9596 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Johnson City facility?", a: "Drop-off requirements vary by material and quantity. Call (423) 328-9596 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area is available to you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Washington County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",

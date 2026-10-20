@@ -15,7 +15,7 @@ export const GREENWOOD_INDIANA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:67597", phone: "7084:67924" },
   seo: {
-    title: 'Greenwood Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Greenwood, Indiana | Call (317) 888-3889",
     description: "Recycling services Greenwood organizing drop-off and pickup for electronics, lighting debris, battery groups, paper materials, and approved waste streams. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,31 @@ export const GREENWOOD_INDIANA: CountyPage = {
     crumb: "Greenwood",
     /* Home / Locations / Indiana / Greenwood (14 Oct 2026, the state hub brief). */
     parent: { label: "Indiana", href: href('/indiana-recycling/') },
-    lead: "Recycling services Greenwood organizing drop-off and pickup for electronics, lighting debris, battery groups, paper materials, and approved waste streams. Call (800) 969-5166",
+    lead: "Indiana Bulb Processing and Mercury Retort Facility, 498 Park 800 Drive, Greenwood, IN 46143",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "498 Park 800 Drive, Greenwood, IN 46143", href: "https://www.google.com/maps/dir/?api=1&destination=498+Park+800+Drive%2C+Greenwood%2C+IN+46143" },
+    { glyph: 'phone', label: "Phone", value: "(317) 888-3889", href: "tel:+13178883889" },
+    { glyph: 'phone', label: "Toll-free", value: "(866) 375-7340", href: "tel:+18663757340" },
+    { glyph: 'clock', label: "Hours", value: "Monday to Friday, 7:00 AM to 2:00 PM" },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on Park 800 Drive. Staff will direct you to the drop-off area upon arrival.",
+    introShort: "Enter via the main lot on Park 800 Drive. Staff will direct you to the drop-off area upon arrival.",
+    rows: [
+      { label: "Nearest Highway", value: "US Route 31 (US-31)" },
+      { label: "Parking", value: "US 31 or I-65" },
+      { label: "Drop-off Entrance", value: "US 31 or I-65" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Indiana Bulb Processing and Mercury Retort Facility",
+    address: "498 Park 800 Drive, Greenwood, IN 46143",
+    tel: "+13178883889",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=498+Park+800+Drive%2C+Greenwood%2C+IN+46143",
   },
   about: {
     heading: "Electronics Recycling Services in Greenwood, Indiana",
@@ -36,6 +59,9 @@ export const GREENWOOD_INDIANA: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Bulbs, light fixtures, batteries, ballasts (PCB and non-PCB), mercury devices, elemental mercury, e-waste, phosphor powder for retort" }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "US 31 or I-65" }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -50,6 +76,13 @@ export const GREENWOOD_INDIANA: CountyPage = {
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (317) 888-3889 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Greenwood facility?", a: "Drop-off requirements vary by material and quantity. Call (317) 888-3889 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Johnson County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",

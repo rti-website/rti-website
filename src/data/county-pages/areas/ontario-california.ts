@@ -29,7 +29,7 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
   service: "Light Bulb, Battery and Electronics Recycling",
   figma: { board: "7052:28731", phone: "7052:34333" },
   seo: {
-    title: 'Ontario, CA Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Ontario, California | Call (800) 969-5166",
     description: "Recycle lamps, ballasts, batteries and electronics at Recycle Technologies in Ontario, California. Drop off at 805 E Francis St or schedule a business pickup.",
   },
   hero: {
@@ -37,16 +37,32 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
     crumb: "Ontario",
     /* Home / Locations / California / Ontario (14 Oct 2026, the state hub brief). */
     parent: { label: "California", href: href('/california-recycling/') },
-    lead: "Responsible recycling for lamps, ballasts, batteries and electronics, for businesses and residents across the Inland Empire and Southern California.",
+    lead: "California Bulb Processing Facility, 805 East Francis Street, Ontario, CA 91761",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },
   },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
   quickInfo: [
-    { glyph: 'pin',   label: "Address",  value: "805 E Francis St, Ontario, CA 91761", href: MAPS },
-    { glyph: 'phone', label: "Phone",    value: "909-923-8241", href: "tel:+19099238241" },
-    { glyph: 'clock', label: "Drop-off", value: "Mon–Thu 8:30 AM–2:30 PM, Fri 8:30 AM–1:30 PM" },
-    { glyph: 'badge', label: "Facility", value: "Full loading dock, no appointment needed" },
+    { glyph: 'pin',   label: "Address", value: "805 East Francis Street, Ontario, CA 91761", href: "https://www.google.com/maps/dir/?api=1&destination=805+East+Francis+Street%2C+Ontario%2C+CA+91761" },
+    { glyph: 'phone', label: "Phone", value: "(909) 923-7252", href: "tel:+19099237252" },
+    { glyph: 'clock', label: "Hours", value: "Monday to Friday, 6:00 AM to 2:30 PM" },
   ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on East Francis Street. Staff will direct you to the drop-off area upon arrival.",
+    introShort: "Enter via the main lot on East Francis Street. Staff will direct you to the drop-off area upon arrival.",
+    rows: [
+      { label: "Nearest Highway", value: "State Route 60 (Pomona Freeway)" },
+      { label: "Parking", value: "60 Fwy; on Francis St between Campus Ave and Bon View Ave, use the driveway" },
+      { label: "Drop-off Entrance", value: "60 Fwy; on Francis St between Campus Ave and Bon View Ave, use the driveway" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "California Bulb Processing Facility",
+    address: "805 East Francis Street, Ontario, CA 91761",
+    tel: "+19099237252",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=805+East+Francis+Street%2C+Ontario%2C+CA+91761",
+  },
   about: {
     heading: "Three Ways to Recycle With Us",
     blocks: [
@@ -58,6 +74,9 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Lamps, e-waste, aerosol cans, non-PCB capacitors, ballasts, batteries, mercury devices" }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "60 Fwy; on Francis St between Campus Ave and Bon View Ave, use the driveway" }] },
     { kind: 'text', heading: "Light Bulb and Lamp Recycling in Ontario, California", blocks: [
       { p: "Fluorescent tubes, CFLs and other mercury lamps cannot go in the trash in California. We recycle fluorescent, CFL, HID, UV, neon, halogen, incandescent and LED lamps, separating the glass, metal and mercury so each can be handled correctly. We take everything from a single box of tubes to a full relamping project, and give you a certificate of recycling for your records." },
       { h2: "Ballast Recycling" },
@@ -75,13 +94,6 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
       { title: "Custom Programs", text: "Single cleanouts, scheduled pickups or ongoing collection across multiple sites." },
       { title: "A National Network", text: "Part of a national network of recycling facilities, so multi-location businesses can work with one provider." },
     ] },
-    { kind: 'faq', heading: "Frequently Asked Questions", items: [
-      { q: "Do I need an appointment to drop off?", a: "No. Bring your materials to 805 E Francis St during drop-off hours." },
-      { q: "Can I throw fluorescent tubes in the trash in California?", a: "No. Fluorescent tubes, CFLs and other mercury lamps are universal waste in California and must be recycled." },
-      { q: "Do you pick up from businesses?", a: "Yes. We offer scheduled and one time pickups for businesses in the Ontario area. Schedule a pickup or request a quote." },
-      { q: "What if I am not near Ontario?", a: "Order a mail-in recycling kit and ship your bulbs, batteries or small electronics to us." },
-      { q: "Will I get proof of recycling?", a: "Yes. Business customers receive a certificate of recycling for each load." },
-    ] },
     { kind: 'text', heading: "Other Recycle Technologies Locations", blocks: [
       { list: [
         { title: "Phoenix, Arizona", text: "Our nearest location to the east.", href: href('/phoenix-arizona/') },
@@ -89,15 +101,21 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
         { title: "All Locations", text: "See every Recycle Technologies facility and drop-off location.", href: href('/all-locations/') },
       ] },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (909) 923-7252 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Ontario facility?", a: "Drop-off requirements vary by material and quantity. Call (909) 923-7252 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "San Bernardino County", text: "" }] }] },
   ],
   company: {
     name: "Recycle Technologies, Ontario",
     text: "805 E Francis St, Ontario, CA 91761. Full loading dock; no appointment needed for drop-offs.",
     lines: [
-      { kind: 'hours', text: "Monday – Thursday: 8:30 am – 2:30 pm" },
-      { kind: 'hours', text: "Friday: 8:30 am – 1:30 pm" },
+      { kind: 'hours', text: "Monday – Friday: 6:00 am – 2:30 pm" },
       { kind: 'hours', text: "Saturday – Sunday: Closed" },
-      { kind: 'phone', text: "909-923-8241", tel: "+19099238241" },
+      { kind: 'phone', text: "(909) 923-7252", tel: "+19099237252" },
       { kind: 'email', text: "dispatch@recycletechnologies.com" },
     ],
   },
@@ -107,12 +125,11 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
     locality: "Ontario",
     region: "CA",
     postalCode: "91761",
-    telephone: "+1-909-923-8241",
+    telephone: "+1-909-923-7252",
     email: "dispatch@recycletechnologies.com",
     geo: { lat: 34.041215, lng: -117.638732 },
     hours: [
-      { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], opens: "08:30", closes: "14:30" },
-      { days: ["Friday"], opens: "08:30", closes: "13:30" },
+      { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "06:00", closes: "14:30" },
     ],
   },
 }

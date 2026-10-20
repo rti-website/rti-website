@@ -15,7 +15,7 @@ export const KENNESAW_GEORGIA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:69256", phone: "7084:69583" },
   seo: {
-    title: 'Kennesaw, GA Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Kennesaw, Georgia | Call (800) 969-5166",
     description: "Recycling services Kennesaw coordinating acceptance of electronics, lamp remnants, battery assortments, paper loads, and approved materials for processing. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,30 @@ export const KENNESAW_GEORGIA: CountyPage = {
     crumb: "Kennesaw",
     /* Home / Locations / Georgia / Kennesaw (14 Oct 2026, the state hub brief). */
     parent: { label: "Georgia", href: href('/georgia-recycling/') },
-    lead: "Recycling services Kennesaw coordinating acceptance of electronics, lamp remnants, battery assortments, paper loads, and approved materials for processing. Call (800) 969-5166",
+    lead: "Atlanta, Georgia Transfer Facility, 3400 Town Point Dr NW, Suite 130, Kennesaw, GA 30144",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "3400 Town Point Dr NW, Suite 130, Kennesaw, GA 30144", href: "https://www.google.com/maps/dir/?api=1&destination=3400+Town+Point+Dr+NW%2C+Suite+130%2C+Kennesaw%2C+GA+30144" },
+    { glyph: 'phone', label: "Phone", value: "(770) 426-5000", href: "tel:+17704265000" },
+    { glyph: 'clock', label: "Hours", value: "Monday-Friday, 9:00 AM - 4:00 PM" },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "The Atlanta Transfer Facility is located at 3400 Town Point Drive NW in Kennesaw, Georgia. Contact the facility before visiting to confirm the correct drop-off entrance, accepted materials, and any delivery or appointment requirements.",
+    introShort: "The Atlanta Transfer Facility is located at 3400 Town Point Drive NW in Kennesaw, Georgia. Contact the facility before visiting to confirm the correct drop-off entrance, accepted materials, and any delivery or appointment requirements.",
+    rows: [
+      { label: "Nearest Highway", value: "Interstate 75 (I-75) provides access to the Kennesaw area. Confirm the best exit and route using your preferred navigation app." },
+      { label: "Parking", value: "Contact the facility to confirm visitor parking and unloading arrangements." },
+      { label: "Drop-off Entrance", value: "Call (770) 426-5000 before arrival for directions to the designated drop-off area." },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Atlanta, Georgia Transfer Facility",
+    address: "3400 Town Point Dr NW, Suite 130, Kennesaw, GA 30144",
+    tel: "+17704265000",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=3400+Town+Point+Dr+NW%2C+Suite+130%2C+Kennesaw%2C+GA+30144",
   },
   about: {
     heading: "Electronics Recycling Services in Kennesaw, Georgia",
@@ -36,6 +58,9 @@ export const KENNESAW_GEORGIA: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "The Kennesaw, Georgia facility currently accepts Lamps, batteries, ballasts, electronics, TVs, mercury devices, aerosols, and airbags." }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "Businesses and residents." }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -50,6 +75,13 @@ export const KENNESAW_GEORGIA: CountyPage = {
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (770) 426-5000 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Kennesaw facility?", a: "Drop-off requirements vary by material and quantity. Call (770) 426-5000 before you visit to confirm what you are bringing is accepted and whether you need to schedule a time. Large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Cobb County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",

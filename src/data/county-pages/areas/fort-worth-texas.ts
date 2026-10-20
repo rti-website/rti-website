@@ -15,7 +15,7 @@ export const FORT_WORTH_TEXAS: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:78708", phone: "7084:79033" },
   seo: {
-    title: 'Fort Worth Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Fort Worth, Texas | Call (800) 969-5166",
     description: "Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,30 @@ export const FORT_WORTH_TEXAS: CountyPage = {
     crumb: "Fort Worth",
     /* Home / Locations / Texas / Fort Worth (14 Oct 2026, the state hub brief). */
     parent: { label: "Texas", href: href('/texas-recycling/') },
-    lead: "Recycling services Texas coordinating collection of electronic hardware, spent lighting, varied battery formats, paper volumes, and approved discards statewide. Call (800) 969-5166",
+    lead: "Texas Bulb Processing Facility, 101 East Bowie Street, Fort Worth, TX 76110",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "101 East Bowie Street, Fort Worth, TX 76110", href: "https://www.google.com/maps/dir/?api=1&destination=101+East+Bowie+Street%2C+Fort+Worth%2C+TX+76110" },
+    { glyph: 'phone', label: "Phone", value: "(817) 921-1440", href: "tel:+18179211440" },
+    { glyph: 'clock', label: "Hours", value: "Monday to Friday, 8:00 AM to 3:30 PM" },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on East Bowie Street. Contact the facility before arrival if you need directions to the designated receiving or drop-off area.",
+    introShort: "Enter via the main lot on East Bowie Street. Contact the facility before arrival if you need directions to the designated receiving or drop-off area.",
+    rows: [
+      { label: "Nearest Highway", value: "Nearest highway I-35; nearest main roads: Berry St and Main St. Unloading by forklift or at two 53 ft loading docks on the west side." },
+      { label: "Parking", value: "Contact the facility at (817) 921-1440 to confirm visitor parking and unloading arrangements." },
+      { label: "Drop-off Entrance", value: "Use the main lot on East Bowie Street and follow facility staff instructions for the designated drop-off area." },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Texas Bulb Processing Facility",
+    address: "101 East Bowie Street, Fort Worth, TX 76110",
+    tel: "+18179211440",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=101+East+Bowie+Street%2C+Fort+Worth%2C+TX+76110",
   },
   about: {
     heading: "Electronics Recycling Services in Fort Worth, Texas",
@@ -35,6 +57,9 @@ export const FORT_WORTH_TEXAS: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "All material. PCBs must come with a manifest." }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "Businesses and residents; residential material usually comes through the city household hazardous waste department." }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -56,6 +81,13 @@ export const FORT_WORTH_TEXAS: CountyPage = {
         { title: "All Locations", text: "", href: href('/all-locations/') },
       ] },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (817) 921-1440 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Fort Worth facility?", a: "Drop-off requirements vary by material and quantity. Call (817) 921-1440 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Tarrant County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",

@@ -15,7 +15,7 @@ export const OCALA_FLORIDA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:68694", phone: "7084:69020" },
   seo: {
-    title: 'Ocala Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Ocala, Florida | Call (800) 969-5166",
     description: "Recycling services Ocala coordinating receipt of electronics, lamp debris, mixed battery groups, paper volumes, and approved items for proper routing. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,30 @@ export const OCALA_FLORIDA: CountyPage = {
     crumb: "Ocala",
     /* Home / Locations / Florida / Ocala (14 Oct 2026, the state hub brief). */
     parent: { label: "Florida", href: href('/florida-recycling/') },
-    lead: "Recycling services Ocala coordinating receipt of electronics, lamp debris, mixed battery groups, paper volumes, and approved items for proper routing. Call (800) 969-5166",
+    lead: "Florida Bulb Processing Facility, 1007 SW 16th Lane, Ocala, FL 34471",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "1007 SW 16th Lane, Ocala, FL 34471", href: "https://www.google.com/maps/dir/?api=1&destination=1007+SW+16th+Lane%2C+Ocala%2C+FL+34471" },
+    { glyph: 'phone', label: "Phone", value: "(813) 534-5735", href: "tel:+18135345735" },
+    { glyph: 'clock', label: "Hours", value: "Mon to Fri, 8am to 4pm" },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on SW 16th Lane. Staff will direct you to the drop-off area upon arrival.",
+    introShort: "Enter via the main lot on SW 16th Lane. Staff will direct you to the drop-off area upon arrival.",
+    rows: [
+      { label: "Nearest Highway", value: "US-27 / US-301 / US-441" },
+      { label: "Parking", value: "Beside the 17th Street bridge, next to Fakhoury Chiropractic" },
+      { label: "Drop-off Entrance", value: "Beside the 17th Street bridge, next to Fakhoury Chiropractic" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Florida Bulb Processing Facility",
+    address: "1007 SW 16th Lane, Ocala, FL 34471",
+    tel: "+18135345735",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=1007+SW+16th+Lane%2C+Ocala%2C+FL+34471",
   },
   about: {
     heading: "Electronics Recycling Services in Ocala, Florida",
@@ -35,6 +57,9 @@ export const OCALA_FLORIDA: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "All lamps, batteries, ballasts, PCB ballasts, electronics, scrap metal, mercury devices, elemental mercury" }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "Beside the 17th Street bridge, next to Fakhoury Chiropractic" }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -49,6 +74,13 @@ export const OCALA_FLORIDA: CountyPage = {
       { h: "Mail in Program" },
       { p: "Access our recycling services through our complete recycling kits which you can just order from the comfort of your home and drop off at the nearest FedEx." },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (813) 534-5735 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Ocala facility?", a: "Drop-off requirements vary by material and quantity. Call (813) 534-5735 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Marion County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",

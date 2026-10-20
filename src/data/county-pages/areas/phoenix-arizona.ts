@@ -15,7 +15,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
   service: "Light Bulb Recycling",
   figma: { board: "7084:76092", phone: "7084:76418" },
   seo: {
-    title: 'Phoenix Recycling Center: Lamps, Batteries & E-Waste',
+    title: "Recycling in Phoenix, Arizona | Call (800) 969-5166",
     description: "Recycling services Arizona coordinating collection of electronics, lighting waste, battery types, paper materials, and approved items statewide. Call (800) 969-5166",
   },
   hero: {
@@ -23,8 +23,30 @@ export const PHOENIX_ARIZONA: CountyPage = {
     crumb: "Phoenix",
     /* Home / Locations / Arizona / Phoenix (14 Oct 2026, the state hub brief). */
     parent: { label: "Arizona", href: href('/arizona-recycling/') },
-    lead: "Recycling services Arizona coordinating collection of electronics, lighting waste, battery types, paper materials, and approved items statewide. Call (800) 969-5166",
+    lead: "Arizona PCB Ballast Processing Facility, 1545 East Victory Street, Phoenix, AZ 85040",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
+  },
+  // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
+  quickInfo: [
+    { glyph: 'pin',   label: "Address", value: "1545 East Victory Street, Phoenix, AZ 85040", href: "https://www.google.com/maps/dir/?api=1&destination=1545+East+Victory+Street%2C+Phoenix%2C+AZ+85040" },
+    { glyph: 'phone', label: "Phone", value: "602-276-4278", href: "tel:+16022764278" },
+    { glyph: 'clock', label: "Hours", value: "Monday to Friday, 6:00 AM to 2:30 PM" },
+  ],
+  directions: {
+    heading: "Getting Here",
+    intro: "Enter via the main lot on East Victory Street. Staff will direct you to the drop-off area when you arrive.",
+    introShort: "Enter via the main lot on East Victory Street. Staff will direct you to the drop-off area when you arrive.",
+    rows: [
+      { label: "Nearest Highway", value: "Interstate 17 (Maricopa Freeway)" },
+      { label: "Parking", value: "I-17; corner of S 16th St and E Victory St; access on Victory St, left side toward the end of the cul-de-sac" },
+      { label: "Drop-off Entrance", value: "I-17; corner of S 16th St and E Victory St; access on Victory St, left side toward the end of the cul-de-sac" },
+    ],
+    primary: "Get Directions",
+    secondary: "Call This Location",
+    name: "Arizona PCB Ballast Processing Facility",
+    address: "1545 East Victory Street, Phoenix, AZ 85040",
+    tel: "+16022764278",
+    mapsHref: "https://www.google.com/maps/dir/?api=1&destination=1545+East+Victory+Street%2C+Phoenix%2C+AZ+85040",
   },
   about: {
     heading: "Electronics Recycling Services in Phoenix, Arizona",
@@ -35,6 +57,9 @@ export const PHOENIX_ARIZONA: CountyPage = {
     ],
   },
   sections: [
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Lamps, e-waste, aerosol cans, non-PCB capacitors, ballasts, batteries, mercury devices" }] },
+    { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "I-17; corner of S 16th St and E Victory St; access on Victory St, left side toward the end of the cul-de-sac" }] },
     { kind: 'features', cards: [
       { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
@@ -57,6 +82,13 @@ export const PHOENIX_ARIZONA: CountyPage = {
         { title: "All Locations", text: "", href: href('/all-locations/') },
       ] },
     ] },
+    // 20 Oct 2026, the facility content doc.
+    { kind: 'faq', heading: "Questions About This Location", items: [
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (480) 393-5729 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Phoenix facility?", a: "Drop-off requirements vary by material and quantity. Call (480) 393-5729 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+    ] },
+    { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Maricopa County", text: "" }] }] },
   ],
   company: {
     name: "Business Pick-Up Service",
