@@ -84,7 +84,11 @@ export function PickupForm({ text: PICKUP }: { text: PickupText }) {
         setState('error')
         return
       }
-      trackLead({ type: 'quote', formId: 'itad_pickup_form', audience: value('audience') })
+      trackLead({
+        type: 'quote', formId: 'itad_pickup_form', audience: value('audience'),
+        // Hashed by GTM for enhanced conversions (see track.ts).
+        email: value('email'), phone: value('phone'),
+      })
       const firstName = value('firstName')
       form.reset()
       setState('sent')

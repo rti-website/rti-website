@@ -322,7 +322,8 @@ export async function POST(req: Request): Promise<Response> {
   let notified = false
   if (to && mailConfigured()) {
     // The table layout Asim sent on 24 Sep 2026 — see src/lib/lead-email.ts.
-    const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id })
+    // `attribution` adds the Source section: the ad click (22 Oct 2026, Usman).
+    const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id, attribution: attr })
     const result = await sendMail({
       to,
       ...(cc ? { cc } : {}),

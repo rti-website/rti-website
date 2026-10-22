@@ -15,11 +15,25 @@
  *
  * Not a component and no 'use client' needed: it only runs inside event
  * handlers of components that already are client ones.
+ *
+ * ENHANCED CONVERSIONS FOR LEADS (22 Oct 2026, Usman Nawaz): the visitor's
+ * email and phone ride on the `lead_form_submit` push as
+ *   user_data: { email: 'name@company.com', phone_number: '+17635551234' }
+ * GTM's Google Ads tag hashes them (SHA-256) before anything leaves the
+ * browser, so Google Ads can match the lead to the ad click. Only on that
+ * push: GA4 does not allow personal data in event parameters, so
+ * `generate_lead` and `form_submit` stay without it. Email trimmed and lower
+ * case, phone in E.164; a value that does not look right is left out. With
+ * gtag.js only (no GTM), gtag('set', 'user_data', …) before the conversion.
  */
+import { toE164 } from '@/lib/phone'
+
 type Attr = Record<string, string | undefined>
 type Cfg = { gtm: string | null; gtag: boolean; ga4: string; ads: string; label: string }
 
-export function trackLead(lead: { type: 'contact' | 'quote'; formId: string; service?: string; audience?: string }) {
+export function trackLead(lead: {
+  type: 'contact' | 'quote'; formId: string; service?: string; audience?: string; email?: string; phone?: string
+}) {
   const w = window as unknown as { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void; __rtiAttr?: Attr; __rtiTracking?: Cfg }
   const attr = w.__rtiAttr ?? {}
   const cfg = w.__rtiTracking
@@ -35,6 +49,13 @@ export function trackLead(lead: { type: 'contact' | 'quote'; formId: string; ser
     ads_conversion_id: cfg?.ads || undefined,
     ads_conversion_label: cfg?.label || undefined,
   }
+  const email = (lead.email ?? '').trim().toLowerCase()
+  const phone = toE164(lead.phone ?? '')
+  const userData: { email?: string; phone_number?: string } = {}
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) userData.email = email
+  if (phone) userData.phone_number = phone
+  const hasUserData = Object.keys(userData).length > 0
+
   const event = { event: 'generate_lead', ...fields }
   const dl = (w.dataLayer = w.dataLayer || [])
   dl.push(event)
@@ -46,12 +67,15 @@ export function trackLead(lead: { type: 'contact' | 'quote'; formId: string; ser
    * `generate_lead`, so without these two pushes a lead was saved but never
    * counted in Google Ads. Same fields ride along on both.
    */
-  dl.push({ event: 'lead_form_submit', ...fields })
+  dl.push({ event: 'lead_form_submit', ...fields, ...(hasUserData ? { user_data: userData } : {}) })
   dl.push({ event: 'form_submit', ...fields })
 
   if (cfg && !cfg.gtm && typeof w.gtag === 'function') {
     w.gtag('event', 'generate_lead', { service_interest: event.service_interest, source: event.source, campaign: event.campaign })
-    if (cfg.ads && cfg.label) w.gtag('event', 'conversion', { send_to: `${cfg.ads}/${cfg.label}` })
+    if (cfg.ads && cfg.label) {
+      if (hasUserData) w.gtag('set', 'user_data', userData)
+      w.gtag('event', 'conversion', { send_to: `${cfg.ads}/${cfg.label}` })
+    }
   }
 }
 

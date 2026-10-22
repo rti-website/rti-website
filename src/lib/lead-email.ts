@@ -1,6 +1,7 @@
 import 'server-only'
 import { SITE } from '@/lib/site'
 import { leadFormName } from '@/lib/lead-forms'
+import type { Attribution } from '@/lib/tracking'
 
 /**
  * The notification email a new lead sends to LEAD_NOTIFY_TO.
@@ -34,8 +35,16 @@ import { leadFormName } from '@/lib/lead-forms'
  * A row with nothing in it is left out, and a section with no rows is left
  * out with it, so the pickup form (no service, no city) gets the same layout
  * with fewer rows. When and where it was sent go in a small grey line at the
- * end. How the visitor found the site (campaign, keyword, landing page) is
- * not in the email; it is on the enquiry in Admin -> Enquiries.
+ * end.
+ *
+ * SOURCE (22 Oct 2026, Usman Nawaz, for Google Ads): a last section with the
+ * ad click that brought the visitor, read from the rti_attr cookie when the
+ * lead was posted: gclid / gbraid / wbraid, the five utm_ values, the landing
+ * page, the referrer and when the click was first seen. Empty ones are left
+ * out; with no click ID and no utm_ value it says "Direct / unknown" (the
+ * landing page and referrer still show when the cookie has them). Only when
+ * the caller passes `attribution`: the website notification and the admin's
+ * "View form" for a website enquiry. The assignment email does not carry it.
  *
  * Inline styles and tables only: that is what Outlook, which the team reads
  * this in, renders reliably. Every value is escaped; it is visitor input.
@@ -57,6 +66,8 @@ export type LeadForEmail = {
   submitPage?: string | null
   /** The enquiry number, for the link to it in Publisher. */
   id?: number | null
+  /** How the visitor found the site (the rti_attr cookie). Null: no cookie. */
+  attribution?: Attribution | null
 }
 
 const esc = (s: string) =>
@@ -156,7 +167,29 @@ export const leadName = (l: LeadForEmail) =>
 // every row, headings uppercase in #555.
 const HEAD = 'padding:22px 0 6px;font-size:15px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#555555'
 const LABEL = 'padding:10px 8px 10px 0;width:170px;color:#555555;font-size:13px;line-height:18px;vertical-align:middle;border-bottom:1px solid #e6e6e6'
-const VALUE = 'padding:10px 0;color:#333333;font-size:13px;line-height:18px;vertical-align:middle;border-bottom:1px solid #e6e6e6'
+const VALUE = 'padding:10px 0;color:#333333;font-size:13px;line-height:18px;vertical-align:middle;border-bottom:1px solid #e6e6e6;word-break:break-word;overflow-wrap:anywhere'
+
+/** The Source section's rows, in this order, labelled as Google Ads names them. */
+const SOURCE_ROWS: [keyof Attribution, string][] = [
+  ['gclid', 'gclid'], ['gbraid', 'gbraid'], ['wbraid', 'wbraid'],
+  ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
+  ['utm_term', 'utm_term'], ['utm_content', 'utm_content'],
+  ['landing_page', 'Landing page'], ['referrer', 'Referrer'], ['captured_at', 'Click captured at'],
+]
+
+/** The Source section (see the note at the top). Never empty. */
+export function sourceSection(a: Attribution | null | undefined): Section {
+  const rows: Row[] = []
+  for (const [k, label] of SOURCE_ROWS) {
+    let v = (a?.[k] ?? '').trim()
+    if (!v) continue
+    if (k === 'captured_at' && !Number.isNaN(Date.parse(v))) v = submittedAt(new Date(v))
+    rows.push([label, v])
+  }
+  const paid = SOURCE_ROWS.slice(0, 8).some(([k]) => (a?.[k] ?? '').trim())
+  if (!paid) rows.unshift(['Source', 'Direct / unknown'])
+  return { title: 'Source', rows }
+}
 
 function sectionsHtml(sections: Section[]): string {
   return sections.map((s) => `<table role="presentation" cellpadding="0" cellspacing="0" width="375" style="border-collapse:collapse;width:375px">
@@ -186,6 +219,7 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
      29 Sep 2026): Get a Quote, Contact Us or Schedule a Pickup. */
   const head = intro ?? (form ? { title: form, line: `A ${form} form was submitted on the website.` } : base)
   const sections = leadSections(l)
+  if (l.attribution !== undefined) sections.push(sourceSection(l.attribution))
   const name = leadName(l)
 
   const sent = `Sent ${submittedAt(l.submittedAt ?? new Date())}${d.consent ? ' · Consent given' : ''}`

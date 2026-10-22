@@ -417,7 +417,11 @@ export function ContactForm({
         if (out.field) focusField(out.field)
         return
       }
-      trackLead({ type: 'contact', formId: `${variant}_form`, service: value('service'), audience: value('audience') })
+      trackLead({
+        type: 'contact', formId: `${variant}_form`, service: value('service'), audience: value('audience'),
+        // Hashed by GTM for enhanced conversions (see track.ts).
+        email: value('email'), phone: value('phone'),
+      })
       const firstName = value('firstName')
       form.reset()
       filled.current = { city: false, state: false, zip: false }

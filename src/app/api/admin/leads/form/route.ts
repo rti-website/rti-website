@@ -1,6 +1,7 @@
 import { one } from '@/lib/db'
 import { guard, json } from '@/lib/admin-route'
 import { leadNotification, spokenTime, type LeadForEmail } from '@/lib/lead-email'
+import type { Attribution } from '@/lib/tracking'
 
 /**
  * GET ?id= — one enquiry laid out as the notification email lays it out
@@ -44,6 +45,23 @@ export const GET = guard(async ({ req, user }) => {
     : lead.channel && lead.channel !== 'website'
       ? { title: 'Enquiry logged by the team', line: `${lead.channel_detail ? `${lead.channel_detail}. ` : ''}Logged${lead.created_by_name ? ` by ${lead.created_by_name}` : ''} on ${when}. No notification email was sent for it; this is the same layout.` }
       : undefined
-  const mail = leadNotification({ ...lead, details: d, submittedAt: new Date(lead.created_at) }, intro)
+  /* A website enquiry shows the Source section the notification had (22 Oct
+     2026), read back from lead_attribution. Null (no row): Direct / unknown. */
+  let attribution: Attribution | null | undefined
+  if (!intro) {
+    try {
+      const a = await one<Record<string, unknown>>(`
+        SELECT gclid, gbraid, wbraid, utm_source, utm_medium, utm_campaign, utm_term, utm_content,
+               landing_page, referrer, captured_at
+          FROM lead_attribution WHERE lead_id = $1`, [id])
+      attribution = a
+        ? Object.fromEntries(Object.entries(a).filter(([, v]) => v != null && v !== '')
+            .map(([k, v]) => [k, v instanceof Date ? v.toISOString() : String(v)])) as Attribution
+        : null
+    } catch {
+      attribution = undefined
+    }
+  }
+  const mail = leadNotification({ ...lead, details: d, submittedAt: new Date(lead.created_at), attribution }, intro)
   return json({ subject: mail.subject, html: mail.html, emailed: !intro })
 })
