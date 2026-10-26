@@ -9,9 +9,12 @@ import { LANDING_MINNESOTA_LIGHT_BULBS } from './minnesota-light-bulbs'
 import { LANDING_CHICAGO_BATTERY_RECYCLING } from './chicago-battery-recycling'
 import { LANDING_CHICAGO_ELECTRONIC_RECYCLE } from './chicago-electronic-recycle'
 import { LANDING_CHICAGO_LIGHT_BULBS } from './chicago-light-bulbs'
+import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from './minnesota-universal-waste-recycling'
+import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from './wisconsin-universal-waste-recycling'
 
 /**
- * The nine Google Ads landing pages of 30 Sep 2026 (see LandingPage in
+ * The Google Ads landing pages: the nine of 30 Sep 2026, redesigned 27 Oct
+ * 2026, and the two universal waste pages added that day (see LandingPage in
  * src/data/local-pages/types.ts). The six Minnesota and Wisconsin ones took
  * over the ad URLs of 24 Sep 2026 and keep their SEO title and description
  * (src/data/state-pages.ts); the three Chicago ones are new. All noindex,
@@ -27,6 +30,9 @@ export const LANDING_PAGES: LandingPage[] = [
   LANDING_CHICAGO_BATTERY_RECYCLING,
   LANDING_CHICAGO_ELECTRONIC_RECYCLE,
   LANDING_CHICAGO_LIGHT_BULBS,
+  // Universal waste, 27 Oct 2026 (the redesign's two new pages).
+  LANDING_MINNESOTA_UNIVERSAL_WASTE,
+  LANDING_WISCONSIN_UNIVERSAL_WASTE,
 ]
 
 /** Admin -> Pages document: `landing/` and the URL's path, e.g. landing/battery-recycling-Wisconsin. */

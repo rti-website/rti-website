@@ -9,6 +9,7 @@ import { TawkChat } from '@/components/client/TawkChat'
 import { canvasZoomScript } from '@/lib/canvas-zoom'
 import { isPreview } from '@/lib/page-content'
 import { PreviewBar } from '@/components/client/PreviewBar'
+import { CookieConsent } from '@/components/client/CookieConsent'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -50,18 +51,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body suppressHydrationWarning>
-        {/* GTM's no-JavaScript fallback, straight after <body> as Google asks. */}
-        {tracking.gtm && (
-          <noscript>
-            <iframe src={`https://www.googletagmanager.com/ns.html?id=${tracking.gtm}`}
-              height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} title="Google Tag Manager" />
-          </noscript>
-        )}
+        {/* No GTM <noscript> fallback since 27 Oct 2026: Google's tags load only
+            after Analytics consent, and a browser without JavaScript can never
+            give it (src/components/client/CookieConsent.tsx). */}
         {children}
         {/* useSearchParams needs a Suspense boundary to stay static. */}
         <Suspense fallback={null}><PageViewTracker /></Suspense>
         {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
+        {/* Cookie banner and settings panel (management, 27 Oct 2026). */}
+        {!preview && <CookieConsent />}
         {preview && <PreviewBar />}
       </body>
     </html>

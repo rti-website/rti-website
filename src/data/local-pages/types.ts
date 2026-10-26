@@ -98,34 +98,55 @@ export type LocalPage = {
 }
 
 /**
- * THE LANDING PAGES — nine Google Ads pages of 30 Sep 2026 (battery,
- * electronics and light bulbs for Wisconsin, Minnesota and Chicago), drawn
- * from the same kit plus a split hero with a photo, a stats strip, a text
- * and photo section, the shared certifications band and Client's Stories.
- * At the ad URLs of 24 Sep 2026 (/battery-recycling/Wisconsin/ etc.) and
- * three Chicago ones beside them; noindex, not in the sitemap. Built by
+ * THE LANDING PAGES — the Google Ads pages, redesigned 27 Oct 2026 (Figma
+ * BVtf2AOuUOcYbiMIlcKmbC, "New Pages": battery, electronics and light bulbs
+ * for Minnesota, Wisconsin and Chicago, plus universal waste for Minnesota
+ * and Wisconsin). Every frame is the same run of parts, so a page is data:
+ *
+ *   hero        photo, breadcrumb, H1, one paragraph, Get a Quote, and the
+ *               Request a Quote form beside it
+ *   highlights  the four ticked items under the hero
+ *   about       heading and paragraphs beside a facility photo
+ *   options     cards (two a row, an odd last one centred) and up to two buttons
+ *   why         four check cards
+ *   items       what we take: cards two a row, an optional line under them
+ *   steps       numbered cards, three then two
+ *   industries  the photo cards of the shared Industries We Serve band
+ *   areas       the line under Areas We Serve (the map is shared)
+ *   faq         optional (the Wisconsin frames have none)
+ *   cta         gradient band: heading, optional line, Get a Quote, an
+ *               optional second button and an optional email line
+ *
+ * At the ad URLs (/battery-recycling/Wisconsin/ etc.) and, new on 27 Oct,
+ * /universal-waste-recycling/Minnesota/ and /Wisconsin/. noindex, not in the
+ * sitemap or the menus. Built by
  * src/components/sections/locations/LandingServicePage.tsx.
  */
-export type Photo = {
-  src: string
-  /** The photo layer in the frame's image box (560 x 420 on the board, 350 x 230 on the phone). */
-  w: number; h: number; left: number; top: number
-}
+export type LandingCard = { title: string; body: string }
 export type LandingPage = {
   url: string
   figma: { board: string; phone: string }
   seo: { title: string; description: string }
   schema: { service: string; areaServed: string[] }
-  hero: { crumb: string; h1: string; body: string[]; primary: Link; secondary: Link; image: Photo }
-  stats: { value: string; label: string }[]
-  about: { figma: string; heading: string; body: string[]; image: Photo }
-  bands: LocalBand[]
-  /** The certifications band's paragraph. */
-  certBody: string
-  faq: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
-  cta: LocalPage['cta']
+  hero: { crumb: string; h1: string; body: string; button: Link; image: string }
+  highlights: string[]
+  about: { heading: string; body: string[]; image: string }
+  options: { heading: string; cards: LandingCard[]; buttons: Link[] }
+  why: { heading: string; cards: LandingCard[] }
+  items: { heading: string; cards: LandingCard[]; note?: string }
+  steps: { heading: string; intro?: string; cards: LandingCard[] }
+  industries: { lead: string; cards: { title: string; key: IndustryKey }[] }
+  areas: { lead: string }
+  certBody?: string
+  faq?: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
+  cta: { heading: string; body?: string; primary: Link; secondary?: Link; email?: string }
   todo: string[]
 }
+
+/** The industry photos the landing frames use (public/images/landing/ind-*.png). */
+export type IndustryKey =
+  | 'manufacturing' | 'healthcare' | 'automotive' | 'retail' | 'education' | 'government'
+  | 'financial' | 'offices' | 'it-operations' | 'warehouses'
 
 export type IconName =
   | 'shield' | 'truck' | 'clock' | 'check' | 'lock' | 'mail'

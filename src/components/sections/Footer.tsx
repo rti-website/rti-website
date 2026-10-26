@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { CookieSettingsLink } from '@/components/client/CookieConsent'
 import Link from 'next/link'
 import { Box } from '@/components/design/Frame'
 import { QUOTE_HREF } from '@/lib/urls'
@@ -228,6 +229,13 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
           <a href="#top" className="py-[6px] font-roboto text-[14px] leading-[14px] text-muted hover:text-brand lg:py-0 lg:font-poppins">
             {FOOTER_TEXT.backToTop} &uarr;
           </a>
+        </Box>
+        {/* Cookie settings (management, 27 Oct 2026): reopens the consent panel
+            so a visitor can change their choice. Centred in the bar. */}
+        <Box x={860} y={0} h={74} w={200} className="flex items-center justify-center">
+          <CookieSettingsLink className="py-[6px] font-roboto text-[14px] leading-[14px] text-muted underline-offset-2 hover:text-brand hover:underline lg:py-0 lg:font-poppins">
+            Cookie settings
+          </CookieSettingsLink>
         </Box>
         <Box x={1321} y={0} h={74} w={280} className="flex items-center justify-center text-center lg:justify-end lg:text-left">
           <p className="font-roboto text-[14px] leading-[14px] text-ink lg:font-poppins lg:text-[#13220f]">

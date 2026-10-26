@@ -80,7 +80,11 @@ export type Industry = {
 
 const EASE = 'duration-500 ease-out motion-reduce:transition-none'
 
-export function IndustryCard({ ind, reveal = false, more = 'Learn More' }: { ind: Industry; reveal?: boolean; more?: string }) {
+export function IndustryCard({ ind, reveal = false, more = 'Learn More', small = false }: {
+  ind: Industry; reveal?: boolean; more?: string
+  /** The landing frames (27 Oct 2026) set a longer title at 19px instead of 24 so it stays on one line. */
+  small?: boolean
+}) {
   const card = reveal ? (
     <article
       className="group relative h-[140px] w-full overflow-hidden rounded-[12px] bg-white lg:h-[226px] lg:w-[310px] lg:flex-none lg:rounded-[20px]"
@@ -99,7 +103,7 @@ export function IndustryCard({ ind, reveal = false, more = 'Learn More' }: { ind
         className={`absolute inset-0 transition-[translate,opacity] max-lg:hidden lg:group-hover:translate-y-[250px] lg:group-hover:opacity-0 lg:group-focus-visible:translate-y-[250px] lg:group-focus-visible:opacity-0 ${EASE}`}
         style={{ backgroundImage: 'linear-gradient(to bottom, rgba(10,15,12,0) 31.25%, rgba(10,15,12,0.7) 77.885%)' }}
       />
-      <h3 className={`absolute bottom-[10px] left-[12px] right-[12px] font-sans text-[15px] font-bold leading-[22px] text-white transition-[translate] lg:bottom-auto lg:left-[25px] lg:right-auto lg:top-[163px] lg:w-[253px] lg:text-[24px] lg:leading-[32px] lg:group-hover:-translate-y-[142px] lg:group-focus-visible:-translate-y-[142px] ${EASE}`}>
+      <h3 className={`absolute bottom-[10px] left-[12px] right-[12px] font-sans text-[15px] font-bold leading-[22px] text-white transition-[translate] lg:bottom-auto lg:left-[25px] lg:right-auto lg:top-[163px] lg:w-[253px] ${small ? 'max-lg:text-[13px] max-lg:leading-[1.2] lg:text-[19px]' : 'lg:text-[24px]'} lg:leading-[32px] lg:group-hover:-translate-y-[142px] lg:group-focus-visible:-translate-y-[142px] ${EASE}`}>
         {ind.t}
       </h3>
       <p className={`absolute left-[25px] top-[66px] hidden w-[275px] translate-x-[300px] translate-y-[12px] font-roboto text-[14px] leading-[18px] text-white/80 transition-[translate,color] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[rgba(186,186,186,0.8)] group-focus-visible:translate-x-0 group-focus-visible:translate-y-0 group-focus-visible:text-[rgba(186,186,186,0.8)] lg:block ${EASE}`}>

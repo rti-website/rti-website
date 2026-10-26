@@ -1,204 +1,104 @@
-import { href, quoteHref } from '@/lib/urls'
-import { type LandingPage, PICKUP } from '@/data/local-pages/types'
+import { href } from '@/lib/urls'
+import type { LandingPage } from '@/data/local-pages/types'
 import { STATE_PAGES } from '@/data/state-pages'
 
 /**
- * Battery Recycling in Minnesota — /battery-recycling/Minnesota/ (Google Ads landing page, noindex)
- * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7154:18195, phone 7154:18615 (30 Sep 2026).
- * The frame's copy word for word; see `todo` for what the build had to settle.
+ * Battery Recycling in Minnesota: /battery-recycling/Minnesota/ (Google Ads landing page, noindex).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7374:15764, phone 7374:16419 (27 Oct 2026).
+ * The frame's copy word for word. Built by LandingServicePage.
+ * SEO title and description kept from the ad page this URL has carried since 24 Sep 2026.
  */
 export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
-  url: href('/battery-recycling/Minnesota/'),
-  figma: { board: "7154:18195", phone: "7154:18615" },
+  url: href("/battery-recycling/Minnesota/"),
+  figma: { board: "7374:15764", phone: "7374:16419" },
   seo: STATE_PAGES["battery-recycling"].Minnesota.seo,
   schema: { service: "Battery Recycling", areaServed: ["Blaine, MN", "Minnesota"] },
   hero: {
     crumb: "Battery Recycling in Minnesota",
-    h1: "Battery Recycling in Minnesota",
-    body: [
-      "Recycle Technologies provides battery recycling in Minnesota, with commercial pickup available within a 100-mile radius of our Minnesota facility. Since 1993, we've helped businesses recycle alkaline, lithium-ion, lead-acid, and other battery types.",
-    ],
-    primary: { label: 'Get a Quote', href: quoteHref({ service: "Battery Recycling", location: "Minnesota" }) },
-    secondary: PICKUP,
-    image: { src: '/images/locations/landing/battery-hero.png', w: 966.906, h: 543.885, left: 0.0, top: 0.0 },
+    h1: "Certified Battery Recycling Services in Minnesota",
+    body: "Safe, certified battery recycling with scheduled pickup from our Blaine, MN facility. Lithium-ion, lead-acid, alkaline, NiCd, and EV batteries accepted, with a certificate of recycling for your records.",
+    button: { label: 'Get a Quote', href: '#landing-quote' },
+    image: '/images/landing/hero-battery.png',
   },
-  stats: [
-    { value: "Since 1993", label: "Recycling batteries for businesses" },
-    { value: "100 miles", label: "Commercial pickup radius" },
-    { value: "Drop-off & mail-in", label: "Options for individuals" },
-    { value: "Certificate", label: "Of recycling and safe disposal" },
-  ],
+  highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
-    figma: "7154:18279",
-    heading: "What’s Battery Recycling in Minnesota?",
+    heading: "Understanding Battery Recycling in Minnesota",
     body: [
-      "Battery recycling in Minnesota is the process of collecting used or spent batteries and properly handling them rather than throwing them away with regular trash. Different battery chemistries require different handling, and batteries can start fires or leak chemicals if they are stored or handled incorrectly.",
-      "Recycle Technologies has handled battery recycling from its Minnesota and Wisconsin facilities since 1993. Once batteries arrive at our Minnesota facility, trained staff sort and separate them by type. After a pickup or drop-off is processed, customers receive a certificate of recycling and safe disposal documenting that their batteries were handled properly.",
+      "Battery recycling is the process of collecting used or spent batteries and handling them safely instead of throwing them in the trash. Batteries contain materials like lithium, lead, cadmium, and acid that can leak into the environment or cause fires if damaged, crushed, or stored incorrectly. That's why rechargeable batteries are banned from trash in Minnesota, and many cities, including Minneapolis, no longer accept batteries in curbside recycling.",
+      "Different battery types require different handling, so sorting is a key part of the process. At Recycle Technologies, collected batteries are brought to our Blaine, Minnesota facility, where trained staff sort them by chemistry for proper recycling. Once processed, you receive a certificate of recycling for your records.",
     ],
-    image: { src: '/images/locations/landing/about-facility.png', w: 560.0, h: 420.0, left: 0.0, top: 0.0 },
+    image: '/images/landing/photo-blaine.png',
   },
-  bands: [
-    {
-      figma: "7154:18287",
-      heading: "What Batteries Can You Recycle in Minnesota?",
-      grey: false,
-      mint: true,
-      blocks: [
-        {
-          kind: "text",
-          body: [
-            "Recycle Technologies accepts a broad range of battery types. If you're unsure whether your batteries qualify, contact us before scheduling.",
-          ],
-        },
-        {
-          kind: "cards",
-          rows: [
-            [
-              {
-                title: "Alkaline & Zinc Batteries",
-                body: ["Standard alkaline batteries and zinc batteries."],
-              },
-              {
-                title: "Lithium-Ion & Lead-Acid Batteries",
-                body: ["Rechargeable lithium-ion battery packs and sealed lead-acid batteries."],
-              },
-            ],
-            [
-              {
-                title: "Nickel-Cadmium & Button Cell Batteries",
-                body: ["NiCd batteries and button-cell batteries."],
-              },
-              {
-                title: "EV, Power Tool & Backup Batteries",
-                body: [
-                  "Electric vehicle batteries, Tesla batteries, power tool battery packs, and battery backup units.",
-                ],
-              },
-            ],
-          ],
-        },
-        {
-          kind: "text",
-          body: [
-            "Other battery types, including mercury oxide batteries, may be handled on a case-by-case basis. Contact Recycle Technologies if your battery type isn't listed.",
-          ],
-        },
-      ],
-    },
-    {
-      figma: "7154:18309",
-      heading: "How Do We Recycle Batteries in Minnesota?",
-      grey: false,
-      blocks: [
-        {
-          kind: "text",
-          body: [
-            "Batteries can enter the recycling process through a business pickup, a drop-off at a Recycle Technologies location, or the mail-in program. Because different battery chemistries have different handling requirements, sorting is central to the process.",
-          ],
-        },
-        {
-          kind: "cards",
-          rows: [
-            [
-              {
-                title: "Collection",
-                body: [
-                  "Businesses can schedule a commercial pickup within a 100-mile radius of our Minnesota facility. Individuals can use a nearby drop-off location or order a mail-in kit.",
-                ],
-              },
-              {
-                title: "Sorting and Storage",
-                body: [
-                  "Once batteries arrive, trained staff sort and separate them by type. Battery terminals should be covered before shipping or storage to reduce the risk of fire. Batteries sent through the mail-in program should already be separated by type.",
-                ],
-              },
-              {
-                title: "Documentation",
-                body: [
-                  "Once a pickup or drop-off is processed, Recycle Technologies issues a certificate of recycling and safe disposal.",
-                ],
-              },
-            ],
-          ],
-        },
-      ],
-    },
-    {
-      figma: "7154:18331",
-      grey: false,
-      mint: true,
-      blocks: [
-        {
-          kind: "banner",
-          heading: "Battery Recycling Pickup in Minnesota",
-          body: [
-            "Recycle Technologies offers commercial battery recycling pickup within a 100-mile radius of its Minnesota facility. Businesses within that range can request a pickup to have spent batteries collected directly.",
-          ],
-          link: PICKUP,
-        },
-      ],
-    },
-    {
-      figma: "7154:18338",
-      heading: "Mail-In & Drop-Off Battery Recycling",
-      grey: false,
-      blocks: [
-        {
-          kind: "cards",
-          rows: [
-            [
-              {
-                title: "Drop-Off",
-                body: ["Individuals can bring their batteries to a nearby Recycle Technologies location."],
-              },
-              {
-                title: "Mail-In",
-                body: [
-                  "Individuals can order a mail-in recycling kit for eligible battery types. Batteries sent through the mail-in program should be separated by type before shipping, since not every battery type can be mailed the same way.",
-                ],
-              },
-            ],
-          ],
-        },
-      ],
-    },
-  ],
-  certBody: "Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.",
+  options: {
+    heading: "Battery Recycling Options in Minnesota",
+    cards: [
+      { title: "Business Pickup", body: "Scheduled battery pickup within 100 miles of our Blaine facility." },
+      { title: "Drop-Off", body: "Bring spent batteries to our Blaine facility." },
+      { title: "Mail-In Program", body: "Outside our pickup area? Ship eligible batteries through our mail-in program." },
+    ],
+    buttons: [{ label: "View Drop-Off Location", href: href("/minnesota-recycling/ramsey/blaine/") }, { label: "Mail-In Program", href: href("/mail-in-recycling/") }],
+  },
+  why: {
+    heading: "Why Choose Recycle Technologies for Battery Recycling?",
+    cards: [
+      { title: "Local Minnesota facility", body: "Batteries are sorted at our own Blaine facility, not sent through a broker." },
+      { title: "Scheduled pickup", body: "We collect directly from your site within 100 miles of Blaine." },
+      { title: "Compliance documentation", body: "A certificate of recycling for every processed pickup or drop-off." },
+      { title: "Certified and experienced", body: "R2v3 and RIOS certified, serving businesses since 1993." },
+    ],
+  },
+  items: {
+    heading: "Batteries We Recycle",
+    cards: [
+      { title: "Lithium-ion batteries", body: "Laptop, phone, tablet, and equipment battery packs" },
+      { title: "Lead-acid batteries", body: "Sealed lead-acid, UPS, and battery backup units" },
+      { title: "Alkaline & zinc batteries", body: "AA, AAA, C, D, and 9V" },
+      { title: "NiCd & button cell batteries", body: "Rechargeables and small device batteries" },
+      { title: "EV & power tool batteries", body: "Electric vehicle, and power tool packs" },
+    ],
+  },
+  steps: {
+    heading: "How Do We Recycle Batteries in Minnesota?",
+    intro: "From your site to final processing, we make battery recycling simple, safe, and fully documented.",
+    cards: [
+      { title: "Request a Quote", body: "Tell us your battery types and approximate quantity. Our team will recommend the right option for your business." },
+      { title: "Prepare Your Batteries", body: "Tape battery terminals or bag each battery individually to prevent short circuits. Keep damaged, swollen, or leaking batteries separate and let us know before pickup." },
+      { title: "Pickup or Drop-Off", body: "Businesses within 100 miles of Blaine can arrange a pickup, and our team collects batteries directly from your location. You can also drop off batteries at our Blaine facility." },
+      { title: "Sorting at Our Minnesota Facility", body: "Trained staff at our Blaine facility sort batteries by chemistry, including lithium-ion, lead-acid, alkaline, and NiCd, so each type is handled correctly." },
+      { title: "Certificate of Recycling", body: "Once your batteries are processed, you receive a certificate of recycling for your compliance records." },
+    ],
+  },
+  industries: {
+    lead: "Manufacturing, healthcare, automotive and fleet, retail and corporate offices, education, and government organizations across Minnesota.",
+    cards: [
+      { title: "Manufacturing", key: "manufacturing" },
+      { title: "Healthcare", key: "healthcare" },
+      { title: "Automotive and fleet", key: "automotive" },
+      { title: "Retail and corporate offices", key: "retail" },
+      { title: "Education", key: "education" },
+      { title: "Government organizations", key: "government" },
+    ],
+  },
+  areas: { lead: "Battery pickup within 100 miles of our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
   faq: {
-    eyebrow: "FAQs",
-    heading: "Frequently Asked Questions",
+    eyebrow: 'FAQs',
+    heading: 'Frequently Asked Questions',
     items: [
-      {
-        q: "What types of batteries can I recycle in Minnesota?",
-        a: "We accept alkaline, lithium-ion, lead-acid, nickel-cadmium, button-cell, EV, power tool, and backup batteries. Contact us about other battery types.",
-      },
-      {
-        q: "Does Recycle Technologies offer battery pickup in Minnesota?",
-        a: "Yes. Recycle Technologies offers commercial battery recycling pickup within a 100-mile radius of our Minnesota facility. Businesses within that range can request a pickup to have spent batteries collected directly.",
-      },
-      {
-        q: "How far does the Minnesota battery recycling pickup service extend?",
-        a: "Commercial pickup is available to businesses within a 100-mile radius of our Minnesota facility. Individuals can use a nearby drop-off location or order a mail-in kit instead.",
-      },
-      {
-        q: "Do batteries need to be sorted before recycling?",
-        a: "Once batteries arrive, trained staff sort and separate them by type. Batteries sent through the mail-in program should already be separated by type, and battery terminals should be covered before shipping or storage to reduce the risk of fire.",
-      },
-      {
-        q: "Can batteries be recycled through the mail-in program?",
-        a: "Yes. Individuals can order a mail-in recycling kit for eligible battery types. Batteries should be separated by type before shipping, since not every battery type can be mailed the same way.",
-      },
+      { q: "Where can businesses recycle batteries in Minnesota?", a: "Recycle Technologies offers battery pickup within 100 miles of Blaine, drop-off at our Blaine facility, and a mail-in program." },
+      { q: "Do you recycle lithium-ion batteries?", a: "Yes. We accept lithium-ion packs from laptops, phones, tools, and equipment, plus EV batteries." },
+      { q: "How should I store batteries before pickup?", a: "Tape terminals or bag batteries individually and store them in a cool, dry container. Keep damaged or swollen batteries separate and let us know before pickup." },
+      { q: "Do I need to sort batteries before pickup?", a: "No. Our team sorts batteries by type at our Blaine facility." },
+      { q: "Will I receive proof of recycling?", a: "Yes. Every processed pickup or drop-off includes a certificate of recycling and safe disposal." },
+      { q: "Can I recycle batteries by mail?", a: "Yes. Eligible batteries can be shipped through our mail-in program." },
     ],
   },
   cta: {
-    heading: "Ready to Recycle Your Batteries in Minnesota?",
-    body: [
-      "Businesses within 100 miles of our Minnesota facility can request a quote or schedule a pickup to start recycling their spent batteries.",
-    ],
-    primary: { label: 'Get a Quote', href: quoteHref({ service: "Battery Recycling", location: "Minnesota" }) },
-    secondary: PICKUP,
+    heading: "Get a Battery Recycling Quote in Minnesota",
+    body: "Tell us about your batteries and our team will get back to you with the right recycling option.",
+    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    secondary: { label: "Call 763-559-5130", href: "tel:+17635595130" },
+    email: "dispatch@recycletechnologies.com",
   },
-  todo: [
-    "FAQ answers written for the build from the page's own copy (the frames draw these closed): 4 of 5. Confirm or replace.",
-  ],
+  todo: [],
 }

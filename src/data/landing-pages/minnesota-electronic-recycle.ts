@@ -1,181 +1,106 @@
-import { href, quoteHref } from '@/lib/urls'
-import { type LandingPage, PICKUP } from '@/data/local-pages/types'
+import { href } from '@/lib/urls'
+import type { LandingPage } from '@/data/local-pages/types'
 import { STATE_PAGES } from '@/data/state-pages'
 
 /**
- * Electronics Recycling in Minnesota — /electronic-recycle/Minnesota/ (Google Ads landing page, noindex)
- * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7154:18907, phone 7154:19332 (30 Sep 2026).
- * The frame's copy word for word; see `todo` for what the build had to settle.
+ * Electronics Recycling in Minnesota: /electronic-recycle/Minnesota/ (Google Ads landing page, noindex).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7375:6971, phone 7375:7636 (27 Oct 2026).
+ * The frame's copy word for word. Built by LandingServicePage.
+ * SEO title and description kept from the ad page this URL has carried since 24 Sep 2026.
  */
 export const LANDING_MINNESOTA_ELECTRONIC_RECYCLE: LandingPage = {
-  url: href('/electronic-recycle/Minnesota/'),
-  figma: { board: "7154:18907", phone: "7154:19332" },
+  url: href("/electronic-recycle/Minnesota/"),
+  figma: { board: "7375:6971", phone: "7375:7636" },
   seo: STATE_PAGES["electronic-recycle"].Minnesota.seo,
   schema: { service: "Electronics Recycling", areaServed: ["Blaine, MN", "Minnesota"] },
   hero: {
     crumb: "Electronics Recycling in Minnesota",
-    h1: "Electronics Recycling in Minnesota",
-    body: [
-      "Recycle Technologies provides electronics recycling in Minnesota through our licensed facility in Blaine. Since 1993, we’ve helped businesses and individuals recycle computers, monitors, phones, and other electronic equipment. Businesses can schedule a pickup, while individuals can drop off equipment or use our mail-in program.",
-    ],
-    primary: { label: 'Get a Quote', href: quoteHref({ service: "Electronics Recycling", location: "Minnesota" }) },
-    secondary: PICKUP,
-    image: { src: '/images/locations/landing/electronics-hero.png', w: 560.0, h: 420.0, left: 0.0, top: 0.0 },
+    h1: "Certified Electronics Recycling Services in Minnesota",
+    body: "Secure, certified e-waste and IT equipment recycling for Minnesota businesses, processed at our R2v3-certified facility in Blaine. Computers, laptops, servers, monitors, printers, phones, and more accepted, with a certificate of recycling for your records.",
+    button: { label: 'Get a Quote', href: '#landing-quote' },
+    image: '/images/landing/hero-electronics.png',
   },
-  stats: [
-    { value: "Since 1993", label: "Electronics recycling services" },
-    { value: "R2v3", label: "Active certification in Blaine" },
-    { value: "Pickup", label: "Scheduled for businesses" },
-    { value: "Drop-off & mail-in", label: "Options for individuals" },
-  ],
+  highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
-    figma: "7154:18991",
-    heading: "What’s Electronics Recycling in Minnesota?",
+    heading: "Understanding Electronics Recycling in Minnesota",
     body: [
-      "Electronics recycling is the process of collecting used or unwanted electronic devices and breaking them down so that their materials can be reused rather than thrown away.",
-      "Recycle Technologies has provided electronics recycling services since 1993. At our licensed Blaine, Minnesota facility, electronics are dismantled and processed into recoverable materials including plastic, wire, circuit boards, metals, and glass.",
-      "Plastic and wiring are shredded and sent to molders and smelters. Monitors undergo a lead-decontamination step before being recycled, while circuit boards are separated so that the metals and minerals inside them can be collected for reuse.",
-      "Our Blaine facility holds active R2v3 certification. Businesses can also use our pickup service to move retired office electronics and IT equipment into a documented recycling process.",
+      "Electronics recycling is the process of collecting unwanted or retired devices and breaking them down so their materials can be reused instead of sent to landfill. Electronics contain lead, metals, plastics, and circuit boards that need proper handling, and Minnesota prohibits throwing TVs, monitors, and other video display devices in the trash.",
+      "For businesses, retired computers and IT equipment also carry a data security risk. At Recycle Technologies, collected electronics are processed at our licensed Blaine, Minnesota facility, where they are dismantled and separated into recoverable materials like plastic, wire, metals, glass, and circuit boards. Once processed, you receive a certificate of recycling for your records.",
     ],
-    image: { src: '/images/locations/landing/about-facility.png', w: 560.0, h: 420.0, left: 0.0, top: 0.0 },
+    image: '/images/landing/photo-blaine.png',
   },
-  bands: [
-    {
-      figma: "7154:19001",
-      heading: "What Electronics Can You Recycle in Minnesota?",
-      grey: false,
-      mint: true,
-      blocks: [
-        {
-          kind: "text",
-          body: [
-            "Recycle Technologies accepts a broad range of electronic and computer-related equipment. If you're unsure whether an item qualifies, contact us before scheduling.",
-          ],
-        },
-        {
-          kind: "cards",
-          rows: [
-            [
-              {
-                title: "General Electronics",
-                body: [
-                  "Cables, switches, chargers, keyboards, mice, remotes, microwaves, televisions, and other everyday electronic items.",
-                ],
-              },
-              { title: "Computers & IT Equipment", body: ["Desktop computers, laptops, and servers."] },
-              { title: "Monitors & Displays", body: ["Computer monitors and CRT monitors."] },
-            ],
-            [
-              {
-                title: "Office & Imaging Equipment",
-                body: ["Fax machines, printers, scanners, and copiers."],
-              },
-              { title: "Phones", body: ["Cell phones and related mobile devices."] },
-            ],
-          ],
-        },
-        {
-          kind: "text",
-          body: [
-            "Have something not listed here? Contact Recycle Technologies to confirm whether we can accept it.",
-          ],
-        },
-      ],
-    },
-    {
-      figma: "7154:19026",
-      heading: "How Do We Recycle Electronics in Minnesota?",
-      grey: false,
-      blocks: [
-        {
-          kind: "text",
-          body: [
-            "Electronics can enter the recycling process through a business pickup, a drop-off at a Recycle Technologies location, or the mail-in program. Equipment then goes through a series of steps before leaving the facility as recovered material.",
-          ],
-        },
-        {
-          kind: "cards",
-          rows: [
-            [
-              {
-                title: "Collection",
-                body: [
-                  "Businesses can schedule a pickup. Individuals can drop equipment at a nearby location or order a mail-in recycling kit for eligible items shipped from anywhere in the country.",
-                ],
-              },
-              {
-                title: "Sorting and Storage",
-                body: ["Incoming electronics are grouped by type before processing begins."],
-              },
-              {
-                title: "Dismantling",
-                body: ["Devices are broken down so individual components and materials can be separated."],
-              },
-            ],
-            [
-              {
-                title: "Separation",
-                body: [
-                  "Plastic and wiring are separated for shredding; monitors go through a lead-decontamination step; and circuit boards are separated from the rest of the equipment.",
-                ],
-              },
-              {
-                title: "Recovery",
-                body: [
-                  "Shredded plastic and wire are sent to molders and smelters, while metals and minerals recovered from circuit boards are collected for reuse.",
-                ],
-              },
-            ],
-          ],
-        },
-        {
-          kind: "text",
-          body: ["Because equipment types vary, not every device follows exactly the same processing path."],
-        },
-        {
-          kind: "buttons",
-          primary: { label: 'Get a Quote', href: quoteHref({ service: "Electronics Recycling", location: "Minnesota" }) },
-          secondary: PICKUP,
-        },
-      ],
-    },
-  ],
-  certBody: "Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.",
+  options: {
+    heading: "Electronics Recycling Options in Minnesota",
+    cards: [
+      { title: "Business Pickup", body: "Retired office electronics and IT equipment collected from your location within 100 miles of our Blaine facility." },
+      { title: "Drop-Off", body: "Bring electronics to our Blaine facility." },
+      { title: "Mail-In Kit", body: "Outside our pickup area? Order a mail-in kit and ship eligible electronics for certified recycling." },
+    ],
+    buttons: [{ label: "View Drop-Off Location", href: href("/minnesota-recycling/ramsey/blaine/") }, { label: "Order a Mail-In Kit", href: href("/mail-in-recycling/") }],
+  },
+  why: {
+    heading: "Why Choose Recycle Technologies for Electronics Recycling?",
+    cards: [
+      { title: "Local Minnesota facility", body: "Electronics are processed at our own licensed Blaine facility." },
+      { title: "R2v3 & RIOS certified", body: "Responsible electronics recycling backed by recognized industry standards." },
+      { title: "Certificate of recycling", body: "Documentation for your compliance records." },
+      { title: "Data security support", body: "Pair recycling with secure hard drive destruction to protect sensitive business data." },
+    ],
+  },
+  items: {
+    heading: "Electronics We Recycle",
+    cards: [
+      { title: "Computers & IT equipment", body: "Desktops, laptops, and servers" },
+      { title: "Monitors & displays", body: "Computer monitors, CRT monitors, and TVs" },
+      { title: "Office & imaging equipment", body: "Printers, copiers, scanners, and fax machines" },
+      { title: "Phones & mobile devices", body: "Cell phones and related devices" },
+      { title: "General electronics", body: "Cables, chargers, switches, keyboards, mice, remotes." },
+    ],
+    note: "Not sure about your item? Contact us and we'll guide you.",
+  },
+  steps: {
+    heading: "How Do We Recycle Electronics in Minnesota?",
+    intro: "From your site to final material recovery, we make electronics recycling simple, secure, and responsible.",
+    cards: [
+      { title: "Request a Quote", body: "Tell us what equipment you have and the approximate quantity. Our team will recommend the right option for your business." },
+      { title: "Pickup or Drop-Off", body: "Businesses within 100 miles of Blaine can arrange a pickup, or drop off equipment at our Blaine facility." },
+      { title: "Sorting & Dismantling", body: "At our Blaine facility, equipment is sorted by type and dismantled so individual components and materials can be separated." },
+      { title: "Material Separation & Recovery", body: "Plastic and wiring are shredded and sent to molders and smelters, monitors go through a lead-decontamination step, and metals and minerals from circuit boards are collected for reuse." },
+      { title: "Certificate of Recycling", body: "Once processed, you receive a certificate of recycling for your compliance records." },
+    ],
+  },
+  industries: {
+    lead: "Healthcare, financial services and banking, education, government, manufacturing, retail and corporate offices, and automotive and fleet organizations across Minnesota.",
+    cards: [
+      { title: "Healthcare", key: "healthcare" },
+      { title: "Financial services and banking", key: "financial" },
+      { title: "Education", key: "education" },
+      { title: "Government", key: "government" },
+      { title: "Manufacturing", key: "manufacturing" },
+      { title: "Retail and corporate offices", key: "retail" },
+      { title: "Automotive and fleet organizations", key: "automotive" },
+    ],
+  },
+  areas: { lead: "Electronics pickup within 100 miles of our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
   faq: {
-    eyebrow: "FAQs",
-    heading: "Frequently Asked Questions",
+    eyebrow: 'FAQs',
+    heading: 'Frequently Asked Questions',
     items: [
-      {
-        q: "What electronics can I recycle in Minnesota?",
-        a: "We accept computers, laptops, servers, monitors, printers, copiers, phones, and a range of general electronics. Contact us if you’re unsure about a specific item.",
-      },
-      {
-        q: "Does Recycle Technologies offer electronics pickup for businesses?",
-        a: "Yes. Businesses can schedule a pickup to move retired office electronics and IT equipment into a documented recycling process through our Blaine, Minnesota facility.",
-      },
-      {
-        q: "Can individuals recycle electronics at Recycle Technologies?",
-        a: "Yes. Individuals can drop off equipment at a nearby Recycle Technologies location or order a mail-in recycling kit for eligible items shipped from anywhere in the country.",
-      },
-      {
-        q: "What happens to electronics after they are recycled?",
-        a: "Electronics are dismantled and processed into recoverable materials including plastic, wire, circuit boards, metals, and glass. Shredded plastic and wire are sent to molders and smelters, monitors go through a lead decontamination step, and metals and minerals from circuit boards are collected for reuse.",
-      },
-      {
-        q: "Is the Blaine facility R2v3 certified?",
-        a: "Yes. Our Blaine, Minnesota facility holds active R2v3 certification.",
-      },
+      { q: "Where can businesses recycle electronics in Minnesota?", a: "Recycle Technologies offers pickup within 100 miles of Blaine, drop-off at our Blaine facility, and a mail-in kit." },
+      { q: "What electronics do you accept?", a: "Computers, laptops, servers, monitors, TVs, printers, copiers, scanners, phones, cables, and other electronic equipment." },
+      { q: "Is your Blaine facility R2v3 certified?", a: "Yes. Our Blaine facility holds active R2v3 certification." },
+      { q: "Will I receive proof of recycling?", a: "Yes. You receive a certificate of recycling once your electronics are processed." },
+      { q: "What happens to electronics after they are recycled?", a: "Devices are dismantled, and plastic, wire, metals, glass, and circuit board materials are recovered for reuse." },
+      { q: "How do you protect data on old computers and hard drives?", a: "We offer secure hard drive destruction alongside electronics recycling to help protect your business data." },
     ],
   },
   cta: {
-    heading: "Ready to Recycle Electronics in Minnesota?",
-    body: [
-      "Businesses can request a quote or schedule a pickup, while individuals can use drop-off or our mail-in program to recycle electronics through our Blaine, Minnesota facility.",
-    ],
-    primary: { label: 'Get a Quote', href: quoteHref({ service: "Electronics Recycling", location: "Minnesota" }) },
-    secondary: PICKUP,
+    heading: "Get an Electronics Recycling Quote in Minnesota",
+    body: "Tell us about your equipment and our team will get back to you with the right recycling option.",
+    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    secondary: { label: "Call 763-559-5130", href: "tel:+17635595130" },
+    email: "dispatch@recycletechnologies.com",
   },
-  todo: [
-    "FAQ answers written for the build from the page's own copy (the frames draw these closed): 4 of 5. Confirm or replace.",
-  ],
+  todo: [],
 }

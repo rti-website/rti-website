@@ -44,6 +44,29 @@ export const ATTR_COOKIE = 'rti_attr'
 export const ATTR_MAX_AGE = 90 * 24 * 60 * 60
 
 /**
+ * COOKIE CONSENT (management, 27 Oct 2026). Two categories: Necessary,
+ * always on, and Analytics, off until the visitor accepts. The choice is the
+ * `rti_consent` cookie ({ v: 1, a: true|false, t: ISO time }, a necessary
+ * cookie, 12 months). The bootstrap below exposes it as
+ *   window.rtiConsent = { necessary: true, analytics, decided, gpc, updatedAt }
+ * and fires `rti:consent` on window whenever it changes (detail: the same
+ * object). The visitor identification module reads both. A browser that sends
+ * Global Privacy Control (navigator.globalPrivacyControl) is treated as
+ * Analytics declined, whatever the cookie says, and is not shown the banner.
+ *
+ * Until Analytics is accepted: no GTM, no gtag.js, no GA4, no Google Ads
+ * call number swap, and no rti_attr cookie. The visit's attribution is held
+ * in sessionStorage (`rti_attr_held`) and written to rti_attr the moment the
+ * visitor accepts, so an ad click on page 1 and consent on page 3 still ties
+ * the lead to the click. Declining deletes rti_attr and the Google cookies.
+ * The banner itself is src/components/client/CookieConsent.tsx.
+ */
+export const CONSENT_COOKIE = 'rti_consent'
+export const CONSENT_MAX_AGE = 365 * 24 * 60 * 60
+export const CONSENT_EVENT = 'rti:consent'
+export const ATTR_HELD_KEY = 'rti_attr_held'
+
+/**
  * A number Google Ads swaps for a Google forwarding number, so calls from ad
  * visitors count as conversions (Google Ads "calls from website", 27 Sep
  * 2026). `number` is the number AS THE SITE SHOWS IT, `label` the call
@@ -256,14 +279,22 @@ export function trackingBootstrap(rt: TrackingRuntime): string {
   const C = JSON.stringify({
     gtm: rt.gtm, gtag: rt.gtag, ga4d: rt.ga4Direct, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel, calls: rt.calls,
     keys: ATTRIBUTION_KEYS, cookie: ATTR_COOKIE, maxAge: ATTR_MAX_AGE,
+    consent: CONSENT_COOKIE, consentAge: CONSENT_MAX_AGE, held: ATTR_HELD_KEY, event: CONSENT_EVENT,
   }).replace(/</g, '\\u003c')
   return `(function(){var C=${C},w=window,d=document;w.dataLayer=w.dataLayer||[];w.__rtiTracking=C;
+var sec=location.protocol==='https:'?';Secure':'',host=location.hostname.replace(/^www\\./,'');
+function rc(n){var m=d.cookie.match(new RegExp('(?:^|;\\\\s*)'+n+'=([^;]*)'));if(!m)return null;try{return JSON.parse(decodeURIComponent(m[1]))}catch(e){return null}}
+function kill(n){d.cookie=n+'=;max-age=0;path=/';d.cookie=n+'=;max-age=0;path=/;domain=.'+host}
+var gpc=navigator.globalPrivacyControl===true,saved=rc(C.consent);if(!saved||typeof saved.a!=='boolean')saved=null;
+var cs={necessary:true,analytics:!gpc&&!!(saved&&saved.a),decided:!!saved||gpc,gpc:gpc,updatedAt:saved?saved.t||null:null};w.rtiConsent=cs;
+function writeAttr(a){if(a)d.cookie=C.cookie+'='+encodeURIComponent(JSON.stringify(a))+';max-age='+C.maxAge+';path=/;SameSite=Lax'+sec}
 try{var p=new URLSearchParams(location.search),hit={},any=false;C.keys.forEach(function(k){var v=p.get(k);if(v){hit[k]=v.slice(0,200);any=true}});
-var m=d.cookie.match(new RegExp('(?:^|;\\\\s*)'+C.cookie+'=([^;]*)')),cur=null;if(m){try{cur=JSON.parse(decodeURIComponent(m[1]))}catch(e){}}
-if(any||!cur){var a=any?hit:{};a.landing_page=(location.origin+location.pathname+location.search).slice(0,500);var r=d.referrer;
-if(r){try{if(new URL(r).host!==location.host)a.referrer=r.slice(0,500)}catch(e){}}a.captured_at=new Date().toISOString();
-d.cookie=C.cookie+'='+encodeURIComponent(JSON.stringify(a))+';max-age='+C.maxAge+';path=/;SameSite=Lax'+(location.protocol==='https:'?';Secure':'');cur=a}
-w.__rtiAttr=cur}catch(e){}
+var cur=rc(C.cookie),held=null;try{held=JSON.parse(sessionStorage.getItem(C.held)||'null')}catch(e){}
+var base=cs.analytics?cur:(held||cur);
+if(any||!base){var a=any?hit:{};a.landing_page=(location.origin+location.pathname+location.search).slice(0,500);var r=d.referrer;
+if(r){try{if(new URL(r).host!==location.host)a.referrer=r.slice(0,500)}catch(e){}}a.captured_at=new Date().toISOString();base=a}
+if(cs.analytics){if(base!==cur)writeAttr(base)}else{try{sessionStorage.setItem(C.held,JSON.stringify(base))}catch(e){}if(cs.decided&&cur)kill(C.cookie)}
+w.__rtiAttr=base}catch(e){}
 w.dataLayer.push({rti_ga4_id:C.ga4,rti_ads_conversion_id:C.ads,rti_ads_conversion_number:(C.ads||'').replace(/^AW-/,''),rti_ads_conversion_label:C.label});
 d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!t)return;var n=t.getAttribute('href').slice(4),b=JSON.stringify({number:n,page:location.href,label:(t.textContent||'').trim().slice(0,80)});
 w.dataLayer.push({event:'click_to_call',phone_number:n,page_url:location.href});try{if(navigator.sendBeacon)navigator.sendBeacon('/api/call-click/',new Blob([b],{type:'application/json'}));else fetch('/api/call-click/',{method:'POST',headers:{'content-type':'application/json'},body:b,keepalive:true})}catch(x){}},true);
@@ -271,13 +302,14 @@ var CTA={'schedule a pickup':'Schedule a Pickup','get a quote':'Get a Quote','co
 d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a,button'):null;if(!t||meta('rti:tracking')==='off')return;
 var l=CTA[((t.getAttribute('data-cta')||t.innerText||t.textContent||'')+'').toLowerCase().replace(/[^a-z ]+/g,' ').replace(/\\s+/g,' ').trim()];
 if(!l&&t.matches('a[href^="tel:"]'))l='Call Us Now';if(!l)return;var pg=location.pathname;
-w.dataLayer.push({event:'cta_click',cta_label:l,page:pg});if((C.ga4d||(C.gtag&&C.ga4))&&typeof w.gtag==='function')w.gtag('event','cta_click',{send_to:C.ga4,cta_label:l,page:pg})},true);
+w.dataLayer.push({event:'cta_click',cta_label:l,page:pg});if(cs.analytics&&(C.ga4d||(C.gtag&&C.ga4))&&typeof w.gtag==='function')w.gtag('event','cta_click',{send_to:C.ga4,cta_label:l,page:pg})},true);
 function meta(n){var e=d.querySelector('meta[name="'+n+'"]');return e?e.getAttribute('content'):null}
 w.__rtiPageView=function(){var ev={event:'page_view_custom',page_type:meta('rti:page-type')||'page',page_name:meta('rti:page-name')||d.title,
 page_category:meta('rti:page-category')||'',page_url:location.href,analytics_excluded:meta('rti:analytics')==='exclude',tracking_disabled:meta('rti:tracking')==='off'};
 var id=meta('rti:tracking-id');if(id)ev.custom_tracking_id=id;var x=meta('rti:datalayer');if(x){try{var o=JSON.parse(x);for(var k in o)if(!(k in ev))ev[k]=o[k]}catch(e){}}
 w.dataLayer.push(ev)};
-function start(){w.__rtiPageView();if(meta('rti:tracking')==='off')return;
+var loaded=false,started=false;
+function tags(){if(loaded||!cs.analytics||meta('rti:tracking')==='off')return;loaded=true;
 if(C.gtm){w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var j=d.createElement('script');j.async=true;
 j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(C.gtm);d.head.appendChild(j)}
 else if(C.gtag){w.gtag=function(){w.dataLayer.push(arguments)};var g=d.createElement('script');g.async=true;
@@ -287,6 +319,14 @@ if(C.ga4d){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};var h=d.create
 h.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(C.ga4);d.head.appendChild(h);w.gtag('js',new Date());w.gtag('config',C.ga4)}
 if((C.gtm||C.gtag)&&C.ads&&C.calls.length){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};
 C.calls.forEach(function(c){w.gtag('config',C.ads+'/'+c.label,{phone_conversion_number:c.number})})}}
+w.rtiSetConsent=function(analytics){var v=!!analytics&&!gpc,was=loaded,t=new Date().toISOString();
+d.cookie=C.consent+'='+encodeURIComponent(JSON.stringify({v:1,a:v,t:t}))+';max-age='+C.consentAge+';path=/;SameSite=Lax'+sec;
+cs.analytics=v;cs.decided=true;cs.updatedAt=t;
+if(v){writeAttr(w.__rtiAttr);try{sessionStorage.removeItem(C.held)}catch(e){}if(started)tags()}
+else{kill(C.cookie);d.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^(_ga|_gid|_gat|_gcl_|_uet|_fbp|_clck|_clsk|MUID)/.test(n))kill(n)})}
+try{w.dispatchEvent(new CustomEvent(C.event,{detail:{necessary:true,analytics:cs.analytics,decided:true,gpc:gpc}}))}catch(e){}
+return{reload:was&&!v}};
+function start(){started=true;w.__rtiPageView();tags()}
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else start()})();`
 }
 
