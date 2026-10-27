@@ -11,6 +11,7 @@ import { LANDING_CHICAGO_ELECTRONIC_RECYCLE } from './chicago-electronic-recycle
 import { LANDING_CHICAGO_LIGHT_BULBS } from './chicago-light-bulbs'
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from './minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from './wisconsin-universal-waste-recycling'
+import { LANDING_CHICAGO_UNIVERSAL_WASTE } from './chicago-universal-waste-recycling'
 
 /**
  * The Google Ads landing pages: the nine of 30 Sep 2026, redesigned 27 Oct
@@ -33,6 +34,8 @@ export const LANDING_PAGES: LandingPage[] = [
   // Universal waste, 27 Oct 2026 (the redesign's two new pages).
   LANDING_MINNESOTA_UNIVERSAL_WASTE,
   LANDING_WISCONSIN_UNIVERSAL_WASTE,
+  // Chicago universal waste, 29 Oct 2026 (management).
+  LANDING_CHICAGO_UNIVERSAL_WASTE,
 ]
 
 /** Admin -> Pages document: `landing/` and the URL's path, e.g. landing/battery-recycling-Wisconsin. */

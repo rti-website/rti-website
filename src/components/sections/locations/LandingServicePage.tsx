@@ -234,10 +234,12 @@ function CardRows({ cards, numbered = false }: { cards: LandingCard[]; numbered?
 /** The options cards (28 Oct 2026): one row, equal widths, 24 apart; one
  *  column on the phone. */
 function OneRow({ cards }: { cards: LandingCard[] }) {
+  /* A lone card (Chicago universal waste, 7514:8937) is 629 wide, centred. */
+  const one = cards.length === 1
   return (
-    <div className="flex w-full flex-col gap-[14px] lg:flex-row lg:items-stretch lg:gap-[24px]">
+    <div className="flex w-full flex-col gap-[14px] lg:flex-row lg:items-stretch lg:justify-center lg:gap-[24px]">
       {cards.map((c) => (
-        <div key={c.title} className="flex w-full flex-col items-center gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] text-center lg:min-w-px lg:flex-1 lg:gap-[16px] lg:px-[30px] lg:py-[32px]">
+        <div key={c.title} className={`flex w-full flex-col items-center gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] text-center lg:gap-[16px] lg:px-[30px] lg:py-[32px] ${one ? 'lg:w-[629px] lg:shrink-0' : 'lg:min-w-px lg:flex-1'}`}>
           <h3 className="w-full font-sans text-[18px] font-medium leading-[normal] text-[#132119] lg:text-[19px]">{c.title}</h3>
           <p className="w-full whitespace-pre-line font-sans text-[14px] leading-[normal] text-[#7e7e7e] lg:text-[15px]">{c.body}</p>
         </div>

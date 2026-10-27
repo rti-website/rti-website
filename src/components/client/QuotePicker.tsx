@@ -26,7 +26,7 @@ import { PICKUP_HREF, QUOTE_HREF, path } from '@/lib/urls'
  *
  * HOW IT HOOKS IN. Nothing else on the site had to change: one click
  * listener on the document (capture phase) catches any link whose path is
- * /quote/ and opens the picker instead of following it. The link is still a
+ * /quote/ or /contact-us/ and opens the picker instead of following it. The link is still a
  * real link, so without JavaScript, or with a modifier key (new tab), it goes
  * straight to the form as before. The Business button itself carries
  * data-quote-direct so it is let through. The form's "Change" link opens
@@ -41,7 +41,9 @@ import { PICKUP_HREF, QUOTE_HREF, path } from '@/lib/urls'
  */
 export const OPEN_EVENT = 'rti:quote-picker'
 
-const QUOTE_PATH = path('/quote/')
+/** Links that open the picker first: Get a Quote, and since 29 Oct 2026
+ *  Contact Us too (Aaqib). Business then goes on to the link clicked. */
+const PICKER_PATHS = [path('/quote/'), path('/contact-us/')]
 
 export function QuotePicker() {
   const [open, setOpen] = useState(false)
@@ -59,7 +61,7 @@ export function QuotePicker() {
       if (!(a instanceof HTMLAnchorElement) || a.hasAttribute('data-quote-direct') || a.target === '_blank') return
       let url: URL
       try { url = new URL(a.href, window.location.href) } catch { return }
-      if (url.origin !== window.location.origin || url.pathname !== QUOTE_PATH) return
+      if (url.origin !== window.location.origin || !PICKER_PATHS.includes(url.pathname)) return
       e.preventDefault()
       e.stopPropagation()
       opener.current = a
@@ -106,15 +108,15 @@ export function QuotePicker() {
 
   if (!open) return null
 
-  const onBusiness = () => {
+  const onBusiness = (dest: string = target) => {
     setOpen(false)
     // Already on the form: no page load, so say who it is for and scroll to it.
-    const url = new URL(target, window.location.href)
+    const url = new URL(dest, window.location.href)
     if (url.pathname === window.location.pathname) {
       window.history.replaceState(null, '', url.pathname + url.search + url.hash)
       document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } else {
-      window.location.assign(target)
+      window.location.assign(dest)
     }
   }
 
@@ -218,7 +220,7 @@ export function QuotePicker() {
             </div>
             <p className="w-full text-center font-sans text-[14.5px] leading-[1.4] text-[#7e7e7e]">
               Need a pickup for a business?{' '}
-              <a data-quote-direct href={target} onClick={(e) => { e.preventDefault(); onBusiness() }} className="font-semibold text-brand underline underline-offset-2 hover:text-[#04717a]">Get a quote</a>
+              <a data-quote-direct href={QUOTE_HREF} onClick={(e) => { e.preventDefault(); onBusiness(QUOTE_HREF) }} className="font-semibold text-brand underline underline-offset-2 hover:text-[#04717a]">Get a quote</a>
             </p>
           </>
         )}

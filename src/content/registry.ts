@@ -119,6 +119,7 @@ import { LANDING_CHICAGO_ELECTRONIC_RECYCLE } from '@/data/landing-pages/chicago
 import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-bulbs'
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from '@/data/landing-pages/minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from '@/data/landing-pages/wisconsin-universal-waste-recycling'
+import { LANDING_CHICAGO_UNIVERSAL_WASTE } from '@/data/landing-pages/chicago-universal-waste-recycling'
 import { WISCONSIN_AIRBAG_RECYCLING } from '@/data/local-pages/wisconsin-airbag-recycling'
 import { WISCONSIN_BALLAST_RECYCLING } from '@/data/local-pages/wisconsin-ballast-recycling'
 import { WISCONSIN_BATTERY_RECYCLING } from '@/data/local-pages/wisconsin-battery-recycling'
@@ -337,6 +338,7 @@ export const DOCS = {
   'landing/light-bulbs-Chicago': { title: "Light Bulb Recycling in Chicago, Illinois (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_LIGHT_BULBS.url], data: one(LANDING_CHICAGO_LIGHT_BULBS) },
   'landing/universal-waste-recycling-Minnesota': { title: "Universal Waste Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_UNIVERSAL_WASTE.url], data: one(LANDING_MINNESOTA_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Wisconsin': { title: "Universal Waste Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_UNIVERSAL_WASTE.url], data: one(LANDING_WISCONSIN_UNIVERSAL_WASTE) },
+  'landing/universal-waste-recycling-Chicago': { title: "Universal Waste Recycling in Chicago (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_UNIVERSAL_WASTE.url], data: one(LANDING_CHICAGO_UNIVERSAL_WASTE) },
   'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
   'area/sheboygan': { title: "Sheboygan Recycling", group: 'Location pages', urls: [SHEBOYGAN.url], data: one(SHEBOYGAN) },
   'area/tv-recycling-green-bay': { title: "TV Recycling in Green Bay", group: 'Location pages', urls: [TV_RECYCLING_GREEN_BAY.url], data: one(TV_RECYCLING_GREEN_BAY) },
