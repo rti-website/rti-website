@@ -314,7 +314,7 @@ function Industries({ industries }: { industries: LandingPage['industries'] }) {
         <div className="grid w-full grid-cols-2 gap-[12px] lg:mt-[58px] lg:flex lg:flex-wrap lg:justify-center lg:gap-x-[14px] lg:gap-y-[12px]">
           {industries.cards.map((c) => {
             const ind = INDUSTRY[c.key]
-            return <IndustryCard key={c.title} ind={{ t: c.title, img: ind.img, href: ind.href, b: ind.b }} reveal small={c.title.length > 16} />
+            return <IndustryCard key={c.title} ind={{ t: c.title, img: ind.img, href: ind.href, b: ind.b }} reveal small={c.title.length > 16} twoLine={c.title.length > 30} />
           })}
         </div>
       </div>

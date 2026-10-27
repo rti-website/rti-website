@@ -5,8 +5,8 @@ import type { LandingPage } from '@/data/local-pages/types'
  * Universal Waste Recycling in Chicago: /universal-waste-recycling/Chicago/ (Google Ads landing page, noindex).
  * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7514:8884, phone 7514:9501 (29 Oct 2026, from management).
  * The frame's copy word for word. Built by LandingServicePage.
- * Chicago is pickup only (no drop-off): one Pickup Options card, no buttons under it,
- * and no email line in the closing band, as drawn.
+ * Chicago is pickup only (no drop-off): one Pickup Options card, no buttons under it.
+ * The closing band's email line was added 29 Oct 2026 (management), as on the other Chicago pages.
  */
 export const LANDING_CHICAGO_UNIVERSAL_WASTE: LandingPage = {
   url: href("/universal-waste-recycling/Chicago/"),
@@ -100,6 +100,7 @@ export const LANDING_CHICAGO_UNIVERSAL_WASTE: LandingPage = {
     body: "Tell us what you have, and we'll set up the right pickup for your business.",
     primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call (800) 969-5166", href: "tel:+18009695166" },
+    email: "widispatch@recycletechnologies.com",
   },
   todo: [],
 }

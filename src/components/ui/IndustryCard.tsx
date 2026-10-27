@@ -80,10 +80,18 @@ export type Industry = {
 
 const EASE = 'duration-500 ease-out motion-reduce:transition-none'
 
-export function IndustryCard({ ind, reveal = false, more = 'Learn More', small = false }: {
+export function IndustryCard({ ind, reveal = false, more = 'Learn More', small = false, twoLine = false }: {
   ind: Industry; reveal?: boolean; more?: string
   /** The landing frames (27 Oct 2026) set a longer title at 19px instead of 24 so it stays on one line. */
   small?: boolean
+  /**
+   * A title too long for one line even at 19px ("Facilities and property
+   * management", 29 Oct 2026). Its two lines start 32px higher so they end
+   * where a one-line title does (Figma 7514:9029 lifts that title box the
+   * same way); on hover it rises 112 instead of 142, and the summary drops
+   * 26, so title, summary and Learn More do not run into each other.
+   */
+  twoLine?: boolean
 }) {
   const card = reveal ? (
     <article
@@ -103,10 +111,10 @@ export function IndustryCard({ ind, reveal = false, more = 'Learn More', small =
         className={`absolute inset-0 transition-[translate,opacity] max-lg:hidden lg:group-hover:translate-y-[250px] lg:group-hover:opacity-0 lg:group-focus-visible:translate-y-[250px] lg:group-focus-visible:opacity-0 ${EASE}`}
         style={{ backgroundImage: 'linear-gradient(to bottom, rgba(10,15,12,0) 31.25%, rgba(10,15,12,0.7) 77.885%)' }}
       />
-      <h3 className={`absolute bottom-[10px] left-[12px] right-[12px] font-sans text-[15px] font-bold leading-[22px] text-white transition-[translate] lg:bottom-auto lg:left-[25px] lg:right-auto lg:top-[163px] lg:w-[253px] ${small ? 'max-lg:text-[13px] max-lg:leading-[1.2] lg:text-[19px]' : 'lg:text-[24px]'} lg:leading-[32px] lg:group-hover:-translate-y-[142px] lg:group-focus-visible:-translate-y-[142px] ${EASE}`}>
+      <h3 className={`absolute bottom-[10px] left-[12px] right-[12px] font-sans text-[15px] font-bold leading-[22px] text-white transition-[translate] lg:bottom-auto lg:left-[25px] lg:right-auto lg:w-[253px] ${small ? 'max-lg:text-[13px] max-lg:leading-[1.2] lg:text-[19px]' : 'lg:text-[24px]'} lg:leading-[32px] ${twoLine ? 'lg:top-[131px] lg:group-hover:-translate-y-[112px] lg:group-focus-visible:-translate-y-[112px]' : 'lg:top-[163px] lg:group-hover:-translate-y-[142px] lg:group-focus-visible:-translate-y-[142px]'} ${EASE}`}>
         {ind.t}
       </h3>
-      <p className={`absolute left-[25px] top-[66px] hidden w-[275px] translate-x-[300px] translate-y-[12px] font-roboto text-[14px] leading-[18px] text-white/80 transition-[translate,color] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[rgba(186,186,186,0.8)] group-focus-visible:translate-x-0 group-focus-visible:translate-y-0 group-focus-visible:text-[rgba(186,186,186,0.8)] lg:block ${EASE}`}>
+      <p className={`absolute left-[25px] ${twoLine ? 'top-[92px]' : 'top-[66px]'} hidden w-[275px] translate-x-[300px] translate-y-[12px] font-roboto text-[14px] leading-[18px] text-white/80 transition-[translate,color] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[rgba(186,186,186,0.8)] group-focus-visible:translate-x-0 group-focus-visible:translate-y-0 group-focus-visible:text-[rgba(186,186,186,0.8)] lg:block ${EASE}`}>
         {ind.b}
       </p>
       <span aria-hidden="true" className={`absolute left-[20px] right-[22px] top-[186px] hidden h-[16px] translate-y-[40px] items-center justify-between transition-[translate] group-hover:translate-y-0 group-focus-visible:translate-y-0 lg:flex ${EASE}`}>
