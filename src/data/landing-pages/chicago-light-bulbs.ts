@@ -103,6 +103,7 @@ export const LANDING_CHICAGO_LIGHT_BULBS: LandingPage = {
     body: "Tell us about your lighting and we'll arrange the right pickup option for your business.",
     primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 800-969-5166", href: "tel:+18009695166" },
+    email: "widispatch@recycletechnologies.com",
   },
   todo: [],
 }

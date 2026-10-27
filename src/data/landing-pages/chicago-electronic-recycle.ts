@@ -103,6 +103,7 @@ export const LANDING_CHICAGO_ELECTRONIC_RECYCLE: LandingPage = {
     body: "Tell us what equipment you have and where it's located, and we'll set up the right recycling option.",
     primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 800-969-5166", href: "tel:+18009695166" },
+    email: "widispatch@recycletechnologies.com",
   },
   todo: [],
 }

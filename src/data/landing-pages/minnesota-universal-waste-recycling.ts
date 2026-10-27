@@ -36,9 +36,9 @@ export const LANDING_MINNESOTA_UNIVERSAL_WASTE: LandingPage = {
     cards: [
       { title: "Business Pickup", body: "One scheduled pickup for all your universal waste from your site within our Minnesota pickup area." },
       { title: "Drop-Off", body: "Lamps: 10040 Davenport St NE (west dock).\nOther Items: 1525 99th Ln NE, Blaine." },
-      { title: "Mail-In", body: "Small quantities? Order a mail-in kit" },
+      { title: "Mail-In Kit", body: "Small quantities? Order a mail-in kit" },
     ],
-    buttons: [],
+    buttons: [{ label: "Order a Mail-In Kit", href: href("/mail-in-recycling/") }],
   },
   why: {
     heading: "Why Choose Recycle Technologies?",

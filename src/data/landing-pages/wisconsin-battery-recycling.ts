@@ -38,7 +38,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
       { title: "Drop-Off", body: "Bring batteries to a nearby Recycle Technologies location." },
       { title: "Mail-In Program", body: "Order a mail-in kit for eligible battery types." },
     ],
-    buttons: [],
+    buttons: [{ label: "Mail-In Program", href: href("/mail-in-recycling/") }],
   },
   why: {
     heading: "Why Choose Recycle Technologies for Battery Recycling?",

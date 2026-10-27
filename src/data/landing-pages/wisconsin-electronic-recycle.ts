@@ -38,7 +38,7 @@ export const LANDING_WISCONSIN_ELECTRONIC_RECYCLE: LandingPage = {
       { title: "Drop-Off", body: "Bring equipment to our New Berlin location or a nearby Recycle Technologies drop-off." },
       { title: "Mail-In Program", body: "Order a mail-in recycling kit for eligible items." },
     ],
-    buttons: [],
+    buttons: [{ label: "Mail-In Program", href: href("/mail-in-recycling/") }],
   },
   why: {
     heading: "Why Choose Recycle Technologies for Electronics Recycling?",

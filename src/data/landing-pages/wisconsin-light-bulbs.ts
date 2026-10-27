@@ -37,7 +37,7 @@ export const LANDING_WISCONSIN_LIGHT_BULBS: LandingPage = {
       { title: "Business Pickup", body: "Scheduled collection of spent bulbs, ballasts, and fixtures directly from your Wisconsin facility. Packing materials can be delivered ahead of pickup." },
       { title: "Mail-In Program", body: "Ship eligible bulbs through nationwide Mail-In Program." },
     ],
-    buttons: [],
+    buttons: [{ label: "Mail-In Program", href: href("/mail-in-recycling/") }],
   },
   why: {
     heading: "Why Choose Recycle Technologies for Light Bulb Recycling?",
