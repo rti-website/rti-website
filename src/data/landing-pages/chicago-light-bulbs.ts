@@ -1,9 +1,9 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 
 /**
  * Light Bulb Recycling in Chicago, Illinois: /light-bulbs/Chicago/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:7461, phone 7377:8041 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:7461, phone 7377:8041 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  */
 export const LANDING_CHICAGO_LIGHT_BULBS: LandingPage = {
@@ -18,8 +18,10 @@ export const LANDING_CHICAGO_LIGHT_BULBS: LandingPage = {
     crumb: "Light Bulb Recycling in Chicago, Illinois",
     h1: "Certified Light Bulb Recycling Services in Chicago",
     body: "Reliable commercial lighting recycling for Chicago businesses, with scheduled pickup and processing at our R2v3-certified facility in New Berlin, WI. Fluorescent tubes, CFLs, LED, HID lighting, ballasts, and fixtures accepted, with a certificate of recycling for your records.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-light-bulbs.png',
+    photo: '/images/landing/hero-photo-light-bulbs.jpg',
   },
   highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
@@ -99,7 +101,7 @@ export const LANDING_CHICAGO_LIGHT_BULBS: LandingPage = {
   cta: {
     heading: "Get a Light Bulb Recycling Quote in Chicago",
     body: "Tell us about your lighting and we'll arrange the right pickup option for your business.",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 800-969-5166", href: "tel:+18009695166" },
   },
   todo: [],

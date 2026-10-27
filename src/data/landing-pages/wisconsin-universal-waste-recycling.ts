@@ -1,9 +1,9 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 
 /**
  * Universal Waste Recycling in Wisconsin: /universal-waste-recycling/Wisconsin/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:20008, phone 7377:20642 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:20008, phone 7377:20642 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  */
 export const LANDING_WISCONSIN_UNIVERSAL_WASTE: LandingPage = {
@@ -18,8 +18,10 @@ export const LANDING_WISCONSIN_UNIVERSAL_WASTE: LandingPage = {
     crumb: "Universal Waste Recycling in Wisconsin",
     h1: "Universal Waste Recycling for Wisconsin Businesses",
     body: "One pickup for your lamps, batteries, ballasts, and mercury devices. Processed at our R2v3-certified New Berlin, WI facility, with a certificate of recycling for your compliance records.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-universal-waste.png',
+    photo: '/images/landing/hero-photo-universal-waste.jpg',
   },
   highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
@@ -95,7 +97,7 @@ export const LANDING_WISCONSIN_UNIVERSAL_WASTE: LandingPage = {
   cta: {
     heading: "Get a Universal Waste Recycling Quote in Wisconsin",
     body: "Tell us what you have, and we'll set up the right pickup for your business.",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 262-798-3040", href: "tel:+12627983040" },
     email: "widispatch@recycletechnologies.com",
   },

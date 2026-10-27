@@ -5,6 +5,8 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { ContactSection } from '@/components/sections/ContactSection'
+import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
+import { ServicesCta } from '@/components/sections/services/ServicesCta'
 import { QUOTE_PAGE } from '@/data/contact'
 import { content } from '@/lib/page-content'
 import { HERO_PHOTOS } from '@/data/hero-photos'
@@ -33,16 +35,30 @@ export const generateMetadata = () => pageMetadata({
 
 const FORM_TOP = 610
 const FORM_H = 1324
-const FOOTER_TOP = FORM_TOP + FORM_H
+/* FAQ and the closing band, as on /contact-us/: the "Get a Quote form" frame
+   (7465:8862, 28 Oct 2026) is the Contact Us page with the quote form in it. */
+const FAQ_TOP = FORM_TOP + FORM_H
+const FAQ_H = 715.52
+const CTA_TOP = FAQ_TOP + FAQ_H
+const CTA_H = 456
+const FOOTER_TOP = CTA_TOP + CTA_H
 
 export default async function QuotePage() {
-  const { QUOTE_PAGE: PAGE } = await content('contact')
+  const { QUOTE_PAGE: PAGE, FAQ, CTA } = await content('contact')
   return (
     <Canvas height={FOOTER_TOP + FOOTER_H}>
       <Header />
       <main>
         <ServiceHero label="6365:1084" {...HERO_PHOTOS.contact} crumbs={PAGE.crumbs} h1={PAGE.h1} lead={PAGE.lead} />
         <ContactSection top={FORM_TOP} height={FORM_H} variant="quote" />
+        <ServiceFaq
+          top={FAQ_TOP} height={FAQ_H} listTop={276} label="7465:8998"
+          eyebrow={FAQ.eyebrow}
+          heading={FAQ.heading}
+          lead={FAQ.lead}
+          items={FAQ.items}
+        />
+        <ServicesCta top={CTA_TOP} label="7465:9011" content={CTA} />
       </main>
       <Footer top={FOOTER_TOP} />
     </Canvas>

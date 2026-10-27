@@ -5,6 +5,8 @@ import { dropoffSites } from '@/lib/dropoff-sites'
 import { MAIL_IN } from '@/lib/nav'
 import { content } from '@/lib/page-content'
 import { InfoRow } from '@/components/ui/Glyph'
+import Image from 'next/image'
+import { QuoteChangeButton } from '@/components/client/QuotePicker'
 
 /**
  * Contact form + facility cards — Figma 6369:757. 1920x871.
@@ -71,6 +73,18 @@ export async function ContactSection({ top, height, variant = 'contact' }: { top
             <Eyebrow>{head.eyebrow}</Eyebrow>
             <h2 className={HEADING}>{head.heading}</h2>
             <p className={LEAD}>{head.lead}</p>
+            {/* Who the quote is for (Figma 7465:9284, phone 7465:9964): the
+                choice made in the "Who is this for?" picker, and a link to
+                make it again. Business only, so the chip never changes. */}
+            {variant === 'quote' && (
+              <div className="flex items-center gap-[12px] lg:-mt-[10px]">
+                <span className="flex items-center gap-[6px] rounded-full bg-[#eaf4f5] px-[12px] py-[6px]">
+                  <Image src="/images/quote/building-14.svg" alt="" width={14} height={14} unoptimized className="size-[14px]" />
+                  <span className="font-sans text-[12.5px] font-semibold leading-[1.2] text-brand whitespace-nowrap">Business / Commercial</span>
+                </span>
+                <QuoteChangeButton className="font-sans text-[14px] font-semibold leading-[1.3] text-brand underline underline-offset-2 hover:text-[#04717a]" />
+              </div>
+            )}
           </div>
           <ContactForm form={FORM} serviceInterest={SERVICE_INTEREST} heroLocations={HERO_LOCATIONS} variant={variant} help={help} />
         </div>

@@ -67,7 +67,10 @@ import type { AddressSuggestion } from '@/app/api/address/route'
  *
  * THREE FORMS, ONE COMPONENT (Asim, 29 Sep 2026). `variant` says which:
  *   contact  /contact-us/          "Is it for?" preselected Commercial
- *   quote    /quote/               the same form
+ *   quote    /quote/               business only since 28 Oct 2026: no
+ *                                  "Is it for?" (posts Commercial); the
+ *                                  heading block shows the Business /
+ *                                  Commercial chip and a Change link
  *   pickup   /request-a-pickup/    business only: no "Is it for?" (it posts
  *                                  Commercial) and the business notice on top
  * It posts `form` with the variant, so the enquiry says where it came from.
@@ -157,6 +160,10 @@ export function ContactForm({
   help: { copy: typeof NO_PICKUP; sites: DropoffSite[]; mailInHref: string }
 }) {
   const pickup = variant === 'pickup'
+  /* Business only, so no "Is it for?": the pickup form, and since 28 Oct 2026
+     the quote form, which visitors reach through the "Who is this for?"
+     picker (QuotePicker) having chosen Business / Commercial. */
+  const fixed = pickup || variant === 'quote'
   const [state, setState] = useState<State>('idle')
   const [error, setError] = useState<string | null>(null)
   const [bad, setBad] = useState<FieldName | null>(null)
@@ -447,7 +454,7 @@ export function ContactForm({
       <input type="hidden" name="type" value="contact" />
       <input type="hidden" name="form" value={variant} />
       {/* Schedule a Pickup is business only: every pickup posts Commercial. */}
-      {pickup && <input type="hidden" name="audience" value="Commercial" />}
+      {fixed && <input type="hidden" name="audience" value="Commercial" />}
       {pickup && <ResidentialHelp mode="business" {...help} />}
       {/* Honeypot. Hidden from sight AND from screen readers, and out of the
           tab order, so no person is ever offered it — only a bot that fills
@@ -524,7 +531,7 @@ export function ContactForm({
           <ServicePicker options={serviceInterest} value={services} onChange={(v) => { setServices(v); setBad(null) }}
             placeholder={F.service.placeholder} invalid={invalid('service')} inputClass={INPUT} />
         </div>
-        {!pickup && <div className={FIELD}>
+        {!fixed && <div className={FIELD}>
           <label htmlFor="contact-audience" className={LABEL}>{F.audience.label}<Req /></label>
           <div className="relative">
             <select id="contact-audience" name="audience" defaultValue={AUDIENCES[0]} onChange={(e) => { setAudience(e.target.value); if (bad === 'company') { setBad(null); setError(null); setState('idle') } }} className={`${INPUT} appearance-none pr-[44px]`}>
@@ -537,7 +544,7 @@ export function ContactForm({
 
       {/* Under the row with "Is it for?" (Asim, 29 Sep 2026: "move these
           precautions below the is this for place"). */}
-      {!pickup && !business && <ResidentialHelp mode="residential" {...help} />}
+      {!fixed && !business && <ResidentialHelp mode="residential" {...help} />}
 
       {/* How did you hear about us? Required (Asim, 1 Oct 2026). On the form
           rather than a pop-up after sending: a question asked after the lead

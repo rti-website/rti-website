@@ -128,7 +128,9 @@ export type LandingPage = {
   figma: { board: string; phone: string }
   seo: { title: string; description: string }
   schema: { service: string; areaServed: string[] }
-  hero: { crumb: string; h1: string; body: string; button: Link; image: string }
+  /** `image` is the full-bleed background; `photo` the 560 x 420 picture on
+   *  the right (28 Oct 2026, where the quote form was). */
+  hero: { crumb: string; h1: string; body: string; button: Link; secondary: Link; image: string; photo: string }
   highlights: string[]
   about: { heading: string; body: string[]; image: string }
   options: { heading: string; cards: LandingCard[]; buttons: Link[] }

@@ -1,10 +1,10 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 import { STATE_PAGES } from '@/data/state-pages'
 
 /**
  * Battery Recycling in Minnesota: /battery-recycling/Minnesota/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7374:15764, phone 7374:16419 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7374:15764, phone 7374:16419 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  * SEO title and description kept from the ad page this URL has carried since 24 Sep 2026.
  */
@@ -17,8 +17,10 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
     crumb: "Battery Recycling in Minnesota",
     h1: "Certified Battery Recycling Services in Minnesota",
     body: "Safe, certified battery recycling with scheduled pickup from our Blaine, MN facility. Lithium-ion, lead-acid, alkaline, NiCd, and EV batteries accepted, with a certificate of recycling for your records.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-battery.png',
+    photo: '/images/landing/hero-photo-battery.jpg',
   },
   highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
@@ -96,7 +98,7 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
   cta: {
     heading: "Get a Battery Recycling Quote in Minnesota",
     body: "Tell us about your batteries and our team will get back to you with the right recycling option.",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 763-559-5130", href: "tel:+17635595130" },
     email: "dispatch@recycletechnologies.com",
   },

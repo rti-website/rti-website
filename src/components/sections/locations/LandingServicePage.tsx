@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { FlowCanvas } from '@/components/design/Frame'
 import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
-import { CaseStudies, CASE_STUDIES_H } from '@/components/sections/CaseStudies'
 import { CertificationsBand } from '@/components/sections/services/CertificationsBand'
 import { Faq } from '@/components/sections/locations/LocalServicePage'
-import { LandingQuoteForm } from '@/components/client/LandingQuoteForm'
+import { CaseStudyRail, type RailStory } from '@/components/client/CaseStudyRail'
 import { IndustryCard } from '@/components/ui/IndustryCard'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
-import { href } from '@/lib/urls'
+import { caseStudyHref, href, path } from '@/lib/urls'
+import { content } from '@/lib/page-content'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
 import type { IndustryKey, LandingCard, LandingPage, Link as L } from '@/data/local-pages/types'
 
@@ -24,23 +24,30 @@ import type { IndustryKey, LandingCard, LandingPage, Link as L } from '@/data/lo
  * auto-layout column, px319 on the 1920 board (a 1282 column) and px20 on the
  * phone. Numbers are the board's at `lg:` and the phone frame's below it.
  *
- *   hero        photo under a teal-to-navy ramp; py84, text and the 500px
- *               Request a Quote card 70 apart; H1 46/1.12, body 18/1.6
- *               (phone py36 px20, centred, H1 30, body 15, the form under it)
+ *   hero        photo under a teal-to-navy ramp; py84, text and a 560 x 420
+ *               photo 70 apart; H1 46/1.12, body 18/1.6; Get a Quote (white)
+ *               and Schedule a Pickup (outline). 28 Oct 2026: the photo took
+ *               the place of the Request a Quote card, and Get a Quote opens
+ *               the "Who is this for?" picker (QuotePicker) like every other
+ *               Get a Quote on the site. (Phone py36 px20, centred, H1 30,
+ *               body 15, the buttons stacked, a navy 86% wash, the photo
+ *               350 x 230 under.)
  *   highlights  #f4f9f6, py30, four columns split by #d7e4dc rules, a 28px
  *               teal tick and 17px semibold (phone 2 x 2, 14px)
  *   about       py70, heading 32 and 16px text beside a 560 x 420 photo
  *               (phone py40, centred, 21 / 14, the photo 350 x 230 under)
  *   cards       white, 1px #e6e6e6, r12, px30 py32, gap16; title 19 medium,
  *               text 15 #7e7e7e; 629 wide two a row (411 three a row for the
- *               steps), an odd last row centred; rows 24 apart (phone 14)
+ *               steps), an odd last row centred; rows 24 apart (phone 14).
+ *               The options cards are one row, equal widths (28 Oct 2026).
  *   why         py84, heading 34/1.25, four #eaf4f5 cards with a 40px tick
  *   industries  #f8faf9, the shared Industries We Serve band and cards
  *   areas       the home page's map with its pins, lines and three cards
  *   cta         navy to green, py80, heading 34, buttons, the email line
  *
- * The certifications band and Client's Stories are the shared sections, as
- * on the service pages; the FAQ is the location pages' Faq.
+ * The certifications band is the shared section, as on the service pages;
+ * the FAQ is the location pages' Faq. Case Studies is this page's own
+ * (7444:9120, 28 Oct 2026): see LandingCaseStudies below.
  */
 const CERT_H = 360
 
@@ -59,7 +66,7 @@ export function LandingServicePage({ page }: { page: LandingPage }) {
         <About about={page.about} />
 
         <Band heading={page.options.heading}>
-          <CardRows cards={page.options.cards} />
+          <OneRow cards={page.options.cards} />
           {page.options.buttons.length > 0 && (
             <div className="flex w-full flex-col gap-[16px] lg:w-auto lg:flex-row lg:justify-center">
               {page.options.buttons.map((b, i) => <Btn key={b.label} link={b} filled={i === 0} />)}
@@ -85,9 +92,7 @@ export function LandingServicePage({ page }: { page: LandingPage }) {
         <div className="relative lg:h-[var(--cert-h)]" style={{ '--cert-h': `${CERT_H}px` } as React.CSSProperties}>
           <CertificationsBand top={0} height={CERT_H} label="landing-certifications" body={page.certBody} />
         </div>
-        <div className="relative lg:h-[var(--cs-h)]" style={{ '--cs-h': `${CASE_STUDIES_H}px` } as React.CSSProperties}>
-          <CaseStudies top={0} label="landing-case-studies" />
-        </div>
+        <LandingCaseStudies />
 
         {page.faq && <Faq faq={page.faq} id={page.url} />}
         <Cta cta={page.cta} />
@@ -109,7 +114,7 @@ function Hero({ page }: { page: LandingPage }) {
   return (
     <section className="relative isolate overflow-hidden bg-[#0b1f3a] px-[20px] py-[36px] lg:px-0 lg:py-[84px]">
       <Image src={h.image} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10" style={{ backgroundImage: HERO_RAMP }} />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[rgba(11,31,58,0.86)] lg:bg-transparent lg:[background-image:var(--ramp)]" style={{ '--ramp': HERO_RAMP } as React.CSSProperties} />
       <div className="mx-auto flex w-full flex-col items-center gap-[28px] lg:w-[1282px] lg:flex-row lg:gap-[70px]">
         <div className="flex w-full flex-col items-center gap-[14px] text-center lg:min-w-px lg:flex-1 lg:items-start lg:gap-[20px] lg:text-left">
           <nav aria-label="Breadcrumb">
@@ -121,12 +126,21 @@ function Hero({ page }: { page: LandingPage }) {
           </nav>
           <h1 className="font-sans text-[30px] font-semibold leading-[1.12] text-white lg:text-[46px]">{h.h1}</h1>
           <p className="font-sans text-[15px] leading-[1.6] text-white/[0.92] lg:text-[18px]">{h.body}</p>
-          <Link href={h.button.href} className="btn-pop flex items-center justify-center gap-[10px] rounded-[8px] bg-white px-[26px] py-[14px] font-sans text-[15px] font-semibold leading-[normal] text-brand">
-            {h.button.label}
-            <Image src="/images/landing/arrow-right-teal.svg" alt="" width={16} height={16} className="size-[16px]" />
-          </Link>
+          {/* Phone: stacked, the white button as wide as the outline one. */}
+          <div className="flex flex-col items-stretch gap-[20px] lg:flex-row lg:items-center">
+            <Link href={h.button.href} className="btn-pop flex items-center justify-center gap-[10px] rounded-[8px] bg-white px-[26px] py-[14px] font-sans text-[15px] font-semibold leading-[normal] text-brand">
+              {h.button.label}
+              <Image src="/images/landing/arrow-right-teal.svg" alt="" width={16} height={16} className="size-[16px]" />
+            </Link>
+            <Link href={h.secondary.href} className="btn-pop flex items-center justify-center gap-[10px] rounded-[8px] border border-white px-[28px] py-[14.5px] font-sans text-[15px] font-medium leading-[normal] text-white">
+              {h.secondary.label}
+              <Image src="/images/landing/arrow-white-13.svg" alt="" width={15} height={12} className="h-[11.75px] w-[14.75px]" />
+            </Link>
+          </div>
         </div>
-        <LandingQuoteForm service={page.schema.service} />
+        <div className="relative h-[230px] w-full max-w-[350px] shrink-0 overflow-hidden rounded-[12px] bg-[#eaf4f5] lg:h-[420px] lg:w-[560px] lg:max-w-none">
+          <Image src={h.photo} alt="" fill priority sizes="(min-width: 1024px) 560px, 350px" className="object-cover" />
+        </div>
       </div>
     </section>
   )
@@ -211,6 +225,21 @@ function CardRows({ cards, numbered = false }: { cards: LandingCard[]; numbered?
               </div>
             )
           })}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** The options cards (28 Oct 2026): one row, equal widths, 24 apart; one
+ *  column on the phone. */
+function OneRow({ cards }: { cards: LandingCard[] }) {
+  return (
+    <div className="flex w-full flex-col gap-[14px] lg:flex-row lg:items-stretch lg:gap-[24px]">
+      {cards.map((c) => (
+        <div key={c.title} className="flex w-full flex-col items-center gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] text-center lg:min-w-px lg:flex-1 lg:gap-[16px] lg:px-[30px] lg:py-[32px]">
+          <h3 className="w-full font-sans text-[18px] font-medium leading-[normal] text-[#132119] lg:text-[19px]">{c.title}</h3>
+          <p className="w-full whitespace-pre-line font-sans text-[14px] leading-[normal] text-[#7e7e7e] lg:text-[15px]">{c.body}</p>
         </div>
       ))}
     </div>
@@ -347,6 +376,48 @@ function Areas({ lead }: { lead: string }) {
           ))}
         </ul>
       </div>
+    </section>
+  )
+}
+
+/* ------------------------------------------------------------ case studies -- */
+
+/**
+ * Case Studies — Figma 7444:9120 (board, 1064 tall) and 7444:9199 (phone),
+ * 28 Oct 2026. White, py84 gap44 (phone py44 gap24): the badge, the 40px
+ * title, the lead and View All Case Studies, then the carousel
+ * (CaseStudyRail) and its two arrows.
+ *
+ * The frame repeats one placeholder story three times; these are the three
+ * real ones from src/data/case-studies.ts (title, link to its card on
+ * /case-studies/, its PDF) with the home page's photos for them, in the
+ * frame's order: the aerial (Midwest business) left, the server room
+ * (hospital system) in the middle, the workshop (auto repair) right.
+ */
+const STORY_PHOTOS: { id: string; img: string }[] = [
+  { id: 'midwest-business', img: '/images/home/case-midwest-business.png' },
+  { id: 'hospital-system',  img: '/images/home/case-healthcare.png' },
+  { id: 'auto-repair-shop', img: '/images/home/case-auto-repair.png' },
+]
+
+async function LandingCaseStudies() {
+  const { CASE_STUDY_CARDS } = await content('case-studies')
+  const stories: RailStory[] = STORY_PHOTOS.flatMap(({ id, img }) => {
+    const c = CASE_STUDY_CARDS.find((x) => x.id === id)
+    return c ? [{ id, img, title: c.title, href: caseStudyHref(id), pdf: c.pdf }] : []
+  })
+  return (
+    <section className="flex flex-col items-center gap-[24px] overflow-hidden bg-white py-[44px] lg:gap-[44px] lg:py-[84px]">
+      <div className="flex w-[350px] max-w-[calc(100%-40px)] flex-col items-center gap-[10px] text-center lg:w-[1282px] lg:max-w-none lg:gap-[14px]">
+        <span className="rounded-full bg-[#e8f5ec] px-[20px] py-[9px] font-sans text-[11px] font-bold uppercase leading-none text-[#1b7a3d]">Clients Stories</span>
+        <h2 className="font-sans text-[26px] font-semibold leading-[1.2] text-[#132119] lg:text-[40px]">Case Studies</h2>
+        <p className="font-sans text-[14.5px] leading-[1.6] text-[#7e7e7e] lg:text-[17px]">Real results from real partnerships. See how organizations simplify ITAD, strengthen data security, and recover value from retired hardware.</p>
+        <Link href={path('/case-studies/')} className="btn-pop flex min-w-[208px] items-center whitespace-nowrap justify-center gap-[10px] rounded-[8px] bg-brand px-[26px] py-[14px] font-sans text-[15px] font-semibold leading-[1.3] text-white">
+          View All Case Studies
+          <Image src="/images/landing/arrow-right-white.svg" alt="" width={16} height={16} className="size-[16px]" />
+        </Link>
+      </div>
+      <CaseStudyRail stories={stories} start={1} />
     </section>
   )
 }

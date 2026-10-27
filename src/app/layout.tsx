@@ -10,6 +10,7 @@ import { canvasZoomScript } from '@/lib/canvas-zoom'
 import { isPreview } from '@/lib/page-content'
 import { PreviewBar } from '@/components/client/PreviewBar'
 import { CookieConsent } from '@/components/client/CookieConsent'
+import { QuotePicker } from '@/components/client/QuotePicker'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -61,6 +62,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
         {/* Cookie banner and settings panel (management, 27 Oct 2026). */}
         {!preview && <CookieConsent />}
+        {/* Get a Quote asks "Who is this for?" first (28 Oct 2026). */}
+        <QuotePicker />
         {preview && <PreviewBar />}
       </body>
     </html>

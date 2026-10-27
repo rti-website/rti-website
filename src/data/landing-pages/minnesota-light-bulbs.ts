@@ -1,10 +1,10 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 import { STATE_PAGES } from '@/data/state-pages'
 
 /**
  * Light Bulb Recycling in Minnesota: /light-bulbs/Minnesota/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7375:8163, phone 7375:8836 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7375:8163, phone 7375:8836 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  * SEO title and description kept from the ad page this URL has carried since 24 Sep 2026.
  */
@@ -17,8 +17,10 @@ export const LANDING_MINNESOTA_LIGHT_BULBS: LandingPage = {
     crumb: "Light Bulb Recycling in Minnesota",
     h1: "Commercial Light Bulb Recycling Services in Minnesota",
     body: "Commercial light bulb, ballast, and fixture recycling for Minnesota businesses, processed at our Blaine facility without a broker. Fluorescent tubes, CFLs, LED, HID lamps, and more accepted, with a certificate of recycling for your records.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-light-bulbs.png',
+    photo: '/images/landing/hero-photo-light-bulbs.jpg',
   },
   highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
@@ -100,7 +102,7 @@ export const LANDING_MINNESOTA_LIGHT_BULBS: LandingPage = {
   cta: {
     heading: "Get a Light Bulb Recycling Quote in Minnesota",
     body: "Tell us about your lighting and our team will get back to you with the right recycling option.",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 763-559-5130", href: "tel:+17635595130" },
     email: "dispatch@recycletechnologies.com",
   },

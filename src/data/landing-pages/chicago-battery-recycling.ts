@@ -1,9 +1,9 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 
 /**
  * Battery Recycling in Chicago, Illinois: /battery-recycling/Chicago/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:9503, phone 7377:10090 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7377:9503, phone 7377:10090 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  */
 export const LANDING_CHICAGO_BATTERY_RECYCLING: LandingPage = {
@@ -18,8 +18,10 @@ export const LANDING_CHICAGO_BATTERY_RECYCLING: LandingPage = {
     crumb: "Battery Recycling in Chicago, Illinois",
     h1: "Certified Battery Recycling Services in Chicago",
     body: "Commercial battery recycling for Chicago businesses, with scheduled pickup and in-house processing at our New Berlin, WI facility. Lithium-ion, lead-acid, alkaline, NiCd, EV, and backup batteries accepted, with a certificate of recycling for your records.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-battery.png',
+    photo: '/images/landing/hero-photo-battery.jpg',
   },
   highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
@@ -99,7 +101,7 @@ export const LANDING_CHICAGO_BATTERY_RECYCLING: LandingPage = {
   cta: {
     heading: "Get a Battery Recycling Quote in Chicago",
     body: "Tell us about your batteries and we'll set up the right pickup option for your business.",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: "Call 800-969-5166", href: "tel:+18009695166" },
   },
   todo: [],

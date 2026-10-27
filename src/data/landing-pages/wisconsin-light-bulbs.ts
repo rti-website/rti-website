@@ -1,10 +1,10 @@
-import { href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
 import { STATE_PAGES } from '@/data/state-pages'
 
 /**
  * Light Bulb Recycling in Wisconsin: /light-bulbs/Wisconsin/ (Google Ads landing page, noindex).
- * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7376:7167, phone 7376:7779 (27 Oct 2026).
+ * Figma BVtf2AOuUOcYbiMIlcKmbC, page New Pages: board 7376:7167, phone 7376:7779 (27 Oct 2026; updated to the frames of 28 Oct 2026).
  * The frame's copy word for word. Built by LandingServicePage.
  * SEO title and description kept from the ad page this URL has carried since 24 Sep 2026.
  */
@@ -17,10 +17,12 @@ export const LANDING_WISCONSIN_LIGHT_BULBS: LandingPage = {
     crumb: "Light Bulb Recycling in Wisconsin",
     h1: "Certified Light Bulb Recycling Services in Wisconsin",
     body: "Commercial light bulb recycling for Wisconsin businesses, processed at our R2v3-certified facility in New Berlin, WI, with no broker in between. Fluorescent tubes, CFLs, LED, HID lighting, ballasts, and fixtures accepted, with a documented path from pickup to processing.",
-    button: { label: 'Get a Quote', href: '#landing-quote' },
+    button: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-light-bulbs.png',
+    photo: '/images/landing/hero-photo-light-bulbs.jpg',
   },
-  highlights: ["Since 1993", "R2v3 & RIOS Certified", "Certificate of Recycling", "Business Pickup"],
+  highlights: ["Since 1993", "R2v3, RIOS & NAID AAA Certified", "Certificate of Recycling", "Business Pickup"],
   about: {
     heading: "Why Recycle Light Bulbs in Wisconsin?",
     body: [
@@ -85,8 +87,11 @@ export const LANDING_WISCONSIN_LIGHT_BULBS: LandingPage = {
   areas: { lead: "Commercial lighting pickup across Wisconsin, including Milwaukee, Waukesha, New Berlin, Madison, Green Bay, Appleton, Racine, Sheboygan, Oconomowoc, and Fond du Lac." },
   certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
   cta: {
-    heading: "Get a Quote",
-    primary: { label: 'Get a Quote', href: '#landing-quote' },
+    heading: "Get a Light Bulb Recycling Quote in Wisconsin",
+    body: "Tell us about your lighting and our team will get back to you with the right recycling option.",
+    primary: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: { label: "Call 262 798 3040", href: "tel:+12627983040" },
+    email: "widispatch@recycletechnologies.com",
   },
-  todo: ["The Wisconsin frames have no FAQ section and a short Get a Quote band; built as drawn."],
+  todo: ["The Wisconsin frames have no FAQ section; built as drawn."],
 }
