@@ -86,7 +86,7 @@ export const LANDING_CHICAGO_LIGHT_BULBS: LandingPage = {
     ],
   },
   areas: { lead: "Commercial lighting pickup throughout Chicago and Cook County." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',

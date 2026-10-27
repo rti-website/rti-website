@@ -82,7 +82,7 @@ export const LANDING_MINNESOTA_UNIVERSAL_WASTE: LandingPage = {
     ],
   },
   areas: { lead: "Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',

@@ -85,7 +85,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
     ],
   },
   areas: { lead: "Commercial battery pickup within 100 miles of New Berlin, including Milwaukee, Waukesha, Madison, Racine, Sheboygan, Oconomowoc, Fond du Lac, and Appleton." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   cta: {
     heading: "Get a Battery Recycling Quote in Wisconsin",
     body: "Tell us about your batteries and our team will get back to you with the right recycling option.",

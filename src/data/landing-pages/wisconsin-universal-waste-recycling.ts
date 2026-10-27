@@ -82,7 +82,7 @@ export const LANDING_WISCONSIN_UNIVERSAL_WASTE: LandingPage = {
     ],
   },
   areas: { lead: "Milwaukee, Waukesha, New Berlin, Brookfield, Racine, Kenosha, Oconomowoc, Madison, Green Bay, and Appleton." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',

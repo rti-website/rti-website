@@ -82,7 +82,7 @@ export const LANDING_CHICAGO_UNIVERSAL_WASTE: LandingPage = {
     ],
   },
   areas: { lead: "Chicago and Cook County." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',

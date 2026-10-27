@@ -85,7 +85,7 @@ export const LANDING_WISCONSIN_LIGHT_BULBS: LandingPage = {
     ],
   },
   areas: { lead: "Commercial lighting pickup across Wisconsin, including Milwaukee, Waukesha, New Berlin, Madison, Green Bay, Appleton, Racine, Sheboygan, Oconomowoc, and Fond du Lac." },
-  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3.',
+  certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   cta: {
     heading: "Get a Light Bulb Recycling Quote in Wisconsin",
     body: "Tell us about your lighting and our team will get back to you with the right recycling option.",
