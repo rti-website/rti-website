@@ -39,11 +39,13 @@ export const CONTENT = industryPage({
     { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete.' },
     { q: 'What if our office or facility is outside Minnesota or Wisconsin?', a: 'Our mail-in program lets you order a recycling kit, pack your equipment, and ship it with a prepaid label from anywhere in the country.' },
     { q: 'Is pickup available for government and municipal offices?', a: 'Pickup is available exclusively for commercial clients in our service area; offices elsewhere can use the mail-in program instead.' },
+    // 28 Oct 2026, management: the approved MBE wording, with the certificate
+    // details that government and bid pages carry.
+    { q: 'Is Recycle Technologies a certified minority business?', a: 'Yes. Recycle Technologies, Inc. is a Certified Minority Business Enterprise (MBE) through the National Minority Supplier Development Council (NMSDC), North Central MSDC. Certificate WS696947, valid through 07/2027.' },
   ],
   ctaHeading: 'Ready to Clear Out Retired Electronics from Your Office or Facility?',
   ctaBody: ['Get a quote for your next equipment refresh, or call MN: (800) 969-5166 / WI: (800) 205-3040 to talk through a pickup or larger project directly.'],
   todo: [
-    'The doc gives four FAQs where the other industry pages have five — an empty bold line sits where a fifth question was drafted. Musaveer to supply it or confirm four is intended.',
     'No Government hero photograph exists yet. The page borrows Education’s; Aqeel to supply one.',
   ],
 })

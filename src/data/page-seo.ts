@@ -227,7 +227,7 @@ const SHEET_SEO: Record<string, PageSeo> = {
   // #36 About Us
   "/about-us-commercial-recycling-solutions/": {
     title: "About Recycle Technologies | Since 1993",
-    description: "Minority-owned and operating since 1993, Recycle Technologies delivers certified, sustainable e-waste and ITAD solutions.",
+    description: "A Certified Minority Business Enterprise (MBE) operating since 1993, Recycle Technologies delivers certified, sustainable e-waste and ITAD solutions.",
     focusKeyword: "about Recycle Technologies",
   },
   // #37 Why Choose Us — corrected, see the note above

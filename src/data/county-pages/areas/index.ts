@@ -53,13 +53,15 @@ import { APPLETON_RECYCLING } from './appleton-recycling'
 import { ROSEVILLE } from './roseville'
 import { ELECTRONIC_RECYCLING_IN_WOODBURY } from './electronic-recycling-in-woodbury'
 import { BROOKLYN_PARK_RECYCLING_CENTER } from './brooklyn-park-recycling-center'
-import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './light-bulb-recycling-minneapolis'
 import { SHREDDING_WISCONSIN } from './shredding-wisconsin'
-import { SHREDDING_ROCHESTER } from './shredding-rochester'
 import { LEWISBURG_TENNESSEE } from './lewisburg-tennessee'
 import { RECYCLING_KITS_OHIO } from './recycling-kits'
 import { RECYCLING_KITS_FLORIDA } from './recycling-kits'
 import { ONTARIO_CALIFORNIA } from './ontario-california'
+import { SHREDDING_RACINE } from './shredding-racine'
+import { SHREDDING_APPLETON } from './shredding-appleton'
+import { ROSEVILLE_ELECTRONIC_RECYCLING } from './roseville-electronic-recycling'
+import { COMPUTER_RECYCLE_MINNEAPOLIS } from './computer-recycle-minneapolis'
 
 /**
  * THE AREA PAGES (29 Sep 2026): 49 old WordPress location pages that had been
@@ -93,8 +95,14 @@ export const AREA_PAGES: CountyPage[] = [
   SHREDDING_WAUKESHA, NEW_BERLIN_RECYCLING_CENTER,
   // The 8 Oct 2026 batch: thirteen more old URLs back on this template
   // (Figma 7052:28731 / 7052:34333), copy from the old WordPress pages.
-  SHEBOYGAN, TV_RECYCLING_GREEN_BAY, FOND_DU_LAC_RECYCLING, APPLETON_RECYCLING, ROSEVILLE, ELECTRONIC_RECYCLING_IN_WOODBURY, BROOKLYN_PARK_RECYCLING_CENTER, LIGHT_BULB_RECYCLING_MINNEAPOLIS, SHREDDING_WISCONSIN, SHREDDING_ROCHESTER, LEWISBURG_TENNESSEE, RECYCLING_KITS_OHIO, RECYCLING_KITS_FLORIDA,
+  SHEBOYGAN, TV_RECYCLING_GREEN_BAY, FOND_DU_LAC_RECYCLING, APPLETON_RECYCLING, ROSEVILLE, ELECTRONIC_RECYCLING_IN_WOODBURY, BROOKLYN_PARK_RECYCLING_CENTER, SHREDDING_WISCONSIN, LEWISBURG_TENNESSEE, RECYCLING_KITS_OHIO, RECYCLING_KITS_FLORIDA,
   ONTARIO_CALIFORNIA,
+  // 28 Oct 2026: four old URLs back from 301s (redirect sheet "RTI Currently
+  // redirect pages", action Restore), copy from the Wayback Machine.
+  // Light Bulb Recycling Minneapolis and Rochester Shredding left the list the
+  // same day: the sheet 301s them to /minnesota-recycling/bulb-recycle-minneapolis/
+  // and /shredding-minnesota/ (data/url-map.csv).
+  SHREDDING_RACINE, SHREDDING_APPLETON, ROSEVILLE_ELECTRONIC_RECYCLING, COMPUTER_RECYCLE_MINNEAPOLIS,
 ]
 
 export type AreaDocKey =
@@ -152,13 +160,15 @@ export type AreaDocKey =
   | 'area/roseville'
   | 'area/electronic-recycling-in-woodbury'
   | 'area/brooklyn-park-recycling-center'
-  | 'area/light-bulb-recycling-minneapolis'
   | 'area/shredding-wisconsin'
-  | 'area/shredding-rochester'
   | 'area/lewisburg-tennessee'
   | 'area/recycling-kits-in-ohio'
   | 'area/recycling-kits-in-florida'
   | 'area/ontario-california'
+  | 'area/shredding-racine'
+  | 'area/shredding-appleton'
+  | 'area/roseville-electronic-recycling'
+  | 'area/computer-recycle-minneapolis'
 
 export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'],
@@ -186,11 +196,13 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [ROSEVILLE, 'area/roseville'],
   [ELECTRONIC_RECYCLING_IN_WOODBURY, 'area/electronic-recycling-in-woodbury'],
   [BROOKLYN_PARK_RECYCLING_CENTER, 'area/brooklyn-park-recycling-center'],
-  [LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'area/light-bulb-recycling-minneapolis'],
   [SHREDDING_WISCONSIN, 'area/shredding-wisconsin'],
-  [SHREDDING_ROCHESTER, 'area/shredding-rochester'],
   [LEWISBURG_TENNESSEE, 'area/lewisburg-tennessee'],
   [RECYCLING_KITS_OHIO, 'area/recycling-kits-in-ohio'],
   [RECYCLING_KITS_FLORIDA, 'area/recycling-kits-in-florida'],
   [ONTARIO_CALIFORNIA, 'area/ontario-california'],
+  [SHREDDING_RACINE, 'area/shredding-racine'],
+  [SHREDDING_APPLETON, 'area/shredding-appleton'],
+  [ROSEVILLE_ELECTRONIC_RECYCLING, 'area/roseville-electronic-recycling'],
+  [COMPUTER_RECYCLE_MINNEAPOLIS, 'area/computer-recycle-minneapolis'],
 ])

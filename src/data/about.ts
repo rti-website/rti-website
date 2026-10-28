@@ -29,7 +29,7 @@ export const LIVE_SEO = {
 }
 
 export const PROPOSED_SEO = {
-  title: 'About Recycle Technologies | Minority-Owned Midwest Recycler',
+  title: 'About Recycle Technologies | Certified Minority Business Enterprise (MBE)',
   description: 'Recycle Technologies has recycled e-waste and fluorescent lamps since 1993 from licensed Minnesota and Wisconsin facilities, with nationwide mail-in service.',
 }
 
@@ -49,14 +49,14 @@ export const STORY = {
   eyebrow: 'Our Story',
   heading: 'Recycling Responsibly Since 1993',
   body: [
-    'Recycle Technologies, Inc. is a Midwest-based, Minority-Owned e-waste and fluorescent lamp recycler. With licensed facilities in Minnesota and Wisconsin, we offer a wide range of services and are able to schedule local commercial pickups or accept residential drop-offs. Our Mail-In Program allows us to service customers across the country, and our Certificate of Recycling gives customers peace of mind.',
-    'We’re proud to be the only Minority-Owned document destruction and recycling company in the Midwest region. Our Blaine, Minnesota facility carries R2v3 certification, with our New Berlin, Wisconsin facility currently pursuing R2v3 certification as well.',
+    'Recycle Technologies, Inc. is a Midwest-based e-waste and fluorescent lamp recycler and a Certified Minority Business Enterprise (MBE). With licensed facilities in Minnesota and Wisconsin, we offer a wide range of services and are able to schedule local commercial pickups or accept residential drop-offs. Our Mail-In Program allows us to service customers across the country, and our Certificate of Recycling gives customers peace of mind.',
+    'Recycle Technologies, Inc. is a Certified Minority Business Enterprise (MBE) through the National Minority Supplier Development Council (NMSDC), North Central MSDC. Our Blaine, Minnesota facility carries R2v3 certification, with our New Berlin, Wisconsin facility currently pursuing R2v3 certification as well.',
   ],
   factsTitle: 'Quick Facts',
   facts: [
     'Founded in 1993 — 30+ years in business',
     'Licensed facilities in Minnesota and Wisconsin',
-    'The only Minority-Owned recycler in the Midwest',
+    'Certified Minority Business Enterprise (MBE)',
     'Nationwide reach through our Mail-In Program',
   ],
 }
@@ -103,8 +103,8 @@ export const IMPACT = {
 export const LEADERSHIP = {
   eyebrow: 'Leadership',
   heading: 'Locally Owned. Community Led.',
-  body: 'Recycle Technologies is proud to be the only Minority-Owned document destruction and recycling company in the Midwest, having served both businesses and individuals with integrity since 1993.',
-  pills: ['Minority-Owned Business', 'Hands-On Since 1993', 'Community-Rooted Service'],
+  body: 'Recycle Technologies is proud to be a Certified Minority Business Enterprise (MBE), having served both businesses and individuals with integrity since 1993.',
+  pills: ['Certified Minority Business Enterprise (MBE)', 'Hands-On Since 1993', 'Community-Rooted Service'],
 }
 
 /**

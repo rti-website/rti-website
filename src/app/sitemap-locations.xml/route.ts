@@ -11,6 +11,8 @@ import REDIRECTS from '../../../data/redirects.json'
  * The seven state hubs of the same day are added after the hub pages, as the
  * hub brief asks ("add all 7 hubs to sitemap.xml and sitemap-locations.xml").
  * All 77 of their URLs answered 200 on live when this was written.
+ * 28 Oct 2026 (redirect sheet): the four restored pages added, Rochester
+ * shredding and Light Bulb Recycling Minneapolis out (they now 301).
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -57,7 +59,8 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/ramsey/",
     "/minnesota-recycling/battery-recycling-st-paul/",
     "/shredding-minnesota/st-paul/",
-    "/minnesota-recycling/ramsey/roseville/"
+    "/minnesota-recycling/ramsey/roseville/",
+    "/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/"
   ] },
   { group: "Minnesota: Dakota County", urls: [
     "/minnesota-recycling/dakota-county/",
@@ -72,8 +75,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/scott-county/"
   ] },
   { group: "Minnesota: Olmsted County", urls: [
-    "/minnesota-recycling/olmsted-county/",
-    "/shredding-minnesota/rochester/"
+    "/minnesota-recycling/olmsted-county/"
   ] },
   { group: "Minnesota: Benton County", urls: [
     "/minnesota-recycling/benton-county-recycling/",
@@ -83,7 +85,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/minneapolis/",
     "/minnesota-recycling/battery-recycling-in-minneapolis/",
     "/minnesota-recycling/bulb-recycle-minneapolis/",
-    "/light-bulb-recycling-minneapolis/"
+    "/minnesota-recycling/computer-recycle-minneapolis/"
   ] },
   { group: "Minnesota: statewide services", urls: [
     "/shredding-minnesota/",
@@ -122,10 +124,12 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/wisconsin-recycling/appleton-electronic-recycling-center/",
     "/wisconsin-recycling/calumet-county/appleton-recycling/",
     "/wisconsin-recycling/battery-recycling-appleton/",
-    "/wisconsin-recycling/tv-recycling-appleton/"
+    "/wisconsin-recycling/tv-recycling-appleton/",
+    "/shredding-wisconsin/appleton/"
   ] },
   { group: "Wisconsin: Racine and Washington County", urls: [
     "/wisconsin-recycling/racine/",
+    "/shredding-wisconsin/racine/",
     "/wisconsin-recycling/washington-county-recycling-center/"
   ] },
   { group: "Wisconsin: statewide services and cities", urls: [

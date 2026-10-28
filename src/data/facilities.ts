@@ -365,7 +365,7 @@ export const MINNESOTA: Facility = {
         ] },
         { heading: 'Scott · Olmsted · Benton Counties', chips: [
           chip('Scott County', '/minnesota-recycling/scott-county/'),
-          chip('Rochester shredding', '/shredding-minnesota/rochester/'),
+          chip('Olmsted County', '/minnesota-recycling/olmsted-county/'),
           chip('St. Cloud', '/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/'),
         ] },
         { heading: 'St. Louis County', chips: [

@@ -10,7 +10,7 @@ import { content } from '@/lib/page-content'
  * MOBILE — Figma 6638:8989. 390 wide: px20 / py48, gap 32, on #f6f6f6 rather
  * than the teal tint, and the three badges stay side by side as equal thirds
  * (116.67 each, no gutter) instead of stacking. The titles lose their
- * `nowrap` so "Minority-Owned" can take two lines, which is what the frame
+ * `nowrap` so the MBE title can take two lines, which is what the frame
  * draws.
  */
 export async function WhyCallout({ top, height }: { top: number; height: number }) {

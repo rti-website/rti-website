@@ -66,12 +66,14 @@ import { APPLETON_RECYCLING } from './areas/appleton-recycling'
 import { ROSEVILLE } from './areas/roseville'
 import { ELECTRONIC_RECYCLING_IN_WOODBURY } from './areas/electronic-recycling-in-woodbury'
 import { BROOKLYN_PARK_RECYCLING_CENTER } from './areas/brooklyn-park-recycling-center'
-import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './areas/light-bulb-recycling-minneapolis'
 import { SHREDDING_WISCONSIN } from './areas/shredding-wisconsin'
-import { SHREDDING_ROCHESTER } from './areas/shredding-rochester'
 import { LEWISBURG_TENNESSEE } from './areas/lewisburg-tennessee'
 import { RECYCLING_KITS_OHIO, RECYCLING_KITS_FLORIDA } from './areas/recycling-kits'
 import { ONTARIO_CALIFORNIA } from './areas/ontario-california'
+import { SHREDDING_RACINE } from './areas/shredding-racine'
+import { SHREDDING_APPLETON } from './areas/shredding-appleton'
+import { ROSEVILLE_ELECTRONIC_RECYCLING } from './areas/roseville-electronic-recycling'
+import { COMPUTER_RECYCLE_MINNEAPOLIS } from './areas/computer-recycle-minneapolis'
 import { LOCATION_PAGES } from './index'
 
 /**
@@ -120,7 +122,7 @@ export const DIRECTORY: DirectoryGroup[] = [
   ] },
   { heading: 'Ramsey County', page: RAMSEY, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_ST_PAUL, 'St. Paul Battery Recycling'), l(SHREDDING_ST_PAUL, 'St. Paul Shredding'),
-    l(ROSEVILLE, 'Roseville'),
+    l(ROSEVILLE, 'Roseville'), l(ROSEVILLE_ELECTRONIC_RECYCLING, 'Roseville Electronics', 'Electronic Recycling Roseville'),
   ] },
   { heading: 'Dakota County', page: DAKOTA, state: 'Minnesota', links: [
     l(BURNSVILLE_RECYCLING_CENTER, 'Burnsville'), l(LAKEVILLE_RECYCLING_CENTER, 'Lakeville'),
@@ -129,16 +131,14 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(ELECTRONIC_RECYCLING_IN_WOODBURY, 'Woodbury', 'Electronic Recycling Woodbury'),
   ] },
   { heading: 'Scott County', page: SCOTT, state: 'Minnesota', links: [] },
-  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [
-    l(SHREDDING_ROCHESTER, 'Rochester Shredding', 'Shredding Rochester'),
-  ] },
+  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [] },
   { heading: 'Benton County', page: BENTON, state: 'Minnesota', links: [
     l(ST_CLOUD_RECYCLING_CENTER, 'St. Cloud'),
   ] },
   { heading: 'Minneapolis', page: MINNEAPOLIS, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_IN_MINNEAPOLIS, 'Battery Recycling', 'Battery Recycling Minneapolis'),
     l(BULB_RECYCLE_MINNEAPOLIS, 'Bulb Recycling', 'Bulb Recycling Minneapolis'),
-    l(LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'Light Bulb Recycling', 'Light Bulb Recycling Minneapolis'),
+    l(COMPUTER_RECYCLE_MINNEAPOLIS, 'Computer Recycling', 'Computer Recycling Minneapolis'),
   ] },
   // Duluth had its own column until 8 Oct 2026; its two pages moved here to
   // make room in the 21-column band for the Tennessee and Recycling Kits columns.
@@ -181,8 +181,11 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(APPLETON_RECYCLING, 'Appleton Recycling'),
     l(BATTERY_RECYCLING_APPLETON, 'Appleton Battery Recycling', 'Battery Recycling Appleton'),
     l(TV_RECYCLING_APPLETON, 'Appleton TV Recycling', 'TV Recycling Appleton'),
+    l(SHREDDING_APPLETON, 'Appleton Shredding', 'Shredding Appleton'),
   ] },
-  { heading: 'Racine County', page: RACINE, state: 'Wisconsin', links: [] },
+  { heading: 'Racine County', page: RACINE, state: 'Wisconsin', links: [
+    l(SHREDDING_RACINE, 'Racine Shredding', 'Shredding Racine'),
+  ] },
   { heading: 'Washington County, WI', card: 'Washington County', page: WASHINGTON_WI, state: 'Wisconsin', links: [] },
   { heading: 'Wisconsin', state: 'Wisconsin', links: [
     l(TV_RECYCLING_IN_WISCONSIN, 'TV Recycling', 'TV Recycling Wisconsin'),

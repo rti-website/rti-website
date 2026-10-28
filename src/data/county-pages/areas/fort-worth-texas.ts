@@ -61,7 +61,7 @@ export const FORT_WORTH_TEXAS: CountyPage = {
     { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "All material. PCBs must come with a manifest." }] },
     { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "Businesses and residents; residential material usually comes through the city household hazardous waste department." }] },
     { kind: 'features', cards: [
-      { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
+      { title: "Trusted and Local", text: "Recycle Technologies is a local recycling company and a Certified Minority Business Enterprise (MBE), offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
       { title: "Custom Recycling Services", text: "Get one item or hundreds of them, we can recycle everything based on your personalized requirements." },
       { title: "Quick Booking and Pickup", text: "You can get a free quote by filling out the form, and our team will be at your doorstep in no time for a pickup." },

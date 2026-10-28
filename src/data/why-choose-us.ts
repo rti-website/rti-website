@@ -11,8 +11,8 @@ import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
  */
 
 export const SEO = {
-  title: 'Why Choose Recycle Technologies | Minority-Owned, R2v3 Certified',
-  description: 'A Minority-Owned Midwest recycler since 1993, R2v3 certified in Blaine, Minnesota, issuing a Certificate of Recycling or Shredding on every shipment.',
+  title: 'Why Choose Recycle Technologies | Certified Minority Business Enterprise (MBE)',
+  description: 'A Certified Minority Business Enterprise (MBE) and Midwest recycler since 1993, R2v3 certified in Blaine, Minnesota, issuing a Certificate of Recycling or Shredding on every shipment.',
 }
 
 /**
@@ -75,7 +75,7 @@ export const CALLOUT = {
   heading: 'Certified & Accountable',
   items: [
     { glyph: 'shield' as const,  title: 'R2v3 Certified', sub: 'Blaine, MN facilities' },
-    { glyph: 'rosette' as const, title: 'Minority-Owned', sub: 'Verified business status' },
+    { glyph: 'rosette' as const, title: 'Certified Minority Business Enterprise (MBE)', sub: 'Through NMSDC, North Central MSDC' },
     { glyph: 'clock' as const,   title: '30+ Years',      sub: 'In continuous operation' },
   ],
   footnote: 'Our New Berlin, Wisconsin facility is currently pursuing R2v3 certification.',
@@ -95,7 +95,7 @@ export const TRUST = {
     {
       glyph: 'chat' as const,
       title: 'A Direct Relationship',
-      body: 'As a Midwest-based, Minority-Owned company, you work directly with the team handling your materials, not a distant call center.',
+      body: 'As a Midwest-based Certified Minority Business Enterprise (MBE), you work directly with the team handling your materials, not a distant call center.',
     },
     {
       glyph: 'truck' as const,

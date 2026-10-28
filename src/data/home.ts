@@ -141,8 +141,8 @@ export const HOME_WHY_CHOOSE = {
   body: [
     'With over 30 years of experience, Recycle Technologies provides responsible '
     + 'electronics recycling, IT asset recycling, and document shredding across the '
-    + 'Midwest. We are the region’s only minority-owned document destruction and '
-    + 'recycling company, backed by R2v3-certified facilities in Minnesota and Wisconsin '
+    + 'Midwest. We are a Certified Minority Business Enterprise (MBE), backed by '
+    + 'R2v3-certified facilities in Minnesota and Wisconsin '
     + 'with expanded operations in Chicago.',
     'Our convenient local and nationwide mail-in recycling options make electronics '
     + 'recycling near you simple, secure, and environmentally responsible.',

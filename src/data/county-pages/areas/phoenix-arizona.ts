@@ -61,7 +61,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
     { kind: 'text', heading: "What This Location Accepts", blocks: [{ p: "Lamps, e-waste, aerosol cans, non-PCB capacitors, ballasts, batteries, mercury devices" }] },
     { kind: 'text', heading: "Dropping Off at This Location", blocks: [{ p: "I-17; corner of S 16th St and E Victory St; access on Victory St, left side toward the end of the cul-de-sac" }] },
     { kind: 'features', cards: [
-      { title: "Trusted and Local", text: "Recycle Technologies is a local minority-owned recycling company offering recycling solutions in Minnesota since 1993." },
+      { title: "Trusted and Local", text: "Recycle Technologies is a local recycling company and a Certified Minority Business Enterprise (MBE), offering recycling solutions in Minnesota since 1993." },
       { title: "Dependable Customer Service", text: "We value our clients and their devotion for a better planet and ensure quality recycling services within time." },
       { title: "Custom Recycling Services", text: "Get one item or hundreds of them, we can recycle everything based on your personalized requirements." },
       { title: "Quick Booking and Pickup", text: "You can get a free quote by filling out the form, and our team will be at your doorstep in no time for a pickup." },

@@ -228,9 +228,9 @@ export const CHICAGO_LIGHT_BULB_RECYCLING: LocalPage = {
               },
               {
                 icon: "users",
-                title: "Minority-Owned",
+                title: "Certified Minority Business Enterprise (MBE)",
                 body: [
-                  "Recycle Technologies is the only minority-owned document destruction and recycling company in the Midwest region.",
+                  "Recycle Technologies, Inc. is a Certified Minority Business Enterprise (MBE) through the National Minority Supplier Development Council (NMSDC), North Central MSDC.",
                 ],
               },
             ],
