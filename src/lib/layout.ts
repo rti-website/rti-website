@@ -33,7 +33,8 @@ export const HEADER_H = 120
  * between rows, 40 bottom. directory.ts throws if the data outgrows it.
  * FOOTER_H and FOOTER_BAR_Y include it, so every page's canvas grows with it.
  */
-export const DIRECTORY_ROWS = 3
+// 4 from 29 Oct 2026 (23 columns: Duluth and Des Moines joined, see directory.ts).
+export const DIRECTORY_ROWS = 4
 export const DIRECTORY_COLS = 7
 export const DIRECTORY_ROW_H = 225
 export const DIRECTORY_ROW_GAP = 32

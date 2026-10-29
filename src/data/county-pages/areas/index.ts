@@ -62,6 +62,36 @@ import { SHREDDING_RACINE } from './shredding-racine'
 import { SHREDDING_APPLETON } from './shredding-appleton'
 import { ROSEVILLE_ELECTRONIC_RECYCLING } from './roseville-electronic-recycling'
 import { COMPUTER_RECYCLE_MINNEAPOLIS } from './computer-recycle-minneapolis'
+import { ELECTRONICS_RECYCLING_IN_MINNEAPOLIS } from './electronics-recycling-in-minneapolis'
+import { ELECTRONIC_RECYCLING_MINNEAPOLIS } from './electronic-recycling-minneapolis'
+import { MADISON_ELECTRONIC_RECYCLING } from './madison-electronic-recycling'
+import { ELECTRONIC_RECYCLING_MADISON } from './electronic-recycling-madison'
+import { ELECTRONIC_RECYCLING_APPLETON } from './electronic-recycling-appleton'
+import { ELECTRONICS_RECYCLING_GREEN_BAY } from './electronics-recycling-green-bay'
+import { ELECTRONIC_RECYCLING_GREEN_BAY } from './electronic-recycling-green-bay'
+import { TV_RECYCLING_MADISON } from './tv-recycling-madison'
+import { COMPUTER_RECYCLE_DULUTH } from './computer-recycle-duluth'
+import { BATTERY_RECYCLING_DULUTH } from './battery-recycling-duluth'
+import { ELECTRONIC_RECYCLING_ST_PAUL } from './electronic-recycling-st-paul'
+import { RICHFIELD_RECYCLING_SERVICES } from './richfield-recycling-services'
+import { MINNEAPOLIS_RECYCLING_CENTER } from './minneapolis-recycling-center'
+import { OAKDALE_RECYCLING_SERVICES } from './oakdale-recycling-services'
+import { ROCHESTER_RECYCLING } from './rochester-recycling'
+import { SHREDDING_MINNEAPOLIS } from './shredding-minneapolis'
+import { SHREDDING_MILWAUKEE } from './shredding-milwaukee'
+import { SHREDDING_MADISON } from './shredding-madison'
+import { SHREDDING_DES_MOINES } from './shredding-des-moines'
+import { TV_RECYCLING_DES_MOINES } from './tv-recycling-des-moines'
+import { COMPUTER_RECYCLE_DES_MOINES } from './computer-recycle-des-moines'
+import { ELECTRONIC_RECYCLING_DES_MOINES } from './electronic-recycling-des-moines'
+import { ELECTRONIC_RECYCLING_IN_ROCHESTER } from './electronic-recycling-in-rochester'
+import { DULUTH } from './duluth'
+import { COMPUTER_RECYCLE_MILWAUKEE } from './computer-recycle-milwaukee'
+import { TV_RECYCLING_MILWAUKEE } from './tv-recycling-milwaukee'
+import { WOOD_BURY_RECYCLING } from './wood-bury-recycling'
+import { RAMSEY_ELECTRONIC_RECYCLING } from './ramsey-electronic-recycling'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './light-bulb-recycling-minneapolis'
+import { SHREDDING_ROCHESTER } from './shredding-rochester'
 
 /**
  * THE AREA PAGES (29 Sep 2026): 49 old WordPress location pages that had been
@@ -103,6 +133,18 @@ export const AREA_PAGES: CountyPage[] = [
   // same day: the sheet 301s them to /minnesota-recycling/bulb-recycle-minneapolis/
   // and /shredding-minnesota/ (data/url-map.csv).
   SHREDDING_RACINE, SHREDDING_APPLETON, ROSEVILLE_ELECTRONIC_RECYCLING, COMPUTER_RECYCLE_MINNEAPOLIS,
+  // 29 Oct 2026: management, the whole sheet "RTI Currently redirect pages"
+  // is pages again, no redirects. 28 more old URLs back on this template
+  // (copy from the Wayback Machine), and Light Bulb Recycling Minneapolis
+  // and Rochester Shredding back on the list.
+  ELECTRONICS_RECYCLING_IN_MINNEAPOLIS, ELECTRONIC_RECYCLING_MINNEAPOLIS, MADISON_ELECTRONIC_RECYCLING, ELECTRONIC_RECYCLING_MADISON,
+  ELECTRONIC_RECYCLING_APPLETON, ELECTRONICS_RECYCLING_GREEN_BAY, ELECTRONIC_RECYCLING_GREEN_BAY, TV_RECYCLING_MADISON,
+  COMPUTER_RECYCLE_DULUTH, BATTERY_RECYCLING_DULUTH, ELECTRONIC_RECYCLING_ST_PAUL, RICHFIELD_RECYCLING_SERVICES,
+  MINNEAPOLIS_RECYCLING_CENTER, OAKDALE_RECYCLING_SERVICES, ROCHESTER_RECYCLING, SHREDDING_MINNEAPOLIS,
+  SHREDDING_MILWAUKEE, SHREDDING_MADISON, SHREDDING_DES_MOINES, TV_RECYCLING_DES_MOINES,
+  COMPUTER_RECYCLE_DES_MOINES, ELECTRONIC_RECYCLING_DES_MOINES, ELECTRONIC_RECYCLING_IN_ROCHESTER, DULUTH,
+  COMPUTER_RECYCLE_MILWAUKEE, TV_RECYCLING_MILWAUKEE, WOOD_BURY_RECYCLING, RAMSEY_ELECTRONIC_RECYCLING,
+  LIGHT_BULB_RECYCLING_MINNEAPOLIS, SHREDDING_ROCHESTER,
 ]
 
 export type AreaDocKey =
@@ -169,6 +211,36 @@ export type AreaDocKey =
   | 'area/shredding-appleton'
   | 'area/roseville-electronic-recycling'
   | 'area/computer-recycle-minneapolis'
+  | 'area/electronics-recycling-in-minneapolis'
+  | 'area/electronic-recycling-minneapolis'
+  | 'area/madison-electronic-recycling'
+  | 'area/electronic-recycling-madison'
+  | 'area/electronic-recycling-appleton'
+  | 'area/electronics-recycling-green-bay'
+  | 'area/electronic-recycling-green-bay'
+  | 'area/tv-recycling-madison'
+  | 'area/computer-recycle-duluth'
+  | 'area/battery-recycling-duluth'
+  | 'area/electronic-recycling-st-paul'
+  | 'area/richfield-recycling-services'
+  | 'area/minneapolis-recycling-center'
+  | 'area/oakdale-recycling-services'
+  | 'area/rochester-recycling'
+  | 'area/shredding-minneapolis'
+  | 'area/shredding-milwaukee'
+  | 'area/shredding-madison'
+  | 'area/shredding-des-moines'
+  | 'area/tv-recycling-des-moines'
+  | 'area/computer-recycle-des-moines'
+  | 'area/electronic-recycling-des-moines'
+  | 'area/electronic-recycling-in-rochester'
+  | 'area/duluth'
+  | 'area/computer-recycle-milwaukee'
+  | 'area/tv-recycling-milwaukee'
+  | 'area/wood-bury-recycling'
+  | 'area/ramsey-electronic-recycling'
+  | 'area/light-bulb-recycling-minneapolis'
+  | 'area/shredding-rochester'
 
 export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [BLAINE, 'area/blaine'], [MILWAUKEE, 'area/milwaukee'],
@@ -205,4 +277,34 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [SHREDDING_APPLETON, 'area/shredding-appleton'],
   [ROSEVILLE_ELECTRONIC_RECYCLING, 'area/roseville-electronic-recycling'],
   [COMPUTER_RECYCLE_MINNEAPOLIS, 'area/computer-recycle-minneapolis'],
+  [ELECTRONICS_RECYCLING_IN_MINNEAPOLIS, 'area/electronics-recycling-in-minneapolis'],
+  [ELECTRONIC_RECYCLING_MINNEAPOLIS, 'area/electronic-recycling-minneapolis'],
+  [MADISON_ELECTRONIC_RECYCLING, 'area/madison-electronic-recycling'],
+  [ELECTRONIC_RECYCLING_MADISON, 'area/electronic-recycling-madison'],
+  [ELECTRONIC_RECYCLING_APPLETON, 'area/electronic-recycling-appleton'],
+  [ELECTRONICS_RECYCLING_GREEN_BAY, 'area/electronics-recycling-green-bay'],
+  [ELECTRONIC_RECYCLING_GREEN_BAY, 'area/electronic-recycling-green-bay'],
+  [TV_RECYCLING_MADISON, 'area/tv-recycling-madison'],
+  [COMPUTER_RECYCLE_DULUTH, 'area/computer-recycle-duluth'],
+  [BATTERY_RECYCLING_DULUTH, 'area/battery-recycling-duluth'],
+  [ELECTRONIC_RECYCLING_ST_PAUL, 'area/electronic-recycling-st-paul'],
+  [RICHFIELD_RECYCLING_SERVICES, 'area/richfield-recycling-services'],
+  [MINNEAPOLIS_RECYCLING_CENTER, 'area/minneapolis-recycling-center'],
+  [OAKDALE_RECYCLING_SERVICES, 'area/oakdale-recycling-services'],
+  [ROCHESTER_RECYCLING, 'area/rochester-recycling'],
+  [SHREDDING_MINNEAPOLIS, 'area/shredding-minneapolis'],
+  [SHREDDING_MILWAUKEE, 'area/shredding-milwaukee'],
+  [SHREDDING_MADISON, 'area/shredding-madison'],
+  [SHREDDING_DES_MOINES, 'area/shredding-des-moines'],
+  [TV_RECYCLING_DES_MOINES, 'area/tv-recycling-des-moines'],
+  [COMPUTER_RECYCLE_DES_MOINES, 'area/computer-recycle-des-moines'],
+  [ELECTRONIC_RECYCLING_DES_MOINES, 'area/electronic-recycling-des-moines'],
+  [ELECTRONIC_RECYCLING_IN_ROCHESTER, 'area/electronic-recycling-in-rochester'],
+  [DULUTH, 'area/duluth'],
+  [COMPUTER_RECYCLE_MILWAUKEE, 'area/computer-recycle-milwaukee'],
+  [TV_RECYCLING_MILWAUKEE, 'area/tv-recycling-milwaukee'],
+  [WOOD_BURY_RECYCLING, 'area/wood-bury-recycling'],
+  [RAMSEY_ELECTRONIC_RECYCLING, 'area/ramsey-electronic-recycling'],
+  [LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'area/light-bulb-recycling-minneapolis'],
+  [SHREDDING_ROCHESTER, 'area/shredding-rochester'],
 ])

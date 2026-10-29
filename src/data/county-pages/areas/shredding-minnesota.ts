@@ -53,7 +53,7 @@ export const SHREDDING_MINNESOTA: CountyPage = {
         { title: "ST.Paul Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in ST Paul from your trusted local partner.", href: href("/shredding-minnesota/st-paul/") },
         { title: "Des Monies Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in Des Monies from your trusted local partner." },
         { title: "Minneapolis Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in Minneapolis from your trusted local partner." },
-        { title: "Rochester Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in Rochester from your trusted local partner." },
+        { title: "Rochester Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in Rochester from your trusted local partner.", href: href("/shredding-minnesota/rochester/") },
       ] },
     ] },
   ],

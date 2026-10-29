@@ -13,6 +13,8 @@ import REDIRECTS from '../../../data/redirects.json'
  * All 77 of their URLs answered 200 on live when this was written.
  * 28 Oct 2026 (redirect sheet): the four restored pages added, Rochester
  * shredding and Light Bulb Recycling Minneapolis out (they now 301).
+ * 29 Oct 2026: the whole sheet is pages again; its 30 other URLs added
+ * (Rochester shredding and Light Bulb Recycling Minneapolis back).
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -47,7 +49,9 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/hennepin-county-recycling-center/maple-grove-recycling-center/",
     "/minnesota-recycling/hennepin-county-recycling-center/minnetonka-recycling-center/",
     "/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/",
-    "/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/"
+    "/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/",
+    "/minnesota-recycling/hennepin-county-recycling-center/richfield-recycling-services/",
+    "/minnesota-recycling/hennepin-county-recycling-center/minneapolis-recycling-center/"
   ] },
   { group: "Minnesota: Anoka County", urls: [
     "/minnesota-recycling/anoka-county-recycling/",
@@ -60,7 +64,9 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/battery-recycling-st-paul/",
     "/shredding-minnesota/st-paul/",
     "/minnesota-recycling/ramsey/roseville/",
-    "/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/"
+    "/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/",
+    "/minnesota-recycling/ramsey/electronic-recycling/",
+    "/minnesota-recycling/electronic-recycling-st-paul/"
   ] },
   { group: "Minnesota: Dakota County", urls: [
     "/minnesota-recycling/dakota-county/",
@@ -69,13 +75,18 @@ const GROUPS: { group: string; urls: string[] }[] = [
   ] },
   { group: "Minnesota: Washington County", urls: [
     "/minnesota-recycling/washington-county/",
-    "/minnesota-recycling/electronic-recycling-in-woodbury/"
+    "/minnesota-recycling/electronic-recycling-in-woodbury/",
+    "/minnesota-recycling/washington-county/oakdale-recycling-services/",
+    "/wisconsin-recycling/washington-county-recycling-center/wood-bury-recycling/"
   ] },
   { group: "Minnesota: Scott County", urls: [
     "/minnesota-recycling/scott-county/"
   ] },
   { group: "Minnesota: Olmsted County", urls: [
-    "/minnesota-recycling/olmsted-county/"
+    "/minnesota-recycling/olmsted-county/",
+    "/minnesota-recycling/olmsted-county/rochester-recycling/",
+    "/electronics-recycling-in-minneapolis/electronic-recycling-in-rochester/",
+    "/shredding-minnesota/rochester/"
   ] },
   { group: "Minnesota: Benton County", urls: [
     "/minnesota-recycling/benton-county-recycling/",
@@ -85,19 +96,29 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/minneapolis/",
     "/minnesota-recycling/battery-recycling-in-minneapolis/",
     "/minnesota-recycling/bulb-recycle-minneapolis/",
-    "/minnesota-recycling/computer-recycle-minneapolis/"
+    "/minnesota-recycling/computer-recycle-minneapolis/",
+    "/light-bulb-recycling-minneapolis/",
+    "/electronics-recycling-in-minneapolis/",
+    "/minnesota-recycling/electronic-recycling-minneapolis/",
+    "/shredding-minnesota/minneapolis/"
   ] },
   { group: "Minnesota: statewide services", urls: [
     "/shredding-minnesota/",
     "/tv-recycling-in-minnesota/",
     "/minnesota-recycling/electronic-recycling-duluth/",
-    "/shredding-minnesota/duluth/"
+    "/shredding-minnesota/duluth/",
+    "/minnesota-recycling/duluth/",
+    "/minnesota-recycling/computer-recycle-duluth/",
+    "/minnesota-recycling/battery-recycling-duluth/"
   ] },
   { group: "Wisconsin: Milwaukee County", urls: [
     "/wisconsin-recycling/milwaukee/",
     "/wisconsin-recycling/battery-recycling-milwaukee/",
     "/wisconsin-recycling/bulb-recycle-milwaukee/",
-    "/wisconsin-recycling/milwaukee/oak-creek/"
+    "/wisconsin-recycling/milwaukee/oak-creek/",
+    "/shredding-wisconsin/milwaukee/",
+    "/wisconsin-recycling/computer-recycle-milwaukee/",
+    "/wisconsin-recycling/tv-recycling-milwaukee/"
   ] },
   { group: "Wisconsin: Waukesha County", urls: [
     "/wisconsin-recycling/waukesha-electronic-recycling/",
@@ -111,13 +132,19 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/wisconsin-recycling/madison/",
     "/wisconsin-recycling/battery-recycling-madison/",
     "/wisconsin-recycling/fluorescent-bulb-recycle-madison/",
-    "/wisconsin-recycling/computer-recycling-madison/"
+    "/wisconsin-recycling/computer-recycling-madison/",
+    "/wisconsin-recycling/electronic-recycling-madison/",
+    "/wisconsin-recycling/madison/electronic-recycling/",
+    "/wisconsin-recycling/tv-recycling-madison/",
+    "/shredding-wisconsin/madison/"
   ] },
   { group: "Wisconsin: Green Bay", urls: [
     "/wisconsin-recycling/green-bay-recycling/",
     "/wisconsin-recycling/battery-recycling-green-bay/",
     "/shredding-wisconsin/green-bay/",
-    "/wisconsin-recycling/tv-recycling-green-bay/"
+    "/wisconsin-recycling/tv-recycling-green-bay/",
+    "/wisconsin-recycling/electronics-recycling-green-bay/",
+    "/wisconsin-recycling/electronic-recycling-green-bay/"
   ] },
   { group: "Wisconsin: Calumet County", urls: [
     "/wisconsin-recycling/calumet-county/",
@@ -125,7 +152,8 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/wisconsin-recycling/calumet-county/appleton-recycling/",
     "/wisconsin-recycling/battery-recycling-appleton/",
     "/wisconsin-recycling/tv-recycling-appleton/",
-    "/shredding-wisconsin/appleton/"
+    "/shredding-wisconsin/appleton/",
+    "/wisconsin-recycling/electronic-recycling-appleton/"
   ] },
   { group: "Wisconsin: Racine and Washington County", urls: [
     "/wisconsin-recycling/racine/",
@@ -137,6 +165,12 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/shredding-wisconsin/",
     "/wisconsin-recycling/sheboygan/",
     "/wisconsin-recycling/fond-du-lac-recycling/"
+  ] },
+  { group: "Des Moines, Iowa (29 Oct 2026)", urls: [
+    "/electronic-recycling-des-moines/",
+    "/computer-recycle-des-moines/",
+    "/tv-recycling-des-moines/",
+    "/shredding-minnesota/des-moines/"
   ] },
   { group: "Mail-in recycling locations", urls: [
     "/phoenix-arizona/",

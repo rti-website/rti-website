@@ -74,6 +74,36 @@ import { SHREDDING_RACINE } from './areas/shredding-racine'
 import { SHREDDING_APPLETON } from './areas/shredding-appleton'
 import { ROSEVILLE_ELECTRONIC_RECYCLING } from './areas/roseville-electronic-recycling'
 import { COMPUTER_RECYCLE_MINNEAPOLIS } from './areas/computer-recycle-minneapolis'
+import { ELECTRONICS_RECYCLING_IN_MINNEAPOLIS } from './areas/electronics-recycling-in-minneapolis'
+import { ELECTRONIC_RECYCLING_MINNEAPOLIS } from './areas/electronic-recycling-minneapolis'
+import { MADISON_ELECTRONIC_RECYCLING } from './areas/madison-electronic-recycling'
+import { ELECTRONIC_RECYCLING_MADISON } from './areas/electronic-recycling-madison'
+import { ELECTRONIC_RECYCLING_APPLETON } from './areas/electronic-recycling-appleton'
+import { ELECTRONICS_RECYCLING_GREEN_BAY } from './areas/electronics-recycling-green-bay'
+import { ELECTRONIC_RECYCLING_GREEN_BAY } from './areas/electronic-recycling-green-bay'
+import { TV_RECYCLING_MADISON } from './areas/tv-recycling-madison'
+import { COMPUTER_RECYCLE_DULUTH } from './areas/computer-recycle-duluth'
+import { BATTERY_RECYCLING_DULUTH } from './areas/battery-recycling-duluth'
+import { ELECTRONIC_RECYCLING_ST_PAUL } from './areas/electronic-recycling-st-paul'
+import { RICHFIELD_RECYCLING_SERVICES } from './areas/richfield-recycling-services'
+import { MINNEAPOLIS_RECYCLING_CENTER } from './areas/minneapolis-recycling-center'
+import { OAKDALE_RECYCLING_SERVICES } from './areas/oakdale-recycling-services'
+import { ROCHESTER_RECYCLING } from './areas/rochester-recycling'
+import { SHREDDING_MINNEAPOLIS } from './areas/shredding-minneapolis'
+import { SHREDDING_MILWAUKEE } from './areas/shredding-milwaukee'
+import { SHREDDING_MADISON } from './areas/shredding-madison'
+import { SHREDDING_DES_MOINES } from './areas/shredding-des-moines'
+import { TV_RECYCLING_DES_MOINES } from './areas/tv-recycling-des-moines'
+import { COMPUTER_RECYCLE_DES_MOINES } from './areas/computer-recycle-des-moines'
+import { ELECTRONIC_RECYCLING_DES_MOINES } from './areas/electronic-recycling-des-moines'
+import { ELECTRONIC_RECYCLING_IN_ROCHESTER } from './areas/electronic-recycling-in-rochester'
+import { DULUTH } from './areas/duluth'
+import { COMPUTER_RECYCLE_MILWAUKEE } from './areas/computer-recycle-milwaukee'
+import { TV_RECYCLING_MILWAUKEE } from './areas/tv-recycling-milwaukee'
+import { WOOD_BURY_RECYCLING } from './areas/wood-bury-recycling'
+import { RAMSEY_ELECTRONIC_RECYCLING } from './areas/ramsey-electronic-recycling'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from './areas/light-bulb-recycling-minneapolis'
+import { SHREDDING_ROCHESTER } from './areas/shredding-rochester'
 import { LOCATION_PAGES } from './index'
 
 /**
@@ -116,6 +146,7 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(BLOOMINGTON_RECYCLING_CENTER, 'Bloomington'), l(EDINA_RECYCLING_SERVICES, 'Edina'),
     l(MAPLE_GROVE_RECYCLING_CENTER, 'Maple Grove'), l(MINNETONKA_RECYCLING_CENTER, 'Minnetonka'),
     l(PLYMOUTH_RECYCLING_CENTER, 'Plymouth'), l(BROOKLYN_PARK_RECYCLING_CENTER, 'Brooklyn Park'),
+    l(RICHFIELD_RECYCLING_SERVICES, 'Richfield'),
   ] },
   { heading: 'Anoka County', page: ANOKA, state: 'Minnesota', links: [
     l(BLAINE, 'Blaine'), l(COON_RAPIDS, 'Coon Rapids'), l(EAST_BETHEL, 'East Bethel'),
@@ -123,36 +154,60 @@ export const DIRECTORY: DirectoryGroup[] = [
   { heading: 'Ramsey County', page: RAMSEY, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_ST_PAUL, 'St. Paul Battery Recycling'), l(SHREDDING_ST_PAUL, 'St. Paul Shredding'),
     l(ROSEVILLE, 'Roseville'), l(ROSEVILLE_ELECTRONIC_RECYCLING, 'Roseville Electronics', 'Electronic Recycling Roseville'),
+    l(RAMSEY_ELECTRONIC_RECYCLING, 'Ramsey Electronics', 'Electronic Recycling Ramsey County'),
+    l(ELECTRONIC_RECYCLING_ST_PAUL, 'St. Paul Electronics', 'Electronic Recycling St. Paul'),
   ] },
   { heading: 'Dakota County', page: DAKOTA, state: 'Minnesota', links: [
     l(BURNSVILLE_RECYCLING_CENTER, 'Burnsville'), l(LAKEVILLE_RECYCLING_CENTER, 'Lakeville'),
   ] },
   { heading: 'Washington County, MN', card: 'Washington County', page: WASHINGTON_MN, state: 'Minnesota', links: [
     l(ELECTRONIC_RECYCLING_IN_WOODBURY, 'Woodbury', 'Electronic Recycling Woodbury'),
+    l(WOOD_BURY_RECYCLING, 'Woodbury Recycling', 'Recycling Woodbury'),
+    l(OAKDALE_RECYCLING_SERVICES, 'Oakdale'),
   ] },
   { heading: 'Scott County', page: SCOTT, state: 'Minnesota', links: [] },
-  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [] },
+  { heading: 'Olmsted County', page: OLMSTED, state: 'Minnesota', links: [
+    l(ROCHESTER_RECYCLING, 'Rochester', 'Rochester Recycling'),
+    l(ELECTRONIC_RECYCLING_IN_ROCHESTER, 'Rochester Electronics', 'Electronic Recycling Rochester'),
+    l(SHREDDING_ROCHESTER, 'Rochester Shredding', 'Shredding Rochester'),
+  ] },
   { heading: 'Benton County', page: BENTON, state: 'Minnesota', links: [
     l(ST_CLOUD_RECYCLING_CENTER, 'St. Cloud'),
   ] },
   { heading: 'Minneapolis', page: MINNEAPOLIS, state: 'Minnesota', links: [
     l(BATTERY_RECYCLING_IN_MINNEAPOLIS, 'Battery Recycling', 'Battery Recycling Minneapolis'),
     l(BULB_RECYCLE_MINNEAPOLIS, 'Bulb Recycling', 'Bulb Recycling Minneapolis'),
+    l(LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'Light Bulb Recycling', 'Light Bulb Recycling Minneapolis'),
     l(COMPUTER_RECYCLE_MINNEAPOLIS, 'Computer Recycling', 'Computer Recycling Minneapolis'),
+    l(ELECTRONICS_RECYCLING_IN_MINNEAPOLIS, 'Electronics Recycling', 'Electronics Recycling Minneapolis'),
+    l(ELECTRONIC_RECYCLING_MINNEAPOLIS, 'Sustainable E-Recycling', 'Sustainable E-Recycling Minneapolis'),
+    l(SHREDDING_MINNEAPOLIS, 'Shredding Service', 'Shredding Minneapolis'),
   ] },
-  // Duluth had its own column until 8 Oct 2026; its two pages moved here to
-  // make room in the 21-column band for the Tennessee and Recycling Kits columns.
+  // Duluth gets its column back (29 Oct 2026, three more Duluth pages); the
+  // band has a fourth row for it and Des Moines (DIRECTORY_ROWS).
+  { heading: 'Duluth', state: 'Minnesota', links: [
+    l(ELECTRONIC_RECYCLING_DULUTH, 'Electronic Recycling', 'Electronic Recycling Duluth'),
+    l(SHREDDING_DULUTH, 'Shredding', 'Shredding Duluth'),
+    l(DULUTH, 'Recycling Services', 'Recycling Services Duluth'),
+    l(COMPUTER_RECYCLE_DULUTH, 'Computer Recycling', 'Computer Recycling Duluth'),
+    l(BATTERY_RECYCLING_DULUTH, 'Battery Recycling', 'Battery Recycling Duluth'),
+  ] },
+  // Duluth had its own column until 8 Oct 2026 and has it again from 29 Oct
+  // (above). Minneapolis Recycling Center is here: the Minneapolis and
+  // Hennepin columns are full.
   { heading: 'Minnesota', state: 'Minnesota', links: [
     l(SHREDDING_MINNESOTA, 'Document Shredding', 'Document Shredding Minnesota'),
     l(TV_RECYCLING_IN_MINNESOTA, 'TV Recycling', 'TV Recycling Minnesota'),
-    l(ELECTRONIC_RECYCLING_DULUTH, 'Duluth Electronic Recycling', 'Electronic Recycling Duluth'),
-    l(SHREDDING_DULUTH, 'Duluth Shredding', 'Shredding Duluth'),
+    l(MINNEAPOLIS_RECYCLING_CENTER, 'Minneapolis Recycling Center'),
   ] },
   /* ------------------------------------------------------------ Wisconsin */
   { heading: 'Milwaukee', page: MILWAUKEE, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_MILWAUKEE, 'Battery Recycling', 'Battery Recycling Milwaukee'),
     l(BULB_RECYCLE_MILWAUKEE, 'Bulb Recycling', 'Bulb Recycling Milwaukee'),
     l(OAK_CREEK, 'Oak Creek'),
+    l(SHREDDING_MILWAUKEE, 'Shredding Service', 'Shredding Milwaukee'),
+    l(COMPUTER_RECYCLE_MILWAUKEE, 'Computer Recycling', 'Computer Recycling Milwaukee'),
+    l(TV_RECYCLING_MILWAUKEE, 'TV Recycling', 'TV Recycling Milwaukee'),
   ] },
   // The Waukesha heading links to the electronic recycling page since the
   // recycling center page 301s there (SEO redirect plan, 6 Oct 2026).
@@ -167,11 +222,17 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(BATTERY_RECYCLING_MADISON, 'Battery Recycling', 'Battery Recycling Madison'),
     l(FLUORESCENT_BULB_RECYCLE_MADISON, 'Bulb Recycling', 'Bulb Recycling Madison'),
     l(COMPUTER_RECYCLING_MADISON, 'Computer Recycling', 'Computer Recycling Madison'),
+    l(ELECTRONIC_RECYCLING_MADISON, 'Electronic Recycling', 'Electronic Recycling Madison'),
+    l(MADISON_ELECTRONIC_RECYCLING, 'Electronics Recycling', 'Electronics Recycling Madison'),
+    l(TV_RECYCLING_MADISON, 'TV Recycling', 'TV Recycling Madison'),
+    l(SHREDDING_MADISON, 'Shredding Service', 'Shredding Madison'),
   ] },
   { heading: 'Green Bay', page: GREEN_BAY_RECYCLING, state: 'Wisconsin', links: [
     l(BATTERY_RECYCLING_GREEN_BAY, 'Battery Recycling', 'Battery Recycling Green Bay'),
     l(SHREDDING_GREEN_BAY, 'Shredding Services', 'Shredding Green Bay'),
     l(TV_RECYCLING_GREEN_BAY, 'TV Recycling', 'TV Recycling Green Bay'),
+    l(ELECTRONICS_RECYCLING_GREEN_BAY, 'Electronics Recycling', 'Electronics Recycling Green Bay'),
+    l(ELECTRONIC_RECYCLING_GREEN_BAY, 'Electronic Recycling Center', 'Electronic Recycling Green Bay'),
   ] },
   // Appleton had its own column until 8 Oct 2026; its pages moved under
   // Calumet County (with the new /calumet-county/appleton-recycling/) to make
@@ -182,6 +243,7 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(BATTERY_RECYCLING_APPLETON, 'Appleton Battery Recycling', 'Battery Recycling Appleton'),
     l(TV_RECYCLING_APPLETON, 'Appleton TV Recycling', 'TV Recycling Appleton'),
     l(SHREDDING_APPLETON, 'Appleton Shredding', 'Shredding Appleton'),
+    l(ELECTRONIC_RECYCLING_APPLETON, 'Appleton E-Recycling', 'Electronic Recycling Appleton'),
   ] },
   { heading: 'Racine County', page: RACINE, state: 'Wisconsin', links: [
     l(SHREDDING_RACINE, 'Racine Shredding', 'Shredding Racine'),
@@ -191,6 +253,13 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(TV_RECYCLING_IN_WISCONSIN, 'TV Recycling', 'TV Recycling Wisconsin'),
     l(SHREDDING_WISCONSIN, 'Document Shredding', 'Document Shredding Wisconsin'),
     l(SHEBOYGAN, 'Sheboygan'), l(FOND_DU_LAC_RECYCLING, 'Fond du Lac'),
+  ] },
+  /* ------------------------------------------------------------- Iowa */
+  { heading: 'Des Moines', state: null, links: [
+    l(ELECTRONIC_RECYCLING_DES_MOINES, 'Electronic Recycling', 'Electronic Recycling Des Moines'),
+    l(COMPUTER_RECYCLE_DES_MOINES, 'Computer Recycling', 'Computer Recycling Des Moines'),
+    l(TV_RECYCLING_DES_MOINES, 'TV Recycling', 'TV Recycling Des Moines'),
+    l(SHREDDING_DES_MOINES, 'Shredding Service', 'Shredding Des Moines'),
   ] },
   /* ------------------------------------------- mail-in cities, nationwide */
   { heading: 'Mail-In Recycling', state: null, links: [

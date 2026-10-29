@@ -110,6 +110,36 @@ import { SHREDDING_RACINE } from '@/data/county-pages/areas/shredding-racine'
 import { SHREDDING_APPLETON } from '@/data/county-pages/areas/shredding-appleton'
 import { ROSEVILLE_ELECTRONIC_RECYCLING } from '@/data/county-pages/areas/roseville-electronic-recycling'
 import { COMPUTER_RECYCLE_MINNEAPOLIS } from '@/data/county-pages/areas/computer-recycle-minneapolis'
+import { ELECTRONICS_RECYCLING_IN_MINNEAPOLIS } from '@/data/county-pages/areas/electronics-recycling-in-minneapolis'
+import { ELECTRONIC_RECYCLING_MINNEAPOLIS } from '@/data/county-pages/areas/electronic-recycling-minneapolis'
+import { MADISON_ELECTRONIC_RECYCLING } from '@/data/county-pages/areas/madison-electronic-recycling'
+import { ELECTRONIC_RECYCLING_MADISON } from '@/data/county-pages/areas/electronic-recycling-madison'
+import { ELECTRONIC_RECYCLING_APPLETON } from '@/data/county-pages/areas/electronic-recycling-appleton'
+import { ELECTRONICS_RECYCLING_GREEN_BAY } from '@/data/county-pages/areas/electronics-recycling-green-bay'
+import { ELECTRONIC_RECYCLING_GREEN_BAY } from '@/data/county-pages/areas/electronic-recycling-green-bay'
+import { TV_RECYCLING_MADISON } from '@/data/county-pages/areas/tv-recycling-madison'
+import { COMPUTER_RECYCLE_DULUTH } from '@/data/county-pages/areas/computer-recycle-duluth'
+import { BATTERY_RECYCLING_DULUTH } from '@/data/county-pages/areas/battery-recycling-duluth'
+import { ELECTRONIC_RECYCLING_ST_PAUL } from '@/data/county-pages/areas/electronic-recycling-st-paul'
+import { RICHFIELD_RECYCLING_SERVICES } from '@/data/county-pages/areas/richfield-recycling-services'
+import { MINNEAPOLIS_RECYCLING_CENTER } from '@/data/county-pages/areas/minneapolis-recycling-center'
+import { OAKDALE_RECYCLING_SERVICES } from '@/data/county-pages/areas/oakdale-recycling-services'
+import { ROCHESTER_RECYCLING } from '@/data/county-pages/areas/rochester-recycling'
+import { SHREDDING_MINNEAPOLIS } from '@/data/county-pages/areas/shredding-minneapolis'
+import { SHREDDING_MILWAUKEE } from '@/data/county-pages/areas/shredding-milwaukee'
+import { SHREDDING_MADISON } from '@/data/county-pages/areas/shredding-madison'
+import { SHREDDING_DES_MOINES } from '@/data/county-pages/areas/shredding-des-moines'
+import { TV_RECYCLING_DES_MOINES } from '@/data/county-pages/areas/tv-recycling-des-moines'
+import { COMPUTER_RECYCLE_DES_MOINES } from '@/data/county-pages/areas/computer-recycle-des-moines'
+import { ELECTRONIC_RECYCLING_DES_MOINES } from '@/data/county-pages/areas/electronic-recycling-des-moines'
+import { ELECTRONIC_RECYCLING_IN_ROCHESTER } from '@/data/county-pages/areas/electronic-recycling-in-rochester'
+import { DULUTH } from '@/data/county-pages/areas/duluth'
+import { COMPUTER_RECYCLE_MILWAUKEE } from '@/data/county-pages/areas/computer-recycle-milwaukee'
+import { TV_RECYCLING_MILWAUKEE } from '@/data/county-pages/areas/tv-recycling-milwaukee'
+import { WOOD_BURY_RECYCLING } from '@/data/county-pages/areas/wood-bury-recycling'
+import { RAMSEY_ELECTRONIC_RECYCLING } from '@/data/county-pages/areas/ramsey-electronic-recycling'
+import { LIGHT_BULB_RECYCLING_MINNEAPOLIS } from '@/data/county-pages/areas/light-bulb-recycling-minneapolis'
+import { SHREDDING_ROCHESTER } from '@/data/county-pages/areas/shredding-rochester'
 import { LANDING_WISCONSIN_BATTERY_RECYCLING } from '@/data/landing-pages/wisconsin-battery-recycling'
 import { LANDING_WISCONSIN_ELECTRONIC_RECYCLE } from '@/data/landing-pages/wisconsin-electronic-recycle'
 import { LANDING_WISCONSIN_LIGHT_BULBS } from '@/data/landing-pages/wisconsin-light-bulbs'
@@ -358,6 +388,36 @@ export const DOCS = {
   'area/shredding-appleton': { title: "Appleton Shredding Services", group: 'Location pages', urls: [SHREDDING_APPLETON.url], data: one(SHREDDING_APPLETON) },
   'area/roseville-electronic-recycling': { title: "Roseville Electronic Recycling", group: 'Location pages', urls: [ROSEVILLE_ELECTRONIC_RECYCLING.url], data: one(ROSEVILLE_ELECTRONIC_RECYCLING) },
   'area/computer-recycle-minneapolis': { title: "Computer Recycling in Minneapolis Minnesota", group: 'Location pages', urls: [COMPUTER_RECYCLE_MINNEAPOLIS.url], data: one(COMPUTER_RECYCLE_MINNEAPOLIS) },
+  'area/electronics-recycling-in-minneapolis': { title: "Electronics Recycling in Minneapolis, MN", group: 'Location pages', urls: [ELECTRONICS_RECYCLING_IN_MINNEAPOLIS.url], data: one(ELECTRONICS_RECYCLING_IN_MINNEAPOLIS) },
+  'area/electronic-recycling-minneapolis': { title: "Sustainable Electronic Recycling in Minneapolis Minnesota", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_MINNEAPOLIS.url], data: one(ELECTRONIC_RECYCLING_MINNEAPOLIS) },
+  'area/madison-electronic-recycling': { title: "Electronic Recycling Madison, WI", group: 'Location pages', urls: [MADISON_ELECTRONIC_RECYCLING.url], data: one(MADISON_ELECTRONIC_RECYCLING) },
+  'area/electronic-recycling-madison': { title: "Electronic Recycling, Madison, Wi", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_MADISON.url], data: one(ELECTRONIC_RECYCLING_MADISON) },
+  'area/electronic-recycling-appleton': { title: "Sustainable Electronic Recycling in Appleton Wisconsin", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_APPLETON.url], data: one(ELECTRONIC_RECYCLING_APPLETON) },
+  'area/electronics-recycling-green-bay': { title: "Electronics Recycling in Green Bay", group: 'Location pages', urls: [ELECTRONICS_RECYCLING_GREEN_BAY.url], data: one(ELECTRONICS_RECYCLING_GREEN_BAY) },
+  'area/electronic-recycling-green-bay': { title: "Green Bay electronic recycling center", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_GREEN_BAY.url], data: one(ELECTRONIC_RECYCLING_GREEN_BAY) },
+  'area/tv-recycling-madison': { title: "Innovative TV Recycling in Madison", group: 'Location pages', urls: [TV_RECYCLING_MADISON.url], data: one(TV_RECYCLING_MADISON) },
+  'area/computer-recycle-duluth': { title: "Environmental-Friendly Computer Recycling in Duluth Minnesota", group: 'Location pages', urls: [COMPUTER_RECYCLE_DULUTH.url], data: one(COMPUTER_RECYCLE_DULUTH) },
+  'area/battery-recycling-duluth': { title: "Battery Recycling Duluth", group: 'Location pages', urls: [BATTERY_RECYCLING_DULUTH.url], data: one(BATTERY_RECYCLING_DULUTH) },
+  'area/electronic-recycling-st-paul': { title: "Sustainable Electronic Recycling in St. Paul Minnesota", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_ST_PAUL.url], data: one(ELECTRONIC_RECYCLING_ST_PAUL) },
+  'area/richfield-recycling-services': { title: "Richfield Recycling Services", group: 'Location pages', urls: [RICHFIELD_RECYCLING_SERVICES.url], data: one(RICHFIELD_RECYCLING_SERVICES) },
+  'area/minneapolis-recycling-center': { title: "Minneapolis Recycling Center", group: 'Location pages', urls: [MINNEAPOLIS_RECYCLING_CENTER.url], data: one(MINNEAPOLIS_RECYCLING_CENTER) },
+  'area/oakdale-recycling-services': { title: "Oakdale Recycling Service", group: 'Location pages', urls: [OAKDALE_RECYCLING_SERVICES.url], data: one(OAKDALE_RECYCLING_SERVICES) },
+  'area/rochester-recycling': { title: "Rochester Recycling Center", group: 'Location pages', urls: [ROCHESTER_RECYCLING.url], data: one(ROCHESTER_RECYCLING) },
+  'area/shredding-minneapolis': { title: "Minneapolis Shredding Service", group: 'Location pages', urls: [SHREDDING_MINNEAPOLIS.url], data: one(SHREDDING_MINNEAPOLIS) },
+  'area/shredding-milwaukee': { title: "Milwaukee Shredding Service", group: 'Location pages', urls: [SHREDDING_MILWAUKEE.url], data: one(SHREDDING_MILWAUKEE) },
+  'area/shredding-madison': { title: "Madison Shredding Service", group: 'Location pages', urls: [SHREDDING_MADISON.url], data: one(SHREDDING_MADISON) },
+  'area/shredding-des-moines': { title: "Des Moines Shredding Service", group: 'Location pages', urls: [SHREDDING_DES_MOINES.url], data: one(SHREDDING_DES_MOINES) },
+  'area/tv-recycling-des-moines': { title: "TV Recycling in Des Moines", group: 'Location pages', urls: [TV_RECYCLING_DES_MOINES.url], data: one(TV_RECYCLING_DES_MOINES) },
+  'area/computer-recycle-des-moines': { title: "Environmental-Friendly Computer Recycling in Des Moines Minnesota", group: 'Location pages', urls: [COMPUTER_RECYCLE_DES_MOINES.url], data: one(COMPUTER_RECYCLE_DES_MOINES) },
+  'area/electronic-recycling-des-moines': { title: "Sustainable Electronic Recycling in Des Moines", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_DES_MOINES.url], data: one(ELECTRONIC_RECYCLING_DES_MOINES) },
+  'area/electronic-recycling-in-rochester': { title: "Electronic Recycling in Rochester", group: 'Location pages', urls: [ELECTRONIC_RECYCLING_IN_ROCHESTER.url], data: one(ELECTRONIC_RECYCLING_IN_ROCHESTER) },
+  'area/duluth': { title: "Recycling Services in Duluth", group: 'Location pages', urls: [DULUTH.url], data: one(DULUTH) },
+  'area/computer-recycle-milwaukee': { title: "Computer Recycling in Milwaukee Wisconsin", group: 'Location pages', urls: [COMPUTER_RECYCLE_MILWAUKEE.url], data: one(COMPUTER_RECYCLE_MILWAUKEE) },
+  'area/tv-recycling-milwaukee': { title: "TV Recycling in Milwaukee WI", group: 'Location pages', urls: [TV_RECYCLING_MILWAUKEE.url], data: one(TV_RECYCLING_MILWAUKEE) },
+  'area/wood-bury-recycling': { title: "Woodburry Recycling Service", group: 'Location pages', urls: [WOOD_BURY_RECYCLING.url], data: one(WOOD_BURY_RECYCLING) },
+  'area/ramsey-electronic-recycling': { title: "Ramsey County Electronic Recycling", group: 'Location pages', urls: [RAMSEY_ELECTRONIC_RECYCLING.url], data: one(RAMSEY_ELECTRONIC_RECYCLING) },
+  'area/light-bulb-recycling-minneapolis': { title: "Light Bulb Recycling In Minneapolis", group: 'Location pages', urls: [LIGHT_BULB_RECYCLING_MINNEAPOLIS.url], data: one(LIGHT_BULB_RECYCLING_MINNEAPOLIS) },
+  'area/shredding-rochester': { title: "Rochester Shredding Service", group: 'Location pages', urls: [SHREDDING_ROCHESTER.url], data: one(SHREDDING_ROCHESTER) },
   'area/oconomowoc-recycling-center': { title: "Oconomowoc Recycling Center", group: 'Location pages', urls: [OCONOMOWOC_RECYCLING_CENTER.url], data: one(OCONOMOWOC_RECYCLING_CENTER) },
   'area/waukesha-electronic-recycling': { title: "Sustainable Electronic Recycling in Waukesha WI", group: 'Location pages', urls: [WAUKESHA_ELECTRONIC_RECYCLING.url], data: one(WAUKESHA_ELECTRONIC_RECYCLING) },
   'area/battery-recycling-waukesha': { title: "Battery Recycling Waukesha", group: 'Location pages', urls: [BATTERY_RECYCLING_WAUKESHA.url], data: one(BATTERY_RECYCLING_WAUKESHA) },
