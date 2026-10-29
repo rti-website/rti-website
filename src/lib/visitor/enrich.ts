@@ -4,7 +4,7 @@ import { sendMail } from '@/lib/mail'
 import { lookupIp as placeOf } from '@/lib/geoip'
 import { visitorConfig, excludedCidrs } from './config.ts'
 import { lookupIp } from './lookup-ip.ts'
-import { classify, companyKey, NO_LOOKUP_COUNTRIES, type IpLookupResult } from './classify.ts'
+import { classify, companyKey, isDatacenterOrg, NO_LOOKUP_COUNTRIES, type IpLookupResult } from './classify.ts'
 import { inCidrs, isPrivateIp, maskIp } from './ip.ts'
 import { markBusinessLeads } from './leads.ts'
 import { chicago } from './schedule.ts'
@@ -128,7 +128,69 @@ async function handle(job: Job): Promise<void> {
     companyId = c?.id ?? null
   }
   await save(job.hash, classification, companyId, r)
+  // A cloud or data centre network: drop everything its visits stored.
+  if (classification === 'datacenter') await purgeDatacenter()
   await maybeWarn(today + 1)
+}
+
+/**
+ * CLOUD AND DATA CENTRE NETWORKS ARE NOT VISITORS (management, 30 Oct 2026:
+ * "exclude bots and cloud or data center networks"). Run after a lookup
+ * classifies one, and by the 10 minute sweep:
+ *
+ *   1. lookups made before this rule that it now calls datacenter (an
+ *      "Anthropic, PBC" or a hosting network kept as a company) are
+ *      reclassified and lose their company;
+ *   2. every visit from such an IP is deleted, with its page views;
+ *   3. a visitor left with no visits and no enquiry is deleted with its
+ *      Visitor lead; one with other visits keeps them, recounted;
+ *   4. a company row made only from such a network is deleted, unless an
+ *      enquiry was created from it.
+ * Returns how many visits went.
+ */
+export async function purgeDatacenter(): Promise<number> {
+  const old = await q<{ id: number; org_name: string | null; org_domain: string | null; org_type: string | null; is_vpn: boolean; is_hosting: boolean; company_id: number | null }>(`
+    SELECT id, org_name, org_domain, org_type, is_vpn, is_hosting, company_id FROM ip_lookups
+     WHERE classification IN ('business', 'noise', 'anonymous') AND NOT is_vpn
+       AND (is_hosting OR org_type = 'hosting' OR org_name IS NOT NULL)`)
+  const re = old.filter((r) => r.is_hosting || r.org_type === 'hosting' || isDatacenterOrg(r.org_name, r.org_domain))
+  const companies = [...new Set(re.map((r) => r.company_id).filter((x): x is number => x !== null))]
+  if (re.length) {
+    await q("UPDATE ip_lookups SET classification = 'datacenter', company_id = NULL WHERE id = ANY($1::bigint[])", [re.map((r) => r.id)])
+  }
+  const gone = await q<{ visitor_id: string }>(`
+    DELETE FROM visits x USING ip_lookups k
+     WHERE k.classification = 'datacenter' AND (x.ip_lookup_id = k.id OR (x.ip_lookup_id IS NULL AND x.ip_hash = k.ip_hash))
+    RETURNING x.visitor_id`)
+  const touched = [...new Set(gone.map((g) => g.visitor_id))]
+  if (touched.length) {
+    const empty = (await q<{ id: string }>(`
+      SELECT v.id FROM visitors v WHERE v.id = ANY($1::uuid[])
+         AND NOT EXISTS (SELECT 1 FROM visits x WHERE x.visitor_id = v.id)
+         AND NOT EXISTS (SELECT 1 FROM leads l WHERE l.visitor_id = v.id AND l.lead_type = 'form')`, [touched])).map((r) => r.id)
+    if (empty.length) {
+      await q("DELETE FROM leads WHERE lead_type = 'visitor' AND visitor_id = ANY($1::uuid[])", [empty])
+      await q('DELETE FROM visitors WHERE id = ANY($1::uuid[])', [empty])
+    }
+    await q(`
+      UPDATE visitors v SET visit_count = (SELECT count(*)::int FROM visits x WHERE x.visitor_id = v.id),
+             company_id = CASE WHEN v.company_id = ANY($2::bigint[]) THEN NULL ELSE v.company_id END
+       WHERE v.id = ANY($1::uuid[])`, [touched.filter((t) => !empty.includes(t)), companies])
+  }
+  // Every other visitor still tied to a reclassified company loses that link.
+  if (companies.length) {
+    const unlinked = await q<{ id: string }>('UPDATE visitors SET company_id = NULL WHERE company_id = ANY($1::bigint[]) RETURNING id', [companies])
+    if (unlinked.length) {
+      await q(`UPDATE leads SET is_business_ip = false, company = NULL, name = 'Anonymous visitor ' || substr(replace(visitor_id::text, '-', ''), 1, 8)
+                WHERE lead_type = 'visitor' AND visitor_id = ANY($1::uuid[])`, [unlinked.map((u) => u.id)])
+    }
+    await q(`
+      DELETE FROM companies c WHERE c.id = ANY($1::bigint[]) AND c.status <> 'lead_created'
+         AND NOT EXISTS (SELECT 1 FROM visitors v WHERE v.company_id = c.id)
+         AND NOT EXISTS (SELECT 1 FROM ip_lookups k WHERE k.company_id = c.id)`, [companies])
+  }
+  if (gone.length) console.log(`[visitor] cloud or data centre networks: ${gone.length} visit(s) removed`)
+  return gone.length
 }
 
 /** Writes (or refreshes) the lookup for a hash and applies it to the visits that wait for it. */
@@ -185,7 +247,7 @@ export async function refreshCompanies(visitorIds?: string[]): Promise<void> {
 async function callsToday(): Promise<number> {
   const row = await one<{ n: number }>(`
     SELECT count(*)::int AS n FROM ip_lookups
-     WHERE classification IN ('business', 'anonymous', 'noise', 'failed')
+     WHERE classification IN ('business', 'anonymous', 'noise', 'datacenter', 'failed')
        AND (looked_up_at AT TIME ZONE 'America/Chicago')::date = (now() AT TIME ZONE 'America/Chicago')::date`)
   return row?.n ?? 0
 }

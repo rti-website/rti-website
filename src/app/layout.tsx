@@ -12,6 +12,7 @@ import { PreviewBar } from '@/components/client/PreviewBar'
 import { CookieConsent } from '@/components/client/CookieConsent'
 import { QuotePicker } from '@/components/client/QuotePicker'
 import { VisitorTracker } from '@/components/client/VisitorTracker'
+import { SnitcherTag } from '@/components/client/SnitcherTag'
 import { visitorConfig } from '@/lib/visitor/config'
 
 /**
@@ -22,6 +23,9 @@ import { visitorConfig } from '@/lib/visitor/config'
 export const dynamic = 'error'
 
 export const metadata: Metadata = { metadataBase: new URL(SITE.origin) }
+
+/** Snitcher's profile id (30 Oct 2026, SnitcherTag.tsx): set in .env.local on the site that should report to Snitcher; empty means off. */
+const SNITCHER_PROFILE_ID = (process.env.SNITCHER_PROFILE_ID ?? '').trim()
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   /*
@@ -64,6 +68,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             only when VISITOR_CAPTURE is on for this build, never in a preview,
             and it sends nothing until Analytics consent. */}
         {visitorConfig.captureOn() && !preview && <Suspense fallback={null}><VisitorTracker /></Suspense>}
+        {/* Snitcher (management, 30 Oct 2026): only after Analytics consent,
+            never in a preview, only when SNITCHER_PROFILE_ID is set. */}
+        {SNITCHER_PROFILE_ID && !preview && <SnitcherTag profileId={SNITCHER_PROFILE_ID} />}
         {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
         {/* Cookie banner and settings panel (management, 27 Oct 2026). */}

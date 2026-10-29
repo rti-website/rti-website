@@ -1,4 +1,4 @@
-// node --test: IP classification (business kept; ISP, VPN, hosting anonymous; relays and clouds noise).
+// node --test: IP classification (business kept; ISP and VPN anonymous; relays noise; clouds and data centres dropped).
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { classify, companyKey, NO_LOOKUP_COUNTRIES, type IpLookupResult } from '../../src/lib/visitor/classify.ts'
@@ -15,14 +15,21 @@ test('the four kept types are business', () => {
   }
 })
 
-test('ISP, hosting and any VPN/proxy/Tor/datacenter flag stay anonymous', () => {
+test('ISP and any VPN/proxy/Tor flag stay anonymous (people)', () => {
   assert.equal(classify({ ...base, orgType: 'isp', orgName: 'Comcast Cable' }).classification, 'anonymous')
-  assert.equal(classify({ ...base, orgType: 'hosting' }).classification, 'anonymous')
   assert.equal(classify({ ...base, isVpn: true }).classification, 'anonymous')
   assert.equal(classify({ ...base, isProxy: true }).classification, 'anonymous')
   assert.equal(classify({ ...base, isTor: true }).classification, 'anonymous')
-  assert.equal(classify({ ...base, isDatacenter: true }).classification, 'anonymous')
+  assert.equal(classify({ ...base, isVpn: true, isDatacenter: true, orgName: 'NordVPN' }).classification, 'anonymous')
   assert.equal(classify({ ...base, orgType: null }).classification, 'anonymous')
+})
+
+test('clouds, data centres and AI companies are dropped (management, 30 Oct 2026)', () => {
+  assert.equal(classify({ ...base, orgType: 'hosting' }).classification, 'datacenter')
+  assert.equal(classify({ ...base, isDatacenter: true }).classification, 'datacenter')
+  const clouds: [string, string | null][] = [['Anthropic, PBC', 'anthropic.com'], ['OpenAI, L.L.C.', 'openai.com'], ['Amazon Web Services', 'aws.amazon.com'],
+    ['Google Cloud', null], ['DigitalOcean, LLC', 'digitalocean.com'], ['Hetzner Online GmbH', 'hetzner.com'], ['OVH SAS', 'ovh.net']]
+  for (const [n, d] of clouds) assert.equal(classify({ ...base, orgName: n, orgDomain: d }).classification, 'datacenter', n)
 })
 
 test('relays and clouds typed business are noise', () => {

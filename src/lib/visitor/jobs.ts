@@ -3,7 +3,8 @@ import { one, q, tx } from '@/lib/db'
 import { sendMail } from '@/lib/mail'
 import { SITE } from '@/lib/site'
 import { visitorConfig } from './config.ts'
-import { applyLookup, refreshCompanies } from './enrich.ts'
+import { applyLookup, purgeDatacenter, refreshCompanies } from './enrich.ts'
+import { mergeByIp } from './store.ts'
 import { markBusinessLeads } from './leads.ts'
 import { chicago, chicagoDayBounds, dailyDue, monthlyDue, previousYmd, weeklyDue } from './schedule.ts'
 import { INTENT_PATHS, sourceOf } from './source.ts'
@@ -85,6 +86,10 @@ export async function sweep(): Promise<void> {
     SELECT v.id FROM visitors v JOIN leads l ON l.visitor_id = v.id AND l.lead_type = 'visitor'
      WHERE v.company_id IS NOT NULL AND NOT l.is_business_ip LIMIT 500`)
   if (unmarked.length) await markBusinessLeads(unmarked.map((u) => u.id))
+  // Management, 30 Oct 2026: nothing from cloud or data centre networks, and
+  // one visitor per IP (enrich.ts purgeDatacenter, store.ts mergeByIp).
+  await purgeDatacenter()
+  await mergeByIp()
   await refreshCompanies()
 }
 

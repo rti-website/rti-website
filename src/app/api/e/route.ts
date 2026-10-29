@@ -5,7 +5,7 @@ import { analyticsConsent, gpcSignal, visitorIdFrom, VISITOR_COOKIE, VISITOR_COO
 import { isBotUserAgent } from '@/lib/visitor/bot'
 import { clientIpFrom, maskIp } from '@/lib/visitor/ip'
 import { cleanAttribution } from '@/lib/visitor/source'
-import { inTurn, recordLeave, recordPageView } from '@/lib/visitor/store'
+import { inTurn, recordLeave, recordPageView, resolveVisitor } from '@/lib/visitor/store'
 
 /**
  * /api/e/ — the visitor identification endpoint (docs/visitor-identification/
@@ -19,7 +19,9 @@ import { inTurn, recordLeave, recordPageView } from '@/lib/visitor/store'
  *   3. Analytics consent in the rti_consent cookie, and no Global Privacy
  *      Control (Sec-GPC). A visitor who declined or withdrew also loses their
  *      rti_vid cookie here;
- *   4. not a crawler or script (user agent), and not a flood (store.ts).
+ *   4. not a crawler or script (user agent), and not a flood (store.ts);
+ *   5. not from a cloud or data centre network already looked up
+ *      (classify.ts 'datacenter'; management, 30 Oct 2026).
  *
  * Then it sets rti_vid (a random UUID, HttpOnly, 13 months) and stores the
  * page view after the response (after()), so the page never waits.
@@ -118,7 +120,12 @@ export async function POST(req: Request): Promise<Response> {
   if (b.t !== 'pv' || typeof b.path !== 'string' || !b.path.startsWith('/')) return empty()
   if (b.path.startsWith('/admin') || b.path.startsWith('/api/')) return empty()
 
-  const visitorId = known ?? randomUUID()
+  // The same visitor for the same IP (store.ts resolveVisitor); nothing at all
+  // from a cloud or data centre network already looked up.
+  let resolved: { id: string; excluded: boolean }
+  try { resolved = await resolveVisitor(known, ip, ua) } catch { resolved = { id: known ?? randomUUID(), excluded: false } }
+  if (resolved.excluded) return empty()
+  const visitorId = resolved.id
   const sec = Number(b.sec)
   const input = {
     visitorId,
