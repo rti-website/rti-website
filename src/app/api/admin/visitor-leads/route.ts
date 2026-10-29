@@ -7,7 +7,7 @@ import { listVisitorLeads, rangeFrom, toCsv, type VisitorLeadFilter } from '@/li
 /**
  * Admin -> Visitor leads (brief section 7): one per consented visitor,
  * Business IP first. Never in Enquiries, never emailed, never counted there.
- *   GET   ?business=yes|no|all (default yes) &type &status &source &intent=1 &q
+ *   GET   ?business=yes|no|all (default yes) &type &status &source &hot=1 &q
  *         &from &to (Chicago days, default last 30) or &day=YYYY-MM-DD, &page, &format=csv
  *   PATCH { id, status }   new | reviewed | converted | ignore
  */
@@ -25,15 +25,18 @@ export const GET = guard(async ({ req, user }) => {
     // The digest's CSV link asks for all types ("yesterday's Visitor leads, all types").
     business: b === 'no' || b === 'all' ? b : day ? 'all' : 'yes',
     type: sp.get('type') ?? undefined, status: sp.get('status') ?? undefined, source: sp.get('source') ?? undefined,
-    intent: sp.get('intent') === '1', q: sp.get('q') ?? undefined,
+    // hot=1: the hot lead flag (src/lib/visitor/hot.ts); intent=1, its old name, still works.
+    hot: sp.get('hot') === '1' || sp.get('intent') === '1', q: sp.get('q') ?? undefined,
   }
   const page = Math.max(1, Number(sp.get('page')) || 1)
   const out = await listVisitorLeads(range, f, page)
   if (sp.get('format') === 'csv') {
     const csv = toCsv(
-      ['Lead #', 'Name', 'Business IP', 'Org type', 'Domain', 'City', 'Region', 'Visits', 'Pages viewed', 'Last seen', 'Source', 'Intent', 'Status', 'Created', 'Converted to enquiry #'],
-      out.all.map((r) => [r.id, r.name, r.is_business_ip ? 'yes' : 'no', r.org_type, r.domain, r.city, r.region, r.visit_count, r.page_count,
-        new Date(r.last_seen).toISOString(), r.source, r.intent ? 'yes' : '', r.visitor_status, new Date(r.created_at).toISOString(), r.converted_lead_id]))
+      ['Lead #', 'Name', 'Business IP', 'Org type', 'Domain', 'Location', 'Visits', 'Pages viewed', 'First seen', 'Last seen',
+        'How they found us', 'Landing page', 'Hot lead', 'Why hot', 'Status', 'Created', 'Converted to enquiry #'],
+      out.all.map((r) => [r.id, r.name, r.is_business_ip ? 'yes' : 'no', r.org_type, r.domain, r.place, r.visit_count, r.page_count,
+        new Date(r.first_seen).toISOString(), new Date(r.last_seen).toISOString(), r.source, r.landing_page,
+        r.hot.length ? 'yes' : '', r.hot_text, r.visitor_status, new Date(r.created_at).toISOString(), r.converted_lead_id]))
     return new NextResponse(csv, { headers: {
       'content-type': 'text/csv; charset=utf-8', 'cache-control': 'no-store',
       'content-disposition': `attachment; filename="rti-visitor-leads-${range.from}-to-${range.to}.csv"`,

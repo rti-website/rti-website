@@ -7,6 +7,7 @@ import { applyLookup, refreshCompanies } from './enrich.ts'
 import { markBusinessLeads } from './leads.ts'
 import { chicago, chicagoDayBounds, dailyDue, monthlyDue, previousYmd, weeklyDue } from './schedule.ts'
 import { INTENT_PATHS, sourceOf } from './source.ts'
+import { hotReasons, hotText } from './hot.ts'
 
 /**
  * The scheduled side of visitor identification (brief sections 6, 7, 8 and 5).
@@ -110,7 +111,7 @@ const adminLink = (view: string) => `${SITE.origin}/admin/?view=${view}`
 
 type NewCompany = {
   id: number; name: string; domain: string | null; type: string; city: string | null; region: string | null
-  pages: string[] | null; first_touch: Record<string, string> | null; intent: boolean
+  pages: string[] | null; first_touch: Record<string, string> | null; visits: number; has_form_lead: boolean
 }
 
 async function companiesFirstSeen(start: Date, end: Date): Promise<NewCompany[]> {
@@ -119,11 +120,12 @@ async function companiesFirstSeen(start: Date, end: Date): Promise<NewCompany[]>
            (SELECT array_agg(DISTINCT p.path) FROM visitors v JOIN visits s ON s.visitor_id = v.id
               JOIN page_views p ON p.visit_id = s.id WHERE v.company_id = c.id) AS pages,
            (SELECT v.first_touch FROM visitors v WHERE v.company_id = c.id ORDER BY v.first_seen LIMIT 1) AS first_touch,
-           EXISTS (SELECT 1 FROM visitors v JOIN visits s ON s.visitor_id = v.id JOIN page_views p ON p.visit_id = s.id
-                    WHERE v.company_id = c.id AND p.path = ANY($3::text[])) AS intent
+           (SELECT count(*)::int FROM visitors v JOIN visits s ON s.visitor_id = v.id WHERE v.company_id = c.id) AS visits,
+           EXISTS (SELECT 1 FROM visitors v JOIN leads l ON l.visitor_id = v.id AND l.lead_type = 'form'
+                    WHERE v.company_id = c.id) AS has_form_lead
       FROM companies c
      WHERE c.first_seen >= $1 AND c.first_seen < $2 AND c.status <> 'ignore'
-     ORDER BY c.first_seen`, [start, end, INTENT_PATHS])
+     ORDER BY c.first_seen`, [start, end])
 }
 
 /** Companies that viewed a pickup, quote or contact page in the window without a form lead from them. */
@@ -137,6 +139,9 @@ async function intentCompanies(start: Date, end: Date): Promise<{ name: string; 
      GROUP BY c.id ORDER BY c.name`, [start, end, INTENT_PATHS])
 }
 
+/** The hot lead flag's reasons as words, empty when not hot (src/lib/visitor/hot.ts). */
+const hotOf = (c: NewCompany) => hotText(hotReasons({ paths: c.pages, visits: c.visits, converted: c.has_form_lead }), c.visits)
+
 function companyRows(list: NewCompany[]): string {
   return list.map((c) => `<tr>
     <td style="padding:6px 10px;border-bottom:1px solid #eee"><b>${esc(c.name)}</b>${c.domain ? `<br><span style="color:#666">${esc(c.domain)}</span>` : ''}</td>
@@ -144,10 +149,10 @@ function companyRows(list: NewCompany[]): string {
     <td style="padding:6px 10px;border-bottom:1px solid #eee">${esc([c.city, c.region].filter(Boolean).join(', '))}</td>
     <td style="padding:6px 10px;border-bottom:1px solid #eee">${esc((c.pages ?? []).slice(0, 5).join(', '))}${(c.pages?.length ?? 0) > 5 ? ` +${(c.pages!.length - 5)}` : ''}</td>
     <td style="padding:6px 10px;border-bottom:1px solid #eee">${esc(sourceOf(c.first_touch).label)}</td>
-    <td style="padding:6px 10px;border-bottom:1px solid #eee">${c.intent ? 'Yes' : ''}</td></tr>`).join('')
+    <td style="padding:6px 10px;border-bottom:1px solid #eee">${hotOf(c) ? `<b style="color:#b42318">Hot</b><br><span style="color:#666">${esc(hotOf(c))}</span>` : ''}</td></tr>`).join('')
 }
 
-const TABLE_HEAD = `<tr style="background:#f4f9f6;text-align:left">${['Company', 'Type', 'Location', 'Pages', 'Source', 'Intent']
+const TABLE_HEAD = `<tr style="background:#f4f9f6;text-align:left">${['Company', 'Type', 'Location', 'Pages', 'How they found us', 'Hot lead']
   .map((h) => `<th style="padding:6px 10px">${h}</th>`).join('')}</tr>`
 
 function wrap(title: string, body: string): string {
@@ -182,7 +187,7 @@ ${intent.length ? `<h3 style="margin:20px 0 6px">Looked at pickup, quote or cont
     `<li><b>${esc(i.name)}</b>${i.domain ? ` (${esc(i.domain)})` : ''}: ${esc(i.pages.join(', '))}</li>`).join('')}</ul>` : ''}
 <p>Anonymous Visitor leads yesterday: <b>${anon?.n ?? 0}</b>.</p>
 <p><a href="${adminLink('visitors')}">Open Visitors</a> · <a href="${adminLink('visitor-leads')}">Open Visitor leads</a> · <a href="${csv}">Yesterday's Visitor leads as CSV</a> (sign in needed)</p>`)
-  const text = `${subject}\n\n${fresh.map((c) => `- ${c.name}${c.domain ? ` (${c.domain})` : ''}, ${c.type}, ${[c.city, c.region].filter(Boolean).join(', ')}; pages: ${(c.pages ?? []).slice(0, 5).join(', ')}; source: ${sourceOf(c.first_touch).label}${c.intent ? '; INTENT' : ''}`).join('\n')}\n\n`
+  const text = `${subject}\n\n${fresh.map((c) => `- ${c.name}${c.domain ? ` (${c.domain})` : ''}, ${c.type}, ${[c.city, c.region].filter(Boolean).join(', ')}; pages: ${(c.pages ?? []).slice(0, 5).join(', ')}; source: ${sourceOf(c.first_touch).label}${hotOf(c) ? `; HOT: ${hotOf(c)}` : ''}`).join('\n')}\n\n`
     + (intent.length ? `Intent (pickup, quote or contact viewed, no form):\n${intent.map((i) => `- ${i.name}: ${i.pages.join(', ')}`).join('\n')}\n\n` : '')
     + `Anonymous Visitor leads yesterday: ${anon?.n ?? 0}\n\nVisitors: ${adminLink('visitors')}\nVisitor leads: ${adminLink('visitor-leads')}\nCSV: ${csv}\n`
   return send(subject, text, html)

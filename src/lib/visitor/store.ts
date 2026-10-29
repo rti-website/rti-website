@@ -6,6 +6,7 @@ import { ensureVisitorLead } from './leads.ts'
 import { freshLookup, applyLookup, queueLookup } from './enrich.ts'
 import { hashIp, isPrivateIp } from './ip.ts'
 import { visitorConfig } from './config.ts'
+import { lookupIp as placeOfIp } from '@/lib/geoip'
 
 /**
  * What /api/e/ stores for one page view (brief sections 3.3 and 3.4), after
@@ -15,7 +16,9 @@ import { visitorConfig } from './config.ts'
  *
  *   visitors    created on the first event, with first touch; last_seen
  *   visits      the session continues if its last page was under 30
- *               minutes ago, otherwise a new one starts
+ *               minutes ago, otherwise a new one starts; a new one gets its
+ *               city, state and country from the DB-IP file (db/019, read
+ *               on this server, never sent anywhere)
  *   page_views  one row; the previous one gets its seconds on page
  *   leads       the Visitor lead, on the visitor's first stored event
  *   ip_lookups  cache hit -> linked now; miss -> queued (enrich.ts)
@@ -83,10 +86,12 @@ export async function recordPageView(input: PageViewInput): Promise<'stored' | '
     } else {
       // This session's own source: the page it started on, its referrer and campaign parameters.
       const attr: Attribution = cleanAttribution({ ...input.params, landing_page: path, referrer: externalReferrer(input.referrer) ?? undefined })
+      const place = input.ip ? placeOfIp(input.ip) : null
       const [row] = await run<{ id: number }>(`
-        INSERT INTO visits (visitor_id, ip_hash, device_type, entry_path, exit_path, page_count, source, attribution)
-        VALUES ($1, $2, $3, $4, $4, 1, $5, $6::jsonb) RETURNING id`,
-        [visitorId, ipHash, deviceType(input.userAgent), path, sourceOf(attr).kind, JSON.stringify(attr)])
+        INSERT INTO visits (visitor_id, ip_hash, device_type, entry_path, exit_path, page_count, source, attribution, city, region, country_code)
+        VALUES ($1, $2, $3, $4, $4, 1, $5, $6::jsonb, $7, $8, $9) RETURNING id`,
+        [visitorId, ipHash, deviceType(input.userAgent), path, sourceOf(attr).kind, JSON.stringify(attr),
+          place?.city || null, place?.region || null, place?.countryCode || null])
       if (!row) throw new Error('visit not created')
       visitId = row.id
       await run('UPDATE visitors SET visit_count = visit_count + 1 WHERE id = $1', [visitorId])

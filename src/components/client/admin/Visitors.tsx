@@ -5,6 +5,8 @@ import { Dialog } from './Dialog'
 import { Empty, Icon, Table } from './Bits'
 import { api, getJSON, sendJSON } from './api'
 import { LeadDialog, when, type Agent, type Me } from './Leads'
+import { Journey, type JourneySession } from './VisitorHistory'
+import { SOURCE_KINDS } from '@/lib/visitor/source'
 
 /**
  * Admin -> Visitors (visitor identification, brief section 8): the companies
@@ -19,13 +21,13 @@ import { LeadDialog, when, type Agent, type Me } from './Leads'
 type Company = {
   id: number; name: string; domain: string | null; type: string; city: string | null; region: string | null
   status: string; notes: string | null; first_seen: string; last_seen: string
-  visits: number; pages: number; top_pages: string[]; intent: boolean; has_form_lead: boolean
+  visits: number; pages: number; top_pages: string[]; has_form_lead: boolean
   source: string; source_kind: string; visitor_count: number; lead_visitor_id: string | null
+  hot: string[]; hot_text: string
 }
-type PageView = { path: string; title: string | null; at: string; seconds: number | null }
 type Detail = {
   company: Company & { first_seen: string }
-  sessions: { id: number; visitor_id: string; started_at: string; ended_at: string; device_type: string | null; entry_path: string; exit_path: string; source: string | null; attribution: Record<string, string> | null; pages: PageView[] }[]
+  sessions: (JourneySession & { visitor_id: string })[]
   leads: { id: number; lead_type: string; name: string | null; email: string | null; status: string; visitor_status: string | null; created_at: string; converted_lead_id: number | null }[]
   visitors: { id: string; first_seen: string; last_seen: string; visit_count: number }[]
 }
@@ -54,7 +56,7 @@ export function Visitors({ onToast }: { onToast: (m: string) => void }) {
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
   const [source, setSource] = useState('')
-  const [intent, setIntent] = useState(false)
+  const [hot, setHot] = useState(false)
   const [q, setQ] = useState('')
   const [expanded, setExpanded] = useState<number | null>(null)
   const [detail, setDetail] = useState<number | null>(null)
@@ -66,10 +68,10 @@ export function Visitors({ onToast }: { onToast: (m: string) => void }) {
     if (type) p.set('type', type)
     if (status) p.set('status', status)
     if (source) p.set('source', source)
-    if (intent) p.set('intent', '1')
+    if (hot) p.set('hot', '1')
     if (q.trim()) p.set('q', q.trim())
     return p
-  }, [from, to, type, status, source, intent, q])
+  }, [from, to, type, status, source, hot, q])
 
   const reload = useCallback(() => {
     void getJSON<{ companies: Company[] }>('/visitors', params()).then((r) => {
@@ -99,7 +101,8 @@ export function Visitors({ onToast }: { onToast: (m: string) => void }) {
       <div className="a-note"><span>
         <b>Companies whose office networks visited the site</b> (visitors who accepted Analytics cookies). Home, mobile and VPN
         visits stay anonymous, and a shared network can name the wrong organisation: treat a company here as a sales signal,
-        not proof of who visited. <b>Intent</b> means they looked at Schedule a Pickup, Get a Quote or Contact Us without sending a form.
+        not proof of who visited. <b>Hot</b> means someone from it viewed the quote page, a pickup or contact page, or a service
+        page, or came back for another visit, and nobody from it has sent a form yet.
       </span></div>
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', margin: '0 0 16px' }}>
         <span className="a-search" style={{ flex: '1 1 260px', maxWidth: 380 }}>
@@ -121,17 +124,17 @@ export function Visitors({ onToast }: { onToast: (m: string) => void }) {
           {Object.entries(COMPANY_STATUS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
         </select>
         <select className="a-inp" style={{ width: 'auto' }} value={source} onChange={(e) => setSource(e.target.value)} aria-label="Source">
-          <option value="">All sources</option>
-          <option value="ad">Ad</option><option value="organic">Organic</option><option value="referral">Referral</option><option value="direct">Direct</option>
+          <option value="">How they found us: all</option>
+          {SOURCE_KINDS.map((k) => <option key={k.kind} value={k.kind}>{k.label}</option>)}
         </select>
         <label style={{ display: 'flex', gap: 6, alignItems: 'center', fontSize: 13 }}>
-          <input type="checkbox" checked={intent} onChange={(e) => setIntent(e.target.checked)} /> Intent only
+          <input type="checkbox" checked={hot} onChange={(e) => setHot(e.target.checked)} /> Hot only
         </label>
         <span style={{ color: 'var(--a-muted)', fontSize: 13 }}>{rows.length} compan{rows.length === 1 ? 'y' : 'ies'}</span>
         <a className="a-btn sm" style={{ marginLeft: 'auto' }} href={api('/visitors', new URLSearchParams([...params(), ['format', 'csv']]))}>Download CSV</a>
       </div>
       {error && <div className="a-err" style={{ marginBottom: 14 }}>{error}</div>}
-      <Table head={['Company', 'Location', 'Last seen', 'Visits', 'Pages', 'Source', 'Intent', 'Status', '']}>
+      <Table head={['Company', 'Location', 'Last seen', 'Visits', 'Pages', 'How they found us', 'Hot lead', 'Status', '']}>
         {loaded && rows.length === 0 && !error && <Empty>No identified companies in these dates.</Empty>}
         {rows.map((c) => (
           <Fragment key={c.id}>
@@ -147,7 +150,7 @@ export function Visitors({ onToast }: { onToast: (m: string) => void }) {
                 </button>
               </td>
               <td>{c.source}</td>
-              <td>{c.intent ? <span className="a-pill bad">Intent</span> : c.has_form_lead ? <span className="a-pill live">Enquired</span> : ''}</td>
+              <td>{c.hot.length > 0 ? <><span className="a-pill bad">Hot</span><span className="a-meta">{c.hot_text}</span></> : c.has_form_lead ? <span className="a-pill live">Enquired</span> : ''}</td>
               <td>
                 <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }} value={c.status}
                   onChange={(e) => void setCompanyStatus(c.id, e.target.value)} aria-label="Status">
@@ -184,7 +187,6 @@ function CompanyDetail({ id, onClose, onToast, onChanged }: { id: number; onClos
   const [d, setD] = useState<Detail | null>(null)
   const [error, setError] = useState('')
   const [notes, setNotes] = useState('')
-  const [open, setOpen] = useState<number | null>(null)
   useEffect(() => {
     void getJSON<Detail>('/visitors/company', new URLSearchParams({ id: String(id) })).then((r) => {
       if (r.ok) { setD(r.data); setNotes(r.data.company.notes ?? '') } else setError(r.error)
@@ -240,34 +242,8 @@ function CompanyDetail({ id, onClose, onToast, onChanged }: { id: number; onClos
             </div>
           )}
           <div>
-            <b style={{ fontSize: 13 }}>Sessions, newest first</b>
-            <div className="a-tablewrap" style={{ marginTop: 6 }}><div className="a-scroll"><table>
-              <thead><tr><th>Started</th><th>Device</th><th>Source</th><th>Entry</th><th>Pages</th><th /></tr></thead>
-              <tbody>
-                {d.sessions.map((s) => (
-                  <Fragment key={s.id}>
-                    <tr>
-                      <td style={{ whiteSpace: 'nowrap' }}>{T(s.started_at)}</td>
-                      <td>{s.device_type ?? '—'}</td>
-                      <td>{s.source ?? '—'}{s.attribution?.utm_campaign ? <span className="a-meta">{s.attribution.utm_campaign}</span> : null}</td>
-                      <td className="a-mono">{s.entry_path}</td>
-                      <td>{s.pages.length}</td>
-                      <td><button className="a-btn sm" onClick={() => setOpen(open === s.id ? null : s.id)}>{open === s.id ? 'Hide' : 'Show'}</button></td>
-                    </tr>
-                    {open === s.id && (
-                      <tr><td colSpan={6}>
-                        <ol style={{ margin: 0, paddingLeft: 18 }}>
-                          {s.pages.map((p, i) => (
-                            <li key={i}><span className="a-mono">{p.path}</span>{p.title ? <span className="a-hint"> · {p.title}</span> : null}
-                              <span className="a-hint"> · {new Date(p.at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}{p.seconds !== null ? ` · ${p.seconds}s` : ''}</span></li>
-                          ))}
-                        </ol>
-                      </td></tr>
-                    )}
-                  </Fragment>
-                ))}
-              </tbody>
-            </table></div></div>
+            <b style={{ fontSize: 13 }}>Visits, newest first: how each started, and its pages in order with the time on each</b>
+            <div style={{ marginTop: 6 }}><Journey sessions={[...d.sessions].reverse()} newestFirst /></div>
           </div>
         </div>
       )}

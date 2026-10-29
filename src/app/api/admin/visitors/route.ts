@@ -6,7 +6,7 @@ import { listCompanies, rangeFrom, toCsv } from '@/lib/visitor/admin-data'
 
 /**
  * Admin -> Visitors (brief section 8): the identified companies.
- *   GET   ?from&to (Chicago days, default last 7) &type &status &source &intent=1 &q &format=csv
+ *   GET   ?from&to (Chicago days, default last 7) &type &status &source &hot=1 &q &format=csv
  *   PATCH { id, status?, notes? }
  * Only for VISITOR_ADMIN_ROLES / VISITOR_ADMIN_EMAILS (src/lib/visitor/config.ts).
  */
@@ -20,12 +20,12 @@ export const GET = guard(async ({ req, user }) => {
   let rows = await listCompanies(range, { type: sp.get('type') ?? undefined, status: sp.get('status') ?? undefined, q: sp.get('q') ?? undefined })
   const source = sp.get('source')
   if (source) rows = rows.filter((r) => r.source_kind === source)
-  if (sp.get('intent') === '1') rows = rows.filter((r) => r.intent)
+  if (sp.get('hot') === '1' || sp.get('intent') === '1') rows = rows.filter((r) => r.hot.length > 0)
   if (sp.get('format') === 'csv') {
     const csv = toCsv(
-      ['Company', 'Domain', 'Type', 'City', 'Region', 'Last seen', 'Visits', 'Pages', 'Top pages', 'Source', 'Intent', 'Status'],
+      ['Company', 'Domain', 'Type', 'City', 'Region', 'Last seen', 'Visits', 'Pages', 'Top pages', 'How they found us', 'Hot lead', 'Why hot', 'Status'],
       rows.map((r) => [r.name, r.domain, r.type, r.city, r.region, new Date(r.last_seen).toISOString(), r.visits, r.pages,
-        r.top_pages.join(' | '), r.source, r.intent ? 'yes' : '', r.status]))
+        r.top_pages.join(' | '), r.source, r.hot.length ? 'yes' : '', r.hot_text, r.status]))
     return new NextResponse(csv, { headers: {
       'content-type': 'text/csv; charset=utf-8', 'cache-control': 'no-store',
       'content-disposition': `attachment; filename="rti-visitors-${range.from}-to-${range.to}.csv"`,

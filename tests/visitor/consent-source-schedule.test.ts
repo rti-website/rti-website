@@ -37,14 +37,24 @@ test('first touch held from page 1 survives consent on page 2 (gclid and utm kep
   assert.deepEqual(sourceOf(ft), { kind: 'ad', label: 'Google Ads' })
 })
 
-test('source buckets', () => {
-  assert.equal(sourceOf({ msclkid: '1' }).label, 'Microsoft Ads')
-  assert.equal(sourceOf({ fbclid: '1' }).label, 'Meta')
-  assert.equal(sourceOf({ utm_medium: 'cpc', utm_source: 'linkedin' }).kind, 'ad')
-  assert.equal(sourceOf({ referrer: 'https://www.google.com/' }).kind, 'organic')
+test('how they found us (management, 30 Oct 2026: Google Ads, organic, LinkedIn, direct)', () => {
+  assert.deepEqual(sourceOf({ gclid: '1', referrer: 'https://www.google.com/' }), { kind: 'ad', label: 'Google Ads' })
+  assert.deepEqual(sourceOf({ msclkid: '1' }), { kind: 'ad', label: 'Microsoft Ads' })
+  assert.deepEqual(sourceOf({ utm_medium: 'cpc', utm_source: 'linkedin' }), { kind: 'ad', label: 'LinkedIn Ads' })
+  assert.deepEqual(sourceOf({ utm_medium: 'paid_social', utm_source: 'facebook' }), { kind: 'ad', label: 'Facebook Ads' })
+  assert.deepEqual(sourceOf({ referrer: 'https://www.google.com/' }), { kind: 'organic', label: 'Organic: Google' })
+  assert.deepEqual(sourceOf({ referrer: 'https://www.bing.com/search?q=x' }), { kind: 'organic', label: 'Organic: Bing' })
+  assert.deepEqual(sourceOf({ referrer: 'https://www.linkedin.com/feed/' }), { kind: 'social', label: 'LinkedIn' })
+  assert.deepEqual(sourceOf({ referrer: 'https://lnkd.in/abc' }), { kind: 'social', label: 'LinkedIn' })
+  assert.deepEqual(sourceOf({ utm_source: 'linkedin', utm_medium: 'social' }), { kind: 'social', label: 'LinkedIn' })
+  assert.deepEqual(sourceOf({ utm_source: 'LinkedIn' }), { kind: 'social', label: 'LinkedIn' })
+  assert.deepEqual(sourceOf({ fbclid: '1' }), { kind: 'social', label: 'Facebook' })
+  assert.deepEqual(sourceOf({ referrer: 'https://l.facebook.com/' }), { kind: 'social', label: 'Facebook' })
+  assert.deepEqual(sourceOf({ utm_medium: 'email', utm_source: 'newsletter' }), { kind: 'email', label: 'Email: Newsletter' })
+  assert.deepEqual(sourceOf({ referrer: 'https://chatgpt.com/' }), { kind: 'referral', label: 'ChatGPT' })
   assert.deepEqual(sourceOf({ referrer: 'https://www.mprnews.org/story' }), { kind: 'referral', label: 'mprnews.org' })
   assert.equal(sourceOf({ referrer: 'https://www.recycletechnologies.com/quote/' }).kind, 'direct')
-  assert.equal(sourceOf({}).kind, 'direct')
+  assert.deepEqual(sourceOf({}), { kind: 'direct', label: 'Direct' })
   assert.equal(sourceOf(null).kind, 'direct')
 })
 
@@ -52,6 +62,7 @@ test('intent pages', () => {
   assert.equal(isIntentPath('/quote/'), true)
   assert.equal(isIntentPath('/request-a-pickup'), true)
   assert.equal(isIntentPath('/contact-us/'), true)
+  assert.equal(isIntentPath('/quote-by-location/'), true)
   assert.equal(isIntentPath('/battery-recycling/'), false)
 })
 

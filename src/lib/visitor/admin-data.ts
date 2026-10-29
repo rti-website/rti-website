@@ -1,14 +1,67 @@
 import 'server-only'
 import { one, q } from '@/lib/db'
 import { chicago, chicagoDayBounds } from './schedule.ts'
-import { INTENT_PATHS, sourceOf } from './source.ts'
+import { sourceOf } from './source.ts'
+import { hotReasons, hotText, type HotReason } from './hot.ts'
 
 /**
  * The queries behind Admin -> Visitors, Visitor leads and the Visitor history
  * panel on an enquiry (brief section 8). Read only, admin only: the route
  * handlers that call these check the session and VISITOR_ADMIN_ROLES first,
  * and nothing here is reachable from the public site.
+ *
+ * 30 Oct 2026 (management): every list carries where the visitor is (city or
+ * state of their latest visit: the ipapi.is lookup's, else the DB-IP file's
+ * kept on the visit (db/019), else the company's), how
+ * they found us (sourceOf, src/lib/visitor/source.ts), visits and last seen,
+ * and the hot lead flag with its reasons (src/lib/visitor/hot.ts). The
+ * journey, every visit's pages in order with the time on each, comes from
+ * sessionsOf() below.
  */
+
+/** "Minneapolis, Minnesota"; a country other than the US is added ("Toronto, Ontario, CA"). */
+export function placeOf(city: string | null | undefined, region: string | null | undefined, country?: string | null): string | null {
+  const parts = [city, region].filter((x): x is string => Boolean(x && x.trim()))
+  if (country && country.toUpperCase() !== 'US') parts.push(country.toUpperCase())
+  return parts.length ? parts.join(', ') : null
+}
+
+export type JourneyPage = { path: string; title: string | null; at: string; seconds: number | null }
+export type JourneySession = {
+  id: number; started_at: string; ended_at: string; device_type: string | null; page_count: number
+  source: string; source_kind: string; campaign: string | null; landing: string | null; place: string | null
+  pages: JourneyPage[]
+}
+
+/**
+ * A visitor's visits, OLDEST FIRST, each with its pages in the order viewed
+ * and the seconds on each (null for a page left before it was measured, as
+ * the last page of a visit often is). `until` stops at an enquiry's time.
+ */
+export async function sessionsOf(visitorId: string, until?: string | Date, limit = 100): Promise<JourneySession[]> {
+  const rows = await q<{
+    id: number; started_at: string; ended_at: string; device_type: string | null; page_count: number
+    attribution: Record<string, string> | null; city: string | null; region: string | null; country_code: string | null; pages: JourneyPage[]
+  }>(`
+    SELECT * FROM (
+      SELECT x.id, x.started_at, x.ended_at, x.device_type, x.page_count, x.attribution,
+             coalesce(k.city, x.city) AS city, coalesce(k.region, x.region) AS region, coalesce(k.country_code, x.country_code) AS country_code,
+             coalesce((SELECT json_agg(json_build_object('path', p.path, 'title', p.title, 'at', p.viewed_at, 'seconds', p.seconds_on_page)
+                                       ORDER BY p.viewed_at, p.id)
+                         FROM page_views p WHERE p.visit_id = x.id AND ($2::timestamptz IS NULL OR p.viewed_at <= $2)), '[]'::json) AS pages
+        FROM visits x LEFT JOIN ip_lookups k ON k.id = x.ip_lookup_id
+       WHERE x.visitor_id = $1 AND ($2::timestamptz IS NULL OR x.started_at <= $2)
+       ORDER BY x.started_at DESC LIMIT $3) s
+     ORDER BY started_at`, [visitorId, until ?? null, limit])
+  return rows.map((r) => {
+    const src = sourceOf(r.attribution)
+    return {
+      id: r.id, started_at: r.started_at, ended_at: r.ended_at, device_type: r.device_type, page_count: r.page_count,
+      source: src.label, source_kind: src.kind, campaign: r.attribution?.utm_campaign ?? null,
+      landing: r.attribution?.landing_page ?? null, place: placeOf(r.city, r.region, r.country_code), pages: r.pages,
+    }
+  })
+}
 
 export type Range = { start: Date; end: Date; from: string; to: string }
 
@@ -29,13 +82,15 @@ export function rangeFrom(sp: URLSearchParams, defaultDays = 7): Range {
 export type CompanyRow = {
   id: number; name: string; domain: string | null; type: string; city: string | null; region: string | null
   status: string; notes: string | null; first_seen: string; last_seen: string
-  visits: number; pages: number; top_pages: string[]; intent: boolean; has_form_lead: boolean
+  visits: number; pages: number; top_pages: string[]; has_form_lead: boolean
   first_touch: Record<string, string> | null; source: string; source_kind: string
   visitor_count: number; lead_visitor_id: string | null
+  /** Hot lead flag (src/lib/visitor/hot.ts): its reasons, and them as words. */
+  hot: HotReason[]; hot_text: string
 }
 
 export async function listCompanies(r: Range, f: { type?: string; status?: string; q?: string }): Promise<CompanyRow[]> {
-  const rows = await q<Omit<CompanyRow, 'source' | 'source_kind'>>(`
+  const rows = await q<Omit<CompanyRow, 'source' | 'source_kind' | 'hot' | 'hot_text'> & { paths: string[] }>(`
     WITH s AS (
       SELECT v.company_id, v.id AS vid, x.id AS visit_id, x.ended_at
         FROM visits x JOIN visitors v ON v.id = x.visitor_id
@@ -44,37 +99,50 @@ export async function listCompanies(r: Range, f: { type?: string; status?: strin
                    count(DISTINCT vid)::int AS visitor_count FROM s GROUP BY company_id),
     pv AS (SELECT s.company_id, p.path, count(*)::int AS n FROM s JOIN page_views p ON p.visit_id = s.visit_id GROUP BY 1, 2),
     pg AS (SELECT company_id, count(*)::int AS pages, (array_agg(path ORDER BY n DESC, path))[1:5] AS top_pages,
-                  bool_or(path = ANY($3::text[])) AS intent FROM pv GROUP BY company_id)
+                  array_agg(path) AS paths FROM pv GROUP BY company_id)
     SELECT c.id, c.name, c.domain, c.type, c.city, c.region, c.status, c.notes, c.first_seen, agg.last AS last_seen,
            agg.visits, coalesce(pg.pages, 0) AS pages, coalesce(pg.top_pages, '{}') AS top_pages,
-           coalesce(pg.intent, false) AS intent, agg.visitor_count,
+           coalesce(pg.paths, '{}') AS paths, agg.visitor_count,
            EXISTS (SELECT 1 FROM visitors v JOIN leads l ON l.visitor_id = v.id AND l.lead_type = 'form'
                     WHERE v.company_id = c.id) AS has_form_lead,
            (SELECT v.first_touch FROM visitors v WHERE v.company_id = c.id ORDER BY v.first_seen LIMIT 1) AS first_touch,
            (SELECT v.id FROM visitors v WHERE v.company_id = c.id ORDER BY v.last_seen DESC LIMIT 1) AS lead_visitor_id
       FROM companies c JOIN agg ON agg.company_id = c.id LEFT JOIN pg ON pg.company_id = c.id
-     WHERE ($4::text IS NULL OR c.type = $4)
-       AND ($5::text IS NULL OR c.status = $5)
-       AND ($6::text IS NULL OR c.name ILIKE '%' || $6 || '%' OR c.domain ILIKE '%' || $6 || '%')
+     WHERE ($3::text IS NULL OR c.type = $3)
+       AND ($4::text IS NULL OR c.status = $4)
+       AND ($5::text IS NULL OR c.name ILIKE '%' || $5 || '%' OR c.domain ILIKE '%' || $5 || '%')
      ORDER BY agg.last DESC LIMIT 1000`,
-    [r.start, r.end, INTENT_PATHS, f.type || null, f.status || null, f.q?.trim() || null])
-  return rows.map((row) => {
+    [r.start, r.end, f.type || null, f.status || null, f.q?.trim() || null])
+  return rows.map(({ paths, ...row }) => {
     const s = sourceOf(row.first_touch)
-    // Intent means viewing those pages WITHOUT sending a form (brief section 7).
-    return { ...row, intent: row.intent && !row.has_form_lead, source: s.label, source_kind: s.kind }
+    // Not hot once someone from it has sent a form: it is an enquiry then.
+    const hot = hotReasons({ paths, visits: row.visits, converted: row.has_form_lead })
+    return { ...row, source: s.label, source_kind: s.kind, hot, hot_text: hotText(hot, row.visits) }
   })
 }
 
 export async function companyDetail(id: number) {
   const company = await one(`SELECT * FROM companies WHERE id = $1`, [id])
   if (!company) return null
-  const sessions = await q(`
-    SELECT x.id, x.visitor_id, x.started_at, x.ended_at, x.device_type, x.entry_path, x.exit_path, x.page_count,
-           x.source, x.attribution,
+  const raw = await q<{
+    id: number; visitor_id: string; started_at: string; ended_at: string; device_type: string | null; page_count: number
+    attribution: Record<string, string> | null; city: string | null; region: string | null; country_code: string | null; pages: JourneyPage[]
+  }>(`
+    SELECT x.id, x.visitor_id, x.started_at, x.ended_at, x.device_type, x.page_count, x.attribution,
+           coalesce(k.city, x.city) AS city, coalesce(k.region, x.region) AS region, coalesce(k.country_code, x.country_code) AS country_code,
            coalesce((SELECT json_agg(json_build_object('path', p.path, 'title', p.title, 'at', p.viewed_at, 'seconds', p.seconds_on_page)
-                                     ORDER BY p.viewed_at) FROM page_views p WHERE p.visit_id = x.id), '[]'::json) AS pages
-      FROM visits x JOIN visitors v ON v.id = x.visitor_id
+                                     ORDER BY p.viewed_at, p.id) FROM page_views p WHERE p.visit_id = x.id), '[]'::json) AS pages
+      FROM visits x JOIN visitors v ON v.id = x.visitor_id LEFT JOIN ip_lookups k ON k.id = x.ip_lookup_id
      WHERE v.company_id = $1 ORDER BY x.started_at DESC LIMIT 200`, [id])
+  // Newest first here (a company can have many browsers); each visit's pages in order.
+  const sessions: (JourneySession & { visitor_id: string })[] = raw.map((r) => {
+    const src = sourceOf(r.attribution)
+    return {
+      id: r.id, visitor_id: r.visitor_id, started_at: r.started_at, ended_at: r.ended_at, device_type: r.device_type, page_count: r.page_count,
+      source: src.label, source_kind: src.kind, campaign: r.attribution?.utm_campaign ?? null, landing: r.attribution?.landing_page ?? null,
+      place: placeOf(r.city, r.region, r.country_code), pages: r.pages,
+    }
+  })
   const leads = await q(`
     SELECT l.id, l.lead_type, l.name, l.email, l.company, l.status, l.visitor_status, l.is_business_ip, l.created_at,
            l.converted_lead_id, l.visitor_id
@@ -85,15 +153,18 @@ export async function companyDetail(id: number) {
 }
 
 export type VisitorLeadFilter = {
-  business?: 'yes' | 'no' | 'all'; type?: string; status?: string; source?: string; intent?: boolean; q?: string
+  business?: 'yes' | 'no' | 'all'; type?: string; status?: string; source?: string; hot?: boolean; q?: string
 }
 
 export type VisitorLeadRow = {
   id: number; name: string; company: string | null; is_business_ip: boolean; visitor_status: string
   created_at: string; converted_lead_id: number | null; visitor_id: string
   org_type: string | null; domain: string | null; city: string | null; region: string | null; company_id: number | null
-  visit_count: number; page_count: number; last_seen: string; first_touch: Record<string, string> | null
-  intent: boolean; source: string; source_kind: string
+  visit_count: number; page_count: number; first_seen: string; last_seen: string; first_touch: Record<string, string> | null
+  /** City or state (src: the latest visit's IP lookup, else the company), e.g. "Minneapolis, Minnesota". */
+  place: string | null; country_code: string | null
+  source: string; source_kind: string; landing_page: string | null
+  hot: HotReason[]; hot_text: string
 }
 
 export async function listVisitorLeads(r: Range, f: VisitorLeadFilter, page = 1, perPage = 50) {
@@ -108,26 +179,38 @@ export async function listVisitorLeads(r: Range, f: VisitorLeadFilter, page = 1,
     args.push(f.q.trim())
     where.push(`(l.name ILIKE '%' || $${args.length} || '%' OR c.domain ILIKE '%' || $${args.length} || '%')`)
   }
-  args.push(INTENT_PATHS)
-  const intentArg = `$${args.length}`
-  const rows = await q<Omit<VisitorLeadRow, 'source' | 'source_kind'>>(`
+  type Raw = Omit<VisitorLeadRow, 'source' | 'source_kind' | 'landing_page' | 'place' | 'hot' | 'hot_text'>
+    & { paths: string[]; loc_city: string | null; loc_region: string | null }
+  const rows = await q<Raw>(`
     SELECT l.id, l.name, l.company, l.is_business_ip, coalesce(l.visitor_status, 'new') AS visitor_status, l.created_at,
            l.converted_lead_id, l.visitor_id, c.type AS org_type, c.domain, c.city, c.region, c.id AS company_id,
-           v.visit_count, v.last_seen, v.first_touch,
-           (SELECT count(*)::int FROM visits x JOIN page_views p ON p.visit_id = x.id WHERE x.visitor_id = v.id) AS page_count,
-           (EXISTS (SELECT 1 FROM visits x JOIN page_views p ON p.visit_id = x.id
-                     WHERE x.visitor_id = v.id AND p.path = ANY(${intentArg}::text[]))
-            AND l.converted_lead_id IS NULL) AS intent
+           v.visit_count, v.first_seen, v.last_seen, v.first_touch,
+           coalesce(pv.page_count, 0) AS page_count, coalesce(pv.paths, '{}') AS paths,
+           loc.city AS loc_city, loc.region AS loc_region, loc.country_code
       FROM leads l JOIN visitors v ON v.id = l.visitor_id LEFT JOIN companies c ON c.id = v.company_id
+      LEFT JOIN LATERAL (
+        SELECT count(*)::int AS page_count, array_agg(DISTINCT p.path) AS paths
+          FROM visits x JOIN page_views p ON p.visit_id = x.id WHERE x.visitor_id = v.id) pv ON true
+      LEFT JOIN LATERAL (
+        SELECT coalesce(k.city, x.city) AS city, coalesce(k.region, x.region) AS region, coalesce(k.country_code, x.country_code) AS country_code
+          FROM visits x LEFT JOIN ip_lookups k ON k.id = x.ip_lookup_id
+         WHERE x.visitor_id = v.id AND coalesce(k.city, x.city, k.region, x.region, k.country_code, x.country_code) IS NOT NULL
+         ORDER BY x.started_at DESC LIMIT 1) loc ON true
      WHERE ${where.join(' AND ')}
      ORDER BY l.is_business_ip DESC, v.last_seen DESC
      LIMIT 5000`, args)
-  let list: VisitorLeadRow[] = rows.map((row) => {
+  let list: VisitorLeadRow[] = rows.map(({ paths, loc_city, loc_region, ...row }) => {
     const s = sourceOf(row.first_touch)
-    return { ...row, source: s.label, source_kind: s.kind }
+    const hot = hotReasons({ paths, visits: row.visit_count, converted: row.converted_lead_id !== null })
+    return {
+      ...row, source: s.label, source_kind: s.kind, landing_page: row.first_touch?.landing_page ?? null,
+      // The visitor's own latest lookup first: a company's city is where it was first seen.
+      place: placeOf(loc_city ?? row.city, loc_region ?? row.region, row.country_code),
+      hot, hot_text: hotText(hot, row.visit_count),
+    }
   })
   if (f.source) list = list.filter((x) => x.source_kind === f.source)
-  if (f.intent) list = list.filter((x) => x.intent)
+  if (f.hot) list = list.filter((x) => x.hot.length > 0)
   const total = list.length
   const business = list.filter((x) => x.is_business_ip).length
   return { total, business, page, perPage, rows: list.slice((page - 1) * perPage, page * perPage), all: list }
@@ -142,16 +225,21 @@ export async function historyForLead(leadId: number) {
   const visitor = await one<{ id: string; first_seen: string; visit_count: number; first_touch: Record<string, string> | null; company_id: number | null }>(
     'SELECT id, first_seen, visit_count, first_touch, company_id FROM visitors WHERE id = $1', [lead.visitor_id])
   const company = visitor?.company_id ? await one('SELECT id, name, domain, type, city, region FROM companies WHERE id = $1', [visitor.company_id]) : null
-  const sessions = await q(`
-    SELECT x.id, x.started_at, x.ended_at, x.device_type, x.source, x.attribution, x.page_count,
-           coalesce((SELECT json_agg(json_build_object('path', p.path, 'title', p.title, 'at', p.viewed_at, 'seconds', p.seconds_on_page)
-                                     ORDER BY p.viewed_at) FROM page_views p WHERE p.visit_id = x.id AND p.viewed_at <= $2), '[]'::json) AS pages
-      FROM visits x WHERE x.visitor_id = $1 AND x.started_at <= $2
-     ORDER BY x.started_at DESC LIMIT 50`, [lead.visitor_id, lead.created_at])
+  const sessions = await sessionsOf(lead.visitor_id, lead.created_at, 50)
   return {
     lead, company, sessions,
     visitor: visitor ? { ...visitor, source: sourceOf(visitor.first_touch).label } : null,
   }
+}
+
+/** The journey panel on Admin -> Visitor leads: one visitor, all their visits. */
+export async function journeyForVisitor(visitorId: string) {
+  const visitor = await one<{ id: string; first_seen: string; last_seen: string; visit_count: number; first_touch: Record<string, string> | null; company_id: number | null }>(
+    'SELECT id, first_seen, last_seen, visit_count, first_touch, company_id FROM visitors WHERE id = $1', [visitorId])
+  if (!visitor) return null
+  const company = visitor.company_id ? await one('SELECT id, name, domain, type, city, region FROM companies WHERE id = $1', [visitor.company_id]) : null
+  const sessions = await sessionsOf(visitorId)
+  return { lead: null, company, sessions, visitor: { ...visitor, source: sourceOf(visitor.first_touch).label } }
 }
 
 /** CSV with a header row; every value quoted. */
