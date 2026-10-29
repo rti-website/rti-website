@@ -46,7 +46,8 @@ const FILLED = `${BTN} bg-brand text-white hover:bg-[#04717a]`
 const OUTLINE = `${BTN} border border-brand text-brand hover:bg-[#eaf4f5]`
 const GHOST = `${BTN} text-brand hover:bg-[#eaf4f5]`
 
-export function CookieConsent() {
+/** `orgLookup`: visitor identification is on in this build (VISITOR_CAPTURE), so Analytics also covers it. */
+export function CookieConsent({ orgLookup = false }: { orgLookup?: boolean }) {
   const [consent, setConsent] = useState<Consent | null>(null)
   const [banner, setBanner] = useState(false)
   const [panel, setPanel] = useState(false)
@@ -175,7 +176,7 @@ export function CookieConsent() {
                 <div className="flex min-w-px flex-1 flex-col gap-[4px]">
                   <h3 id="cookie-analytics-label" className="font-sans text-[15px] font-semibold leading-[1.3] text-[#132119] lg:text-[16px]">Analytics</h3>
                   <p id="cookie-analytics-desc" className="font-sans text-[13.5px] leading-[1.5] text-[#474747] lg:text-[14px]">
-                    Helps us understand how visitors use the site so we can improve it.
+                    Helps us understand how visitors use the site so we can improve it{orgLookup ? <>, including which organization&apos;s network a visit comes from</> : null}.
                     {gpc && <span className="mt-[4px] block text-[#7e7e7e]">Off because your browser sends a Global Privacy Control signal.</span>}
                   </p>
                 </div>

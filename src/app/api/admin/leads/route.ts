@@ -58,7 +58,12 @@ async function log(leadId: number, userId: number, kind: string, text: string | 
   await q('INSERT INTO lead_activity (lead_id, user_id, kind, body) VALUES ($1, $2, $3, $4)', [leadId, userId, kind, text])
 }
 
-export const GET = guard(async ({ user }) => {
+export const GET = guard(async ({ req, user }) => {
+  // ?agents=1: only who an enquiry can be assigned to (the Create lead dialog
+  // on Admin -> Visitors), without loading the whole list.
+  if (new URL(req.url).searchParams.get('agents') === '1') {
+    return json({ agents: canAssign(user) ? await agents() : [], me: { id: user.id, role: user.role } })
+  }
   /* Where each enquiry is from (db/007, 24 Sep 2026). Rows from before it,
      or any the after-submit step missed, are filled in here first. `hasMapsKey`
      says whether the detail view's map can use the Maps key (through
@@ -73,13 +78,14 @@ export const GET = guard(async ({ user }) => {
      they submitted from — and, since db/010, who it is assigned to and what
      has happened to it. A database that has not run 010 yet has none of those
      columns; the list still loads without them (and without assignment). */
-  const mine = isAgent(user) ? 'WHERE l.assigned_to = $1' : ''
+  // Form leads only (db/018): Visitor leads have their own screen and never count here.
+  const mine = isAgent(user) ? "WHERE l.lead_type = 'form' AND l.assigned_to = $1" : "WHERE l.lead_type = 'form'"
   const params = isAgent(user) ? [user.id] : []
   try {
     const rows = await q(`
       SELECT l.id, l.type, l.name, l.email, l.phone, l.company, l.message, l.details,
              l.source_page, l.status, l.notes, l.created_at, to_jsonb(l)->'geo' AS geo,
-             l.channel, l.channel_detail, l.assigned_to, l.assigned_at,
+             l.channel, l.channel_detail, l.assigned_to, l.assigned_at, l.visitor_id,
              asg.name AS assigned_name, crt.name AS created_by_name,
              to_jsonb(a) - 'lead_id' - 'created_at' AS attribution,
              COALESCE((SELECT json_agg(json_build_object('id', x.id, 'kind', x.kind, 'body', x.body, 'at', x.at, 'who', u.name)
@@ -114,7 +120,7 @@ export const PATCH = guard(async ({ req, user }) => {
   if (status && !STATUSES.includes(status)) return json({ error: 'Unknown status' }, 400)
 
   const cur = await one<{ id: number; status: string; assigned_to: number | null }>(
-    'SELECT id, status, assigned_to FROM leads WHERE id = $1', [id])
+    "SELECT id, status, assigned_to FROM leads WHERE id = $1 AND lead_type = 'form'", [id])
   if (!cur) return json({ error: 'That enquiry does not exist.' }, 404)
   // An agent works their own list and nobody else's.
   if (isAgent(user) && cur.assigned_to !== user.id) return json({ error: 'That enquiry is not assigned to you.' }, 403)
@@ -169,6 +175,8 @@ export const POST = guard(async ({ req, user }) => {
     channel: string; channel_detail: string; type: string; name: string; phone: string; email: string
     company: string; service: string; audience: string; address: string; city: string; state: string; zip: string
     referral: string; message: string; assigned_to: number | null; status: string
+    /** "Create lead" on Admin -> Visitors (db/018): the visitor and company it came from. */
+    visitor_id: string; company_id: number
   }>(req)
 
   const s = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
@@ -210,6 +218,16 @@ export const POST = guard(async ({ req, user }) => {
     const leadId = row.id, agentId = assigned, origin = adminOrigin(req)
     after(() => emailAssignee({ leadId, agentId, by: user, origin }))
   }
+  /* Made from Admin -> Visitors (db/018): the lead keeps that visitor's history,
+     and the company is marked "Lead created" (brief section 7). */
+  if (typeof b.company_id === 'number' && Number.isInteger(b.company_id)) {
+    try {
+      const vid = typeof b.visitor_id === 'string' && /^[0-9a-f-]{36}$/i.test(b.visitor_id) ? b.visitor_id.toLowerCase() : null
+      if (vid) await q('UPDATE leads SET visitor_id = $2 WHERE id = $1 AND EXISTS (SELECT 1 FROM visitors WHERE id = $2)', [row.id, vid])
+      await q("UPDATE companies SET status = 'lead_created' WHERE id = $1", [b.company_id])
+      await log(row.id, user.id, 'note', 'Created from Admin -> Visitors')
+    } catch (err) { console.warn('[leads] visitor link not saved:', (err as Error).message) }
+  }
   // Same location lookup the website forms get, so the distance and the map work.
   try { await locateLead(row.id) } catch { /* best effort */ }
   return json({ id: row.id }, 201)
@@ -228,7 +246,7 @@ export const DELETE = guard(async ({ req, user }) => {
   const { ids } = await body<{ ids: number[] }>(req)
   const list = Array.isArray(ids) ? [...new Set(ids.filter((n) => Number.isInteger(n) && n > 0))].slice(0, 500) : []
   if (list.length === 0) return json({ error: 'Which enquiries?' }, 400)
-  const rows = await q<{ id: number }>('DELETE FROM leads WHERE id = ANY($1::bigint[]) RETURNING id', [list])
+  const rows = await q<{ id: number }>("DELETE FROM leads WHERE id = ANY($1::bigint[]) AND lead_type = 'form' RETURNING id", [list])
   console.log(`[leads] ${user.name} (#${user.id}) deleted enquiries ${rows.map((r) => r.id).join(', ') || 'none'}`)
   return json({ deleted: rows.length })
 })

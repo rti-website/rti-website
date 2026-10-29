@@ -178,8 +178,8 @@ export async function fillMissingLocations(limit = 500): Promise<number> {
     const rows = await q<Row>(
       `SELECT id, host(ip) AS ip, details->>'zip' AS zip, details->>'city' AS city, details->>'state' AS state
          FROM leads
-        WHERE geo IS NULL
-           OR ($2 AND geo->>'ipLookup' = 'no-database' AND ip IS NOT NULL)
+        WHERE lead_type = 'form' AND (geo IS NULL
+           OR ($2 AND geo->>'ipLookup' = 'no-database' AND ip IS NOT NULL))
         ORDER BY id DESC LIMIT $1`, [limit, withDb])
     for (const r of rows) {
       await q(`UPDATE leads SET geo = $2::jsonb WHERE id = $1`, [r.id, JSON.stringify(forRow(r))])

@@ -12,6 +12,8 @@ import { Pages } from './Pages'
 import { Leads } from './Leads'
 import { PasswordInput } from './Bits'
 import { LeadWorkflow } from './LeadWorkflow'
+import { Visitors } from './Visitors'
+import { VisitorLeads } from './VisitorLeads'
 import { slugify } from '@/lib/slug'
 import { api, getJSON, sendJSON } from './api'
 
@@ -42,21 +44,24 @@ type Category = {
 type CategoryRow = Category & {
   description: string | null; sort_order: number; post_count: number; published_count: number
 }
-type Counts = { published: number; draft: number; scheduled: number; subscribers: number; leads: number; media: number }
+type Counts = { published: number; draft: number; scheduled: number; subscribers: number; leads: number; media: number; visitorLeads?: number }
 type Boot = {
   user: User; counts: Counts; categories: Category[]
+  /** May open Visitors and Visitor leads (VISITOR_ADMIN_ROLES / _EMAILS, db/018). */
+  visitors?: boolean
   authors: { id: number; name: string }[]; social: SocialLink[]
   settings: Record<string, unknown>
 }
 
 /* 'settings' was split in two on 24 Sep 2026: 'tracking' (Google & Tracking)
    and 'social' (Social Links). See SiteSettings.tsx. */
-type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'pages' | 'locations' | 'subs' | 'leads' | 'workflow' | 'users' | 'tracking' | 'social'
+type View = 'dash' | 'posts' | 'editor' | 'cats' | 'media' | 'seo' | 'pages' | 'locations' | 'subs' | 'leads' | 'workflow' | 'users' | 'tracking' | 'social' | 'visitors' | 'visitorLeads'
 
 const TITLES: Record<View, string> = {
   dash: 'Overview', posts: 'All Posts', editor: 'Edit post', cats: 'Categories',
   media: 'Media library', seo: 'SEO', pages: 'Pages', locations: 'Location pages', subs: 'Subscribers', leads: 'Enquiries', workflow: 'Lead workflow',
   users: 'People & access', tracking: 'Google & Tracking', social: 'Social Links',
+  visitors: 'Visitors', visitorLeads: 'Visitor leads',
 }
 
 const LOGO = '/images/logo.png'
@@ -104,6 +109,13 @@ export function AdminApp() {
     // An agent's whole admin is their enquiries (db/010), so that is where
     // they land — the Overview is posts they cannot see.
     if ((data as Boot).user?.role === 'agent') setView((v) => (v === 'dash' ? 'leads' : v))
+    /* /admin/?view=visitors and ?view=visitor-leads: the links in the visitor
+       digest email (db/018). Only for someone allowed to see them. */
+    const want = new URLSearchParams(window.location.search).get('view')
+    if ((data as Boot).visitors && (want === 'visitors' || want === 'visitor-leads')) {
+      setView(want === 'visitors' ? 'visitors' : 'visitorLeads')
+      window.history.replaceState(null, '', window.location.pathname)
+    }
     const lead = Number(new URLSearchParams(window.location.search).get('lead'))
     if (Number.isInteger(lead) && lead > 0) {
       setDeepLead(lead); setView('leads')
@@ -193,6 +205,14 @@ export function AdminApp() {
           <NavBtn on={view === 'workflow'} go={() => show('workflow')} label="Lead workflow"
             icon="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M17 8l2 2 4-4" />
         )}
+        {/* Visitor identification (db/018, 29 Oct 2026): companies that visited,
+            and the Visitor leads. Only for VISITOR_ADMIN_ROLES / _EMAILS. */}
+        {boot.visitors && (<>
+          <NavBtn on={view === 'visitors'} go={() => show('visitors')} label="Visitors"
+            icon="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 10h.01M15 10h.01" />
+          <NavBtn on={view === 'visitorLeads'} go={() => show('visitorLeads')} label="Visitor leads"
+            count={boot.counts.visitorLeads} icon="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M21 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </>)}
 
         {!agent && <>
         <p className="a-navlabel">Site</p>
@@ -242,7 +262,7 @@ export function AdminApp() {
             <button className="a-btn p" onClick={() => setAsking('lead')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> Add enquiry
             </button>
-          ) : !agent && !ads && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && view !== 'pages' && (
+          ) : !agent && !ads && view !== 'media' && view !== 'cats' && view !== 'seo' && view !== 'users' && view !== 'tracking' && view !== 'social' && view !== 'locations' && view !== 'pages' && view !== 'visitors' && view !== 'visitorLeads' && (
             <button className="a-btn p" onClick={() => setAsking('post')}>
               <Icon d="M12 5v14M5 12h14" w={2.2} /> New post
             </button>
@@ -283,6 +303,8 @@ export function AdminApp() {
         {view === 'users' && <Users meId={boot.user.id} onToast={say} />}
         {view === 'subs' && <Subscribers />}
         {view === 'leads' && <Leads onToast={say} openId={deepLead} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
+        {view === 'visitors' && boot.visitors && <Visitors onToast={say} />}
+        {view === 'visitorLeads' && boot.visitors && <VisitorLeads onToast={say} />}
         {view === 'workflow' && canAssign && <LeadWorkflow onToast={say} adding={asking === 'lead'} onAdded={() => { setAsking(null); void load() }} />}
         {view === 'pages' && canSeePages && <Pages onToast={say} onFocusChange={setFocus} readOnly={ads}
           onManage={(where, id) => { if (where === 'posts' && id) open(id); else if (where !== 'code') show(where) }} />}

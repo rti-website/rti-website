@@ -11,6 +11,8 @@ import { isPreview } from '@/lib/page-content'
 import { PreviewBar } from '@/components/client/PreviewBar'
 import { CookieConsent } from '@/components/client/CookieConsent'
 import { QuotePicker } from '@/components/client/QuotePicker'
+import { VisitorTracker } from '@/components/client/VisitorTracker'
+import { visitorConfig } from '@/lib/visitor/config'
 
 /**
  * `dynamic = 'error'` makes the BUILD FAIL if any page reaches for request-time
@@ -58,10 +60,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
         {/* useSearchParams needs a Suspense boundary to stay static. */}
         <Suspense fallback={null}><PageViewTracker /></Suspense>
+        {/* Visitor identification (docs/visitor-identification/, 29 Oct 2026):
+            only when VISITOR_CAPTURE is on for this build, never in a preview,
+            and it sends nothing until Analytics consent. */}
+        {visitorConfig.captureOn() && !preview && <Suspense fallback={null}><VisitorTracker /></Suspense>}
         {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
         {/* Cookie banner and settings panel (management, 27 Oct 2026). */}
-        {!preview && <CookieConsent />}
+        {!preview && <CookieConsent orgLookup={visitorConfig.captureOn()} />}
         {/* Get a Quote asks "Who is this for?" first (28 Oct 2026). */}
         <QuotePicker />
         {preview && <PreviewBar />}

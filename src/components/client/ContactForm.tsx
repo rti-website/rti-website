@@ -6,6 +6,7 @@ import { FORM as FORM_DEFAULTS, HERO_LOCATIONS as LOCATION_DEFAULTS, matchServic
 import { path } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
 import { cityKey, stateCode } from '@/lib/us-address'
+import { COMPANY_INVALID_MESSAGE, isPlaceholderCompany } from '@/lib/company-name'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
@@ -112,6 +113,8 @@ function check(v: (k: FieldName) => string, consent: boolean, form: Form): { fie
   // Business only since 24 Sep 2026: a Residential enquiry has no company
   // field on screen, so nothing to require.
   if (v('audience') !== 'Residential' && !v('company')) return { field: 'company', message: E.company }
+  // "TEST", "N/A", "unavailable"… (29 Oct 2026). `??` covers copy saved in the admin before the message existed.
+  if (v('audience') !== 'Residential' && isPlaceholderCompany(v('company'))) return { field: 'company', message: E.companyInvalid ?? COMPANY_INVALID_MESSAGE }
   if (!v('address')) return { field: 'address', message: E.address }
   if (!v('city')) return { field: 'city', message: E.city }
   if (!stateCode(v('state'))) return { field: 'state', message: E.usState }

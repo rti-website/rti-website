@@ -31,7 +31,7 @@ export type Handler = (ctx: { user: AdminUser; req: Request }) => Promise<Respon
  * Reading is still decided by each endpoint's `role` list.
  */
 const WRITES: Partial<Record<AdminUser['role'], RegExp>> = {
-  ads: /^\/api\/admin\/(leads|tracking|maps|subscribers|session)(\/|$)/,
+  ads: /^\/api\/admin\/(leads|tracking|maps|subscribers|session|visitors|visitor-leads)(\/|$)/,
   agent: /^\/api\/admin\/(leads|session)(\/|$)/,
 }
 

@@ -27,7 +27,7 @@ export const GET = guard(async ({ req, user }) => {
     lead = await one<LeadRow>(`
       SELECT l.type, l.name, l.email, l.phone, l.company, l.message, COALESCE(l.details, '{}'::jsonb) AS details,
              l.created_at, l.source_page, l.channel, l.channel_detail, l.assigned_to, u.name AS created_by_name
-        FROM leads l LEFT JOIN users u ON u.id = l.created_by WHERE l.id = $1`, [id])
+        FROM leads l LEFT JOIN users u ON u.id = l.created_by WHERE l.id = $1 AND l.lead_type = 'form'`, [id])
   } catch {
     // A database without db/010: no channel or assignment columns.
     lead = await one<LeadRow>(`

@@ -30,7 +30,10 @@
     "check:pages": "node scripts/check-page-fields.mjs",
     "check:wrap": "node scripts/check-wrap-slack.mjs",
     "check:edges": "node scripts/check-edges.mjs",
-    "geoip:update": "node scripts/geoip-update.mjs"
+    "geoip:update": "node scripts/geoip-update.mjs",
+    "db:down": "node scripts/db-down.mjs",
+    "test": "node --test \"tests/**/*.test.ts\"",
+    "visitor:lookup": "node scripts/ip-lookup-test.mjs"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.3.0",

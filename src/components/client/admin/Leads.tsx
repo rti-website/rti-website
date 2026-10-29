@@ -6,6 +6,7 @@ import { Empty, Icon, Table } from './Bits'
 import { LOCATION_CSV_HEAD, LocationBlock, LocationCell, locationCsv, locationText, type LeadGeo } from './LeadLocation'
 import { LEAD_FORMS, leadFormKey } from '@/lib/lead-forms'
 import { getJSON, sendJSON } from './api'
+import { VisitorHistory } from './VisitorHistory'
 
 /**
  * Enquiries — the leads screen, moved out of AdminApp on 26 Sep 2026 when it
@@ -43,6 +44,8 @@ export type LeadRow = {
   attribution?: Record<string, string | null> | null
   /** Where they are (db/007, src/lib/lead-location.ts), or null before it ran. */
   geo?: LeadGeo | null
+  /** The browser it came from (db/018, visitor identification), when it had given Analytics consent. */
+  visitor_id?: string | null
 }
 
 /** How they found us — the attribution fields, in the order the brief lists them. */
@@ -445,6 +448,7 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
                   {(canAssign || agent) && <ContactEditor lead={l} onSaved={() => { onToast('Contact details saved'); reload() }} onError={onToast} />}
                   <ActivityPanel lead={l} onNote={(t) => addNote(l.id, t)} />
                   <LocationBlock geo={l.geo} details={l.details} hasMapsKey={hasMapsKey} />
+                  {l.visitor_id && <VisitorHistory leadId={l.id} />}
                   <p style={{ margin: '14px 4px 6px', fontWeight: 600 }}>How they found us</p>
                   {l.attribution ? (
                     <dl style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, max-content) 1fr', gap: '6px 20px', margin: 0, padding: '0 4px 8px' }}>
@@ -622,11 +626,17 @@ function F({ id, label, children, hint }: { id: string; label: string; children:
  * as the caller gave it. The service list is the contact form's, so phone
  * enquiries file under the same names as website ones.
  */
-export function LeadDialog({ agents, me, onClose, onSaved }: {
+export type LeadPrefill = { company: string; domain: string | null; visitorId: string | null; companyId: number }
+
+export function LeadDialog({ agents, me, onClose, onSaved, prefill }: {
   agents: Agent[]; me: Me; onClose: () => void; onSaved: (id: number) => void
+  /** "Create lead" on Admin -> Visitors (db/018): the company, its domain and the visitor, filled in. */
+  prefill?: LeadPrefill
 }) {
   const [v, setV] = useState({
-    channel: 'phone', channel_detail: '', type: 'contact', name: '', phone: '', email: '', company: '',
+    channel: prefill ? 'other' : 'phone',
+    channel_detail: prefill ? `Visitors page${prefill.domain ? `: ${prefill.domain}` : ''}` : '',
+    type: 'contact', name: '', phone: '', email: '', company: prefill?.company ?? '',
     service: '', audience: '', address: '', city: '', state: '', zip: '', referral: '', message: '',
     assigned_to: me.role === 'agent' ? String(me.id) : '', status: 'new',
   })
@@ -638,8 +648,10 @@ export function LeadDialog({ agents, me, onClose, onSaved }: {
   const two = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 } as const
 
   return (
-    <Dialog title="Add an enquiry" wide onClose={onClose}
-      intro="For an enquiry that did not come through the website: a phone call, an email, somebody at the counter."
+    <Dialog title={prefill ? `Create a lead: ${prefill.company}` : 'Add an enquiry'} wide onClose={onClose}
+      intro={prefill
+        ? 'From Admin -> Visitors: the company is filled in and its visits stay linked to the lead. Add whoever you reach there.'
+        : 'For an enquiry that did not come through the website: a phone call, an email, somebody at the counter.'}
       footer={
         <>
           <button className="a-btn" onClick={onClose} disabled={busy}>Cancel</button>
@@ -647,6 +659,7 @@ export function LeadDialog({ agents, me, onClose, onSaved }: {
             setBusy(true); setError('')
             const r = await sendJSON<{ id: number }>('/leads', 'POST', {
               ...v, assigned_to: v.assigned_to ? Number(v.assigned_to) : null,
+              ...(prefill ? { visitor_id: prefill.visitorId, company_id: prefill.companyId } : {}),
             })
             setBusy(false)
             if (!r.ok) { setError(r.error); return }

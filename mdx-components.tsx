@@ -64,9 +64,40 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     KeyTakeaways,
     PullQuote,
+    VisitorIdentificationNotice,
     SymbolGrid,
     ...components,
   }
+}
+
+/**
+ * The privacy policy's paragraph on visitor identification (brief section 9,
+ * 29 Oct 2026; DRAFT wording for Aaqib / Musaveer to approve). Rendered only in
+ * a build with VISITOR_CAPTURE=on, so the policy says it exactly when the site
+ * does it: production stays dark, and the day capture is switched on there the
+ * same build publishes the paragraph. Same type scale as the rest of the page.
+ */
+export function VisitorIdentificationNotice() {
+  if (!/^(on|true|1|yes)$/i.test((process.env.VISITOR_CAPTURE ?? '').trim())) return null
+  const P = 'mt-[20px] font-roboto text-[17px] leading-[27px] text-[#4a4a4a]'
+  return (
+    <>
+      <h3 className="mt-[36px] font-sans text-[20px] font-medium leading-[28px] text-[#132119]">Identifying the Organization You Visit From</h3>
+      <p className={P}>
+        If you accept analytics cookies, we use your IP address to identify the organization (for example a business, school or
+        public body) whose network you are visiting from, and we record the pages you view on our Site and how you found it. We use
+        this for sales follow up with organizations. It does not identify you as a person: we only know who you are if you send us a
+        form, and then we link that enquiry to your earlier visits on our Site.
+      </p>
+      <p className={P}>
+        Your IP address is used only for that lookup and is not stored. We keep a one way coded (hashed) version for up to 90 days so
+        the same address is not looked up twice, and records of pages viewed for up to 13 months. A cookie called rti_vid holds a
+        random identifier so visits from the same browser can be grouped. We do not do this if you decline analytics cookies or your
+        browser sends a Global Privacy Control signal, and we do not look up visitors from the European Union or the United Kingdom.
+        You can change your choice at any time in Cookie settings at the bottom of every page.
+      </p>
+    </>
+  )
 }
 
 /**

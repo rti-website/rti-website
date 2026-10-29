@@ -11,6 +11,9 @@ import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
 import { leadNotification } from '@/lib/lead-email'
 import { locateLead } from '@/lib/lead-location'
 import { isLeadFormKey, leadFormKey } from '@/lib/lead-forms'
+import { COMPANY_INVALID_MESSAGE, isPlaceholderCompany } from '@/lib/company-name'
+import { visitorIdFrom } from '@/lib/visitor/consent'
+import { convertVisitor } from '@/lib/visitor/leads'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -88,6 +91,8 @@ function validateSpecForm(p: Payload, copy: ContactCopy):
   // Business only since 24 Sep 2026: the form does not show Company Name for
   // a Residential enquiry, so it is only required for the rest.
   if (str(p.audience) !== 'Residential' && !str(p.company)) return { ok: false, field: 'company', error: E.company }
+  // A stand-in such as "TEST", "N/A" or "unavailable" (29 Oct 2026, src/lib/company-name.ts).
+  if (str(p.audience) !== 'Residential' && isPlaceholderCompany(str(p.company))) return { ok: false, field: 'company', error: E.companyInvalid ?? COMPANY_INVALID_MESSAGE }
   // The street address too since 1 Oct 2026 (Asim). `??` covers copy saved
   // in the admin before the message existed.
   if (!str(p.address)) return { ok: false, field: 'address', error: E.address ?? 'Please enter your street address.' }
@@ -237,6 +242,11 @@ export async function POST(req: Request): Promise<Response> {
   const name = spec?.ok ? spec.name : clean(payload.name, LIMITS.name ?? 120)
   const phone = spec?.ok ? spec.phone : clean(payload.phone, LIMITS.phone ?? 40)
   const company = clean(payload.company, LIMITS.company ?? 160)
+  // Every form, the ITAD pickup form (no firstName, so no spec check) included:
+  // a filled-in Company Name must be a real one (29 Oct 2026).
+  if (company && isPlaceholderCompany(company)) {
+    return fail(body, COMPANY_INVALID_MESSAGE, 400, { field: 'company' })
+  }
   const message = spec?.ok ? spec.message : clean(payload.message, LIMITS.message ?? 5000)
   const sourcePage = clean(payload.sourcePage, 300)
 
@@ -271,6 +281,17 @@ export async function POST(req: Request): Promise<Response> {
   } catch (err) {
     console.error('[leads] insert failed:', (err as Error).message)
     return fail(body, 'We could not save that just now. Please call us instead.', 500)
+  }
+
+  /* Visitor identification (db/018, 29 Oct 2026): a browser that had given
+     Analytics consent carries rti_vid. The enquiry remembers it, so its earlier
+     visits show under it in the admin, and that browser's Visitor lead becomes
+     Converted. After the response, never in the way: routing, the email and
+     the Enquiries list are exactly as before. */
+  const visitorId = visitorIdFrom(req.headers.get('cookie'))
+  if (id && visitorId) {
+    const leadId = id
+    after(() => convertVisitor(visitorId, leadId))
   }
 
   // ---------------------------------------------------------- attribution --
@@ -360,7 +381,7 @@ export async function POST(req: Request): Promise<Response> {
     try {
       const recent = await one<{ n: number }>(
         `SELECT count(*)::int AS n FROM leads
-          WHERE lower(email) = lower($1) AND details ? 'autoReply'
+          WHERE lower(email) = lower($1) AND details ? 'autoReply' AND lead_type = 'form'
             AND created_at > now() - interval '24 hours'`, [email])
       if ((recent?.n ?? 0) === 0) {
         const first = details.firstName || name?.split(/\s+/)[0] || null

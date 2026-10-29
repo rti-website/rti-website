@@ -194,6 +194,8 @@ export const FORM = {
     email: 'Please check the email address.',
     phone: 'Please enter a US phone number, e.g. (763) 559-5130.',
     company: 'Please enter your company name.',
+    // 29 Oct 2026: "TEST", "N/A", "unavailable" and the like (src/lib/company-name.ts).
+    companyInvalid: 'Please enter your real company name.',
     address: 'Please enter your street address.',
     city: 'Please enter your city.',
     usState: 'Please enter a US state, e.g. MN or Minnesota.',
