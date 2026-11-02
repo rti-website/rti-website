@@ -187,7 +187,7 @@ export const LOCATIONS: DropoffLocation[] = [
     note: APPOINTMENT,
     body: `Please call before you visit to confirm our working hours. ${CONFIRM}`,
     // Its own page since 8 Oct 2026.
-    url: href('/lewisburg-tennessee/'),
+    url: href('/tennessee/lewisburg/'),
   },
 ]
 

@@ -4,7 +4,7 @@ import { Box, Section } from '@/components/design/Frame'
 import { Btn, Eyebrow } from '@/components/ui/Bits'
 import type { Crumb } from '@/components/sections/service/ServiceHero'
 import type { StatePageLike } from '@/data/facilities'
-import { localFacilityPage } from '@/data/local-pages'
+import { facilityServicePage } from '@/data/local-pages'
 import { content } from '@/lib/page-content'
 import { href } from '@/lib/urls'
 
@@ -136,7 +136,7 @@ export async function StateMaterials({ f, top, height }: { f: StatePageLike; top
           the odd last tile spans both columns. */}
       <ul className="grid w-full grid-cols-2 gap-[12px] lg:flex lg:w-[1276px] lg:flex-wrap lg:justify-center lg:gap-[20px]">
         {m.tiles.map((t) => {
-          const page = t.href ? { url: t.href } : localFacilityPage(site, t.service)
+          const page = t.href ? { url: t.href } : facilityServicePage(site, t.service)
           const tile = 'flex h-full w-full flex-col items-center gap-[10px] rounded-[12px] bg-[#eaf4f5] px-[16px] py-[20px] text-center lg:gap-[12px] lg:px-[20px] lg:py-[24px]'
           const inner = (
             <>

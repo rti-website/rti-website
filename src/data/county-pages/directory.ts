@@ -31,7 +31,6 @@ import { SHREDDING_ST_PAUL } from './areas/shredding-st-paul'
 import { ELECTRONIC_RECYCLING_DULUTH } from './areas/electronic-recycling-duluth'
 import { SHREDDING_DULUTH } from './areas/shredding-duluth'
 import { SHREDDING_MINNESOTA } from './areas/shredding-minnesota'
-import { TV_RECYCLING_IN_MINNESOTA } from './areas/tv-recycling-in-minnesota'
 import { MILWAUKEE } from './areas/milwaukee'
 import { BATTERY_RECYCLING_MILWAUKEE } from './areas/battery-recycling-milwaukee'
 import { BULB_RECYCLE_MILWAUKEE } from './areas/bulb-recycle-milwaukee'
@@ -172,7 +171,6 @@ export const DIRECTORY: DirectoryGroup[] = [
   // Hennepin columns are full.
   { heading: 'Minnesota', state: 'Minnesota', links: [
     l(SHREDDING_MINNESOTA, 'Document Shredding', 'Document Shredding Minnesota'),
-    l(TV_RECYCLING_IN_MINNESOTA, 'TV Recycling', 'TV Recycling Minnesota'),
     l(MINNEAPOLIS_RECYCLING_CENTER, 'Minneapolis Recycling Center'),
   ] },
   /* ------------------------------------------------------------ Wisconsin */

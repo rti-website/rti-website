@@ -22,7 +22,7 @@ export const JOHNSON_CITY_BUFFALO_TENNESSEE: CountyPage = {
     h1: 'Recycle Technologies Johnson City, TN',
     crumb: "Johnson City",
     /* Home / Locations / Tennessee / Johnson City (14 Oct 2026, the state hub brief). */
-    parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
+    parent: { label: "Tennessee", href: href('/tennessee/') },
     lead: "Tennessee Bulb and Airbag Processing Facility, 300 Boggs Lane, Johnson City, TN 37604",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

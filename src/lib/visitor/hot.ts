@@ -39,6 +39,9 @@ export const SERVICE_ROOTS = [
 /** The services each facility offers at /minnesota-recycling/<slug>/ and /wisconsin-recycling/<slug>/. */
 const STATE_SERVICE = /^\/(minnesota|wisconsin)-recycling\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|tv-recycling|universal-waste-recycling)\/$/
 
+/** The facility service pages from the 3 Nov 2026 sheet: /minnesota/blaine/<service>/, /arizona/phoenix/… and /tennessee/lewisburg/…. */
+const FACILITY_SERVICE = /^\/(minnesota\/blaine|arizona\/phoenix|tennessee\/lewisburg)\/(ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|television-recycling)\/$/
+
 /** The Chicago service pages (/battery-recycling-chicago/, /paper-shredding-chicago/ …). */
 const CHICAGO_SERVICE = /^\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|light-bulb-recycling|tv-recycling|hard-drive-destruction|off-site-shredding|paper-shredding|phone-shredding)-chicago\/$/
 
@@ -50,7 +53,7 @@ function norm(p: string): string {
 export function isServicePath(p: string): boolean {
   const path = norm(p)
   const lower = path.toLowerCase()
-  return SERVICE_ROOTS.some((r) => lower === r || lower.startsWith(r)) || STATE_SERVICE.test(path) || CHICAGO_SERVICE.test(path)
+  return SERVICE_ROOTS.some((r) => lower === r || lower.startsWith(r)) || STATE_SERVICE.test(path) || FACILITY_SERVICE.test(path) || CHICAGO_SERVICE.test(path)
 }
 
 /** Why a visitor is hot, in this order; empty when they are not. */

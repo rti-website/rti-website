@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { ServiceLocationPage } from '@/components/sections/locations/ServiceLocation'
 import { LocalServicePage } from '@/components/sections/locations/LocalServicePage'
 import { findServicePage, offeredServices, servicePageMetadata } from '@/lib/service-location-route'
-import { LOCAL_FACILITY_PAGES, localDocKey, localFacilityPage, type LocalPage } from '@/data/local-pages'
+import { DELETED_MINNESOTA_SERVICES, LOCAL_FACILITY_PAGES, localDocKey, localFacilityPage, type LocalPage } from '@/data/local-pages'
 import { content } from '@/lib/page-content'
 import { pageMetadata } from '@/lib/page-meta'
 import { CountyPage } from '@/components/sections/locations/CountyPage'
@@ -33,13 +33,18 @@ const SITE = 'minnesota'
 export async function generateStaticParams() {
   const fromAdmin = await offeredServices(SITE)
   const fixed = Object.keys(LOCAL_FACILITY_PAGES[SITE])
-  return [...new Set([...fixed, ...countySlugs(SITE), ...fromAdmin.map((p) => p.service)])].map((service) => ({ service }))
+  // 3 Nov 2026: the service pages the sheet deleted stay out, even if
+  // Admin -> Locations still offers them (they moved to /minnesota/blaine/).
+  return [...new Set([...fixed, ...countySlugs(SITE), ...fromAdmin.map((p) => p.service)])]
+    .filter((service) => !DELETED_MINNESOTA_SERVICES.has(service))
+    .map((service) => ({ service }))
 }
 
 type Props = { params: Promise<{ service: string }> }
 
 export async function generateMetadata({ params }: Props) {
   const { service } = await params
+  if (DELETED_MINNESOTA_SERVICES.has(service)) return {}
   const county = countyPage(SITE, service)
   if (county) return pageMetadata({ url: county.url, title: county.seo.title, description: county.seo.description })
   const local = localFacilityPage(SITE, service)
@@ -49,6 +54,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function MinnesotaServicePage({ params }: Props) {
   const { service } = await params
+  if (DELETED_MINNESOTA_SERVICES.has(service)) notFound()
   const county = countyPage(SITE, service)
   if (county) return <CountyPage page={await content(countyDocKey(county))} />
   const local = localFacilityPage(SITE, service)

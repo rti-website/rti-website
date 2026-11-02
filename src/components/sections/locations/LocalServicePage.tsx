@@ -57,6 +57,33 @@ export function LocalServicePage({ page }: { page: LocalPage }) {
   )
 }
 
+/* ------------------------------------------------------------- rich text -- */
+
+/**
+ * Inline links and bold in a copy string (3 Nov 2026, the content team's
+ * docs): `[label](/path/)` is a link (a site path through next/link, any
+ * other address in a new tab) and `**text**` is bold. Plain strings, as on
+ * the older pages, come back unchanged. The strings stay editable as text in
+ * Admin -> Pages.
+ */
+const INLINE = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*/g
+
+export function Rich({ text, light = false }: { text: string; light?: boolean }) {
+  if (!text.includes('](') && !text.includes('**')) return <>{text}</>
+  const out: React.ReactNode[] = []
+  let last = 0
+  for (const m of text.matchAll(INLINE)) {
+    if (m.index! > last) out.push(text.slice(last, m.index))
+    const cls = light ? 'underline underline-offset-2 hover:text-white' : 'font-medium text-brand underline underline-offset-2 hover:text-[#132119]'
+    if (m[3] !== undefined) out.push(<strong key={m.index} className={light ? 'font-semibold' : 'font-semibold text-[#132119]'}>{m[3]}</strong>)
+    else if (m[2]!.startsWith('/')) out.push(<Link key={m.index} href={m[2]!} className={cls}>{m[1]}</Link>)
+    else out.push(<a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer" className={cls}>{m[1]}</a>)
+    last = m.index! + m[0].length
+  }
+  if (last < text.length) out.push(text.slice(last))
+  return <>{out}</>
+}
+
 /* -------------------------------------------------------------------- hero -- */
 
 const HERO_BG = [
@@ -80,7 +107,7 @@ function Hero({ page }: { page: LocalPage }) {
         </nav>
         <h1 className="text-balance font-sans text-[28px] font-semibold leading-[1.2] text-white lg:text-[60px]">{h.h1}</h1>
         <div className="flex w-full flex-col gap-[12px] font-roboto text-[13.5px] leading-[1.4] text-white/90 lg:text-[17px]">
-          {h.body.map((t) => <p key={t}>{t}</p>)}
+          {h.body.map((t) => <p key={t}><Rich text={t} light /></p>)}
         </div>
         <div className="flex w-full flex-col gap-[12px] lg:w-auto lg:flex-row lg:gap-[16px]">
           <HeroBtn link={h.primary} filled />
@@ -121,7 +148,7 @@ function Block({ block: b }: { block: LocalBlock }) {
     case 'text':
       return (
         <div className={`flex w-full flex-col gap-[14px] font-roboto text-[14px] leading-[1.6] text-[#474747] lg:text-[16px] lg:leading-[1.65] ${b.align === 'left' ? 'text-left' : 'text-center'}`}>
-          {b.body.map((t) => <p key={t}>{t}</p>)}
+          {b.body.map((t) => <p key={t}><Rich text={t} /></p>)}
         </div>
       )
     case 'h3':
@@ -150,7 +177,7 @@ function Block({ block: b }: { block: LocalBlock }) {
           {b.rows.map((r, i) => (
             <div key={r.label} className={`flex flex-col gap-[4px] py-[14px] lg:flex-row lg:gap-[24px] lg:px-[20px] ${i ? 'border-t border-[#cfe3e3]' : ''}`}>
               <dt className="font-roboto text-[15px] font-bold leading-[23px] text-brand lg:w-[220px] lg:shrink-0">{r.label}</dt>
-              <dd className="min-w-px font-roboto text-[15px] leading-[23px] text-[#132119] lg:flex-1 lg:text-[16px] lg:leading-[25px]">{r.value}</dd>
+              <dd className="min-w-px font-roboto text-[15px] leading-[23px] text-[#132119] lg:flex-1 lg:text-[16px] lg:leading-[25px]"><Rich text={r.value} /></dd>
             </div>
           ))}
         </dl>
@@ -163,7 +190,7 @@ function Block({ block: b }: { block: LocalBlock }) {
               {row.map((t) => (
                 <p key={t} className="flex gap-[12px] rounded-[12px] border border-[#e6e6e6] bg-white p-[18px] text-left font-roboto text-[15px] leading-[23px] text-[#132119] lg:min-w-px lg:flex-1 lg:text-[16px] lg:leading-[25px]">
                   <span aria-hidden="true" className="mt-[7px] size-[10px] shrink-0 rounded-full bg-[#1b7a3d]" />
-                  {t}
+                  <span><Rich text={t} /></span>
                 </p>
               ))}
             </li>
@@ -227,7 +254,7 @@ function Card({ card, className = '', style }: { card: LocalCard; className?: st
         <span aria-hidden="true" className="grid size-[48px] shrink-0 place-items-center rounded-full bg-brand font-sans text-[20px] font-medium leading-none text-white">{card.n}</span>
       )}
       {card.title && <h3 className="w-full font-sans text-[18px] font-medium leading-[1.3] text-[#132119] lg:text-[19px]">{card.title}</h3>}
-      {card.body.map((t) => <p key={t} className="w-full font-roboto text-[14px] leading-[1.58] text-[#7e7e7e] lg:text-[15px]">{t}</p>)}
+      {card.body.map((t) => <p key={t} className="w-full font-roboto text-[14px] leading-[1.58] text-[#7e7e7e] lg:text-[15px]"><Rich text={t} /></p>)}
     </div>
   )
 }
@@ -257,7 +284,7 @@ export function Cta({ cta: c }: { cta: LocalPage['cta'] }) {
         <h2 className="font-sans text-[23px] font-semibold leading-[1.3] lg:text-[34px]">{c.heading}</h2>
         <div className="flex w-full flex-col items-center gap-[20px] lg:gap-[28px]">
           <div className="flex w-full flex-col gap-[14px] font-roboto text-[14.5px] leading-[1.4] lg:w-[800px] lg:text-[17px]">
-            {c.body.map((t) => <p key={t}>{t}</p>)}
+            {c.body.map((t) => <p key={t}><Rich text={t} light /></p>)}
           </div>
           {c.line && <p className="font-sans text-[18px] font-medium leading-[26px]">{c.line}</p>}
           <div className="flex w-full flex-col items-center gap-[12px] lg:w-auto lg:flex-row lg:gap-[16px]">

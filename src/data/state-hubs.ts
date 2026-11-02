@@ -6,8 +6,8 @@ import type { Facility, StateHub, StatePageLike } from '@/data/facilities'
  * 7 new state hub pages using the same template as /minnesota-recycling/ and
  * /wisconsin-recycling/") and their seven content docs, word for word:
  *
- *   /arizona-recycling/     Phoenix          /indiana-recycling/    Greenwood
- *   /california-recycling/  Ontario          /tennessee-recycling/  Johnson City, Lewisburg
+ *   /arizona/ (was /arizona-recycling/)  Phoenix   /indiana-recycling/  Greenwood
+ *   /california-recycling/  Ontario          /tennessee/ (was /tennessee-recycling/)  Johnson City, Lewisburg
  *   /florida-recycling/     Ocala            /texas-recycling/      Fort Worth
  *   /georgia-recycling/     Kennesaw
  *
@@ -87,6 +87,18 @@ const TILES: StateHub['materials']['tiles'] = [
   { label: 'Off-site shredding',   icon: `${I}/state-lock.svg`,        service: 'off-site-shredding',   href: href('/off-site-shredding/') },
 ]
 
+/**
+ * The four services the Phoenix and Lewisburg facilities offer, each tile to
+ * that facility's own page (3 Nov 2026, management sheet "all plan rti 1":
+ * "update the page as we are giving services, not show all").
+ */
+const fourTiles = (base: string): StateHub['materials']['tiles'] => [
+  { label: 'Electronics', icon: `${I}/state-electronics.svg`, service: 'electronic-recycling', href: href(`${base}electronic-recycling/`) },
+  { label: 'Batteries',   icon: `${I}/state-batteries.svg`,   service: 'battery-recycling',    href: href(`${base}battery-recycling/`) },
+  { label: 'Light bulbs', icon: `${I}/state-bulbs.svg`,       service: 'light-bulb-recycling', href: href(`${base}light-bulb-recycling/`) },
+  { label: 'Ballasts',    icon: `${I}/state-ballasts.svg`,    service: 'ballast-recycling',    href: href(`${base}ballast-recycling/`) },
+]
+
 const BUTTONS = {
   primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
   secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
@@ -113,6 +125,8 @@ function hub(o: {
   slug: string; state: string; title: string; description: string; h1: string; lead: string
   sites: HubSite[]; servicesLead: string; counties: StateHub['counties']['groups']
   faqs: Facility['faqs']; photo: { src: string; flip: boolean }
+  /** Only the services this state's facility offers (3 Nov 2026); all nine when absent. */
+  tiles?: StateHub['materials']['tiles']
 }): StateHubPage {
   return {
     slug: o.slug,
@@ -122,7 +136,7 @@ function hub(o: {
     hero: { h1: o.h1, lead: o.lead, leadShort: o.lead, buttons: BUTTONS },
     sites: o.sites,
     hub: {
-      materials: { heading: `Recycling and Shredding Services in ${o.state}`, lead: o.servicesLead, tiles: TILES },
+      materials: { heading: `Recycling and Shredding Services in ${o.state}`, lead: o.servicesLead, tiles: o.tiles ?? TILES },
       counties: { lead: COUNTIES_LEAD, groups: o.counties },
       cta: cta(o.state),
       mailIn: MAIL_IN,
@@ -136,8 +150,11 @@ function hub(o: {
 const LEAD_HOME = (state: string) => `One provider for what leaves your building or your home, from old lamps to retired hard drives. Recycle Technologies offers the full range of recycling and secure destruction services for ${state} businesses and residents.`
 const LEAD_BUILDING = (state: string) => `One provider for what leaves your building, from old lamps to retired hard drives. Recycle Technologies offers the full range of recycling and secure destruction services for ${state} businesses and residents.`
 
+// 3 Nov 2026 (management sheet): moved from /arizona-recycling/ to /arizona/
+// (the old URL is deleted, no redirect); the tiles show the four Phoenix services.
 export const ARIZONA_HUB = hub({
-  slug: 'arizona-recycling', state: 'Arizona',
+  slug: 'arizona', state: 'Arizona',
+  tiles: fourTiles('/arizona/phoenix/'),
   title: 'Arizona E-Waste Recycling & Shredding | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Arizona. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Arizona',
@@ -240,8 +257,12 @@ export const INDIANA_HUB = hub({
   photo: PHOTO_A,
 })
 
+// 3 Nov 2026 (management sheet): moved from /tennessee-recycling/ to
+// /tennessee/ (the old URL is deleted, no redirect); the tiles show the four
+// Lewisburg services; Lewisburg itself moved to /tennessee/lewisburg/.
 export const TENNESSEE_HUB = hub({
-  slug: 'tennessee-recycling', state: 'Tennessee',
+  slug: 'tennessee', state: 'Tennessee',
+  tiles: fourTiles('/tennessee/lewisburg/'),
   title: 'Tennessee E-Waste Recycling | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Tennessee. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Tennessee',
@@ -250,12 +271,12 @@ export const TENNESSEE_HUB = hub({
   // /johnson-city-buffalo-tennessee/, the only Johnson City page on the site
   // (/johnson-city-boggs-tennessee/ 301s to /mail-in-recycling/, flagged).
   sites: [
-    site('Tennessee', 'Lewisburg', '/lewisburg-tennessee/', '1580 Old Columbia Road, Lewisburg, TN 37091', '(629) 240-1860', 'Call for hours; by appointment'),
+    site('Tennessee', 'Lewisburg', '/tennessee/lewisburg/', '1580 Old Columbia Road, Lewisburg, TN 37091', '(629) 240-1860', 'Call for hours; by appointment'),
     site('Tennessee', 'Johnson City', '/johnson-city-buffalo-tennessee/', '300 Boggs Lane, Johnson City, TN 37604', '(423) 328-9596'),
   ],
   servicesLead: LEAD_HOME('Tennessee'),
   counties: [
-    { heading: 'Marshall County', chips: [chip('Lewisburg', '/lewisburg-tennessee/')] },
+    { heading: 'Marshall County', chips: [chip('Lewisburg', '/tennessee/lewisburg/')] },
     { heading: 'Washington County', chips: [chip('Johnson City', '/johnson-city-buffalo-tennessee/')] },
   ],
   faqs: [

@@ -2,14 +2,17 @@ import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Document Shredding Minnesota, /shredding-minnesota/
+ * Document Shredding Minnesota, /minnesota/blaine/shredding/
+ * 3 Nov 2026 (management sheet "all plan rti 1"): moved from
+ * /shredding-minnesota/, which now 301s here; the content stays as it is.
+ * Its city pages (/shredding-minnesota/duluth/ and the rest) keep their URLs.
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7073:7429, phone 7073:8254 (29 Sep 2026).
  * The frame's copy word for word; "this form" and the like link to the quote
  * form (the pickup form in a sentence about pickups). The SEO title and
  * description are the old WordPress page's (15 Sep 2026 backup).
  */
 export const SHREDDING_MINNESOTA: CountyPage = {
-  url: "/shredding-minnesota/",
+  url: "/minnesota/blaine/shredding/",
   state: "Minnesota",
   county: "Minnesota",
   areaServed: "Minnesota",

@@ -79,7 +79,6 @@ import { OCALA_FLORIDA } from '@/data/county-pages/areas/ocala-florida'
 import { KENNESAW_GEORGIA } from '@/data/county-pages/areas/kennesaw-georgia'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from '@/data/county-pages/areas/johnson-city-buffalo-tennessee'
 import { TV_RECYCLING_IN_WISCONSIN } from '@/data/county-pages/areas/tv-recycling-in-wisconsin'
-import { TV_RECYCLING_IN_MINNESOTA } from '@/data/county-pages/areas/tv-recycling-in-minnesota'
 import { TV_RECYCLING_APPLETON } from '@/data/county-pages/areas/tv-recycling-appleton'
 import { EDINA_RECYCLING_SERVICES } from '@/data/county-pages/areas/edina-recycling-services'
 import { SHREDDING_DULUTH } from '@/data/county-pages/areas/shredding-duluth'
@@ -147,15 +146,23 @@ import { WISCONSIN_LIGHT_BULB_RECYCLING } from '@/data/local-pages/wisconsin-lig
 import { WISCONSIN_OFF_SITE_SHREDDING } from '@/data/local-pages/wisconsin-off-site-shredding'
 import { WISCONSIN_PAPER_SHREDDING } from '@/data/local-pages/wisconsin-paper-shredding'
 import { WISCONSIN_PHONE_SHREDDING } from '@/data/local-pages/wisconsin-phone-shredding'
-import { MINNESOTA_AIRBAG_RECYCLING } from '@/data/local-pages/minnesota-airbag-recycling'
-import { MINNESOTA_BALLAST_RECYCLING } from '@/data/local-pages/minnesota-ballast-recycling'
-import { MINNESOTA_BATTERY_RECYCLING } from '@/data/local-pages/minnesota-battery-recycling'
-import { MINNESOTA_ELECTRONIC_RECYCLING } from '@/data/local-pages/minnesota-electronic-recycling'
-import { MINNESOTA_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/minnesota-hard-drive-destruction'
-import { MINNESOTA_LIGHT_BULB_RECYCLING } from '@/data/local-pages/minnesota-light-bulb-recycling'
-import { MINNESOTA_OFF_SITE_SHREDDING } from '@/data/local-pages/minnesota-off-site-shredding'
-import { MINNESOTA_PAPER_SHREDDING } from '@/data/local-pages/minnesota-paper-shredding'
-import { MINNESOTA_PHONE_SHREDDING } from '@/data/local-pages/minnesota-phone-shredding'
+import { BLAINE_ELECTRONIC_RECYCLING } from '@/data/local-pages/blaine-electronic-recycling'
+import { BLAINE_BATTERY_RECYCLING } from '@/data/local-pages/blaine-battery-recycling'
+import { BLAINE_LIGHT_BULB_RECYCLING } from '@/data/local-pages/blaine-light-bulb-recycling'
+import { BLAINE_BALLAST_RECYCLING } from '@/data/local-pages/blaine-ballast-recycling'
+import { BLAINE_PAPER_SHREDDING } from '@/data/local-pages/blaine-paper-shredding'
+import { BLAINE_PHONE_SHREDDING } from '@/data/local-pages/blaine-phone-shredding'
+import { BLAINE_OFF_SITE_SHREDDING } from '@/data/local-pages/blaine-off-site-shredding'
+import { BLAINE_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/blaine-hard-drive-destruction'
+import { BLAINE_TELEVISION_RECYCLING } from '@/data/local-pages/blaine-television-recycling'
+import { PHOENIX_ELECTRONIC_RECYCLING } from '@/data/local-pages/phoenix-electronic-recycling'
+import { PHOENIX_BATTERY_RECYCLING } from '@/data/local-pages/phoenix-battery-recycling'
+import { PHOENIX_LIGHT_BULB_RECYCLING } from '@/data/local-pages/phoenix-light-bulb-recycling'
+import { PHOENIX_BALLAST_RECYCLING } from '@/data/local-pages/phoenix-ballast-recycling'
+import { LEWISBURG_ELECTRONIC_RECYCLING } from '@/data/local-pages/lewisburg-electronic-recycling'
+import { LEWISBURG_BATTERY_RECYCLING } from '@/data/local-pages/lewisburg-battery-recycling'
+import { LEWISBURG_LIGHT_BULB_RECYCLING } from '@/data/local-pages/lewisburg-light-bulb-recycling'
+import { LEWISBURG_BALLAST_RECYCLING } from '@/data/local-pages/lewisburg-ballast-recycling'
 import { CHICAGO_AIRBAG_RECYCLING } from '@/data/local-pages/chicago-airbag-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
@@ -327,15 +334,23 @@ export const DOCS = {
   'local/wisconsin-recycling-off-site-shredding': { title: "On-Site & Off-Site Shredding in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_OFF_SITE_SHREDDING.url], data: one(WISCONSIN_OFF_SITE_SHREDDING) },
   'local/wisconsin-recycling-paper-shredding': { title: "Paper Shredding Services in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PAPER_SHREDDING.url], data: one(WISCONSIN_PAPER_SHREDDING) },
   'local/wisconsin-recycling-phone-shredding': { title: "Phone Shredding Service in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PHONE_SHREDDING.url], data: one(WISCONSIN_PHONE_SHREDDING) },
-  'local/minnesota-recycling-airbag-recycling': { title: "Airbag Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_AIRBAG_RECYCLING.url], data: one(MINNESOTA_AIRBAG_RECYCLING) },
-  'local/minnesota-recycling-ballast-recycling': { title: "Ballast Recycling in Minnesota", group: 'Location pages', urls: [MINNESOTA_BALLAST_RECYCLING.url], data: one(MINNESOTA_BALLAST_RECYCLING) },
-  'local/minnesota-recycling-battery-recycling': { title: "Battery Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_BATTERY_RECYCLING.url], data: one(MINNESOTA_BATTERY_RECYCLING) },
-  'local/minnesota-recycling-electronic-recycling': { title: "Electronic Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_ELECTRONIC_RECYCLING.url], data: one(MINNESOTA_ELECTRONIC_RECYCLING) },
-  'local/minnesota-recycling-hard-drive-destruction': { title: "Hard Drive Destruction in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_HARD_DRIVE_DESTRUCTION.url], data: one(MINNESOTA_HARD_DRIVE_DESTRUCTION) },
-  'local/minnesota-recycling-light-bulb-recycling': { title: "Light Bulb Recycling in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_LIGHT_BULB_RECYCLING.url], data: one(MINNESOTA_LIGHT_BULB_RECYCLING) },
-  'local/minnesota-recycling-off-site-shredding': { title: "On-Site & Off-Site Shredding in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_OFF_SITE_SHREDDING.url], data: one(MINNESOTA_OFF_SITE_SHREDDING) },
-  'local/minnesota-recycling-paper-shredding': { title: "Paper Shredding Services in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PAPER_SHREDDING.url], data: one(MINNESOTA_PAPER_SHREDDING) },
-  'local/minnesota-recycling-phone-shredding': { title: "Phone Shredding Service in Blaine, Minnesota", group: 'Location pages', urls: [MINNESOTA_PHONE_SHREDDING.url], data: one(MINNESOTA_PHONE_SHREDDING) },
+  'local/minnesota-blaine-electronic-recycling': { title: "Electronics Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_ELECTRONIC_RECYCLING.url], data: one(BLAINE_ELECTRONIC_RECYCLING) },
+  'local/minnesota-blaine-battery-recycling': { title: "Battery Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_BATTERY_RECYCLING.url], data: one(BLAINE_BATTERY_RECYCLING) },
+  'local/minnesota-blaine-light-bulb-recycling': { title: "Light Bulb Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_LIGHT_BULB_RECYCLING.url], data: one(BLAINE_LIGHT_BULB_RECYCLING) },
+  'local/minnesota-blaine-ballast-recycling': { title: "Ballast Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_BALLAST_RECYCLING.url], data: one(BLAINE_BALLAST_RECYCLING) },
+  'local/minnesota-blaine-paper-shredding': { title: "Secure Paper Shredding in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_PAPER_SHREDDING.url], data: one(BLAINE_PAPER_SHREDDING) },
+  'local/minnesota-blaine-phone-shredding': { title: "Secure Phone Shredding in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_PHONE_SHREDDING.url], data: one(BLAINE_PHONE_SHREDDING) },
+  'local/minnesota-blaine-off-site-shredding': { title: "Off-Site Shredding in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_OFF_SITE_SHREDDING.url], data: one(BLAINE_OFF_SITE_SHREDDING) },
+  'local/minnesota-blaine-hard-drive-destruction': { title: "Hard Drive Destruction in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_HARD_DRIVE_DESTRUCTION.url], data: one(BLAINE_HARD_DRIVE_DESTRUCTION) },
+  'local/minnesota-blaine-television-recycling': { title: "TV Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_TELEVISION_RECYCLING.url], data: one(BLAINE_TELEVISION_RECYCLING) },
+  'local/arizona-phoenix-electronic-recycling': { title: "Electronics Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_ELECTRONIC_RECYCLING.url], data: one(PHOENIX_ELECTRONIC_RECYCLING) },
+  'local/arizona-phoenix-battery-recycling': { title: "Battery Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_BATTERY_RECYCLING.url], data: one(PHOENIX_BATTERY_RECYCLING) },
+  'local/arizona-phoenix-light-bulb-recycling': { title: "Light Bulb Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_LIGHT_BULB_RECYCLING.url], data: one(PHOENIX_LIGHT_BULB_RECYCLING) },
+  'local/arizona-phoenix-ballast-recycling': { title: "Ballast Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_BALLAST_RECYCLING.url], data: one(PHOENIX_BALLAST_RECYCLING) },
+  'local/tennessee-lewisburg-electronic-recycling': { title: "Electronics Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_ELECTRONIC_RECYCLING.url], data: one(LEWISBURG_ELECTRONIC_RECYCLING) },
+  'local/tennessee-lewisburg-battery-recycling': { title: "Battery Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BATTERY_RECYCLING.url], data: one(LEWISBURG_BATTERY_RECYCLING) },
+  'local/tennessee-lewisburg-light-bulb-recycling': { title: "Light Bulb Recycling in Lewisburg, TN", group: 'Location pages', urls: [LEWISBURG_LIGHT_BULB_RECYCLING.url], data: one(LEWISBURG_LIGHT_BULB_RECYCLING) },
+  'local/tennessee-lewisburg-ballast-recycling': { title: "Ballast Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BALLAST_RECYCLING.url], data: one(LEWISBURG_BALLAST_RECYCLING) },
   'local/airbag-recycling-chicago': { title: "Airbag Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_AIRBAG_RECYCLING.url], data: one(CHICAGO_AIRBAG_RECYCLING) },
   'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
   'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
@@ -420,7 +435,6 @@ export const DOCS = {
   'area/kennesaw-georgia': { title: "Kennesaw, Georgia", group: 'Location pages', urls: [KENNESAW_GEORGIA.url], data: one(KENNESAW_GEORGIA) },
   'area/johnson-city-buffalo-tennessee': { title: "Johnson City (Buffalo), Tennessee", group: 'Location pages', urls: [JOHNSON_CITY_BUFFALO_TENNESSEE.url], data: one(JOHNSON_CITY_BUFFALO_TENNESSEE) },
   'area/tv-recycling-in-wisconsin': { title: "TV Recycling In Wisconsin", group: 'Location pages', urls: [TV_RECYCLING_IN_WISCONSIN.url], data: one(TV_RECYCLING_IN_WISCONSIN) },
-  'area/tv-recycling-in-minnesota': { title: "TV Recycling in Minnesota", group: 'Location pages', urls: [TV_RECYCLING_IN_MINNESOTA.url], data: one(TV_RECYCLING_IN_MINNESOTA) },
   'area/tv-recycling-appleton': { title: "TV Recycling in Appleton WI", group: 'Location pages', urls: [TV_RECYCLING_APPLETON.url], data: one(TV_RECYCLING_APPLETON) },
   'area/edina-recycling-services': { title: "Edina Recycling Services", group: 'Location pages', urls: [EDINA_RECYCLING_SERVICES.url], data: one(EDINA_RECYCLING_SERVICES) },
   'area/shredding-duluth': { title: "Duluth Shredding Service", group: 'Location pages', urls: [SHREDDING_DULUTH.url], data: one(SHREDDING_DULUTH) },

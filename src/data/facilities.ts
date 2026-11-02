@@ -640,7 +640,7 @@ export const NATIONWIDE = {
      phone (a copy and paste slip). The phone frame (6834:2668) has Ontario's
      own, and that is what is used here. */
   facilities: [
-    { ...nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'), href: href('/lewisburg-tennessee/') },
+    { ...nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '(629) 240-1860', 8, 'lewisburg-tn'), href: href('/tennessee/lewisburg/') },
     { ...nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'), href: href('/greenwood-indiana/') },
     { ...nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'), href: href('/ocala-florida/') },
     { ...nationwide('Johnson City, TN', '300 Boggs Lane, Johnson City, TN 37604',              '(423) 328-9596', 6, 'johnson-city-tn'), href: href('/johnson-city-buffalo-tennessee/') },

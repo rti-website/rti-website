@@ -12,6 +12,8 @@ import { content } from '@/lib/page-content'
 import { DOCS, MDX_DOC_BY_URL } from '@/content/registry'
 import { CountyPage } from '@/components/sections/locations/CountyPage'
 import { CATCH_ALL_LOCATION_PAGES, catchAllLocationPage, countyDocKey } from '@/data/county-pages'
+import { LocalServicePage } from '@/components/sections/locations/LocalServicePage'
+import { DOC_PAGES, docLocalPage, localDocKey, type LocalPage } from '@/data/local-pages'
 
 /**
  * Catch-all route driven by the content manifest.
@@ -60,8 +62,12 @@ export async function generateStaticParams() {
   // (29 Sep 2026: shredding, TV and mail-in city pages, and the cities under
   // a county), fixed copy in src/data/county-pages/areas/.
   const fromAreas = CATCH_ALL_LOCATION_PAGES.map((p) => ({ slug: toSegments(p.url) }))
-  const taken = new Set([...fromFiles, ...fromAreas].map((e) => e.slug.join('/')))
-  return [...fromFiles, ...fromAreas, ...fromDb.filter((e) => !taken.has(e.slug.join('/')))]
+  // The service pages from the content team's docs (3 Nov 2026):
+  // /minnesota/blaine/<service>/, /arizona/phoenix/<service>/ and
+  // /tennessee/lewisburg/<service>/ (src/data/local-pages DOC_PAGES).
+  const fromDocs = DOC_PAGES.map((p) => ({ slug: toSegments(p.url) }))
+  const taken = new Set([...fromFiles, ...fromAreas, ...fromDocs].map((e) => e.slug.join('/')))
+  return [...fromFiles, ...fromAreas, ...fromDocs, ...fromDb.filter((e) => !taken.has(e.slug.join('/')))]
 }
 
 type Props = { params: Promise<{ slug: string[] }> }
@@ -71,6 +77,8 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const area = catchAllLocationPage('/' + slug.join('/'))
   if (area) return pageMetadata({ url: area.url, title: area.seo.title, description: area.seo.description })
+  const doc = docLocalPage('/' + slug.join('/'))
+  if (doc) return pageMetadata({ url: doc.url, title: doc.seo.title, description: doc.seo.description })
   const entry = byUrl('/' + slug.join('/'))
   if (entry) {
     return pageMetadata({
@@ -106,6 +114,8 @@ export default async function CatchAllPage({ params }: Props) {
   const { slug } = await params
   const area = catchAllLocationPage('/' + slug.join('/'))
   if (area) return <CountyPage page={await content(countyDocKey(area))} />
+  const doc = docLocalPage('/' + slug.join('/'))
+  if (doc) return <LocalServicePage page={(await content(localDocKey(doc))) as LocalPage} />
   const entry = byUrl('/' + slug.join('/'))
 
   if (!entry) {

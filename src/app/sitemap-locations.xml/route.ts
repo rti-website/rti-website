@@ -16,6 +16,10 @@ import REDIRECTS from '../../../data/redirects.json'
  * 29 Oct 2026: the whole sheet is pages again; its 30 other URLs added
  * (Rochester shredding and Light Bulb Recycling Minneapolis back).
  * 2 Nov 2026 (management): 13 of them deleted again (404, no redirect).
+ * 3 Nov 2026 (management sheet "all plan rti 1"): Arizona and Tennessee hubs
+ * at /arizona/ and /tennessee/, Lewisburg at /tennessee/lewisburg/, Document
+ * Shredding MN at /minnesota/blaine/shredding/, TV Recycling MN out (it 301s),
+ * and the 17 new service pages in their own groups.
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -32,12 +36,12 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/mail-in-recycling/"
   ] },
   { group: "State hubs (14 Oct 2026)", urls: [
-    "/arizona-recycling/",
+    "/arizona/",
     "/california-recycling/",
     "/florida-recycling/",
     "/georgia-recycling/",
     "/indiana-recycling/",
-    "/tennessee-recycling/",
+    "/tennessee/",
     "/texas-recycling/"
   ] },
   { group: "Chicago", urls: [
@@ -94,8 +98,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/light-bulb-recycling-minneapolis/"
   ] },
   { group: "Minnesota: statewide services", urls: [
-    "/shredding-minnesota/",
-    "/tv-recycling-in-minnesota/",
+    "/minnesota/blaine/shredding/",
     "/minnesota-recycling/electronic-recycling-duluth/",
     "/shredding-minnesota/duluth/"
   ] },
@@ -160,6 +163,29 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/tv-recycling-des-moines/",
     "/shredding-minnesota/des-moines/"
   ] },
+  { group: "Minnesota: Blaine service pages (3 Nov 2026)", urls: [
+    "/minnesota/blaine/electronic-recycling/",
+    "/minnesota/blaine/battery-recycling/",
+    "/minnesota/blaine/light-bulb-recycling/",
+    "/minnesota/blaine/ballast-recycling/",
+    "/minnesota/blaine/paper-shredding/",
+    "/minnesota/blaine/phone-shredding/",
+    "/minnesota/blaine/off-site-shredding/",
+    "/minnesota/blaine/hard-drive-destruction/",
+    "/minnesota/blaine/television-recycling/"
+  ] },
+  { group: "Arizona: Phoenix service pages (3 Nov 2026)", urls: [
+    "/arizona/phoenix/electronic-recycling/",
+    "/arizona/phoenix/battery-recycling/",
+    "/arizona/phoenix/light-bulb-recycling/",
+    "/arizona/phoenix/ballast-recycling/"
+  ] },
+  { group: "Tennessee: Lewisburg service pages (3 Nov 2026)", urls: [
+    "/tennessee/lewisburg/electronic-recycling/",
+    "/tennessee/lewisburg/battery-recycling/",
+    "/tennessee/lewisburg/light-bulb-recycling/",
+    "/tennessee/lewisburg/ballast-recycling/"
+  ] },
   { group: "Mail-in recycling locations", urls: [
     "/phoenix-arizona/",
     "/ocala-florida/",
@@ -168,7 +194,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/fort-worth-texas/",
     "/ontario-california/",
     "/johnson-city-buffalo-tennessee/",
-    "/lewisburg-tennessee/",
+    "/tennessee/lewisburg/",
     "/recycling-kits-in-ohio/",
     "/recycling-kits-in-florida/"
   ] },

@@ -34,9 +34,9 @@ const ROUTES = [
   '/industries/government-municipal/', '/industries/manufacturing-industrial/',
   '/industries/retail-corporate-offices/', '/nope-404/', '/quote/',
   // The location pages (24 Sep 2026): a partner hub, a partner service page, a MN one.
-  '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota-recycling/battery-recycling/',
+  '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota/blaine/battery-recycling/',
   // The fixed city service pages of 27 Sep 2026 (src/data/city-pages/).
-  '/minnesota-recycling/light-bulb-recycling/', '/minnesota-recycling/electronic-recycling/',
+  '/minnesota/blaine/light-bulb-recycling/', '/minnesota/blaine/electronic-recycling/',
   '/wisconsin-recycling/battery-recycling/', '/wisconsin-recycling/light-bulb-recycling/', '/wisconsin-recycling/electronic-recycling/',
 ]
 

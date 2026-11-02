@@ -371,16 +371,10 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/minnesota-recycling/ramsey/": { title: "Electronics Recycling Ramsey MN | Drop-Off & Pickup", description: "Need electronics recycling in Ramsey, MN? Drop off or mail in your old devices, batteries and bulbs. Business pickup within 100 miles. Call for a free quote." }, // 01,03
   "/": { title: "E-Waste Recycling, ITAD & Shredding | Recycle Technologies", description: "Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics." }, // 05,06
   "/minnesota-recycling/hennepin-county-recycling-center/": { title: "Hennepin County Recycling: Electronics, Batteries & Bulbs", description: "Recycling center Hennepin County receiving electronics, computers, lamps, batteries, and devices, managed through documented intake and processing steps." }, // 05,06
-  "/minnesota-recycling/off-site-shredding/": { title: "Off-Site Shredding in Blaine, MN | Recycle Technologies" }, // 05
   "/wisconsin-recycling/off-site-shredding/": { title: "Off-Site Shredding in New Berlin, WI | Recycle Technologies" }, // 05
-  "/minnesota-recycling/light-bulb-recycling/": { title: "Light Bulb Recycling in Blaine, MN | Recycle Technologies", description: "Drop off, schedule a commercial pickup or mail in fluorescent tubes, CFLs, HID and other lamps at our Blaine, Minnesota facility. Processed in-house, not" }, // 05,06
-  "/minnesota-recycling/paper-shredding/": { title: "Paper Shredding in Blaine, MN | Recycle Technologies" }, // 05
   "/wisconsin-recycling/phone-shredding/": { title: "Phone Shredding in New Berlin, WI | Recycle Technologies" }, // 05
   "/wisconsin-recycling/paper-shredding/": { title: "Paper Shredding in New Berlin, WI | Recycle Technologies" }, // 05
-  "/minnesota-recycling/phone-shredding/": { title: "Phone Shredding in Blaine, MN | Recycle Technologies" }, // 05
   "/wisconsin-recycling/electronic-recycling/": { title: "E-Waste Recycling in New Berlin, WI | Recycle Technologies", description: "Drop off, business pickup or mail in computers, monitors, printers, phones and other e-waste at our New Berlin, Wisconsin facility. Dismantled" }, // 05,06
-  "/minnesota-recycling/hard-drive-destruction/": { title: "Hard Drive Destruction in Blaine, MN | Recycle Technologies" }, // 05
-  "/minnesota-recycling/electronic-recycling/": { title: "E-Waste Recycling in Blaine, MN | Recycle Technologies", description: "Drop off, business pickup or mail in computers, monitors, printers, phones and other e-waste at our R2v3 certified Blaine, Minnesota facility. Dismantled" }, // 05,06
   "/wisconsin-recycling/light-bulb-recycling/": { title: "Bulb Recycling in New Berlin, WI | Recycle Technologies", description: "Drop off, schedule a commercial pickup or mail in fluorescent tubes, CFLs, HID and other lamps at our New Berlin, Wisconsin facility. Processed in-house" }, // 05,06
   "/phone-shredding-chicago/": { title: "Phone Shredding in Chicago, IL | Recycle Technologies" }, // 05
   "/paper-shredding-chicago/": { title: "Paper Shredding in Chicago, IL | Recycle Technologies" }, // 05
@@ -427,7 +421,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/wisconsin-recycling/madison/": { description: "Recycling center Madison managing electronics intake, lighting waste, battery assortments, paper volumes, and approved material streams." }, // 06
   "/all-locations/": { description: "Explore electronics recycling facility in USA. Drop-off your E-waste: old TVs, printers, computer, phones, monitors, small appliances, and more at one" }, // 06
   "/minnesota-recycling/east-bethel/": { description: "Recycling East Bethel for consoles, modems, power cords, ink units, and small electronics, received through verified intake and processing steps." }, // 06
-  "/tv-recycling-in-minnesota/": { description: "TV recycling in Minnesota homes and facilities trust for disposal of flat screens, broken units, outdated models, and large televisions." }, // 06
   "/minnesota-recycling/electronic-recycling-duluth/": { description: "Sustainable electronic recycling Duluth Minnesota for POS terminals, barcode scanners, AV gear, and tablets, managed through verified intake steps." }, // 06
   "/wisconsin-recycling/sheboygan/": { description: "Recycling services Sheboygan facilitating collection of electronics, lighting remnants, battery varieties, paper batches, and approved materials." }, // 06
   "/minnesota-recycling/dakota-county/burnsville-recycling-center/": { description: "Recycling center in Burnsville accepting electronic equipment, spent power cells, lighting waste, paper materials, and managed material intake." }, // 06
@@ -459,7 +452,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/blog/": { description: "Stay updated with our blog on recycling and E-waste trends. From emerging technologies to consumer behaviors, gain valuable insights into the evolving" }, // 06
   "/wisconsin-recycling/tv-recycling-appleton/": { description: "TV recycling Appleton WI for LCD screens, OLED units, plasma panels, rear-projection sets, and flat displays, received through documented intake steps." }, // 06
   "/wisconsin-recycling/battery-recycling/": { description: "Drop off, business pickup or mail in spent batteries at our New Berlin, Wisconsin facility. Alkaline, lithium-ion, lead-acid, NiCd and EV batteries sorted" }, // 06
-  "/minnesota-recycling/battery-recycling/": { description: "Drop off, business pickup or mail in spent batteries at our R2v3 certified Blaine, Minnesota facility. Alkaline, lithium-ion, lead-acid, NiCd and EV" }, // 06
   "/recycle-symbol/": { description: "This guide will break down the most common recycling symbols, which will help you understand it much better and what you are supposed to do with each" }, // 06
 }
 

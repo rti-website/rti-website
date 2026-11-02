@@ -5,7 +5,7 @@ import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
-import { LOCAL_FACILITY_PAGES, LOCAL_SERVICE_LABEL } from '@/data/local-pages'
+import { BLAINE_PAGES, LOCAL_FACILITY_PAGES, LOCAL_SERVICE_LABEL } from '@/data/local-pages'
 
 /**
  * "What This Location Accepts" — Figma 6744:8796 (Minnesota, six tiles) /
@@ -38,7 +38,8 @@ export async function LocationMaterials({ top, height, f, links = {} }: {
 }) {
   const { DETAIL_COPY } = await content('facilities')
   const site = f.slug.replace(/-recycling$/, '') as keyof typeof LOCAL_FACILITY_PAGES
-  const services = Object.entries(LOCAL_FACILITY_PAGES[site] ?? {})
+  // Minnesota's links open the Blaine pages (/minnesota/blaine/<service>/, 3 Nov 2026).
+  const services = Object.entries(site === 'minnesota' ? BLAINE_PAGES : LOCAL_FACILITY_PAGES[site] ?? {})
     .sort(([a], [b]) => Object.keys(LOCAL_SERVICE_LABEL).indexOf(a) - Object.keys(LOCAL_SERVICE_LABEL).indexOf(b))
     .map(([svc, p]) => ({ label: LOCAL_SERVICE_LABEL[svc] ?? svc, href: p.url }))
   return (

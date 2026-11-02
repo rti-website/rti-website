@@ -36,7 +36,7 @@
   },
   {
     "source": "/battery-recycling-in-minnesota/",
-    "destination": "/minnesota-recycling/battery-recycling/",
+    "destination": "/minnesota/blaine/battery-recycling/",
     "statusCode": 301
   },
   {
@@ -375,6 +375,16 @@
     "statusCode": 301
   },
   {
+    "source": "/shredding-minnesota/",
+    "destination": "/minnesota/blaine/shredding/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tv-recycling-in-minnesota/",
+    "destination": "/minnesota/blaine/television-recycling/",
+    "statusCode": 301
+  },
+  {
     "source": "/wisconsin-recycling/electronics-recycling-milwaukee/",
     "destination": "/wisconsin-recycling/milwaukee/",
     "statusCode": 301
@@ -436,12 +446,12 @@
   },
   {
     "source": "/minnesota-recycling/on-site-off-site-shredding/",
-    "destination": "/minnesota-recycling/off-site-shredding/",
+    "destination": "/minnesota/blaine/off-site-shredding/",
     "statusCode": 301
   },
   {
     "source": "/minnesota-recycling/tv-recycling/",
-    "destination": "/tv-recycling-in-minnesota/",
+    "destination": "/minnesota/blaine/television-recycling/",
     "statusCode": 301
   },
   {

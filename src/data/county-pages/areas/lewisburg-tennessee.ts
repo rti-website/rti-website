@@ -2,7 +2,7 @@ import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Lewisburg, Tennessee, /lewisburg-tennessee/
+ * Lewisburg, Tennessee, /tennessee/lewisburg/ (was /lewisburg-tennessee/ until 3 Nov 2026: moved by the management sheet, old URL deleted)
  * Built 8 Oct 2026 on the county template (Figma BVtf2AOuUOcYbiMIlcKmbC board
  * 7052:28731, phone 7052:34333), laid out like Johnson City (Buffalo), TN.
  *
@@ -30,7 +30,7 @@ import type { CountyPage } from '../types'
 const MAPS = "https://www.google.com/maps/dir/?api=1&destination=1580+Old+Columbia+Rd%2C+Lewisburg%2C+TN+37091"
 
 export const LEWISBURG_TENNESSEE: CountyPage = {
-  url: "/lewisburg-tennessee/",
+  url: "/tennessee/lewisburg/",
   state: "Tennessee",
   county: "Lewisburg",
   figma: { board: "7052:28731", phone: "7052:34333" },
@@ -42,7 +42,7 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
     h1: 'Recycle Technologies Lewisburg, TN',
     crumb: "Lewisburg",
     /* Home / Locations / Tennessee / Lewisburg (14 Oct 2026, the state hub brief). */
-    parent: { label: "Tennessee", href: href('/tennessee-recycling/') },
+    parent: { label: "Tennessee", href: href('/tennessee/') },
     lead: "Tennessee Main Receiving and Administration Facility, 1580 Old Columbia Road, Lewisburg, TN 37091",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },

@@ -22,7 +22,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
     h1: 'Recycle Technologies Phoenix, AZ',
     crumb: "Phoenix",
     /* Home / Locations / Arizona / Phoenix (14 Oct 2026, the state hub brief). */
-    parent: { label: "Arizona", href: href('/arizona-recycling/') },
+    parent: { label: "Arizona", href: href('/arizona/') },
     lead: "Arizona PCB Ballast Processing Facility, 1545 East Victory Street, Phoenix, AZ 85040",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
