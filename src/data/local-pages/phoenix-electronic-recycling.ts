@@ -125,5 +125,5 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule Commercial Pickup", href: PICKUP_HREF },
   },
-  todo: ["\"Materials not accepted:\" heading left out (the doc has no list under it)", "\"Pickup coverage:\" line left out (empty in the doc)", "The doc repeats the commercial pickup paragraph", "it is shown once", "FAQ \"Do you offer hard drive destruction in Phoenix?\" left out (answer is [CONFIRM] in the doc)", "Phone: the docs give (602) 276-1858", "the Arizona hub's center card still shows (480) 393-5729"],
+  todo: ["\"Materials not accepted:\" heading left out (the doc has no list under it)", "\"Pickup coverage:\" line left out (empty in the doc)", "The doc repeats the commercial pickup paragraph", "it is shown once", "FAQ \"Do you offer hard drive destruction in Phoenix?\" left out (answer is [CONFIRM] in the doc)"],
 }

@@ -67,7 +67,7 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
         { kind: "h3", text: "Printer, Copier and Office Equipment Recycling" },
         { kind: "text", body: ["Old printers, scanners, fax machines and copiers pile up after an office upgrade or move. Bring them to our Blaine center or add them to a scheduled business pickup. Some multifunction copiers and printers keep scanned documents on internal drives, so ask about drive destruction before recycling them."] },
         { kind: "h3", text: "Electronics That Store Sensitive Data" },
-        { kind: "text", body: [`Computers, laptops, servers and phones may hold personal files, customer information, emails and business records. If the storage media needs to be physically destroyed, request [hard drive destruction](${href('/hard-drive-destruction-services/')}) when you arrange your drop-off or pickup. A destruction certificate is provided for the service.`] },
+        { kind: "text", body: [`Computers, laptops, servers and phones may hold personal files, customer information, emails and business records. If the storage media needs to be physically destroyed, request [hard drive destruction](${href('/minnesota/blaine/hard-drive-destruction/')}) when you arrange your drop-off or pickup. A destruction certificate is provided for the service.`] },
       ],
     },
     {
@@ -172,7 +172,7 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
       grey: false,
       blocks: [
         { kind: "chips", links: [
-            { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-services/') },
+            { label: "Hard Drive Destruction", href: href('/minnesota/blaine/hard-drive-destruction/') },
             { label: "IT Asset Disposition", href: href('/it-asset-disposition/') },
             { label: "Battery Recycling", href: href('/battery-recycling/') },
             { label: "Light Bulb Recycling", href: href('/light-bulbs/') },

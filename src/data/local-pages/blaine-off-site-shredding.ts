@@ -53,7 +53,7 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
       blocks: [
         { kind: "text", body: ["One facility, one pickup, every format. Whether it's a file room in Anoka or a bin of retired laptops and phones from a Maple Grove office, we destroy:"] },
         { kind: "bullets", rows: [
-            [`**Paper records:** confidential business documents, financial and HR files, contracts and personal papers. Please remove staples first. More on [paper shredding](${href('/paper-shredding-services/')}).`, `**Hard drives and SSDs:** from desktops, laptops, servers and other retired IT equipment, physically destroyed. More on [hard drive destruction](${href('/hard-drive-destruction-services/')}).`],
+            [`**Paper records:** confidential business documents, financial and HR files, contracts and personal papers. Please remove staples first. More on [paper shredding](${href('/paper-shredding-services/')}).`, `**Hard drives and SSDs:** from desktops, laptops, servers and other retired IT equipment, physically destroyed. More on [hard drive destruction](${href('/minnesota/blaine/hard-drive-destruction/')}).`],
             [`**Phones and mobile devices:** cell phones and smartphones, working or broken, plus SIM cards and memory chips, wiped or physically destroyed. More on [phone shredding](${href('/phone-shredding-service/')}).`],
         ] },
         { kind: "h3", text: "From Your Building to Our Shredder" },
@@ -173,7 +173,7 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
         { kind: "chips", links: [
             { label: "Off-Site Shredding", href: href('/off-site-shredding/') },
             { label: "Paper Shredding", href: href('/paper-shredding-services/') },
-            { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-services/') },
+            { label: "Hard Drive Destruction", href: href('/minnesota/blaine/hard-drive-destruction/') },
             { label: "Phone Shredding", href: href('/phone-shredding-service/') },
             { label: "Document Shredding in Minnesota", href: href('/minnesota/blaine/shredding/') },
             { label: "IT Asset Disposition", href: href('/it-asset-disposition/') },

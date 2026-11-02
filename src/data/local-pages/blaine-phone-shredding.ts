@@ -98,7 +98,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
         ] },
         { kind: "buttons", primary: { label: "Request a Phone Shredding Quote", href: QUOTE_HREF }, secondary: { label: "Schedule a Pickup", href: PICKUP_HREF } },
         { kind: "h3", text: "Residential Drop-Off" },
-        { kind: "text", body: [`Residential customers looking for phone shredding near them in Blaine, Spring Lake Park or Circle Pines can bring devices to 1525 99th Ln NE on weekdays from 7:30 AM to 4:00 PM. The same trip can include [hard drives for destruction](${href('/hard-drive-destruction-services/')}), [paper for shredding](${href('/paper-shredding-services/')}), and other [electronics](${href('/electronic-recycle/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
+        { kind: "text", body: [`Residential customers looking for phone shredding near them in Blaine, Spring Lake Park or Circle Pines can bring devices to 1525 99th Ln NE on weekdays from 7:30 AM to 4:00 PM. The same trip can include [hard drives for destruction](${href('/minnesota/blaine/hard-drive-destruction/')}), [paper for shredding](${href('/paper-shredding-services/')}), and other [electronics](${href('/electronic-recycle/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
         { kind: "h3", text: "Mail-In" },
         { kind: "text", body: [`Residential customers who can't make it to Blaine can order a [mail-in recycling kit](https://ezontheearth.com/collections/electronic-waste?utm_source=recycletechnologies&utm_medium=referral&utm_campaign=kits) and ship their phones in. Read about our [mail-in recycling program](${href('/mail-in-recycling/')}) before you order.`] },
       ],
@@ -168,7 +168,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
       blocks: [
         { kind: "chips", links: [
             { label: "Phone Shredding", href: href('/phone-shredding-service/') },
-            { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-services/') },
+            { label: "Hard Drive Destruction", href: href('/minnesota/blaine/hard-drive-destruction/') },
             { label: "Paper Shredding", href: href('/paper-shredding-services/') },
             { label: "Document Shredding in Minnesota", href: href('/minnesota/blaine/shredding/') },
             { label: "Electronics Recycling", href: href('/electronic-recycle/') },

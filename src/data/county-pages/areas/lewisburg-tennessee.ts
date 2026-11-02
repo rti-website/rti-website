@@ -114,8 +114,8 @@ export const LEWISBURG_TENNESSEE: CountyPage = {
     ] },
     // 20 Oct 2026, the facility content doc.
     { kind: 'faq', heading: "Questions About This Location", items: [
-      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (629) 240-1860 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
-      { q: "Do I need an appointment to drop off at the Lewisburg facility?", a: "Drop-off requirements vary by material and quantity. Call (629) 240-1860 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call 615-214-4768 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Lewisburg facility?", a: "Drop-off requirements vary by material and quantity. Call 615-214-4768 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
       { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
     ] },
     { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Marshall County", text: "" }] }] },

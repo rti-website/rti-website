@@ -29,7 +29,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
   // 20 Oct 2026, the facility content doc (Aaqib): address, phone, hours, Getting Here, what it accepts, drop-off, FAQ and county.
   quickInfo: [
     { glyph: 'pin',   label: "Address", value: "1545 East Victory Street, Phoenix, AZ 85040", href: "https://www.google.com/maps/dir/?api=1&destination=1545+East+Victory+Street%2C+Phoenix%2C+AZ+85040" },
-    { glyph: 'phone', label: "Phone", value: "602-276-4278", href: "tel:+16022764278" },
+    { glyph: 'phone', label: "Phone", value: "602-276-1858", href: "tel:+16022761858" },
     { glyph: 'clock', label: "Hours", value: "Monday to Friday, 6:00 AM to 2:30 PM" },
   ],
   directions: {
@@ -45,7 +45,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
     secondary: "Call This Location",
     name: "Arizona PCB Ballast Processing Facility",
     address: "1545 East Victory Street, Phoenix, AZ 85040",
-    tel: "+16022764278",
+    tel: "+16022761858",
     mapsHref: "https://www.google.com/maps/dir/?api=1&destination=1545+East+Victory+Street%2C+Phoenix%2C+AZ+85040",
   },
   about: {
@@ -84,8 +84,8 @@ export const PHOENIX_ARIZONA: CountyPage = {
     ] },
     // 20 Oct 2026, the facility content doc.
     { kind: 'faq', heading: "Questions About This Location", items: [
-      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (480) 393-5729 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
-      { q: "Do I need an appointment to drop off at the Phoenix facility?", a: "Drop-off requirements vary by material and quantity. Call (480) 393-5729 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
+      { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (602) 276-1858 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
+      { q: "Do I need an appointment to drop off at the Phoenix facility?", a: "Drop-off requirements vary by material and quantity. Call (602) 276-1858 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged. Large or commercial loads, in particular, go faster when the loading area expects you." },
       { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
     ] },
     { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Maricopa County", text: "" }] }] },

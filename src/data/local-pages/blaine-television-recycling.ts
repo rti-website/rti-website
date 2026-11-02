@@ -86,7 +86,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
       grey: true,
       blocks: [
         { kind: "h3", text: "Drop-Off" },
-        { kind: "text", body: ["Searching for TV recycling near you in Blaine, Spring Lake Park, or Lino Lakes? Bring your sets to 1525 99th Ln NE any weekday between 7:30 AM and 4:00 PM. Drop-off is open to households and businesses, and we don't publish a per-household cap. Call 763-559-5130 ahead of time if you're bringing more than a few sets or anything unusually large.", `The same visit can include other [electronics](${href('/electronic-recycle/')}), [batteries](${href('/battery-recycling/')}), and hard drives for [destruction](${href('/hard-drive-destruction-services/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
+        { kind: "text", body: ["Searching for TV recycling near you in Blaine, Spring Lake Park, or Lino Lakes? Bring your sets to 1525 99th Ln NE any weekday between 7:30 AM and 4:00 PM. Drop-off is open to households and businesses, and we don't publish a per-household cap. Call 763-559-5130 ahead of time if you're bringing more than a few sets or anything unusually large.", `The same visit can include other [electronics](${href('/electronic-recycle/')}), [batteries](${href('/battery-recycling/')}), and hard drives for [destruction](${href('/minnesota/blaine/hard-drive-destruction/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
         { kind: "h3", text: "Commercial Pickup" },
         { kind: "text", body: [`Many public programs charge per set, cap how many TVs a household can bring, or won't take sets used by a business or rental property. Property managers turning over units, schools retiring classroom displays, hospitals and clinics replacing room TVs, offices clearing conference rooms, and contractors finishing renovation cleanouts can schedule a pickup instead. Pickup covers businesses within roughly 100 miles of Blaine, including [Coon Rapids](${href('/minnesota-recycling/coon-rapids/')}), Andover, Anoka, Ham Lake, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), [Brooklyn Park](${href('/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/')}), Maple Grove, [Plymouth](${href('/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/')}), [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), St. Paul, Bloomington, [Woodbury](${href('/minnesota-recycling/electronic-recycling-in-woodbury/')}), Burnsville, [Lakeville](${href('/minnesota-recycling/dakota-county/lakeville-recycling-center/')}), Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.`, "When requesting a quote, include:"] },
         { kind: "bullets", rows: [
@@ -152,7 +152,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
         { kind: "chips", links: [
             { label: "TV Recycling", href: href('/tv-recycling/') },
             { label: "Electronics Recycling", href: href('/electronic-recycle/') },
-            { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-services/') },
+            { label: "Hard Drive Destruction", href: href('/minnesota/blaine/hard-drive-destruction/') },
             { label: "Battery Recycling", href: href('/battery-recycling/') },
             { label: "Mail-In Recycling Program", href: href('/mail-in-recycling/') },
             { label: "All Drop-Off Locations", href: href('/dropoff/') },

@@ -159,7 +159,8 @@ export const ARIZONA_HUB = hub({
   description: 'Certified electronics recycling, data destruction, and shredding across Arizona. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Arizona',
   lead: 'Full-service electronics recycling, data destruction, and shredding for Arizona businesses and residents, supported by our Phoenix facility.',
-  sites: [site('Arizona', 'Phoenix', '/phoenix-arizona/', '1545 East Victory Street, Phoenix, AZ 85040', '(480) 393-5729')],
+  // Phone and hours: the Phoenix content docs (Aaqib, 3 Nov 2026: "use the information in the Google Docs").
+  sites: [site('Arizona', 'Phoenix', '/phoenix-arizona/', '1545 East Victory Street, Phoenix, AZ 85040', '(602) 276-1858', 'Mon to Fri, 7:30 AM to 2:00 PM')],
   servicesLead: LEAD_HOME('Arizona'),
   counties: [{ heading: 'Maricopa County', chips: [chip('Phoenix', '/phoenix-arizona/')] }],
   faqs: [
@@ -267,12 +268,14 @@ export const TENNESSEE_HUB = hub({
   description: 'Certified electronics recycling, data destruction, and shredding across Tennessee. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Tennessee',
   lead: 'Full-service electronics recycling, data destruction, and shredding for Tennessee businesses and residents, supported by our Johnson City and Lewisburg facilities.',
-  // Johnson City: the doc's address (300 Boggs Lane) and number; its page is
+  // 3 Nov 2026 (Aaqib): addresses, phones and hours from the Tennessee content
+  // docs (Lewisburg 615-214-4768; Johnson City 2212 Buffalo Road #210,
+  // 423-328-7012). Until then: the hub doc's (300 Boggs Lane). Its page is
   // /johnson-city-buffalo-tennessee/, the only Johnson City page on the site
   // (/johnson-city-boggs-tennessee/ 301s to /mail-in-recycling/, flagged).
   sites: [
-    site('Tennessee', 'Lewisburg', '/tennessee/lewisburg/', '1580 Old Columbia Road, Lewisburg, TN 37091', '(629) 240-1860', 'Call for hours; by appointment'),
-    site('Tennessee', 'Johnson City', '/johnson-city-buffalo-tennessee/', '300 Boggs Lane, Johnson City, TN 37604', '(423) 328-9596'),
+    site('Tennessee', 'Lewisburg', '/tennessee/lewisburg/', '1580 Old Columbia Road, Lewisburg, TN 37091', '615-214-4768', 'Mon to Fri, 8:00 AM to 4:00 PM'),
+    site('Tennessee', 'Johnson City', '/johnson-city-buffalo-tennessee/', '2212 Buffalo Road #210, Johnson City, TN 37604', '423-328-7012', 'Mon to Fri, 7:30 AM to 3:00 PM'),
   ],
   servicesLead: LEAD_HOME('Tennessee'),
   counties: [

@@ -92,7 +92,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
       grey: true,
       blocks: [
         { kind: "h3", text: "Drop-Off" },
-        { kind: "text", body: ["Looking for paper shredding near you in Blaine, Ham Lake or Spring Lake Park? Bring your boxes to 1525 99th Ln NE any weekday between 7:30 AM and 4:00 PM. City shred programs nearby often cap you at a box or a few per visit, while our drop-off is set up for larger household cleanouts too. Call 763-559-5130 if you'd like to witness the shredding.", `Old hard drives can be destroyed on the same visit through our [hard drive destruction](${href('/hard-drive-destruction-services/')}) service, and phones through [phone shredding](${href('/phone-shredding-service/')}). Retired computers can go to [electronics recycling](${href('/electronic-recycle/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
+        { kind: "text", body: ["Looking for paper shredding near you in Blaine, Ham Lake or Spring Lake Park? Bring your boxes to 1525 99th Ln NE any weekday between 7:30 AM and 4:00 PM. City shred programs nearby often cap you at a box or a few per visit, while our drop-off is set up for larger household cleanouts too. Call 763-559-5130 if you'd like to witness the shredding.", `Old hard drives can be destroyed on the same visit through our [hard drive destruction](${href('/minnesota/blaine/hard-drive-destruction/')}) service, and phones through [phone shredding](${href('/phone-shredding-service/')}). Retired computers can go to [electronics recycling](${href('/electronic-recycle/')}).`, `View all [Recycle Technologies drop-off locations](${href('/dropoff/')}).`] },
         { kind: "h3", text: "Business Pickup" },
         { kind: "text", body: ["Pickup is a business service. We collect documents within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.", "When requesting a quote, include:"] },
         { kind: "bullets", rows: [
@@ -171,7 +171,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
             { label: "Paper Shredding", href: href('/paper-shredding-services/') },
             { label: "Off-Site Shredding", href: href('/off-site-shredding/') },
             { label: "Document Shredding in Minnesota", href: href('/minnesota/blaine/shredding/') },
-            { label: "Hard Drive Destruction", href: href('/hard-drive-destruction-services/') },
+            { label: "Hard Drive Destruction", href: href('/minnesota/blaine/hard-drive-destruction/') },
             { label: "Phone Shredding", href: href('/phone-shredding-service/') },
             { label: "Electronics Recycling", href: href('/electronic-recycle/') },
             { label: "All Drop-Off Locations", href: href('/dropoff/') },

@@ -126,7 +126,7 @@ export const LOCATIONS: DropoffLocation[] = [
   },
   {
     name: 'Phoenix, Arizona', kind: 'rti',
-    address: '1545 East Victory Street, Phoenix, AZ 85040', zip: '85040', phone: '(480) 393-5729',
+    address: '1545 East Victory Street, Phoenix, AZ 85040', zip: '85040', phone: '(602) 276-1858',
     hours: 'Monday to Friday, 7:30 AM to 2:00 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     body: `You can drop off accepted items during our regular working hours, Monday to Friday, 7:30 AM to 2:00 PM. ${CONFIRM}`,
@@ -178,7 +178,7 @@ export const LOCATIONS: DropoffLocation[] = [
   },
   {
     name: 'Lewisburg, Tennessee', kind: 'rti',
-    address: '1580 Old Columbia Road, Lewisburg, TN 37091', zip: '37091', phone: '931-334-1265',
+    address: '1580 Old Columbia Road, Lewisburg, TN 37091', zip: '37091', phone: '615-214-4768',
     // !! THE COPY HAS NO HOURS for Lewisburg ("[HOURS]"). Rather than print a
     // placeholder, the card says to call. Put the real hours here (and in the
     // sentence below) when the content writer has them.

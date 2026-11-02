@@ -563,5 +563,10 @@
     "source": "/what-to-do-with-old-phones-for-a-greener-future/",
     "destination": "/what-to-do-with-old-phones/",
     "statusCode": 301
+  },
+  {
+    "source": "/lewisburg-tennessee/",
+    "destination": "/tennessee/lewisburg/",
+    "statusCode": 301
   }
 ]
