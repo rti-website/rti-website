@@ -155,6 +155,7 @@ import { BLAINE_PHONE_SHREDDING } from '@/data/local-pages/blaine-phone-shreddin
 import { BLAINE_OFF_SITE_SHREDDING } from '@/data/local-pages/blaine-off-site-shredding'
 import { BLAINE_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/blaine-hard-drive-destruction'
 import { BLAINE_TELEVISION_RECYCLING } from '@/data/local-pages/blaine-television-recycling'
+import { BLAINE_AIRBAG_RECYCLING } from '@/data/local-pages/blaine-airbag-recycling'
 import { PHOENIX_ELECTRONIC_RECYCLING } from '@/data/local-pages/phoenix-electronic-recycling'
 import { PHOENIX_BATTERY_RECYCLING } from '@/data/local-pages/phoenix-battery-recycling'
 import { PHOENIX_LIGHT_BULB_RECYCLING } from '@/data/local-pages/phoenix-light-bulb-recycling'
@@ -343,6 +344,7 @@ export const DOCS = {
   'local/minnesota-blaine-off-site-shredding': { title: "Off-Site Shredding in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_OFF_SITE_SHREDDING.url], data: one(BLAINE_OFF_SITE_SHREDDING) },
   'local/minnesota-blaine-hard-drive-destruction': { title: "Hard Drive Destruction in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_HARD_DRIVE_DESTRUCTION.url], data: one(BLAINE_HARD_DRIVE_DESTRUCTION) },
   'local/minnesota-blaine-television-recycling': { title: "TV Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_TELEVISION_RECYCLING.url], data: one(BLAINE_TELEVISION_RECYCLING) },
+  'local/minnesota-blaine-airbag-recycling': { title: "Airbag Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_AIRBAG_RECYCLING.url], data: one(BLAINE_AIRBAG_RECYCLING) },
   'local/arizona-phoenix-electronic-recycling': { title: "Electronics Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_ELECTRONIC_RECYCLING.url], data: one(PHOENIX_ELECTRONIC_RECYCLING) },
   'local/arizona-phoenix-battery-recycling': { title: "Battery Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_BATTERY_RECYCLING.url], data: one(PHOENIX_BATTERY_RECYCLING) },
   'local/arizona-phoenix-light-bulb-recycling': { title: "Light Bulb Recycling in Phoenix, AZ", group: 'Location pages', urls: [PHOENIX_LIGHT_BULB_RECYCLING.url], data: one(PHOENIX_LIGHT_BULB_RECYCLING) },

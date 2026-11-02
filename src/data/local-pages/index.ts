@@ -27,6 +27,7 @@ import { BLAINE_PHONE_SHREDDING } from './blaine-phone-shredding'
 import { BLAINE_OFF_SITE_SHREDDING } from './blaine-off-site-shredding'
 import { BLAINE_HARD_DRIVE_DESTRUCTION } from './blaine-hard-drive-destruction'
 import { BLAINE_TELEVISION_RECYCLING } from './blaine-television-recycling'
+import { BLAINE_AIRBAG_RECYCLING } from './blaine-airbag-recycling'
 import { PHOENIX_ELECTRONIC_RECYCLING } from './phoenix-electronic-recycling'
 import { PHOENIX_BATTERY_RECYCLING } from './phoenix-battery-recycling'
 import { PHOENIX_LIGHT_BULB_RECYCLING } from './phoenix-light-bulb-recycling'
@@ -86,13 +87,14 @@ export const LOCAL_PAGES: LocalPage[] = [
  *   /arizona/phoenix/<service>/      four (electronics, batteries, bulbs, ballasts)
  *   /tennessee/lewisburg/<service>/  the same four
  *
- * Served by the [...slug] catch-all (docLocalPage below). No airbag page: the
- * sheet's Airbags row links the ballast doc, so it waits for its own doc.
+ * Served by the [...slug] catch-all (docLocalPage below). The airbag page came
+ * later the same day: the sheet's Airbags row linked the ballast doc, and
+ * management sent the airbag doc separately ("Blaine Airbag Recycling Page").
  */
 export const DOC_PAGES: LocalPage[] = [
   BLAINE_ELECTRONIC_RECYCLING, BLAINE_BATTERY_RECYCLING, BLAINE_LIGHT_BULB_RECYCLING, BLAINE_BALLAST_RECYCLING,
   BLAINE_PAPER_SHREDDING, BLAINE_PHONE_SHREDDING, BLAINE_OFF_SITE_SHREDDING, BLAINE_HARD_DRIVE_DESTRUCTION,
-  BLAINE_TELEVISION_RECYCLING,
+  BLAINE_TELEVISION_RECYCLING, BLAINE_AIRBAG_RECYCLING,
   PHOENIX_ELECTRONIC_RECYCLING, PHOENIX_BATTERY_RECYCLING, PHOENIX_LIGHT_BULB_RECYCLING, PHOENIX_BALLAST_RECYCLING,
   LEWISBURG_ELECTRONIC_RECYCLING, LEWISBURG_BATTERY_RECYCLING, LEWISBURG_LIGHT_BULB_RECYCLING, LEWISBURG_BALLAST_RECYCLING,
 ]
@@ -119,6 +121,7 @@ export const BLAINE_PAGES: Record<string, LocalPage> = {
   'off-site-shredding': BLAINE_OFF_SITE_SHREDDING,
   'phone-shredding': BLAINE_PHONE_SHREDDING,
   'tv-recycling': BLAINE_TELEVISION_RECYCLING,
+  'airbag-recycling': BLAINE_AIRBAG_RECYCLING,
 }
 
 /**

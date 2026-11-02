@@ -40,7 +40,7 @@ export const SERVICE_ROOTS = [
 const STATE_SERVICE = /^\/(minnesota|wisconsin)-recycling\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|tv-recycling|universal-waste-recycling)\/$/
 
 /** The facility service pages from the 3 Nov 2026 sheet: /minnesota/blaine/<service>/, /arizona/phoenix/… and /tennessee/lewisburg/…. */
-const FACILITY_SERVICE = /^\/(minnesota\/blaine|arizona\/phoenix|tennessee\/lewisburg)\/(ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|television-recycling)\/$/
+const FACILITY_SERVICE = /^\/(minnesota\/blaine|arizona\/phoenix|tennessee\/lewisburg)\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|television-recycling)\/$/
 
 /** The Chicago service pages (/battery-recycling-chicago/, /paper-shredding-chicago/ …). */
 const CHICAGO_SERVICE = /^\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|light-bulb-recycling|tv-recycling|hard-drive-destruction|off-site-shredding|paper-shredding|phone-shredding)-chicago\/$/

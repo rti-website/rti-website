@@ -172,7 +172,8 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota/blaine/phone-shredding/",
     "/minnesota/blaine/off-site-shredding/",
     "/minnesota/blaine/hard-drive-destruction/",
-    "/minnesota/blaine/television-recycling/"
+    "/minnesota/blaine/television-recycling/",
+    "/minnesota/blaine/airbag-recycling/"
   ] },
   { group: "Arizona: Phoenix service pages (3 Nov 2026)", urls: [
     "/arizona/phoenix/electronic-recycling/",
