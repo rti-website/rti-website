@@ -15,6 +15,7 @@ import REDIRECTS from '../../../data/redirects.json'
  * shredding and Light Bulb Recycling Minneapolis out (they now 301).
  * 29 Oct 2026: the whole sheet is pages again; its 30 other URLs added
  * (Rochester shredding and Light Bulb Recycling Minneapolis back).
+ * 2 Nov 2026 (management): 13 of them deleted again (404, no redirect).
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -64,9 +65,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/battery-recycling-st-paul/",
     "/shredding-minnesota/st-paul/",
     "/minnesota-recycling/ramsey/roseville/",
-    "/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/",
-    "/minnesota-recycling/ramsey/electronic-recycling/",
-    "/minnesota-recycling/electronic-recycling-st-paul/"
+    "/minnesota-recycling/ramsey/electronic-recycling/roseville-electronic-recycling/"
   ] },
   { group: "Minnesota: Dakota County", urls: [
     "/minnesota-recycling/dakota-county/",
@@ -75,18 +74,13 @@ const GROUPS: { group: string; urls: string[] }[] = [
   ] },
   { group: "Minnesota: Washington County", urls: [
     "/minnesota-recycling/washington-county/",
-    "/minnesota-recycling/electronic-recycling-in-woodbury/",
-    "/minnesota-recycling/washington-county/oakdale-recycling-services/",
-    "/wisconsin-recycling/washington-county-recycling-center/wood-bury-recycling/"
+    "/minnesota-recycling/electronic-recycling-in-woodbury/"
   ] },
   { group: "Minnesota: Scott County", urls: [
     "/minnesota-recycling/scott-county/"
   ] },
   { group: "Minnesota: Olmsted County", urls: [
-    "/minnesota-recycling/olmsted-county/",
-    "/minnesota-recycling/olmsted-county/rochester-recycling/",
-    "/electronics-recycling-in-minneapolis/electronic-recycling-in-rochester/",
-    "/shredding-minnesota/rochester/"
+    "/minnesota-recycling/olmsted-county/"
   ] },
   { group: "Minnesota: Benton County", urls: [
     "/minnesota-recycling/benton-county-recycling/",
@@ -97,19 +91,13 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/minnesota-recycling/battery-recycling-in-minneapolis/",
     "/minnesota-recycling/bulb-recycle-minneapolis/",
     "/minnesota-recycling/computer-recycle-minneapolis/",
-    "/light-bulb-recycling-minneapolis/",
-    "/electronics-recycling-in-minneapolis/",
-    "/minnesota-recycling/electronic-recycling-minneapolis/",
-    "/shredding-minnesota/minneapolis/"
+    "/light-bulb-recycling-minneapolis/"
   ] },
   { group: "Minnesota: statewide services", urls: [
     "/shredding-minnesota/",
     "/tv-recycling-in-minnesota/",
     "/minnesota-recycling/electronic-recycling-duluth/",
-    "/shredding-minnesota/duluth/",
-    "/minnesota-recycling/duluth/",
-    "/minnesota-recycling/computer-recycle-duluth/",
-    "/minnesota-recycling/battery-recycling-duluth/"
+    "/shredding-minnesota/duluth/"
   ] },
   { group: "Wisconsin: Milwaukee County", urls: [
     "/wisconsin-recycling/milwaukee/",
