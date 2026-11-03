@@ -45,20 +45,20 @@ export const ATTR_MAX_AGE = 90 * 24 * 60 * 60
  * necessary cookie, 12 months). The bootstrap below exposes it as
  *   window.rtiConsent = { necessary: true, analytics, decided, gpc, updatedAt }
  * and fires `rti:consent` on window whenever it changes (detail: the same
- * object). The visitor identification module and Snitcher read both.
+ * object). The visitor identification module reads both.
  *
  * 27 Oct 2026 (management): Analytics was OFF until the visitor clicked
  * Accept. Nothing loaded before that: no GTM, GA4 or Ads, no rti_attr cookie,
- * no visitor identification, no Snitcher. Most visitors never touch the
+ * no visitor identification. Most visitors never touch the
  * banner, so Google never saw their visit or their ad click and their leads
  * arrived as direct/unknown.
  *
  * 4 Nov 2026 (management, Peter: "load tags on page load with Consent Mode v2
  * (US default granted), fire the lead event only on form success, and store
  * the gclid/UTM in the form"). Now:
- *   - Analytics is ON by default. Tags, rti_attr, visitor identification and
- *     Snitcher all start on page load. The banner is still shown until the
- *     visitor chooses, and Reject (or Analytics off in Customize) switches it
+ *   - Analytics is ON by default. Tags, rti_attr and visitor identification
+ *     (when VISITOR_CAPTURE is on) start on page load. The banner is still
+ *     shown until the visitor chooses, and Reject (or Analytics off in Customize) switches it
  *     all off: rti_attr and the Google cookies are deleted, and the page
  *     reloads without the tags.
  *   - Google Consent Mode v2 is set before GTM loads:
