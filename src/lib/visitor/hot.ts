@@ -39,8 +39,8 @@ export const SERVICE_ROOTS = [
 /** The services each facility offers at /minnesota-recycling/<slug>/ and /wisconsin-recycling/<slug>/. */
 const STATE_SERVICE = /^\/(minnesota|wisconsin)-recycling\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|tv-recycling|universal-waste-recycling)\/$/
 
-/** The facility service pages from the 3 Nov 2026 sheet: /minnesota/blaine/<service>/, /arizona/phoenix/… and /tennessee/lewisburg/…. */
-const FACILITY_SERVICE = /^\/(minnesota\/blaine|arizona\/phoenix|tennessee\/lewisburg)\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|television-recycling)\/$/
+/** The facility service pages from the 3 Nov 2026 sheet: /minnesota/blaine/<service>/, /arizona/phoenix/…, /tennessee/lewisburg/… and (4 Nov) /florida/ocala/…, /indiana/greenwood/…, /california/ontario/…. */
+const FACILITY_SERVICE = /^\/(minnesota\/blaine|arizona\/phoenix|tennessee\/lewisburg|florida\/ocala|indiana\/greenwood|california\/ontario)\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|hard-drive-destruction|light-bulb-recycling|off-site-shredding|paper-shredding|phone-shredding|television-recycling)\/$/
 
 /** The Chicago service pages (/battery-recycling-chicago/, /paper-shredding-chicago/ …). */
 const CHICAGO_SERVICE = /^\/(airbag-recycling|ballast-recycling|battery-recycling|electronic-recycling|light-bulb-recycling|tv-recycling|hard-drive-destruction|off-site-shredding|paper-shredding|phone-shredding)-chicago\/$/

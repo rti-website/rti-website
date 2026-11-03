@@ -117,12 +117,13 @@ export const LOCATIONS: DropoffLocation[] = [
   },
   {
     name: 'Ontario, California', kind: 'rti',
-    address: '805 East Francis Street, Ontario, CA 91761', zip: '91761', phone: '909-923-8241',
-    hours: 'Monday to Thursday, 8:30 AM to 2:30 PM; Friday, 8:30 AM to 1:30 PM',
+    // Phone and hours: the Ontario content docs (4 Nov 2026; until then 909-923-8241, Mon–Thu 8:30–2:30, Fri 8:30–1:30).
+    address: '805 East Francis Street, Ontario, CA 91761', zip: '91761', phone: '(909) 923-7252',
+    hours: 'Monday to Friday, 6:00 AM to 2:30 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
-    body: `You can drop off accepted items during our regular working hours, Monday to Thursday, 8:30 AM to 2:30 PM; Friday, 8:30 AM to 1:30 PM. ${CONFIRM}`,
+    body: `You can drop off accepted items during our regular working hours, Monday to Friday, 6:00 AM to 2:30 PM. ${CONFIRM}`,
     // Its own page since 8 Oct 2026.
-    url: href('/ontario-california/'),
+    url: href('/california/ontario/'),
   },
   {
     name: 'Phoenix, Arizona', kind: 'rti',
@@ -149,7 +150,7 @@ export const LOCATIONS: DropoffLocation[] = [
     hours: 'Monday to Friday, 7:00 AM to 2:00 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     body: `You can drop off accepted items during our regular working hours, Monday to Friday, 7:00 AM to 2:00 PM. ${CONFIRM}`,
-    url: href('/greenwood-indiana/'),
+    url: href('/indiana/greenwood/'),
   },
   {
     name: 'Ocala, Florida', kind: 'rti',
@@ -158,7 +159,7 @@ export const LOCATIONS: DropoffLocation[] = [
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     note: APPOINTMENT,
     body: `You can drop off accepted items during our regular working hours, Monday to Friday, 6:00 AM to 2:30 PM. ${CONFIRM}`,
-    url: href('/ocala-florida/'),
+    url: href('/florida/ocala/'),
   },
   {
     name: 'Kennesaw, Georgia', kind: 'rti',

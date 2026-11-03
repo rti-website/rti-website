@@ -9,12 +9,14 @@ test('service pages: the hubs, their state and Chicago pages; not location pages
     '/minnesota-recycling/battery-recycling/', '/wisconsin-recycling/paper-shredding/', '/battery-recycling-chicago/', '/paper-shredding-chicago',
     '/services/', '/mail-in-recycling/',
     '/minnesota/blaine/battery-recycling/', '/minnesota/blaine/television-recycling/', '/arizona/phoenix/ballast-recycling/',
-    '/tennessee/lewisburg/light-bulb-recycling/']) {
+    '/tennessee/lewisburg/light-bulb-recycling/', '/florida/ocala/battery-recycling/', '/indiana/greenwood/electronic-recycling/',
+    '/california/ontario/ballast-recycling/']) {
     assert.equal(isServicePath(p), true, p)
   }
   for (const p of ['/', '/quote/', '/about-us-commercial-recycling-solutions/', '/minnesota-recycling/', '/minnesota-recycling/duluth/',
     '/wisconsin-recycling/battery-recycling-milwaukee/', '/battery-recycling-des-moines/', '/shredding-wisconsin/milwaukee/', '/blog/',
-    '/arizona/', '/tennessee/lewisburg/', '/minnesota/blaine/shredding/']) {
+    '/arizona/', '/tennessee/lewisburg/', '/minnesota/blaine/shredding/', '/florida/', '/florida/ocala/', '/indiana/greenwood/',
+    '/california/ontario/']) {
     assert.equal(isServicePath(p), false, p)
   }
 })

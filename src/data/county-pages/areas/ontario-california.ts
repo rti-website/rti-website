@@ -2,7 +2,7 @@ import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Ontario, California, /ontario-california/
+ * Ontario, California, /california/ontario/ (was /ontario-california/ until 4 Nov 2026: moved by the management sheet, the old URL 301s here)
  * Built 8 Oct 2026 on the county template (Figma BVtf2AOuUOcYbiMIlcKmbC board
  * 7052:28731, phone 7052:34333) from the replacement content Asim sent ("only
  * take the necessary content like the other pages"). The URL had 301'd to
@@ -23,7 +23,7 @@ import type { CountyPage } from '../types'
 const MAPS = "https://www.google.com/maps/dir/?api=1&destination=805+E+Francis+St%2C+Ontario%2C+CA+91761"
 
 export const ONTARIO_CALIFORNIA: CountyPage = {
-  url: "/ontario-california/",
+  url: "/california/ontario/",
   state: "California",
   county: "Ontario",
   service: "Light Bulb, Battery and Electronics Recycling",
@@ -36,7 +36,7 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
     h1: 'Recycling Services in Ontario, California',
     crumb: "Ontario",
     /* Home / Locations / California / Ontario (14 Oct 2026, the state hub brief). */
-    parent: { label: "California", href: href('/california-recycling/') },
+    parent: { label: "California", href: href('/california/') },
     lead: "California Bulb Processing Facility, 805 East Francis Street, Ontario, CA 91761",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },

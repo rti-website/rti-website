@@ -641,12 +641,12 @@ export const NATIONWIDE = {
      own, and that is what is used here. */
   facilities: [
     { ...nationwide('Lewisburg, TN',    '1580 Old Columbia Road, Lewisburg, TN 37091',         '615-214-4768', 8, 'lewisburg-tn'), href: href('/tennessee/lewisburg/') },
-    { ...nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'), href: href('/greenwood-indiana/') },
-    { ...nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'), href: href('/ocala-florida/') },
+    { ...nationwide('Greenwood, IN',    '498 Park 800 Drive, Greenwood, IN 46143',             '(866) 375-7340', 3, 'greenwood-in'), href: href('/indiana/greenwood/') },
+    { ...nationwide('Ocala, FL',        '1007 SW 16th Lane, Ocala, FL 34471',                  '(813) 534-5735', 4, 'ocala-fl'), href: href('/florida/ocala/') },
     { ...nationwide('Johnson City, TN', '2212 Buffalo Road #210, Johnson City, TN 37604',      '423-328-7012', 6, 'johnson-city-tn'), href: href('/johnson-city-buffalo-tennessee/') },
     { ...nationwide('Atlanta, GA',      '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 7, 'atlanta-ga'), href: href('/kennesaw-georgia/') },
     // Every card opens its facility page (Ontario 8 Oct 2026, the rest 21 Oct 2026, Aaqib: "make all these facilities clickable").
-    { ...nationwide('Ontario, CA', '805 East Francis Street, Ontario, CA 91761', '(888) 923-7252', 1, 'ontario-ca'), href: href('/ontario-california/') },
+    { ...nationwide('Ontario, CA', '805 East Francis Street, Ontario, CA 91761', '(909) 923-7252', 1, 'ontario-ca'), href: href('/california/ontario/') },
     { ...nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(602) 276-1858', 2, 'phoenix-az'), href: href('/phoenix-arizona/') },
     { ...nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'), href: href('/fort-worth-texas/') },
   ],

@@ -7,6 +7,7 @@ import { Accordion } from '@/components/client/Accordion'
 import { FOOTER_H } from '@/lib/layout'
 import { QUOTE_HREF, href } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
+import { LocalServicePageV2Body } from '@/components/sections/locations/LocalServicePageV2'
 import { ICON_SRC, type LocalBand, type LocalBlock, type LocalCard, type LocalPage, type Link as L } from '@/data/local-pages/types'
 
 /**
@@ -43,11 +44,15 @@ export function LocalServicePage({ page }: { page: LocalPage }) {
     <FlowCanvas>
       <Header />
       <main>
-        <Hero page={page} />
-        {page.bands.map((b) => <Band key={b.figma} band={b} />)}
-        <Faq faq={page.faq} id={page.url} />
-        {page.after.map((b) => <Band key={b.figma} band={b} />)}
-        <Cta cta={page.cta} />
+        {page.design === 2 ? <LocalServicePageV2Body page={page} /> : (
+          <>
+            <Hero page={page} />
+            {page.bands.map((b) => <Band key={b.figma} band={b} />)}
+            <Faq faq={page.faq} id={page.url} />
+            {page.after.map((b) => <Band key={b.figma} band={b} />)}
+            <Cta cta={page.cta} />
+          </>
+        )}
       </main>
       <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
         <Footer top={0} />
@@ -239,6 +244,8 @@ function Block({ block: b }: { block: LocalBlock }) {
           </a>
         </div>
       )
+    default:
+      return null
   }
 }
 

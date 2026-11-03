@@ -2,14 +2,14 @@ import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Ocala, Florida, /ocala-florida/
+ * Ocala, Florida, /florida/ocala/ (was /ocala-florida/ until 4 Nov 2026: moved by the management sheet, the old URL 301s here)
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7084:68694, phone 7084:69020 (29 Sep 2026).
  * The frame's copy word for word; "this form" and the like link to the quote
  * form (the pickup form in a sentence about pickups). The SEO title and
  * description are the old WordPress page's (15 Sep 2026 backup).
  */
 export const OCALA_FLORIDA: CountyPage = {
-  url: "/ocala-florida/",
+  url: "/florida/ocala/",
   state: "Florida",
   county: "Ocala",
   service: "Light Bulb Recycling",
@@ -22,7 +22,7 @@ export const OCALA_FLORIDA: CountyPage = {
     h1: 'Recycle Technologies Ocala, FL',
     crumb: "Ocala",
     /* Home / Locations / Florida / Ocala (14 Oct 2026, the state hub brief). */
-    parent: { label: "Florida", href: href('/florida-recycling/') },
+    parent: { label: "Florida", href: href('/florida/') },
     lead: "Florida Bulb Processing Facility, 1007 SW 16th Lane, Ocala, FL 34471",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -30,7 +30,7 @@ export const OCALA_FLORIDA: CountyPage = {
   quickInfo: [
     { glyph: 'pin',   label: "Address", value: "1007 SW 16th Lane, Ocala, FL 34471", href: "https://www.google.com/maps/dir/?api=1&destination=1007+SW+16th+Lane%2C+Ocala%2C+FL+34471" },
     { glyph: 'phone', label: "Phone", value: "(813) 534-5735", href: "tel:+18135345735" },
-    { glyph: 'clock', label: "Hours", value: "Mon to Fri, 8am to 4pm" },
+    { glyph: 'clock', label: "Hours", value: "Monday to Friday, 6:00 AM to 2:30 PM" }, // 4 Nov 2026: the Ocala content docs (was Mon to Fri, 8am to 4pm)
   ],
   directions: {
     heading: "Getting Here",

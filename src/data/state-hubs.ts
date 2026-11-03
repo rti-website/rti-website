@@ -6,9 +6,9 @@ import type { Facility, StateHub, StatePageLike } from '@/data/facilities'
  * 7 new state hub pages using the same template as /minnesota-recycling/ and
  * /wisconsin-recycling/") and their seven content docs, word for word:
  *
- *   /arizona/ (was /arizona-recycling/)  Phoenix   /indiana-recycling/  Greenwood
- *   /california-recycling/  Ontario          /tennessee/ (was /tennessee-recycling/)  Johnson City, Lewisburg
- *   /florida-recycling/     Ocala            /texas-recycling/      Fort Worth
+ *   /arizona/ (was /arizona-recycling/)  Phoenix   /indiana/ (was /indiana-recycling/)  Greenwood
+ *   /california/ (was /california-recycling/)  Ontario    /tennessee/ (was /tennessee-recycling/)  Johnson City, Lewisburg
+ *   /florida/ (was /florida-recycling/)  Ocala     /texas-recycling/      Fort Worth
  *   /georgia-recycling/     Kennesaw
  *
  * Linked like Minnesota and Wisconsin (Aaqib, 14 Oct 2026): a center card
@@ -29,7 +29,7 @@ import type { Facility, StateHub, StatePageLike } from '@/data/facilities'
  * pages, as no state has service pages of its own.
  *
  * Not taken from the docs, on purpose:
- *   - Indiana's "Franklin" chip: /franklin-indiana/ 301s to /greenwood-indiana/
+ *   - Indiana's "Franklin" chip: /franklin-indiana/ 301s to /indiana/greenwood/
  *     (the same brief: there is no Franklin branch).
  *   - Hours: the docs give none. Ontario's are its page's; the others say
  *     "Call for hours", as Lewisburg's page does.
@@ -92,11 +92,11 @@ const TILES: StateHub['materials']['tiles'] = [
  * that facility's own page (3 Nov 2026, management sheet "all plan rti 1":
  * "update the page as we are giving services, not show all").
  */
-const fourTiles = (base: string): StateHub['materials']['tiles'] => [
+const fourTiles = (base: string, ballasts = `${base}ballast-recycling/`): StateHub['materials']['tiles'] => [
   { label: 'Electronics', icon: `${I}/state-electronics.svg`, service: 'electronic-recycling', href: href(`${base}electronic-recycling/`) },
   { label: 'Batteries',   icon: `${I}/state-batteries.svg`,   service: 'battery-recycling',    href: href(`${base}battery-recycling/`) },
   { label: 'Light bulbs', icon: `${I}/state-bulbs.svg`,       service: 'light-bulb-recycling', href: href(`${base}light-bulb-recycling/`) },
-  { label: 'Ballasts',    icon: `${I}/state-ballasts.svg`,    service: 'ballast-recycling',    href: href(`${base}ballast-recycling/`) },
+  { label: 'Ballasts',    icon: `${I}/state-ballasts.svg`,    service: 'ballast-recycling',    href: href(ballasts) },
 ]
 
 const BUTTONS = {
@@ -173,16 +173,21 @@ export const ARIZONA_HUB = hub({
   photo: PHOTO_A,
 })
 
+// 4 Nov 2026 (management sheet, California tab): moved from
+// /california-recycling/ to /california/ (the old URL is deleted, no
+// redirect); the tiles show the four Ontario services; Ontario itself moved
+// to /california/ontario/ (the old URL 301s).
 export const CALIFORNIA_HUB = hub({
-  slug: 'california-recycling', state: 'California',
+  slug: 'california', state: 'California',
+  tiles: fourTiles('/california/ontario/'),
   title: 'California E-Waste Recycling | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across California. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in California',
   lead: 'Full-service electronics recycling, data destruction, and shredding for California businesses and residents, supported by our Ontario facility.',
-  // Hours: the Ontario page's own (src/data/county-pages/areas/ontario-california.ts).
-  sites: [site('California', 'Ontario', '/ontario-california/', '805 East Francis Street, Ontario, CA 91761', '(888) 923-7252', 'Mon–Thu 8:30 AM–2:30 PM, Fri 8:30 AM–1:30 PM')],
+  // Phone and hours: the Ontario content docs (4 Nov 2026; until then (888) 923-7252, Mon–Thu 8:30–2:30, Fri 8:30–1:30).
+  sites: [site('California', 'Ontario', '/california/ontario/', '805 East Francis Street, Ontario, CA 91761', '(909) 923-7252', 'Mon to Fri, 6:00 AM to 2:30 PM')],
   servicesLead: LEAD_HOME('California'),
-  counties: [{ heading: 'San Bernardino County', chips: [chip('Ontario', '/ontario-california/')] }],
+  counties: [{ heading: 'San Bernardino County', chips: [chip('Ontario', '/california/ontario/')] }],
   faqs: [
     { q: 'Can electronics be thrown in the trash in California?', a: 'No. California prohibits disposing of covered electronic devices, such as TVs, monitors, and computers, in regular household trash.' },
     { q: 'How should I dispose of old batteries and fluorescent bulbs?', a: 'California prohibits placing batteries and fluorescent lamps in regular trash; use an appropriate recycling or hazardous-waste collection program.' },
@@ -193,16 +198,21 @@ export const CALIFORNIA_HUB = hub({
   photo: PHOTO_B,
 })
 
+// 4 Nov 2026 (management sheet, Florida tab): moved from /florida-recycling/
+// to /florida/ (the old URL is deleted, no redirect); the tiles show the four
+// Ocala services; Ocala itself moved to /florida/ocala/ (the old URL 301s).
 export const FLORIDA_HUB = hub({
-  slug: 'florida-recycling', state: 'Florida',
+  slug: 'florida', state: 'Florida',
+  tiles: fourTiles('/florida/ocala/'),
   title: 'Florida E-Waste Recycling & Shredding | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Florida. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Florida',
   lead: 'Full-service electronics recycling, data destruction, and shredding for Florida businesses and residents, supported by our Ocala facility.',
-  sites: [site('Florida', 'Ocala', '/ocala-florida/', '1007 SW 16th Lane, Ocala, FL 34471', '(813) 534-5735')],
+  // Hours: the Ocala content docs (4 Nov 2026), drop-off by appointment.
+  sites: [site('Florida', 'Ocala', '/florida/ocala/', '1007 SW 16th Lane, Ocala, FL 34471', '(813) 534-5735', 'Mon to Fri, 6:00 AM to 2:30 PM')],
   servicesLead: LEAD_HOME('Florida'),
   counties: [
-    { heading: 'Marion County', chips: [chip('Ocala', '/ocala-florida/')] },
+    { heading: 'Marion County', chips: [chip('Ocala', '/florida/ocala/')] },
     // The brief: the Florida hub also links these two pages.
     { heading: 'Florida Recycling Resources', chips: [
       chip('Recycling kits in Florida', '/recycling-kits-in-florida/'),
@@ -238,16 +248,23 @@ export const GEORGIA_HUB = hub({
   photo: PHOTO_B,
 })
 
+// 4 Nov 2026 (management sheet, Indiana tab): moved from /indiana-recycling/
+// to /indiana/ (the old URL is deleted, no redirect); the tiles show the
+// Greenwood services; Greenwood itself moved to /indiana/greenwood/ (the old
+// URL 301s). The Ballasts tile opens /ballasts/ until the Greenwood ballast
+// page is built (its doc in the sheet could not be opened, 4 Nov 2026).
 export const INDIANA_HUB = hub({
-  slug: 'indiana-recycling', state: 'Indiana',
+  slug: 'indiana', state: 'Indiana',
+  tiles: fourTiles('/indiana/greenwood/', '/ballasts/'),
   title: 'Indiana E-Waste Recycling & Shredding | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Indiana. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Indiana',
   lead: 'Full-service electronics recycling, data destruction, and shredding for Indiana businesses and residents, supported by our Greenwood facility.',
-  sites: [site('Indiana', 'Greenwood', '/greenwood-indiana/', '498 Park 800 Drive, Greenwood, IN 46143', '(866) 375-7340')],
+  // Phone and hours: the Greenwood content docs (4 Nov 2026; toll-free (866) 375-7340 until then).
+  sites: [site('Indiana', 'Greenwood', '/indiana/greenwood/', '498 Park 800 Drive, Greenwood, IN 46143', '(317) 888-3889', 'Mon to Fri, 7:00 AM to 2:00 PM')],
   servicesLead: LEAD_HOME('Indiana'),
   // The doc lists "Greenwood · Franklin"; /franklin-indiana/ 301s to Greenwood (no Franklin branch).
-  counties: [{ heading: 'Johnson County', chips: [chip('Greenwood', '/greenwood-indiana/')] }],
+  counties: [{ heading: 'Johnson County', chips: [chip('Greenwood', '/indiana/greenwood/')] }],
   faqs: [
     { q: 'Which electronics cannot be thrown away with regular trash in Indiana?', a: 'Indiana prohibits households, small businesses, and schools from discarding items such as computers, monitors, TVs, tablets, and printers in regular trash.' },
     { q: 'Can I recycle broken or nonworking electronics?', a: 'Contact Recycle Technologies with your equipment list to confirm acceptance and any handling requirements for damaged or nonworking devices.' },

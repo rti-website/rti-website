@@ -51,6 +51,43 @@ export type LocalBlock =
   | { kind: 'buttons'; primary: Link; secondary: Link }
   /** The landing pages' pickup banner: a mint box, heading and text beside a button. */
   | { kind: 'banner'; heading: string; body: string[]; link: Link }
+  | DocBlock
+
+/**
+ * THE 4 NOV 2026 DESIGN ("RTI Location Service Page New Design", Figma
+ * 7566:9207 board, 7577:10185 phone) for the pages built from the content
+ * team's Google Docs (`design: 2`). Drawn by LocalServicePageV2.tsx.
+ * A line icon is named, not a file: src/components/ui/LineIcon.tsx.
+ */
+export type LineIconItem = { icon: string; title?: string; body?: string }
+
+export type DocBlock =
+  /** The facility card: name, the info rows (the first three across, the rest under a rule), an optional note. */
+  | { kind: 'center'; eyebrow?: string; title?: string; rows: { label: string; value: string }[]; note?: string[] }
+  /** "Available service options": one joined card, three across on the board. */
+  | { kind: 'options'; heading?: string; items: LineIconItem[] }
+  /** What we take: white icon cards, three a row (mint band). */
+  | { kind: 'grid'; items: LineIconItem[] }
+  /** A white bar under a grid ("Not sure which type you have? Call …"). */
+  | { kind: 'note'; body: string[] }
+  /** Left: teal rule, heading, text; right: a mint panel of ticks (`checks`) or of paragraphs (`panel`). */
+  | { kind: 'split'; heading: string; body?: string[]; checks?: string[]; panel?: string[] }
+  /** Numbered steps on a line: across on the board, down on the phone. */
+  | { kind: 'timeline'; steps: { title?: string; body: string }[] }
+  /** One way to recycle (drop-off, pickup, mail-in). `dark`: the gradient pickup card. */
+  | { kind: 'option'; icon: string; title: string; dark?: boolean; body: string[]; listIntro?: string; list?: string[]; buttons?: { primary: Link; secondary: Link }; after?: string[] }
+  /** Pill links with a pin (counties and cities served). */
+  | { kind: 'places'; links: Link[] }
+  /** One bordered card of icon rows, two a row (who uses the service). */
+  | { kind: 'list'; items: LineIconItem[] }
+  /** A mint panel of ticked lines. */
+  | { kind: 'checks'; items: string[] }
+  /** Mint box with a teal left rule (rules and laws). */
+  | { kind: 'callout'; body: string[] }
+  /** Titled paragraphs as cards, two or three a row. */
+  | { kind: 'topics'; items: { title: string; body: string[] }[] }
+  /** The dark Why band's cards: four a row, a short row centred. */
+  | { kind: 'why'; items: LineIconItem[] }
 
 export type LocalBand = {
   /** Figma node id of the band on the board. */
@@ -60,6 +97,8 @@ export type LocalBand = {
   /** #fcfcfc or white, as the frame draws it; the landing pages' tint is #f4f9f6 (`mint`). */
   grey: boolean
   mint?: boolean
+  /** The navy-to-green Why band of the 4 Nov design. */
+  dark?: boolean
   blocks: LocalBlock[]
 }
 
@@ -79,6 +118,10 @@ export type LocalPage = {
     primary: Link
     secondary: Link
   }
+  /** 2: the 4 Nov 2026 design (LocalServicePageV2). Absent: the 30 Sep frames. */
+  design?: 2
+  /** The 4 Nov design's summary box under the hero. */
+  summary?: string[]
   /** The bands before the FAQ, in frame order. */
   bands: LocalBand[]
   faq: { eyebrow: string; heading: string; items: { q: string; a: string }[] }

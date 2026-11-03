@@ -164,6 +164,17 @@ import { LEWISBURG_ELECTRONIC_RECYCLING } from '@/data/local-pages/lewisburg-ele
 import { LEWISBURG_BATTERY_RECYCLING } from '@/data/local-pages/lewisburg-battery-recycling'
 import { LEWISBURG_LIGHT_BULB_RECYCLING } from '@/data/local-pages/lewisburg-light-bulb-recycling'
 import { LEWISBURG_BALLAST_RECYCLING } from '@/data/local-pages/lewisburg-ballast-recycling'
+import { OCALA_ELECTRONIC_RECYCLING } from '@/data/local-pages/ocala-electronic-recycling'
+import { OCALA_BATTERY_RECYCLING } from '@/data/local-pages/ocala-battery-recycling'
+import { OCALA_LIGHT_BULB_RECYCLING } from '@/data/local-pages/ocala-light-bulb-recycling'
+import { OCALA_BALLAST_RECYCLING } from '@/data/local-pages/ocala-ballast-recycling'
+import { GREENWOOD_ELECTRONIC_RECYCLING } from '@/data/local-pages/greenwood-electronic-recycling'
+import { GREENWOOD_BATTERY_RECYCLING } from '@/data/local-pages/greenwood-battery-recycling'
+import { GREENWOOD_LIGHT_BULB_RECYCLING } from '@/data/local-pages/greenwood-light-bulb-recycling'
+import { ONTARIO_ELECTRONIC_RECYCLING } from '@/data/local-pages/ontario-electronic-recycling'
+import { ONTARIO_BATTERY_RECYCLING } from '@/data/local-pages/ontario-battery-recycling'
+import { ONTARIO_LIGHT_BULB_RECYCLING } from '@/data/local-pages/ontario-light-bulb-recycling'
+import { ONTARIO_BALLAST_RECYCLING } from '@/data/local-pages/ontario-ballast-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
 import { CHICAGO_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/chicago-hard-drive-destruction'
@@ -352,6 +363,17 @@ export const DOCS = {
   'local/tennessee-lewisburg-battery-recycling': { title: "Battery Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BATTERY_RECYCLING.url], data: one(LEWISBURG_BATTERY_RECYCLING) },
   'local/tennessee-lewisburg-light-bulb-recycling': { title: "Light Bulb Recycling in Lewisburg, TN", group: 'Location pages', urls: [LEWISBURG_LIGHT_BULB_RECYCLING.url], data: one(LEWISBURG_LIGHT_BULB_RECYCLING) },
   'local/tennessee-lewisburg-ballast-recycling': { title: "Ballast Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BALLAST_RECYCLING.url], data: one(LEWISBURG_BALLAST_RECYCLING) },
+  'local/florida-ocala-electronic-recycling': { title: "Electronics Recycling in Ocala, FL", group: 'Location pages', urls: [OCALA_ELECTRONIC_RECYCLING.url], data: one(OCALA_ELECTRONIC_RECYCLING) },
+  'local/florida-ocala-battery-recycling': { title: "Battery Recycling in Ocala, FL", group: 'Location pages', urls: [OCALA_BATTERY_RECYCLING.url], data: one(OCALA_BATTERY_RECYCLING) },
+  'local/florida-ocala-light-bulb-recycling': { title: "Light Bulb Recycling in Ocala, FL", group: 'Location pages', urls: [OCALA_LIGHT_BULB_RECYCLING.url], data: one(OCALA_LIGHT_BULB_RECYCLING) },
+  'local/florida-ocala-ballast-recycling': { title: "Ballast Recycling in Ocala, FL", group: 'Location pages', urls: [OCALA_BALLAST_RECYCLING.url], data: one(OCALA_BALLAST_RECYCLING) },
+  'local/indiana-greenwood-electronic-recycling': { title: "Electronics Recycling in Greenwood, IN", group: 'Location pages', urls: [GREENWOOD_ELECTRONIC_RECYCLING.url], data: one(GREENWOOD_ELECTRONIC_RECYCLING) },
+  'local/indiana-greenwood-battery-recycling': { title: "Battery Recycling in Greenwood, IN", group: 'Location pages', urls: [GREENWOOD_BATTERY_RECYCLING.url], data: one(GREENWOOD_BATTERY_RECYCLING) },
+  'local/indiana-greenwood-light-bulb-recycling': { title: "Light Bulb Recycling in Greenwood, IN", group: 'Location pages', urls: [GREENWOOD_LIGHT_BULB_RECYCLING.url], data: one(GREENWOOD_LIGHT_BULB_RECYCLING) },
+  'local/california-ontario-electronic-recycling': { title: "Electronics Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_ELECTRONIC_RECYCLING.url], data: one(ONTARIO_ELECTRONIC_RECYCLING) },
+  'local/california-ontario-battery-recycling': { title: "Battery Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_BATTERY_RECYCLING.url], data: one(ONTARIO_BATTERY_RECYCLING) },
+  'local/california-ontario-light-bulb-recycling': { title: "Light Bulb Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_LIGHT_BULB_RECYCLING.url], data: one(ONTARIO_LIGHT_BULB_RECYCLING) },
+  'local/california-ontario-ballast-recycling': { title: "Ballast Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_BALLAST_RECYCLING.url], data: one(ONTARIO_BALLAST_RECYCLING) },
   'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
   'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
   'local/hard-drive-destruction-chicago': { title: "Hard Drive Destruction in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_HARD_DRIVE_DESTRUCTION.url], data: one(CHICAGO_HARD_DRIVE_DESTRUCTION) },

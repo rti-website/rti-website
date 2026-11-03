@@ -2,14 +2,14 @@ import { PICKUP_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Greenwood, Indiana, /greenwood-indiana/
+ * Greenwood, Indiana, /indiana/greenwood/ (was /greenwood-indiana/ until 4 Nov 2026: moved by the management sheet, the old URL 301s here)
  * Figma BVtf2AOuUOcYbiMIlcKmbC: board 7084:67597, phone 7084:67924 (29 Sep 2026).
  * The frame's copy word for word; "this form" and the like link to the quote
  * form (the pickup form in a sentence about pickups). The SEO title and
  * description are the old WordPress page's (15 Sep 2026 backup).
  */
 export const GREENWOOD_INDIANA: CountyPage = {
-  url: "/greenwood-indiana/",
+  url: "/indiana/greenwood/",
   state: "Indiana",
   county: "Greenwood",
   service: "Light Bulb Recycling",
@@ -22,7 +22,7 @@ export const GREENWOOD_INDIANA: CountyPage = {
     h1: 'Recycle Technologies Greenwood, IN',
     crumb: "Greenwood",
     /* Home / Locations / Indiana / Greenwood (14 Oct 2026, the state hub brief). */
-    parent: { label: "Indiana", href: href('/indiana-recycling/') },
+    parent: { label: "Indiana", href: href('/indiana/') },
     lead: "Indiana Bulb Processing and Mercury Retort Facility, 498 Park 800 Drive, Greenwood, IN 46143",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

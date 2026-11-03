@@ -61,7 +61,12 @@
   },
   {
     "source": "/franklin-indiana/",
-    "destination": "/greenwood-indiana/",
+    "destination": "/indiana/greenwood/",
+    "statusCode": 301
+  },
+  {
+    "source": "/greenwood-indiana/",
+    "destination": "/indiana/greenwood/",
     "statusCode": 301
   },
   {
@@ -87,6 +92,16 @@
   {
     "source": "/news/",
     "destination": "/category/news/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ocala-florida/",
+    "destination": "/florida/ocala/",
+    "statusCode": 301
+  },
+  {
+    "source": "/ontario-california/",
+    "destination": "/california/ontario/",
     "statusCode": 301
   },
   {

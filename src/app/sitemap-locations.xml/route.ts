@@ -20,6 +20,10 @@ import REDIRECTS from '../../../data/redirects.json'
  * at /arizona/ and /tennessee/, Lewisburg at /tennessee/lewisburg/, Document
  * Shredding MN at /minnesota/blaine/shredding/, TV Recycling MN out (it 301s),
  * and the 17 new service pages in their own groups.
+ * 4 Nov 2026 (the same sheet, Florida, Indiana and California tabs): hubs at
+ * /florida/, /indiana/ and /california/, Ocala, Greenwood and Ontario at
+ * /florida/ocala/, /indiana/greenwood/ and /california/ontario/, and their
+ * 11 service pages.
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -37,10 +41,10 @@ const GROUPS: { group: string; urls: string[] }[] = [
   ] },
   { group: "State hubs (14 Oct 2026)", urls: [
     "/arizona/",
-    "/california-recycling/",
-    "/florida-recycling/",
+    "/california/",
+    "/florida/",
     "/georgia-recycling/",
-    "/indiana-recycling/",
+    "/indiana/",
     "/tennessee/",
     "/texas-recycling/"
   ] },
@@ -187,13 +191,30 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/tennessee/lewisburg/light-bulb-recycling/",
     "/tennessee/lewisburg/ballast-recycling/"
   ] },
+  { group: "Florida: Ocala service pages (4 Nov 2026)", urls: [
+    "/florida/ocala/electronic-recycling/",
+    "/florida/ocala/battery-recycling/",
+    "/florida/ocala/light-bulb-recycling/",
+    "/florida/ocala/ballast-recycling/"
+  ] },
+  { group: "Indiana: Greenwood service pages (4 Nov 2026)", urls: [
+    "/indiana/greenwood/electronic-recycling/",
+    "/indiana/greenwood/battery-recycling/",
+    "/indiana/greenwood/light-bulb-recycling/"
+  ] },
+  { group: "California: Ontario service pages (4 Nov 2026)", urls: [
+    "/california/ontario/electronic-recycling/",
+    "/california/ontario/battery-recycling/",
+    "/california/ontario/light-bulb-recycling/",
+    "/california/ontario/ballast-recycling/"
+  ] },
   { group: "Mail-in recycling locations", urls: [
     "/phoenix-arizona/",
-    "/ocala-florida/",
+    "/florida/ocala/",
     "/kennesaw-georgia/",
-    "/greenwood-indiana/",
+    "/indiana/greenwood/",
     "/fort-worth-texas/",
-    "/ontario-california/",
+    "/california/ontario/",
     "/johnson-city-buffalo-tennessee/",
     "/tennessee/lewisburg/",
     "/recycling-kits-in-ohio/",

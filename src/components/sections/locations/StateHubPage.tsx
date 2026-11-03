@@ -11,7 +11,7 @@ import { content } from '@/lib/page-content'
 import { faqNode, graph } from '@/lib/schema'
 
 /**
- * A state hub — /arizona-recycling/, /california-recycling/ and the rest of
+ * A state hub — /arizona/, /california/ and the rest of
  * the seven of 14 Oct 2026 (src/data/state-hubs.ts). The Minnesota and
  * Wisconsin template (LocationDetailPage), band for band, with the facility
  * linked the same way (Aaqib, 14 Oct 2026):

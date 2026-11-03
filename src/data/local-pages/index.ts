@@ -35,6 +35,17 @@ import { LEWISBURG_ELECTRONIC_RECYCLING } from './lewisburg-electronic-recycling
 import { LEWISBURG_BATTERY_RECYCLING } from './lewisburg-battery-recycling'
 import { LEWISBURG_LIGHT_BULB_RECYCLING } from './lewisburg-light-bulb-recycling'
 import { LEWISBURG_BALLAST_RECYCLING } from './lewisburg-ballast-recycling'
+import { OCALA_ELECTRONIC_RECYCLING } from './ocala-electronic-recycling'
+import { OCALA_BATTERY_RECYCLING } from './ocala-battery-recycling'
+import { OCALA_LIGHT_BULB_RECYCLING } from './ocala-light-bulb-recycling'
+import { OCALA_BALLAST_RECYCLING } from './ocala-ballast-recycling'
+import { GREENWOOD_ELECTRONIC_RECYCLING } from './greenwood-electronic-recycling'
+import { GREENWOOD_BATTERY_RECYCLING } from './greenwood-battery-recycling'
+import { GREENWOOD_LIGHT_BULB_RECYCLING } from './greenwood-light-bulb-recycling'
+import { ONTARIO_ELECTRONIC_RECYCLING } from './ontario-electronic-recycling'
+import { ONTARIO_BATTERY_RECYCLING } from './ontario-battery-recycling'
+import { ONTARIO_LIGHT_BULB_RECYCLING } from './ontario-light-bulb-recycling'
+import { ONTARIO_BALLAST_RECYCLING } from './ontario-ballast-recycling'
 
 export type { LocalPage } from './types'
 
@@ -84,6 +95,12 @@ export const LOCAL_PAGES: LocalPage[] = [
  *                                    /tv-recycling-in-minnesota/)
  *   /arizona/phoenix/<service>/      four (electronics, batteries, bulbs, ballasts)
  *   /tennessee/lewisburg/<service>/  the same four
+ *   /florida/ocala/<service>/        the same four (4 Nov 2026, the sheet's Florida tab)
+ *   /indiana/greenwood/<service>/    electronics, batteries, bulbs (Indiana tab; the
+ *                                    ballast doc in the sheet could not be opened)
+ *   /california/ontario/<service>/   the same four (California tab)
+ *
+ * All of them in the 4 Nov 2026 design (`design: 2`, LocalServicePageV2).
  *
  * Served by the [...slug] catch-all (docLocalPage below). The airbag page came
  * later the same day: the sheet's Airbags row linked the ballast doc, and
@@ -95,6 +112,9 @@ export const DOC_PAGES: LocalPage[] = [
   BLAINE_TELEVISION_RECYCLING, BLAINE_AIRBAG_RECYCLING,
   PHOENIX_ELECTRONIC_RECYCLING, PHOENIX_BATTERY_RECYCLING, PHOENIX_LIGHT_BULB_RECYCLING, PHOENIX_BALLAST_RECYCLING,
   LEWISBURG_ELECTRONIC_RECYCLING, LEWISBURG_BATTERY_RECYCLING, LEWISBURG_LIGHT_BULB_RECYCLING, LEWISBURG_BALLAST_RECYCLING,
+  OCALA_ELECTRONIC_RECYCLING, OCALA_BATTERY_RECYCLING, OCALA_LIGHT_BULB_RECYCLING, OCALA_BALLAST_RECYCLING,
+  GREENWOOD_ELECTRONIC_RECYCLING, GREENWOOD_BATTERY_RECYCLING, GREENWOOD_LIGHT_BULB_RECYCLING,
+  ONTARIO_ELECTRONIC_RECYCLING, ONTARIO_BATTERY_RECYCLING, ONTARIO_LIGHT_BULB_RECYCLING, ONTARIO_BALLAST_RECYCLING,
 ]
 
 /** The doc page at this URL, for the catch-all ('/arizona/phoenix/battery-recycling' or with the slash). */

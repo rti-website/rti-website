@@ -77,7 +77,7 @@ export const PHOENIX_ARIZONA: CountyPage = {
     // 8 Oct 2026: links to the nearby locations (the Ontario content doc).
     { kind: 'text', heading: "Nearby Recycle Technologies Locations", blocks: [
       { list: [
-        { title: "Ontario, California", text: "805 E Francis St, Ontario, CA 91761", href: href('/ontario-california/') },
+        { title: "Ontario, California", text: "805 E Francis St, Ontario, CA 91761", href: href('/california/ontario/') },
         { title: "Fort Worth, Texas", text: "", href: href('/fort-worth-texas/') },
         { title: "All Locations", text: "", href: href('/all-locations/') },
       ] },
