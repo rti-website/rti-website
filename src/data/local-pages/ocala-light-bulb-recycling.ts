@@ -195,8 +195,8 @@ export const OCALA_LIGHT_BULB_RECYCLING: LocalPage = {
         {
           kind: "callout",
           body: [
-            "Florida follows the federal universal waste rule for mercury-containing lamps, along with its own stricter rules in Chapter 62-737 of the Florida Administrative Code, so fluorescent and HID lamps need to go to a recycler rather than the trash ([Florida DEP](https://floridadep.gov/waste/permitting-compliance-assistance/content/mercury-permitting-and-registration)).",
-            "Marion County's recycling and household hazardous waste programs are set up for county residents, and businesses that don't pay the county's solid waste assessment can't use the recycling centers ([Marion County](https://www.marionfl.org/agencies-departments/departments-facilities-offices/solid-waste/materials-accepted-at-recycling-centers)). The Ocala partner center gives businesses and residents another local option, with commercial pickup for larger volumes.",
+            "Florida follows the federal universal waste rule for mercury-containing lamps, along with its own stricter rules in Chapter 62-737 of the Florida Administrative Code, so fluorescent and HID lamps need to go to a recycler rather than the trash.",
+            "Marion County's recycling and household hazardous waste programs are set up for county residents, and businesses that don't pay the county's solid waste assessment can't use the recycling centers (Marion County). The Ocala partner center gives businesses and residents another local option, with commercial pickup for larger volumes.",
           ],
         },
       ],

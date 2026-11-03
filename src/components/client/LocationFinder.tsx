@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { BarForm } from '@/components/client/BarForm'
 import { mapEmbed, type Facility } from '@/data/facilities'
 import type { Finder } from '@/data/locations'
-import { path } from '@/lib/urls'
+import { path, outboundRel } from '@/lib/urls'
 
 /**
  * The locator on /all-locations/ — the search bar (Figma 6377:975) and the
@@ -207,7 +207,7 @@ export function LocationFinder({ finder: FINDER, facilities: FACILITIES }: {
                       {FINDER.result.details}
                       <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[12px] w-[15px]" />
                     </Link>
-                    <a href={directions} target="_blank" rel="noopener noreferrer" className="btn-pop inline-flex h-[42px] items-center justify-center gap-[8px] rounded-[8px] border border-brand px-[18px] font-roboto text-[14px] font-medium text-brand hover:bg-brand-soft">
+                    <a href={directions} target="_blank" rel={outboundRel(directions)} className="btn-pop inline-flex h-[42px] items-center justify-center gap-[8px] rounded-[8px] border border-brand px-[18px] font-roboto text-[14px] font-medium text-brand hover:bg-brand-soft">
                       {FINDER.result.directions}
                       <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[12px] w-[15px]" />
                     </a>

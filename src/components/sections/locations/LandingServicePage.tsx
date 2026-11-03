@@ -9,7 +9,7 @@ import { CaseStudyRail, type RailStory } from '@/components/client/CaseStudyRail
 import { IndustryCard } from '@/components/ui/IndustryCard'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
-import { caseStudyHref, href, path } from '@/lib/urls'
+import { caseStudyHref, href, path, outboundRel } from '@/lib/urls'
 import { content } from '@/lib/page-content'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
 import type { IndustryKey, LandingCard, LandingPage, Link as L } from '@/data/local-pages/types'
@@ -257,7 +257,7 @@ function Btn({ link, filled = false }: { link: L; filled?: boolean }) {
     </>
   )
   return link.external
-    ? <a href={link.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+    ? <a href={link.href} target="_blank" rel={outboundRel(link.href)} className={cls}>{inner}</a>
     : <Link href={link.href} className={cls}>{inner}</Link>
 }
 

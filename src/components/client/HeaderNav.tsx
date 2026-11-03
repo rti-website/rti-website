@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { HEADER_H } from '@/lib/layout'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * The main nav row and everything that drops out of it — Figma
@@ -383,6 +384,6 @@ function MenuRow({ item, gap }: { item: MenuItem; gap: 10 | 15 }) {
     + ' hover:[background-image:linear-gradient(90deg,#012325_0%,#05838b_100%)]'
     + ' focus-visible:[background-image:linear-gradient(90deg,#012325_0%,#05838b_100%)]'
   return item.external
-    ? <a href={item.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+    ? <a href={item.href} target="_blank" rel={outboundRel(item.href)} className={cls}>{inner}</a>
     : <Link href={item.href} className={cls}>{inner}</Link>
 }

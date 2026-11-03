@@ -3,6 +3,7 @@ import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { type CertLogo } from '@/data/certifications-page'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Certifications grid — Figma 6380:1097. py 100, gap 50: heading block on an
@@ -55,7 +56,7 @@ export async function CertGrid({ top, height }: { top: number; height: number })
               {c.href ? (
                 /* The logo repeats the title's link, so it is skipped by
                    keyboard and screen reader: one tab stop per card. */
-                <a href={c.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true"
+                <a href={c.href} target="_blank" rel={outboundRel(c.href)} tabIndex={-1} aria-hidden="true"
                   className="flex h-full w-[102px] items-center transition-opacity hover:opacity-80 lg:w-[120px]">
                   <Logo logo={c.logo} alt="" />
                 </a>
@@ -67,7 +68,7 @@ export async function CertGrid({ top, height }: { top: number; height: number })
             </div>
             <h3 className="w-full font-sans text-[16px] font-medium leading-[1.3] text-heading lg:text-[19px]">
               {c.href ? (
-                <a href={c.href} target="_blank" rel="noopener noreferrer"
+                <a href={c.href} target="_blank" rel={outboundRel(c.href)}
                   aria-label={`${c.title}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
                   className="transition-colors hover:text-brand">
                   {c.title}

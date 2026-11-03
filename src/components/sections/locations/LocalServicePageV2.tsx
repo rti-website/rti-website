@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { LineIcon } from '@/components/ui/LineIcon'
 import { HeroBtn, Faq, Cta, Band as OldBand } from '@/components/sections/locations/LocalServicePage'
-import { href } from '@/lib/urls'
+import { href, outboundRel } from '@/lib/urls'
 import type { DocBlock, LineIconItem, LocalBand, LocalPage, Link as L } from '@/data/local-pages/types'
 
 /**
@@ -64,7 +64,7 @@ export function Rich({ text, light = false, soft = false }: { text: string; ligh
     else if (m[5] !== undefined) out.push(<a key={k} href={`mailto:${m[5]}`} className={cls}>{m[5]}</a>)
     else if (m[2]!.startsWith('/')) out.push(<Link key={k} href={m[2]!} className={linkCls}>{m[1]}</Link>)
     else if (/^(tel|mailto):/.test(m[2]!)) out.push(<a key={k} href={m[2]} className={cls}>{m[1]}</a>)
-    else out.push(<a key={k} href={m[2]} target="_blank" rel="noopener noreferrer" className={linkCls}>{m[1]}</a>)
+    else out.push(<a key={k} href={m[2]} target="_blank" rel={outboundRel(m[2]!)} className={linkCls}>{m[1]}</a>)
     last = m.index! + m[0].length
   }
   if (last < text.length) out.push(text.slice(last))

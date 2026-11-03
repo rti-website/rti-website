@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Section } from '@/components/design/Frame'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * "What We Accept" — Figma 6142:2067, inside frame 6142:2048.
@@ -176,6 +177,6 @@ function Row({ item }: { item: { label: string; text: string; href?: string; ext
   }
   const linked = `${cls} transition-colors hover:bg-brand-soft`
   return item.external
-    ? <a href={item.href} target="_blank" rel="noopener noreferrer" className={linked}>{inner}</a>
+    ? <a href={item.href} target="_blank" rel={outboundRel(item.href)} className={linked}>{inner}</a>
     : <Link href={item.href} className={linked}>{inner}</Link>
 }

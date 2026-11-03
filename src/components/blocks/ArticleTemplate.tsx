@@ -7,7 +7,7 @@ import { Btn } from '@/components/ui/Bits'
 import { ArticleBody } from '@/components/client/ArticleReader'
 import { RelatedArticles } from '@/components/sections/blog/RelatedArticles'
 import { FOOTER_H } from '@/lib/layout'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, outboundRel } from '@/lib/urls'
 import type { ContentEntry } from '@/lib/content'
 
 /**
@@ -130,7 +130,7 @@ export function ArticleTemplate({
                         <a
                           href={s.href(entry.url)}
                           target={s.label === 'Email' ? undefined : '_blank'}
-                          rel="noopener noreferrer"
+                          rel={outboundRel(s.href(entry.url))}
                           aria-label={s.label}
                           className="grid size-[44px] place-items-center rounded-full bg-[#eaf4f5] transition-colors hover:bg-[#dbeced] lg:size-[38px]"
                         >

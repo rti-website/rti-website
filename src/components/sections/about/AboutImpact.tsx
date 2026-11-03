@@ -1,5 +1,6 @@
 import { Section } from '@/components/design/Frame'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Impact numbers — Figma 6372:843. Navy-to-teal horizontal gradient, py 90,
@@ -43,7 +44,7 @@ export async function AboutImpact({ top, height }: { top: number; height: number
             <dt className="font-sans text-[32px] font-semibold leading-[38px] text-white lg:text-[44px] lg:leading-[1.3]">
               {/* R2v3 opens SERI's directory listing, as every R2v3 mark does. */}
               {'href' in s && s.href ? (
-                <a href={s.href} target="_blank" rel="noopener noreferrer"
+                <a href={s.href} target="_blank" rel={outboundRel(s.href)}
                   aria-label={`${s.v}, ${s.l}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
                   className="underline decoration-white/40 underline-offset-[6px] transition-opacity hover:opacity-80">
                   {s.v}

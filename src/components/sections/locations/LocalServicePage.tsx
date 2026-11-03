@@ -5,7 +5,7 @@ import { Header } from '@/components/sections/Header'
 import { Footer } from '@/components/sections/Footer'
 import { Accordion } from '@/components/client/Accordion'
 import { FOOTER_H } from '@/lib/layout'
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href, outboundRel } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
 import { LocalServicePageV2Body } from '@/components/sections/locations/LocalServicePageV2'
 import { ICON_SRC, type LocalBand, type LocalBlock, type LocalCard, type LocalPage, type Link as L } from '@/data/local-pages/types'
@@ -82,7 +82,7 @@ export function Rich({ text, light = false }: { text: string; light?: boolean })
     const cls = light ? 'underline underline-offset-2 hover:text-white' : 'font-medium text-brand underline underline-offset-2 hover:text-[#132119]'
     if (m[3] !== undefined) out.push(<strong key={m.index} className={light ? 'font-semibold' : 'font-semibold text-[#132119]'}>{m[3]}</strong>)
     else if (m[2]!.startsWith('/')) out.push(<Link key={m.index} href={m[2]!} className={cls}>{m[1]}</Link>)
-    else out.push(<a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer" className={cls}>{m[1]}</a>)
+    else out.push(<a key={m.index} href={m[2]} target="_blank" rel={outboundRel(m[2]!)} className={cls}>{m[1]}</a>)
     last = m.index! + m[0].length
   }
   if (last < text.length) out.push(text.slice(last))
@@ -238,7 +238,7 @@ function Block({ block: b }: { block: LocalBlock }) {
     case 'button':
       return (
         <div className="flex w-full justify-center">
-          <a href={b.link.href} {...(b.link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          <a href={b.link.href} {...(b.link.external ? { target: '_blank', rel: outboundRel(b.link.href) } : {})}
             className="btn-pop flex h-[48px] w-full items-center justify-center rounded-[8px] border border-brand bg-white px-[28px] font-roboto text-[15px] font-medium leading-[25px] text-brand lg:w-auto">
             {b.link.label}
           </a>

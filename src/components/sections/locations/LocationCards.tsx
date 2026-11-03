@@ -4,6 +4,7 @@ import { Btn, Eyebrow, Lead } from '@/components/ui/Bits'
 import { GLYPHS } from '@/components/ui/Glyph'
 import { facilitiesOf, type Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * "Licensed Facilities Ready to Serve You" — Figma 6743:2450 on /all-locations/,
@@ -137,7 +138,7 @@ function BadgeLogo({ f }: { f: Facility }) {
       className="h-[40px] w-[39px] object-contain lg:h-[46.46px] lg:w-[44.602px]" />
   )
   return l.href ? (
-    <a href={l.href} target="_blank" rel="noopener noreferrer"
+    <a href={l.href} target="_blank" rel={outboundRel(l.href)}
       aria-label={`${l.alt} — see ${f.name} in the R2 certified facility directory (opens in a new tab)`}
       className="btn-pop grid min-h-[44px] min-w-[44px] shrink-0 place-items-center transition-opacity hover:opacity-80">
       {body}

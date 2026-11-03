@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { outboundRel } from '@/lib/urls'
 
 export type Logo = {
   src: string
@@ -136,7 +137,7 @@ function Mark({ logo: l, duplicate }: { logo: Logo; duplicate: boolean }) {
     <a
       href={l.href}
       target="_blank"
-      rel="noopener noreferrer"
+      rel={outboundRel(l.href)}
       tabIndex={duplicate ? -1 : undefined}
       aria-label={duplicate ? undefined : `${l.name ?? 'Certification'} — verify this certification (opens in a new tab)`}
       className="inline-flex items-center rounded-[4px] transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"

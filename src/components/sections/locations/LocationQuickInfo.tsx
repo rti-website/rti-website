@@ -2,6 +2,7 @@ import { Section } from '@/components/design/Frame'
 import { GLYPHS } from '@/components/ui/Glyph'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Quick-info bar — Figma 6744:8794 (Minnesota) / 6746:8487 (Wisconsin).
@@ -69,7 +70,7 @@ export function QuickInfoBar({ items }: { items: QuickInfoItem[] }) {
           )
           return it.href
             ? <a key={it.label} href={it.href}
-                {...(it.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                {...(it.external ? { target: '_blank', rel: outboundRel(it.href) } : {})}
                 className="flex items-center gap-[12px] hover:[&_span:last-child]:text-brand lg:gap-[14px]">{inner}</a>
             : <div key={it.label} className="flex items-center gap-[12px] lg:gap-[14px]">{inner}</div>
         })}

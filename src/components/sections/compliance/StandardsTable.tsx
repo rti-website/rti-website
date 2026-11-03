@@ -1,6 +1,7 @@
 import { Section } from '@/components/design/Frame'
 import { Eyebrow } from '@/components/ui/Bits'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Standards we're held to — Figma 6389:1527, and on a phone 6674:5298 in
@@ -72,7 +73,7 @@ export async function StandardsTable({ top, height }: { top: number; height: num
               <th scope="row"
                 className={`text-left align-middle font-sans font-medium text-heading max-lg:col-start-1 max-lg:row-start-1 max-lg:text-[18px] max-lg:leading-[24px] lg:w-[316px] lg:pl-[32px] lg:pr-[24px] lg:text-[17px] lg:leading-[1.3] ${rule}`}>
                 {r.href ? (
-                  <a href={r.href} target="_blank" rel="noopener noreferrer"
+                  <a href={r.href} target="_blank" rel={outboundRel(r.href)}
                     aria-label={`${r.name}: see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
                     className="underline decoration-brand/40 underline-offset-4 transition-colors hover:text-brand">
                     {r.name}

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { milesBetween, type LatLng } from '@/lib/geo'
-import { path } from '@/lib/urls'
+import { path, outboundRel } from '@/lib/urls'
 
 /**
  * Find a Drop-off Location — /dropoff/, Figma 7206:3216 (phone 7210:6498).
@@ -175,7 +175,7 @@ export function DropoffFinder({ copy: C, sites }: { copy: FinderCopy; sites: Fin
         {state.kind === 'found' && !near && (
           <p className="rounded-[12px] border border-brand/30 bg-white px-[20px] py-[16px] font-roboto text-[15px] leading-[24px] text-ink lg:px-[32px]">
             {C.noneNear}{' '}
-            <a href={C.noneNearLink.href} target="_blank" rel="noopener noreferrer" className="font-bold text-brand underline">{C.noneNearLink.label}</a>
+            <a href={C.noneNearLink.href} target="_blank" rel={outboundRel(C.noneNearLink.href)} className="font-bold text-brand underline">{C.noneNearLink.label}</a>
           </p>
         )}
         {state.kind === 'found' && near && (
@@ -191,8 +191,8 @@ export function DropoffFinder({ copy: C, sites }: { copy: FinderCopy; sites: Fin
                   <p><span className="font-medium text-heading">{C.labels.phone}:</span> <a href={tel(s.phone)} className="text-brand">{s.phone}</a></p>
                   <p><span className="font-medium text-heading">{C.labels.accepts}:</span> {s.accepts}</p>
                   <div className="mt-[6px] flex flex-wrap gap-[16px] font-roboto text-[15px] font-bold">
-                    <a href={s.directions} target="_blank" rel="noopener noreferrer" className="text-brand underline">{C.labels.directions} →</a>
-                    <a href={s.view} {...(s.view.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className="text-brand underline">{C.labels.view} →</a>
+                    <a href={s.directions} target="_blank" rel={outboundRel(s.directions)} className="text-brand underline">{C.labels.directions} →</a>
+                    <a href={s.view} {...(s.view.startsWith('http') ? { target: '_blank', rel: outboundRel(s.view) } : {})} className="text-brand underline">{C.labels.view} →</a>
                   </div>
                 </li>
               ))}
@@ -215,7 +215,7 @@ function StatusPanel({ text, link, external = false }: { text: string; link: { l
   return (
     <div className="flex flex-1 flex-col items-start gap-[12px] rounded-[12px] bg-[#eaf4f5] px-[20px] py-[20px] lg:flex-row lg:items-center lg:gap-[20px] lg:px-[32px] lg:py-[24px]">
       <p className="flex-1 font-roboto text-[15px] leading-[24px] text-[#333] lg:text-[16px] lg:leading-[26px]">{text}</p>
-      <a href={link.href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      <a href={link.href} {...(external ? { target: '_blank', rel: outboundRel(link.href) } : {})}
         className="shrink-0 font-roboto text-[15px] font-bold text-brand underline">
         {link.label}&nbsp;&nbsp;→
       </a>

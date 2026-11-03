@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
+import { outboundRel } from '@/lib/urls'
 
 export type RailStory = { id: string; img: string; title: string; href: string; pdf: string }
 
@@ -101,7 +102,7 @@ function Active({ story }: { story: RailStory }) {
             View case study
             <Image src="/images/landing/cs-external.svg" alt="" width={16} height={16} unoptimized className="size-[16px]" />
           </Link>
-          <a href={story.pdf} download target="_blank" rel="noopener" className={`${btn} border border-brand text-brand hover:bg-[#eaf4f5] max-lg:flex-row-reverse`}>
+          <a href={story.pdf} download target="_blank" rel={outboundRel(story.pdf)} className={`${btn} border border-brand text-brand hover:bg-[#eaf4f5] max-lg:flex-row-reverse`}>
             Download PDF
             <Image src="/images/landing/cs-download.svg" alt="" width={16} height={16} unoptimized className="size-[16px]" />
           </a>

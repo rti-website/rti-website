@@ -4,6 +4,7 @@ import { useEffect, useId, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { NavEntry } from '@/components/client/HeaderNav'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * The phone header and its drawer — Figma BVtf2AOuUOcYbiMIlcKmbC, the
@@ -334,7 +335,7 @@ export function MobileNav({
                         }
                         return item.external
                           ? (
-                            <a key={item.title} href={item.href} target="_blank" rel="noopener noreferrer" onClick={() => setDrawer(false)} className={cls}>
+                            <a key={item.title} href={item.href} target="_blank" rel={outboundRel(item.href)} onClick={() => setDrawer(false)} className={cls}>
                               {inner}
                             </a>
                           )

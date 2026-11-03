@@ -7,7 +7,7 @@ import { Btn } from '@/components/ui/Bits'
 import { QuickInfoBar } from '@/components/sections/locations/LocationQuickInfo'
 import { DirectionsPanel } from '@/components/sections/locations/LocationDirections'
 import { FOOTER_H } from '@/lib/layout'
-import { PICKUP_HREF, QUOTE_HREF, absolute, href } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, absolute, href, outboundRel } from '@/lib/urls'
 import { breadcrumbNode, faqNode, graph, serviceNode } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 import type { AboutBlock, AreaSection, CompanyLine, CountyPage as Page } from '@/data/county-pages/types'
@@ -243,7 +243,7 @@ const isExternal = (u: string) => /^https?:\/\//.test(u)
 /** A hero button: Google Maps directions open in a new tab, everything else is a site link. */
 function HeroLink({ href: to, className, children }: { href: string; className: string; children: React.ReactNode }) {
   return isExternal(to)
-    ? <a href={to} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
+    ? <a href={to} target="_blank" rel={outboundRel(to)} className={className}>{children}</a>
     : <Link href={to} className={className}>{children}</Link>
 }
 
@@ -365,7 +365,7 @@ function Services({ heading, shared }: { heading?: string; shared: Shared }) {
                 )
                 const cls = 'inline-flex items-center gap-[6px] font-roboto text-[13.5px] font-medium leading-[normal] text-brand hover:underline lg:text-[14.5px]'
                 return l.external
-                  ? <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+                  ? <a key={l.label} href={l.href} target="_blank" rel={outboundRel(l.href)} className={cls}>{inner}</a>
                   : <Link key={l.label} href={l.href} className={cls}>{inner}</Link>
               })}
             </div>

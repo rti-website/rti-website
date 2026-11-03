@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { outboundRel } from '@/lib/urls'
 
 /* Shared design primitives, values read directly off the Figma nodes. */
 
@@ -90,6 +91,6 @@ export function Btn({
   )
   if (submit || !href) return <button type="submit" className={cls}>{inner}</button>
   return external
-    ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+    ? <a href={href} target="_blank" rel={outboundRel(href)} className={cls}>{inner}</a>
     : <Link href={href} className={cls}>{inner}</Link>
 }

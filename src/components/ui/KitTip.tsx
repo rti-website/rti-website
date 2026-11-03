@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * The mail-in kit tip under a service page's hero buttons and in its closing
@@ -31,7 +32,7 @@ export function KitTip({ tip, className = '' }: { tip: KitTipCopy; className?: s
         {/* A link on this site (/mail-in-recycling/) opens in the same tab. */}
         {tip.href.startsWith('/')
           ? <Link href={tip.href} className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</Link>
-          : <a href={tip.href} target="_blank" rel="noopener noreferrer" className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</a>}
+          : <a href={tip.href} target="_blank" rel={outboundRel(tip.href)} className="font-medium text-white underline underline-offset-2 hover:text-white/80">{tip.link}</a>}
         {tip.after ? <>{' '}{tip.after}</> : null}
       </span>
     </p>

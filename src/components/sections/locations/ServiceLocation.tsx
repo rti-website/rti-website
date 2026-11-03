@@ -11,7 +11,7 @@ import { GLYPHS } from '@/components/ui/Glyph'
 import { mapEmbed } from '@/data/facilities'
 import { NETWORK_PHONE, SERVICES, SERVICE_SLUGS, type ServiceSlug } from '@/data/service-locations'
 import { FOOTER_H } from '@/lib/layout'
-import { absolute, href, quoteHref, PICKUP_HREF } from '@/lib/urls'
+import { absolute, href, quoteHref, PICKUP_HREF, outboundRel } from '@/lib/urls'
 import { US_STATES } from '@/lib/us-address'
 import { breadcrumbNode, faqNode, graph } from '@/lib/schema'
 import {
@@ -332,7 +332,7 @@ export function ServiceLocationPage({ all, site, page }: { all: Locations; site:
               <p className="font-roboto text-[13px] leading-[1.5] text-muted">
                 {d.complianceVerifiedBy && <>Reviewed by {d.complianceVerifiedBy}{d.complianceVerifiedAt && `, ${fmtDate(d.complianceVerifiedAt)}`}. </>}
                 {d.complianceSource && /^https?:\/\//.test(d.complianceSource)
-                  ? <a href={d.complianceSource} target="_blank" rel="noopener noreferrer" className="text-brand underline underline-offset-2">Source</a>
+                  ? <a href={d.complianceSource} target="_blank" rel={outboundRel(d.complianceSource)} className="text-brand underline underline-offset-2">Source</a>
                   : d.complianceSource}
               </p>
             )}

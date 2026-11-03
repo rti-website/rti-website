@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { KIT_STORE } from '@/lib/nav'
-import { PICKUP_HREF, QUOTE_HREF, path } from '@/lib/urls'
+import { PICKUP_HREF, QUOTE_HREF, path, outboundRel } from '@/lib/urls'
 
 /**
  * "Who is this for?" — the choice every Get a Quote button now asks first
@@ -212,7 +212,7 @@ export function QuotePicker() {
                 <Image src="/images/quote/box.svg" alt="" width={22} height={22} unoptimized className="size-[22px]" />
                 <h3 className="font-sans text-[20px] font-semibold leading-[1.28] text-[#132119]">Ship it to us</h3>
                 <p className="font-sans text-[14.5px] leading-[1.5] text-[#474747]">Prepaid kit, any US address</p>
-                <a href={KIT_STORE} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className={`${OPT_BTN} bg-brand text-white hover:bg-[#04717a]`}>
+                <a href={KIT_STORE} target="_blank" rel={outboundRel(KIT_STORE)} onClick={() => setOpen(false)} className={`${OPT_BTN} bg-brand text-white hover:bg-[#04717a]`}>
                   Order a mail-in kit
                   <Image src="/images/landing/arrow-right-white.svg" alt="" width={16} height={16} unoptimized className="size-[16px]" />
                 </a>

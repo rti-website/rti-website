@@ -5,6 +5,7 @@ import { GLYPHS } from '@/components/ui/Glyph'
 import type { Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
 import type { QuickInfoItem } from '@/components/sections/locations/LocationQuickInfo'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * "Our Wisconsin Recycling Center" — Figma 6744:8794 on the Wisconsin
@@ -65,7 +66,7 @@ export async function LocationCenterBar({ top, height, f }: {
               <span className="whitespace-nowrap">{c.primary}</span>
               <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </Link>
-            <a href={f.mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-transparent text-brand hover:bg-brand-soft`}>
+            <a href={f.mapsHref} target="_blank" rel={outboundRel(f.mapsHref)} className={`${BTN} border border-brand bg-transparent text-brand hover:bg-brand-soft`}>
               <span className="whitespace-nowrap">{c.secondary}</span>
               <Image src="/images/icons/arrow-teal.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </a>

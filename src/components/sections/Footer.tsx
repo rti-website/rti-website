@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { CookieSettingsLink } from '@/components/client/CookieConsent'
 import Link from 'next/link'
 import { Box } from '@/components/design/Frame'
-import { QUOTE_HREF } from '@/lib/urls'
+import { QUOTE_HREF, outboundRel } from '@/lib/urls'
 import { DIRECTORY_H, FOOTER_BAR_Y, FOOTER_H } from '@/lib/layout'
 import { LocationDirectory } from '@/components/sections/LocationDirectory'
 import { NewsletterForm } from '@/components/client/NewsletterForm'
@@ -176,7 +176,7 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
             <ul className="flex items-center gap-[20px] lg:h-[45px] lg:gap-[30px]">
               {SOCIAL.map((s) => (
                 <li key={s.platform}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} (opens in a new tab)`} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
+                  <a href={s.url} target="_blank" rel={outboundRel(s.url)} aria-label={`${s.label} (opens in a new tab)`} className="grid size-[44px] place-items-center text-brand transition-opacity hover:opacity-70 lg:block lg:size-auto">
                     <svg viewBox="0 0 22 22" className="size-[25px] fill-current" aria-hidden="true"><path d={s.path} /></svg>
                   </a>
                 </li>
@@ -286,7 +286,7 @@ function LinkColumn({ groups }: { groups: FooterGroup[] }) {
               <li key={l.l} className="flex items-center gap-[10px]">
                 <span aria-hidden="true" className="hidden font-roboto text-[12px] leading-none text-muted lg:block">&rsaquo;</span>
                 {l.external ? (
-                  <a href={l.h} target="_blank" rel="noopener noreferrer" className={LINK}>{l.l}</a>
+                  <a href={l.h} target="_blank" rel={outboundRel(l.h)} className={LINK}>{l.l}</a>
                 ) : (
                   <Link href={l.h} className={LINK}>{l.l}</Link>
                 )}
@@ -342,7 +342,7 @@ function Cert({ c, col }: { c: FooterCert; col: number }) {
   /* The R2v3 mark is the whole cell as a link, so the tap target is the
      cell (117x97 on a 390 phone), not the 42px mark. */
   return c.href ? (
-    <a href={c.href} target="_blank" rel="noopener noreferrer"
+    <a href={c.href} target="_blank" rel={outboundRel(c.href)}
       aria-label={`${c.name} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
       className={`${cell} transition-opacity hover:opacity-70`} style={vars}>
       {art}

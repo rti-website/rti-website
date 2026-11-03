@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { FORM as FORM_DEFAULTS, HERO_LOCATIONS as LOCATION_DEFAULTS, matchService } from '@/data/contact'
-import { path } from '@/lib/urls'
+import { path, outboundRel } from '@/lib/urls'
 import { usPhoneDigits } from '@/lib/phone'
 import { cityKey, stateCode } from '@/lib/us-address'
 import { COMPANY_INVALID_MESSAGE, isPlaceholderCompany } from '@/lib/company-name'
@@ -517,7 +517,7 @@ export function ContactForm({
                 </button>
               ))}
               {hint.credit && (
-                <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer" className="text-[12px] text-muted underline underline-offset-2">
+                <a href="https://www.geonames.org/" target="_blank" rel={outboundRel('https://www.geonames.org/')} className="text-[12px] text-muted underline underline-offset-2">
                   ZIP data: GeoNames
                 </a>
               )}

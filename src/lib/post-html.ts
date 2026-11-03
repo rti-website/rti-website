@@ -112,6 +112,15 @@ function stripPageBuilder(html: string): string {
   return out.replace(/\u0000(\d+)\u0000/g, (_m, i: string) => scripts[Number(i)]!)
 }
 
+/** `rel` with nofollow added (the tag's own rel kept, or a new one). */
+function withNofollow(tag: string): string {
+  if (/\srel\s*=/i.test(tag)) {
+    return tag.replace(/\srel\s*=\s*(["'])(.*?)\1/i, (_m, q: string, rel: string) =>
+      /\bnofollow\b/i.test(rel) ? ` rel=${q}${rel}${q}` : ` rel=${q}${[rel.trim(), 'nofollow'].filter(Boolean).join(' ')}${q}`)
+  }
+  return tag.replace(/^<a\b/i, '<a rel="nofollow"')
+}
+
 export function tidyPostHtml(html: string): string {
   if (!html) return html
   return stripPageBuilder(html)
@@ -122,8 +131,11 @@ export function tidyPostHtml(html: string): string {
     // 4. links that redirect point at their destination.
     .replace(/(<a\b[^>]*?\shref\s*=\s*)(["'])(.*?)\2/gi, (_m, pre: string, q: string, h: string) => `${pre}${q}${followRedirects(h.trim())}${q}`)
     .replace(/<a\b[^>]*>/gi, (tag) => {
-      if (!/\bnofollow\b/i.test(tag)) return tag
       const href = /\shref\s*=\s*(["'])(.*?)\1/i.exec(tag)?.[2]?.trim() ?? ''
+      // 6. EVERY LINK TO ANOTHER SITE IS NOFOLLOW (4 Nov 2026, Aaqib's team
+      //    lead: "keep all outbound links nofollow").
+      if (/^(https?:)?\/\//i.test(href) && !OWN_HREF.test(href)) return withNofollow(tag)
+      if (!/\bnofollow\b/i.test(tag)) return tag
       if (!OWN_HREF.test(href)) return tag
       return tag.replace(/\srel\s*=\s*(["'])(.*?)\1/i, (_m, q: string, rel: string) => {
         const kept = rel.split(/\s+/).filter((t) => t && t.toLowerCase() !== 'nofollow')

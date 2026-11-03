@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { milesBetween, type LatLng } from '@/lib/geo'
-import { path } from '@/lib/urls'
+import { path, outboundRel } from '@/lib/urls'
 import type { DropoffSite } from '@/lib/dropoff-sites'
 import type { NO_PICKUP } from '@/data/contact'
 
@@ -159,7 +159,7 @@ function Dropoffs({ copy, sites, origin, denied, onOrigin, onMailIn }: {
               </p>
               <div className="flex flex-wrap gap-x-[16px] gap-y-[4px] pt-[2px] font-roboto text-[14px] font-medium">
                 <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.address)}`}
-                  target="_blank" rel="noopener noreferrer" className="text-brand underline underline-offset-2 hover:no-underline">
+                  target="_blank" rel={outboundRel(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.address)}`)} className="text-brand underline underline-offset-2 hover:no-underline">
                   {C.directions}
                 </a>
                 {s.page && <a href={s.page} className="text-brand underline underline-offset-2 hover:no-underline">{s.name.split(', ').slice(1).join(', ')} facility page</a>}
@@ -241,7 +241,7 @@ function MailIn({ copy, mailInHref }: { copy: Copy; mailInHref: string }) {
         ))}
       </ol>
       <div className="flex flex-wrap items-center gap-x-[18px] gap-y-[10px] pt-[4px]">
-        <a href={mailInHref} target="_blank" rel="noopener noreferrer"
+        <a href={mailInHref} target="_blank" rel={outboundRel(mailInHref)}
           className="btn-pop inline-flex h-[46px] items-center rounded-[8px] border border-brand bg-brand px-[24px] font-roboto text-[15px] font-medium text-white">
           {C.buy}
         </a>

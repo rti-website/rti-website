@@ -198,7 +198,7 @@ export const LEWISBURG_LIGHT_BULB_RECYCLING: LocalPage = {
           kind: "callout",
           body: [
             "Fluorescent and other mercury-containing lamps from businesses are managed under federal universal waste rules, so they should go to a recycler rather than the dumpster.",
-            "Public options around Lewisburg are limited. Marshall County's hazardous waste drop-off covers paint, tires, oil, and antifreeze and doesn't take commercial waste ([Marshall County](https://marshallcountytn.gov/solid-waste)). The state's mobile household hazardous waste collections are for households only and run on set dates ([TDEC](https://www.tn.gov/environment/sw-mm-household-hazardous-waste-program.html)). The Lewisburg center gives residents and businesses a weekday option all year.",
+            "Public options around Lewisburg are limited. Marshall County's hazardous waste drop-off covers paint, tires, oil, and antifreeze and doesn't take commercial waste (Marshall County). The state's mobile household hazardous waste collections are for households only and run on set dates ([TDEC](https://www.tn.gov/environment/sw-mm-household-hazardous-waste-program.html)). The Lewisburg center gives residents and businesses a weekday option all year.",
           ],
         },
       ],

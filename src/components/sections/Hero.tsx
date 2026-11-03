@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import { Box, Section } from '@/components/design/Frame'
 import { Btn } from '@/components/ui/Bits'
-import { CONTACT_FORM_HREF } from '@/lib/urls'
+import { CONTACT_FORM_HREF, outboundRel } from '@/lib/urls'
 import { HERO_H } from '@/lib/layout'
 import { R2_DIRECTORY } from '@/data/certifications'
 import { content } from '@/lib/page-content'
@@ -235,7 +235,7 @@ export async function Hero() {
             <Fragment key={s.icon}>
               {i > 0 && <span className="w-px shrink-0 self-stretch bg-white/15" aria-hidden="true" />}
               {s.href ? (
-                <a href={s.href} target="_blank" rel="noopener noreferrer"
+                <a href={s.href} target="_blank" rel={outboundRel(s.href)}
                   aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
                   className={`${cls} transition-opacity hover:opacity-80`}>
                   {body}
@@ -273,7 +273,7 @@ export async function Hero() {
             </>
           )
           return s.href ? (
-            <a key={s.icon} href={s.href} target="_blank" rel="noopener noreferrer"
+            <a key={s.icon} href={s.href} target="_blank" rel={outboundRel(s.href)}
               aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
               className={`${cls} transition-opacity hover:opacity-80`}>
               {body}

@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import Link from 'next/link'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Required by @next/mdx with the App Router — MDX will not work without this
@@ -40,7 +41,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     a: ({ href = '', ...p }) => {
       const external = /^https?:\/\//.test(href)
       return external
-        ? <a href={href} target="_blank" rel="noopener noreferrer" className="text-brand underline underline-offset-2" {...p} />
+        ? <a href={href} target="_blank" rel={outboundRel(href)} className="text-brand underline underline-offset-2" {...p} />
         : <Link href={href} className="text-brand underline underline-offset-2" {...p} />
     },
     blockquote: (p) => <PullQuote {...p} />,

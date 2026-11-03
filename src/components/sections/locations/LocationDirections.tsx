@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Section } from '@/components/design/Frame'
 import { mapEmbed, type Facility } from '@/data/facilities'
 import { content } from '@/lib/page-content'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * Map & Directions — Figma 6744:8795 (Minnesota) / 6746:8520 (Wisconsin).
@@ -97,7 +98,7 @@ export function DirectionsPanel({ heading, intro, introShort, rows, note, primar
           </dl>}
 
           <div className="flex flex-col gap-[10px] lg:flex-row lg:gap-[14px] lg:pt-[6px]">
-            <a href={mapsHref} target="_blank" rel="noopener noreferrer" className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
+            <a href={mapsHref} target="_blank" rel={outboundRel(mapsHref)} className={`${BTN} border border-brand bg-brand text-white hover:bg-brand/90`}>
               <span className="whitespace-nowrap">{primary}</span>
               <Image src="/images/icons/arrow-white.svg" alt="" width={18} height={14} className="h-[14.252px] w-[18.213px] shrink-0" />
             </a>

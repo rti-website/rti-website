@@ -2,6 +2,7 @@
 
 import { Fragment, useState, type ReactNode } from 'react'
 import Link from 'next/link'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * A question, with an answer when one has been written. Pages that still have
@@ -136,7 +137,7 @@ function withLinks(text: string): ReactNode {
     const cls = 'font-medium text-brand underline underline-offset-2 hover:text-heading'
     parts.push(href!.startsWith('/')
       ? <Link key={m.index} href={href!} className={cls}>{label}</Link>
-      : <a key={m.index} href={href!} className={cls}>{label}</a>)
+      : <a key={m.index} href={href!} rel={outboundRel(href!)} className={cls}>{label}</a>)
     last = m.index + m[0].length
   }
   if (!parts.length) return text

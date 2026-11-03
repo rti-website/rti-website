@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import type { CaseStudyCard as Card, CaseStudyCardLabels } from '@/data/case-studies'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * One case-study card — Figma 6391:1549 on /case-studies/ and 6390:1533 on
@@ -64,7 +65,7 @@ export function CaseStudyCardView({ card, labels }: { card: Card; labels: CaseSt
             <a
               href={card.pdf}
               target="_blank"
-              rel="noopener noreferrer"
+              rel={outboundRel(card.pdf)}
               className="underline-offset-4 after:absolute after:inset-0 after:z-[1] after:rounded-[12px] after:content-[''] group-hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
             >
               {card.title}

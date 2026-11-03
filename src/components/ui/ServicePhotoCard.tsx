@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ServiceCard } from '@/data/services'
+import { outboundRel } from '@/lib/urls'
 
 /**
  * One homepage service card — Figma component 6542:12459 and its instances
@@ -131,6 +132,6 @@ export function ServicePhotoCard({ card, scale = 1, reveal = false, more = 'Lear
     </>
   )
   return card.external
-    ? <a href={card.href} target="_blank" rel="noopener noreferrer" className={cls + zoom} style={style}>{inner}</a>
+    ? <a href={card.href} target="_blank" rel={outboundRel(card.href)} className={cls + zoom} style={style}>{inner}</a>
     : <Link href={card.href} className={cls + zoom} style={style}>{inner}</Link>
 }

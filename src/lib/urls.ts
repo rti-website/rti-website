@@ -40,6 +40,17 @@ export function isExternal(input: string): boolean {
 }
 
 /**
+ * The `rel` of a link that opens in a new tab. Every link to another site is
+ * nofollow (4 Nov 2026, Aaqib's team lead: "keep all outbound links
+ * nofollow"); links to this site (paths, recycletechnologies.com, tel:,
+ * mailto:) stay followed.
+ */
+export function outboundRel(input: string): string {
+  const own = /^(?:https?:)?\/\/(?:[a-z0-9-]+\.)*recycletechnologies\.com(?:[/?#:]|$)/i.test(input)
+  return /^(?:https?:)?\/\//i.test(input) && !own ? 'nofollow noopener noreferrer' : 'noopener noreferrer'
+}
+
+/**
  * Where every "Get a Quote" button goes.
  *
  * It used to be `/quote/`, which is a KEEP row in url-map.csv but has no page
