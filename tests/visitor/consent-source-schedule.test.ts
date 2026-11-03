@@ -7,13 +7,14 @@ import { chicago, chicagoDayBounds, dailyDue, monthlyDue, previousYmd, weeklyDue
 
 const consent = (a: boolean) => `rti_consent=${encodeURIComponent(JSON.stringify({ v: 1, a, t: '2026-10-29T10:00:00Z' }))}`
 
-test('consent gate: only an explicit Analytics yes counts', () => {
+test('consent gate: Analytics is on unless the visitor said no', () => {
   assert.equal(analyticsConsent(consent(true)), true)
   assert.equal(analyticsConsent(`other=1; ${consent(true)}`), true)
   assert.equal(analyticsConsent(consent(false)), false)
-  assert.equal(analyticsConsent(''), false)
-  assert.equal(analyticsConsent(null), false)
-  assert.equal(analyticsConsent('rti_consent=garbage'), false)
+  // Default granted (4 Nov 2026): only an explicit "no" is a no.
+  assert.equal(analyticsConsent(''), true)
+  assert.equal(analyticsConsent(null), true)
+  assert.equal(analyticsConsent('rti_consent=garbage'), true)
 })
 
 test('Global Privacy Control is a no', () => {

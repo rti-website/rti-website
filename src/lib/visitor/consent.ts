@@ -19,10 +19,17 @@ export function readCookie(header: string | null | undefined, name: string): str
   return null
 }
 
+/**
+ * Analytics is ON unless the visitor said no (management, 4 Nov 2026: "US
+ * default granted", src/lib/tracking.ts). So: no rti_consent cookie, or one
+ * that cannot be read, is consent; only an explicit { a: false } is not.
+ * Global Privacy Control is checked separately (gpcSignal), and bots and data
+ * centre networks are refused by the route and the sweep as before.
+ */
 export function analyticsConsent(cookieHeader: string | null | undefined): boolean {
   const raw = readCookie(cookieHeader, 'rti_consent')
-  if (!raw) return false
-  try { return (JSON.parse(raw) as { a?: unknown }).a === true } catch { return false }
+  if (!raw) return true
+  try { return (JSON.parse(raw) as { a?: unknown }).a !== false } catch { return true }
 }
 
 export function gpcSignal(headers: Headers): boolean {

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import type { PickupText } from '@/data/itad'
 import { path } from '@/lib/urls'
 import { trackLead } from '@/components/client/track'
+import { AttributionFields, formAttribution } from '@/components/client/AttributionFields'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
 
 /**
@@ -76,6 +77,8 @@ export function PickupForm({ text: PICKUP }: { text: PickupText }) {
           website: value('website'),
           sourcePage: window.location.pathname,
           submitPage: window.location.href,
+          // This visit's gclid / UTM (4 Nov 2026), see AttributionFields.
+          attribution: formAttribution(),
         }),
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string }
@@ -108,6 +111,7 @@ export function PickupForm({ text: PICKUP }: { text: PickupText }) {
       className="relative flex w-full flex-col items-start gap-[16px] rounded-[16px] border border-line bg-white px-[24px] py-[28px] lg:w-[900px] lg:items-center lg:gap-[20px] lg:p-[40px]"
     >
       <input type="hidden" name="type" value="quote" />
+      <AttributionFields />
       {/* Honeypot — see /api/leads. Out of sight, out of the tab order. */}
       <div aria-hidden="true" className="absolute size-px overflow-hidden opacity-0">
         <label htmlFor="pickup-website">Leave this empty</label>

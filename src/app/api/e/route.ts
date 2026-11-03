@@ -16,9 +16,9 @@ import { inTurn, recordLeave, recordPageView, resolveVisitor } from '@/lib/visit
  * stored when a check fails:
  *   1. VISITOR_CAPTURE is on (off by default: production stays dark);
  *   2. the request comes from this site (Origin header);
- *   3. Analytics consent in the rti_consent cookie, and no Global Privacy
- *      Control (Sec-GPC). A visitor who declined or withdrew also loses their
- *      rti_vid cookie here;
+ *   3. Analytics not declined in the rti_consent cookie (on by default since
+ *      4 Nov 2026, consent.ts), and no Global Privacy Control (Sec-GPC). A
+ *      visitor who declined or withdrew also loses their rti_vid cookie here;
  *   4. not a crawler or script (user agent), and not a flood (store.ts);
  *   5. not from a cloud or data centre network already looked up
  *      (classify.ts 'datacenter'; management, 30 Oct 2026).
@@ -100,7 +100,7 @@ export async function POST(req: Request): Promise<Response> {
   let b: Record<string, unknown> = {}
   try { b = JSON.parse(raw) as Record<string, unknown> } catch { return empty() }
 
-  // Consent withdrawn, never given, or Global Privacy Control: nothing kept,
+  // Consent withdrawn (Reject), or Global Privacy Control: nothing kept,
   // and the visitor cookie goes.
   if (b.t === 'forget' || !analyticsConsent(cookieHeader) || gpcSignal(req.headers)) {
     const res = empty()

@@ -7,7 +7,7 @@ import { FORM, SERVICE_INTEREST, matchService } from '@/data/contact'
 import { fail, formDone, readBody } from '@/lib/form-post'
 import { residentialReplyHtml, residentialReplyText } from '@/data/emails'
 import { publishedContent } from '@/lib/page-content'
-import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
+import { ATTRIBUTION_KEYS, cleanAttribution, pickAttribution, readAttribution } from '@/lib/tracking'
 import { leadNotification } from '@/lib/lead-email'
 import { locateLead } from '@/lib/lead-location'
 import { isLeadFormKey, leadFormKey } from '@/lib/lead-forms'
@@ -302,8 +302,17 @@ export async function POST(req: Request): Promise<Response> {
    * script-less form post too. Plus the page the form was sent from and the
    * browser. Its own table (lead_attribution, db/006); a failure here is
    * logged and never costs the lead.
+   *
+   * 4 Nov 2026 (management: "store the gclid/UTM in the form"): the form
+   * carries the visit's record too, as `attribution` in the JSON body, or as
+   * hidden fields (gclid, utm_source …) when posted before hydration
+   * (src/components/client/AttributionFields.tsx). The form's wins when it has
+   * a campaign, else the cookie's (pickAttribution, src/lib/attribution.ts).
    */
-  const attr = readAttribution(req.headers.get('cookie'))
+  const fromBody = cleanAttribution(
+    payload.attribution && typeof payload.attribution === 'object' ? payload.attribution : payload,
+  )
+  const attr = pickAttribution(readAttribution(req.headers.get('cookie')), fromBody)
   const submitPage = clean(payload.submitPage, 500) ?? (body.from ? body.from : sourcePage)
   if (id) {
     try {

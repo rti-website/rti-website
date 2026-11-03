@@ -16,6 +16,11 @@ import { href } from '@/lib/urls'
  * `rti:consent` event, so tags are gated before React ever runs. This file is
  * only the interface to it.
  *
+ * DEFAULT ON (management, 4 Nov 2026): Analytics now starts granted and the
+ * banner is an opt-out. Ignoring it keeps tracking on; Reject or Analytics off
+ * in Customize turns it off (src/lib/tracking.ts has the Consent Mode v2
+ * details). Leads were arriving as direct/unknown while it waited for Accept.
+ *
  * TWO CATEGORIES, NOT THE FRAME'S FOUR. Management asked for Necessary
  * (always on) and Analytics (off until accepted); the frames also draw
  * Functional and Marketing. The site sets no functional or marketing cookies

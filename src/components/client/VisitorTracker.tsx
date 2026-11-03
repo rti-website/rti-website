@@ -12,8 +12,10 @@ import { path as sitePath } from '@/lib/urls'
  * (CLAUDE.md rule 7). It renders nothing, runs after hydration, and adds no
  * dependency.
  *
- * CONSENT FIRST. Nothing is sent, and the server sets no cookie, until the
- * cookie banner reports Analytics consent (window.rtiConsent, the rti:consent
+ * CONSENT. Since 4 Nov 2026 Analytics is on by default (management: "US
+ * default granted", src/lib/tracking.ts), so this sends from page load. Nothing
+ * is sent, and the server sets no cookie, once the cookie banner reports
+ * Analytics declined (window.rtiConsent, the rti:consent
  * event; src/lib/tracking.ts). Before that, the first touch values (landing
  * page, referrer, gclid, utm_…) are held by the banner's own bootstrap in
  * sessionStorage (rti_attr_held) and exposed as window.__rtiAttr; this reads

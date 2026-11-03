@@ -9,6 +9,7 @@ import { cityKey, stateCode } from '@/lib/us-address'
 import { COMPANY_INVALID_MESSAGE, isPlaceholderCompany } from '@/lib/company-name'
 import { CONNECT_EMAIL_KEY } from '@/components/client/ConnectForm'
 import { trackLead } from '@/components/client/track'
+import { AttributionFields, formAttribution } from '@/components/client/AttributionFields'
 import { SuccessDialog } from '@/components/client/SuccessDialog'
 import { ResidentialHelp } from '@/components/client/ResidentialHelp'
 import { ServicePicker } from '@/components/client/ServicePicker'
@@ -416,8 +417,11 @@ export function ContactForm({
           website: value('website'),
           sourcePage: window.location.pathname,
           // Full URL, query included — the "submit_page" of the lead's
-          // attribution (the campaign itself comes from the rti_attr cookie).
+          // attribution.
           submitPage: window.location.href,
+          // This visit's gclid / UTM, landing page and referrer (4 Nov 2026):
+          // the server uses it when the rti_attr cookie has no campaign.
+          attribution: formAttribution(),
         }),
       })
       const out = (await res.json().catch(() => ({}))) as { error?: string; field?: FieldName }
@@ -454,6 +458,7 @@ export function ContactForm({
     /* method + action: a submit before hydration posts here instead of
        GETting the fields into the address bar (RTI-10, src/lib/form-post.ts). */
     <form method="post" action={path('/api/leads/')} className="flex w-full flex-col gap-[16px] lg:gap-[20px]" onSubmit={submit} noValidate>
+      <AttributionFields />
       <input type="hidden" name="type" value="contact" />
       <input type="hidden" name="form" value={variant} />
       {/* Schedule a Pickup is business only: every pickup posts Commercial. */}

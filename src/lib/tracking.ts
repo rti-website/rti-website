@@ -32,39 +32,58 @@ import { SITE } from '@/lib/site'
  * runs everywhere, because it is our own first-party data, not a tag.
  */
 
-export const ATTRIBUTION_KEYS = [
-  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
-  'gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid',
-  'campaign_id', 'adgroup_id', 'keyword', 'matchtype', 'device',
-] as const
-export type AttributionKey = (typeof ATTRIBUTION_KEYS)[number]
+import { ATTRIBUTION_KEYS, cleanAttribution, type Attribution } from '@/lib/attribution'
+export { ATTRIBUTION_KEYS, cleanAttribution, pickAttribution, type Attribution, type AttributionKey } from '@/lib/attribution'
 
 /** The cookie: first party, 90 days, path=/, SameSite=Lax (the lead spec's terms). */
 export const ATTR_COOKIE = 'rti_attr'
 export const ATTR_MAX_AGE = 90 * 24 * 60 * 60
 
 /**
- * COOKIE CONSENT (management, 27 Oct 2026). Two categories: Necessary,
- * always on, and Analytics, off until the visitor accepts. The choice is the
- * `rti_consent` cookie ({ v: 1, a: true|false, t: ISO time }, a necessary
- * cookie, 12 months). The bootstrap below exposes it as
+ * COOKIE CONSENT. Two categories: Necessary, always on, and Analytics. The
+ * choice is the `rti_consent` cookie ({ v: 1, a: true|false, t: ISO time }, a
+ * necessary cookie, 12 months). The bootstrap below exposes it as
  *   window.rtiConsent = { necessary: true, analytics, decided, gpc, updatedAt }
  * and fires `rti:consent` on window whenever it changes (detail: the same
- * object). The visitor identification module reads both. A browser that sends
- * Global Privacy Control (navigator.globalPrivacyControl) is treated as
- * Analytics declined, whatever the cookie says, and is not shown the banner.
+ * object). The visitor identification module and Snitcher read both.
  *
- * Until Analytics is accepted: no GTM, no gtag.js, no GA4, no Google Ads
- * call number swap, and no rti_attr cookie. The visit's attribution is held
- * in sessionStorage (`rti_attr_held`) and written to rti_attr the moment the
- * visitor accepts, so an ad click on page 1 and consent on page 3 still ties
- * the lead to the click. Declining deletes rti_attr and the Google cookies.
+ * 27 Oct 2026 (management): Analytics was OFF until the visitor clicked
+ * Accept. Nothing loaded before that: no GTM, GA4 or Ads, no rti_attr cookie,
+ * no visitor identification, no Snitcher. Most visitors never touch the
+ * banner, so Google never saw their visit or their ad click and their leads
+ * arrived as direct/unknown.
+ *
+ * 4 Nov 2026 (management, Peter: "load tags on page load with Consent Mode v2
+ * (US default granted), fire the lead event only on form success, and store
+ * the gclid/UTM in the form"). Now:
+ *   - Analytics is ON by default. Tags, rti_attr, visitor identification and
+ *     Snitcher all start on page load. The banner is still shown until the
+ *     visitor chooses, and Reject (or Analytics off in Customize) switches it
+ *     all off: rti_attr and the Google cookies are deleted, and the page
+ *     reloads without the tags.
+ *   - Google Consent Mode v2 is set before GTM loads:
+ *       gtag('consent', 'default', { ad_storage, analytics_storage,
+ *                                    ad_user_data, ad_personalization })
+ *     all 'granted', except a second, region-scoped default of all 'denied'
+ *     for the EEA, the UK and Switzerland (Google applies it by the visitor's
+ *     IP; those visitors are counted only once they Accept). A saved choice
+ *     replaces both defaults, and every choice afterwards is sent as
+ *     gtag('consent', 'update', …).
+ *   - Global Privacy Control (navigator.globalPrivacyControl) still counts as
+ *     Analytics declined, and that browser is not shown the banner.
+ * With Analytics declined the visit's attribution is still held in
+ * sessionStorage (`rti_attr_held`) and sent with a form the visitor submits.
  * The banner itself is src/components/client/CookieConsent.tsx.
  */
 export const CONSENT_COOKIE = 'rti_consent'
 export const CONSENT_MAX_AGE = 365 * 24 * 60 * 60
 export const CONSENT_EVENT = 'rti:consent'
 export const ATTR_HELD_KEY = 'rti_attr_held'
+/** Where Consent Mode starts denied: the EEA, the UK and Switzerland (ISO 3166-1 alpha-2). */
+export const CONSENT_DENIED_REGIONS = [
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU',
+  'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH',
+] as const
 
 /**
  * A number Google Ads swaps for a Google forwarding number, so calls from ad
@@ -279,14 +298,16 @@ export function trackingBootstrap(rt: TrackingRuntime): string {
   const C = JSON.stringify({
     gtm: rt.gtm, gtag: rt.gtag, ga4d: rt.ga4Direct, ga4: rt.ga4Id, ads: rt.adsId, label: rt.adsLabel, calls: rt.calls,
     keys: ATTRIBUTION_KEYS, cookie: ATTR_COOKIE, maxAge: ATTR_MAX_AGE,
-    consent: CONSENT_COOKIE, consentAge: CONSENT_MAX_AGE, held: ATTR_HELD_KEY, event: CONSENT_EVENT,
+    consent: CONSENT_COOKIE, consentAge: CONSENT_MAX_AGE, held: ATTR_HELD_KEY, event: CONSENT_EVENT, eea: CONSENT_DENIED_REGIONS,
   }).replace(/</g, '\\u003c')
   return `(function(){var C=${C},w=window,d=document;w.dataLayer=w.dataLayer||[];w.__rtiTracking=C;
 var sec=location.protocol==='https:'?';Secure':'',host=location.hostname.replace(/^www\\./,'');
 function rc(n){var m=d.cookie.match(new RegExp('(?:^|;\\\\s*)'+n+'=([^;]*)'));if(!m)return null;try{return JSON.parse(decodeURIComponent(m[1]))}catch(e){return null}}
 function kill(n){d.cookie=n+'=;max-age=0;path=/';d.cookie=n+'=;max-age=0;path=/;domain=.'+host}
 var gpc=navigator.globalPrivacyControl===true,saved=rc(C.consent);if(!saved||typeof saved.a!=='boolean')saved=null;
-var cs={necessary:true,analytics:!gpc&&!!(saved&&saved.a),decided:!!saved||gpc,gpc:gpc,updatedAt:saved?saved.t||null:null};w.rtiConsent=cs;
+var cs={necessary:true,analytics:!gpc&&(saved?saved.a:true),decided:!!saved||gpc,gpc:gpc,updatedAt:saved?saved.t||null:null};w.rtiConsent=cs;
+w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};function cm(g){return{ad_storage:g,analytics_storage:g,ad_user_data:g,ad_personalization:g}}
+w.gtag('consent','default',cm(cs.analytics?'granted':'denied'));if(!saved&&!gpc){var rd=cm('denied');rd.region=C.eea;w.gtag('consent','default',rd)}
 function writeAttr(a){if(a)d.cookie=C.cookie+'='+encodeURIComponent(JSON.stringify(a))+';max-age='+C.maxAge+';path=/;SameSite=Lax'+sec}
 try{var p=new URLSearchParams(location.search),hit={},any=false;C.keys.forEach(function(k){var v=p.get(k);if(v){hit[k]=v.slice(0,200);any=true}});
 var cur=rc(C.cookie),held=null;try{held=JSON.parse(sessionStorage.getItem(C.held)||'null')}catch(e){}
@@ -296,7 +317,7 @@ if(r){try{if(new URL(r).host!==location.host)a.referrer=r.slice(0,500)}catch(e){
 if(cs.analytics){if(base!==cur)writeAttr(base)}else{try{sessionStorage.setItem(C.held,JSON.stringify(base))}catch(e){}if(cs.decided&&cur)kill(C.cookie)}
 w.__rtiAttr=base}catch(e){}
 w.dataLayer.push({rti_ga4_id:C.ga4,rti_ads_conversion_id:C.ads,rti_ads_conversion_number:(C.ads||'').replace(/^AW-/,''),rti_ads_conversion_label:C.label});
-d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!t)return;var n=t.getAttribute('href').slice(4),b=JSON.stringify({number:n,page:location.href,label:(t.textContent||'').trim().slice(0,80)});
+d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!t)return;var n=t.getAttribute('href').slice(4),b=JSON.stringify({number:n,page:location.href,label:(t.textContent||'').trim().slice(0,80),attr:w.__rtiAttr||null});
 w.dataLayer.push({event:'click_to_call',phone_number:n,page_url:location.href});try{if(navigator.sendBeacon)navigator.sendBeacon('/api/call-click/',new Blob([b],{type:'application/json'}));else fetch('/api/call-click/',{method:'POST',headers:{'content-type':'application/json'},body:b,keepalive:true})}catch(x){}},true);
 var CTA={'schedule a pickup':'Schedule a Pickup','get a quote':'Get a Quote','contact us':'Contact Us','call us now':'Call Us Now'};
 d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('a,button'):null;if(!t||meta('rti:tracking')==='off')return;
@@ -312,7 +333,7 @@ var loaded=false,started=false;
 function tags(){if(loaded||!cs.analytics||meta('rti:tracking')==='off')return;loaded=true;
 if(C.gtm){w.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var j=d.createElement('script');j.async=true;
 j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(C.gtm);d.head.appendChild(j)}
-else if(C.gtag){w.gtag=function(){w.dataLayer.push(arguments)};var g=d.createElement('script');g.async=true;
+else if(C.gtag){var g=d.createElement('script');g.async=true;
 g.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(C.ga4||C.ads);d.head.appendChild(g);w.gtag('js',new Date());
 if(C.ga4)w.gtag('config',C.ga4);if(C.ads)w.gtag('config',C.ads)}
 if(C.ga4d){w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};var h=d.createElement('script');h.async=true;
@@ -321,9 +342,9 @@ if((C.gtm||C.gtag)&&C.ads&&C.calls.length){w.gtag=w.gtag||function(){w.dataLayer
 C.calls.forEach(function(c){w.gtag('config',C.ads+'/'+c.label,{phone_conversion_number:c.number})})}}
 w.rtiSetConsent=function(analytics){var v=!!analytics&&!gpc,was=loaded,t=new Date().toISOString();
 d.cookie=C.consent+'='+encodeURIComponent(JSON.stringify({v:1,a:v,t:t}))+';max-age='+C.consentAge+';path=/;SameSite=Lax'+sec;
-cs.analytics=v;cs.decided=true;cs.updatedAt=t;
+cs.analytics=v;cs.decided=true;cs.updatedAt=t;w.gtag('consent','update',cm(v?'granted':'denied'));
 if(v){writeAttr(w.__rtiAttr);try{sessionStorage.removeItem(C.held)}catch(e){}if(started)tags()}
-else{kill(C.cookie);d.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^(_ga|_gid|_gat|_gcl_|_uet|_fbp|_clck|_clsk|MUID)/.test(n))kill(n)})}
+else{try{if(w.__rtiAttr)sessionStorage.setItem(C.held,JSON.stringify(w.__rtiAttr))}catch(e){}kill(C.cookie);d.cookie.split(';').forEach(function(c){var n=c.split('=')[0].trim();if(/^(_ga|_gid|_gat|_gcl_|_uet|_fbp|_clck|_clsk|MUID)/.test(n))kill(n)})}
 try{w.dispatchEvent(new CustomEvent(C.event,{detail:{necessary:true,analytics:cs.analytics,decided:true,gpc:gpc}}))}catch(e){}
 return{reload:was&&!v}};
 function start(){started=true;w.__rtiPageView();tags()}
@@ -337,20 +358,9 @@ if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else st
  * brought the visitor — and it works for a form posted before hydration too.
  * Only known keys, every value capped: it is visitor-controlled input.
  */
-export type Attribution = Partial<Record<AttributionKey | 'landing_page' | 'referrer' | 'captured_at', string>>
-
 export function readAttribution(cookieHeader: string | null): Attribution | null {
   if (!cookieHeader) return null
   const m = cookieHeader.match(new RegExp(`(?:^|;\\s*)${ATTR_COOKIE}=([^;]*)`))
   if (!m?.[1]) return null
-  let raw: unknown
-  try { raw = JSON.parse(decodeURIComponent(m[1])) } catch { return null }
-  if (!raw || typeof raw !== 'object') return null
-  const r = raw as Record<string, unknown>
-  const out: Attribution = {}
-  for (const k of [...ATTRIBUTION_KEYS, 'landing_page', 'referrer', 'captured_at'] as const) {
-    const v = r[k]
-    if (typeof v === 'string' && v.trim()) out[k] = v.trim().slice(0, k === 'landing_page' || k === 'referrer' ? 500 : 200)
-  }
-  return Object.keys(out).length ? out : null
+  try { return cleanAttribution(JSON.parse(decodeURIComponent(m[1]))) } catch { return null }
 }

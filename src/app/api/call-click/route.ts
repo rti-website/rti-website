@@ -1,6 +1,6 @@
 import { NextResponse, after } from 'next/server'
 import { one, q } from '@/lib/db'
-import { ATTRIBUTION_KEYS, readAttribution } from '@/lib/tracking'
+import { ATTRIBUTION_KEYS, cleanAttribution, pickAttribution, readAttribution } from '@/lib/tracking'
 import { locateLead } from '@/lib/lead-location'
 
 /**
@@ -33,7 +33,7 @@ const hits = new Map<string, number>()   // `${ip}|${number}` -> last accepted t
 const DEDUPE_MS = 10 * 60 * 1000
 
 export async function POST(req: Request) {
-  let body: { number?: unknown; page?: unknown; label?: unknown } = {}
+  let body: { number?: unknown; page?: unknown; label?: unknown; attr?: unknown } = {}
   try { body = await req.json() } catch { return NextResponse.json({ ok: false }, { status: 400 }) }
 
   const digits = String(body.number ?? '').replace(/\D/g, '').replace(/^1?(\d{10})$/, '1$1')
@@ -68,8 +68,9 @@ export async function POST(req: Request) {
   }
   if (!id) return NextResponse.json({ ok: false }, { status: 500 })
 
-  // How they found us, same as a form lead (lead_attribution, db/006).
-  const attr = readAttribution(req.headers.get('cookie'))
+  // How they found us, same as a form lead (lead_attribution, db/006): the
+  // cookie, or the visit's own record the tap sends along (4 Nov 2026).
+  const attr = pickAttribution(readAttribution(req.headers.get('cookie')), cleanAttribution(body.attr))
   try {
     const cols = [...ATTRIBUTION_KEYS, 'landing_page', 'referrer'] as const
     await q(

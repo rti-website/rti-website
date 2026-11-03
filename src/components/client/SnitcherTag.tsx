@@ -10,8 +10,9 @@ import { useEffect } from 'react'
  * identification (src/lib/visitor/), it does not replace it.
  *
  * WHY A CLIENT COMPONENT (CLAUDE.md rule 7, and why it is not pasted into
- * <head> as the email says): it is third party tracking, so like GTM it may
- * only load after the visitor accepts Analytics cookies in our banner
+ * <head> as the email says): it is third party tracking, so like GTM it loads
+ * only while Analytics is on (on by default since 4 Nov 2026; off after
+ * Reject or with Global Privacy Control) in our banner
  * (window.rtiConsent / the rti:consent event, src/lib/tracking.ts). Pasted in
  * <head> it would run before consent. The snippet below is Snitcher's own,
  * unchanged apart from its settings coming from SNITCHER_PROFILE_ID; once it
