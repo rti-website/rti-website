@@ -199,7 +199,6 @@ export const OCALA_BALLAST_RECYCLING: LocalPage = {
         {
           kind: "note",
           body: [
-            "Sources: [EPA](https://www.epa.gov/pcbs/disposal-fluorescent-light-ballasts-flb), [EPA fact sheet](https://www.epa.gov/sites/default/files/2020-07/documents/pcb-flb-factsheet-final-july-2020.pdf), [Florida DEP](https://floridadep.gov/waste/permitting-compliance-assistance/content/mercury-permitting-and-registration), [Marion County](https://www.marionfl.org/agencies-departments/departments-facilities-offices/solid-waste/materials-accepted-at-recycling-centers).",
             "Marion County's recycling centers don't list ballasts, and businesses that don't pay the county's solid waste assessment can't use them. The Ocala partner center accepts PCB and non-PCB ballasts from anyone who books ahead.",
           ],
         },

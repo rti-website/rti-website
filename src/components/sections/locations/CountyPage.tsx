@@ -76,7 +76,12 @@ export async function CountyPage({ page }: { page: Page }) {
             if (s.kind === 'text' && s.blocks.length === 0 && next?.kind === 'features') return null
             const prev = list[i - 1]
             const heading = s.kind === 'features' && prev?.kind === 'text' && prev.blocks.length === 0 ? prev.heading : undefined
-            return <Section key={i} section={s} wrap={!!page.sections} shared={shared} heading={heading} />
+            /* Two white text bands in a row ("What This Location Accepts" then
+               "Dropping Off at This Location") read as one: the gap between
+               them is one band's padding, not two (4 Nov 2026, Aaqib). */
+            const white = (x?: AreaSection) => !!x && (x.kind === 'faq' || (x.kind === 'text' && x.blocks.length > 0))
+            const join = { top: white(s) && white(prev), bottom: white(s) && white(next) }
+            return <Section key={i} section={s} wrap={!!page.sections} shared={shared} heading={heading} join={join} />
           })
         })()}
         {page.company && <Company company={page.company} shared={shared} />}
@@ -122,14 +127,16 @@ function legacySections(page: Page): AreaSection[] {
   return out
 }
 
-function Section({ section: s, wrap, shared, heading }: { section: AreaSection; wrap: boolean; shared: Shared; heading?: string }) {
+type Join = { top: boolean; bottom: boolean }
+
+function Section({ section: s, wrap, shared, heading, join }: { section: AreaSection; wrap: boolean; shared: Shared; heading?: string; join?: Join }) {
   switch (s.kind) {
     case 'items': return <Items heading={s.heading} wrap={wrap} groups={shared.COUNTY_ITEMS} />
     case 'features': return <Features cards={s.cards} icons={shared.COUNTY_FEATURE_ICONS} heading={heading} />
     case 'sights': return <Sights sights={s} />
-    case 'text': return <TextSection heading={s.heading} blocks={s.blocks} />
+    case 'text': return <TextSection heading={s.heading} blocks={s.blocks} join={join} />
     case 'products': return <Products heading={s.heading} items={s.items} />
-    case 'faq': return <TextSection heading={s.heading} blocks={[{ list: s.items.map((x) => ({ title: x.q, text: x.a })) }]} />
+    case 'faq': return <TextSection heading={s.heading} blocks={[{ list: s.items.map((x) => ({ title: x.q, text: x.a })) }]} join={join} />
   }
 }
 
@@ -300,9 +307,10 @@ const H2 = 'font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] max
  * the "Recycling Locations" and "Shredding Locations" lists, 7060:5137 and
  * 7073:8209). Same column, sizes and 18 gaps as About in every frame.
  */
-function TextSection({ heading, blocks }: { heading: string; blocks: AboutBlock[] }) {
+function TextSection({ heading, blocks, join }: { heading: string; blocks: AboutBlock[]; join?: Join }) {
+  const pad = `${join?.top ? 'pt-0 lg:pt-0' : 'pt-[40px] lg:pt-[70px]'} ${join?.bottom ? 'pb-[28px] lg:pb-[40px]' : 'pb-[40px] lg:pb-[70px]'}`
   return (
-    <section className="bg-white px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
+    <section className={`bg-white px-[20px] lg:px-0 ${pad}`}>
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[20px] lg:max-w-none lg:w-[1282px] lg:gap-[18px]">
         <h2 className={H2}>{heading}</h2>
         {blocks.map((b, i) => <Block key={i} block={b} />)}

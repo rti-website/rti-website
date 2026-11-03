@@ -305,13 +305,21 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
       dark: true,
       blocks: [
         {
-          kind: "why",
+          kind: "topics",
           items: [
             {
-              icon: "layers",
               title: "One Provider for Paper, Hard Drives and Phones",
-              body: "Manage confidential documents and electronic media destruction through one provider. Recycle Technologies offers off-site shredding for paper records, physical destruction of hard drives and SSDs, and wiping or destruction of phones and their storage components, depending on the service provided. Instead of coordinating separate vendors for paper records and retired devices, businesses can arrange collection through one service and receive a Certificate of Destruction for their records. Whether you're clearing an archive, retiring office equipment, or scheduling recurring collections, contact our Blaine team to discuss your materials and pickup requirements.",
+              body: [
+                "Manage confidential documents and electronic media destruction through one provider. Recycle Technologies offers off-site shredding for paper records, physical destruction of hard drives and SSDs, and wiping or destruction of phones and their storage components, depending on the service provided.",
+                "Instead of coordinating separate vendors for paper records and retired devices, businesses can arrange collection through one service and receive a Certificate of Destruction for their records.",
+                "Whether you're clearing an archive, retiring office equipment, or scheduling recurring collections, contact our Blaine team to discuss your materials and pickup requirements.",
+              ],
             },
+          ],
+        },
+        {
+          kind: "why",
+          items: [
             {
               icon: "pin",
               title: "Our own Blaine facility",

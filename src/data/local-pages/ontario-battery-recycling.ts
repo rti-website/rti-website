@@ -115,10 +115,10 @@ export const ONTARIO_BATTERY_RECYCLING: LocalPage = {
           kind: "split",
           heading: "Tape It Before You Bring It",
           body: [
-            "Prepare batteries for transport according to the instructions for their type. Lithium and rechargeable batteries may require terminal protection, such as covering exposed terminals with suitable tape or placing individual batteries in separate bags. Keep different chemistries separated and labels visible.",
             `See our main [battery recycling page](${href('/battery-recycling/')}) for more information about battery types and recycling options.`,
           ],
           panel: [
+            "Prepare batteries for transport according to the instructions for their type. Lithium and rechargeable batteries may require terminal protection, such as covering exposed terminals with suitable tape or placing individual batteries in separate bags. Keep different chemistries separated and labels visible.",
             "For damaged, swollen, or leaking batteries, contact the facility before handling or transporting them.",
           ],
         },

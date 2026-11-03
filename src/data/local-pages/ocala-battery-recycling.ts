@@ -205,7 +205,6 @@ export const OCALA_BATTERY_RECYCLING: LocalPage = {
         {
           kind: "note",
           body: [
-            "Sources: [Florida DEP: Battery Main Page](https://floridadep.gov/waste/permitting-compliance-assistance/content/battery-main-page), [Florida DEP: Homeowner's Battery Guide](https://floridadep.gov/sites/default/files/Battery-Fact-Sheet_09Dec15.pdf), [Marion County Solid Waste](https://www.marionfl.org/agencies-departments/departments-facilities-offices/solid-waste/materials-accepted-at-recycling-centers), [Citrus County Solid Waste](https://www.citruscounty.gov/departments/public_works/solid_waste_management/recycling/batteries.php), [Alachua County Hazardous Waste Collection](https://alachuacounty.us/Depts/SolidWaste/hwc).",
             "Commercial generators also have federal requirements. The EPA advises businesses to manage used lithium-ion batteries under its universal waste rules, since most are likely hazardous waste when discarded ([EPA](https://epa.gov/recycle/used-lithium-ion-batteries)).",
             "For businesses that generate batteries regularly, the challenge isn't just finding a place that accepts them. It's finding an option that fits the battery types, quantity, pickup needs, and documentation requirements. Recycle Technologies offers appointment-based drop-off through its Ocala partner center, business pickup across the service area, and mail-in options for eligible smaller loads. Contact us to discuss your batteries and determine the appropriate route.",
           ],

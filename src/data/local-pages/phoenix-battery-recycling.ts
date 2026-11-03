@@ -44,12 +44,27 @@ export const PHOENIX_BATTERY_RECYCLING: LocalPage = {
             },
             { label: "Phone", value: "(602) 276-1858" },
             { label: "Hours", value: "Monday to Friday, 7:30 AM to 2:00 PM" },
+          ],
+        },
+        {
+          kind: "options",
+          heading: "Available Service Options",
+          items: [
             {
-              label: "Drop-off",
-              value: "Open to businesses and residents. Walk-ins are accepted for 1 to 4 pallets.",
+              icon: "pin",
+              title: "Drop-off",
+              body: "Open to businesses and residents. Walk-ins are accepted for 1 to 4 pallets.",
             },
-            { label: "Commercial pickup", value: "For businesses with bulk or recurring battery loads." },
-            { label: "Mail-in", value: "Prepaid kits for dry cell, laptop, lead-acid, and lithium batteries." },
+            {
+              icon: "truck",
+              title: "Commercial pickup",
+              body: "For businesses with bulk or recurring battery loads.",
+            },
+            {
+              icon: "mail",
+              title: "Mail-in",
+              body: "Prepaid kits for dry cell, laptop, lead-acid, and lithium batteries.",
+            },
           ],
         },
       ],

@@ -213,11 +213,8 @@ export const FLORIDA_HUB = hub({
   servicesLead: LEAD_HOME('Florida'),
   counties: [
     { heading: 'Marion County', chips: [chip('Ocala', '/florida/ocala/')] },
-    // The brief: the Florida hub also links these two pages.
-    { heading: 'Florida Recycling Resources', chips: [
-      chip('Recycling kits in Florida', '/recycling-kits-in-florida/'),
-      chip('Florida fluorescent bulb regulations', '/florida-fluorescent-bulb-recycling-regulations/'),
-    ] },
+    // "Florida Recycling Resources" (kits and bulb regulations chips) taken
+    // out 4 Nov 2026 (Aaqib): they are not counties.
   ],
   faqs: [
     { q: 'Why should I recycle old electronics instead of throwing them away?', a: 'Electronics can contain recoverable materials such as copper, steel, and glass, as well as substances that require careful handling. Recycling helps recover materials and reduce environmental risks.' },

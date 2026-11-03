@@ -204,7 +204,6 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
         {
           kind: "note",
           body: [
-            "Sources: [IDEM: Electronic Waste](https://www.in.gov/idem/recycle/electronic-waste/), [IDEM: Indiana Regulations Affecting E-Waste](https://www.in.gov/idem/recycle/electronic-waste/indiana-regulations-affecting-electronic-waste-e-waste), [Johnson County Electronics Recycling (Earth911)](https://search.earth911.com/location/Q1RQNVJaXl9HUg/), [Daily Journal](https://dailyjournal.net/?p=1814099), [Marion County Wellness & Environmental Coalition](https://mcwec.org/2023/09/combined-tox-away-day-this-saturday-free/).",
             "Our Greenwood center takes the business loads, CRTs, and out-of-county drop-offs those programs can't, from anyone who stops in.",
           ],
         },

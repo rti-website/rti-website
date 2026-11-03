@@ -202,7 +202,6 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
         {
           kind: "note",
           body: [
-            "Sources: [Florida DEP: Electronics Waste](https://floridadep.gov/waste/permitting-compliance-assistance/content/electronics-waste), [Marion County: Materials Accepted at Recycling Centers](https://www.marionfl.org/agencies-departments/departments-facilities-offices/solid-waste/materials-accepted-at-recycling-centers), [Marion County Solid Waste](https://utilities.marionfl.org/my-water/solid-waste).",
             `DEP's advice for businesses is to ask any recycler where the scrap ends up and how data on the equipment is destroyed. The steps above show where each material goes; our [hard drive destruction](${href('/hard-drive-destruction-services/')}) service covers the data, and the Ocala partner location takes the office equipment, CRTs, and large loads the county centers can't.`,
           ],
         },
