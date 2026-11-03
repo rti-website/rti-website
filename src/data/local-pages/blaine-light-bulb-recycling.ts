@@ -141,7 +141,7 @@ export const BLAINE_LIGHT_BULB_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Light Bulb Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "What does light bulb recycling cost in Blaine?", a: "Pricing depends on the lamp type and quantity. Call 763-559-5130 or request a quote." },
       { q: "Will my bulbs end up in a landfill?", a: "No. We're committed to zero landfill." },

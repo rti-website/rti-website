@@ -64,7 +64,21 @@ export async function CountyPage({ page }: { page: Page }) {
         <About page={page} />
         {!page.noServices && <Services heading={page.servicesHeading} shared={shared} />}
         <Cta shared={shared} />
-        {(page.sections ?? legacySections(page)).map((s, i) => <Section key={i} section={s} wrap={!!page.sections} shared={shared} />)}
+        {(() => {
+          /* A heading-only text section right before the feature cards
+             ("Why Choose Recycle Technologies", Lewisburg and others) is drawn
+             as the cards' own heading, in their band (3 Nov 2026: it used to
+             float in a white band of its own, a gap away from its cards). The
+             data keeps both entries, so Admin -> Pages edits keep their place. */
+          const list = page.sections ?? legacySections(page)
+          return list.map((s, i) => {
+            const next = list[i + 1]
+            if (s.kind === 'text' && s.blocks.length === 0 && next?.kind === 'features') return null
+            const prev = list[i - 1]
+            const heading = s.kind === 'features' && prev?.kind === 'text' && prev.blocks.length === 0 ? prev.heading : undefined
+            return <Section key={i} section={s} wrap={!!page.sections} shared={shared} heading={heading} />
+          })
+        })()}
         {page.company && <Company company={page.company} shared={shared} />}
       </main>
       <div className="relative lg:h-[var(--footer-h)]" style={{ '--footer-h': `${FOOTER_H}px` } as React.CSSProperties}>
@@ -108,10 +122,10 @@ function legacySections(page: Page): AreaSection[] {
   return out
 }
 
-function Section({ section: s, wrap, shared }: { section: AreaSection; wrap: boolean; shared: Shared }) {
+function Section({ section: s, wrap, shared, heading }: { section: AreaSection; wrap: boolean; shared: Shared; heading?: string }) {
   switch (s.kind) {
     case 'items': return <Items heading={s.heading} wrap={wrap} groups={shared.COUNTY_ITEMS} />
-    case 'features': return <Features cards={s.cards} icons={shared.COUNTY_FEATURE_ICONS} />
+    case 'features': return <Features cards={s.cards} icons={shared.COUNTY_FEATURE_ICONS} heading={heading} />
     case 'sights': return <Sights sights={s} />
     case 'text': return <TextSection heading={s.heading} blocks={s.blocks} />
     case 'products': return <Products heading={s.heading} items={s.items} />
@@ -423,9 +437,14 @@ function Items({ heading, wrap = false, groups }: { heading: string; wrap?: bool
  * last card (Document Shredding Minnesota's fifth, 7073:8142) sits in the
  * middle. The four icons repeat in order.
  */
-function Features({ cards, icons }: { cards: { title: string; text: string }[]; icons: string[] }) {
+function Features({ cards, icons, heading }: { cards: { title: string; text: string }[]; icons: string[]; heading?: string }) {
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
+      {heading && (
+        <div className="mx-auto mb-[20px] w-full max-w-[350px] lg:mb-[40px] lg:max-w-none lg:w-[1282px]">
+          <h2 className={H2}>{heading}</h2>
+        </div>
+      )}
       <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1264px] lg:flex-row lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-[24px] lg:gap-y-[40px]">
         {cards.map((c, i) => (
           <div key={c.title} className="flex flex-col gap-[12px] rounded-[12px] border border-[#e6e6e6] bg-white p-[22px] lg:w-[620px] lg:gap-[14px] lg:p-[32px]">

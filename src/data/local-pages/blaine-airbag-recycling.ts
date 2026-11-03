@@ -133,7 +133,7 @@ export const BLAINE_AIRBAG_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Airbag Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "What does airbag recycling cost in Blaine?", a: "Pricing depends on the number of units and whether they're deployed or live. Call 763-559-5130 or request a quote." },
       { q: "Can an individual schedule an airbag pickup?", a: "No. Pickup is for commercial customers. Individuals can use Blaine drop-off or a mail-in kit." },

@@ -122,7 +122,7 @@ export const PHOENIX_LIGHT_BULB_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Light Bulb Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "Is light bulb recycling free in Phoenix?", a: "Cost depends on the bulb types and quantity. Call (602) 276-1858 or request a quote before your visit." },
       { q: "Can I recycle broken fluorescent bulbs?", a: "Call first for handling and packing instructions, since broken mercury lamps need extra care." },

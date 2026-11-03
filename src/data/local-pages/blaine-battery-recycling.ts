@@ -156,7 +156,7 @@ export const BLAINE_BATTERY_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Battery Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "What does battery recycling cost in Blaine?", a: "Pricing depends on the battery chemistry and quantity. Call 763-559-5130 or request a quote." },
       { q: "Do I need an appointment to drop off a small bag of batteries?", a: "No. Come in during regular weekday hours." },

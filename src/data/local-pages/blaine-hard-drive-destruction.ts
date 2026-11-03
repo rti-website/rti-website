@@ -149,7 +149,7 @@ export const BLAINE_HARD_DRIVE_DESTRUCTION: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Hard Drive Destruction FAQs",
+    heading: "FAQs",
     items: [
       { q: "How much does hard drive destruction cost in Blaine?", a: "Pricing depends on the number and type of drives. Call 763-559-5130 or request a quote." },
       { q: "Do you offer on-site shredding at my office?", a: "Destruction happens at our secure facility. We can pick drives up, or you can bring them in and watch." },

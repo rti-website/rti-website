@@ -5,6 +5,7 @@ import type { ContentMeta } from '@/lib/content'
 import { fixLegacyUrl, fixLegacyUrls, localImagePath } from '@/lib/legacy-urls'
 import { tidyPostHtml } from '@/lib/post-html'
 import REDIRECTS from '../../data/redirects.json'
+import { DELETED_POST_URLS } from '@/data/deleted-posts'
 
 /**
  * Published posts, read from PostgreSQL AT BUILD TIME.
@@ -195,7 +196,8 @@ export const allDbPosts = buildOnce(async (): Promise<DbPost[]> => {
     // posts (30 Sep 2026, e.g. …-at-risk-2/) redirect to the original, and a
     // listed link to a redirect is a wasted hop. The redirect itself runs
     // from next.config, before the page is ever reached.
-    return rows.map(toPost).filter((p) => !REDIRECTED.has(p.url))
+    // 3 Nov 2026: and the posts the team lead deleted (src/data/deleted-posts.ts).
+    return rows.map(toPost).filter((p) => !REDIRECTED.has(p.url) && !DELETED_POST_URLS.has(p.url))
   } catch (err) {
     return noDatabase(err)
   }

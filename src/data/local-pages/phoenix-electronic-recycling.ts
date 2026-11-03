@@ -95,7 +95,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Frequently Asked Questions About Phoenix Electronics Recycling",
+    heading: "FAQs",
     items: [
       { q: "Can I drop off electronics without an appointment in Phoenix?", a: "Yes. Walk-ins are accepted for 1–4 pallets, although an appointment is preferred. Confirm the current hours before visiting." },
       { q: "Do you accept PCB ballasts and capacitors?", a: "Yes. The Phoenix location accepts PCB and non-PCB ballasts and capacitors." },

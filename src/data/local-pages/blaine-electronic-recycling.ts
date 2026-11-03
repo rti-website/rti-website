@@ -155,7 +155,7 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Electronics Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "How much does electronics recycling cost in Blaine?", a: "Pricing depends on the equipment type and quantity. Call 763-559-5130 or request a quote." },
       { q: "Can I bring an old refrigerator or washer along with my electronics?", a: "Yes. The Blaine center also accepts appliances like refrigerators, washers and dryers. Call ahead for large ones." },

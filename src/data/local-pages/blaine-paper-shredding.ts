@@ -151,7 +151,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Paper Shredding FAQs",
+    heading: "FAQs",
     items: [
       { q: "How much does paper shredding cost in Blaine?", a: "Pricing depends on volume and service type. Call 763-559-5130 or request a quote." },
       { q: "Do you bring a shredding truck to our office?", a: "No. We collect your documents and shred them at our Blaine facility." },

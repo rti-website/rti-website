@@ -87,9 +87,11 @@ export function DirectionsPanel({ heading, intro, introShort, rows, note, primar
 
           {rows.length > 0 && <dl className="flex flex-col gap-[12px] rounded-[12px] bg-[#eaf4f5] p-[24px] text-[14px] max-lg:hidden">
             {rows.map((r) => (
-              <div key={r.label} className="flex h-[20px] items-start justify-between">
-                <dt className="font-roboto text-muted">{r.label}</dt>
-                <dd className="font-sans font-medium text-heading">{r.value}</dd>
+              /* min-height, not a fixed 20px (3 Nov 2026): a long value (Phoenix's
+                 parking and drop-off lines) wraps and pushed over the next row. */
+              <div key={r.label} className="flex min-h-[20px] items-start justify-between gap-[16px]">
+                <dt className="shrink-0 font-roboto text-muted">{r.label}</dt>
+                <dd className="min-w-0 text-right font-sans font-medium leading-[20px] text-heading">{r.value}</dd>
               </div>
             ))}
           </dl>}

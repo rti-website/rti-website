@@ -8,7 +8,6 @@ import { WISCONSIN_LIGHT_BULB_RECYCLING } from './wisconsin-light-bulb-recycling
 import { WISCONSIN_OFF_SITE_SHREDDING } from './wisconsin-off-site-shredding'
 import { WISCONSIN_PAPER_SHREDDING } from './wisconsin-paper-shredding'
 import { WISCONSIN_PHONE_SHREDDING } from './wisconsin-phone-shredding'
-import { CHICAGO_AIRBAG_RECYCLING } from './chicago-airbag-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from './chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from './chicago-battery-recycling'
 import { CHICAGO_HARD_DRIVE_DESTRUCTION } from './chicago-hard-drive-destruction'
@@ -62,7 +61,6 @@ export const LOCAL_PAGES: LocalPage[] = [
   WISCONSIN_OFF_SITE_SHREDDING,
   WISCONSIN_PAPER_SHREDDING,
   WISCONSIN_PHONE_SHREDDING,
-  CHICAGO_AIRBAG_RECYCLING,
   CHICAGO_BALLAST_RECYCLING,
   CHICAGO_BATTERY_RECYCLING,
   CHICAGO_HARD_DRIVE_DESTRUCTION,

@@ -133,7 +133,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "TV Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "What does TV recycling cost in Blaine?", a: "Pricing depends on the type and number of sets. Call 763-559-5130 or request a quote." },
       { q: "Do working TVs get reused?", a: "Sets that still work may be donated for reuse. Non-working and outdated ones are recycled." },

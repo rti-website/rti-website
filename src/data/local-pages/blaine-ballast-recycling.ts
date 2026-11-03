@@ -148,7 +148,7 @@ export const BLAINE_BALLAST_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Ballast Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "How much does ballast recycling cost?", a: "Pricing depends on the quantity and on whether the ballasts contain PCBs. Call 763-559-5130 or request a quote." },
       { q: "Do I need to cut the ballasts out of the fixtures first?", a: "Tell us when you request your quote, and we'll explain how to send whole fixtures versus loose ballasts." },

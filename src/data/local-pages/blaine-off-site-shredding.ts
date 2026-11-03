@@ -154,7 +154,7 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Off-Site Shredding FAQs",
+    heading: "FAQs",
     items: [
       { q: "What does off-site shredding cost in Blaine?", a: "Pricing depends on volume, media type and schedule. Call 763-559-5130 or request a quote." },
       { q: "Can individuals schedule a pickup?", a: "No. Pickup is for commercial clients. Individuals can use our Blaine drop-off." },

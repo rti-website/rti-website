@@ -164,7 +164,6 @@ import { LEWISBURG_ELECTRONIC_RECYCLING } from '@/data/local-pages/lewisburg-ele
 import { LEWISBURG_BATTERY_RECYCLING } from '@/data/local-pages/lewisburg-battery-recycling'
 import { LEWISBURG_LIGHT_BULB_RECYCLING } from '@/data/local-pages/lewisburg-light-bulb-recycling'
 import { LEWISBURG_BALLAST_RECYCLING } from '@/data/local-pages/lewisburg-ballast-recycling'
-import { CHICAGO_AIRBAG_RECYCLING } from '@/data/local-pages/chicago-airbag-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
 import { CHICAGO_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/chicago-hard-drive-destruction'
@@ -353,7 +352,6 @@ export const DOCS = {
   'local/tennessee-lewisburg-battery-recycling': { title: "Battery Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BATTERY_RECYCLING.url], data: one(LEWISBURG_BATTERY_RECYCLING) },
   'local/tennessee-lewisburg-light-bulb-recycling': { title: "Light Bulb Recycling in Lewisburg, TN", group: 'Location pages', urls: [LEWISBURG_LIGHT_BULB_RECYCLING.url], data: one(LEWISBURG_LIGHT_BULB_RECYCLING) },
   'local/tennessee-lewisburg-ballast-recycling': { title: "Ballast Recycling in Tennessee (Lewisburg)", group: 'Location pages', urls: [LEWISBURG_BALLAST_RECYCLING.url], data: one(LEWISBURG_BALLAST_RECYCLING) },
-  'local/airbag-recycling-chicago': { title: "Airbag Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_AIRBAG_RECYCLING.url], data: one(CHICAGO_AIRBAG_RECYCLING) },
   'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
   'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
   'local/hard-drive-destruction-chicago': { title: "Hard Drive Destruction in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_HARD_DRIVE_DESTRUCTION.url], data: one(CHICAGO_HARD_DRIVE_DESTRUCTION) },

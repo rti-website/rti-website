@@ -150,7 +150,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Phone Shredding FAQs",
+    heading: "FAQs",
     items: [
       { q: "How much does phone shredding cost in Blaine?", a: "Pricing depends on device count and service. Call 763-559-5130 or request a quote." },
       { q: "Do you shred phones at our office?", a: "No. Devices are processed at our Blaine facility, where you can watch if you'd like." },

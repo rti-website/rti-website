@@ -122,7 +122,7 @@ export const LEWISBURG_LIGHT_BULB_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Light Bulb Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "Is light bulb recycling free in Lewisburg?", a: "Cost depends on the bulb types and quantity. Call 615-214-4768 or request a quote before your visit." },
       { q: "Is the Lewisburg center the same as the state's mobile collection events?", a: "No. TDEC's mobile events run on scheduled dates for households, while our Lewisburg center is open every weekday." },

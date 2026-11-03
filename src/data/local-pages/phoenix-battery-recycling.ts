@@ -119,7 +119,7 @@ export const PHOENIX_BATTERY_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Battery Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "Is battery recycling free in Phoenix?", a: "Pricing depends on the battery type and quantity. Call (602) 276-1858 or request a quote to confirm the cost before you bring them in." },
       { q: "What should I do with a swollen or damaged lithium battery?", a: "Stop using and charging it, bag it on its own, and keep it away from heat. Then call us before bringing it in." },

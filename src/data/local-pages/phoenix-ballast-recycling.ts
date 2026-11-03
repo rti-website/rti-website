@@ -118,7 +118,7 @@ export const PHOENIX_BALLAST_RECYCLING: LocalPage = {
   ],
   faq: {
     eyebrow: "FAQ",
-    heading: "Ballast Recycling FAQs",
+    heading: "FAQs",
     items: [
       { q: "Is ballast recycling free in Phoenix?", a: "Pricing depends on the ballast type and quantity. Call (602) 276-1858 or request a quote to confirm the cost before you bring them in." },
       { q: "Can I throw a non-PCB ballast in the trash?", a: "Recycling is the better route. Many non-PCB ballasts still contain DEHP capacitors, and their copper and steel can be recovered." },
