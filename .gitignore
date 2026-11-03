@@ -45,3 +45,7 @@ public/wp-content/
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Internal handover notes and Claude deliverables: never in git
+/docs/visitor-identification/
+/Claude outputs/
