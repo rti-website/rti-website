@@ -120,7 +120,6 @@ export const NEW_BERLIN_BATTERY_RECYCLING: LocalPage = {
           heading: "Getting Batteries Ready",
           body: [
             "Batteries can spark a fire or leak if they're crushed or stored loosely, so a few minutes of prep makes the trip safer:",
-            `Our main [battery recycling page](${href('/battery-recycling/')}) has more on each battery type.`,
           ],
           checks: [
             "**Cover the terminals:** a strip of tape over each end before storage or transport lowers fire risk.",

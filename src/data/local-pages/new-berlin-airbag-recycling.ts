@@ -103,7 +103,6 @@ export const NEW_BERLIN_AIRBAG_RECYCLING: LocalPage = {
         {
           kind: "split",
           heading: "Handling and Packing Airbags",
-          body: [`See our main [airbag recycling page](${href('/airbag-recycling/')}) for more on the service.`],
           checks: [
             "**Keep undeployed units out of the trash and the crusher.** They contain sodium azide, and the Wisconsin DNR advises removing them before a vehicle is crushed or shredded.",
             "**Leave removal to trained techs.** The DNR recommends that only trained technicians with proper safety gear pull or deploy airbags.",

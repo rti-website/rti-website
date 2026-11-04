@@ -113,12 +113,6 @@ export const NEW_BERLIN_ELECTRONIC_RECYCLING: LocalPage = {
             { icon: "layers", title: "Anything not listed", body: "Call 262-798-3040 before you load up" },
           ],
         },
-        {
-          kind: "note",
-          body: [
-            `See our main [electronics recycling page](${href('/electronic-recycle/')}) for more on how devices are processed.`,
-          ],
-        },
       ],
     },
     {

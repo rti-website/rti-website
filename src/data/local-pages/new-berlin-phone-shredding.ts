@@ -122,7 +122,6 @@ export const NEW_BERLIN_PHONE_SHREDDING: LocalPage = {
         {
           kind: "split",
           heading: "Custody and Proof",
-          body: [`Read more on our main [phone shredding page](${href('/phone-shredding-service/')}).`],
           checks: [
             "**Logged on arrival:** Devices are recorded when they reach our New Berlin facility.",
             "**Secure transport:** Phones collected from your site travel straight to our facility.",

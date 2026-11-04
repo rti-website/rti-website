@@ -125,9 +125,6 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
         {
           kind: "split",
           heading: "Getting Equipment Ready",
-          body: [
-            `For more on device types and our process, visit the main [electronics recycling page](${href('/electronic-recycle/')}).`,
-          ],
           checks: [
             "Back up and clear devices you aren't sending for hard drive destruction.",
             "Coil cords and cables and bag small accessories so nothing tangles in transit.",
@@ -350,7 +347,7 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
       figma: "doc-10",
       heading: "Texas Counties Served for Electronics Recycling",
       grey: true,
-      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: href('/fort-worth-texas/') }] }],
+      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: "" }] }],
     },
   ],
   faq: {

@@ -201,14 +201,18 @@ function Block({ block: b, dark }: { block: DocBlock | { kind: 'text'; body: str
     case 'places':
       return (
         <ul className="flex w-full flex-wrap justify-center gap-[10px] lg:gap-[12px]">
-          {b.links.map((l) => (
-            <li key={l.label}>
-              <Link href={l.href} className="btn-pop flex items-center gap-[8px] rounded-full border border-[#e6e6e6] bg-white px-[14px] py-[8px] font-sans text-[14px] font-medium leading-[22px] text-[#132119] hover:border-brand hover:text-brand lg:px-[18px] lg:py-[10px] lg:text-[15px]">
-                <span className={`${ICON_BOX} size-[24px] rounded-full`}><LineIcon name="pin" className="size-[13px]" /></span>
-                {l.label}
-              </Link>
-            </li>
-          ))}
+          {b.links.map((l) => {
+            const chip = 'flex items-center gap-[8px] rounded-full border border-[#e6e6e6] bg-white px-[14px] py-[8px] font-sans text-[14px] font-medium leading-[22px] text-[#132119] lg:px-[18px] lg:py-[10px] lg:text-[15px]'
+            const inner = <><span className={`${ICON_BOX} size-[24px] rounded-full`}><LineIcon name="pin" className="size-[13px]" /></span>{l.label}</>
+            // A chip with no href is a place named, not linked (TL, 5 Nov 2026: "Tarrant County" on the Fort Worth pages).
+            return (
+              <li key={l.label}>
+                {l.href
+                  ? <Link href={l.href} className={`btn-pop ${chip} hover:border-brand hover:text-brand`}>{inner}</Link>
+                  : <span className={chip}>{inner}</span>}
+              </li>
+            )
+          })}
         </ul>
       )
     case 'list':

@@ -127,9 +127,6 @@ export const NEW_BERLIN_PAPER_SHREDDING: LocalPage = {
         {
           kind: "split",
           heading: "From Your Office to the Shredder",
-          body: [
-            `See our main [paper shredding page](${href('/paper-shredding-services/')}) for more on the service.`,
-          ],
           checks: [
             "**Logged on arrival:** Boxes are recorded when they reach our New Berlin plant.",
             "**Tracked throughout:** Paper stays under documented custody from collection until it's shredded.",

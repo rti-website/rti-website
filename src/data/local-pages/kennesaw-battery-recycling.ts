@@ -111,7 +111,6 @@ export const KENNESAW_BATTERY_RECYCLING: LocalPage = {
         {
           kind: "split",
           heading: "Storing and Transporting Batteries Safely",
-          body: [`Our main [battery recycling page](${href('/battery-recycling/')}) has more on each type.`],
           checks: [
             "**Tape the ends.** Covering terminals before storage or transport cuts down on fire risk.",
             "**Keep chemistries apart.** Our staff sort every battery by type, but a pre-sorted box goes through faster, and mail-in kits must be sorted.",

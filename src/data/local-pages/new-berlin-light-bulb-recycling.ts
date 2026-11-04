@@ -119,7 +119,6 @@ export const NEW_BERLIN_LIGHT_BULB_RECYCLING: LocalPage = {
           heading: "Packing Lamps for the Drive",
           panel: [
             "Federal Department of Transportation rules cover bulb packaging in transit, so pack lamps in the cartons your replacements came in or in a fiber bin from us. Tubes rolling loose in a truck bed or a trash bag tend to arrive in pieces. Seal broken lamps in their own closed container and keep them apart from whole ones. Businesses booking pickup can have packing materials delivered first.",
-            `Our main [light bulb recycling page](${href('/light-bulbs/')}) covers every lamp type in more detail.`,
           ],
         },
       ],

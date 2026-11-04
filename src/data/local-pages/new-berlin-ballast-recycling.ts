@@ -110,7 +110,6 @@ export const NEW_BERLIN_BALLAST_RECYCLING: LocalPage = {
           heading: "Sorting and Packing Your Ballasts",
           panel: [
             "PCB and non-PCB ballasts are handled differently, so keep older or unmarked units in their own box, away from newer ones. Pack ballasts snugly in a sturdy box or bin, because they're heavy and can split a thin carton. If a ballast is leaking or stained with oil, keep it separate and call before you bring it in.",
-            `Our main [ballast recycling page](${href('/ballasts/')}) has more on each ballast type.`,
           ],
         },
       ],

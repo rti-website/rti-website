@@ -117,7 +117,6 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
           heading: "Getting Lamps Ready to Move",
           panel: [
             "U.S. Department of Transportation rules apply to how bulbs are packed for shipping, so use the cartons your new lamps came in or a fiber bin. Fill gaps so tubes can't roll, keep cracked lamps in their own closed container, and stack boxes so the heaviest sit on the bottom. Businesses on a pickup schedule can ask for packing materials ahead of time.",
-            `Our main [light bulb recycling page](${href('/light-bulbs/')}) has more on each lamp type.`,
           ],
         },
       ],
@@ -257,7 +256,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
       figma: "doc-8",
       heading: "Texas Counties We Serve",
       grey: true,
-      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: href('/fort-worth-texas/') }] }],
+      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: "" }] }],
     },
   ],
   faq: {

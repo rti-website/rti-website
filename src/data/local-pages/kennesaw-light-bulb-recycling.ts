@@ -113,7 +113,6 @@ export const KENNESAW_LIGHT_BULB_RECYCLING: LocalPage = {
           heading: "Packing Lamps for Transport",
           panel: [
             "Federal Department of Transportation rules govern how bulbs are packed for shipping, so place lamps in the boxes your replacements arrive in or in a fiber bin. Keep tubes snug so they can't slide around, and set aside any that are already cracked. Businesses on a pickup schedule can have packing materials dropped off ahead of time.",
-            `More lamp details are on our main [light bulb recycling page](${href('/light-bulbs/')}).`,
           ],
         },
       ],

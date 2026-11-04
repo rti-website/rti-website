@@ -209,12 +209,6 @@ export const FORT_WORTH_BALLAST_RECYCLING: LocalPage = {
             },
           ],
         },
-        {
-          kind: "text",
-          body: [
-            `For more information about the company's general process, visit the [Recycle Technologies ballast recycling page](${href('/ballasts/')}).`,
-          ],
-        },
       ],
     },
     {
@@ -379,7 +373,7 @@ export const FORT_WORTH_BALLAST_RECYCLING: LocalPage = {
       figma: "doc-8",
       heading: "Texas Counties Served for Ballast Recycling",
       grey: true,
-      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: href('/fort-worth-texas/') }] }],
+      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: "" }] }],
     },
   ],
   faq: {

@@ -111,9 +111,6 @@ export const KENNESAW_ELECTRONIC_RECYCLING: LocalPage = {
         {
           kind: "split",
           heading: "Before You Load the Car",
-          body: [
-            `For more about the service, see our main [electronics recycling page](${href('/electronic-recycle/')}).`,
-          ],
           checks: [
             `**Deal with the data.** Bring hard drives for [hard drive destruction](${href('/hard-drive-destruction-services/')}) rather than relying on a quick wipe.`,
             "**Keep what you want.** Pull out discs, flash drives, and anything personal before drop-off.",

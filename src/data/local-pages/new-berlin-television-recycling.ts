@@ -108,9 +108,6 @@ export const NEW_BERLIN_TELEVISION_RECYCLING: LocalPage = {
         {
           kind: "split",
           heading: "Getting Your TVs Ready",
-          body: [
-            `See our main [TV recycling page](${href('/tv-recycling/')}) for more on how we handle each type.`,
-          ],
           checks: [
             "**Handle tube TVs with care.** CRTs are heavy and contain lead and cadmium, so carry them upright and keep the screen from taking a hit.",
             "**Protect flat screens.** Stand panels on edge with a blanket or cardboard between them so they don't scrape or crack on the ride.",

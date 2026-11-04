@@ -125,7 +125,6 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
           heading: "Storing and Packing Batteries Safely",
           body: [
             "Stored the wrong way, batteries can start fires or leak chemicals. Before your drop-off or pickup:",
-            `Details on each chemistry are on our main [battery recycling page](${href('/battery-recycling/')}).`,
           ],
           checks: [
             "Cover the terminals with tape or a non-conductive cap, especially on lithium and 9-volt batteries.",
@@ -348,7 +347,7 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
       figma: "doc-10",
       heading: "Texas Counties for Battery Recycling Service",
       grey: true,
-      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: href('/fort-worth-texas/') }] }],
+      blocks: [{ kind: "places", links: [{ label: "Tarrant County", href: "" }] }],
     },
   ],
   faq: {

@@ -110,7 +110,6 @@ export const KENNESAW_BALLAST_RECYCLING: LocalPage = {
           heading: "Sorting and Packing Ballasts",
           panel: [
             "If you're not sure which type you have, describe the ballasts when you ask for a quote, and our team will tell you how to handle them. Keep older or unlabeled units separate from newer ones, and pack everything in a sturdy box or bin, since ballasts are heavy. For a ballast that's leaking or oily, set it apart and call first.",
-            `Our main [ballast recycling page](${href('/ballasts/')}) explains each type.`,
           ],
         },
       ],
