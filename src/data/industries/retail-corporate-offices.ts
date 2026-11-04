@@ -13,9 +13,9 @@ export const CONTENT = industryPage({
   lead: 'Retailers and corporate offices can recycle retired computers, IT equipment, batteries, and lighting through Recycle Technologies’ licensed recycling services, with a Certificate of Recycling or Destruction issued for every completed project.',
   challengesHeading: 'Recycling Challenges for Retail & Corporate Offices',
   challenges: [
-    'Retired computers, monitors, and other office electronics tend to build up quietly at stores and corporate offices, especially when a technology refresh, office move, or store closure happens across more than one location at a time.',
-    'Without a single provider to call, IT and facilities teams end up coordinating separate pickups and losing track of what’s been recycled and what’s still sitting in a storage room or back office.',
-    'That equipment often holds information worth protecting, from network settings to data stored on retired hard drives, so businesses typically want a documented process rather than just dropping old devices off somewhere.',
+    `Retired computers, monitors, and other [office electronics](${L.electronics}) tend to build up quietly at stores and corporate offices, especially when a [technology refresh](${L.itad}), office move, or store closure happens across more than one location at a time.`,
+    `Without a single provider to call, IT and facilities teams end up coordinating separate [pickups](${L.pickup}) and losing track of what’s been recycled and what’s still sitting in a storage room or back office.`,
+    `That equipment often holds information worth protecting, from network settings to data stored on [retired hard drives](${L.hardDrive}), so businesses typically want a documented process rather than just dropping old devices off somewhere.`,
     'Retail and corporate teams also need recycling scheduled around store hours or office operations, so it doesn’t interrupt the business while equipment is picked up and processed.',
   ],
   servicesHeading: 'Recycling Services for Retail & Corporate Offices',
@@ -32,11 +32,11 @@ export const CONTENT = industryPage({
   introImage: '/images/industries/intro-retail-v2.png', // 28 Sep 2026 frame; was intro-retail.png
   // (the 23 Sep photo was Figma 6734:5891, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies accept retired computers and IT equipment from retail stores and corporate offices?', a: 'Yes, our electronics recycling and IT asset disposition services cover retired computers, monitors, and other office electronics.' },
-    { q: 'Can a retail or corporate office recycle old televisions along with its electronics?', a: 'Yes, our TV recycling service accepts retired television units, including older CRT models.' },
+    { q: 'Does Recycle Technologies accept retired computers and IT equipment from retail stores and corporate offices?', a: `Yes, our [electronics recycling](${L.electronics}) and [IT asset disposition](${L.itad}) services cover retired computers, monitors, and other office electronics. We also work with [banks and financial offices](${L.finance}) and [manufacturing facilities](${L.manufacturing}).` },
+    { q: 'Can a retail or corporate office recycle old televisions along with its electronics?', a: `Yes, our [TV recycling](${L.tv}) service accepts retired television units, including older CRT models.` },
     { q: 'Does Recycle Technologies provide documentation showing what happened to our equipment?', a: 'Yes, a Certificate of Recycling or Destruction is issued once your equipment has been recycled or destroyed.' },
-    { q: 'Which Recycle Technologies facilities are R2v3 certified?', a: 'Our Blaine, Minnesota, facilities hold active R2v3 certification, while the New Berlin, Wisconsin, facility is pursuing certification and is currently pending.' },
-    { q: 'Is there a recycling option for a retail or corporate location outside Minnesota or Wisconsin?', a: 'Yes, our mail-in program lets businesses anywhere in the country ship electronics, batteries, or bulbs for recycling using a prepaid kit.' },
+    { q: 'Which Recycle Technologies facilities are R2v3 certified?', a: `Our [Blaine, Minnesota](${L.blaine}), facilities hold active [R2v3 certification](${L.certifications}), while the [New Berlin, Wisconsin](${L.newBerlin}), facility is pursuing certification and is currently pending.` },
+    { q: 'Is there a recycling option for a retail or corporate location outside Minnesota or Wisconsin?', a: `Yes, our [mail-in program](${L.mailIn}) lets businesses anywhere in the country ship electronics, batteries, or bulbs for recycling using a prepaid kit.` },
   ],
   ctaHeading: 'Ready to Recycle Your Business Electronics?',
   ctaBody: ['Get a quote for your next pickup, or call MN: (800) 969-5166 / WI: (800) 205-3040 to discuss retired electronics, IT equipment, batteries, or lighting from your store or office.'],

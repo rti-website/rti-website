@@ -13,9 +13,9 @@ export const CONTENT = industryPage({
   lead: 'Recycle Technologies helps financial services and banking organizations retire computers, IT equipment, and paper records through licensed recycling and shredding services, with documentation provided for completed projects.',
   challengesHeading: 'Recycling Challenges in Financial Services & Banking',
   challenges: [
-    'Banks and financial services organizations regularly retire computers, monitors, and networking equipment as branches upgrade systems or consolidate locations. Tracking equipment across multiple branches or offices, scheduling pickups, and making sure retired devices don’t accumulate in storage rooms can add extra coordination for IT and operations teams already managing daily branch activity.',
-    'Retired computers, hard drives, and paper records can also hold sensitive account and customer information. Financial institutions are typically subject to federal recordkeeping and data-security expectations, including those under the Gramm-Leach-Bliley Act (GLBA), which makes documented destruction with a clear record of what happened to each device or document especially important.',
-    'Coordinating that process alongside routine electronics and battery waste is another task for teams already balancing procurement, compliance, and facilities responsibilities.',
+    `Banks and financial services organizations regularly retire computers, monitors, and networking equipment as branches upgrade systems or consolidate locations. Tracking equipment across multiple branches or offices, [scheduling pickups](${L.pickup}), and making sure retired devices don’t accumulate in storage rooms can add extra coordination for IT and operations teams already managing daily branch activity.`,
+    `Retired computers, [hard drives](${L.hardDrive}), and [paper records](${L.paper}) can also hold sensitive account and customer information. Financial institutions are typically subject to federal recordkeeping and data-security expectations, including those under the Gramm-Leach-Bliley Act (GLBA), which makes [documented destruction](${L.itad}) with a clear record of what happened to each device or document especially important.`,
+    `Coordinating that process alongside routine [electronics](${L.electronics}) and [battery](${L.battery}) waste is another task for teams already balancing procurement, compliance, and facilities responsibilities.`,
   ],
   servicesHeading: 'Recycling Services for Financial Services & Banking',
   services: [
@@ -32,11 +32,11 @@ export const CONTENT = industryPage({
   introCrop: { x: -11, y: -75, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13157)
   // (the 23 Sep photo was Figma 6734:5895, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies work with financial services and banking organizations?', a: 'Yes. Our electronics recycling, IT asset disposition, and shredding services are available to businesses retiring computers, IT equipment, and paper records.' },
+    { q: 'Does Recycle Technologies work with financial services and banking organizations?', a: `Yes. Our [electronics recycling](${L.electronics}), [IT asset disposition](${L.itad}), and [shredding](${L.paper}) services are available to businesses retiring computers, IT equipment, and paper records. We also serve [retail and corporate offices](${L.retail}) and [healthcare organizations](${L.healthcare}) with the same documented process.` },
     { q: 'Can financial institutions recycle retired computers and IT equipment?', a: 'Yes, our electronics recycling and IT asset disposition services accept computers, monitors, and related IT equipment.' },
-    { q: 'Does Recycle Technologies provide documentation for recycled or destroyed equipment?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided for completed projects.' },
-    { q: 'Is pickup available for financial services offices?', a: 'Pickup is available exclusively for commercial clients. Offices outside the pickup area can use the mail-in program instead.' },
-    { q: 'Where does Recycle Technologies provide service?', a: 'Recycle Technologies operates licensed facilities in Minnesota and Wisconsin, with a mail-in program available nationwide.' },
+    { q: 'Does Recycle Technologies provide documentation for recycled or destroyed equipment?', a: `Yes, a Certificate of Recycling or Certificate of Destruction is provided for completed projects. See our [certifications](${L.certifications}).` },
+    { q: 'Is pickup available for financial services offices?', a: `[Pickup](${L.pickup}) is available exclusively for commercial clients. Offices outside the pickup area can use the [mail-in program](${L.mailIn}) instead.` },
+    { q: 'Where does Recycle Technologies provide service?', a: `Recycle Technologies operates licensed facilities in [Minnesota](${L.minnesota}) and [Wisconsin](${L.wisconsin}), with a [mail-in program](${L.mailIn}) available nationwide.` },
   ],
   ctaHeading: 'Ready to Recycle Your Financial Organization’s Equipment?',
   ctaBody: ['Request a quote to start retiring computers, IT equipment, and paper records from your branch or office.'],

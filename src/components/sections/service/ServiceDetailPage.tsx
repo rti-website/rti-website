@@ -15,6 +15,7 @@ import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import { Btn } from '@/components/ui/Bits'
 import { KitTip } from '@/components/ui/KitTip'
+import { inlineLinks } from '@/components/ui/InlineLinks'
 import { content as pageContent } from '@/lib/page-content'
 
 /**
@@ -180,7 +181,8 @@ export async function ServiceDetailPage({
              Read More (to #services) and shares that shape. Removing the field
              would mean touching both templates for one page family's change. */
         >
-          {intro.body.map((p) => <p key={p} className={PROSE}>{p}</p>)}
+          {/* `[words](/path/)` in the copy draws as a link (the industry pages, 5 Nov 2026). */}
+          {intro.body.map((p) => <p key={p} className={PROSE}>{inlineLinks(p)}</p>)}
         </ServiceSplit>
 
         <ServiceAcceptBand

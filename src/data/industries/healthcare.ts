@@ -13,8 +13,8 @@ export const CONTENT = industryPage({
   lead: 'Recycle Technologies helps healthcare organizations retire computers, IT equipment, and other electronics through licensed recycling and destruction services, with documentation provided for completed projects.',
   challengesHeading: 'Recycling Challenges in Healthcare',
   challenges: [
-    'Hospitals, clinics, and healthcare facilities regularly retire computers, monitors, networking equipment, and other electronics as systems are upgraded or replaced. Coordinating pickup across multiple departments or buildings, tracking what has been removed, and ensuring retired equipment doesn’t sit in storage or end up in the general trash can add extra work for facilities and IT teams already managing day-to-day operations.',
-    'Retired computers and hard drives can also hold sensitive information, and healthcare organizations are typically subject to HIPAA data security requirements that make documented destruction and a clear record of what happened to each device especially important. Fitting that process in alongside routine electronics, battery, and lighting waste adds one more thing for teams already balancing procurement, facilities, and operational priorities.',
+    `Hospitals, clinics, and healthcare facilities regularly retire computers, monitors, networking equipment, and other [electronics](${L.electronics}) as systems are upgraded or replaced. Coordinating [pickup](${L.pickup}) across multiple departments or buildings, tracking what has been removed, and ensuring retired equipment doesn’t sit in storage or end up in the general trash can add extra work for facilities and IT teams already managing day-to-day operations.`,
+    `Retired computers and [hard drives](${L.hardDrive}) can also hold sensitive information, and healthcare organizations are typically subject to HIPAA data security requirements that make [documented destruction](${L.itad}) and a clear record of what happened to each device especially important. Fitting that process in alongside routine electronics, [battery](${L.battery}), and [lighting](${L.lightBulbs}) waste adds one more thing for teams already balancing procurement, facilities, and operational priorities.`,
   ],
   servicesHeading: 'Recycling Services for Healthcare',
   services: [
@@ -31,11 +31,11 @@ export const CONTENT = industryPage({
   introCrop: { x: -6, y: -75, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13153)
   // (the 23 Sep photo was Figma 6734:5890, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies work with healthcare organizations?', a: 'Yes. Our IT asset disposition service supports businesses, hospitals, and institutes in retiring computers and IT equipment.' },
+    { q: 'Does Recycle Technologies work with healthcare organizations?', a: `Yes. Our [IT asset disposition](${L.itad}) service supports businesses, hospitals, and institutes in retiring computers and IT equipment. We also work with [schools and universities](${L.education}) and [government offices](${L.government}) that handle sensitive records.` },
     { q: 'Can healthcare facilities recycle retired computers and IT equipment?', a: 'Yes, our electronics recycling and IT asset disposition services accept computers, monitors, and related IT equipment.' },
-    { q: 'Does Recycle Technologies provide documentation for recycled or destroyed equipment?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided for completed projects.' },
-    { q: 'Is pickup available for healthcare facilities?', a: 'Pickup is available exclusively for commercial clients. Facilities outside the pickup area can use the mail-in program instead.' },
-    { q: 'Where does Recycle Technologies provide service?', a: 'Recycle Technologies operates licensed facilities in Minnesota and Wisconsin, with a mail-in program available nationwide.' },
+    { q: 'Does Recycle Technologies provide documentation for recycled or destroyed equipment?', a: `Yes, a Certificate of Recycling or Certificate of Destruction is provided for completed projects. See our [certifications](${L.certifications}).` },
+    { q: 'Is pickup available for healthcare facilities?', a: `[Pickup](${L.pickup}) is available exclusively for commercial clients. Facilities outside the pickup area can use the [mail-in program](${L.mailIn}) instead.` },
+    { q: 'Where does Recycle Technologies provide service?', a: `Recycle Technologies operates licensed facilities in [Minnesota](${L.minnesota}) and [Wisconsin](${L.wisconsin}), with a [mail-in program](${L.mailIn}) available nationwide.` },
   ],
   ctaHeading: 'Ready to Recycle Your Healthcare Organization’s Equipment?',
   ctaBody: ['Request a quote to start retiring computers, IT equipment, and other recyclable materials from your facility.'],

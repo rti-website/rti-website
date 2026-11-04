@@ -13,8 +13,8 @@ export const CONTENT = industryPage({
   lead: 'Manufacturing and industrial organizations can recycle retired computers, IT equipment, batteries, and lighting through Recycle Technologies’ licensed recycling services, with a Certificate of Recycling or Destruction issued for every completed project.',
   challengesHeading: 'Recycling Challenges in Manufacturing & Industrial Operations',
   challenges: [
-    'Retired computers, monitors, and networking equipment tend to accumulate at plants, warehouses, and production facilities faster than anyone plans for. A technology refresh on the production floor, an office move, or a shift in operations at one of several locations can leave equipment sitting in storage with no clear next step, especially when there’s no single point of contact handling disposal across sites.',
-    'That equipment often holds information worth protecting, from network configurations to operational and employee data stored on retired hard drives. Plant and facilities teams typically need that equipment picked up, processed, and documented without pulling attention away from ongoing production, and with a record showing what happened to each device after it left the building.',
+    `Retired computers, monitors, and [networking equipment](${L.electronics}) tend to accumulate at plants, warehouses, and production facilities faster than anyone plans for. A [technology refresh](${L.itad}) on the production floor, an office move, or a shift in operations at one of several locations can leave equipment sitting in storage with no clear next step, especially when there’s no single point of contact handling disposal across sites.`,
+    `That equipment often holds information worth protecting, from network configurations to operational and employee data stored on [retired hard drives](${L.hardDrive}). Plant and facilities teams typically need that equipment picked up, processed, and documented without pulling attention away from ongoing production, and with a record showing what happened to each device after it left the building.`,
   ],
   servicesHeading: 'Recycling Services for Manufacturing & Industrial',
   services: [
@@ -32,11 +32,11 @@ export const CONTENT = industryPage({
   introCrop: { x: -11, y: -46, w: 579, h: 386, fw: 568, fh: 295 }, // as the frame places it (6989:13155)
   // (the 23 Sep photo was Figma 6734:5892, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies accept retired computers and IT equipment from manufacturing facilities?', a: 'Yes, our electronics recycling and IT asset disposition services cover retired computers, monitors, and networking equipment.' },
-    { q: 'Can manufacturing and industrial facilities recycle batteries and lighting equipment along with their electronics?', a: 'Yes, our battery recycling service accepts lithium-ion, EV, mercury, nickel-cadmium, and zinc batteries, and our light bulb recycling service covers fluorescent, LED, and other bulb types.' },
+    { q: 'Does Recycle Technologies accept retired computers and IT equipment from manufacturing facilities?', a: `Yes, our [electronics recycling](${L.electronics}) and [IT asset disposition](${L.itad}) services cover retired computers, monitors, and networking equipment. We also work with [automotive shops and fleets](${L.automotive}) and [retail and corporate offices](${L.retail}).` },
+    { q: 'Can manufacturing and industrial facilities recycle batteries and lighting equipment along with their electronics?', a: `Yes, our [battery recycling](${L.battery}) service accepts lithium-ion, EV, mercury, nickel-cadmium, and zinc batteries, and our [light bulb recycling](${L.lightBulbs}) service covers fluorescent, LED, and other bulb types.` },
     { q: 'Does Recycle Technologies provide documentation showing what happened to our equipment?', a: 'Yes, a Certificate of Recycling or Destruction is issued once your equipment has been recycled or destroyed.' },
-    { q: 'Which Recycle Technologies facilities are R2v3 certified?', a: 'Our Blaine, Minnesota, facilities hold active R2v3 certification, while the New Berlin, Wisconsin, facility is pursuing certification and is currently pending.' },
-    { q: 'Is there a recycling option for a manufacturing or industrial facility outside Minnesota or Wisconsin?', a: 'Yes, our mail-in program lets facilities anywhere in the country ship electronics, batteries, or bulbs for recycling using a prepaid kit.' },
+    { q: 'Which Recycle Technologies facilities are R2v3 certified?', a: `Our [Blaine, Minnesota](${L.blaine}), facilities hold active [R2v3 certification](${L.certifications}), while the [New Berlin, Wisconsin](${L.newBerlin}), facility is pursuing certification and is currently pending.` },
+    { q: 'Is there a recycling option for a manufacturing or industrial facility outside Minnesota or Wisconsin?', a: `Yes, our [mail-in program](${L.mailIn}) lets facilities anywhere in the country ship electronics, batteries, or bulbs for recycling using a prepaid kit.` },
   ],
   ctaHeading: 'Ready to Recycle Your Manufacturing or Industrial Equipment?',
   ctaBody: ['Get a quote for your next pickup, or call MN: (800) 969-5166 / WI: (800) 205-3040 to discuss retired electronics, IT equipment, batteries, or lighting from your facility.'],

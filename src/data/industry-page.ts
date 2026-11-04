@@ -46,6 +46,23 @@ export const SERVICE_LINKS = {
   tv:           href('/tv-recycling/'),
   airbag:       href('/airbag-recycling/'),
   mailIn:       href('/mail-in-recycling/'),
+  // For links inside the copy (5 Nov 2026, internal linking): the forms,
+  // certifications, the two home facilities and the other industry pages.
+  pickup:       href('/request-a-pickup/'),
+  quote:        href('/quote/'),
+  certifications: href('/certifications/'),
+  locations:    href('/all-locations/'),
+  minnesota:    href('/minnesota-recycling/'),
+  wisconsin:    href('/wisconsin-recycling/'),
+  blaine:       href('/minnesota-recycling/ramsey/blaine/'),
+  newBerlin:    href('/wisconsin-recycling/new-berlin-recycling-center/'),
+  healthcare:   href('/industries/healthcare/'),
+  finance:      href('/industries/financial-services-banking/'),
+  education:    href('/industries/education/'),
+  government:   href('/industries/government-municipal/'),
+  automotive:   href('/industries/automotive-fleet/'),
+  manufacturing: href('/industries/manufacturing-industrial/'),
+  retail:       href('/industries/retail-corporate-offices/'),
 } as const
 
 /** Every industry doc closes the same way. */

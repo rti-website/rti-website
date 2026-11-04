@@ -13,9 +13,9 @@ export const CONTENT = industryPage({
   lead: 'Schools, districts, colleges, and universities can retire computers, classroom technology, and IT equipment through Recycle Technologies’ licensed recycling services, with a Certificate of Recycling or Destruction issued for every completed project.',
   challengesHeading: 'Recycling Challenges in K-12 & Higher Education',
   challenges: [
-    'Technology refreshes rarely happen one device at a time. When a district replaces a computer lab, a college retires a batch of lab or office computers, or a campus consolidates IT closets across buildings, the result is often dozens or hundreds of computers, monitors, and networking devices that need to leave the building at once.',
-    'Coordinating that volume, scheduling a pickup that works around the academic calendar, and keeping a record of what was removed and from which building or campus take real planning, especially for IT and facilities teams already stretched across day-to-day support.',
-    'Retired computers and hard drives also tend to sit in storage closets long after they’re pulled from service, because nobody wants to ship sensitive equipment out without a clear record of what happens to it. A recycler that documents each step, from pickup through processing, makes it easier for a district or campus to close that loop and free up the storage space those retired devices are taking up.',
+    `Technology refreshes rarely happen one device at a time. When a district replaces a computer lab, a college retires a batch of lab or office computers, or a campus consolidates IT closets across buildings, the result is often dozens or hundreds of computers, monitors, and [networking devices](${L.electronics}) that need to leave the building at once.`,
+    `Coordinating that volume, [scheduling a pickup](${L.pickup}) that works around the academic calendar, and keeping a record of what was removed and from which building or campus take real planning, especially for IT and facilities teams already stretched across day-to-day support.`,
+    `Retired computers and [hard drives](${L.hardDrive}) also tend to sit in storage closets long after they’re pulled from service, because nobody wants to ship sensitive equipment out without a clear record of what happens to it. A recycler that [documents each step](${L.itad}), from pickup through processing, makes it easier for a district or campus to close that loop and free up the storage space those retired devices are taking up.`,
   ],
   servicesHeading: 'Recycling Services for K-12 & Higher Education',
   services: [
@@ -32,11 +32,11 @@ export const CONTENT = industryPage({
   introCrop: { x: -81, y: -152, w: 730, h: 486, fw: 568, fh: 295 }, // as the frame places it (6989:13163)
   // (the 23 Sep photo was Figma 6734:5897, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies work with schools, districts, colleges, or universities?', a: 'Our electronics recycling and IT asset disposition services are set up to handle equipment from businesses and institutions, including bulk technology refreshes.' },
+    { q: 'Does Recycle Technologies work with schools, districts, colleges, or universities?', a: `Our [electronics recycling](${L.electronics}) and [IT asset disposition](${L.itad}) services are set up to handle equipment from businesses and institutions, including bulk technology refreshes. We also work with [government and municipal offices](${L.government}) and [healthcare organizations](${L.healthcare}).` },
     { q: 'Can a school district recycle a large batch of retired computers at once?', a: 'Yes. Our IT asset disposition process includes a planning and estimation step specifically for larger equipment lists.' },
-    { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete.' },
-    { q: 'What if our campus is outside Minnesota or Wisconsin?', a: 'Our mail-in program lets you order a recycling kit, pack your equipment, and ship it with a prepaid label from anywhere in the country.' },
-    { q: 'Is pickup available for schools and campuses?', a: 'Pickup is available exclusively for commercial clients in our service area; campuses elsewhere can use the mail-in program instead.' },
+    { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: `Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete. See our [certifications](${L.certifications}).` },
+    { q: 'What if our campus is outside Minnesota or Wisconsin?', a: `Our [mail-in program](${L.mailIn}) lets you order a recycling kit, pack your equipment, and ship it with a prepaid label from anywhere in the country.` },
+    { q: 'Is pickup available for schools and campuses?', a: `[Pickup](${L.pickup}) is available exclusively for commercial clients in our service area; campuses elsewhere can use the [mail-in program](${L.mailIn}) instead.` },
   ],
   ctaHeading: 'Ready to Clear Out Retired Technology from Your School or Campus?',
   ctaBody: ['Get a quote for your next equipment refresh, or call MN: (800) 969-5166 / WI: (800) 205-3040 to talk through a pickup or bulk project directly.'],

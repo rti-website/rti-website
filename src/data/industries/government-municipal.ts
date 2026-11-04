@@ -13,9 +13,9 @@ export const CONTENT = industryPage({
   lead: 'City, county, and municipal offices can retire computers, IT equipment, and other electronics through Recycle Technologies’ licensed recycling services, with a Certificate of Recycling or Destruction issued for every completed project.',
   challengesHeading: 'Recycling Challenges for Government & Municipal Organizations',
   challenges: [
-    'Government offices rarely retire equipment on a simple schedule. A city department might replace desktops during a budget cycle, a county office might consolidate IT closets across several buildings, or a municipal facility might accumulate old monitors and networking gear over years of incremental upgrades.',
-    'Getting that equipment out the door means coordinating pickup timing, tracking which department or building it came from, and making sure someone can account for what happened to it afterward, on top of the day-to-day workload already carried by facilities and IT staff.',
-    'Paper records and retired computers also tend to pile up in storage rooms because no one wants to send equipment or files out without a clear record of what was destroyed and when. A recycler that documents each step, from pickup through processing, makes it easier for an office to actually clear that backlog instead of letting it grow year over year.',
+    `Government offices rarely retire equipment on a simple schedule. A city department might replace desktops during a budget cycle, a county office might consolidate IT closets across several buildings, or a municipal facility might accumulate old monitors and [networking gear](${L.electronics}) over years of incremental upgrades.`,
+    `Getting that equipment out the door means coordinating [pickup](${L.pickup}) timing, tracking which department or building it came from, and making sure someone can account for what happened to it afterward, on top of the day-to-day workload already carried by facilities and IT staff.`,
+    `[Paper records](${L.paper}) and [retired computers](${L.itad}) also tend to pile up in storage rooms because no one wants to send equipment or files out without a clear record of what was destroyed and when. A recycler that documents each step, from pickup through processing, makes it easier for an office to actually clear that backlog instead of letting it grow year over year.`,
   ],
   servicesHeading: 'Recycling Services for Government & Municipal Organizations',
   services: [
@@ -35,10 +35,10 @@ export const CONTENT = industryPage({
   introCrop: { x: -81, y: -152, w: 730, h: 486, fw: 568, fh: 295 }, // as the frame places it (6989:13241)
   // (the 23 Sep photo was Figma 6734:5897, supplied by Asim)
   faqs: [
-    { q: 'Does Recycle Technologies work with government and municipal organizations?', a: 'Our electronics recycling, IT asset disposition, and shredding services are set up to handle equipment from businesses and institutions, including offices with larger equipment lists.' },
-    { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: 'Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete.' },
-    { q: 'What if our office or facility is outside Minnesota or Wisconsin?', a: 'Our mail-in program lets you order a recycling kit, pack your equipment, and ship it with a prepaid label from anywhere in the country.' },
-    { q: 'Is pickup available for government and municipal offices?', a: 'Pickup is available exclusively for commercial clients in our service area; offices elsewhere can use the mail-in program instead.' },
+    { q: 'Does Recycle Technologies work with government and municipal organizations?', a: `Our [electronics recycling](${L.electronics}), [IT asset disposition](${L.itad}), and [shredding](${L.paper}) services are set up to handle equipment from businesses and institutions, including offices with larger equipment lists. We also work with [schools and universities](${L.education}) and [banks and financial offices](${L.finance}).` },
+    { q: 'Does Recycle Technologies provide proof that equipment was recycled or destroyed?', a: `Yes, a Certificate of Recycling or Certificate of Destruction is provided once a project is complete. See our [certifications](${L.certifications}).` },
+    { q: 'What if our office or facility is outside Minnesota or Wisconsin?', a: `Our [mail-in program](${L.mailIn}) lets you order a recycling kit, pack your equipment, and ship it with a prepaid label from anywhere in the country.` },
+    { q: 'Is pickup available for government and municipal offices?', a: `[Pickup](${L.pickup}) is available exclusively for commercial clients in our service area; offices elsewhere can use the [mail-in program](${L.mailIn}) instead.` },
     // 28 Oct 2026, management: the approved MBE wording, with the certificate
     // details that government and bid pages carry.
     { q: 'Is Recycle Technologies a certified minority business?', a: 'Yes. Recycle Technologies, Inc. is a Certified Minority Business Enterprise (MBE) through the National Minority Supplier Development Council (NMSDC), North Central MSDC. Certificate WS696947, valid through 07/2027.' },
