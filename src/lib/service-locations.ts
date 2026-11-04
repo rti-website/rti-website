@@ -4,7 +4,7 @@ import { q, tx } from '@/lib/db'
 import { milesBetween, type LatLng } from '@/lib/geo'
 import { zipPoint } from '@/lib/zips'
 import { path } from '@/lib/urls'
-import { BLAINE_PAGES } from '@/data/local-pages'
+import { FACILITY_DOC_PAGES } from '@/data/local-pages'
 import {
   SERVICES, SERVICE_SLUGS, SITE_SEEDS, STARTERS,
   type Faq, type PageData, type Pair, type Pickup, type Review, type ServiceSlug, type SiteData,
@@ -212,7 +212,9 @@ export function pageUrl(site: Site, svc: ServiceSlug): string {
   // 3 Nov 2026: Minnesota's service pages moved to /minnesota/blaine/<service>/
   // (the old /minnesota-recycling/<service>/ URLs were deleted), so any link
   // built from Admin -> Locations goes to the Blaine page instead.
-  if (site.slug === 'minnesota' && BLAINE_PAGES[svc]) return BLAINE_PAGES[svc]!.url
+  // 5 Nov 2026: the same for Wisconsin's New Berlin pages (/wisconsin/new-berlin/<service>/).
+  const own = FACILITY_DOC_PAGES[site.slug]?.[svc]
+  if (own) return own.url
   return path(`${site.hubPath}/${svc}`)
 }
 

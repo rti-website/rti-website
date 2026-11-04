@@ -22,7 +22,7 @@ export const FORT_WORTH_TEXAS: CountyPage = {
     h1: 'Recycle Technologies Fort Worth, TX',
     crumb: "Fort Worth",
     /* Home / Locations / Texas / Fort Worth (14 Oct 2026, the state hub brief). */
-    parent: { label: "Texas", href: href('/texas-recycling/') },
+    parent: { label: "Texas", href: href('/texas/') },
     lead: "Texas Bulb Processing Facility, 101 East Bowie Street, Fort Worth, TX 76110",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },

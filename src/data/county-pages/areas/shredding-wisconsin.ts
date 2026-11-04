@@ -2,7 +2,10 @@ import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { CountyPage } from '../types'
 
 /**
- * Paper Shredding Service Wisconsin, /shredding-wisconsin/
+ * Paper Shredding Service Wisconsin, /wisconsin/new-berlin/shredding/
+ * 5 Nov 2026 (management sheet "RTI ALL PLAN", Wisconsin tab): moved from
+ * /shredding-wisconsin/, which now 301s here; the content stays as it is.
+ * Its city pages (/shredding-wisconsin/green-bay/ and the rest) keep their URLs.
  * Built 8 Oct 2026 on the county template, Figma BVtf2AOuUOcYbiMIlcKmbC board
  * 7052:28731, phone 7052:34333, laid out like Document Shredding Minnesota.
  * The old WordPress page's copy word for word (15 Sep 2026 backup), except:
@@ -13,7 +16,7 @@ import type { CountyPage } from '../types'
  * and Waukesha link to their pages here.
  */
 export const SHREDDING_WISCONSIN: CountyPage = {
-  url: "/shredding-wisconsin/",
+  url: "/wisconsin/new-berlin/shredding/",
   state: "Wisconsin",
   county: "Wisconsin",
   areaServed: "Wisconsin",

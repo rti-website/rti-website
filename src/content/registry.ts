@@ -78,7 +78,6 @@ import { BULB_RECYCLE_MILWAUKEE } from '@/data/county-pages/areas/bulb-recycle-m
 import { OCALA_FLORIDA } from '@/data/county-pages/areas/ocala-florida'
 import { KENNESAW_GEORGIA } from '@/data/county-pages/areas/kennesaw-georgia'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from '@/data/county-pages/areas/johnson-city-buffalo-tennessee'
-import { TV_RECYCLING_IN_WISCONSIN } from '@/data/county-pages/areas/tv-recycling-in-wisconsin'
 import { TV_RECYCLING_APPLETON } from '@/data/county-pages/areas/tv-recycling-appleton'
 import { EDINA_RECYCLING_SERVICES } from '@/data/county-pages/areas/edina-recycling-services'
 import { SHREDDING_DULUTH } from '@/data/county-pages/areas/shredding-duluth'
@@ -138,14 +137,6 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from '@/data/landing-pages/minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from '@/data/landing-pages/wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from '@/data/landing-pages/chicago-universal-waste-recycling'
-import { WISCONSIN_AIRBAG_RECYCLING } from '@/data/local-pages/wisconsin-airbag-recycling'
-import { WISCONSIN_BALLAST_RECYCLING } from '@/data/local-pages/wisconsin-ballast-recycling'
-import { WISCONSIN_BATTERY_RECYCLING } from '@/data/local-pages/wisconsin-battery-recycling'
-import { WISCONSIN_ELECTRONIC_RECYCLING } from '@/data/local-pages/wisconsin-electronic-recycling'
-import { WISCONSIN_LIGHT_BULB_RECYCLING } from '@/data/local-pages/wisconsin-light-bulb-recycling'
-import { WISCONSIN_OFF_SITE_SHREDDING } from '@/data/local-pages/wisconsin-off-site-shredding'
-import { WISCONSIN_PAPER_SHREDDING } from '@/data/local-pages/wisconsin-paper-shredding'
-import { WISCONSIN_PHONE_SHREDDING } from '@/data/local-pages/wisconsin-phone-shredding'
 import { BLAINE_ELECTRONIC_RECYCLING } from '@/data/local-pages/blaine-electronic-recycling'
 import { BLAINE_BATTERY_RECYCLING } from '@/data/local-pages/blaine-battery-recycling'
 import { BLAINE_LIGHT_BULB_RECYCLING } from '@/data/local-pages/blaine-light-bulb-recycling'
@@ -175,6 +166,22 @@ import { ONTARIO_ELECTRONIC_RECYCLING } from '@/data/local-pages/ontario-electro
 import { ONTARIO_BATTERY_RECYCLING } from '@/data/local-pages/ontario-battery-recycling'
 import { ONTARIO_LIGHT_BULB_RECYCLING } from '@/data/local-pages/ontario-light-bulb-recycling'
 import { ONTARIO_BALLAST_RECYCLING } from '@/data/local-pages/ontario-ballast-recycling'
+import { NEW_BERLIN_ELECTRONIC_RECYCLING } from '@/data/local-pages/new-berlin-electronic-recycling'
+import { NEW_BERLIN_BATTERY_RECYCLING } from '@/data/local-pages/new-berlin-battery-recycling'
+import { NEW_BERLIN_LIGHT_BULB_RECYCLING } from '@/data/local-pages/new-berlin-light-bulb-recycling'
+import { NEW_BERLIN_BALLAST_RECYCLING } from '@/data/local-pages/new-berlin-ballast-recycling'
+import { NEW_BERLIN_AIRBAG_RECYCLING } from '@/data/local-pages/new-berlin-airbag-recycling'
+import { NEW_BERLIN_PAPER_SHREDDING } from '@/data/local-pages/new-berlin-paper-shredding'
+import { NEW_BERLIN_PHONE_SHREDDING } from '@/data/local-pages/new-berlin-phone-shredding'
+import { NEW_BERLIN_TELEVISION_RECYCLING } from '@/data/local-pages/new-berlin-television-recycling'
+import { KENNESAW_ELECTRONIC_RECYCLING } from '@/data/local-pages/kennesaw-electronic-recycling'
+import { KENNESAW_BATTERY_RECYCLING } from '@/data/local-pages/kennesaw-battery-recycling'
+import { KENNESAW_LIGHT_BULB_RECYCLING } from '@/data/local-pages/kennesaw-light-bulb-recycling'
+import { KENNESAW_BALLAST_RECYCLING } from '@/data/local-pages/kennesaw-ballast-recycling'
+import { FORT_WORTH_ELECTRONIC_RECYCLING } from '@/data/local-pages/fort-worth-electronic-recycling'
+import { FORT_WORTH_BATTERY_RECYCLING } from '@/data/local-pages/fort-worth-battery-recycling'
+import { FORT_WORTH_LIGHT_BULB_RECYCLING } from '@/data/local-pages/fort-worth-light-bulb-recycling'
+import { FORT_WORTH_BALLAST_RECYCLING } from '@/data/local-pages/fort-worth-ballast-recycling'
 import { CHICAGO_BALLAST_RECYCLING } from '@/data/local-pages/chicago-ballast-recycling'
 import { CHICAGO_BATTERY_RECYCLING } from '@/data/local-pages/chicago-battery-recycling'
 import { CHICAGO_HARD_DRIVE_DESTRUCTION } from '@/data/local-pages/chicago-hard-drive-destruction'
@@ -337,14 +344,6 @@ export const DOCS = {
   'area/milwaukee': { title: "Recycling Center in Milwaukee", group: 'Location pages', urls: [MILWAUKEE.url], data: one(MILWAUKEE) },
   'area/battery-recycling-milwaukee': { title: "Non-Hazardous Battery Recycling Milwaukee", group: 'Location pages', urls: [BATTERY_RECYCLING_MILWAUKEE.url], data: one(BATTERY_RECYCLING_MILWAUKEE) },
   'area/oak-creek': { title: "Oak Creek Recycling Center", group: 'Location pages', urls: [OAK_CREEK.url], data: one(OAK_CREEK) },
-  'local/wisconsin-recycling-airbag-recycling': { title: "Airbag Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_AIRBAG_RECYCLING.url], data: one(WISCONSIN_AIRBAG_RECYCLING) },
-  'local/wisconsin-recycling-ballast-recycling': { title: "Ballast Recycling in Wisconsin", group: 'Location pages', urls: [WISCONSIN_BALLAST_RECYCLING.url], data: one(WISCONSIN_BALLAST_RECYCLING) },
-  'local/wisconsin-recycling-battery-recycling': { title: "Battery Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_BATTERY_RECYCLING.url], data: one(WISCONSIN_BATTERY_RECYCLING) },
-  'local/wisconsin-recycling-electronic-recycling': { title: "Electronic Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_ELECTRONIC_RECYCLING.url], data: one(WISCONSIN_ELECTRONIC_RECYCLING) },
-  'local/wisconsin-recycling-light-bulb-recycling': { title: "Light Bulb Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_LIGHT_BULB_RECYCLING.url], data: one(WISCONSIN_LIGHT_BULB_RECYCLING) },
-  'local/wisconsin-recycling-off-site-shredding': { title: "On-Site & Off-Site Shredding in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_OFF_SITE_SHREDDING.url], data: one(WISCONSIN_OFF_SITE_SHREDDING) },
-  'local/wisconsin-recycling-paper-shredding': { title: "Paper Shredding Services in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PAPER_SHREDDING.url], data: one(WISCONSIN_PAPER_SHREDDING) },
-  'local/wisconsin-recycling-phone-shredding': { title: "Phone Shredding Service in New Berlin, Wisconsin", group: 'Location pages', urls: [WISCONSIN_PHONE_SHREDDING.url], data: one(WISCONSIN_PHONE_SHREDDING) },
   'local/minnesota-blaine-electronic-recycling': { title: "Electronics Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_ELECTRONIC_RECYCLING.url], data: one(BLAINE_ELECTRONIC_RECYCLING) },
   'local/minnesota-blaine-battery-recycling': { title: "Battery Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_BATTERY_RECYCLING.url], data: one(BLAINE_BATTERY_RECYCLING) },
   'local/minnesota-blaine-light-bulb-recycling': { title: "Light Bulb Recycling in Blaine, Minnesota", group: 'Location pages', urls: [BLAINE_LIGHT_BULB_RECYCLING.url], data: one(BLAINE_LIGHT_BULB_RECYCLING) },
@@ -374,6 +373,22 @@ export const DOCS = {
   'local/california-ontario-battery-recycling': { title: "Battery Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_BATTERY_RECYCLING.url], data: one(ONTARIO_BATTERY_RECYCLING) },
   'local/california-ontario-light-bulb-recycling': { title: "Light Bulb Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_LIGHT_BULB_RECYCLING.url], data: one(ONTARIO_LIGHT_BULB_RECYCLING) },
   'local/california-ontario-ballast-recycling': { title: "Ballast Recycling in Ontario, CA", group: 'Location pages', urls: [ONTARIO_BALLAST_RECYCLING.url], data: one(ONTARIO_BALLAST_RECYCLING) },
+  'local/wisconsin-new-berlin-electronic-recycling': { title: "Electronics Recycling in New Berlin, Wisconsin", group: 'Location pages', urls: [NEW_BERLIN_ELECTRONIC_RECYCLING.url], data: one(NEW_BERLIN_ELECTRONIC_RECYCLING) },
+  'local/wisconsin-new-berlin-battery-recycling': { title: "Battery Recycling in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_BATTERY_RECYCLING.url], data: one(NEW_BERLIN_BATTERY_RECYCLING) },
+  'local/wisconsin-new-berlin-light-bulb-recycling': { title: "Light Bulb Recycling in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_LIGHT_BULB_RECYCLING.url], data: one(NEW_BERLIN_LIGHT_BULB_RECYCLING) },
+  'local/wisconsin-new-berlin-ballast-recycling': { title: "Ballast Recycling in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_BALLAST_RECYCLING.url], data: one(NEW_BERLIN_BALLAST_RECYCLING) },
+  'local/wisconsin-new-berlin-airbag-recycling': { title: "Airbag Recycling in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_AIRBAG_RECYCLING.url], data: one(NEW_BERLIN_AIRBAG_RECYCLING) },
+  'local/wisconsin-new-berlin-paper-shredding': { title: "Paper Shredding in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_PAPER_SHREDDING.url], data: one(NEW_BERLIN_PAPER_SHREDDING) },
+  'local/wisconsin-new-berlin-phone-shredding': { title: "Phone Shredding in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_PHONE_SHREDDING.url], data: one(NEW_BERLIN_PHONE_SHREDDING) },
+  'local/wisconsin-new-berlin-television-recycling': { title: "TV Recycling in New Berlin, WI", group: 'Location pages', urls: [NEW_BERLIN_TELEVISION_RECYCLING.url], data: one(NEW_BERLIN_TELEVISION_RECYCLING) },
+  'local/georgia-kennesaw-electronic-recycling': { title: "Electronics Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_ELECTRONIC_RECYCLING.url], data: one(KENNESAW_ELECTRONIC_RECYCLING) },
+  'local/georgia-kennesaw-battery-recycling': { title: "Battery Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_BATTERY_RECYCLING.url], data: one(KENNESAW_BATTERY_RECYCLING) },
+  'local/georgia-kennesaw-light-bulb-recycling': { title: "Light Bulb Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_LIGHT_BULB_RECYCLING.url], data: one(KENNESAW_LIGHT_BULB_RECYCLING) },
+  'local/georgia-kennesaw-ballast-recycling': { title: "Ballast Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_BALLAST_RECYCLING.url], data: one(KENNESAW_BALLAST_RECYCLING) },
+  'local/texas-fort-worth-electronic-recycling': { title: "Electronics Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_ELECTRONIC_RECYCLING.url], data: one(FORT_WORTH_ELECTRONIC_RECYCLING) },
+  'local/texas-fort-worth-battery-recycling': { title: "Battery Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_BATTERY_RECYCLING.url], data: one(FORT_WORTH_BATTERY_RECYCLING) },
+  'local/texas-fort-worth-light-bulb-recycling': { title: "Light Bulb Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_LIGHT_BULB_RECYCLING.url], data: one(FORT_WORTH_LIGHT_BULB_RECYCLING) },
+  'local/texas-fort-worth-ballast-recycling': { title: "Ballast Recycling in Fort Worth, Texas", group: 'Location pages', urls: [FORT_WORTH_BALLAST_RECYCLING.url], data: one(FORT_WORTH_BALLAST_RECYCLING) },
   'local/ballast-recycling-chicago': { title: "Ballast Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BALLAST_RECYCLING.url], data: one(CHICAGO_BALLAST_RECYCLING) },
   'local/battery-recycling-chicago': { title: "Battery Recycling in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_BATTERY_RECYCLING.url], data: one(CHICAGO_BATTERY_RECYCLING) },
   'local/hard-drive-destruction-chicago': { title: "Hard Drive Destruction in Chicago, Illinois", group: 'Location pages', urls: [CHICAGO_HARD_DRIVE_DESTRUCTION.url], data: one(CHICAGO_HARD_DRIVE_DESTRUCTION) },
@@ -456,7 +471,6 @@ export const DOCS = {
   'area/ocala-florida': { title: "Ocala, Florida", group: 'Location pages', urls: [OCALA_FLORIDA.url], data: one(OCALA_FLORIDA) },
   'area/kennesaw-georgia': { title: "Kennesaw, Georgia", group: 'Location pages', urls: [KENNESAW_GEORGIA.url], data: one(KENNESAW_GEORGIA) },
   'area/johnson-city-buffalo-tennessee': { title: "Johnson City (Buffalo), Tennessee", group: 'Location pages', urls: [JOHNSON_CITY_BUFFALO_TENNESSEE.url], data: one(JOHNSON_CITY_BUFFALO_TENNESSEE) },
-  'area/tv-recycling-in-wisconsin': { title: "TV Recycling In Wisconsin", group: 'Location pages', urls: [TV_RECYCLING_IN_WISCONSIN.url], data: one(TV_RECYCLING_IN_WISCONSIN) },
   'area/tv-recycling-appleton': { title: "TV Recycling in Appleton WI", group: 'Location pages', urls: [TV_RECYCLING_APPLETON.url], data: one(TV_RECYCLING_APPLETON) },
   'area/edina-recycling-services': { title: "Edina Recycling Services", group: 'Location pages', urls: [EDINA_RECYCLING_SERVICES.url], data: one(EDINA_RECYCLING_SERVICES) },
   'area/shredding-duluth': { title: "Duluth Shredding Service", group: 'Location pages', urls: [SHREDDING_DULUTH.url], data: one(SHREDDING_DULUTH) },

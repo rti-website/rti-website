@@ -36,7 +36,7 @@ const ROUTES = ['/', ...findRoutes(path.join(process.cwd(), 'src', 'app')).sort(
   '/locations/phoenix-az/', '/locations/phoenix-az/battery-recycling/', '/minnesota/blaine/battery-recycling/',
   // The fixed city service pages of 27 Sep 2026 (src/data/city-pages/).
   '/minnesota/blaine/light-bulb-recycling/', '/minnesota/blaine/electronic-recycling/',
-  '/wisconsin-recycling/battery-recycling/', '/wisconsin-recycling/light-bulb-recycling/', '/wisconsin-recycling/electronic-recycling/']
+  '/wisconsin/new-berlin/battery-recycling/', '/wisconsin/new-berlin/light-bulb-recycling/', '/wisconsin/new-berlin/electronic-recycling/']
   .filter((r) => !r.startsWith('/admin') && !r.startsWith('/api'))
 
 const b = await chromium.launch({

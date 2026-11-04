@@ -24,6 +24,10 @@ import REDIRECTS from '../../../data/redirects.json'
  * /florida/, /indiana/ and /california/, Ocala, Greenwood and Ontario at
  * /florida/ocala/, /indiana/greenwood/ and /california/ontario/, and their
  * 11 service pages.
+ * 5 Nov 2026 (sheet "RTI ALL PLAN", Wisconsin, Georgia and Texas tabs): hubs
+ * at /georgia/ and /texas/, Document Shredding WI at
+ * /wisconsin/new-berlin/shredding/, TV Recycling WI out (it 301s), and the
+ * 16 new service pages (8 New Berlin, 4 Kennesaw, 4 Fort Worth).
  *
  * Until now this file was built from Admin -> Locations (published partner
  * hubs and service pages); those are no longer listed here. Every page is
@@ -43,10 +47,10 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/arizona/",
     "/california/",
     "/florida/",
-    "/georgia-recycling/",
+    "/georgia/",
     "/indiana/",
     "/tennessee/",
-    "/texas-recycling/"
+    "/texas/"
   ] },
   { group: "Chicago", urls: [
     "/electronic-recycling-chicago/"
@@ -156,8 +160,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/wisconsin-recycling/washington-county-recycling-center/"
   ] },
   { group: "Wisconsin: statewide services and cities", urls: [
-    "/tv-recycling-in-wisconsin/",
-    "/shredding-wisconsin/",
+    "/wisconsin/new-berlin/shredding/",
     "/wisconsin-recycling/sheboygan/",
     "/wisconsin-recycling/fond-du-lac-recycling/"
   ] },
@@ -207,6 +210,28 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/california/ontario/battery-recycling/",
     "/california/ontario/light-bulb-recycling/",
     "/california/ontario/ballast-recycling/"
+  ] },
+  { group: "Wisconsin: New Berlin service pages (5 Nov 2026)", urls: [
+    "/wisconsin/new-berlin/electronic-recycling/",
+    "/wisconsin/new-berlin/battery-recycling/",
+    "/wisconsin/new-berlin/light-bulb-recycling/",
+    "/wisconsin/new-berlin/ballast-recycling/",
+    "/wisconsin/new-berlin/airbag-recycling/",
+    "/wisconsin/new-berlin/paper-shredding/",
+    "/wisconsin/new-berlin/phone-shredding/",
+    "/wisconsin/new-berlin/television-recycling/"
+  ] },
+  { group: "Georgia: Kennesaw service pages (5 Nov 2026)", urls: [
+    "/georgia/kennesaw/electronic-recycling/",
+    "/georgia/kennesaw/battery-recycling/",
+    "/georgia/kennesaw/light-bulb-recycling/",
+    "/georgia/kennesaw/ballast-recycling/"
+  ] },
+  { group: "Texas: Fort Worth service pages (5 Nov 2026)", urls: [
+    "/texas/fort-worth/electronic-recycling/",
+    "/texas/fort-worth/battery-recycling/",
+    "/texas/fort-worth/light-bulb-recycling/",
+    "/texas/fort-worth/ballast-recycling/"
   ] },
   { group: "Mail-in recycling locations", urls: [
     "/phoenix-arizona/",

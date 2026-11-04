@@ -139,9 +139,9 @@ export const LOCATIONS: DropoffLocation[] = [
     hours: 'Monday to Friday, 8:00 AM to 3:30 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     note: { strong: 'Have Extra Quantity?', text: 'Call our operations team for more than 5 pallets.' },
-    // !! The copy's hours line says 3:30 PM and this sentence 3:00 PM. Both
-    // as written; flagged to Asim 2 Oct 2026 to confirm which is right.
-    body: `You can drop off accepted items during our regular working hours, Monday to Friday, 8:00 AM to 3:00 PM. ${CONFIRM}`,
+    // 5 Nov 2026: 3:30 PM, as the Fort Worth content docs give it (this
+    // sentence said 3:00 PM, flagged 2 Oct 2026).
+    body: `You can drop off accepted items during our regular working hours, Monday to Friday, 8:00 AM to 3:30 PM. ${CONFIRM}`,
     url: href('/fort-worth-texas/'),
   },
   {
@@ -164,7 +164,7 @@ export const LOCATIONS: DropoffLocation[] = [
   {
     name: 'Kennesaw, Georgia', kind: 'rti',
     address: '3400 Town Point Dr NW, Suite 130, Kennesaw, GA 30144', zip: '30144', phone: '(770) 426-5000',
-    hours: '9:00 AM to 4:00 PM',
+    hours: 'Monday to Friday, 9:00 AM to 4:00 PM',
     acceptsLabel: 'Accepted items', accepts: ALL_ITEMS,
     body: `You can drop off accepted items during our regular working hours, Monday to Friday, 9:00 AM to 4:00 PM. ${CONFIRM}`,
     url: href('/kennesaw-georgia/'),

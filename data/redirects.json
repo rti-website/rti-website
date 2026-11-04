@@ -41,7 +41,7 @@
   },
   {
     "source": "/battery-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/battery-recycling/",
+    "destination": "/wisconsin/new-berlin/battery-recycling/",
     "statusCode": 301
   },
   {
@@ -51,12 +51,12 @@
   },
   {
     "source": "/electronic-recycling-wisconsin/",
-    "destination": "/wisconsin-recycling/electronic-recycling/",
+    "destination": "/wisconsin/new-berlin/electronic-recycling/",
     "statusCode": 301
   },
   {
     "source": "/electronics-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/electronic-recycling/",
+    "destination": "/wisconsin/new-berlin/electronic-recycling/",
     "statusCode": 301
   },
   {
@@ -81,7 +81,7 @@
   },
   {
     "source": "/light-bulb-recycling-in-wisconsin/",
-    "destination": "/wisconsin-recycling/light-bulb-recycling/",
+    "destination": "/wisconsin/new-berlin/light-bulb-recycling/",
     "statusCode": 301
   },
   {
@@ -395,8 +395,18 @@
     "statusCode": 301
   },
   {
+    "source": "/shredding-wisconsin/",
+    "destination": "/wisconsin/new-berlin/shredding/",
+    "statusCode": 301
+  },
+  {
     "source": "/tv-recycling-in-minnesota/",
     "destination": "/minnesota/blaine/television-recycling/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tv-recycling-in-wisconsin/",
+    "destination": "/wisconsin/new-berlin/television-recycling/",
     "statusCode": 301
   },
   {
@@ -451,12 +461,12 @@
   },
   {
     "source": "/wisconsin-recycling/on-site-off-site-shredding/",
-    "destination": "/wisconsin-recycling/off-site-shredding/",
+    "destination": "/off-site-shredding/",
     "statusCode": 301
   },
   {
     "source": "/wisconsin-recycling/tv-recycling/",
-    "destination": "/tv-recycling-in-wisconsin/",
+    "destination": "/wisconsin/new-berlin/television-recycling/",
     "statusCode": 301
   },
   {
@@ -556,12 +566,12 @@
   },
   {
     "source": "/wi-computer_recycling.htm",
-    "destination": "/wisconsin-recycling/electronic-recycling/",
+    "destination": "/wisconsin/new-berlin/electronic-recycling/",
     "statusCode": 301
   },
   {
     "source": "/wi_lamp_recycling.htm",
-    "destination": "/wisconsin-recycling/light-bulb-recycling/",
+    "destination": "/wisconsin/new-berlin/light-bulb-recycling/",
     "statusCode": 301
   },
   {

@@ -371,11 +371,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/minnesota-recycling/ramsey/": { title: "Electronics Recycling Ramsey MN | Drop-Off & Pickup", description: "Need electronics recycling in Ramsey, MN? Drop off or mail in your old devices, batteries and bulbs. Business pickup within 100 miles. Call for a free quote." }, // 01,03
   "/": { title: "E-Waste Recycling, ITAD & Shredding | Recycle Technologies", description: "Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics." }, // 05,06
   "/minnesota-recycling/hennepin-county-recycling-center/": { title: "Hennepin County Recycling: Electronics, Batteries & Bulbs", description: "Recycling center Hennepin County receiving electronics, computers, lamps, batteries, and devices, managed through documented intake and processing steps." }, // 05,06
-  "/wisconsin-recycling/off-site-shredding/": { title: "Off-Site Shredding in New Berlin, WI | Recycle Technologies" }, // 05
-  "/wisconsin-recycling/phone-shredding/": { title: "Phone Shredding in New Berlin, WI | Recycle Technologies" }, // 05
-  "/wisconsin-recycling/paper-shredding/": { title: "Paper Shredding in New Berlin, WI | Recycle Technologies" }, // 05
-  "/wisconsin-recycling/electronic-recycling/": { title: "E-Waste Recycling in New Berlin, WI | Recycle Technologies", description: "Drop off, business pickup or mail in computers, monitors, printers, phones and other e-waste at our New Berlin, Wisconsin facility. Dismantled" }, // 05,06
-  "/wisconsin-recycling/light-bulb-recycling/": { title: "Bulb Recycling in New Berlin, WI | Recycle Technologies", description: "Drop off, schedule a commercial pickup or mail in fluorescent tubes, CFLs, HID and other lamps at our New Berlin, Wisconsin facility. Processed in-house" }, // 05,06
   "/phone-shredding-chicago/": { title: "Phone Shredding in Chicago, IL | Recycle Technologies" }, // 05
   "/paper-shredding-chicago/": { title: "Paper Shredding in Chicago, IL | Recycle Technologies" }, // 05
   "/light-bulb-recycling-chicago/": { title: "Light Bulb Recycling in Chicago, IL | Recycle Technologies", description: "Commercial light bulb and lamp recycling for Chicago businesses by scheduled pickup, with mail-in kits for residents. Fluorescent, CFL, HID and more" }, // 05,06
@@ -384,7 +379,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/off-site-shredding-chicago/": { title: "Off-Site Shredding in Chicago, IL | Recycle Technologies" }, // 05
   "/tv-recycling-chicago/": { title: "TV Recycling in Chicago, IL | Recycle Technologies" }, // 05
   "/battery-recycling-chicago/": { title: "Battery Recycling in Chicago, IL | Recycle Technologies", description: "Commercial battery recycling for Chicago businesses by scheduled pickup, with a mail-in program for residents. Processed at our R2v3 certified Midwest" }, // 05,06
-  "/tv-recycling-in-wisconsin/": { description: "TV recycling Wisconsin for smart televisions, LCD panels, plasma screens, CRT units, and display equipment, accepted through verified intake" }, // 06
   "/minnesota-recycling/ramsey/blaine/": { description: "Recycling Services in Blaine offering collection for electronic items, battery units, lighting remnants, paper materials, and managed processing support." }, // 06
   "/recycling-kits-in-florida/": { description: "Recycling kits Florida for desktops, network hubs, rechargeable packs, tube lamps, and power modules, supplied with containers and handling steps." }, // 06
   "/shredding-minnesota/duluth/": { description: "Duluth shredding service for secure disposal of business paperwork, archived files, and sensitive documents with scheduled pickup options." }, // 06
@@ -451,7 +445,6 @@ const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string
   "/wisconsin-recycling/milwaukee/oak-creek/": { description: "Recycling center Oak Creek handling printers, switches, power adapters, lamps, and mixed electronics, accepted through documented intake and processing" }, // 06
   "/blog/": { description: "Stay updated with our blog on recycling and E-waste trends. From emerging technologies to consumer behaviors, gain valuable insights into the evolving" }, // 06
   "/wisconsin-recycling/tv-recycling-appleton/": { description: "TV recycling Appleton WI for LCD screens, OLED units, plasma panels, rear-projection sets, and flat displays, received through documented intake steps." }, // 06
-  "/wisconsin-recycling/battery-recycling/": { description: "Drop off, business pickup or mail in spent batteries at our New Berlin, Wisconsin facility. Alkaline, lithium-ion, lead-acid, NiCd and EV batteries sorted" }, // 06
   "/recycle-symbol/": { description: "This guide will break down the most common recycling symbols, which will help you understand it much better and what you are supposed to do with each" }, // 06
 }
 

@@ -51,7 +51,6 @@ import { SHREDDING_GREEN_BAY } from './areas/shredding-green-bay'
 import { APPLETON_ELECTRONIC_RECYCLING_CENTER } from './areas/appleton-electronic-recycling-center'
 import { BATTERY_RECYCLING_APPLETON } from './areas/battery-recycling-appleton'
 import { TV_RECYCLING_APPLETON } from './areas/tv-recycling-appleton'
-import { TV_RECYCLING_IN_WISCONSIN } from './areas/tv-recycling-in-wisconsin'
 import { PHOENIX_ARIZONA } from './areas/phoenix-arizona'
 import { OCALA_FLORIDA } from './areas/ocala-florida'
 import { KENNESAW_GEORGIA } from './areas/kennesaw-georgia'
@@ -223,7 +222,6 @@ export const DIRECTORY: DirectoryGroup[] = [
   ] },
   { heading: 'Washington County, WI', card: 'Washington County', page: WASHINGTON_WI, state: 'Wisconsin', links: [] },
   { heading: 'Wisconsin', state: 'Wisconsin', links: [
-    l(TV_RECYCLING_IN_WISCONSIN, 'TV Recycling', 'TV Recycling Wisconsin'),
     l(SHREDDING_WISCONSIN, 'Document Shredding', 'Document Shredding Wisconsin'),
     l(SHEBOYGAN, 'Sheboygan'), l(FOND_DU_LAC_RECYCLING, 'Fond du Lac'),
   ] },

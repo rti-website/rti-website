@@ -648,6 +648,7 @@ export const NATIONWIDE = {
     // Every card opens its facility page (Ontario 8 Oct 2026, the rest 21 Oct 2026, Aaqib: "make all these facilities clickable").
     { ...nationwide('Ontario, CA', '805 East Francis Street, Ontario, CA 91761', '(909) 923-7252', 1, 'ontario-ca'), href: href('/california/ontario/') },
     { ...nationwide('Phoenix, AZ',      '1545 East Victory Street, Phoenix, AZ 85040',         '(602) 276-1858', 2, 'phoenix-az'), href: href('/phoenix-arizona/') },
-    { ...nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '(877) 344-8468', 5, 'fort-worth-tx'), href: href('/fort-worth-texas/') },
+    // Phone: the Fort Worth content docs and its page (5 Nov 2026; (877) 344-8468 until then).
+    { ...nationwide('Fort Worth, TX',   '101 East Bowie Street, Fort Worth, TX 76110',         '817-921-1440', 5, 'fort-worth-tx'), href: href('/fort-worth-texas/') },
   ],
 }

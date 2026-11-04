@@ -30,7 +30,6 @@ import { BULB_RECYCLE_MILWAUKEE } from './bulb-recycle-milwaukee'
 import { OCALA_FLORIDA } from './ocala-florida'
 import { KENNESAW_GEORGIA } from './kennesaw-georgia'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from './johnson-city-buffalo-tennessee'
-import { TV_RECYCLING_IN_WISCONSIN } from './tv-recycling-in-wisconsin'
 import { TV_RECYCLING_APPLETON } from './tv-recycling-appleton'
 import { EDINA_RECYCLING_SERVICES } from './edina-recycling-services'
 import { SHREDDING_DULUTH } from './shredding-duluth'
@@ -104,7 +103,7 @@ export const AREA_PAGES: CountyPage[] = [
   PLYMOUTH_RECYCLING_CENTER, MINNETONKA_RECYCLING_CENTER, COON_RAPIDS, BURNSVILLE_RECYCLING_CENTER,
   ELECTRONIC_RECYCLING_DULUTH, SHREDDING_MINNESOTA, SHREDDING_ST_PAUL, SHREDDING_GREEN_BAY,
   GREENWOOD_INDIANA, BULB_RECYCLE_MILWAUKEE, OCALA_FLORIDA, KENNESAW_GEORGIA,
-  JOHNSON_CITY_BUFFALO_TENNESSEE, TV_RECYCLING_IN_WISCONSIN,
+  JOHNSON_CITY_BUFFALO_TENNESSEE,
   TV_RECYCLING_APPLETON, EDINA_RECYCLING_SERVICES, SHREDDING_DULUTH, PHOENIX_ARIZONA,
   LAKEVILLE_RECYCLING_CENTER, BATTERY_RECYCLING_ST_PAUL, GREEN_BAY_RECYCLING, FORT_WORTH_TEXAS,
   EAST_BETHEL, COMPUTER_RECYCLING_MADISON, MINNEAPOLIS, BATTERY_RECYCLING_GREEN_BAY,
@@ -169,7 +168,6 @@ export type AreaDocKey =
   | 'area/ocala-florida'
   | 'area/kennesaw-georgia'
   | 'area/johnson-city-buffalo-tennessee'
-  | 'area/tv-recycling-in-wisconsin'
   | 'area/tv-recycling-appleton'
   | 'area/edina-recycling-services'
   | 'area/shredding-duluth'
@@ -230,7 +228,6 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [ELECTRONIC_RECYCLING_DULUTH, 'area/electronic-recycling-duluth'], [SHREDDING_MINNESOTA, 'area/shredding-minnesota'], [SHREDDING_ST_PAUL, 'area/shredding-st-paul'],
   [SHREDDING_GREEN_BAY, 'area/shredding-green-bay'], [GREENWOOD_INDIANA, 'area/greenwood-indiana'], [BULB_RECYCLE_MILWAUKEE, 'area/bulb-recycle-milwaukee'],
   [OCALA_FLORIDA, 'area/ocala-florida'], [KENNESAW_GEORGIA, 'area/kennesaw-georgia'], [JOHNSON_CITY_BUFFALO_TENNESSEE, 'area/johnson-city-buffalo-tennessee'],
-  [TV_RECYCLING_IN_WISCONSIN, 'area/tv-recycling-in-wisconsin'],
   [TV_RECYCLING_APPLETON, 'area/tv-recycling-appleton'], [EDINA_RECYCLING_SERVICES, 'area/edina-recycling-services'], [SHREDDING_DULUTH, 'area/shredding-duluth'],
   [PHOENIX_ARIZONA, 'area/phoenix-arizona'], [LAKEVILLE_RECYCLING_CENTER, 'area/lakeville-recycling-center'], [BATTERY_RECYCLING_ST_PAUL, 'area/battery-recycling-st-paul'],
   [GREEN_BAY_RECYCLING, 'area/green-bay-recycling'], [FORT_WORTH_TEXAS, 'area/fort-worth-texas'], [EAST_BETHEL, 'area/east-bethel'],

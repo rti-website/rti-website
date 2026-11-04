@@ -8,8 +8,8 @@ import type { Facility, StateHub, StatePageLike } from '@/data/facilities'
  *
  *   /arizona/ (was /arizona-recycling/)  Phoenix   /indiana/ (was /indiana-recycling/)  Greenwood
  *   /california/ (was /california-recycling/)  Ontario    /tennessee/ (was /tennessee-recycling/)  Johnson City, Lewisburg
- *   /florida/ (was /florida-recycling/)  Ocala     /texas-recycling/      Fort Worth
- *   /georgia-recycling/     Kennesaw
+ *   /florida/ (was /florida-recycling/)  Ocala     /texas/ (was /texas-recycling/)  Fort Worth
+ *   /georgia/ (was /georgia-recycling/)  Kennesaw
  *
  * Linked like Minnesota and Wisconsin (Aaqib, 14 Oct 2026): a center card
  * after the hero per facility, "View Center" to its page (Tennessee has two,
@@ -148,7 +148,6 @@ function hub(o: {
 }
 
 const LEAD_HOME = (state: string) => `One provider for what leaves your building or your home, from old lamps to retired hard drives. Recycle Technologies offers the full range of recycling and secure destruction services for ${state} businesses and residents.`
-const LEAD_BUILDING = (state: string) => `One provider for what leaves your building, from old lamps to retired hard drives. Recycle Technologies offers the full range of recycling and secure destruction services for ${state} businesses and residents.`
 
 // 3 Nov 2026 (management sheet): moved from /arizona-recycling/ to /arizona/
 // (the old URL is deleted, no redirect); the tiles show the four Phoenix services.
@@ -226,18 +225,25 @@ export const FLORIDA_HUB = hub({
   photo: PHOTO_A,
 })
 
+// 5 Nov 2026 (management sheet "RTI ALL PLAN", Georgia tab): moved from
+// /georgia-recycling/ to /georgia/ (the old URL is deleted, no redirect);
+// "update the content with the services we are providing": the tiles show
+// the four Kennesaw services (/georgia/kennesaw/<service>/) and the FAQs name
+// them. Kennesaw's own page stays at /kennesaw-georgia/ (no new URL in the
+// sheet). Phone and hours: the Kennesaw content docs.
 export const GEORGIA_HUB = hub({
-  slug: 'georgia-recycling', state: 'Georgia',
+  slug: 'georgia', state: 'Georgia',
+  tiles: fourTiles('/georgia/kennesaw/'),
   title: 'Georgia E-Waste Recycling & Shredding | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Georgia. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronic Waste Recycling and Shredding in Georgia',
   lead: 'Full-service electronics recycling, data destruction, and shredding for Georgia businesses and residents, supported by our Kennesaw facility in the Atlanta area.',
-  sites: [site('Georgia', 'Kennesaw', '/kennesaw-georgia/', '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000')],
-  servicesLead: LEAD_BUILDING('Georgia'),
+  sites: [site('Georgia', 'Kennesaw', '/kennesaw-georgia/', '3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144', '(770) 426-5000', 'Mon to Fri, 9:00 AM to 4:00 PM')],
+  servicesLead: LEAD_HOME('Georgia'),
   counties: [{ heading: 'Cobb County', chips: [chip('Kennesaw', '/kennesaw-georgia/')] }],
   faqs: [
-    { q: 'What services does Recycle Technologies offer in Georgia?', a: 'Electronics recycling, battery and bulb recycling, ballast and airbag recycling, TV recycling, plus secure paper, phone, and hard drive shredding. Contact the team to confirm availability for your specific materials.' },
-    { q: 'Where is Recycle Technologies located in Georgia?', a: 'Our Georgia facility is in Kennesaw, in the Atlanta area: 3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144. Call (770) 426-5000 for hours and accepted materials.' },
+    { q: 'What services does Recycle Technologies offer in Georgia?', a: 'Electronics recycling, battery recycling, light bulb recycling, and ballast recycling at our Kennesaw facility, with drop-off, business pickup, and mail-in options. Contact the team to confirm availability for your specific materials.' },
+    { q: 'Where is Recycle Technologies located in Georgia?', a: 'Our Georgia facility is in Kennesaw, in the Atlanta area: 3400 Town Point Dr. NW, Suite 130, Kennesaw, GA 30144. It is open Monday to Friday, 9:00 AM to 4:00 PM. Call (770) 426-5000 for accepted materials.' },
     { q: 'Does Recycle Technologies offer business pickup in Georgia?', a: 'Scheduled business pickup is available subject to location and collection requirements. Request a quote, and the team will confirm what is possible for your address.' },
     { q: 'Can I receive a certificate after electronics recycling or shredding?', a: 'Yes. Recycle Technologies issues Certificates of Recycling or Destruction after processing is complete, which helps your business document proper disposal.' },
     { q: 'What if my business is nowhere near Kennesaw?', a: 'A prepaid mail-in kit is the simplest option for eligible materials anywhere in Georgia. Pick the right kit, check its accepted materials, and ship it back with the prepaid label.' },
@@ -306,21 +312,27 @@ export const TENNESSEE_HUB = hub({
   photo: PHOTO_B,
 })
 
+// 5 Nov 2026 (management sheet "RTI ALL PLAN", Texas tab): moved from
+// /texas-recycling/ to /texas/ (the old URL is deleted, no redirect); the
+// tiles show the four Fort Worth services (/texas/fort-worth/<service>/) and
+// the FAQs name them. Fort Worth's own page stays at /fort-worth-texas/ (no
+// new URL in the sheet). Phone and hours: the Fort Worth content docs.
 export const TEXAS_HUB = hub({
-  slug: 'texas-recycling', state: 'Texas',
+  slug: 'texas', state: 'Texas',
+  tiles: fourTiles('/texas/fort-worth/'),
   title: 'Texas E-Waste Recycling & Shredding | Recycle Technologies',
   description: 'Certified electronics recycling, data destruction, and shredding across Texas. Business pickup, county coverage, and mail-in kits. Get a quote.',
   h1: 'Electronics Recycling and Shredding in Texas',
-  lead: 'Full-service electronics recycling, data destruction, and shredding for Texas businesses and residents, supported by our Fort Worth facility in the Dallas–Fort Worth metroplex.',
-  sites: [site('Texas', 'Fort Worth', '/fort-worth-texas/', '101 East Bowie Street, Fort Worth, TX 76110', '(877) 344-8468')],
-  servicesLead: LEAD_BUILDING('Texas'),
+  lead: 'Full-service electronics recycling, data destruction, and shredding for Texas businesses and residents, supported by our Fort Worth facility in the Dallas-Fort Worth metroplex.',
+  sites: [site('Texas', 'Fort Worth', '/fort-worth-texas/', '101 East Bowie Street, Fort Worth, TX 76110', '817-921-1440', 'Mon to Fri, 8:00 AM to 3:30 PM')],
+  servicesLead: LEAD_HOME('Texas'),
   counties: [{ heading: 'Tarrant County', chips: [chip('Fort Worth', '/fort-worth-texas/')] }],
   faqs: [
-    { q: 'What services does Recycle Technologies offer in Texas?', a: 'Electronics, battery, bulb, ballast, airbag, and TV recycling, plus secure paper, phone, and hard drive shredding. Contact us to confirm availability for your materials.' },
-    { q: 'Where is Recycle Technologies located in Texas?', a: 'Our Texas facility is at 101 East Bowie Street, Fort Worth, TX 76110, serving the Dallas–Fort Worth metroplex. Call (877) 344-8468 for details.' },
+    { q: 'What services does Recycle Technologies offer in Texas?', a: 'Electronics recycling, battery recycling, light bulb recycling, and ballast recycling through our Fort Worth location, with drop-off, business pickup, and mail-in options. Contact us to confirm availability for your materials.' },
+    { q: 'Where is Recycle Technologies located in Texas?', a: 'Our Texas location is at 101 East Bowie Street, Fort Worth, TX 76110, serving the Dallas-Fort Worth metroplex. It is open Monday to Friday, 8:00 AM to 3:30 PM. Call 817-921-1440 for details.' },
     { q: 'Does Recycle Technologies offer business pickup in Texas?', a: 'Scheduled business pickup is available subject to location and collection requirements. Request a quote to confirm availability for your address.' },
     { q: 'Can I get a certificate after recycling or shredding?', a: 'Yes. Certificates of Recycling or Destruction are issued after processing is complete.' },
-    { q: 'What if my business is far from Fort Worth?', a: 'Use a prepaid mail-in kit for eligible materials anywhere in Texas — pick the right kit and ship it back with the prepaid label.' },
+    { q: 'What if my business is far from Fort Worth?', a: 'Use a prepaid mail-in kit for eligible materials anywhere in Texas. Pick the right kit and ship it back with the prepaid label.' },
   ],
   photo: PHOTO_A,
 })

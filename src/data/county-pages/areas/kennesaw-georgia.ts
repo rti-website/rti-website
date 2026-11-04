@@ -22,7 +22,7 @@ export const KENNESAW_GEORGIA: CountyPage = {
     h1: 'Recycle Technologies Kennesaw, GA (Atlanta Area)',
     crumb: "Kennesaw",
     /* Home / Locations / Georgia / Kennesaw (14 Oct 2026, the state hub brief). */
-    parent: { label: "Georgia", href: href('/georgia-recycling/') },
+    parent: { label: "Georgia", href: href('/georgia/') },
     lead: "Atlanta, Georgia Transfer Facility, 3400 Town Point Dr NW, Suite 130, Kennesaw, GA 30144",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
