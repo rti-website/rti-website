@@ -593,5 +593,30 @@
     "source": "/lewisburg-tennessee/",
     "destination": "/tennessee/lewisburg/",
     "statusCode": 301
+  },
+  {
+    "source": "/tag/recycling-revolution/",
+    "destination": "/recycling-revolution-how-schools-go-green-in-back-to-school/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tag/recycling-old-phones/",
+    "destination": "/how-to-recycle-old-iphone/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tag/recycle-center-near-me/",
+    "destination": "/finding-the-perfect-recycle-center-near-me/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tag/best-buy-tv-recycling/",
+    "destination": "/best-buy-tv-recycling-vs-recycle-technologies/",
+    "statusCode": 301
+  },
+  {
+    "source": "/tag/where-to-recycle-ink-cartridges/",
+    "destination": "/where-to-recycle-ink-cartridges-a-comprehensive-guide/",
+    "statusCode": 301
   }
 ]
