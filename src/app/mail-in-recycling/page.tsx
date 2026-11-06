@@ -21,5 +21,5 @@ export const generateMetadata = () => pageMetadata({
 export default async function Page() {
   // The copy with the admin's edits (Admin -> Pages); metadata above stays on the static import.
   const { CONTENT: copy } = await content('mail-in-recycling')
-  return <ServiceDetailPage content={copy} layout={{ intro: 742, process: 480, accept: 778 }} />
+  return <ServiceDetailPage content={copy} layout={{ intro: 742, process: 889, accept: 778 }} />
 }

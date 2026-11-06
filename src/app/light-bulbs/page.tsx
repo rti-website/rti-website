@@ -25,5 +25,5 @@ export default async function Page() {
   const places = servicePlaces(await loadLocations(), 'light-bulb-recycling')
   // The copy with the admin's edits (Admin -> Pages); metadata above stays on the static import.
   const { CONTENT: copy } = await content('light-bulbs')
-  return <ServiceDetailPage content={copy} layout={{ intro: 724, process: 682 }} places={places} placesTitle={copy.placesTitle ?? ''} />
+  return <ServiceDetailPage content={copy} layout={{ intro: 724, process: 918 }} places={places} placesTitle={copy.placesTitle ?? ''} />
 }

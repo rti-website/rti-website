@@ -284,6 +284,14 @@ export const SERVICE_PAGE_TEXT = {
     heading: 'Frequently Asked Questions',
     lead: 'Recycling helps conserve resources, reduce pollution and support economic sustainability.',
   },
+  /**
+   * The "How Do We …" steps section (ServiceProcess, Figma 7615:12852): the
+   * pill over its heading and the "Next: <step>" link under each step.
+   */
+  process: {
+    eyebrow: 'How it works',
+    next: 'Next:',
+  },
   /** "<Service> Near You" (ServiceLocationsBand); the title is each page's own. */
   nearYou: {
     eyebrow: 'Near You',

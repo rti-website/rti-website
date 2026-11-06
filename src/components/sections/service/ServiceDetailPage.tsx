@@ -11,9 +11,9 @@ import { ServiceHero } from '@/components/sections/service/ServiceHero'
 import { ServiceSplit } from '@/components/sections/service/ServiceSplit'
 import { ServiceAcceptBand } from '@/components/sections/service/ServiceAcceptBand'
 import { ServiceFaq } from '@/components/sections/service/ServiceFaq'
+import { ServiceProcess } from '@/components/sections/service/ServiceProcess'
 import type { ServicePageContent, ServicePageLayout } from '@/data/service-page'
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
-import { Btn } from '@/components/ui/Bits'
 import { KitTip } from '@/components/ui/KitTip'
 import { inlineLinks } from '@/components/ui/InlineLinks'
 import { content as pageContent } from '@/lib/page-content'
@@ -40,7 +40,7 @@ import { content as pageContent } from '@/lib/page-content'
  * BELOW lg every one of those offsets and heights is ignored (see Frame.tsx)
  * and the sections stack in source order — which is precisely the order of the
  * mobile frame, 6638:8236 in file BVtf2AOuUOcYbiMIlcKmbC: hero, intro split,
- * What We Accept, process split, certifications, case studies, FAQ, CTA. So
+ * What We Accept, process steps (7615:13977 since 6 Nov 2026), certifications, case studies, FAQ, CTA. So
  * the arithmetic above is desktop-only and nothing here needs a mobile branch;
  * each section answers the phone itself. The seven /industries/* pages render
  * through this same component, so they inherit the same treatment.
@@ -65,13 +65,7 @@ const CTA_H = 456
  * ServiceSplit because the caller owns the rhythm of its own children.
  */
 const PROSE = 'font-roboto text-[15px] leading-[1.5] text-muted lg:text-[17.018px] lg:leading-[27.654px]'
-const STEP = 'font-roboto text-[15px] leading-[1.4] text-muted lg:text-[16px] lg:leading-[24px]'
 
-/** A section's closing copy is one paragraph on most pages and several on some. */
-function toParagraphs(v: string | string[] | undefined): string[] {
-  if (!v) return []
-  return Array.isArray(v) ? v : [v]
-}
 
 export async function ServiceDetailPage({
   content, layout, places = [], placesTitle = '',
@@ -195,48 +189,14 @@ export async function ServiceDetailPage({
         />
 
         {content.process && (
-          <ServiceSplit
-            top={processTop} height={layout.process ?? 0} media="left" label="6173:4386"
-            id="how-we-recycle"
-            heading={content.process.heading}
-            image={content.process.image}
-            imageCrop={content.process.imageCrop}
-            imageAlt=""
-          >
-            {content.process.intro && <p className={PROSE}>{content.process.intro}</p>}
-            {content.process.steps.length > 0 && (
-              <ul className="flex flex-col gap-[2px]">
-                {content.process.steps.map((st) => (
-                  <li key={st.label} className={STEP}>
-                    <strong className="font-medium text-ink">{st.label}</strong> {st.text}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {toParagraphs(content.process.outro).map((p) => <p key={p} className={STEP}>{p}</p>)}
-            {content.process.extra?.map((x) => (
-              <div key={x.heading} className="flex flex-col gap-[8px] pt-[6px]">
-                <h3 className="font-sans text-[18px] font-semibold leading-[1.3] text-heading lg:text-[20px]">{x.heading}</h3>
-                {x.body?.map((p) => <p key={p} className={STEP}>{p}</p>)}
-                {x.items && x.items.length > 0 && (
-                  <ul className="flex flex-col gap-[2px]">
-                    {x.items.map((it) => (
-                      <li key={it.label} className={STEP}>
-                        <strong className="font-medium text-ink">{it.label}</strong> {it.text}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {x.cta && (
-                  <div className="pt-[4px]">
-                    <Btn href={x.cta.href} variant="colored" external={x.cta.external} className="max-lg:w-full max-lg:justify-center">
-                      {x.cta.label}
-                    </Btn>
-                  </div>
-                )}
-              </div>
-            ))}
-          </ServiceSplit>
+          /* Figma "Option 2" (TL, 6 Nov 2026): step tabs on desktop, an
+             accordion on a phone. See ServiceProcess. */
+          <ServiceProcess
+            top={processTop} height={layout.process ?? 0}
+            process={content.process}
+            eyebrow={text.process.eyebrow}
+            nextLabel={text.process.next}
+          />
         )}
 
         {content.audience && (

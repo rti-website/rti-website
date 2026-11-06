@@ -132,7 +132,10 @@ export type ServicePageContent = {
   }
 
   /**
-   * Prose block two — photo left, text right. Absent on the industry frames
+   * The "How Do We …" steps — since 6 Nov 2026 the tabbed section of Figma
+   * 7615:12852 (ServiceProcess); before that a photo-left prose block. Each
+   * step's `label` is its tab and title ("Step 1: " and a closing ":" or "."
+   * are dropped for display). Absent on the industry frames
    * (6246:1390), which go straight from the services list to certifications.
    */
   process?: {
@@ -150,6 +153,11 @@ export type ServicePageContent = {
     image: string
     /** Where the frame places the photo inside its box — see ImageCrop. */
     imageCrop?: ImageCrop
+    /**
+     * CSS object-position for a photo placed by the 6 Nov 2026 "Option 2"
+     * frame (7615:12852) rather than by an ImageCrop, e.g. '42% 50%'.
+     */
+    imagePosition?: string
   }
 
   /**

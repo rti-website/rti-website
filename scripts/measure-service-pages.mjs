@@ -3,7 +3,8 @@
  * Measure every service detail page's two prose blocks and write the numbers
  * back into its route file's `layout` prop.
  *
- * Why this exists: Figma sized those two blocks (6197:4463 and 6173:4386)
+ * Why this exists: Figma sized those two blocks (6197:4463 and 6173:4386,
+ * the second redrawn as the steps section 7615:12852 on 6 Nov 2026)
  * around placeholder copy — 495 and 579. Real copy runs longer, by up to 260px,
  * and a section that clips silently swallows a paragraph nobody notices is
  * missing. So the heights are measured, not guessed, and re-measured whenever
@@ -119,7 +120,10 @@ for (const route of ROUTES) {
     })()
     return {
       intro: col('6197:4463'),
-      process: col('6173:4386'),
+      // The steps section (Figma 7615:12852, 6 Nov 2026) is measured the same
+      // way: its one column holds the h2, and every step's text is laid out at
+      // once, so the number is right for whichever tab is open.
+      process: col('7615:12852'),
       accept: band('6142:2067', 30),
       audience: band('audience-band', 30),
       certifications: band('6173:2828', 30),

@@ -148,7 +148,9 @@
     "SERVICE_PAGE_TEXT.faq.lead",
     "SERVICE_PAGE_TEXT.nearYou.allLocations",
     "SERVICE_PAGE_TEXT.nearYou.eyebrow",
-    "SERVICE_PAGE_TEXT.nearYou.lead"
+    "SERVICE_PAGE_TEXT.nearYou.lead",
+    "SERVICE_PAGE_TEXT.process.eyebrow",
+    "SERVICE_PAGE_TEXT.process.next"
   ],
   "why-choose-us": [
     "CALLOUT.footnote",

@@ -51,7 +51,9 @@ export const CONTENT: ServicePageContent = {
       { label: 'Step 4: Separation', text: 'During processing, mercury-contaminated phosphor powder and filters, glass, and aluminum end caps are separated from one another so each material can be directed to the right next step.' },
       { label: 'Step 5: Recovery', text: 'Phosphor powder and filters are shipped to a distillation company. Glass is put toward further use in industrial products, and aluminum caps are sent to an aluminum salvage partner.' },
     ],
-    image: '/images/services/light-bulbs-process-v2.png',
+    // The Figma "Option 2" photo (7615:12886, 6 Nov 2026): 926x521 at x-179 in its 500x520 box.
+    image: '/images/services/light-bulbs-process-v3.jpg',
+    imagePosition: '42% 50%',
   },
   faqs: [
     { q: 'What types of light bulbs does Recycle Technologies recycle?', a: 'Fluorescent tubes and CFLs, along with UV, neon, argon, HID, halogen, and incandescent lamps.' },
