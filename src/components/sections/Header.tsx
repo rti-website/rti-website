@@ -37,9 +37,11 @@ import { HEADER_H } from '@/lib/layout'
 /**
  * `quoteOnly` (the Williamston Google Ads pages, 12 Nov 2026: "use Get a
  * Quote only"): the top bar's Schedule a Pickup button and the phone bar's
- * pickup button become Get a Quote, to the quote form.
+ * pickup button become Get a Quote, to the quote form. `quoteHref` sends every
+ * Get a Quote in the header somewhere else: the Williamston page's own form
+ * ("#quote-form", 12 Nov 2026: "Get a Quote (scrolls to the form)").
  */
-export async function Header({ quoteOnly = false }: { quoteOnly?: boolean } = {}) {
+export async function Header({ quoteOnly = false, quoteHref = QUOTE_HREF }: { quoteOnly?: boolean; quoteHref?: string } = {}) {
   /*
    * The Blogs panel's rows are the WordPress categories, read at build time.
    * That is the only reason this component is async — everything else in the
@@ -50,7 +52,7 @@ export async function Header({ quoteOnly = false }: { quoteOnly?: boolean } = {}
   ])
   const NAV = buildNav(blogColumns, { MAIN_NAV, ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, SERVICE_GROUPS })
   /* quoteOnly: the top bar's button (and the drawer's copy of it) is Get a Quote. */
-  const topBar = quoteOnly ? { ...TOP_BAR, contact: { label: HEADER_CTA.label, href: QUOTE_HREF } } : TOP_BAR
+  const topBar = quoteOnly ? { ...TOP_BAR, contact: { label: HEADER_CTA.label, href: quoteHref } } : TOP_BAR
 
   return (
     <>
@@ -61,8 +63,8 @@ export async function Header({ quoteOnly = false }: { quoteOnly?: boolean } = {}
       <MobileNav
         nav={NAV}
         topBar={topBar}
-        quoteHref={QUOTE_HREF}
-        pickupHref={quoteOnly ? QUOTE_HREF : PICKUP_HREF}
+        quoteHref={quoteHref}
+        pickupHref={quoteOnly ? quoteHref : PICKUP_HREF}
         announce={TOP_BAR.announce}
         labels={quoteOnly ? { ...MOBILE_NAV, pickup: HEADER_CTA.label } : MOBILE_NAV}
       />
@@ -124,7 +126,7 @@ export async function Header({ quoteOnly = false }: { quoteOnly?: boolean } = {}
         </Link>
       </Box>
 
-      <HeaderNav nav={NAV} cta={{ label: HEADER_CTA.label, href: QUOTE_HREF }} />
+      <HeaderNav nav={NAV} cta={{ label: HEADER_CTA.label, href: quoteHref }} />
     </Section>
     </>
   )

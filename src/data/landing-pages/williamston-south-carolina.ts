@@ -1,185 +1,162 @@
-import { QUOTE_HREF, href } from '@/lib/urls'
+import { href } from '@/lib/urls'
 import { KIT_STORE } from '@/lib/nav'
 import type { FacilityAdPage } from '@/data/local-pages/types'
 
 /**
- * Recycle Technologies in Williamston, SC: /south-carolina/williamston/ (Google Ads page, noindex).
+ * Commercial Recycling in Williamston, SC: /south-carolina/williamston/ (Google Ads page, noindex).
  *
- * The content team's doc "/south-carolina/williamston/" (Aaqib, 11 Nov 2026).
- * Since 12 Nov 2026 in its own design, FacilityAdPage (management: "make the
- * design more good and a little different from the other pages"), and the
- * main page of the four Williamston service pages: the accepts cards and the
- * service sections link to them.
+ * Copy: management's doc "Williamston, SC | Recycle Technologies"
+ * (12Ty4xJVZtUA-b-xf7irlimdaNha-E-ppRQpRQKbbxlc), its first page, 12 Nov
+ * 2026. It replaced the content team's doc of 11 Nov. Built by
+ * FacilityAdPage, the page's own design, with the site's quote form in it.
  *
  * Aaqib, 11 Nov 2026: Google Ads pages, so noindex, out of the sitemap, no
- * breadcrumb. Not in AREA_PAGES (that list feeds the sitemap and the
- * locations directory); the route is src/app/south-carolina/williamston/.
+ * breadcrumb. Get a Quote only (management, 12 Nov 2026), and every Get a
+ * Quote on the page, the header's included, scrolls to the form on it
+ * ("scrolls to the form").
  *
- * Management's changes, 12 Nov 2026:
- *  - Get a Quote only, no Schedule a Pickup (these are ads pages).
- *  - "we can recycle everything" was an overclaim: the card says "one item or hundreds".
- *  - The hero names the facility "South Carolina Bulb Processing and
- *    Williamston Facility" (was "... and Mercury Retort Facility").
- *
- * Contact (Aaqib and Shiza, 11 Nov 2026): address, phone (864) 774-8310,
- * support@lightingresourcesinc.com, hours 9:00 AM to 4:00 PM (no days given).
- *
- * The doc's copy is kept; the design adds only short labels (the pills over
- * the headings, "Learn more", "Get directions") and reuses the subpages' own
- * lists of what each service takes for the accepts cards.
+ * The doc's placeholders:
+ *   [PHONE]          (864) 774-8310 (Aaqib, 11 Nov 2026)
+ *   [HOURS]          9:00 AM to 4:00 PM (Shiza, 11 Nov 2026; no days given)
+ *   [QUOTE FORM]     the site's quote form (ContactForm, business only)
+ *   [RESPONSE TIME]  not given: "We reply within …" is left out
+ *   [LINK TO SAMPLE CERTIFICATES]  not given: the View Sample Certificates link is left out
+ * The mail-in kits link goes to the kit store with the site's tags (KIT_STORE),
+ * as every Buy Recycling Kits link does, not the EZ on the Earth home page.
  */
-const PHONE = { label: '(864) 774-8310', href: 'tel:+18647748310' }
-const EMAIL = 'support@lightingresourcesinc.com'
+const PHONE = { label: 'Call (864) 774-8310', href: 'tel:+18647748310' }
+const QUOTE = { label: 'Get a Quote', href: '#quote-form' }
+const ADDRESS = '109 Twenty Nine Ct, Williamston, SC 29697'
 const HOURS = '9:00 AM to 4:00 PM'
-const QUOTE = { label: 'Get a Quote', href: QUOTE_HREF }
 const sub = (slug: string) => href(`/south-carolina/williamston/${slug}/`)
+
+/** Where every Get a Quote on the page goes: the form below the hero. */
+export const WILLIAMSTON_QUOTE_ANCHOR = 'quote-form'
 
 export const WILLIAMSTON_SOUTH_CAROLINA: FacilityAdPage = {
   url: href('/south-carolina/williamston/'),
-  // The doc gives no SEO title or description; written from its H1 and copy.
   seo: {
-    title: 'Recycling in Williamston, SC | Recycle Technologies',
-    description: 'Electronics, battery, light bulb and ballast recycling for businesses across Upstate South Carolina from our Williamston, SC facility. Get a quote today.',
+    title: 'Commercial Recycling in Williamston, SC | Recycle Technologies',
+    description: 'Business recycling pickup for electronics, light bulbs, batteries, and ballasts across Upstate SC. Request a quote from our Williamston team.',
   },
-  schema: { service: 'Recycling', areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
+  schema: { service: 'Commercial Recycling', areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   hero: {
-    eyebrow: 'Williamston, South Carolina',
-    h1: 'Recycle Technologies In Williamston, SC',
-    lead: 'South Carolina Bulb Processing and Williamston Facility, 109 Twenty Nine Ct, Williamston SC 29697.',
+    eyebrow: 'Recycle Technologies · Williamston, SC',
+    h1: 'Commercial Recycling in Williamston, SC',
+    subhead: 'Scheduled pickup of electronics, light bulbs, batteries, and ballasts for businesses across Upstate South Carolina, with recycling certificates for your compliance records.',
     image: '/images/landing/hero-universal-waste.png',
-    button: QUOTE,
-    facility: {
-      name: 'Williamston Facility',
-      address: '109 Twenty Nine Ct, Williamston SC 29697',
-      mapsHref: 'https://www.google.com/maps/dir/?api=1&destination=109+Twenty+Nine+Ct%2C+Williamston%2C+SC+29697',
-      phone: PHONE,
-      email: EMAIL,
-      hours: HOURS,
-      accepts: ['Electronics', 'Light bulbs', 'Batteries', 'Ballasts'],
-    },
+    primary: QUOTE,
+    phone: PHONE,
+    address: ADDRESS,
+    hours: HOURS,
   },
-  // From the doc's "Trusted and Local" card and the service pages' strip.
-  highlights: [
-    { icon: 'calendar', text: 'Since 1993' },
-    { icon: 'shield', text: 'R2v3, NAID AAA & RIOS Certified' },
-    { icon: 'map', text: 'Serving Upstate South Carolina' },
-    { icon: 'truck', text: 'Business Pickup' },
+  trust: [
+    { icon: 'shield', text: 'R2v3 Certified' },
+    { icon: 'lock', text: 'NAID AAA Certified' },
+    { icon: 'award', text: 'RIOS Certified' },
+    { icon: 'calendar', text: 'Recycling Since 1993' },
+    { icon: 'file', text: 'Certificates of Recycling' },
   ],
-  accepts: {
-    eyebrow: 'Accepted here',
-    heading: 'What This Location Accepts',
-    lead: 'Electronics (e-waste), light bulbs, batteries, ballasts (PCB and non-PCB)',
-    cards: [
-      { icon: 'monitor', title: 'Electronics (e-waste)', text: 'Computers, laptops, servers, monitors, phones, printers, and other electronics.', link: { label: 'Electronics recycling', href: sub('electronic-recycling') } },
-      { icon: 'bulb', title: 'Light bulbs', text: 'Fluorescent tubes, CFLs, LED, HID lighting, ballasts, and fixtures.', link: { label: 'Light bulb recycling', href: sub('light-bulb-recycling') } },
-      { icon: 'battery', title: 'Batteries', text: 'Alkaline, lithium-ion, lead-acid, NiCd, button cell, EV, and power tool batteries.', link: { label: 'Battery recycling', href: sub('battery-recycling') } },
-      { icon: 'zap', title: 'Ballasts (PCB and non-PCB)', text: 'PCB, non-PCB, electronic, and magnetic ballasts.', link: { label: 'Ballast recycling', href: sub('ballast-recycling') } },
-    ],
+  quote: {
+    heading: 'Get a Recycling Quote',
+    intro: 'Tell us what you have and where it is. Our Williamston team will reply with pricing and pickup options.',
+    button: 'Request My Quote',
+    note: 'Your details are used only for your quote.',
+    contact: { phone: PHONE, address: ADDRESS, hours: HOURS },
   },
-  stories: [
-    {
-      eyebrow: 'Electronics',
-      heading: 'Electronics Recycling Services in Williamston, South Carolina',
-      body: [
-        'Are old electronics taking up space at your business? Recycle Technologies brings eco-friendly electronics recycling services to Williamston, South Carolina. We take care of everything from outdated computers and laptops to TVs, mobile phones, and large office equipment, ensuring each item is handled with precision and care.',
-        'Our process dismantles these devices to recover valuable materials, significantly reducing the environmental impact of discarded electronics. Understanding the long-term dangers of improper e-waste disposal, we are committed to driving responsible change across Upstate South Carolina. Our services help businesses in Greenville, Anderson, and Spartanburg clear their spaces responsibly while meeting environmental regulations. Partner with us to make a positive difference in our community.',
-      ],
-      image: '/images/services/electronics-intro-v2.png',
-      link: { label: 'Learn more about electronics recycling', href: sub('electronic-recycling') },
-    },
-    {
-      eyebrow: 'Batteries',
-      heading: 'Battery Recycling Services in Williamston, South Carolina',
-      body: [
-        'Have you ever wondered what happens to the batteries your business throws away? In Williamston, South Carolina, our Battery Recycling Services ensure safe disposal of all types of batteries, from everyday batteries to substantial industrial units. Our program ensures every component is properly processed and recycled.',
-        'Discarding batteries in landfills is a major environmental hazard. Our team keeps hazardous materials out of the environment while recovering valuable resources for reuse. By choosing Recycle Technologies, you reduce landfill waste and support sustainable resource management across Upstate South Carolina.',
-      ],
-      image: '/images/services/batteries-intro-v2.png',
-      link: { label: 'Learn more about battery recycling', href: sub('battery-recycling') },
-    },
-    {
-      eyebrow: 'Light bulbs',
-      heading: 'Bulb Recycling Services in Williamston, South Carolina',
-      body: [
-        'Are spent light bulbs piling up at your facility? In Williamston, South Carolina, Recycle Technologies offers a hassle-free solution for bulb disposal. We understand the confusion around disposing of them properly, and we are here to help.',
-        'Our service provides safe and eco-friendly fluorescent bulb recycling for businesses across Upstate South Carolina, including Greenville, Anderson, and Spartanburg. Choosing our Bulb Recycling service means convenience for your business and keeps harmful materials out of landfills.',
-      ],
-      image: '/images/services/light-bulbs-intro-v2.png',
-      link: { label: 'Learn more about light bulb recycling', href: sub('light-bulb-recycling') },
-    },
-  ],
-  ways: {
-    eyebrow: 'Ways to recycle',
+  recycle: {
+    heading: 'What We Recycle for Upstate Businesses',
+    intro: 'One call covers every stream your facility generates, from an office IT refresh to a warehouse relamp.',
     cards: [
-      // Get a Quote, not Schedule a Pickup (management, 12 Nov 2026).
-      { icon: 'truck', title: 'Business Pick-Up Service', text: 'Exclusive pick-up recycling services for businesses', links: [QUOTE] },
-      { icon: 'mail', title: 'Mail-In Recycling Program', text: 'Purchase our recycling kits online and mail in your electronics.', links: [
-        { label: 'Mail In Your Electronics', href: href('/mail-in-recycling/') },
-        { label: 'Buy Recycling Kits', href: KIT_STORE, external: true },
-      ] },
+      { icon: 'monitor', title: 'Electronics Recycling', text: 'Computers, laptops, servers, monitors, TVs (including CRTs), printers, copiers, phones and networking equipment. Ask about hard drive destruction with a Certificate of Destruction.', link: { label: 'Electronics Recycling in Williamston', href: sub('electronic-recycling') } },
+      { icon: 'bulb', title: 'Light Bulb Recycling', text: 'Fluorescent tubes, CFLs, HID, UV, LED, halogen and incandescent lamps. Mercury-bearing lamps are handled as universal waste, keeping them out of regular waste streams.', link: { label: 'Light Bulb Recycling in Williamston', href: sub('light-bulb-recycling') } },
+      { icon: 'battery', title: 'Battery Recycling', text: 'Lithium-ion, lead-acid, alkaline, NiCd, button cell and UPS batteries, sorted by chemistry for appropriate handling and recycling. Tell us ahead of time about damaged or swollen units.', link: { label: 'Battery Recycling in Williamston', href: sub('battery-recycling') } },
+      { icon: 'zap', title: 'Ballast Recycling', text: 'PCB and non-PCB fluorescent ballasts, plus magnetic, electronic and HID ballasts from retrofits and demolition projects. PCB-containing units are kept separate and documented.', link: { label: 'Ballast Recycling in Williamston', href: sub('ballast-recycling') } },
     ],
+    button: { label: 'Get a Quote for Mixed Loads', href: '#quote-form' },
   },
   why: {
-    eyebrow: 'Why us',
-    heading: 'Why Choose Recycle Technologies',
+    heading: 'Why Businesses Choose Recycle Technologies',
     cards: [
-      { icon: 'award', title: 'Trusted and Local', text: 'Recycle Technologies has been providing recycling solutions since 1993 and is R2v3, NAID AAA, and RIOS certified, now serving Upstate South Carolina from Williamston.' },
-      { icon: 'users', title: 'Dependable Customer Service', text: 'We value our clients and their devotion for a better planet and ensure quality recycling services within time.' },
-      // Management, 12 Nov 2026: "we can recycle everything" was an overclaim.
-      { icon: 'layers', title: 'Custom Recycling Services', text: 'One item or hundreds, we recycle based on your personalized requirements.' },
-      { icon: 'calendar', title: 'Quick Booking and Pickup', text: 'Get a quote by filling out the form, and our team will schedule your business pickup.' },
+      { icon: 'shield', title: 'Certified handling', text: 'R2v3, NAID AAA and RIOS certifications cover how your equipment, data and materials are managed.' },
+      { icon: 'file', title: 'Paperwork for audits', text: 'A Certificate of Recycling or applicable Certificate of Destruction documents completed jobs.' },
+      { icon: 'layers', title: 'One vendor for every stream', text: 'Electronics, lamps, batteries and ballasts can be included in the same pickup, instead of requiring separate recycling arrangements.' },
+      { icon: 'award', title: 'Experience since 1993', text: 'More than three decades of commercial recycling experience.' },
+      { icon: 'map', title: 'A local Upstate team', text: 'Pickups are coordinated for businesses across the Williamston service area.' },
     ],
   },
-  responsibility: {
-    heading: 'Our Environmental Responsibility',
+  docs: {
+    heading: 'Documentation You Can Keep',
     body: [
-      'What makes Recycle Technologies stand out? Alongside our subsidiaries, Lighting Resources and EZ on the Earth, we lead in advanced recycling practices. Using state-of-the-art technology, we maximize material recovery, drastically reducing landfill waste and environmental harm. Our unwavering commitment to sustainability turns e-waste and other materials into reusable resources, fostering a circular economy.',
-      'Our cutting-edge processes not only reclaim valuable materials but also minimize ecological damage. As dedicated environmental advocates, we continuously innovate in waste management, providing comprehensive services for businesses. By partnering with us, you support a cleaner, healthier, and more sustainable future. For more information, reach out to our Williamston team at (864) 774-8310.',
+      'Commercial recycling doesn’t end when your materials leave the facility. Businesses also need documentation showing how their equipment and materials were handled.',
+      'Recycle Technologies provides documentation for completed recycling and applicable data destruction services.',
     ],
-    image: '/images/landing/hero-photo-universal-waste.jpg',
-    mailIn: {
-      heading: 'Mail in Program',
-      text: 'Access our recycling services through our complete recycling kits, which you can order online and ship to us.',
-      links: [
-        { label: 'Mail In Your Electronics', href: href('/mail-in-recycling/') },
-        { label: 'Buy Recycling Kits', href: KIT_STORE, external: true },
-      ],
-    },
+    certs: [
+      { title: 'Certificate of Recycling', text: 'Documents completed recycling jobs and provides a record for your business.' },
+      { title: 'Certificate of Destruction', text: 'Available for applicable hard drive destruction services to document the destruction process.' },
+    ],
+    outro: 'Keep these certificates with your environmental, operational, and compliance records.',
   },
-  faq: {
-    eyebrow: 'FAQs',
-    heading: 'Questions About This Location',
+  steps: {
+    heading: 'How Pickup Works',
     items: [
-      { q: 'Is there a fee for recycling with this location?', a: 'Fees depend on the material and the quantity. Call (864) 774-8310 with a description of what you need recycled, and we will confirm any charges before your pickup is scheduled.' },
-      { q: 'Do I need to schedule service with the Williamston facility?', a: 'Yes. Requirements vary by material and quantity. Call (864) 774-8310 or request a quote to confirm your materials are accepted and arrange a time. Large or commercial loads go faster when our team knows what to expect.' },
-      { q: 'Can businesses schedule a bulk pickup from this facility?', a: 'Yes. Business pickups are available across Upstate South Carolina, including Greenville, Anderson, and Spartanburg. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started.' },
+      { title: 'Request a quote', text: 'List your materials, approximate quantities, and pickup address in the form.' },
+      { title: 'Get pricing and a date', text: 'Our team confirms costs and packing requirements, then books a pickup time that suits your site.' },
+      { title: 'Pack and stage', text: 'Box bulbs and batteries as instructed and keep PCB-containing ballasts separate. We can advise on appropriate containers.' },
+      { title: 'We collect', text: 'Materials are picked up from your dock or facility and taken for processing.' },
+      { title: 'Keep your records', text: 'You receive the applicable certificate once processing is complete.' },
     ],
   },
-  serve: {
-    heading: 'Counties We Serve',
-    counties: ['Anderson County', 'Greenville County', 'Spartanburg County'],
-    contact: {
-      heading: 'Business Pick-Up Service',
-      // The doc: "contact the person below"; no person is named yet, so "us".
-      text: 'For business pickup services contact us below.',
-      phone: PHONE,
-      email: EMAIL,
-      hours: HOURS,
-      button: QUOTE,
-    },
+  who: {
+    heading: 'Who We Work With',
+    items: [
+      { icon: 'factory', text: 'Manufacturers and distribution centers along I-85' },
+      { icon: 'monitor', text: 'Offices and IT departments' },
+      { icon: 'school', text: 'Schools, colleges and universities' },
+      { icon: 'heart', text: 'Hospitals and clinics' },
+      { icon: 'building', text: 'Property and facility managers' },
+      { icon: 'zap', text: 'Electrical contractors and lighting retrofit crews' },
+      { icon: 'landmark', text: 'Municipalities and public agencies' },
+    ],
+  },
+  area: {
+    heading: 'Upstate Service Area',
+    intro: 'Our Williamston team schedules business pickups across Upstate South Carolina, including:',
+    counties: [
+      { name: 'Anderson County', towns: 'Anderson, Williamston, Belton, Pendleton' },
+      { name: 'Greenville County', towns: 'Greenville, Greer, Simpsonville, Mauldin, Fountain Inn' },
+      { name: 'Spartanburg County', towns: 'Spartanburg, Duncan, Boiling Springs' },
+      { name: 'Pickens and Oconee Counties', towns: 'Easley, Clemson, Seneca' },
+    ],
+    outro: { before: 'Outside this area? Ask about ', link: { label: 'mail-in recycling kits', href: KIT_STORE, external: true }, after: ' for smaller batches.' },
+  },
+  mid: { heading: 'Need a recycling vendor in Upstate SC?', primary: QUOTE, secondary: PHONE },
+  faq: {
+    // The doc's section is "FAQs": the pill, with the site's usual heading under it.
+    eyebrow: 'FAQs',
+    heading: 'Frequently Asked Questions',
+    items: [
+      { q: 'How much does commercial recycling cost?', a: 'Pricing depends on the materials, quantity, and pickup location. Submit the quote form, and we’ll confirm costs before scheduling anything.' },
+      { q: 'Is there a minimum load for pickup?', a: 'Requirements vary by material and distance. Include approximate quantities in your quote request, and we’ll let you know what works for your site.' },
+      { q: 'Can you take several material types in one pickup?', a: 'Yes. Electronics, bulbs, batteries, and ballasts can be collected together when properly separated and packed according to their handling requirements.' },
+      { q: 'Do I get documentation?', a: 'Yes. A Certificate of Recycling is issued for completed recycling jobs, and applicable hard drive destruction services can include a Certificate of Destruction.' },
+      { q: 'Do you offer recurring pickups?', a: 'Yes. Facilities that generate recycling materials regularly can arrange recurring pickups. Mention your preferred schedule in the quote request.' },
+      { q: 'Is it legal to throw these items in the trash in South Carolina?', a: 'South Carolina restricts landfill disposal of certain covered electronics, including specific computers, monitors, printers and televisions. Certain batteries and lamps may also be subject to universal waste requirements under applicable state and federal regulations. Businesses should follow the relevant handling, storage, and disposal rules for each material type. Using an appropriate recycling provider can help businesses manage these materials responsibly and maintain records of completed recycling services.' },
+    ],
   },
   cta: {
-    heading: 'Ready to Recycle? Get a Quote Today',
-    body: 'Tell us what you have and we’ll take it from there.',
+    heading: 'Ready to Book a Pickup in Upstate SC?',
+    body: 'Tell us what you have, and our Williamston team will send pricing and pickup options.',
     primary: QUOTE,
-    secondary: { label: 'Call (864) 774-8310', href: PHONE.href },
+    secondary: PHONE,
+    name: 'Recycle Technologies',
+    address: ADDRESS,
   },
   todo: [
-    'Phone (864) 774-8310 (Aaqib), email and hours 9:00 AM to 4:00 PM (Shiza), 11 Nov 2026, for the doc’s [PHONE], [EMAIL] and empty Hours. No days were given with the hours.',
-    'Business Pick-Up Service card: no [CONTACT NAME] yet, so it says "contact us below" instead of "contact the person below".',
-    'The doc gives no SEO title or meta description; written from its H1 and copy (page is noindex).',
-    'The EZ on the Earth link in the doc carried a tracking parameter; the name is kept as text.',
-    'Management, 12 Nov 2026: Get a Quote only; "we can recycle everything" changed to "one item or hundreds"; hero facility name "... and Williamston Facility".',
-    'The pills over the headings, "Why Choose Recycle Technologies" and the accepts card lines (taken from the four service docs) are the design’s, not the main doc’s.',
+    '[RESPONSE TIME] not given: "We reply within [RESPONSE TIME]." left out under the form.',
+    '[LINK TO SAMPLE CERTIFICATES PAGE OR PDF] not given: the "View Sample Certificates" link is left out.',
+    'Hours "9am - 4pm" from Shiza, 11 Nov 2026, with no days; shown as 9:00 AM to 4:00 PM.',
+    'The quote form is the site’s business quote form (first/last name, email, phone, company, address, city/state/ZIP, what to recycle, how you heard, message); its button reads "Request My Quote".',
+    'Mail-in kits link: the kit store with the site’s tags (KIT_STORE), as every Buy Recycling Kits link, not the EZ on the Earth home page the doc linked.',
   ],
 }

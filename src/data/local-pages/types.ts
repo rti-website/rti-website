@@ -232,37 +232,26 @@ export const SITE_LINK: Record<string, string> = {
 export const KIT_LINK: Link = { label: MAIL_IN.label, href: MAIL_IN.href, external: true }
 
 /**
- * A facility's own Google Ads page (Williamston, SC, 12 Nov 2026): its own
- * design, FacilityAdPage, not the facility template the other centres use.
- * Management: "make the design more good and a little different from the
- * other pages". Icons are LineIcon names.
+ * A facility's own Google Ads page (Williamston, SC): its own design,
+ * FacilityAdPage. Management's content doc of 12 Nov 2026 ("Commercial
+ * Recycling in Williamston, SC"), section by section. Icons are LineIcon names.
  */
 export type FacilityAdPage = {
   url: string
   seo: { title: string; description: string }
   schema: { service: string; areaServed: string[] }
-  hero: {
-    eyebrow: string
-    h1: string
-    lead: string
-    image: string
-    button: Link
-    /** The card on the right: the facility's own details. */
-    facility: { name: string; address: string; mapsHref: string; phone: Link; email: string; hours: string; accepts: string[] }
-  }
-  highlights: { icon: string; text: string }[]
-  accepts: { eyebrow: string; heading: string; lead: string; cards: { icon: string; title: string; text: string; link: Link }[] }
-  /** The service paragraphs, photo and text side by side, the sides alternating. */
-  stories: { eyebrow: string; heading: string; body: string[]; image: string; link?: Link }[]
-  ways: { eyebrow: string; cards: { icon: string; title: string; text: string; links: Link[] }[] }
-  why: { eyebrow: string; heading: string; cards: { icon: string; title: string; text: string }[] }
-  responsibility: { heading: string; body: string[]; image: string; mailIn: { heading: string; text: string; links: Link[] } }
+  hero: { eyebrow: string; h1: string; subhead: string; image: string; primary: Link; phone: Link; address: string; hours: string }
+  trust: { icon: string; text: string }[]
+  /** The quote form section; the form is the site's quote form (ContactForm). */
+  quote: { heading: string; intro: string; button: string; note: string; contact: { phone: Link; address: string; hours: string } }
+  recycle: { heading: string; intro: string; cards: { icon: string; title: string; text: string; link: Link }[]; button: Link }
+  why: { heading: string; cards: { icon: string; title: string; text: string }[] }
+  docs: { heading: string; body: string[]; certs: { title: string; text: string }[]; outro: string }
+  steps: { heading: string; items: { title: string; text: string }[] }
+  who: { heading: string; items: { icon: string; text: string }[] }
+  area: { heading: string; intro: string; counties: { name: string; towns: string }[]; outro: { before: string; link: Link; after: string } }
+  mid: { heading: string; primary: Link; secondary: Link }
   faq: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
-  serve: {
-    heading: string
-    counties: string[]
-    contact: { heading: string; text: string; phone: Link; email: string; hours: string; button: Link }
-  }
-  cta: { heading: string; body: string; primary: Link; secondary?: Link }
+  cta: { heading: string; body: string; primary: Link; secondary: Link; name: string; address: string }
   todo: string[]
 }
