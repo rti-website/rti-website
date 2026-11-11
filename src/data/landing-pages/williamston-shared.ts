@@ -1,3 +1,4 @@
+import { href } from '@/lib/urls'
 import type { IndustryKey, LandingPage } from '@/data/local-pages/types'
 
 /**
@@ -22,10 +23,23 @@ export const WILLIAMSTON_INDUSTRY_CARDS: { title: string; key: IndustryKey }[] =
 /** The map card, its pin on the board where the map draws Upstate South Carolina. */
 export const WILLIAMSTON_PLACE: NonNullable<LandingPage['areas']['place']> = {
   title: 'South Carolina', line1: 'Recycling facility', line2: 'Williamston, SC', x: 1014, y: 678,
+  href: href('/south-carolina/williamston/'),
 }
 
 /** The closing band's call button: the Williamston number (Aaqib, 11 Nov 2026), for the doc's "Call [SC PHONE]". */
 export const WILLIAMSTON_CALL = { label: 'Call (864) 774-8310', href: 'tel:+18647748310' }
+
+/**
+ * The line under the hero buttons (12 Nov 2026): the Williamston facility,
+ * linking to its page (the four service pages' main page), its address and
+ * its phone.
+ */
+export const WILLIAMSTON_FACILITY: NonNullable<LandingPage['hero']['facility']> = {
+  label: 'Williamston Facility',
+  href: href('/south-carolina/williamston/'),
+  address: '109 Twenty Nine Ct, Williamston SC 29697',
+  phone: { label: '(864) 774-8310', href: 'tel:+18647748310' },
+}
 
 /** The closing band's email line, for the doc's [SC EMAIL] (Shiza, 11 Nov 2026). */
 export const WILLIAMSTON_EMAIL = 'support@lightingresourcesinc.com'

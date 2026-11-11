@@ -1,6 +1,6 @@
-import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
 
 /**
  * Electronics Recycling in Williamston, SC: /south-carolina/williamston/electronic-recycling/ (Google Ads page, noindex, 11 Nov 2026).
@@ -18,14 +18,16 @@ export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
   },
   schema: { service: "Electronics Recycling", areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   noCrumbs: true,
+  // Get a Quote only: no Schedule a Pickup anywhere on the page (management, 12 Nov 2026).
+  quoteOnly: true,
   hero: {
     crumb: "Electronics Recycling in Williamston, SC",
     h1: "Certified Electronics Recycling Services in Williamston, SC",
     body: "Reliable electronics recycling for Upstate South Carolina businesses, with scheduled pickup and processing through our Williamston, SC facility. Computers, laptops, servers, monitors, phones, printers, and other electronics accepted, with a documented recycling process for your records.",
     button: { label: 'Get a Quote', href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: "/images/landing/hero-electronics.png",
     photo: "/images/landing/hero-photo-electronics.jpg",
+    facility: WILLIAMSTON_FACILITY,
   },
   highlights: WILLIAMSTON_HIGHLIGHTS,
   about: {

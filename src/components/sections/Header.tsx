@@ -34,7 +34,12 @@ import { HEADER_H } from '@/lib/layout'
  * the header of every page on the site. Resources was added on 16 Sep and
  * removed again on 21 Sep; the footer links the page now. See src/lib/nav.ts.
  */
-export async function Header() {
+/**
+ * `quoteOnly` (the Williamston Google Ads pages, 12 Nov 2026: "use Get a
+ * Quote only"): the top bar's Schedule a Pickup button and the phone bar's
+ * pickup button become Get a Quote, to the quote form.
+ */
+export async function Header({ quoteOnly = false }: { quoteOnly?: boolean } = {}) {
   /*
    * The Blogs panel's rows are the WordPress categories, read at build time.
    * That is the only reason this component is async — everything else in the
@@ -44,6 +49,8 @@ export async function Header() {
     blogMenuColumns(), content('site-header'), content('services'),
   ])
   const NAV = buildNav(blogColumns, { MAIN_NAV, ABOUT_NAV, BLOG_NAV, INDUSTRY_NAV, SERVICE_GROUPS })
+  /* quoteOnly: the top bar's button (and the drawer's copy of it) is Get a Quote. */
+  const topBar = quoteOnly ? { ...TOP_BAR, contact: { label: HEADER_CTA.label, href: QUOTE_HREF } } : TOP_BAR
 
   return (
     <>
@@ -53,11 +60,11 @@ export async function Header() {
           why the header is the one place this build renders two trees. */}
       <MobileNav
         nav={NAV}
-        topBar={TOP_BAR}
+        topBar={topBar}
         quoteHref={QUOTE_HREF}
-        pickupHref={PICKUP_HREF}
+        pickupHref={quoteOnly ? QUOTE_HREF : PICKUP_HREF}
         announce={TOP_BAR.announce}
-        labels={MOBILE_NAV}
+        labels={quoteOnly ? { ...MOBILE_NAV, pickup: HEADER_CTA.label } : MOBILE_NAV}
       />
 
     {/* overflow="visible" so the menus can hang below the 140px bar. Every other
@@ -101,10 +108,10 @@ export async function Header() {
           <a href={TOP_BAR.phoneMn.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneMn.label}</a>
           <a href={TOP_BAR.phoneWi.tel} className="font-roboto text-[12px] leading-[14px] text-white hover:underline">{TOP_BAR.phoneWi.label}</a>
           <Link
-            href={TOP_BAR.contact.href}
+            href={topBar.contact.href}
             className="btn-pop flex h-[26.5px] items-center rounded-[2.426px] border-[0.606px] border-brand bg-white px-[19.406px] font-sans text-[12.129px] font-semibold leading-[12.129px] tracking-[0.2426px] text-brand"
           >
-            {TOP_BAR.contact.label}
+            {topBar.contact.label}
           </Link>
         </div>
       </Box>

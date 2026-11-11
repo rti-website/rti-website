@@ -1,6 +1,6 @@
-import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
 
 /**
  * Battery Recycling in Williamston, SC: /south-carolina/williamston/battery-recycling/ (Google Ads page, noindex, 11 Nov 2026).
@@ -18,14 +18,16 @@ export const LANDING_WILLIAMSTON_BATTERY_RECYCLING: LandingPage = {
   },
   schema: { service: "Battery Recycling", areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   noCrumbs: true,
+  // Get a Quote only: no Schedule a Pickup anywhere on the page (management, 12 Nov 2026).
+  quoteOnly: true,
   hero: {
     crumb: "Battery Recycling in Williamston, SC",
     h1: "Certified Battery Recycling Services in Williamston, SC",
     body: "Reliable commercial battery recycling for Upstate South Carolina businesses, with scheduled pickup to our facility in Williamston, SC. Alkaline, lithium-ion, lead-acid, NiCd, button cell, EV, and power tool batteries accepted, with a certificate of recycling and safe disposal for your records.",
     button: { label: 'Get a Quote', href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: "/images/landing/hero-battery.png",
     photo: "/images/landing/hero-photo-battery.jpg",
+    facility: WILLIAMSTON_FACILITY,
   },
   highlights: WILLIAMSTON_HIGHLIGHTS,
   about: {

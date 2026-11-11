@@ -1,6 +1,6 @@
-import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_PLACE } from './williamston-shared'
 
 /**
  * Ballast Recycling in Williamston, SC: /south-carolina/williamston/ballast-recycling/ (Google Ads page, noindex, 11 Nov 2026).
@@ -18,14 +18,16 @@ export const LANDING_WILLIAMSTON_BALLAST_RECYCLING: LandingPage = {
   },
   schema: { service: "Ballast Recycling", areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   noCrumbs: true,
+  // Get a Quote only: no Schedule a Pickup anywhere on the page (management, 12 Nov 2026).
+  quoteOnly: true,
   hero: {
     crumb: "Ballast Recycling in Williamston, SC",
     h1: "Certified Ballast Recycling Services in Williamston, SC",
     body: "Commercial ballast recycling for Upstate South Carolina businesses, with scheduled pickup to our facility in Williamston, SC. PCB, non-PCB, electronic, and magnetic ballasts accepted, with hazardous components sent to an EPA-approved incineration facility and a certificate of recycling for your records.",
     button: { label: 'Get a Quote', href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: "/images/services/hero-ballasts-v2.png",
     photo: "/images/services/ballasts-process-v2.png",
+    facility: WILLIAMSTON_FACILITY,
   },
   highlights: WILLIAMSTON_HIGHLIGHTS,
   about: {
@@ -70,7 +72,7 @@ export const LANDING_WILLIAMSTON_BALLAST_RECYCLING: LandingPage = {
       { title: "Request a Quote", body: "Share your ballast types and estimated volume, and we'll set up the right service for your business." },
       { title: "Scheduled Pickup", body: "Our team collects spent ballasts from your location and transports them to our Williamston, SC facility." },
       { title: "Sorting & Dismantling", body: "Ballasts are sorted as magnetic or electronic, then taken apart to separate metals, plastics, and capacitors." },
-      { title: "Hazardous Component Removal", body: "PCB- and DEHP-containing capacitors are removed and sent to an EPA-approved incineration facility through a certified hazardous waste hauler, which eliminates generator liability for your business." },
+      { title: "Hazardous Component Removal", body: "PCB- and DEHP-containing capacitors are removed and sent to an EPA-approved incineration facility through a certified hazardous waste hauler." },
       { title: "Recovery & Certificate", body: "Copper, steel, and other non-hazardous materials are reclaimed for reuse. You receive a certificate of recycling for your records." },
     ],
   },
@@ -86,5 +88,5 @@ export const LANDING_WILLIAMSTON_BALLAST_RECYCLING: LandingPage = {
     secondary: WILLIAMSTON_CALL,
     email: WILLIAMSTON_EMAIL,
   },
-  todo: [...WILLIAMSTON_CONTACT_TODO, "The ballast doc has no Industries We Serve section; built without it, as written.", "Hero and photos: there is no ballast landing photo, so the ballast service page photos are used."],
+  todo: [...WILLIAMSTON_CONTACT_TODO, "Step 4: the doc's closing words 'which eliminates generator liability for your business' are removed (management, 12 Nov 2026: federal rules do not allow a recycler to remove a generator's liability; LR's own service agreement says so).", "The ballast doc has no Industries We Serve section; built without it, as written.", "Hero and photos: there is no ballast landing photo, so the ballast service page photos are used."],
 }

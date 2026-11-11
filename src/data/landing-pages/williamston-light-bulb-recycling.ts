@@ -1,6 +1,6 @@
-import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
+import { QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
 
 /**
  * Light Bulb Recycling in Williamston, SC: /south-carolina/williamston/light-bulb-recycling/ (Google Ads page, noindex, 11 Nov 2026).
@@ -18,14 +18,16 @@ export const LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING: LandingPage = {
   },
   schema: { service: "Light Bulb Recycling", areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   noCrumbs: true,
+  // Get a Quote only: no Schedule a Pickup anywhere on the page (management, 12 Nov 2026).
+  quoteOnly: true,
   hero: {
     crumb: "Light Bulb Recycling in Williamston, SC",
     h1: "Certified Light Bulb Recycling Services in Williamston, SC",
     body: "Commercial light bulb recycling for Upstate South Carolina businesses, handled through our facility in Williamston, SC, with no broker in between. Fluorescent tubes, CFLs, LED, HID lighting, ballasts, and fixtures accepted, with a documented path from pickup to processing.",
     button: { label: 'Get a Quote', href: QUOTE_HREF },
-    secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: "/images/landing/hero-light-bulbs.png",
     photo: "/images/landing/hero-photo-light-bulbs.jpg",
+    facility: WILLIAMSTON_FACILITY,
   },
   highlights: WILLIAMSTON_HIGHLIGHTS,
   about: {

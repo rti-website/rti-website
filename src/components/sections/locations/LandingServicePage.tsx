@@ -7,6 +7,7 @@ import { CertificationsBand } from '@/components/sections/services/Certification
 import { Faq } from '@/components/sections/locations/LocalServicePage'
 import { CaseStudyRail, type RailStory } from '@/components/client/CaseStudyRail'
 import { IndustryCard } from '@/components/ui/IndustryCard'
+import { LineIcon } from '@/components/ui/LineIcon'
 import { Eyebrow, Lead, Title } from '@/components/ui/Bits'
 import { FOOTER_H } from '@/lib/layout'
 import { caseStudyHref, href, path, outboundRel } from '@/lib/urls'
@@ -59,7 +60,7 @@ export function LandingServicePage({ page }: { page: LandingPage }) {
   )
   return (
     <FlowCanvas>
-      <Header />
+      <Header quoteOnly={page.quoteOnly} />
       <main>
         <Hero page={page} />
         <Highlights items={page.highlights} />
@@ -134,11 +135,23 @@ function Hero({ page }: { page: LandingPage }) {
               {h.button.label}
               <Image src="/images/landing/arrow-right-teal.svg" alt="" width={16} height={16} className="size-[16px]" />
             </Link>
-            <Link href={h.secondary.href} className="btn-pop flex items-center justify-center gap-[10px] rounded-[8px] border border-white px-[28px] py-[14.5px] font-sans text-[15px] font-medium leading-[normal] text-white">
-              {h.secondary.label}
-              <Image src="/images/landing/arrow-white-13.svg" alt="" width={15} height={12} className="h-[11.75px] w-[14.75px]" />
-            </Link>
+            {h.secondary && (
+              <Link href={h.secondary.href} className="btn-pop flex items-center justify-center gap-[10px] rounded-[8px] border border-white px-[28px] py-[14.5px] font-sans text-[15px] font-medium leading-[normal] text-white">
+                {h.secondary.label}
+                <Image src="/images/landing/arrow-white-13.svg" alt="" width={15} height={12} className="h-[11.75px] w-[14.75px]" />
+              </Link>
+            )}
           </div>
+          {h.facility && (
+            /* The facility line (Williamston, 12 Nov 2026): its page, address and phone. */
+            <div className="flex flex-col items-center gap-[8px] border-t border-white/20 pt-[16px] font-sans text-[14px] leading-[1.4] text-white/90 lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-[22px] lg:pt-[20px] lg:text-[15px]">
+              <Link href={h.facility.href} className="inline-flex items-center gap-[8px] font-semibold text-white hover:underline">
+                <LineIcon name="building" className="size-[17px] text-[#8fd9b0]" />{h.facility.label}
+              </Link>
+              <span className="inline-flex items-center gap-[8px]"><LineIcon name="pin" className="size-[17px] text-[#8fd9b0]" />{h.facility.address}</span>
+              <a href={h.facility.phone.href} className="inline-flex items-center gap-[8px] hover:underline"><LineIcon name="phone" className="size-[16px] text-[#8fd9b0]" />{h.facility.phone.label}</a>
+            </div>
+          )}
         </div>
         <div className="relative h-[230px] w-full max-w-[350px] shrink-0 overflow-hidden rounded-[12px] bg-[#eaf4f5] lg:h-[420px] lg:w-[560px] lg:max-w-none">
           <Image src={h.photo} alt="" fill priority sizes="(min-width: 1024px) 560px, 350px" className="object-cover" />
@@ -349,7 +362,9 @@ function Areas({ lead, place }: { lead: string; place?: LandingPage['areas']['pl
   /* A page outside the three home-page areas (Williamston, SC, 11 Nov 2026):
      its one card at x1246, level with its pin, and a dashed line from the pin
      to the card, as the Wisconsin card is drawn. */
-  const cards = place ? [{ x: 1246, y: place.y + 12.5 - 62.5, t: place.title, l1: place.line1, l2: place.line2 }] : AREA_CARDS
+  const cards: { x: number; y: number; t: string; l1: string; l2: string; href?: string }[] = place
+    ? [{ x: 1246, y: place.y + 12.5 - 62.5, t: place.title, l1: place.line1, l2: place.line2, href: place.href }]
+    : AREA_CARDS
   const lines = place ? [{ x: place.x + 25, y: place.y + 12.5, w: 1246 - place.x - 25, h: 1 }] : AREA_LINES
   const pins = place ? [{ x: place.x, y: place.y }] : AREA_PINS
   return (
@@ -379,7 +394,10 @@ function Areas({ lead, place }: { lead: string; place?: LandingPage['areas']['pl
               style={{ '--x': `${c.x}px`, '--y': `${c.y}px` } as React.CSSProperties}>
               <Image src="/images/icons/pin-card.png" alt="" width={22} height={34} className="h-[34px] w-[22px] shrink-0 object-contain lg:absolute lg:left-[18px] lg:top-[24px]" />
               <div className="flex min-w-0 flex-1 flex-col gap-[6px] lg:contents">
-                <p className="font-sans text-[17px] font-semibold leading-[1.25] text-brand lg:absolute lg:left-[55px] lg:top-[24px] lg:w-[160px] lg:text-[18px]">{c.t}</p>
+                <p className="font-sans text-[17px] font-semibold leading-[1.25] text-brand lg:absolute lg:left-[55px] lg:top-[24px] lg:w-[200px] lg:text-[18px]">
+                  {/* A card with a page (Williamston) links to it. */}
+                  {c.href ? <Link href={c.href} className="hover:underline">{c.t}</Link> : c.t}
+                </p>
                 <p className="font-roboto text-[14px] leading-[20px] text-muted lg:absolute lg:left-[55px] lg:top-[58px] lg:w-[209px] lg:leading-[22px]">{c.l1}<br />{c.l2}</p>
               </div>
             </li>

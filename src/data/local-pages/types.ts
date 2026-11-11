@@ -173,7 +173,15 @@ export type LandingPage = {
   schema: { service: string; areaServed: string[] }
   /** `image` is the full-bleed background; `photo` the 560 x 420 picture on
    *  the right (28 Oct 2026, where the quote form was). */
-  hero: { crumb: string; h1: string; body: string; button: Link; secondary: Link; image: string; photo: string }
+  /**
+   * `secondary` is absent on a Get a Quote only page (Williamston, 12 Nov 2026).
+   * `facility`: a line under the buttons naming the facility (a link to its
+   * page), its address and its phone (Williamston, 12 Nov 2026).
+   */
+  hero: {
+    crumb: string; h1: string; body: string; button: Link; secondary?: Link; image: string; photo: string
+    facility?: { label: string; href: string; address: string; phone: Link }
+  }
   highlights: string[]
   about: { heading: string; body: string[]; image: string }
   options: { heading: string; cards: LandingCard[]; buttons: Link[] }
@@ -187,9 +195,11 @@ export type LandingPage = {
    * home-page areas (Williamston, SC, 11 Nov 2026), its pin at (x, y) on the
    * 1920 board. Without it the map shows Minnesota, Wisconsin and Chicago.
    */
-  areas: { lead: string; place?: { title: string; line1: string; line2: string; x: number; y: number } }
+  areas: { lead: string; place?: { title: string; line1: string; line2: string; x: number; y: number; href?: string } }
   /** No breadcrumb, in the hero or in the JSON-LD (the Williamston Google Ads pages, 11 Nov 2026). */
   noCrumbs?: boolean
+  /** Get a Quote only, no Schedule a Pickup, in the header too (Williamston, 12 Nov 2026). */
+  quoteOnly?: boolean
   certBody?: string
   faq?: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
   cta: { heading: string; body?: string; primary: Link; secondary?: Link; email?: string }
@@ -220,3 +230,39 @@ export const SITE_LINK: Record<string, string> = {
   'IT Asset Disposition (ITAD)': href('/it-asset-disposition/'),
 }
 export const KIT_LINK: Link = { label: MAIL_IN.label, href: MAIL_IN.href, external: true }
+
+/**
+ * A facility's own Google Ads page (Williamston, SC, 12 Nov 2026): its own
+ * design, FacilityAdPage, not the facility template the other centres use.
+ * Management: "make the design more good and a little different from the
+ * other pages". Icons are LineIcon names.
+ */
+export type FacilityAdPage = {
+  url: string
+  seo: { title: string; description: string }
+  schema: { service: string; areaServed: string[] }
+  hero: {
+    eyebrow: string
+    h1: string
+    lead: string
+    image: string
+    button: Link
+    /** The card on the right: the facility's own details. */
+    facility: { name: string; address: string; mapsHref: string; phone: Link; email: string; hours: string; accepts: string[] }
+  }
+  highlights: { icon: string; text: string }[]
+  accepts: { eyebrow: string; heading: string; lead: string; cards: { icon: string; title: string; text: string; link: Link }[] }
+  /** The service paragraphs, photo and text side by side, the sides alternating. */
+  stories: { eyebrow: string; heading: string; body: string[]; image: string; link?: Link }[]
+  ways: { eyebrow: string; cards: { icon: string; title: string; text: string; links: Link[] }[] }
+  why: { eyebrow: string; heading: string; cards: { icon: string; title: string; text: string }[] }
+  responsibility: { heading: string; body: string[]; image: string; mailIn: { heading: string; text: string; links: Link[] } }
+  faq: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
+  serve: {
+    heading: string
+    counties: string[]
+    contact: { heading: string; text: string; phone: Link; email: string; hours: string; button: Link }
+  }
+  cta: { heading: string; body: string; primary: Link; secondary?: Link }
+  todo: string[]
+}
