@@ -329,7 +329,7 @@ function Industries({ industries }: { industries: NonNullable<LandingPage['indus
         <div className="grid w-full grid-cols-2 gap-[12px] lg:mt-[58px] lg:flex lg:flex-wrap lg:justify-center lg:gap-x-[14px] lg:gap-y-[12px]">
           {industries.cards.map((c) => {
             const ind = INDUSTRY[c.key]
-            return <IndustryCard key={c.title} ind={{ t: c.title, img: ind.img, href: ind.href, b: ind.b }} reveal small={c.title.length > 16} twoLine={c.title.length > 30} />
+            return <IndustryCard key={c.title} ind={{ t: c.title, img: ind.img, href: ind.href, b: c.body ?? ind.b }} reveal small={c.title.length > 16} twoLine={c.title.length > 30} />
           })}
         </div>
       </div>
@@ -345,28 +345,55 @@ function Industries({ industries }: { industries: NonNullable<LandingPage['indus
  * map at y361. Below lg it is taken apart as on the home page: the map as a
  * plain picture, the three cards as a list, no pins or connector lines.
  */
-const AREA_CARDS = [
-  { x: 370, y: 430.84, t: 'Minnesota', l1: 'Licensed recycling facilities', l2: 'Blaine, MN' },
-  { x: 1246, y: 621.84, t: 'Wisconsin', l1: 'Licensed recycling facility', l2: 'New Berlin, WI' },
-  { x: 499, y: 850.84, t: 'Chicago', l1: 'Expanded service coverage', l2: 'Business recycling & e-waste' },
+type Spot = { x: number; y: number; t: string; l1: string; l2: string; href?: string; h?: number }
+type Pin = { x: number; y: number; href?: string; label?: string }
+
+/** Each facility card opens that location's page (TL, 12 Nov 2026: "make them clickable"). */
+const MN_HREF = href('/minnesota-recycling/')
+const WI_HREF = href('/wisconsin-recycling/')
+const CHI_HREF = href('/electronic-recycling-chicago/')
+
+const MN_CARD: Spot = { x: 370, y: 430.84, t: 'Minnesota', l1: 'Licensed recycling facilities', l2: 'Blaine, MN', href: MN_HREF }
+const WI_CARD: Spot = { x: 1246, y: 621.84, t: 'Wisconsin', l1: 'Licensed recycling facility', l2: 'New Berlin, WI', href: WI_HREF }
+const CHI_CARD: Spot = { x: 499, y: 850.84, t: 'Chicago', l1: 'Expanded service coverage', l2: 'Business recycling & e-waste', href: CHI_HREF }
+const AREA_CARDS: Spot[] = [MN_CARD, WI_CARD, CHI_CARD]
+const MN_LINES = [{ x: 509, y: 689, w: 305, h: 1 }, { x: 509, y: 563, w: 1, h: 126 }]
+const CHI_LINES = [{ x: 716, y: 763, w: 177, h: 1 }, { x: 716, y: 763, w: 1, h: 88 }]
+const AREA_LINES = [...MN_LINES, { x: 946, y: 696.84, w: 300, h: 1 }, ...CHI_LINES]
+/* The home page's pins: the Wisconsin and Chicago ones link to their cards' pages, the other two are decoration. */
+const AREA_PINS: Pin[] = [
+  { x: 897, y: 604 }, { x: 1006, y: 645 },
+  { x: 918, y: 684, href: WI_HREF, label: 'Wisconsin' },
+  { x: 890, y: 743.84, href: CHI_HREF, label: 'Chicago' },
 ]
-const AREA_LINES = [
-  { x: 509, y: 689, w: 305, h: 1 }, { x: 509, y: 563, w: 1, h: 126 },
-  { x: 946, y: 696.84, w: 300, h: 1 },
-  { x: 716, y: 763, w: 177, h: 1 }, { x: 716, y: 763, w: 1, h: 88 },
-]
-const AREA_PINS = [{ x: 897, y: 604 }, { x: 1006, y: 645 }, { x: 918, y: 684 }, { x: 890, y: 743.84 }]
+
+/**
+ * A page with its own facility (`place`, Williamston, SC): all four locations
+ * (TL, 12 Nov 2026). Minnesota and Chicago keep their home-page cards; the
+ * Wisconsin card moves up to x1246 y455 (its line goes up from its pin, then
+ * right) so the page's own card can sit under it at y760, joined to its pin
+ * by a line down and right. Nothing crosses another pin or card.
+ */
+function placeLayout(place: NonNullable<LandingPage['areas']['place']>) {
+  // a street address runs to two lines: the card grows from 125 to 147 to keep its bottom margin
+  const own: Spot = { x: 1246, y: 760, t: place.title, l1: place.line1, l2: place.line2, href: place.href, h: place.line2.length > 28 ? 147 : 125 }
+  const wi: Spot = { ...WI_CARD, y: 455 }
+  const px = place.x + 12.5, ownMid = own.y + (own.h ?? 125) / 2, wiMid = wi.y + 62.5
+  return {
+    cards: [own, MN_CARD, wi, CHI_CARD],
+    lines: [
+      ...MN_LINES, ...CHI_LINES,
+      { x: 930.5, y: wiMid, w: 1, h: 684 - wiMid }, { x: 930.5, y: wiMid, w: 1246 - 930.5, h: 1 },
+      { x: px, y: place.y + 25, w: 1, h: ownMid - place.y - 25 }, { x: px, y: ownMid, w: 1246 - px, h: 1 },
+    ],
+    pins: [...AREA_PINS, { x: place.x, y: place.y, href: place.href, label: place.title }],
+  }
+}
 
 function Areas({ lead, place }: { lead: string; place?: LandingPage['areas']['place'] }) {
   const abs = (x: number, y: number, w?: number, h?: number) => ({ left: x, top: y, width: w, height: h })
-  /* A page outside the three home-page areas (Williamston, SC, 11 Nov 2026):
-     its one card at x1246, level with its pin, and a dashed line from the pin
-     to the card, as the Wisconsin card is drawn. */
-  const cards: { x: number; y: number; t: string; l1: string; l2: string; href?: string }[] = place
-    ? [{ x: 1246, y: place.y + 12.5 - 62.5, t: place.title, l1: place.line1, l2: place.line2, href: place.href }]
-    : AREA_CARDS
-  const lines = place ? [{ x: place.x + 25, y: place.y + 12.5, w: 1246 - place.x - 25, h: 1 }] : AREA_LINES
-  const pins = place ? [{ x: place.x, y: place.y }] : AREA_PINS
+  const { cards, lines, pins } = place ? placeLayout(place) : { cards: AREA_CARDS, lines: AREA_LINES, pins: AREA_PINS }
+  const pinImg = <Image src="/images/icons/map-pin.svg" alt="" width={25} height={25} className="size-full" />
   return (
     <section className="bg-white px-[20px] py-[48px] lg:p-0">
       <div className="relative mx-auto flex w-full flex-col items-center gap-[24px] lg:h-[1210px] lg:w-[1920px] lg:gap-0">
@@ -381,25 +408,25 @@ function Areas({ lead, place }: { lead: string; place?: LandingPage['areas']['pl
           <span key={i} aria-hidden="true" className="absolute hidden lg:block"
             style={{ ...abs(l.x, l.y, l.w, l.h), backgroundImage: `repeating-linear-gradient(${l.w > l.h ? 90 : 180}deg, rgba(0,0,0,0.6) 0 4px, transparent 4px 8px)` }} />
         ))}
-        {pins.map((p, i) => (
-          <Image key={i} src="/images/icons/map-pin.svg" alt="" width={25} height={25} className="absolute hidden size-[25px] lg:block" style={abs(p.x, p.y)} />
-        ))}
-        {!place && <span aria-hidden="true" className="absolute hidden size-[25px] lg:block" style={abs(816, 676)}>
+        {pins.map((p, i) => p.href
+          ? <Link key={i} href={p.href} aria-label={`${p.label}: open this location`} className="absolute z-[1] hidden size-[25px] transition-transform hover:scale-125 focus-visible:scale-125 lg:block" style={abs(p.x, p.y)}>{pinImg}</Link>
+          : <span key={i} aria-hidden="true" className="absolute hidden size-[25px] lg:block" style={abs(p.x, p.y)}>{pinImg}</span>)}
+        {/* Minnesota's marker (the home page draws it as a dot), linked like the pins. */}
+        <Link href={MN_HREF} aria-label="Minnesota: open this location" className="absolute z-[1] hidden size-[25px] transition-transform hover:scale-125 focus-visible:scale-125 lg:block" style={abs(816, 676)}>
           <Image src="/images/icons/map-dot-outer.svg" alt="" width={25} height={25} className="size-full" />
           <Image src="/images/icons/map-dot-inner.svg" alt="" width={11} height={11} className="absolute left-[7px] top-[7px] size-[10.714px]" />
-        </span>}
+        </Link>
         <ul className="flex w-full flex-col gap-[16px] lg:contents">
           {cards.map((c) => (
-            <li key={c.t} className="flex items-center gap-[16px] rounded-[8px] bg-white p-[20px] shadow-[0px_4px_12px_0px_rgba(13,39,80,0.12)] lg:absolute lg:block lg:h-[125px] lg:w-[278px] lg:p-0 lg:shadow-[0px_0px_20px_0px_#ebebeb,0px_0px_20px_0px_rgba(13,39,80,0.1)] lg:[left:var(--x)] lg:[top:var(--y)]"
-              style={{ '--x': `${c.x}px`, '--y': `${c.y}px` } as React.CSSProperties}>
+            <li key={c.t} className="group relative flex items-center gap-[16px] rounded-[8px] bg-white p-[20px] shadow-[0px_4px_12px_0px_rgba(13,39,80,0.12)] transition-shadow hover:shadow-[0px_6px_22px_0px_rgba(13,39,80,0.22)] lg:absolute lg:block lg:h-[var(--h)] lg:w-[278px] lg:p-0 lg:shadow-[0px_0px_20px_0px_#ebebeb,0px_0px_20px_0px_rgba(13,39,80,0.1)] lg:[left:var(--x)] lg:[top:var(--y)]"
+              style={{ '--x': `${c.x}px`, '--y': `${c.y}px`, '--h': `${c.h ?? 125}px` } as React.CSSProperties}>
               <Image src="/images/icons/pin-card.png" alt="" width={22} height={34} className="h-[34px] w-[22px] shrink-0 object-contain lg:absolute lg:left-[18px] lg:top-[24px]" />
               <div className="flex min-w-0 flex-1 flex-col gap-[6px] lg:contents">
-                <p className="font-sans text-[17px] font-semibold leading-[1.25] text-brand lg:absolute lg:left-[55px] lg:top-[24px] lg:w-[200px] lg:text-[18px]">
-                  {/* A card with a page (Williamston) links to it. */}
-                  {c.href ? <Link href={c.href} className="hover:underline">{c.t}</Link> : c.t}
-                </p>
+                <p className="font-sans text-[17px] font-semibold leading-[1.25] text-brand group-hover:underline lg:absolute lg:left-[55px] lg:top-[24px] lg:w-[200px] lg:text-[18px]">{c.t}</p>
                 <p className="font-roboto text-[14px] leading-[20px] text-muted lg:absolute lg:left-[55px] lg:top-[58px] lg:w-[209px] lg:leading-[22px]">{c.l1}<br />{c.l2}</p>
               </div>
+              {/* The whole card is the link to that location's page. */}
+              {c.href && <Link href={c.href} aria-label={`${c.t}: ${c.l1}, ${c.l2}`} className="absolute inset-0 z-[1] rounded-[8px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand" />}
             </li>
           ))}
         </ul>
@@ -467,7 +494,13 @@ function Cta({ cta: c }: { cta: LandingPage['cta'] }) {
               ? <a href={c.secondary.href} className={btn(false)}>{c.secondary.label}{arrow(false)}</a>
               : <Link href={c.secondary.href} className={btn(false)}>{c.secondary.label}{arrow(false)}</Link>)}
           </div>
-          {c.email && <a href={`mailto:${c.email}`} className="font-sans text-[15px] font-medium leading-[normal] hover:underline lg:text-[18px]">{c.email}</a>}
+          {(c.email || c.address || c.hours) && (
+            <div className="flex flex-col items-center gap-[6px] lg:gap-[8px]">
+              {c.email && <a href={`mailto:${c.email}`} className="font-sans text-[15px] font-medium leading-[normal] hover:underline lg:text-[18px]">{c.email}</a>}
+              {c.address && <p className="font-sans text-[14.5px] leading-[normal] text-white/90 lg:text-[16px]">{c.address}</p>}
+              {c.hours && <p className="font-sans text-[14.5px] leading-[normal] text-white/90 lg:text-[16px]">{c.hours}</p>}
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -189,11 +189,14 @@ export type LandingPage = {
   items: { heading: string; cards: LandingCard[]; note?: string }
   steps: { heading: string; intro?: string; cards: LandingCard[] }
   /** Absent on a page whose doc has no Industries section (Williamston ballasts, 11 Nov 2026). */
-  industries?: { lead: string; cards: { title: string; key: IndustryKey }[] }
+  /** `body`: the card's hover line when the doc gives one per industry (Williamston, 12 Nov 2026); otherwise the industry page's summary. */
+  industries?: { lead: string; cards: { title: string; key: IndustryKey; body?: string }[] }
   /**
    * `place`: the one facility card on the map for a page outside the three
    * home-page areas (Williamston, SC, 11 Nov 2026), its pin at (x, y) on the
    * 1920 board. Without it the map shows Minnesota, Wisconsin and Chicago.
+   * With it the map shows all four locations, the page's own first
+   * (TL, 12 Nov 2026: "mention the other locations and make them clickable").
    */
   areas: { lead: string; place?: { title: string; line1: string; line2: string; x: number; y: number; href?: string } }
   /** No breadcrumb, in the hero or in the JSON-LD (the Williamston Google Ads pages, 11 Nov 2026). */
@@ -202,7 +205,8 @@ export type LandingPage = {
   quoteOnly?: boolean
   certBody?: string
   faq?: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
-  cta: { heading: string; body?: string; primary: Link; secondary?: Link; email?: string }
+  /** `address` and `hours`: lines under the email (Williamston docs, 12 Nov 2026). */
+  cta: { heading: string; body?: string; primary: Link; secondary?: Link; email?: string; address?: string; hours?: string }
   todo: string[]
 }
 

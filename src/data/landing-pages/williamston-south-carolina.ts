@@ -42,7 +42,8 @@ export const WILLIAMSTON_SOUTH_CAROLINA: FacilityAdPage = {
   schema: { service: 'Commercial Recycling', areaServed: ['Williamston, SC', 'Upstate South Carolina'] },
   hero: {
     eyebrow: 'Recycle Technologies · Williamston, SC',
-    h1: 'Commercial Recycling in Williamston, SC',
+    // TL, 12 Nov 2026: "Commercial" → "Electronic" in the heading (SEO title unchanged).
+    h1: 'Electronic Recycling in Williamston, SC',
     subhead: 'Scheduled pickup of electronics, light bulbs, batteries, and ballasts for businesses across Upstate South Carolina, with recycling certificates for your compliance records.',
     image: '/images/landing/hero-universal-waste.png',
     primary: QUOTE,

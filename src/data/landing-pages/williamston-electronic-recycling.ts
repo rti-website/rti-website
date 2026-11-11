@@ -1,6 +1,6 @@
 import { QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMSTON_FACILITY, WILLIAMSTON_ADDRESS, WILLIAMSTON_HOURS, WILLIAMSTON_PLACE_ADDRESS, williamstonHighlights } from './williamston-shared'
 
 /**
  * Electronics Recycling in Williamston, SC: /south-carolina/williamston/electronic-recycling/ (Google Ads page, noindex, 11 Nov 2026).
@@ -8,6 +8,8 @@ import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_EMAIL, WILLIAMS
  * fixed), in the Google Ads landing design (LandingServicePage, as
  * /light-bulbs/Wisconsin/). No breadcrumb (Aaqib: "these are for google ads").
  * The closing band: Get a Quote, Call (864) 774-8310 and support@lightingresourcesinc.com (11 Nov 2026).
+ * Updated to the doc's 12 Nov 2026 version (TL): S.C. landfill ban, per-industry
+ * lines, the address on the map card, and the address and hours in the closing band.
  */
 export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
   url: href('/south-carolina/williamston/electronic-recycling/'),
@@ -29,19 +31,19 @@ export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
     photo: "/images/landing/hero-photo-electronics.jpg",
     facility: WILLIAMSTON_FACILITY,
   },
-  highlights: WILLIAMSTON_HIGHLIGHTS,
+  highlights: williamstonHighlights('Electronics'),
   about: {
     heading: "Why Recycle Electronics in South Carolina?",
     body: [
-      "Recycling retired electronics breaks devices down so their materials can be reused instead of thrown away. For businesses, it also moves old office electronics and IT equipment into a documented process instead of a storage closet or dumpster.",
-      "Recycle Technologies has been recycling electronics since 1993. Businesses in Greenville, Anderson, Spartanburg and across Upstate South Carolina can book a scheduled pickup, and collected equipment goes to our Williamston, SC facility, where plastic, wire, circuit boards, metals, and glass are separated and sent for recovery.",
+      "Recycling retired electronics breaks devices down so their materials can be reused instead of thrown away. In South Carolina, it's also the law: since July 1, 2011, computers, monitors, printers, and televisions have been banned from the state's solid waste landfills (S.C. Code § 48-60-90). For businesses, recycling moves old office electronics and IT equipment into a documented process instead of a storage closet or dumpster, with a certificate of recycling for your compliance records.",
+      "Businesses in Greenville, Anderson, Spartanburg and across the Upstate I-85 corridor can book a scheduled pickup, and collected equipment goes to our Williamston, SC facility, where plastic, wire, circuit boards, metals, and glass are separated and sent for recovery. Recycle Technologies has been recycling electronics since 1993.",
     ],
     image: "/images/services/electronics-intro-v2.png",
   },
   options: {
     heading: "Electronics Recycling Options in South Carolina",
     cards: [
-      { title: "Business Pickup", body: "Scheduled collection of retired electronics and IT equipment directly from your South Carolina facility." },
+      { title: "Business Pickup", body: "Scheduled collection of retired electronics and IT equipment directly from your South Carolina facility, whether you have one item or hundreds." },
       { title: "Mail-In Program", body: "Order a mail-in recycling kit for eligible items." },
     ],
     buttons: [{ label: 'Mail-In Program', href: href('/mail-in-recycling/') }],
@@ -52,19 +54,19 @@ export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
       { title: "Local certified facility", body: "Electronics are processed at our licensed, R2v3-certified Williamston, SC facility." },
       { title: "Hassle-free pickup", body: "We arrange collection and transportation from your location." },
       { title: "Documented process", body: "Proof of proper recycling for your compliance records." },
-      { title: "Proven experience", body: "Recycling electronics since 1993." },
+      { title: "Proven experience", body: "Recycle Technologies has been recycling electronics since 1993." },
     ],
   },
   items: {
     heading: "Electronics We Recycle",
     cards: [
-      { title: "Computers & IT equipment", body: "Desktop computers, laptops, and servers" },
-      { title: "Monitors & displays", body: "Computer monitors and CRT monitors" },
-      { title: "Office & imaging equipment", body: "Printers, scanners, copiers, and fax machines" },
-      { title: "Phones", body: "Cell phones and mobile devices" },
-      { title: "General electronics", body: "Cables, switches, chargers, keyboards, mice, remotes, microwaves, and televisions" },
+      { title: "Computers & IT Equipment", body: "Desktop computers, laptops, servers" },
+      { title: "Monitors & Displays", body: "Computer monitors, CRT monitors" },
+      { title: "Office & Imaging Equipment", body: "Printers, scanners, copiers, fax machines" },
+      { title: "Phones", body: "Cell phones, mobile devices" },
+      { title: "General Electronics", body: "Cables, switches, chargers, keyboards, mice, remotes, microwaves, televisions" },
     ],
-    note: "Have electronics that aren't on the list? Reach out and we'll confirm before your pickup.",
+    note: "Have something that isn't listed? Contact us and we'll confirm before your pickup.",
   },
   steps: {
     heading: "How Do We Recycle Electronics in South Carolina?",
@@ -79,19 +81,29 @@ export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
   },
   industries: {
     lead: 'Manufacturing, healthcare, education, government, retail and corporate offices, financial services, and automotive and fleet businesses across South Carolina.',
-    cards: WILLIAMSTON_INDUSTRY_CARDS,
+    cards: [
+      { title: 'Manufacturing', key: 'manufacturing', body: 'Automotive suppliers and advanced manufacturers along the Upstate I-85 corridor, recycling retired computers, controls, and office equipment.' },
+      { title: 'Healthcare', key: 'healthcare', body: 'Hospitals, clinics, and medical offices across the Upstate needing documented recycling of computers, monitors, and devices.' },
+      { title: 'Education', key: 'education', body: 'Colleges, universities, and school districts recycle outdated lab computers, classroom displays, and staff devices.' },
+      { title: 'Government', key: 'government', body: 'City and county offices across the Upstate with a documented process for retired public equipment.' },
+      { title: 'Retail & Corporate Offices', key: 'retail', body: 'Regional headquarters in Greenville and branch offices across the Upstate clearing out old IT and office equipment.' },
+      { title: 'Financial Services', key: 'financial', body: 'Banks, credit unions, and insurance offices recycling computers and phones with full documentation.' },
+      { title: 'Automotive & Fleet', key: 'automotive', body: 'Dealerships, service centers, and fleet operators recycling diagnostic computers, office electronics, and phones.' },
+    ],
   },
   areas: {
     lead: "Electronics pickup across Upstate South Carolina, including Greenville, Anderson, Spartanburg, Williamston, Easley, Greer, Simpsonville, Mauldin, Clemson, and Seneca.",
-    place: WILLIAMSTON_PLACE,
+    place: WILLIAMSTON_PLACE_ADDRESS,
   },
   certBody: "Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3, NAID AAA, and RIOS.",
   cta: {
     heading: "Get an Electronics Recycling Quote in Williamston, SC",
-    body: "Tell us about your equipment and our team will get back to you with the right recycling option.",
+    body: "Whether you have one item or hundreds, tell us about your equipment and our team will get back to you with the right recycling option.",
     primary: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: WILLIAMSTON_CALL,
     email: WILLIAMSTON_EMAIL,
+    address: WILLIAMSTON_ADDRESS,
+    hours: WILLIAMSTON_HOURS,
   },
   todo: [...WILLIAMSTON_CONTACT_TODO, "\"Local certified facility\" (licensed, R2v3-certified Williamston, SC facility) is highlighted in the doc; kept as written, please confirm."],
 }

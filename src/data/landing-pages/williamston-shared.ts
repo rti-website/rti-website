@@ -48,3 +48,15 @@ export const WILLIAMSTON_EMAIL = 'support@lightingresourcesinc.com'
 export const WILLIAMSTON_CONTACT_TODO = [
   'Closing band: phone (864) 774-8310 (Aaqib) and email support@lightingresourcesinc.com (Shiza), 11 Nov 2026, for the doc’s [SC PHONE] and [SC EMAIL].',
 ]
+
+/* ---- The 12 Nov 2026 docs (electronics, batteries, ballasts) ---- */
+
+/** The facility's address and hours, in the map card and the closing band. */
+export const WILLIAMSTON_ADDRESS = '109 Twenty Nine Ct, Williamston, SC 29697'
+export const WILLIAMSTON_HOURS = 'Hours: 9:00 AM – 4:00 PM'
+
+/** "Location card: South Carolina · Recycling facility · 109 Twenty Nine Ct, Williamston, SC 29697". */
+export const WILLIAMSTON_PLACE_ADDRESS: NonNullable<LandingPage['areas']['place']> = { ...WILLIAMSTON_PLACE, line2: WILLIAMSTON_ADDRESS }
+
+/** The highlights strip of those docs: the "since 1993" item last, naming the material. */
+export const williamstonHighlights = (what: string) => ['R2v3, RIOS & NAID AAA Certified', 'Certificate of Recycling', 'Business Pickup', `Recycling ${what} Since 1993`]
