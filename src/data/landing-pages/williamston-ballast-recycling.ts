@@ -51,7 +51,7 @@ export const LANDING_WILLIAMSTON_BALLAST_RECYCLING: LandingPage = {
   why: {
     heading: "Why Choose Recycle Technologies for Ballast Recycling?",
     cards: [
-      { title: "Certified facility", body: "Ballasts are handled through our Williamston, SC facility under our R2v3-certified process." },
+      { title: "Certified recycling", body: "Ballasts are handled through our Williamston, SC facility, backed by Recycle Technologies’ R2v3, RIOS and NAID AAA certifications." },
       { title: "EPA-approved disposal", body: "PCB and DEHP components go to an EPA-approved incineration facility through a certified hazardous waste hauler." },
       { title: "Certificate of recycling", body: "Proof of proper disposal for your compliance records." },
       { title: "Proven experience", body: "Recycle Technologies has been recycling lighting ballasts since 1993." },

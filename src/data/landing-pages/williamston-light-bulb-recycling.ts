@@ -49,7 +49,7 @@ export const LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING: LandingPage = {
   why: {
     heading: "Why Choose Recycle Technologies for Light Bulb Recycling?",
     cards: [
-      { title: "Certified facility", body: "Lighting is handled through our Williamston, SC facility under our R2v3-certified process." },
+      { title: "Certified recycling", body: "Light bulbs and fixtures are handled through our Williamston, SC facility, backed by Recycle Technologies’ R2v3, RIOS and NAID AAA certifications." },
       { title: "No broker", body: "We handle processing directly, so you get a documented path from pickup to processing." },
       { title: "Hassle-free pickup", body: "We arrange collection and transportation from your location." },
       { title: "Proven experience", body: "Recycling fluorescent lamps and lighting since 1993." },

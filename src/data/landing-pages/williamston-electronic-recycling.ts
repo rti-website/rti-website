@@ -51,7 +51,7 @@ export const LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING: LandingPage = {
   why: {
     heading: "Why Choose Recycle Technologies for Electronics Recycling?",
     cards: [
-      { title: "Local certified facility", body: "Electronics are processed at our licensed, R2v3-certified Williamston, SC facility." },
+      { title: "Certified recycling", body: "Electronics are handled through our Williamston, SC facility, backed by Recycle Technologies’ R2v3, RIOS and NAID AAA certifications." },
       { title: "Hassle-free pickup", body: "We arrange collection and transportation from your location." },
       { title: "Documented process", body: "Proof of proper recycling for your compliance records." },
       { title: "Proven experience", body: "Recycle Technologies has been recycling electronics since 1993." },

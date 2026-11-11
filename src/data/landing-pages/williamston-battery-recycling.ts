@@ -51,7 +51,7 @@ export const LANDING_WILLIAMSTON_BATTERY_RECYCLING: LandingPage = {
   why: {
     heading: "Why Choose Recycle Technologies for Battery Recycling?",
     cards: [
-      { title: "Nearby certified facility", body: "Batteries are sorted and handled through our Williamston, SC facility under our R2v3-certified process." },
+      { title: "Certified recycling", body: "Batteries are sorted and handled through our Williamston, SC facility, backed by Recycle Technologies’ R2v3, RIOS and NAID AAA certifications." },
       { title: "Hassle-free pickup", body: "We collect directly from businesses across Upstate South Carolina." },
       { title: "Certificate of recycling", body: "Proof of recycling and safe disposal for your compliance records." },
       { title: "Proven experience", body: "Recycle Technologies has been recycling batteries since 1993." },
