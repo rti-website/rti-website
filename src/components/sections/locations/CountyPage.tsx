@@ -38,7 +38,7 @@ export async function CountyPage({ page }: { page: Page }) {
   const shared = await content('county-shared')
   const trail = trailOf(page).map((c) => ({ name: c.label, url: c.href ?? page.url }))
   const schema = graph(
-    breadcrumbNode(trail),
+    ...(page.hero.noCrumbs ? [] : [breadcrumbNode(trail)]),
     serviceNode({ name: page.service ?? 'Electronics Recycling', url: page.url, description: page.seo.description, areaServed: [page.areaServed ?? `${page.county}, ${page.state}`] }),
     ...(page.schema ? [recyclingCenterNode(page)] : []),
     ...(page.sections ?? []).flatMap((s) => s.kind === 'faq' ? [faqNode(s.items)] : []),
@@ -62,7 +62,7 @@ export async function CountyPage({ page }: { page: Page }) {
           </section>
         )}
         <About page={page} />
-        {!page.noServices && <Services heading={page.servicesHeading} shared={shared} />}
+        {!page.noServices && <Services heading={page.servicesHeading} shared={shared} noDropOff={page.noDropOff} />}
         <Cta shared={shared} />
         {(() => {
           /* A heading-only text section right before the feature cards
@@ -193,7 +193,7 @@ function Hero({ page }: { page: Page }) {
       {/* Text — crumbs at y131, H1 at 158, lead at 250, button at 294 on the
           board: one block centred on the band. */}
       <div className="relative flex h-full flex-col items-center justify-center px-[40px] text-center lg:mx-auto lg:w-[1282px] lg:items-start lg:px-0 lg:text-left">
-        <nav aria-label="Breadcrumb" className="max-lg:hidden lg:mb-[10px] lg:pl-[3px]">
+        {!h.noCrumbs && <nav aria-label="Breadcrumb" className="max-lg:hidden lg:mb-[10px] lg:pl-[3px]">
           <ol className="flex items-center gap-[13px] font-roboto text-[11.011px] font-bold uppercase leading-[16.517px] tracking-[0.8909px]">
             {trailOf(page).map((c, i) => (
               <li key={c.label} className="flex items-center gap-[13px]">
@@ -204,7 +204,7 @@ function Hero({ page }: { page: Page }) {
               </li>
             ))}
           </ol>
-        </nav>
+        </nav>}
         <h1 className="w-full max-w-[310px] text-balance font-sans text-[28px] font-semibold leading-[1.2] text-white lg:max-w-[var(--h1-w)] lg:text-[60px] lg:leading-[84.7px] lg:tracking-[-2.03px]"
           style={{ '--h1-w': `${h.h1Width ?? 1156}px` } as React.CSSProperties}>
           {h.h1}
@@ -343,12 +343,14 @@ function Block({ block }: { block: AboutBlock }) {
  * Section - Service Options (7016:9108): three cards, stacked on the phone.
  * Some area frames put a heading over them, 24 above the cards (7060:4075).
  */
-function Services({ heading, shared }: { heading?: string; shared: Shared }) {
+function Services({ heading, shared, noDropOff = false }: { heading?: string; shared: Shared; noDropOff?: boolean }) {
+  /* Without Residential Drop-Off the two cards sit centred (Williamston, 11 Nov 2026). */
+  const cards = noDropOff ? shared.COUNTY_SERVICES.filter((s) => !s.icon.includes('drop-off')) : shared.COUNTY_SERVICES
   return (
     <section className="bg-[#fcfcfc] px-[20px] py-[40px] lg:px-0 lg:py-[70px]">
       {heading && <h2 className="mb-[16px] text-center font-sans text-[21px] font-semibold leading-[1.3] text-[#132119] lg:mb-[24px] lg:text-[32px] lg:leading-[normal]">{heading}</h2>}
-      <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1272px] lg:flex-row lg:gap-[24px]">
-        {shared.COUNTY_SERVICES.map((s) => (
+      <div className="mx-auto flex w-full max-w-[350px] flex-col gap-[16px] lg:max-w-none lg:w-[1272px] lg:flex-row lg:justify-center lg:gap-[24px]">
+        {cards.map((s) => (
           <div key={s.title} className="flex flex-col gap-[14px] rounded-[12px] border border-[#e6e6e6] bg-white px-[24px] py-[26px] lg:min-h-[285px] lg:w-[408px] lg:gap-[16px] lg:px-[30px] lg:py-[32px]">
             <span className="grid size-[44px] place-items-center rounded-full bg-brand lg:size-[48px]">
               <Image src={s.icon} alt="" width={22} height={22} className="size-[20px] lg:size-[22px]" />

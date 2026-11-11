@@ -53,7 +53,7 @@ const CERT_H = 360
 
 export function LandingServicePage({ page }: { page: LandingPage }) {
   const schema = graph(
-    breadcrumbNode([{ name: 'Home', url: href('/') }, { name: page.hero.crumb, url: page.url }]),
+    ...(page.noCrumbs ? [] : [breadcrumbNode([{ name: 'Home', url: href('/') }, { name: page.hero.crumb, url: page.url }])]),
     serviceNode({ name: page.schema.service, url: page.url, description: page.seo.description, areaServed: page.schema.areaServed }),
     ...(page.faq ? [faqNode(page.faq.items)] : []),
   )
@@ -86,8 +86,8 @@ export function LandingServicePage({ page }: { page: LandingPage }) {
           <CardRows cards={page.steps.cards} numbered />
         </Band>
 
-        <Industries industries={page.industries} />
-        <Areas lead={page.areas.lead} />
+        {page.industries && <Industries industries={page.industries} />}
+        <Areas lead={page.areas.lead} place={page.areas.place} />
 
         <div className="relative lg:h-[var(--cert-h)]" style={{ '--cert-h': `${CERT_H}px` } as React.CSSProperties}>
           <CertificationsBand top={0} height={CERT_H} label="landing-certifications" body={page.certBody} />
@@ -117,13 +117,15 @@ function Hero({ page }: { page: LandingPage }) {
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[rgba(11,31,58,0.86)] lg:bg-transparent lg:[background-image:var(--ramp)]" style={{ '--ramp': HERO_RAMP } as React.CSSProperties} />
       <div className="mx-auto flex w-full flex-col items-center gap-[28px] lg:w-[1282px] lg:flex-row lg:gap-[70px]">
         <div className="flex w-full flex-col items-center gap-[14px] text-center lg:min-w-px lg:flex-1 lg:items-start lg:gap-[20px] lg:text-left">
-          <nav aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center justify-center gap-x-[8px] font-sans text-[13px] font-bold leading-[1.5] text-white/85">
-              <li><Link href={href('/')} className="hover:text-white hover:underline">Home</Link></li>
-              <li aria-hidden="true">›</li>
-              <li aria-current="page">{h.crumb}</li>
-            </ol>
-          </nav>
+          {!page.noCrumbs && (
+            <nav aria-label="Breadcrumb">
+              <ol className="flex flex-wrap items-center justify-center gap-x-[8px] font-sans text-[13px] font-bold leading-[1.5] text-white/85">
+                <li><Link href={href('/')} className="hover:text-white hover:underline">Home</Link></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">{h.crumb}</li>
+              </ol>
+            </nav>
+          )}
           <h1 className="font-sans text-[30px] font-semibold leading-[1.12] text-white lg:text-[46px]">{h.h1}</h1>
           <p className="font-sans text-[15px] leading-[1.6] text-white/[0.92] lg:text-[18px]">{h.body}</p>
           {/* Phone: stacked, the white button as wide as the outline one. */}
@@ -304,7 +306,7 @@ const INDUSTRY: Record<IndustryKey, { img: string; href: string; b: string }> = 
   warehouses: { img: '/images/landing/ind-warehouses.png', href: href('/industries/manufacturing-industrial/'), b: 'Scheduled pickup for batteries, lighting, and equipment that accumulate in warehouses and distribution sites.' },
 }
 
-function Industries({ industries }: { industries: LandingPage['industries'] }) {
+function Industries({ industries }: { industries: NonNullable<LandingPage['industries']> }) {
   return (
     <section className="bg-[#f8faf9] px-[20px] py-[48px] lg:px-0 lg:pb-[80px] lg:pt-[80px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[20px] lg:w-[1282px] lg:gap-0">
@@ -342,8 +344,14 @@ const AREA_LINES = [
 ]
 const AREA_PINS = [{ x: 897, y: 604 }, { x: 1006, y: 645 }, { x: 918, y: 684 }, { x: 890, y: 743.84 }]
 
-function Areas({ lead }: { lead: string }) {
+function Areas({ lead, place }: { lead: string; place?: LandingPage['areas']['place'] }) {
   const abs = (x: number, y: number, w?: number, h?: number) => ({ left: x, top: y, width: w, height: h })
+  /* A page outside the three home-page areas (Williamston, SC, 11 Nov 2026):
+     its one card at x1246, level with its pin, and a dashed line from the pin
+     to the card, as the Wisconsin card is drawn. */
+  const cards = place ? [{ x: 1246, y: place.y + 12.5 - 62.5, t: place.title, l1: place.line1, l2: place.line2 }] : AREA_CARDS
+  const lines = place ? [{ x: place.x + 25, y: place.y + 12.5, w: 1246 - place.x - 25, h: 1 }] : AREA_LINES
+  const pins = place ? [{ x: place.x, y: place.y }] : AREA_PINS
   return (
     <section className="bg-white px-[20px] py-[48px] lg:p-0">
       <div className="relative mx-auto flex w-full flex-col items-center gap-[24px] lg:h-[1210px] lg:w-[1920px] lg:gap-0">
@@ -354,19 +362,19 @@ function Areas({ lead }: { lead: string }) {
           <Image src="/images/home/map.png" alt="Recycle Technologies service coverage across the United States" width={707} height={804} className="h-auto w-full lg:size-full" />
         </div>
         {/* The frame's connectors: 1px black dashes, 4 on and 4 off, at 60%. */}
-        {AREA_LINES.map((l, i) => (
+        {lines.map((l, i) => (
           <span key={i} aria-hidden="true" className="absolute hidden lg:block"
             style={{ ...abs(l.x, l.y, l.w, l.h), backgroundImage: `repeating-linear-gradient(${l.w > l.h ? 90 : 180}deg, rgba(0,0,0,0.6) 0 4px, transparent 4px 8px)` }} />
         ))}
-        {AREA_PINS.map((p, i) => (
+        {pins.map((p, i) => (
           <Image key={i} src="/images/icons/map-pin.svg" alt="" width={25} height={25} className="absolute hidden size-[25px] lg:block" style={abs(p.x, p.y)} />
         ))}
-        <span aria-hidden="true" className="absolute hidden size-[25px] lg:block" style={abs(816, 676)}>
+        {!place && <span aria-hidden="true" className="absolute hidden size-[25px] lg:block" style={abs(816, 676)}>
           <Image src="/images/icons/map-dot-outer.svg" alt="" width={25} height={25} className="size-full" />
           <Image src="/images/icons/map-dot-inner.svg" alt="" width={11} height={11} className="absolute left-[7px] top-[7px] size-[10.714px]" />
-        </span>
+        </span>}
         <ul className="flex w-full flex-col gap-[16px] lg:contents">
-          {AREA_CARDS.map((c) => (
+          {cards.map((c) => (
             <li key={c.t} className="flex items-center gap-[16px] rounded-[8px] bg-white p-[20px] shadow-[0px_4px_12px_0px_rgba(13,39,80,0.12)] lg:absolute lg:block lg:h-[125px] lg:w-[278px] lg:p-0 lg:shadow-[0px_0px_20px_0px_#ebebeb,0px_0px_20px_0px_rgba(13,39,80,0.1)] lg:[left:var(--x)] lg:[top:var(--y)]"
               style={{ '--x': `${c.x}px`, '--y': `${c.y}px` } as React.CSSProperties}>
               <Image src="/images/icons/pin-card.png" alt="" width={22} height={34} className="h-[34px] w-[22px] shrink-0 object-contain lg:absolute lg:left-[18px] lg:top-[24px]" />

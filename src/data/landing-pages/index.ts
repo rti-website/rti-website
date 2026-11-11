@@ -12,6 +12,10 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from './chicago-light-bulbs'
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from './minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from './wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from './chicago-universal-waste-recycling'
+import { LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING } from './williamston-electronic-recycling'
+import { LANDING_WILLIAMSTON_BATTERY_RECYCLING } from './williamston-battery-recycling'
+import { LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING } from './williamston-light-bulb-recycling'
+import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from './williamston-ballast-recycling'
 
 /**
  * The Google Ads landing pages: the nine of 30 Sep 2026, redesigned 27 Oct
@@ -36,6 +40,12 @@ export const LANDING_PAGES: LandingPage[] = [
   LANDING_WISCONSIN_UNIVERSAL_WASTE,
   // Chicago universal waste, 29 Oct 2026 (management).
   LANDING_CHICAGO_UNIVERSAL_WASTE,
+  // Williamston, SC, 11 Nov 2026 (Aaqib). Their main page, /south-carolina/williamston/,
+  // is in the facility design: ./williamston-south-carolina.ts.
+  LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING,
+  LANDING_WILLIAMSTON_BATTERY_RECYCLING,
+  LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING,
+  LANDING_WILLIAMSTON_BALLAST_RECYCLING,
 ]
 
 /** Admin -> Pages document: `landing/` and the URL's path, e.g. landing/battery-recycling-Wisconsin. */

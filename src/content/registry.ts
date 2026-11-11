@@ -137,6 +137,11 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from '@/data/landing-pages/minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from '@/data/landing-pages/wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from '@/data/landing-pages/chicago-universal-waste-recycling'
+import { WILLIAMSTON_SOUTH_CAROLINA } from '@/data/landing-pages/williamston-south-carolina'
+import { LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING } from '@/data/landing-pages/williamston-electronic-recycling'
+import { LANDING_WILLIAMSTON_BATTERY_RECYCLING } from '@/data/landing-pages/williamston-battery-recycling'
+import { LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING } from '@/data/landing-pages/williamston-light-bulb-recycling'
+import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from '@/data/landing-pages/williamston-ballast-recycling'
 import { BLAINE_ELECTRONIC_RECYCLING } from '@/data/local-pages/blaine-electronic-recycling'
 import { BLAINE_BATTERY_RECYCLING } from '@/data/local-pages/blaine-battery-recycling'
 import { BLAINE_LIGHT_BULB_RECYCLING } from '@/data/local-pages/blaine-light-bulb-recycling'
@@ -410,6 +415,11 @@ export const DOCS = {
   'landing/universal-waste-recycling-Minnesota': { title: "Universal Waste Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_UNIVERSAL_WASTE.url], data: one(LANDING_MINNESOTA_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Wisconsin': { title: "Universal Waste Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_UNIVERSAL_WASTE.url], data: one(LANDING_WISCONSIN_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Chicago': { title: "Universal Waste Recycling in Chicago (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_UNIVERSAL_WASTE.url], data: one(LANDING_CHICAGO_UNIVERSAL_WASTE) },
+  'landing/south-carolina-williamston': { title: "Recycle Technologies in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [WILLIAMSTON_SOUTH_CAROLINA.url], data: one(WILLIAMSTON_SOUTH_CAROLINA) },
+  'landing/south-carolina-williamston-electronic-recycling': { title: "Electronics Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING.url], data: one(LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING) },
+  'landing/south-carolina-williamston-battery-recycling': { title: "Battery Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_BATTERY_RECYCLING.url], data: one(LANDING_WILLIAMSTON_BATTERY_RECYCLING) },
+  'landing/south-carolina-williamston-light-bulb-recycling': { title: "Light Bulb Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING.url], data: one(LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING) },
+  'landing/south-carolina-williamston-ballast-recycling': { title: "Ballast Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_BALLAST_RECYCLING.url], data: one(LANDING_WILLIAMSTON_BALLAST_RECYCLING) },
   'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
   'area/sheboygan': { title: "Sheboygan Recycling", group: 'Location pages', urls: [SHEBOYGAN.url], data: one(SHEBOYGAN) },
   'area/tv-recycling-green-bay': { title: "TV Recycling in Green Bay", group: 'Location pages', urls: [TV_RECYCLING_GREEN_BAY.url], data: one(TV_RECYCLING_GREEN_BAY) },

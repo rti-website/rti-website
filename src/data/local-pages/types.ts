@@ -180,8 +180,16 @@ export type LandingPage = {
   why: { heading: string; cards: LandingCard[] }
   items: { heading: string; cards: LandingCard[]; note?: string }
   steps: { heading: string; intro?: string; cards: LandingCard[] }
-  industries: { lead: string; cards: { title: string; key: IndustryKey }[] }
-  areas: { lead: string }
+  /** Absent on a page whose doc has no Industries section (Williamston ballasts, 11 Nov 2026). */
+  industries?: { lead: string; cards: { title: string; key: IndustryKey }[] }
+  /**
+   * `place`: the one facility card on the map for a page outside the three
+   * home-page areas (Williamston, SC, 11 Nov 2026), its pin at (x, y) on the
+   * 1920 board. Without it the map shows Minnesota, Wisconsin and Chicago.
+   */
+  areas: { lead: string; place?: { title: string; line1: string; line2: string; x: number; y: number } }
+  /** No breadcrumb, in the hero or in the JSON-LD (the Williamston Google Ads pages, 11 Nov 2026). */
+  noCrumbs?: boolean
   certBody?: string
   faq?: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
   cta: { heading: string; body?: string; primary: Link; secondary?: Link; email?: string }

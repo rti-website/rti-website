@@ -116,6 +116,8 @@ export type CountyPage = {
     third?: { label: string; href: string }
     /** A breadcrumb between Locations and the page ("Wisconsin" on New Berlin, 7233:8249). */
     parent?: { label: string; href: string }
+    /** No breadcrumb, in the hero or in the JSON-LD (the Williamston Google Ads page, 11 Nov 2026). */
+    noCrumbs?: boolean
   }
   /**
    * The quick-info bar under the hero (New Berlin, 7233:9339, 5 Oct 2026):
@@ -154,6 +156,8 @@ export type CountyPage = {
    * the mail-in program are not each described twice).
    */
   noServices?: boolean
+  /** The service cards without Residential Drop-Off, for a facility the doc gives only pickup and mail-in (Williamston, 11 Nov 2026). */
+  noDropOff?: boolean
   /** The heading some frames draw over the Service Options cards ("Recycling Services"). */
   servicesHeading?: string
   /** The sections after the CTA banner, when the page has its own order (the area pages). */
