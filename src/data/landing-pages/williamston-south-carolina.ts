@@ -13,10 +13,9 @@ import type { CountyPage } from '@/data/county-pages/types'
  * breadcrumb. Not in AREA_PAGES (that list feeds the sitemap and the
  * locations directory); the route is src/app/south-carolina/williamston/.
  *
- * The doc has no phone number, email, hours or pickup contact (it says
- * [PHONE], "Toll Free" and [CONTACT NAME]); Aaqib: leave them all out. The
- * FAQ sentences that said "Call [PHONE]" say "Request a quote" instead, and
- * the pickup contact card is left out. See `todo`.
+ * Phone (864) 774-8310 and the address from Aaqib, 11 Nov 2026 (the doc
+ * said [PHONE] and "Toll Free"). No email, hours or pickup contact yet, so
+ * the Hours row and the pickup contact card are left out. See `todo`.
  */
 export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
   url: href('/south-carolina/williamston/'),
@@ -40,6 +39,7 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
   },
   quickInfo: [
     { glyph: 'pin', label: 'Address', value: '109 Twenty Nine Ct, Williamston SC 29697', href: 'https://www.google.com/maps/dir/?api=1&destination=109+Twenty+Nine+Ct%2C+Williamston%2C+SC+29697' },
+    { glyph: 'phone', label: 'Phone', value: '(864) 774-8310', href: 'tel:+18647748310' },
   ],
   about: {
     heading: 'Electronics Recycling Services in Williamston, South Carolina',
@@ -64,13 +64,13 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
       { p: 'Are spent light bulbs piling up at your facility? In Williamston, South Carolina, Recycle Technologies offers a hassle-free solution for bulb disposal. We understand the confusion around disposing of them properly, and we are here to help. Our service provides safe and eco-friendly fluorescent bulb recycling for businesses across Upstate South Carolina, including Greenville, Anderson, and Spartanburg. Choosing our Bulb Recycling service means convenience for your business and keeps harmful materials out of landfills.' },
       { h2: 'Our Environmental Responsibility' },
       { p: 'What makes Recycle Technologies stand out? Alongside our subsidiaries, Lighting Resources and EZ on the Earth, we lead in advanced recycling practices. Using state-of-the-art technology, we maximize material recovery, drastically reducing landfill waste and environmental harm. Our unwavering commitment to sustainability turns e-waste and other materials into reusable resources, fostering a circular economy.' },
-      { p: 'Our cutting-edge processes not only reclaim valuable materials but also minimize ecological damage. As dedicated environmental advocates, we continuously innovate in waste management, providing comprehensive services for businesses. By partnering with us, you support a cleaner, healthier, and more sustainable future.' },
+      { p: 'Our cutting-edge processes not only reclaim valuable materials but also minimize ecological damage. As dedicated environmental advocates, we continuously innovate in waste management, providing comprehensive services for businesses. By partnering with us, you support a cleaner, healthier, and more sustainable future. For more information, reach out to our Williamston team at (864) 774-8310.' },
       { h: 'Mail in Program' },
       { p: 'Access our recycling services through our complete recycling kits, which you can order online and ship to us.' },
     ] },
     { kind: 'faq', heading: 'Questions About This Location', items: [
-      { q: 'Is there a fee for recycling with this location?', a: 'Fees depend on the material and the quantity. Request a quote with a description of what you need recycled, and we will confirm any charges before your pickup is scheduled.' },
-      { q: 'Do I need to schedule service with the Williamston facility?', a: 'Yes. Requirements vary by material and quantity. Request a quote to confirm your materials are accepted and arrange a time. Large or commercial loads go faster when our team knows what to expect.' },
+      { q: 'Is there a fee for recycling with this location?', a: 'Fees depend on the material and the quantity. Call (864) 774-8310 with a description of what you need recycled, and we will confirm any charges before your pickup is scheduled.' },
+      { q: 'Do I need to schedule service with the Williamston facility?', a: 'Yes. Requirements vary by material and quantity. Call (864) 774-8310 or request a quote to confirm your materials are accepted and arrange a time. Large or commercial loads go faster when our team knows what to expect.' },
       { q: 'Can businesses schedule a bulk pickup from this facility?', a: 'Yes. Business pickups are available across Upstate South Carolina, including Greenville, Anderson, and Spartanburg. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started.' },
     ] },
     { kind: 'text', heading: 'Counties We Serve', blocks: [{ list: [
@@ -80,11 +80,9 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
     ] }] },
   ],
   todo: [
-    'No phone number in the doc (Phone row says "Toll Free" with no number): the Phone row is left out.',
+    'Phone (864) 774-8310 from Aaqib, 11 Nov 2026, in place of the doc’s [PHONE] (address card, FAQ, Our Environmental Responsibility).',
     'No hours in the doc: the Hours row is left out.',
-    'FAQ answers 1 and 2 said "Call [PHONE]"; they now say "Request a quote".',
-    '"For more information, reach out to our Williamston team at [PHONE]." (Our Environmental Responsibility) left out.',
-    'Business Pick-Up Service contact card left out: [CONTACT NAME], [PHONE], [EMAIL].',
+    'Business Pick-Up Service contact card left out: no [CONTACT NAME] or [EMAIL] yet.',
     'The doc gives no SEO title or meta description; written from its H1 and copy (page is noindex).',
     'The EZ on the Earth link in the doc carried a tracking parameter; the name is kept as text, as on the other facility pages.',
     'The facility name in the hero lead is highlighted in the doc; kept as written.',

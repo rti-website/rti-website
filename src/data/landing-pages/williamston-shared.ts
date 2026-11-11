@@ -24,7 +24,10 @@ export const WILLIAMSTON_PLACE: NonNullable<LandingPage['areas']['place']> = {
   title: 'South Carolina', line1: 'Recycling facility', line2: 'Williamston, SC', x: 1014, y: 678,
 }
 
-/** Every Williamston page leaves these out until management sends them. */
+/** The closing band's call button: the Williamston number (Aaqib, 11 Nov 2026), for the doc's "Call [SC PHONE]". */
+export const WILLIAMSTON_CALL = { label: 'Call (864) 774-8310', href: 'tel:+18647748310' }
+
+/** Every Williamston page leaves this out until management sends it. */
 export const WILLIAMSTON_CONTACT_TODO = [
-  'Closing band: the doc’s "Call [SC PHONE]" button and [SC EMAIL] line are left out (no South Carolina phone or email yet, Aaqib 11 Nov 2026).',
+  'Closing band: the doc’s [SC EMAIL] line is left out (no South Carolina email yet).',
 ]

@@ -1,13 +1,13 @@
 import { PICKUP_HREF, QUOTE_HREF, href } from '@/lib/urls'
 import type { LandingPage } from '@/data/local-pages/types'
-import { WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
+import { WILLIAMSTON_CALL, WILLIAMSTON_CONTACT_TODO, WILLIAMSTON_HIGHLIGHTS, WILLIAMSTON_INDUSTRY_CARDS, WILLIAMSTON_PLACE } from './williamston-shared'
 
 /**
  * Battery Recycling in Williamston, SC: /south-carolina/williamston/battery-recycling/ (Google Ads page, noindex, 11 Nov 2026).
  * The content team's doc for this URL, word for word (typos and spacing
  * fixed), in the Google Ads landing design (LandingServicePage, as
  * /light-bulbs/Wisconsin/). No breadcrumb (Aaqib: "these are for google ads").
- * No South Carolina phone or email yet: the closing band has Get a Quote only.
+ * The closing band: Get a Quote and Call (864) 774-8310 (Aaqib, 11 Nov 2026); no email yet.
  */
 export const LANDING_WILLIAMSTON_BATTERY_RECYCLING: LandingPage = {
   url: href('/south-carolina/williamston/battery-recycling/'),
@@ -89,6 +89,7 @@ export const LANDING_WILLIAMSTON_BATTERY_RECYCLING: LandingPage = {
     heading: "Get a Battery Recycling Quote in Williamston, SC",
     body: "Tell us about your batteries and our team will get back to you with the right recycling option.",
     primary: { label: 'Get a Quote', href: QUOTE_HREF },
+    secondary: WILLIAMSTON_CALL,
   },
   todo: [...WILLIAMSTON_CONTACT_TODO],
 }
