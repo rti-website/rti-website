@@ -27,7 +27,10 @@ export const WILLIAMSTON_PLACE: NonNullable<LandingPage['areas']['place']> = {
 /** The closing band's call button: the Williamston number (Aaqib, 11 Nov 2026), for the doc's "Call [SC PHONE]". */
 export const WILLIAMSTON_CALL = { label: 'Call (864) 774-8310', href: 'tel:+18647748310' }
 
-/** Every Williamston page leaves this out until management sends it. */
+/** The closing band's email line, for the doc's [SC EMAIL] (Shiza, 11 Nov 2026). */
+export const WILLIAMSTON_EMAIL = 'support@lightingresourcesinc.com'
+
+/** Notes the four pages share. */
 export const WILLIAMSTON_CONTACT_TODO = [
-  'Closing band: the doc’s [SC EMAIL] line is left out (no South Carolina email yet).',
+  'Closing band: phone (864) 774-8310 (Aaqib) and email support@lightingresourcesinc.com (Shiza), 11 Nov 2026, for the doc’s [SC PHONE] and [SC EMAIL].',
 ]

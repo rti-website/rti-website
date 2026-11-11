@@ -13,9 +13,10 @@ import type { CountyPage } from '@/data/county-pages/types'
  * breadcrumb. Not in AREA_PAGES (that list feeds the sitemap and the
  * locations directory); the route is src/app/south-carolina/williamston/.
  *
- * Phone (864) 774-8310 and the address from Aaqib, 11 Nov 2026 (the doc
- * said [PHONE] and "Toll Free"). No email, hours or pickup contact yet, so
- * the Hours row and the pickup contact card are left out. See `todo`.
+ * Address, phone (864) 774-8310, email support@lightingresourcesinc.com and
+ * hours 9:00 AM to 4:00 PM from Aaqib and Shiza, 11 Nov 2026 (the doc said
+ * [PHONE], "Toll Free", [EMAIL] and left Hours empty). No pickup contact
+ * person yet: the pickup card lists the phone, email and hours. See `todo`.
  */
 export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
   url: href('/south-carolina/williamston/'),
@@ -40,6 +41,8 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
   quickInfo: [
     { glyph: 'pin', label: 'Address', value: '109 Twenty Nine Ct, Williamston SC 29697', href: 'https://www.google.com/maps/dir/?api=1&destination=109+Twenty+Nine+Ct%2C+Williamston%2C+SC+29697' },
     { glyph: 'phone', label: 'Phone', value: '(864) 774-8310', href: 'tel:+18647748310' },
+    // Shiza, 11 Nov 2026: "9am - 4pm" (no days given).
+    { glyph: 'clock', label: 'Hours', value: '9:00 AM to 4:00 PM' },
   ],
   about: {
     heading: 'Electronics Recycling Services in Williamston, South Carolina',
@@ -79,10 +82,20 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage & { todo: string[] } = {
       { title: 'Spartanburg County', text: '' },
     ] }] },
   ],
+  company: {
+    name: 'Business Pick-Up Service',
+    // The doc: "contact the person below"; no person is named yet, so "us".
+    text: 'For business pickup services contact us below.',
+    lines: [
+      { kind: 'phone', text: '(864) 774-8310', tel: '+18647748310' },
+      { kind: 'email', text: 'support@lightingresourcesinc.com' },
+      { kind: 'hours', text: '9:00 AM to 4:00 PM' },
+    ],
+  },
   todo: [
     'Phone (864) 774-8310 from Aaqib, 11 Nov 2026, in place of the doc’s [PHONE] (address card, FAQ, Our Environmental Responsibility).',
-    'No hours in the doc: the Hours row is left out.',
-    'Business Pick-Up Service contact card left out: no [CONTACT NAME] or [EMAIL] yet.',
+    'Hours 9:00 AM to 4:00 PM and email support@lightingresourcesinc.com from Shiza, 11 Nov 2026. No days were given with the hours.',
+    'Business Pick-Up Service card: no [CONTACT NAME] yet, so it lists phone, email and hours, and says "contact us below" instead of "contact the person below".',
     'The doc gives no SEO title or meta description; written from its H1 and copy (page is noindex).',
     'The EZ on the Earth link in the doc carried a tracking parameter; the name is kept as text, as on the other facility pages.',
     'The facility name in the hero lead is highlighted in the doc; kept as written.',
