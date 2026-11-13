@@ -25,6 +25,8 @@ export type SeoInput = {
   modifiedTime?: string
   /** Site-relative or absolute image URL. */
   image?: string
+  /** The image's alt text: og:image:alt and twitter:image:alt (13 Nov 2026). */
+  imageAlt?: string
   /** Set true only for pages that must stay out of the index. */
   noindex?: boolean
   /**
@@ -93,7 +95,7 @@ export function buildMetadata(raw: SeoInput, edited?: { title?: string; descript
       siteName: SITE.name,
       title: input.title,
       description: input.description,
-      images: [{ url: image }],
+      images: [{ url: image, ...(input.image && input.imageAlt ? { alt: input.imageAlt } : {}) }],
       ...(input.publishedTime ? {
         publishedTime: input.publishedTime,
         modifiedTime: input.modifiedTime ?? input.publishedTime,
@@ -103,7 +105,7 @@ export function buildMetadata(raw: SeoInput, edited?: { title?: string; descript
       card: 'summary_large_image',
       title: input.title,
       description: input.description,
-      images: [image],
+      images: input.image && input.imageAlt ? [{ url: image, alt: input.imageAlt }] : [image],
     },
   }
 }

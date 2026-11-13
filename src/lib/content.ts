@@ -46,6 +46,11 @@ export type ContentMeta = {
   category?: string
   readingTime?: string
   heroImage?: string
+  /**
+   * The post's featured image alt text (posts.featured_alt): the hero picture's
+   * alt and og:image:alt. The image alt sheet, 13 Nov 2026 (db/020).
+   */
+  imageAlt?: string
 }
 
 export type ContentEntry = ContentMeta & {

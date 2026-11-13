@@ -101,6 +101,7 @@ export async function generateMetadata({ params }: Props) {
     title: post.title,
     description: post.description,
     image: post.image,
+    imageAlt: post.imageAlt,
     publishedTime: post.date,
     modifiedTime: post.updated,
     canonicalOverride: post.canonical ?? undefined,

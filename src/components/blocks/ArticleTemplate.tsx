@@ -70,7 +70,7 @@ export function ArticleTemplate({
         */}
         <div data-figma="6491:6034" className="relative flex flex-col gap-[16px] overflow-hidden bg-white px-[20px] py-[32px] lg:block lg:h-[470px] lg:bg-navy lg:p-0">
           <div className="relative aspect-[350/220] w-full shrink-0 overflow-hidden rounded-[16px] lg:contents">
-            <InteriorHeroArt src={entry.heroImage} />
+            <InteriorHeroArt src={entry.heroImage} alt={entry.imageAlt} />
           </div>
           <Box x={319} y={115} w={871} h={240} className="flex flex-col gap-[16px] lg:block">
             <nav aria-label="Breadcrumb">

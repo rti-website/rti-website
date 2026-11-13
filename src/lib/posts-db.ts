@@ -121,6 +121,9 @@ function toPost(r: Row): DbPost {
     // The hero goes through next/image, which 400s on an absolute URL to our
     // own host (not in remotePatterns) — so it gets the path. 1 Oct 2026.
     heroImage: localImagePath(str(r.og_image_url)) ?? undefined,
+    // The featured image's alt text, from the admin's Alt text field or the
+    // image alt sheet (db/020, 13 Nov 2026). Empty means a decorative alt="".
+    imageAlt: str(r.featured_alt)?.trim() || undefined,
     category: str(r.category_name) ?? undefined,
     readingTime: `${Number(r.reading_minutes ?? 1)} min read`,
     source: r.source === 'wordpress' ? 'wordpress' : 'editor',
@@ -154,7 +157,8 @@ const SELECT = `
          (to_jsonb(p) ->> 'tracking_disabled')  AS tracking_disabled,
          (to_jsonb(p) ->> 'analytics_excluded') AS analytics_excluded,
          (to_jsonb(p) ->  'custom_datalayer')   AS custom_datalayer,
-         (to_jsonb(p) ->> 'custom_tracking_id') AS custom_tracking_id
+         (to_jsonb(p) ->> 'custom_tracking_id') AS custom_tracking_id,
+         (to_jsonb(p) ->> 'featured_alt')       AS featured_alt
     FROM posts p
     LEFT JOIN categories c ON c.id = p.category_id
     LEFT JOIN users u      ON u.id = p.author_id

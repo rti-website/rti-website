@@ -128,10 +128,15 @@ const NAVY = (a: number) => `linear-gradient(0deg, rgba(11,31,58,${a}) 0%, rgba(
 const GREEN = (a: number) => `linear-gradient(90deg, rgba(27,122,61,${a}) 0%, rgba(27,122,61,0) 50%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%)`
 
 export function InteriorHeroArt({
-  src, fill: fillBox, washes, tone = 'classic',
+  src, alt = '', fill: fillBox, washes, tone = 'classic',
 }: {
   /** The page's own hero photograph, exported 1920x470 — or a raw fill, see `fill`. */
   src?: string
+  /**
+   * The photograph's alt text. Empty (decorative) unless given: a blog post's
+   * featured image alt (posts.featured_alt), 13 Nov 2026.
+   */
+  alt?: string
   fill?: HeroFill
   washes?: HeroWashes
   tone?: HeroTone
@@ -160,7 +165,7 @@ export function InteriorHeroArt({
       <Box x={0} y={fillBox?.y ?? 0} w={1920} h={fillBox?.h ?? 470} fill className={ph ? 'max-lg:hidden' : ''}>
         <Image
           src={photo}
-          alt=""
+          alt={alt}
           fill
           priority
           unoptimized={external}
@@ -194,7 +199,7 @@ export function InteriorHeroArt({
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden [container-type:size] lg:hidden">
           {ph.under && tone !== 'teal' && <div className="absolute inset-0" style={{ backgroundImage: NAVY(0.6) }} />}
           <div className="absolute" style={{ left: q(ph.x), top: q(ph.y), width: q(ph.w), height: q(ph.h) }}>
-            <Image src={photo} alt="" fill priority unoptimized={external} sizes="(width < 64rem) 200vw, 1px" className="object-cover"
+            <Image src={photo} alt={alt} fill priority unoptimized={external} sizes="(width < 64rem) 200vw, 1px" className="object-cover"
               style={fillBox?.opacity !== undefined ? { opacity: fillBox.opacity } : undefined} />
             {fillBox?.overlay && <div className="absolute inset-0" style={{ backgroundImage: fillBox.overlay }} />}
           </div>
