@@ -5,7 +5,7 @@ import { slugify } from '@/lib/post-content'
 const LIST = `
   SELECT p.id, p.slug, p.title, p.status, p.updated_at, p.published_at,
          p.meta_title, p.meta_description, p.word_count, p.reading_minutes,
-         c.name AS category, u.name AS author, p.author_id,
+         c.name AS category, u.name AS author, p.author_id, p.redirect_to,
          (p.meta_title <> '' AND p.meta_description <> '') AS seo_ready
     FROM posts p
     LEFT JOIN categories c ON c.id = p.category_id
@@ -24,6 +24,20 @@ export const GET = guard(async ({ req }) => {
     where.push(`(lower(p.title) LIKE $${params.length} OR lower(p.slug) LIKE $${params.length})`)
   }
   if (status) { params.push(status); where.push(`p.status = $${params.length}`) }
+
+  /* One category's posts: the list behind the count on the Categories screen
+     (13 Nov 2026, Aaqib: "when they click on it they can see what are these,
+     the exact link and pages"). Every post in it, not the newest 200 — Recycling
+     alone has 251 — newest published first. */
+  const category = Number(url.searchParams.get('category') ?? '')
+  if (Number.isInteger(category) && category > 0) {
+    params.push(category)
+    where.push(`p.category_id = $${params.length}`)
+    const rows = await q(`${LIST} WHERE ${where.join(' AND ')}
+                          ORDER BY (p.status = 'published') DESC, p.published_at DESC NULLS LAST, p.updated_at DESC
+                          LIMIT 5000`, params)
+    return json({ posts: rows })
+  }
 
   /* Date filter. It reads published_at for anything published and updated_at
      otherwise, because "last 7 days" means two different things depending on

@@ -480,6 +480,21 @@ textarea.a-inp { height: auto; padding: 9px 11px; resize: vertical; line-height:
 }
 .a-link:hover { color: var(--a-brand-deep); }
 
+/* Categories: the post count opens the list of those posts (13 Nov 2026). */
+.a-catcount {
+  display: block; text-align: left; padding: 4px 8px; margin: -4px -8px; border-radius: 8px;
+  font: inherit; color: inherit; cursor: pointer;
+}
+.a-catcount:hover, .a-catcount:focus-visible { background: var(--a-brand-soft); }
+.a-catcount .a-slug { display: block; }
+.a-catcount-go {
+  display: block; margin-top: 2px; font-size: 11.5px; color: var(--a-brand);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.a-catposts { max-height: min(60vh, 640px); overflow-y: auto; border-radius: 12px; }
+.a-catposts-url { display: block; font-size: 11.5px; word-break: break-all; }
+@media (max-width: 560px) { .a-catposts-count { display: none; } }
+
 /* ------------------------------------------------------------ row actions */
 .a-rowacts { text-align: right; white-space: nowrap; width: 1%; }
 .a-icobtn {

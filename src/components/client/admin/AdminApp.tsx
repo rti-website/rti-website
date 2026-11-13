@@ -43,6 +43,8 @@ type Category = {
 }
 type CategoryRow = Category & {
   description: string | null; sort_order: number; post_count: number; published_count: number
+  /** The address the category's page answers at, e.g. /category/recycling/ (db/003). */
+  archive_path?: string | null
 }
 type Counts = { published: number; draft: number; scheduled: number; subscribers: number; leads: number; media: number; visitorLeads?: number }
 type Boot = {
@@ -278,7 +280,7 @@ export function AdminApp() {
             onFocusChange={setFocus}
             onAuthorAdded={(a) => setBoot((b) => (b ? { ...b, authors: [...b.authors, a].sort((x, y) => x.name.localeCompare(y.name)) } : b))} />
         )}
-        {view === 'cats' && <Categories canEdit={canPublish} onToast={say} onChanged={load} />}
+        {view === 'cats' && <Categories canEdit={canPublish} onToast={say} onChanged={load} onOpen={open} />}
         {/* !! THE <main className="a-sheet"> IS NOT OPTIONAL. It is what gives
             every screen its side padding. MediaLibrary has none of its own
             because it is also used inside the picture dialog, which supplies its
@@ -628,8 +630,10 @@ function DeletePost({ post, onCancel, onDone }: {
  * pages yet, so today everything here is free; the guard is for the week after
  * they exist.
  */
-function Categories({ canEdit, onToast, onChanged }: {
+function Categories({ canEdit, onToast, onChanged, onOpen }: {
   canEdit: boolean; onToast: (m: string) => void; onChanged: () => void
+  /** Opens a post in the editor, from the list behind a post count. */
+  onOpen: (id: number) => void
 }) {
   const [rows, setRows] = useState<CategoryRow[]>([])
   const [loading, setLoading] = useState(true)
@@ -638,6 +642,7 @@ function Categories({ canEdit, onToast, onChanged }: {
   const [removing, setRemoving] = useState<CategoryRow | null>(null)
   const [orphans, setOrphans] = useState<number | null>(null)
   const [failed, setFailed] = useState('')
+  const [listing, setListing] = useState<CategoryRow | null>(null)
 
   const reload = useCallback(async () => {
     const r = await getJSON<{ categories: CategoryRow[] }>('/categories')
@@ -704,12 +709,22 @@ function Categories({ canEdit, onToast, onChanged }: {
                 ? <span className="a-slug">under {c.parent_name}</span>
                 : c.description && <span className="a-slug">{c.description}</span>}
             </td>
-            <td className="a-mono">/blog/{c.slug}/</td>
+            {/* archive_path: where the page really is (/category/recycling/ on
+                live); /blog/<slug>/ was shown before and 404s (13 Nov 2026). */}
+            <td className="a-mono">{c.archive_path || `/blog/${c.slug}/`}</td>
             <td className="a-tnum">
               {c.post_count === 0
                 ? <span style={{ color: 'var(--a-muted)' }}>—</span>
-                : <><span className="a-ttl">{c.post_count}</span>
-                    {c.published_count > 0 && <span className="a-slug">{c.published_count} published</span>}</>}
+                : (
+                  /* The count opens the list of those posts with their exact
+                     links (13 Nov 2026), for the team lead and the writers. */
+                  <button className="a-catcount" onClick={() => setListing(c)}
+                    title={`See the ${c.post_count} post${c.post_count === 1 ? '' : 's'} in ${c.name}`}>
+                    <span className="a-ttl">{c.post_count}</span>
+                    {c.published_count > 0 && <span className="a-slug">{c.published_count} published</span>}
+                    <span className="a-catcount-go">View posts</span>
+                  </button>
+                )}
             </td>
             <td>{c.landing_built ? <span className="a-pill live">Built</span> : <span className="a-pill bad">Not built</span>}</td>
             <td className="a-rowacts">
@@ -727,6 +742,11 @@ function Categories({ canEdit, onToast, onChanged }: {
           </tr>
         ))}
       </Table>
+
+      {listing && (
+        <CategoryPosts cat={listing} onClose={() => setListing(null)} onToast={onToast}
+          onOpen={(id) => { setListing(null); onOpen(id) }} />
+      )}
 
       {(adding || editing) && (
         <CategoryDialog row={editing} all={rows} onCancel={() => { setAdding(false); setEditing(null) }}
@@ -748,6 +768,138 @@ function Categories({ canEdit, onToast, onChanged }: {
         </ConfirmDialog>
       )}
     </main>
+  )
+}
+
+type CategoryPost = {
+  id: number; slug: string; title: string; status: string
+  published_at: string | null; updated_at: string; redirect_to: string | null
+}
+
+/**
+ * The posts behind a category's count (13 Nov 2026, Aaqib: the team lead and
+ * the content writers click the 1, the 8, the 251 and see which posts those
+ * are, with the exact link of each).
+ *
+ * Links are built on the address the admin is open on, so on dev they open the
+ * dev page and on live the live one; dev and live share the database, so the
+ * list is the same on both. A post's address is /<slug>/ (src/lib/posts-db.ts).
+ * "Copy links" and "Download CSV" take what the search and status filter show.
+ */
+function CategoryPosts({ cat, onClose, onOpen, onToast }: {
+  cat: CategoryRow
+  onClose: () => void
+  onOpen: (id: number) => void
+  onToast: (m: string) => void
+}) {
+  const [rows, setRows] = useState<CategoryPost[] | null>(null)
+  const [failed, setFailed] = useState('')
+  const [q, setQ] = useState('')
+  const [status, setStatus] = useState('')
+
+  const load = useCallback(async () => {
+    const r = await getJSON<{ posts: CategoryPost[] }>('/posts', new URLSearchParams({ category: String(cat.id) }))
+    if (r.ok) { setRows(r.data.posts ?? []); setFailed('') } else setFailed(r.error)
+  }, [cat.id])
+  useEffect(() => { void load() }, [load])
+
+  const origin = typeof window === 'undefined' ? '' : window.location.origin
+  const link = (p: CategoryPost) => `${origin}/${p.slug}/`
+  const catPath = cat.archive_path || `/blog/${cat.slug}/`
+  const needle = q.trim().toLowerCase()
+  const shown = (rows ?? []).filter((p) =>
+    (!status || p.status === status)
+    && (!needle || p.title.toLowerCase().includes(needle) || p.slug.includes(needle)))
+  const day = (iso: string | null) => {
+    if (!iso) return '—'
+    const d = new Date(iso)
+    return Number.isNaN(d.getTime()) ? '—' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  }
+  const statuses = [...new Set((rows ?? []).map((p) => p.status))]
+
+  async function copy(text: string, what: string) {
+    try { await navigator.clipboard.writeText(text); onToast(`${what} copied`) }
+    catch { onToast('Could not copy. Select the link and copy it by hand.') }
+  }
+
+  function downloadCsv() {
+    const cell = (v: string) => /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v
+    const lines = [['Title', 'Link', 'Status', 'Published', 'Redirects to'].join(',')]
+      .concat(shown.map((p) => [p.title || 'Untitled', link(p), p.status, day(p.published_at),
+        p.redirect_to ?? ''].map(cell).join(',')))
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = `${cat.slug}-posts.csv`
+    a.click()
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+  }
+
+  return (
+    <Dialog wide onClose={onClose}
+      title={`${cat.name}: ${cat.post_count} post${cat.post_count === 1 ? '' : 's'}`}
+      intro={<>
+        Category page: {cat.landing_built
+          ? <a className="a-link a-mono" href={catPath} target="_blank" rel="noopener">{origin}{catPath}</a>
+          : <span className="a-mono">{origin}{catPath} (not built yet)</span>}
+        {cat.published_count !== cat.post_count && <> · {cat.published_count} published,
+          {' '}{cat.post_count - cat.published_count} not live (draft or scheduled, no public page yet)</>}
+      </>}
+      footer={<>
+        <span className="a-hint a-catposts-count" style={{ marginRight: 'auto' }}>
+          {rows ? `Showing ${shown.length} of ${rows.length}` : ''}
+        </span>
+        <button className="a-btn" disabled={!shown.length}
+          onClick={() => void copy(shown.map(link).join('\n'), `${shown.length} link${shown.length === 1 ? '' : 's'}`)}>
+          Copy links
+        </button>
+        <button className="a-btn" disabled={!shown.length} onClick={downloadCsv}>Download CSV</button>
+        <button className="a-btn p" onClick={onClose}>Done</button>
+      </>}
+    >
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 12 }}>
+        <span className="a-search">
+          <Icon d="M11 4a7 7 0 1 1-.01 0M20 20l-3.5-3.5" />
+          <input className="a-inp" type="search" placeholder="Search titles and links"
+            aria-label={`Search the posts in ${cat.name}`} value={q} onChange={(e) => setQ(e.target.value)} />
+        </span>
+        {statuses.length > 1 && (
+          <select className="a-inp" style={{ width: 'auto' }} aria-label="Filter by status"
+            value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="">All statuses</option>
+            {statuses.map((s) => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+          </select>
+        )}
+      </div>
+      {failed && <Retry error={failed} onRetry={() => void load()} />}
+      <div className="a-catposts">
+        <Table head={['#', 'Post and link', 'Status', 'Published', '']}>
+          {!rows && !failed && <Empty>Loading…</Empty>}
+          {rows && shown.length === 0 && <Empty>{rows.length ? 'Nothing matches that.' : 'No posts in this category.'}</Empty>}
+          {shown.map((p, i) => (
+            <tr key={p.id}>
+              <td className="a-tnum a-hint">{i + 1}</td>
+              <td>
+                <span className="a-ttl">{p.title || 'Untitled'}</span>
+                {p.status === 'published'
+                  ? <a className="a-link a-mono a-catposts-url" href={`/${p.slug}/`} target="_blank" rel="noopener">{link(p)}</a>
+                  : <span className="a-slug">{link(p)} (not live yet)</span>}
+                {p.redirect_to && <span className="a-hint" style={{ display: 'block' }}>Redirects to {p.redirect_to}</span>}
+              </td>
+              <td><Pill status={p.status} /></td>
+              <td className="a-tnum" style={{ whiteSpace: 'nowrap' }}>{day(p.published_at)}</td>
+              <td className="a-rowacts">
+                <button className="a-icobtn" title="Copy link" aria-label={`Copy the link of ${p.title || 'this post'}`}
+                  onClick={() => void copy(link(p), 'Link')}>
+                  <Icon d="M9 9h10v10H9zM5 15V5h10" w={1.7} />
+                </button>
+                <button className="a-btn sm" onClick={() => onOpen(p.id)}>Edit</button>
+              </td>
+            </tr>
+          ))}
+        </Table>
+      </div>
+    </Dialog>
   )
 }
 

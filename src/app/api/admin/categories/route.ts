@@ -18,7 +18,7 @@ import { slugify } from '@/lib/post-content'
    grew a second line the replace silently stopped matching — leaving a query
    with no $1 being handed a parameter, which Postgres rejects outright. */
 const LIST = (where = '') => `
-  SELECT c.id, c.name, c.slug, c.description, c.landing_built, c.sort_order, c.parent_id,
+  SELECT c.id, c.name, c.slug, c.description, c.landing_built, c.sort_order, c.parent_id, c.archive_path,
          parent.name AS parent_name,
          (SELECT count(*) FROM posts p WHERE p.category_id = c.id)                          AS post_count,
          (SELECT count(*) FROM posts p WHERE p.category_id = c.id AND p.status = 'published') AS published_count
