@@ -60,7 +60,7 @@ import { HERO_PHOTOS } from '@/data/hero-photos'
 const H = {
   finder: 822,    // Figma 822 — the revised frame, map at full width
   cards:  712,    // Figma 696.05 (redrawn 25 Sep 2026: no hours, no chips) — measured; the lead sets a line longer than drawn
-  states: 707,    // "Recycling by State" (14 Oct 2026, no frame) — measured
+  states: 821,    // "Recycling by State" (14 Oct 2026, no frame) — measured; 821 since South Carolina made it ten (16 Nov 2026), four rows
   extended: 530,  // "Extended Operations" (30 Sep 2026, no frame) — measured: the card ends at 520
   nation: 1375,   // Figma 1634 with nine cards; eight since Chicago moved up to Extended (30 Sep 2026): measured 1275 + pb100
   cover:  491,    // Figma 493 — the doc's second paragraph is two pixels shorter

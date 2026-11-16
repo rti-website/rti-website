@@ -11,13 +11,13 @@ test('service pages: the hubs, their state and Chicago pages; not location pages
     '/minnesota/blaine/battery-recycling/', '/minnesota/blaine/television-recycling/', '/arizona/phoenix/ballast-recycling/',
     '/tennessee/lewisburg/light-bulb-recycling/', '/florida/ocala/battery-recycling/', '/indiana/greenwood/electronic-recycling/',
     '/california/ontario/ballast-recycling/', '/wisconsin/new-berlin/paper-shredding/', '/wisconsin/new-berlin/television-recycling/',
-    '/georgia/kennesaw/light-bulb-recycling/', '/texas/fort-worth/battery-recycling/']) {
+    '/georgia/kennesaw/light-bulb-recycling/', '/texas/fort-worth/battery-recycling/', '/south-carolina/williamston/battery-recycling/']) {
     assert.equal(isServicePath(p), true, p)
   }
   for (const p of ['/', '/quote/', '/about-us-commercial-recycling-solutions/', '/minnesota-recycling/', '/minnesota-recycling/duluth/',
     '/wisconsin-recycling/battery-recycling-milwaukee/', '/battery-recycling-des-moines/', '/shredding-wisconsin/milwaukee/', '/blog/',
     '/arizona/', '/tennessee/lewisburg/', '/minnesota/blaine/shredding/', '/florida/', '/florida/ocala/', '/indiana/greenwood/',
-    '/california/ontario/', '/georgia/', '/texas/', '/wisconsin/new-berlin/shredding/']) {
+    '/california/ontario/', '/georgia/', '/texas/', '/wisconsin/new-berlin/shredding/', '/south-carolina/', '/south-carolina/williamston/']) {
     assert.equal(isServicePath(p), false, p)
   }
 })

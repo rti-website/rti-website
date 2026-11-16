@@ -29,6 +29,7 @@ import { GREENWOOD_INDIANA } from './greenwood-indiana'
 import { BULB_RECYCLE_MILWAUKEE } from './bulb-recycle-milwaukee'
 import { OCALA_FLORIDA } from './ocala-florida'
 import { KENNESAW_GEORGIA } from './kennesaw-georgia'
+import { WILLIAMSTON_SOUTH_CAROLINA } from './williamston-south-carolina'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from './johnson-city-buffalo-tennessee'
 import { TV_RECYCLING_APPLETON } from './tv-recycling-appleton'
 import { EDINA_RECYCLING_SERVICES } from './edina-recycling-services'
@@ -103,6 +104,8 @@ export const AREA_PAGES: CountyPage[] = [
   PLYMOUTH_RECYCLING_CENTER, MINNETONKA_RECYCLING_CENTER, COON_RAPIDS, BURNSVILLE_RECYCLING_CENTER,
   ELECTRONIC_RECYCLING_DULUTH, SHREDDING_MINNESOTA, SHREDDING_ST_PAUL, SHREDDING_GREEN_BAY,
   GREENWOOD_INDIANA, BULB_RECYCLE_MILWAUKEE, OCALA_FLORIDA, KENNESAW_GEORGIA,
+  // 16 Nov 2026: the Williamston, SC facility page (replaces the Google Ads page at that URL).
+  WILLIAMSTON_SOUTH_CAROLINA,
   JOHNSON_CITY_BUFFALO_TENNESSEE,
   TV_RECYCLING_APPLETON, EDINA_RECYCLING_SERVICES, SHREDDING_DULUTH, PHOENIX_ARIZONA,
   LAKEVILLE_RECYCLING_CENTER, BATTERY_RECYCLING_ST_PAUL, GREEN_BAY_RECYCLING, FORT_WORTH_TEXAS,
@@ -167,6 +170,7 @@ export type AreaDocKey =
   | 'area/bulb-recycle-milwaukee'
   | 'area/ocala-florida'
   | 'area/kennesaw-georgia'
+  | 'area/williamston-south-carolina'
   | 'area/johnson-city-buffalo-tennessee'
   | 'area/tv-recycling-appleton'
   | 'area/edina-recycling-services'
@@ -267,4 +271,5 @@ export const AREA_DOC_KEY = new Map<CountyPage, AreaDocKey>([
   [COMPUTER_RECYCLE_MILWAUKEE, 'area/computer-recycle-milwaukee'],
   [TV_RECYCLING_MILWAUKEE, 'area/tv-recycling-milwaukee'],
   [LIGHT_BULB_RECYCLING_MINNEAPOLIS, 'area/light-bulb-recycling-minneapolis'],
+  [WILLIAMSTON_SOUTH_CAROLINA, 'area/williamston-south-carolina'],
 ])

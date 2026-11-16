@@ -65,6 +65,7 @@ const EXACT: Record<string, Rank> = {
   '/florida/': m(0.7),
   '/georgia/': m(0.7),
   '/indiana/': m(0.7),
+  '/south-carolina/': m(0.7),
   '/tennessee/': m(0.7),
   '/texas/': m(0.7),
   '/minnesota/blaine/shredding/': m(0.7),

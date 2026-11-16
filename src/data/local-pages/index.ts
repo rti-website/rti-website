@@ -50,6 +50,9 @@ import { KENNESAW_ELECTRONIC_RECYCLING } from './kennesaw-electronic-recycling'
 import { KENNESAW_BATTERY_RECYCLING } from './kennesaw-battery-recycling'
 import { KENNESAW_LIGHT_BULB_RECYCLING } from './kennesaw-light-bulb-recycling'
 import { KENNESAW_BALLAST_RECYCLING } from './kennesaw-ballast-recycling'
+import { WILLIAMSTON_ELECTRONIC_RECYCLING } from './williamston-electronic-recycling'
+import { WILLIAMSTON_BATTERY_RECYCLING } from './williamston-battery-recycling'
+import { WILLIAMSTON_LIGHT_BULB_RECYCLING } from './williamston-light-bulb-recycling'
 import { FORT_WORTH_ELECTRONIC_RECYCLING } from './fort-worth-electronic-recycling'
 import { FORT_WORTH_BATTERY_RECYCLING } from './fort-worth-battery-recycling'
 import { FORT_WORTH_LIGHT_BULB_RECYCLING } from './fort-worth-light-bulb-recycling'
@@ -108,6 +111,10 @@ export const LOCAL_PAGES: LocalPage[] = [
  *                                    sheet wrote the bulb page under /georgia/atlanta/, Aaqib
  *                                    chose /georgia/kennesaw/ like the other three)
  *   /texas/fort-worth/<service>/     the same four (Texas tab)
+ *   /south-carolina/williamston/<service>/  electronics, batteries, bulbs (16 Nov 2026, the
+ *                                    content team's docs; they replace the Google Ads pages at
+ *                                    those URLs. Ballast: not done for now (Aaqib), its URL is
+ *                                    still the Google Ads page)
  *
  * All of them in the 4 Nov 2026 design (`design: 2`, LocalServicePageV2).
  *
@@ -128,6 +135,7 @@ export const DOC_PAGES: LocalPage[] = [
   NEW_BERLIN_AIRBAG_RECYCLING, NEW_BERLIN_PAPER_SHREDDING, NEW_BERLIN_PHONE_SHREDDING, NEW_BERLIN_TELEVISION_RECYCLING,
   KENNESAW_ELECTRONIC_RECYCLING, KENNESAW_BATTERY_RECYCLING, KENNESAW_LIGHT_BULB_RECYCLING, KENNESAW_BALLAST_RECYCLING,
   FORT_WORTH_ELECTRONIC_RECYCLING, FORT_WORTH_BATTERY_RECYCLING, FORT_WORTH_LIGHT_BULB_RECYCLING, FORT_WORTH_BALLAST_RECYCLING,
+  WILLIAMSTON_ELECTRONIC_RECYCLING, WILLIAMSTON_BATTERY_RECYCLING, WILLIAMSTON_LIGHT_BULB_RECYCLING,
 ]
 
 /** The doc page at this URL, for the catch-all ('/arizona/phoenix/battery-recycling' or with the slash). */

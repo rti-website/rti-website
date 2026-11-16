@@ -12,9 +12,6 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from './chicago-light-bulbs'
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from './minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from './wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from './chicago-universal-waste-recycling'
-import { LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING } from './williamston-electronic-recycling'
-import { LANDING_WILLIAMSTON_BATTERY_RECYCLING } from './williamston-battery-recycling'
-import { LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING } from './williamston-light-bulb-recycling'
 import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from './williamston-ballast-recycling'
 
 /**
@@ -40,11 +37,12 @@ export const LANDING_PAGES: LandingPage[] = [
   LANDING_WISCONSIN_UNIVERSAL_WASTE,
   // Chicago universal waste, 29 Oct 2026 (management).
   LANDING_CHICAGO_UNIVERSAL_WASTE,
-  // Williamston, SC, 11 Nov 2026 (Aaqib). Their main page, /south-carolina/williamston/,
-  // is in the facility design: ./williamston-south-carolina.ts.
-  LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING,
-  LANDING_WILLIAMSTON_BATTERY_RECYCLING,
-  LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING,
+  // Williamston, SC, 11 Nov 2026 (Aaqib). Since 16 Nov 2026 only the ballast
+  // page is a Google Ads page: /south-carolina/williamston/ and its
+  // electronics, battery and light bulb pages are the SEO location pages
+  // (src/data/county-pages/areas/williamston-south-carolina.ts and
+  // src/data/local-pages/williamston-*.ts). Ballast: "do not do the ballast
+  // page for now" (Aaqib).
   LANDING_WILLIAMSTON_BALLAST_RECYCLING,
 ]
 

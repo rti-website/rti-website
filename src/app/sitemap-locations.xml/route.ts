@@ -49,6 +49,7 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/florida/",
     "/georgia/",
     "/indiana/",
+    "/south-carolina/",
     "/tennessee/",
     "/texas/"
   ] },
@@ -232,6 +233,12 @@ const GROUPS: { group: string; urls: string[] }[] = [
     "/texas/fort-worth/battery-recycling/",
     "/texas/fort-worth/light-bulb-recycling/",
     "/texas/fort-worth/ballast-recycling/"
+  ] },
+  { group: "South Carolina: Williamston (16 Nov 2026; the ballast page is still a noindex Google Ads page)", urls: [
+    "/south-carolina/williamston/",
+    "/south-carolina/williamston/electronic-recycling/",
+    "/south-carolina/williamston/battery-recycling/",
+    "/south-carolina/williamston/light-bulb-recycling/"
   ] },
   { group: "Mail-in recycling locations", urls: [
     "/phoenix-arizona/",

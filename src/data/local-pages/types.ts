@@ -235,27 +235,3 @@ export const SITE_LINK: Record<string, string> = {
 }
 export const KIT_LINK: Link = { label: MAIL_IN.label, href: MAIL_IN.href, external: true }
 
-/**
- * A facility's own Google Ads page (Williamston, SC): its own design,
- * FacilityAdPage. Management's content doc of 12 Nov 2026 ("Commercial
- * Recycling in Williamston, SC"), section by section. Icons are LineIcon names.
- */
-export type FacilityAdPage = {
-  url: string
-  seo: { title: string; description: string }
-  schema: { service: string; areaServed: string[] }
-  hero: { eyebrow: string; h1: string; subhead: string; image: string; primary: Link; phone: Link; address: string; hours: string }
-  trust: { icon: string; text: string }[]
-  /** The quote form section; the form is the site's quote form (ContactForm). */
-  quote: { heading: string; intro: string; button: string; note: string; contact: { phone: Link; address: string; hours: string } }
-  recycle: { heading: string; intro: string; cards: { icon: string; title: string; text: string; link: Link }[]; button: Link }
-  why: { heading: string; cards: { icon: string; title: string; text: string }[] }
-  docs: { heading: string; body: string[]; certs: { title: string; text: string }[]; outro: string }
-  steps: { heading: string; items: { title: string; text: string }[] }
-  who: { heading: string; items: { icon: string; text: string }[] }
-  area: { heading: string; intro: string; counties: { name: string; towns: string }[]; outro: { before: string; link: Link; after: string } }
-  mid: { heading: string; primary: Link; secondary: Link }
-  faq: { eyebrow: string; heading: string; items: { q: string; a: string }[] }
-  cta: { heading: string; body: string; primary: Link; secondary: Link; name: string; address: string }
-  todo: string[]
-}

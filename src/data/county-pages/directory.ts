@@ -54,6 +54,7 @@ import { TV_RECYCLING_APPLETON } from './areas/tv-recycling-appleton'
 import { PHOENIX_ARIZONA } from './areas/phoenix-arizona'
 import { OCALA_FLORIDA } from './areas/ocala-florida'
 import { KENNESAW_GEORGIA } from './areas/kennesaw-georgia'
+import { WILLIAMSTON_SOUTH_CAROLINA } from './areas/williamston-south-carolina'
 import { GREENWOOD_INDIANA } from './areas/greenwood-indiana'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from './areas/johnson-city-buffalo-tennessee'
 import { FORT_WORTH_TEXAS } from './areas/fort-worth-texas'
@@ -237,6 +238,8 @@ export const DIRECTORY: DirectoryGroup[] = [
     l(PHOENIX_ARIZONA, 'Phoenix, AZ'), l(OCALA_FLORIDA, 'Ocala, FL'), l(KENNESAW_GEORGIA, 'Kennesaw, GA'),
     l(GREENWOOD_INDIANA, 'Greenwood, IN'),
     l(FORT_WORTH_TEXAS, 'Fort Worth, TX'), l(ONTARIO_CALIFORNIA, 'Ontario, CA'),
+    // 16 Nov 2026: the Williamston, SC facility page (the seventh, DIRECTORY_MAX_LINKS).
+    l(WILLIAMSTON_SOUTH_CAROLINA, 'Williamston, SC'),
   ] },
   { heading: 'Tennessee', state: null, links: [
     l(JOHNSON_CITY_BUFFALO_TENNESSEE, 'Johnson City, TN'), l(LEWISBURG_TENNESSEE, 'Lewisburg, TN'),

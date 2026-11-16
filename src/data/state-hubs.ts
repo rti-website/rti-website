@@ -117,6 +117,8 @@ const cta = (state: string) => ({
   secondary: { label: 'Request a Quote',            href: QUOTE_HREF },
 })
 const chip = (label: string, url: string) => ({ label, href: href(url) })
+/** A city with no page of its own: drawn as a plain chip, no link (South Carolina, 16 Nov 2026). */
+const text = (label: string) => ({ label, href: '' })
 const PHOTO_A = { src: '/images/pages/hero-minnesota-v3.jpg', flip: false }
 const PHOTO_B = { src: '/images/pages/hero-wisconsin-v3.jpg', flip: true }
 
@@ -127,6 +129,10 @@ function hub(o: {
   faqs: Facility['faqs']; photo: { src: string; flip: boolean }
   /** Only the services this state's facility offers (3 Nov 2026); all nine when absent. */
   tiles?: StateHub['materials']['tiles']
+  /** The doc's own wording where it differs from the shared copy (South Carolina, 16 Nov 2026). */
+  materialsHeading?: string
+  countiesLead?: string
+  cta?: ReturnType<typeof cta>
 }): StateHubPage {
   return {
     slug: o.slug,
@@ -136,9 +142,9 @@ function hub(o: {
     hero: { h1: o.h1, lead: o.lead, leadShort: o.lead, buttons: BUTTONS },
     sites: o.sites,
     hub: {
-      materials: { heading: `Recycling and Shredding Services in ${o.state}`, lead: o.servicesLead, tiles: o.tiles ?? TILES },
-      counties: { lead: COUNTIES_LEAD, groups: o.counties },
-      cta: cta(o.state),
+      materials: { heading: o.materialsHeading ?? `Recycling and Shredding Services in ${o.state}`, lead: o.servicesLead, tiles: o.tiles ?? TILES },
+      counties: { lead: o.countiesLead ?? COUNTIES_LEAD, groups: o.counties },
+      cta: o.cta ?? cta(o.state),
       mailIn: MAIL_IN,
       faqHeading: 'Frequently Asked Questions',
     },
@@ -337,8 +343,49 @@ export const TEXAS_HUB = hub({
   photo: PHOTO_A,
 })
 
+// 16 Nov 2026: the content team's "Location Page / South Carolina" doc
+// (1BG6tdb9_rlmF8ZJbSIh6AnoXxfLkDVQG7Z2D5NAX5qc), word for word: the
+// Williamston center card (its page is /south-carolina/williamston/), the
+// four Williamston services (/south-carolina/williamston/<service>/; ballast
+// is still its Google Ads page, Aaqib: "do not do the ballast page for now"),
+// the three Upstate counties and the four FAQs. The doc has no SEO title or
+// description; the ones here follow the other hubs (flagged to Aaqib). Only
+// Williamston has a page, so the other city chips are plain text. The card
+// draws address, phone and hours; the doc's email and materials lines are on
+// the Williamston page.
+export const SOUTH_CAROLINA_HUB = hub({
+  slug: 'south-carolina', state: 'South Carolina',
+  tiles: fourTiles('/south-carolina/williamston/'),
+  title: 'South Carolina Electronics & Lamp Recycling | Recycle Technologies',
+  description: 'Certified electronics, light bulb, battery and ballast recycling for South Carolina businesses. Business pickup across Upstate SC and mail-in kits. Get a quote.',
+  h1: 'Certified Electronics & Lamp Recycling in South Carolina',
+  lead: 'R2v3, RIOS and NAID AAA certified recycling for South Carolina businesses, with every item logged at intake and a certificate issued on completion.',
+  sites: [site('South Carolina', 'Williamston', '/south-carolina/williamston/', '109 Twenty Nine Ct, Williamston, SC 29697', '+1-864-774-8310', 'Mon–Fri 9:00 AM–4:00 PM')],
+  materialsHeading: 'Recycling Services in South Carolina',
+  servicesLead: 'One provider for what leaves your building, from old lamps to retired IT equipment. Recycle Technologies offers electronics recycling, light bulb recycling, battery recycling, and ballast recycling services for South Carolina businesses.',
+  countiesLead: 'Explore the county and city pages below to find the locations and recycling services relevant to your business. Contact us to confirm pickup availability for your address.',
+  counties: [
+    { heading: 'Anderson County', chips: [chip('Williamston', '/south-carolina/williamston/'), text('Anderson')] },
+    { heading: 'Greenville County', chips: [text('Greenville'), text('Greer'), text('Mauldin'), text('Simpsonville')] },
+    { heading: 'Spartanburg County', chips: [text('Spartanburg'), text('Duncan')] },
+  ],
+  cta: {
+    heading: 'Schedule Your South Carolina Recycling Pickup',
+    body: 'Clear out retired electronics, batteries, lamps, and lighting ballasts with a scheduled business collection. Tell us what needs recycling, where it is located, and the approximate quantity to receive a quote and confirm the next steps.',
+    primary:   { label: 'Schedule a Pickup', href: PICKUP_HREF },
+    secondary: { label: 'Get a Quote',       href: QUOTE_HREF },
+  },
+  faqs: [
+    { q: 'What materials can I recycle in South Carolina?', a: 'Recycle Technologies accepts commercial electronics, computers, light bulbs, batteries, and PCB/non-PCB lighting ballasts. Contact the team to confirm acceptance of specific items.' },
+    { q: 'Does Recycle Technologies offer business pickup in South Carolina?', a: 'Yes. Scheduled business pickup is available across Upstate South Carolina—including Greenville, Anderson, and Spartanburg—subject to location and collection requirements. Request a quote to confirm availability.' },
+    { q: 'Can I receive a certificate after electronics or lamp recycling?', a: 'Yes. Operating with R2v3, RIOS, and NAID AAA certifications since 1993, Recycle Technologies logs items at intake and issues applicable Certificates of Recycling after processing is complete.' },
+    { q: 'What if my business is outside the pickup area?', a: 'A prepaid mail-in kit may be suitable for eligible materials. Review available kits and shipping instructions before sending your items.' },
+  ],
+  photo: PHOTO_A,
+})
+
 /** In menu order. The Minnesota and Wisconsin hubs are the facility pages (src/data/facilities.ts). */
-export const STATE_HUBS: StateHubPage[] = [ARIZONA_HUB, CALIFORNIA_HUB, FLORIDA_HUB, GEORGIA_HUB, INDIANA_HUB, TENNESSEE_HUB, TEXAS_HUB]
+export const STATE_HUBS: StateHubPage[] = [ARIZONA_HUB, CALIFORNIA_HUB, FLORIDA_HUB, GEORGIA_HUB, INDIANA_HUB, SOUTH_CAROLINA_HUB, TENNESSEE_HUB, TEXAS_HUB]
 
 /** All nine state hubs, for /all-locations/ and the sitemaps. */
 export const ALL_STATE_HUBS: { state: string; url: string }[] = [

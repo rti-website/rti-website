@@ -77,6 +77,7 @@ import { GREENWOOD_INDIANA } from '@/data/county-pages/areas/greenwood-indiana'
 import { BULB_RECYCLE_MILWAUKEE } from '@/data/county-pages/areas/bulb-recycle-milwaukee'
 import { OCALA_FLORIDA } from '@/data/county-pages/areas/ocala-florida'
 import { KENNESAW_GEORGIA } from '@/data/county-pages/areas/kennesaw-georgia'
+import { WILLIAMSTON_SOUTH_CAROLINA } from '@/data/county-pages/areas/williamston-south-carolina'
 import { JOHNSON_CITY_BUFFALO_TENNESSEE } from '@/data/county-pages/areas/johnson-city-buffalo-tennessee'
 import { TV_RECYCLING_APPLETON } from '@/data/county-pages/areas/tv-recycling-appleton'
 import { EDINA_RECYCLING_SERVICES } from '@/data/county-pages/areas/edina-recycling-services'
@@ -137,10 +138,6 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from '@/data/landing-pages/minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from '@/data/landing-pages/wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from '@/data/landing-pages/chicago-universal-waste-recycling'
-import { WILLIAMSTON_SOUTH_CAROLINA } from '@/data/landing-pages/williamston-south-carolina'
-import { LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING } from '@/data/landing-pages/williamston-electronic-recycling'
-import { LANDING_WILLIAMSTON_BATTERY_RECYCLING } from '@/data/landing-pages/williamston-battery-recycling'
-import { LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING } from '@/data/landing-pages/williamston-light-bulb-recycling'
 import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from '@/data/landing-pages/williamston-ballast-recycling'
 import { BLAINE_ELECTRONIC_RECYCLING } from '@/data/local-pages/blaine-electronic-recycling'
 import { BLAINE_BATTERY_RECYCLING } from '@/data/local-pages/blaine-battery-recycling'
@@ -183,6 +180,9 @@ import { KENNESAW_ELECTRONIC_RECYCLING } from '@/data/local-pages/kennesaw-elect
 import { KENNESAW_BATTERY_RECYCLING } from '@/data/local-pages/kennesaw-battery-recycling'
 import { KENNESAW_LIGHT_BULB_RECYCLING } from '@/data/local-pages/kennesaw-light-bulb-recycling'
 import { KENNESAW_BALLAST_RECYCLING } from '@/data/local-pages/kennesaw-ballast-recycling'
+import { WILLIAMSTON_ELECTRONIC_RECYCLING } from '@/data/local-pages/williamston-electronic-recycling'
+import { WILLIAMSTON_BATTERY_RECYCLING } from '@/data/local-pages/williamston-battery-recycling'
+import { WILLIAMSTON_LIGHT_BULB_RECYCLING } from '@/data/local-pages/williamston-light-bulb-recycling'
 import { FORT_WORTH_ELECTRONIC_RECYCLING } from '@/data/local-pages/fort-worth-electronic-recycling'
 import { FORT_WORTH_BATTERY_RECYCLING } from '@/data/local-pages/fort-worth-battery-recycling'
 import { FORT_WORTH_LIGHT_BULB_RECYCLING } from '@/data/local-pages/fort-worth-light-bulb-recycling'
@@ -197,7 +197,7 @@ import { CHICAGO_PHONE_SHREDDING } from '@/data/local-pages/chicago-phone-shredd
 import { CHICAGO_TV_RECYCLING } from '@/data/local-pages/chicago-tv-recycling'
 import { CHICAGO_ELECTRONIC_RECYCLING } from '@/data/local-pages/chicago-electronic-recycling'
 import * as facilities from '@/data/facilities'
-import { ARIZONA_HUB, CALIFORNIA_HUB, FLORIDA_HUB, GEORGIA_HUB, INDIANA_HUB, TENNESSEE_HUB, TEXAS_HUB } from '@/data/state-hubs'
+import { ARIZONA_HUB, CALIFORNIA_HUB, FLORIDA_HUB, GEORGIA_HUB, INDIANA_HUB, SOUTH_CAROLINA_HUB, TENNESSEE_HUB, TEXAS_HUB } from '@/data/state-hubs'
 import * as certifications from '@/data/certifications'
 import * as nav from '@/lib/nav'
 import * as siteFooter from '@/data/site-footer'
@@ -325,6 +325,7 @@ export const DOCS = {
   'hub/california': { title: 'California (state page)', group: 'Location pages', urls: [CALIFORNIA_HUB.url], data: one(CALIFORNIA_HUB) },
   'hub/florida': { title: 'Florida (state page)', group: 'Location pages', urls: [FLORIDA_HUB.url], data: one(FLORIDA_HUB) },
   'hub/georgia': { title: 'Georgia (state page)', group: 'Location pages', urls: [GEORGIA_HUB.url], data: one(GEORGIA_HUB) },
+  'hub/south-carolina': { title: 'South Carolina (state page)', group: 'Location pages', urls: [SOUTH_CAROLINA_HUB.url], data: one(SOUTH_CAROLINA_HUB) },
   'hub/indiana': { title: 'Indiana (state page)', group: 'Location pages', urls: [INDIANA_HUB.url], data: one(INDIANA_HUB) },
   'hub/tennessee': { title: 'Tennessee (state page)', group: 'Location pages', urls: [TENNESSEE_HUB.url], data: one(TENNESSEE_HUB) },
   'hub/texas': { title: 'Texas (state page)', group: 'Location pages', urls: [TEXAS_HUB.url], data: one(TEXAS_HUB) },
@@ -390,6 +391,9 @@ export const DOCS = {
   'local/georgia-kennesaw-battery-recycling': { title: "Battery Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_BATTERY_RECYCLING.url], data: one(KENNESAW_BATTERY_RECYCLING) },
   'local/georgia-kennesaw-light-bulb-recycling': { title: "Light Bulb Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_LIGHT_BULB_RECYCLING.url], data: one(KENNESAW_LIGHT_BULB_RECYCLING) },
   'local/georgia-kennesaw-ballast-recycling': { title: "Ballast Recycling in Kennesaw, GA", group: 'Location pages', urls: [KENNESAW_BALLAST_RECYCLING.url], data: one(KENNESAW_BALLAST_RECYCLING) },
+  'local/south-carolina-williamston-electronic-recycling': { title: "Electronics Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_ELECTRONIC_RECYCLING.url], data: one(WILLIAMSTON_ELECTRONIC_RECYCLING) },
+  'local/south-carolina-williamston-battery-recycling': { title: "Battery Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_BATTERY_RECYCLING.url], data: one(WILLIAMSTON_BATTERY_RECYCLING) },
+  'local/south-carolina-williamston-light-bulb-recycling': { title: "Light Bulb Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_LIGHT_BULB_RECYCLING.url], data: one(WILLIAMSTON_LIGHT_BULB_RECYCLING) },
   'local/texas-fort-worth-electronic-recycling': { title: "Electronics Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_ELECTRONIC_RECYCLING.url], data: one(FORT_WORTH_ELECTRONIC_RECYCLING) },
   'local/texas-fort-worth-battery-recycling': { title: "Battery Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_BATTERY_RECYCLING.url], data: one(FORT_WORTH_BATTERY_RECYCLING) },
   'local/texas-fort-worth-light-bulb-recycling': { title: "Light Bulb Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_LIGHT_BULB_RECYCLING.url], data: one(FORT_WORTH_LIGHT_BULB_RECYCLING) },
@@ -415,10 +419,6 @@ export const DOCS = {
   'landing/universal-waste-recycling-Minnesota': { title: "Universal Waste Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_UNIVERSAL_WASTE.url], data: one(LANDING_MINNESOTA_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Wisconsin': { title: "Universal Waste Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_UNIVERSAL_WASTE.url], data: one(LANDING_WISCONSIN_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Chicago': { title: "Universal Waste Recycling in Chicago (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_UNIVERSAL_WASTE.url], data: one(LANDING_CHICAGO_UNIVERSAL_WASTE) },
-  'landing/south-carolina-williamston': { title: "Recycle Technologies in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [WILLIAMSTON_SOUTH_CAROLINA.url], data: one(WILLIAMSTON_SOUTH_CAROLINA) },
-  'landing/south-carolina-williamston-electronic-recycling': { title: "Electronics Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING.url], data: one(LANDING_WILLIAMSTON_ELECTRONIC_RECYCLING) },
-  'landing/south-carolina-williamston-battery-recycling': { title: "Battery Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_BATTERY_RECYCLING.url], data: one(LANDING_WILLIAMSTON_BATTERY_RECYCLING) },
-  'landing/south-carolina-williamston-light-bulb-recycling': { title: "Light Bulb Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING.url], data: one(LANDING_WILLIAMSTON_LIGHT_BULB_RECYCLING) },
   'landing/south-carolina-williamston-ballast-recycling': { title: "Ballast Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_BALLAST_RECYCLING.url], data: one(LANDING_WILLIAMSTON_BALLAST_RECYCLING) },
   'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
   'area/sheboygan': { title: "Sheboygan Recycling", group: 'Location pages', urls: [SHEBOYGAN.url], data: one(SHEBOYGAN) },
@@ -480,6 +480,7 @@ export const DOCS = {
   'area/bulb-recycle-milwaukee': { title: "Bulb Recycling In Milwaukee", group: 'Location pages', urls: [BULB_RECYCLE_MILWAUKEE.url], data: one(BULB_RECYCLE_MILWAUKEE) },
   'area/ocala-florida': { title: "Ocala, Florida", group: 'Location pages', urls: [OCALA_FLORIDA.url], data: one(OCALA_FLORIDA) },
   'area/kennesaw-georgia': { title: "Kennesaw, Georgia", group: 'Location pages', urls: [KENNESAW_GEORGIA.url], data: one(KENNESAW_GEORGIA) },
+  'area/williamston-south-carolina': { title: "Williamston, South Carolina", group: 'Location pages', urls: [WILLIAMSTON_SOUTH_CAROLINA.url], data: one(WILLIAMSTON_SOUTH_CAROLINA) },
   'area/johnson-city-buffalo-tennessee': { title: "Johnson City (Buffalo), Tennessee", group: 'Location pages', urls: [JOHNSON_CITY_BUFFALO_TENNESSEE.url], data: one(JOHNSON_CITY_BUFFALO_TENNESSEE) },
   'area/tv-recycling-appleton': { title: "TV Recycling in Appleton WI", group: 'Location pages', urls: [TV_RECYCLING_APPLETON.url], data: one(TV_RECYCLING_APPLETON) },
   'area/edina-recycling-services': { title: "Edina Recycling Services", group: 'Location pages', urls: [EDINA_RECYCLING_SERVICES.url], data: one(EDINA_RECYCLING_SERVICES) },

@@ -188,10 +188,18 @@ export async function StateCounties({ f, top, height }: { f: StatePageLike; top:
             <h3 className="font-sans text-[16px] font-semibold leading-[1.3] text-navy lg:text-[17px]">{g.heading}</h3>
             <ul className="flex flex-wrap gap-[8px]">
               {g.chips.map((ch) => (
-                <li key={ch.href}>
-                  <Link href={ch.href} className="inline-flex rounded-full bg-[#eaf4f5] px-[12px] py-[6px] font-sans text-[13px] font-medium leading-[1.3] text-brand transition-colors hover:bg-brand hover:text-white">
-                    {ch.label}
-                  </Link>
+                <li key={ch.href || ch.label}>
+                  {/* An empty href: a city with no page of its own, drawn as a
+                      plain chip (South Carolina, 16 Nov 2026). */}
+                  {ch.href ? (
+                    <Link href={ch.href} className="inline-flex rounded-full bg-[#eaf4f5] px-[12px] py-[6px] font-sans text-[13px] font-medium leading-[1.3] text-brand transition-colors hover:bg-brand hover:text-white">
+                      {ch.label}
+                    </Link>
+                  ) : (
+                    <span className="inline-flex rounded-full bg-[#f3f5f6] px-[12px] py-[6px] font-sans text-[13px] font-medium leading-[1.3] text-[#474747]">
+                      {ch.label}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
