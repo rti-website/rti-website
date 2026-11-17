@@ -19,6 +19,10 @@ import type { CountyPage } from '../types'
  *
  * The doc gives no SEO title or description; the ones below are written from
  * its H1 and first paragraph (flagged to Aaqib, 16 Nov 2026).
+ *
+ * 17 Nov 2026, the doc's update: "Recycling Center" reads "Location" (Visit
+ * the Williamston Location, About Williamston Location; the SEO title too),
+ * and no "drop-off arrangements" in the Visit text and the last FAQ.
  */
 const ADDRESS = '109 Twenty Nine Ct, Williamston, SC 29697'
 const MAPS = 'https://www.google.com/maps/dir/?api=1&destination=109+Twenty+Nine+Ct%2C+Williamston%2C+SC+29697'
@@ -31,7 +35,7 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage = {
   service: "Recycling Services",
   figma: { board: "7084:69256", phone: "7084:69583" },
   seo: {
-    title: "Recycle Technologies Williamston, SC | Recycling Center",
+    title: "Recycle Technologies Williamston, SC | Recycling Location",
     description: "Recycle electronics, light bulbs, batteries, and ballasts at our Williamston, SC location, with scheduled business pickups across Upstate South Carolina.",
   },
   hero: {
@@ -50,19 +54,19 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage = {
     { glyph: 'badge', label: "Email", value: "support@lightingresourcesinc.com", href: "mailto:support@lightingresourcesinc.com" },
   ],
   directions: {
-    heading: "Visit the Williamston Recycling Center",
-    intro: "Our Williamston location provides access to electronics, light bulb, battery, and ballast recycling services. Call before visiting so our team can confirm drop-off arrangements and accepted materials.",
-    introShort: "Our Williamston location provides access to electronics, light bulb, battery, and ballast recycling services. Call before visiting so our team can confirm drop-off arrangements and accepted materials.",
+    heading: "Visit the Williamston Location",
+    intro: "Our Williamston location provides access to electronics, light bulb, battery, and ballast recycling services. Call before visiting so our team can confirm accepted materials.",
+    introShort: "Our Williamston location provides access to electronics, light bulb, battery, and ballast recycling services. Call before visiting so our team can confirm accepted materials.",
     rows: [],
     primary: "Get Directions",
     secondary: "Call This Location",
-    name: "Williamston Recycling Center",
+    name: "Williamston Location",
     address: ADDRESS,
     tel: "+18647748310",
     mapsHref: MAPS,
   },
   about: {
-    heading: "About Williamston Recycling Center",
+    heading: "About Williamston Location",
     blocks: [
       { h: "Responsible Recycling in Upstate South Carolina" },
       { p: "Recycle Technologies provides recycling services for businesses in Williamston and surrounding Upstate South Carolina communities. Our Williamston location supports four core recycling services, helping businesses manage unwanted electronics, used lighting, batteries, and ballasts." },
@@ -102,12 +106,12 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage = {
       { q: "What materials can I recycle at the Williamston location?", a: "We offer electronics, light bulbs, batteries, and ballast recycling. Contact us to confirm whether we accept your specific materials." },
       { q: "Can businesses schedule a recycling pickup?", a: "Yes. Businesses across Upstate South Carolina can contact our team to arrange scheduled pickups for accepted materials." },
       { q: "Do you provide a Certificate of Recycling?", a: "Yes. A Certificate of Recycling is available for completed recycling services." },
-      { q: "Do I need an appointment before visiting?", a: "Please call +1 (864) 774-8310 before visiting to confirm drop-off arrangements and any requirements for your materials." },
+      { q: "Do I need an appointment before visiting?", a: "Please call +1 (864) 774-8310 before visiting to confirm any requirements for your materials." },
     ] },
   ],
   company: {
     name: "Recycle with Recycle Technologies",
-    text: "From electronics and lighting to batteries and ballasts, our Williamston team helps businesses across Upstate South Carolina manage unwanted materials through responsible recycling services. Contact us today to request a quote or discuss your recycling needs.",
+    text: "From electronics and lighting to batteries and ballasts, our Williamston team helps businesses across Upstate South Carolina manage unwanted materials through responsible recycling services. Contact us today to get a quote or discuss your recycling needs.",
     lines: [
       { kind: 'phone', text: "+1 (864) 774-8310", tel: "+18647748310" },
       { kind: 'email', text: "support@lightingresourcesinc.com" },

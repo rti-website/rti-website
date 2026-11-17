@@ -138,7 +138,6 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from '@/data/landing-pages/chicago-light-
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from '@/data/landing-pages/minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from '@/data/landing-pages/wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from '@/data/landing-pages/chicago-universal-waste-recycling'
-import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from '@/data/landing-pages/williamston-ballast-recycling'
 import { BLAINE_ELECTRONIC_RECYCLING } from '@/data/local-pages/blaine-electronic-recycling'
 import { BLAINE_BATTERY_RECYCLING } from '@/data/local-pages/blaine-battery-recycling'
 import { BLAINE_LIGHT_BULB_RECYCLING } from '@/data/local-pages/blaine-light-bulb-recycling'
@@ -183,6 +182,7 @@ import { KENNESAW_BALLAST_RECYCLING } from '@/data/local-pages/kennesaw-ballast-
 import { WILLIAMSTON_ELECTRONIC_RECYCLING } from '@/data/local-pages/williamston-electronic-recycling'
 import { WILLIAMSTON_BATTERY_RECYCLING } from '@/data/local-pages/williamston-battery-recycling'
 import { WILLIAMSTON_LIGHT_BULB_RECYCLING } from '@/data/local-pages/williamston-light-bulb-recycling'
+import { WILLIAMSTON_BALLAST_RECYCLING } from '@/data/local-pages/williamston-ballast-recycling'
 import { FORT_WORTH_ELECTRONIC_RECYCLING } from '@/data/local-pages/fort-worth-electronic-recycling'
 import { FORT_WORTH_BATTERY_RECYCLING } from '@/data/local-pages/fort-worth-battery-recycling'
 import { FORT_WORTH_LIGHT_BULB_RECYCLING } from '@/data/local-pages/fort-worth-light-bulb-recycling'
@@ -394,6 +394,7 @@ export const DOCS = {
   'local/south-carolina-williamston-electronic-recycling': { title: "Electronics Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_ELECTRONIC_RECYCLING.url], data: one(WILLIAMSTON_ELECTRONIC_RECYCLING) },
   'local/south-carolina-williamston-battery-recycling': { title: "Battery Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_BATTERY_RECYCLING.url], data: one(WILLIAMSTON_BATTERY_RECYCLING) },
   'local/south-carolina-williamston-light-bulb-recycling': { title: "Light Bulb Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_LIGHT_BULB_RECYCLING.url], data: one(WILLIAMSTON_LIGHT_BULB_RECYCLING) },
+  'local/south-carolina-williamston-ballast-recycling': { title: "Ballast Recycling in Williamston, SC", group: 'Location pages', urls: [WILLIAMSTON_BALLAST_RECYCLING.url], data: one(WILLIAMSTON_BALLAST_RECYCLING) },
   'local/texas-fort-worth-electronic-recycling': { title: "Electronics Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_ELECTRONIC_RECYCLING.url], data: one(FORT_WORTH_ELECTRONIC_RECYCLING) },
   'local/texas-fort-worth-battery-recycling': { title: "Battery Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_BATTERY_RECYCLING.url], data: one(FORT_WORTH_BATTERY_RECYCLING) },
   'local/texas-fort-worth-light-bulb-recycling': { title: "Light Bulb Recycling in Fort Worth, TX", group: 'Location pages', urls: [FORT_WORTH_LIGHT_BULB_RECYCLING.url], data: one(FORT_WORTH_LIGHT_BULB_RECYCLING) },
@@ -419,7 +420,6 @@ export const DOCS = {
   'landing/universal-waste-recycling-Minnesota': { title: "Universal Waste Recycling in Minnesota (Google Ads)", group: 'State landing pages', urls: [LANDING_MINNESOTA_UNIVERSAL_WASTE.url], data: one(LANDING_MINNESOTA_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Wisconsin': { title: "Universal Waste Recycling in Wisconsin (Google Ads)", group: 'State landing pages', urls: [LANDING_WISCONSIN_UNIVERSAL_WASTE.url], data: one(LANDING_WISCONSIN_UNIVERSAL_WASTE) },
   'landing/universal-waste-recycling-Chicago': { title: "Universal Waste Recycling in Chicago (Google Ads)", group: 'State landing pages', urls: [LANDING_CHICAGO_UNIVERSAL_WASTE.url], data: one(LANDING_CHICAGO_UNIVERSAL_WASTE) },
-  'landing/south-carolina-williamston-ballast-recycling': { title: "Ballast Recycling in Williamston, SC (Google Ads)", group: 'State landing pages', urls: [LANDING_WILLIAMSTON_BALLAST_RECYCLING.url], data: one(LANDING_WILLIAMSTON_BALLAST_RECYCLING) },
   'area/new-berlin-recycling-center': { title: "New Berlin Recycling Center", group: 'Location pages', urls: [NEW_BERLIN_RECYCLING_CENTER.url], data: one(NEW_BERLIN_RECYCLING_CENTER) },
   'area/sheboygan': { title: "Sheboygan Recycling", group: 'Location pages', urls: [SHEBOYGAN.url], data: one(SHEBOYGAN) },
   'area/tv-recycling-green-bay': { title: "TV Recycling in Green Bay", group: 'Location pages', urls: [TV_RECYCLING_GREEN_BAY.url], data: one(TV_RECYCLING_GREEN_BAY) },

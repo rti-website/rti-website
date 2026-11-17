@@ -32,17 +32,17 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `South Carolina restricts the landfill disposal of certain covered electronics, including specified computers, monitors, printers and televisions. Recycle Technologies helps businesses manage retired electronics through our [Williamston facility](${FACILITY}) at 109 Twenty Nine Ct. We accept desktops, laptops, servers, networking gear, CRT and flat-panel monitors, TVs, printers, copiers, scanners, fax machines, phones, cables, chargers and other accepted electronics. Our team coordinates pickups from offices, plants, schools and clinics within approximately 100 miles, including Greenville, Anderson and Spartanburg. Equipment is dismantled so plastics, wire, metals, glass and circuit boards can be recovered, and every completed recycling job is documented with a Certificate of Recycling. Recycle Technologies’ recycling operations are supported by R2v3 and RIOS certifications at applicable facilities.`,
+    `South Carolina restricts the landfill disposal of certain covered electronics, including specified computers, monitors, printers and televisions. Recycle Technologies helps businesses manage retired electronics through our [Williamston location](${FACILITY}) at 109 Twenty Nine Ct. We accept desktops, laptops, servers, networking gear, CRT and flat-panel monitors, TVs, printers, copiers, scanners, fax machines, phones, cables, chargers and other accepted electronics. Our team coordinates pickups from offices, plants, schools and clinics within approximately 100 miles, including Greenville, Anderson and Spartanburg. Equipment is dismantled so plastics, wire, metals, glass and circuit boards can be recovered, and every completed recycling job is documented with a Certificate of Recycling. Recycling is handled through Recycle Technologies-certified recycling facilities.`,
   ],
   bands: [
     {
       figma: "doc-1",
-      heading: "Our Williamston Electronics Recycling Facility",
+      heading: "Our Williamston Location",
       grey: false,
       blocks: [
         {
           kind: "center",
-          title: `[Williamston Recycling Facility](${FACILITY}) (Anderson County)`,
+          title: `[Williamston Location](${FACILITY}) (Anderson County)`,
           rows: [
             { label: "Address", value: `[109 Twenty Nine Ct, Williamston, SC 29697](${MAPS})` },
             { label: "Phone", value: "(864) 774-8310" },
@@ -128,7 +128,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
           kind: "timeline",
           steps: [
             { title: "Take inventory", body: "Note device types and approximate quantities, and identify any CRTs or cracked screens." },
-            { title: "Request a quote", body: "Share your site address, equipment list and whether you need a one-time or recurring collection." },
+            { title: "Get a quote", body: "Share your site address, equipment list and whether you need a one-time or recurring collection." },
             { title: "Confirm the pickup", body: "Our team sends pricing and books a collection window that fits your schedule." },
             { title: "Collection and recycling", body: "Equipment is collected at your site and dismantled. Plastics, wires, metals, glass and circuit boards are separated for appropriate recycling." },
             { title: "Receive your records", body: "Get a Certificate of Recycling documenting the completed load." },
@@ -176,7 +176,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
             "**How often:** A single cleanout or a recurring schedule.",
           ],
           buttons: {
-            primary: { label: "Request an E-Waste Pickup Quote", href: QUOTE_HREF },
+            primary: { label: "Get a Quote", href: QUOTE_HREF },
             secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
           },
         },
@@ -210,7 +210,6 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
           kind: "text",
           body: [
             "Businesses remain responsible for following the requirements that apply to their information and equipment. Before collection, review your organization's data retention and media sanitization policies, and consult your compliance team when necessary.",
-            "For technical guidance on media sanitization, see [NIST Special Publication 800-88 Revision 2](https://csrc.nist.gov/pubs/sp/800/88/r2/final).",
           ],
         },
       ],
@@ -224,7 +223,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
         {
           kind: "why",
           items: [
-            { icon: "shield", title: "Certified recycling operations", body: "Recycle Technologies' electronics recycling operations are supported by R2v3 and RIOS certifications at applicable facilities. Ask which processing facility will handle your equipment." },
+            { icon: "shield", title: "Certified facilities", body: "Electronics recycling is handled through Recycle Technologies-certified recycling facilities." },
             { icon: "monitor", title: "Every common device", body: "Servers, copiers, phones, CRTs and flat panels can be included in an accepted electronics load." },
             { icon: "recycle", title: "Materials recovered, not dumped", body: "Devices are broken down into plastics, wires, glass, metals and circuit boards for appropriate material recovery." },
             { icon: "file", title: "Documentation", body: "A Certificate of Recycling documents every completed load." },
@@ -240,7 +239,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
     eyebrow: "FAQs",
     heading: "Frequently Asked Questions",
     items: [
-      { q: "What does electronics recycling cost for a Williamston business?", a: "Pricing depends on the equipment mix, volume and location. Call (864) 774-8310 or request a quote." },
+      { q: "What does electronics recycling cost for a Williamston business?", a: "Pricing depends on the equipment mix, volume and location. Call (864) 774-8310 or get a quote." },
       { q: "Should we clear data before pickup?", a: "Yes. Back up important information and sanitize or remove storage devices according to your organization's data protection policies." },
       { q: "Do you take old CRT monitors and tube TVs?", a: "Yes. CRTs are accepted along with flat panels. Mention them on the quote form so we can plan the load." },
       { q: "Can you handle a full office or school cleanout?", a: "Yes. Share the equipment list, project size and timeline, and we'll plan collection around your schedule." },
@@ -273,11 +272,11 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
       "Send us your equipment list and pickup address, and our Williamston team will respond with pricing and an available collection date.",
     ],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
-    secondary: { label: "Schedule Electronics Pickup in Williamston", href: PICKUP_HREF },
+    secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   todo: [
     "Reviews: the doc has a [Placeholder]; left out until real reviews are given",
     "The doc's sub-sections under \"Electronics We Recycle\" (IT refreshes, CRTs, copiers, phones) are drawn as four cards under that band",
-    "Ballast chip links the Williamston ballast page, which is still the Google Ads version (Aaqib, 16 Nov 2026: ballast page not done for now)",
+    "17 Nov 2026, the doc's update: \"Williamston location\" wording, \"Recycling is handled through Recycle Technologies-certified recycling facilities\", Get a Quote buttons, the NIST line removed",
   ],
 }

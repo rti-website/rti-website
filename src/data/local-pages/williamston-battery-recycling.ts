@@ -29,17 +29,17 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Used batteries collect in server rooms, tool cribs and supply closets, and they can catch fire or leak if stored or handled incorrectly. Recycle Technologies provides battery recycling for Upstate businesses through our [Williamston facility](${FACILITY}) at 109 Twenty Nine Ct. We accept alkaline and zinc batteries, rechargeable lithium-ion packs, sealed lead-acid batteries, NiCd and button cell batteries, electric vehicle and Tesla batteries, power tool packs and battery backup units. Commercial pickup is available for businesses in the Upstate; contact our team to confirm availability for your location. Batteries are sorted and separated by type, and a Certificate of Recycling and Safe Disposal documents each completed job. Recycle Technologies' certified recycling operations are supported by R2v3 and RIOS certifications.`,
+    `Used batteries collect in server rooms, tool cribs and supply closets, and they can catch fire or leak if stored or handled incorrectly. Recycle Technologies provides battery recycling for Upstate businesses through our [Williamston location](${FACILITY}) at 109 Twenty Nine Ct. We accept alkaline and zinc batteries, rechargeable lithium-ion packs, sealed lead-acid batteries, NiCd and button cell batteries, electric vehicle and Tesla batteries, power tool packs and battery backup units. Commercial pickup is available for businesses in the Upstate; contact our team to confirm availability for your location. Batteries are sorted and separated by type, and a Certificate of Recycling and Safe Disposal documents each completed job. Recycling is handled through Recycle Technologies-certified recycling facilities.`,
   ],
   bands: [
     {
       figma: "doc-1",
-      heading: "Our Williamston Battery Recycling Facility",
+      heading: "Our Williamston Location",
       grey: false,
       blocks: [
         {
           kind: "center",
-          title: `[Williamston Recycling Facility](${FACILITY}) (Anderson County)`,
+          title: `[Williamston Location](${FACILITY}) (Anderson County)`,
           rows: [
             { label: "Address", value: "109 Twenty Nine Ct, Williamston, SC 29697" },
             { label: "Phone", value: "(864) 774-8310" },
@@ -124,7 +124,7 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
           kind: "timeline",
           steps: [
             { title: "Identify your batteries", body: "Note the battery types and an approximate count or weight." },
-            { title: "Request a quote", body: "Share your site address, battery types and whether any units are damaged." },
+            { title: "Get a quote", body: "Share your site address, battery types and whether any units are damaged." },
             { title: "Prepare the load", body: "Cover exposed terminals where appropriate and keep battery types separated." },
             { title: "Collection and sorting", body: "Batteries are collected from your site and sorted by type by trained staff." },
             { title: "Documentation", body: "Once the job is completed, you receive a Certificate of Recycling and Safe Disposal." },
@@ -155,7 +155,7 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
             "Battery pickup is available for commercial clients such as:",
             "**Manufacturers and warehouses:** Tool packs, scanner batteries and backup units.",
             "**Data centers and IT teams:** UPS and battery backup replacements.",
-            "**Hospitals, clinics and schools:** Emergency lighting, device and everyday batteries.",
+            "**Hospitals, clinics and schools:** Emergency lighting, devices and everyday batteries.",
             "**Auto dealers, repair shops and fleets:** Electric vehicle and sealed lead-acid batteries.",
             "**Offices and property managers:** Exit sign packs and supply-room batteries across multiple buildings.",
           ],
@@ -169,7 +169,7 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
             "**Schedule:** One-time cleanout or recurring collection.",
           ],
           buttons: {
-            primary: { label: "Request a Battery Pickup Quote", href: QUOTE_HREF },
+            primary: { label: "Get a Quote", href: QUOTE_HREF },
             secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
           },
         },
@@ -241,7 +241,7 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
         {
           kind: "why",
           items: [
-            { icon: "shield", title: "Recycling credentials", body: "Recycle Technologies maintains R2v3 and RIOS certifications for its certified recycling operations." },
+            { icon: "shield", title: "Certified facilities", body: "Battery recycling is handled through Recycle Technologies-certified recycling facilities." },
             { icon: "battery", title: "Multiple battery types", body: "Alkaline, lithium-ion, sealed lead-acid, NiCd and button cell batteries." },
             { icon: "car", title: "Larger batteries", body: "EV, Tesla and battery backup units, subject to collection arrangements." },
             { icon: "sort", title: "Sorted by trained staff", body: "Batteries are separated by type after collection." },
@@ -257,7 +257,7 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
     eyebrow: "FAQs",
     heading: "Frequently Asked Questions",
     items: [
-      { q: "How much does battery recycling cost for a Williamston business?", a: "It depends on battery type, quantity and pickup location. Call (864) 774-8310 or request a quote." },
+      { q: "How much does battery recycling cost for a Williamston business?", a: "It depends on battery type, quantity and pickup location. Call (864) 774-8310 or get a quote." },
       { q: "Can a business throw batteries in the trash in South Carolina?", a: "Used lead-acid batteries are subject to specific state disposal restrictions. Other battery types may have different requirements. Lithium-ion batteries also pose a fire risk when damaged or improperly discarded." },
       { q: "Do batteries need to be taped before pickup?", a: "Covering exposed terminals helps reduce the risk of short circuits. Follow the preparation instructions for your battery type and collection service." },
       { q: "What should we do with a swollen or leaking battery?", a: "Do not place it with routine battery collections or in a standard mail-in kit. Contact our team for handling instructions. If it is hot, smoking or actively venting, stay away and contact emergency services." },
@@ -288,11 +288,11 @@ export const WILLIAMSTON_BATTERY_RECYCLING: LocalPage = {
     heading: "Get Started With Battery Recycling in Williamston",
     body: ["Walk through your building, note the battery types and approximate quantities, and send us the list with your pickup address. Our Williamston team will review your requirements and respond with pricing and collection arrangements."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
-    secondary: { label: "Schedule Battery Pickup in Williamston", href: PICKUP_HREF },
+    secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   todo: [
     "\"Where Your Batteries Are Hiding\" is a table in the doc (where to look, what you'll find, battery type); drawn as one card per row",
     "\"Five Battery Storage Mistakes to Avoid\" is a numbered list in the doc; drawn as numbered steps",
-    "Ballast chip links the Williamston ballast page, which is still the Google Ads version (Aaqib, 16 Nov 2026: ballast page not done for now)",
+    "17 Nov 2026, the doc's update: \"Williamston location\" wording, \"Recycling is handled through Recycle Technologies-certified recycling facilities\", Get a Quote buttons",
   ],
 }

@@ -17,7 +17,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
   design: 2,
   seo: {
     title: "Light Bulb Recycling in Williamston, SC | Recycle Technologies",
-    description: "Light bulb recycling in Williamston, SC for fluorescent tubes, CFLs, HID, UV and specialty lamps. Business pickup across Upstate SC. Request a quote.",
+    description: "Light bulb recycling in Williamston, SC for fluorescent tubes, CFLs, HID, UV and specialty lamps. Business pickup across Upstate SC. Get a quote.",
   },
   schema: { service: "Light Bulb Recycling", areaServed: ["Williamston, SC", "Anderson County, SC", "Upstate South Carolina"] },
   hero: {
@@ -28,17 +28,17 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Fluorescent and HID lamps contain small amounts of mercury, so spent tubes from a business need proper handling rather than being placed in regular trash without evaluation. Recycle Technologies provides lamp recycling services for Upstate businesses through our Williamston service location at 109 Twenty Nine Ct. We take fluorescent tubes (including plastic-coated and shielded types), CFLs, green-tipped, circular and U-bend lamps, UV lamps, neon, argon and other cold cathode lamps, metal halide and high-pressure sodium HID lamps, and flood, incandescent and halogen bulbs. Pickup covers offices, plants, schools and contractors within approximately 100 miles of Williamston. Lamps are separated into glass, aluminum end caps and mercury-bearing phosphor, with mercury-bearing material sent to Recycle Technologies’ Greenwood, Indiana facility for further processing. The processing program is backed by Recycle Technologies’ R2v3 and RIOS certifications.",
+    "Fluorescent and HID lamps contain small amounts of mercury, so spent tubes from a business need proper handling rather than being placed in regular trash without evaluation. Recycle Technologies provides lamp recycling services for Upstate businesses through our Williamston service location at 109 Twenty Nine Ct. We take fluorescent tubes (including plastic-coated and shielded types), CFLs, green-tipped, circular and U-bend lamps, UV lamps, neon, argon and other cold cathode lamps, metal halide and high-pressure sodium HID lamps, and flood, incandescent and halogen bulbs. Pickup covers offices, plants, schools and contractors within approximately 100 miles of Williamston. Lamps are separated into glass, aluminum end caps and mercury-bearing phosphor, with mercury-bearing material sent to Recycle Technologies’ Greenwood, Indiana facility for further processing. Recycling is handled through our Williamston location, backed by our certified Recycle Technologies facilities.",
   ],
   bands: [
     {
       figma: "doc-1",
-      heading: "Our Williamston Lamp Recycling Facility",
+      heading: "Williamston Location",
       grey: false,
       blocks: [
         {
           kind: "center",
-          title: `[Williamston Recycling Facility](${FACILITY}) (Anderson County)`,
+          title: `[Williamston Location](${FACILITY}) (Anderson County)`,
           rows: [
             { label: "Address", value: "[109 Twenty Nine Ct, Williamston, SC 29697](https://www.google.com/maps/dir/?api=1&destination=109+Twenty+Nine+Ct%2C+Williamston%2C+SC+29697)" },
             { label: "Phone", value: "(864) 774-8310" },
@@ -131,7 +131,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
           kind: "timeline",
           steps: [
             { title: "Count your lamps", body: "Note lamp types and rough quantities, and flag any broken lamps." },
-            { title: "Request a quote", body: "Send your site address, lamp list and whether ballasts are coming out too." },
+            { title: "Get a quote", body: "Send your site address and lamp list." },
             { title: "Box them up", body: "Pack intact lamps in sturdy cartons and stage them near a dock or entrance. Keep damaged lamps separate and contact our team for instructions." },
             { title: "Collection and separation", body: "Our team collects the boxes, and the lamps are separated into glass, aluminum end caps and mercury-bearing phosphor powder and filters." },
             { title: "Recovery and records", body: "Glass goes on to industrial uses, end caps go to an aluminum salvage partner, and mercury-bearing material goes to Recycle Technologies' Greenwood, Indiana facility for further processing. A Certificate of Recycling closes out the job." },
@@ -177,7 +177,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
             "**Schedule:** One-time relamp or recurring pickup",
           ],
           buttons: {
-            primary: { label: "Request a Lamp Pickup Quote", href: QUOTE_HREF },
+            primary: { label: "Get a Quote", href: QUOTE_HREF },
             secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
           },
         },
@@ -207,7 +207,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
           kind: "callout",
           body: [
             "**Proper containment:** Keep lamps in structurally sound, compatible containers or packages that prevent breakage. Containers must remain closed and in good condition.",
-            "**Labeling:** Mark each lamp or its container with an approved label, such as \"Universal Waste—Lamp(s),\" \"Waste Lamp(s),\" or \"Used Lamp(s).\"",
+            "**Labeling:** Mark each lamp or its container with an approved label, such as \"Universal Waste Lamp(s),\" \"Waste Lamp(s),\" or \"Used Lamp(s).\"",
             "**Accumulation limits:** Universal waste generally cannot be accumulated for more than one year. A longer period may be allowed when it is solely to collect quantities needed for proper recovery, treatment or disposal, and the handler can demonstrate that purpose.",
             "**Broken lamps and releases:** Broken or damaged lamps must be contained promptly to prevent mercury or other hazardous constituents from escaping. Applicable cleanup and management requirements still apply.",
             "**Employee training and shipments:** Handlers must follow applicable training, release-response and off-site shipment requirements.",
@@ -245,8 +245,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
         {
           kind: "why",
           items: [
-            { icon: "shield", title: "Certified processing", body: "Lamp recycling is backed by Recycle Technologies' R2v3 and RIOS certifications, with mercury-bearing material sent to our Greenwood, Indiana facility for further processing." },
-            { icon: "droplet", title: "Mercury recovery", body: "Mercury-bearing material is sent to our Greenwood facility rather than being sent directly to a landfill." },
+            { icon: "shield", title: "Certified facilities", body: "Lamp recycling is handled through our Williamston location, backed by our certified Recycle Technologies facilities, with mercury-bearing material sent to our Greenwood, Indiana facility for further processing." },
             { icon: "recycle", title: "Material recovery", body: "Glass, aluminum end caps and phosphor materials are separated for appropriate recovery and processing." },
             { icon: "zap", title: "Retrofit-ready", body: "Lamps and ballasts from the same project leave on one pickup." },
             { icon: "file", title: "Documentation", body: "A Certificate of Recycling is provided for every completed load." },
@@ -261,7 +260,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
     eyebrow: "FAQs",
     heading: "Frequently Asked Questions",
     items: [
-      { q: "How much does lamp recycling cost for a Williamston business?", a: "Pricing depends on lamp type, quantity and pickup location. Call (864) 774-8310 or request a quote." },
+      { q: "How much does lamp recycling cost for a Williamston business?", a: "Pricing depends on lamp type, quantity and pickup location. Call (864) 774-8310 or get a quote." },
       { q: "Can fluorescent tubes go in a business dumpster in South Carolina?", a: "Don't place spent mercury-containing lamps in regular trash without determining the applicable waste requirements. Qualifying lamps may be managed under universal waste rules." },
       { q: "What should we do with broken fluorescent tubes?", a: "Keep them separate from intact lamps and contact our team for appropriate containment and pickup instructions." },
       { q: "Where does the mercury from our lamps end up?", a: "Mercury-bearing material is sent to Recycle Technologies' Greenwood, Indiana facility for further processing." },
@@ -278,11 +277,9 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
         {
           kind: "chips",
           links: [
-            { label: "Commercial Recycling in Williamston", href: FACILITY },
             { label: "Ballast Recycling in Williamston", href: href('/south-carolina/williamston/ballast-recycling/') },
             { label: "Battery Recycling in Williamston", href: href('/south-carolina/williamston/battery-recycling/') },
             { label: "Electronics Recycling in Williamston", href: href('/south-carolina/williamston/electronic-recycling/') },
-            { label: "Mail-In Recycling Program", href: href('/mail-in-recycling/') },
           ],
         },
       ],
@@ -290,14 +287,14 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
   ],
   cta: {
     heading: "Get Started With Light Bulb Recycling in Williamston",
-    body: ["Planning a relamp, finishing an LED retrofit or just tired of stacking boxes of spent tubes in a storeroom? Send us your lamp count and pickup address, and our Williamston team will reply with pricing and a collection date."],
+    body: ["Tired of stacking boxes of spent tubes in a storeroom? Send us your lamp count and pickup address, and our Williamston team will reply with pricing and a collection date."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
-    secondary: { label: "Schedule Lamp Pickup in Williamston", href: PICKUP_HREF },
+    secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   todo: [
     "Reviews: the doc has \"[PLACEHOLDER: real customer reviews only.]\"; left out until real reviews are given",
     "A stray \"Regulati+2\" line after the rules section in the doc (a pasted citation chip) is left out",
     "The doc's links carried ?utm_source=chatgpt.com; the site links are clean",
-    "Ballast chip links the Williamston ballast page, which is still the Google Ads version (Aaqib, 16 Nov 2026: ballast page not done for now)",
+    "17 Nov 2026, the doc's update: Williamston Location heading, \"backed by our certified Recycle Technologies facilities\", the Mercury recovery card removed, three Related links, a shorter closing line",
   ],
 }

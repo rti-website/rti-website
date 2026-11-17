@@ -346,8 +346,8 @@ export const TEXAS_HUB = hub({
 // 16 Nov 2026: the content team's "Location Page / South Carolina" doc
 // (1BG6tdb9_rlmF8ZJbSIh6AnoXxfLkDVQG7Z2D5NAX5qc), word for word: the
 // Williamston center card (its page is /south-carolina/williamston/), the
-// four Williamston services (/south-carolina/williamston/<service>/; ballast
-// is still its Google Ads page, Aaqib: "do not do the ballast page for now"),
+// four Williamston services (/south-carolina/williamston/<service>/, the
+// ballast page since 17 Nov 2026),
 // the three Upstate counties and the four FAQs. The doc has no SEO title or
 // description; the ones here follow the other hubs (flagged to Aaqib). Only
 // Williamston has a page, so the other city chips are plain text. The card
@@ -357,10 +357,14 @@ export const SOUTH_CAROLINA_HUB = hub({
   slug: 'south-carolina', state: 'South Carolina',
   tiles: fourTiles('/south-carolina/williamston/'),
   title: 'South Carolina Electronics & Lamp Recycling | Recycle Technologies',
-  description: 'Certified electronics, light bulb, battery and ballast recycling for South Carolina businesses. Business pickup across Upstate SC and mail-in kits. Get a quote.',
-  h1: 'Certified Electronics & Lamp Recycling in South Carolina',
-  lead: 'R2v3, RIOS and NAID AAA certified recycling for South Carolina businesses, with every item logged at intake and a certificate issued on completion.',
-  sites: [site('South Carolina', 'Williamston', '/south-carolina/williamston/', '109 Twenty Nine Ct, Williamston, SC 29697', '+1-864-774-8310', 'Mon–Fri 9:00 AM–4:00 PM')],
+  description: 'Electronics, light bulb, battery and ballast recycling for South Carolina businesses through our Williamston location. Business pickup across Upstate SC. Get a quote.',
+  h1: 'Electronics & Lamp Recycling in South Carolina',
+  lead: 'Recycling handled through our Williamston location, backed by our certified Recycle Technologies facilities, for South Carolina businesses, with every item logged at intake and a certificate issued on completion.',
+  // 17 Nov 2026, the doc's update: "Our South Carolina Location", "Williamston Location", "View Location".
+  sites: [{
+    ...site('South Carolina', 'Williamston', '/south-carolina/williamston/', '109 Twenty Nine Ct, Williamston, SC 29697', '+1-864-774-8310', 'Mon–Fri 9:00 AM–4:00 PM'),
+    eyebrow: 'Our South Carolina Location', name: 'Williamston Location', view: 'View Location',
+  }],
   materialsHeading: 'Recycling Services in South Carolina',
   servicesLead: 'One provider for what leaves your building, from old lamps to retired IT equipment. Recycle Technologies offers electronics recycling, light bulb recycling, battery recycling, and ballast recycling services for South Carolina businesses.',
   countiesLead: 'Explore the county and city pages below to find the locations and recycling services relevant to your business. Contact us to confirm pickup availability for your address.',
@@ -377,8 +381,8 @@ export const SOUTH_CAROLINA_HUB = hub({
   },
   faqs: [
     { q: 'What materials can I recycle in South Carolina?', a: 'Recycle Technologies accepts commercial electronics, computers, light bulbs, batteries, and PCB/non-PCB lighting ballasts. Contact the team to confirm acceptance of specific items.' },
-    { q: 'Does Recycle Technologies offer business pickup in South Carolina?', a: 'Yes. Scheduled business pickup is available across Upstate South Carolina—including Greenville, Anderson, and Spartanburg—subject to location and collection requirements. Request a quote to confirm availability.' },
-    { q: 'Can I receive a certificate after electronics or lamp recycling?', a: 'Yes. Operating with R2v3, RIOS, and NAID AAA certifications since 1993, Recycle Technologies logs items at intake and issues applicable Certificates of Recycling after processing is complete.' },
+    { q: 'Does Recycle Technologies offer business pickup in South Carolina?', a: 'Yes. Scheduled business pickup is available across Upstate South Carolina, including Greenville, Anderson, and Spartanburg, subject to location and collection requirements. Get a quote to confirm availability.' },
+    { q: 'Can I receive a certificate after electronics or lamp recycling?', a: 'Yes. Recycle Technologies has been recycling since 1993, logs items at intake, and issues applicable Certificates of Recycling after processing is complete.' },
     { q: 'What if my business is outside the pickup area?', a: 'A prepaid mail-in kit may be suitable for eligible materials. Review available kits and shipping instructions before sending your items.' },
   ],
   photo: PHOTO_A,

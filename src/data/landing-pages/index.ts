@@ -12,7 +12,6 @@ import { LANDING_CHICAGO_LIGHT_BULBS } from './chicago-light-bulbs'
 import { LANDING_MINNESOTA_UNIVERSAL_WASTE } from './minnesota-universal-waste-recycling'
 import { LANDING_WISCONSIN_UNIVERSAL_WASTE } from './wisconsin-universal-waste-recycling'
 import { LANDING_CHICAGO_UNIVERSAL_WASTE } from './chicago-universal-waste-recycling'
-import { LANDING_WILLIAMSTON_BALLAST_RECYCLING } from './williamston-ballast-recycling'
 
 /**
  * The Google Ads landing pages: the nine of 30 Sep 2026, redesigned 27 Oct
@@ -37,13 +36,9 @@ export const LANDING_PAGES: LandingPage[] = [
   LANDING_WISCONSIN_UNIVERSAL_WASTE,
   // Chicago universal waste, 29 Oct 2026 (management).
   LANDING_CHICAGO_UNIVERSAL_WASTE,
-  // Williamston, SC, 11 Nov 2026 (Aaqib). Since 16 Nov 2026 only the ballast
-  // page is a Google Ads page: /south-carolina/williamston/ and its
-  // electronics, battery and light bulb pages are the SEO location pages
-  // (src/data/county-pages/areas/williamston-south-carolina.ts and
-  // src/data/local-pages/williamston-*.ts). Ballast: "do not do the ballast
-  // page for now" (Aaqib).
-  LANDING_WILLIAMSTON_BALLAST_RECYCLING,
+  // Williamston, SC: Google Ads pages 11 to 16 Nov 2026; since 16 and 17 Nov
+  // the SEO location pages (src/data/county-pages/areas/williamston-south-carolina.ts
+  // and src/data/local-pages/williamston-*.ts).
 ]
 
 /** Admin -> Pages document: `landing/` and the URL's path, e.g. landing/battery-recycling-Wisconsin. */
