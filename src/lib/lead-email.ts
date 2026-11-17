@@ -209,7 +209,11 @@ const sectionsText = (sections: Section[]) => sections.flatMap((s) => [
  * Enquiries passes one for an enquiry that did not come from a website form
  * (a phone call, a tap to call), which never sent this email.
  */
-export function leadNotification(l: LeadForEmail, intro?: { title: string; line: string }): { subject: string; text: string; html: string } {
+export function leadNotification(l: LeadForEmail, intro?: { title: string; line: string },
+  /** A line under the heading, in the brand colour: how the enquiry was
+   *  routed to the reader (src/lib/lead-routing.ts, 18 Nov 2026). The
+   *  subject is unchanged, so inbox rules keep working. */
+  opts?: { routedLine?: string }): { subject: string; text: string; html: string } {
   const d = l.details
   const base = INTRO[l.type] ?? {
     title: 'New Website Enquiry', line: `A new ${l.type} enquiry came in from the website.`, subject: 'New Website Enquiry',
@@ -235,12 +239,14 @@ export function leadNotification(l: LeadForEmail, intro?: { title: string; line:
     : `${base.subject}: ${who}`
   const link = l.id ? `${SITE.origin}/admin/?lead=${l.id}` : null
 
-  const text = [head.title, '', ...sectionsText(sections), sent].join('\n')
+  const routed = opts?.routedLine?.trim() || null
+  const text = [head.title, ...(routed ? [routed] : []), '', ...sectionsText(sections), sent].join('\n')
 
   const html = `<!doctype html><html><body style="margin:0;padding:24px;background:#ffffff">
 <div style="font-family:Arial,Helvetica,sans-serif;color:#333333;max-width:420px">
 <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#222222">${esc(head.title)}</p>
 <p style="margin:0;font-size:13px;color:#777777">${esc(head.line)}</p>
+${routed ? `<p style="margin:8px 0 0;font-size:13px;font-weight:700;color:#05838b">${esc(routed)}</p>` : ''}
 ${sectionsHtml(sections)}
 ${link ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 0"><tr><td style="background:#05838b;border-radius:6px">
 <a href="${esc(link)}" style="display:inline-block;padding:10px 18px;font-size:13px;font-weight:700;color:#ffffff;text-decoration:none">Open in Publisher</a>

@@ -14,6 +14,7 @@ import { isLeadFormKey, leadFormKey } from '@/lib/lead-forms'
 import { COMPANY_INVALID_MESSAGE, isPlaceholderCompany } from '@/lib/company-name'
 import { visitorIdFrom } from '@/lib/visitor/consent'
 import { convertVisitor } from '@/lib/visitor/leads'
+import { recordRoute, routeDetails, routeLead, routeRecipients } from '@/lib/lead-route-apply'
 
 /**
  * Where the public forms post — the first public endpoint in the build.
@@ -270,6 +271,19 @@ export async function POST(req: Request): Promise<Response> {
     if (payload.form === 'pickup') details.audience = 'Commercial'
   }
 
+  /* State routing (management, 18 Nov 2026; src/lib/lead-routing.ts): MN, WI
+     and IL to Christine, every other state to Jason and Umer. Tests,
+     residential and spam are left unrouted. Decided before the insert so the
+     enquiry is saved with it (details.routedTo / details.routing). Never
+     costs the enquiry. */
+  let route: ReturnType<typeof routeLead> | null = null
+  try {
+    route = routeLead({ name, email, company, message, details, ip })
+    Object.assign(details, routeDetails(route))
+  } catch (err) {
+    console.error('[leads] routing failed, sent the usual way:', (err as Error).message)
+  }
+
   let id: number | null = null
   try {
     const row = await one<{ id: number }>(
@@ -345,29 +359,45 @@ export async function POST(req: Request): Promise<Response> {
 
   // --------------------------------------------------------------- notify --
   // Business enquiries to Christine, Usman in CC (6 Oct 2026); see notifyRecipients.
-  const { to, cc } = notifyRecipients({
+  // A routed enquiry (18 Nov 2026) goes to the people it was routed to
+  // instead, the CC kept; see routeRecipients in src/lib/lead-route-apply.ts.
+  const usual = notifyRecipients({
     form: leadFormKey({ type, details, source_page: sourcePage }),
     audience: details.audience,
   })
+  const routed = route ? routeRecipients(route, usual.cc) : null
+  const to = routed?.to ?? usual.to
+  const cc = routed ? routed.cc : usual.cc
   let notified = false
+  let notifyFail: string | undefined
   if (to && mailConfigured()) {
     // The table layout Asim sent on 24 Sep 2026 — see src/lib/lead-email.ts.
     // `attribution` adds the Source section: the ad click (22 Oct 2026, Usman).
-    const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id, attribution: attr })
+    const mail = leadNotification({ type, name, email, phone, company, message, details, sourcePage, submitPage, id, attribution: attr },
+      undefined, routed ? { routedLine: routed.line } : undefined)
     const result = await sendMail({
       to,
       ...(cc ? { cc } : {}),
-      subject: mail.subject,
+      subject: `${routed?.subjectPrefix ?? ''}${mail.subject}`,
       text: mail.text,
       html: mail.html,
       // Replying to the notification replies to the person who wrote in.
       replyTo: email,
     })
     notified = result.sent
+    notifyFail = result.reason
   } else if (!to) {
     console.warn('[leads] saved, but LEAD_NOTIFY_TO is not set — nobody was emailed.')
   } else {
     console.warn('[leads] saved, but SMTP is not configured — nobody was emailed.')
+  }
+
+  // Assignment and the Activity lines for the routing, after the answer.
+  if (id && route) {
+    const leadId = id
+    const decided = route
+    const mailed = { sent: notified, to, reason: notifyFail ?? (mailConfigured() ? undefined : 'email is not set up on this server') }
+    after(() => recordRoute(leadId, decided, mailed))
   }
 
   // ------------------------------------------------------ residential reply --

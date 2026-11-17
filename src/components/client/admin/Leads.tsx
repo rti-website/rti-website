@@ -105,10 +105,24 @@ const LEAD_FIELDS: { key: string; label: string; from: 'col' | 'details' }[] = [
   { key: 'clickedFrom', label: 'Tapped on page', from: 'details' },
   { key: 'clickLabel', label: 'Link text', from: 'details' },
   { key: 'autoReply', label: 'Drop off email sent', from: 'details' },
+  // State routing, 18 Nov 2026 (src/lib/lead-routing.ts).
+  { key: 'routedTo', label: 'Routed to', from: 'details' },
+  { key: 'routing', label: 'Routing', from: 'details' },
 ]
 const KNOWN_DETAILS = new Set([...LEAD_FIELDS.filter((f) => f.from === 'details').map((f) => f.key), 'form'])
 /** "Contact Us", "Get a Quote" or "Schedule a Pickup" (29 Sep 2026, src/lib/lead-forms.ts). */
 const formOf = (l: LeadRow): string | null => { const k = leadFormKey(l); return k ? LEAD_FORMS[k] : null }
+/** The labels of src/lib/lead-routing.ts ROUTES, kept here so the client
+ *  bundle does not take the routing rules with it. */
+const ROUTED = ['Christine', 'Jason & Umer']
+/** Who a website enquiry was routed to (18 Nov 2026): a ROUTED label, 'not'
+ *  when it was left unrouted, 'none' when it came in before routing (or
+ *  was logged by hand). */
+const routeOf = (l: LeadRow): string => {
+  const d = l.details ?? {}
+  if (d.routedTo) return d.routedTo
+  return d.routing ? 'not' : 'none'
+}
 /** Who hands enquiries out: administrators, editors and the Ads manager (28 Sep 2026). */
 export const isLeadManager = (role: string) => role === 'administrator' || role === 'editor' || role === 'ads'
 export const LEAD_STATUSES = ['new', 'contacted', 'qualified', 'won', 'lost', 'spam']
@@ -193,6 +207,8 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
   const [who, setWho] = useState('')   // '' any, 'none' unassigned, or an agent id
   // Which form (29 Sep 2026): '' any, a LEAD_FORMS key, or 'other' (phone, tap to call…).
   const [formF, setFormF] = useState('')
+  // State routing (18 Nov 2026): '' any, a ROUTED label, 'not' left unrouted, 'none' from before routing.
+  const [routeF, setRouteF] = useState('')
   // Date range — management's request, 24 Sep 2026 ("date-range filters and
   // a global search bar"). Same choices as the Posts list.
   const [range, setRange] = useState('')
@@ -287,9 +303,10 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
     (!status || l.status === status)
     && (!who || (who === 'none' ? !l.assigned_to : String(l.assigned_to) === who))
     && (!formF || (formF === 'other' ? !leadFormKey(l) : leadFormKey(l) === formF))
+    && (!routeF || routeOf(l) === routeF)
     && inRange(l.created_at)
     && (words.length === 0 || ((h) => words.every((w) => h.includes(w)))(haystack(l))))
-  const filtering = Boolean(q || status || range || who || formF)
+  const filtering = Boolean(q || status || range || who || formF || routeF)
 
   function download() {
     const blob = new Blob([leadsCsv(shown)], { type: 'text/csv;charset=utf-8' })
@@ -320,7 +337,8 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           <b>Every enquiry lands here: the website forms, and the ones the team logs from phone calls, emails and walk ins.</b>{' '}
           <b>View details</b> shows the whole enquiry, where they are on a map, how they found us and everything that has happened to it;{' '}
           <b>View form</b> shows it the way the notification email laid it out.{' '}
-          <b>Assigned</b> hands it to an agent, who then sees it in their own list. <b>Delete</b> removes test entries and spam for good. The <b>mi</b> under Location is the distance to the
+          <b>Assigned</b> hands it to an agent, who then sees it in their own list.{' '}
+          Website enquiries are <b>routed by state</b>: MN, WI and IL are emailed to Christine and assigned to her; every other state is emailed to Jason and Umer to hand out. Tests, residential and spam are not routed. <b>Delete</b> removes test entries and spam for good. The <b>mi</b> under Location is the distance to the
           nearer facility: green is inside the 100 mile pickup area.
         </span></div>
       )}
@@ -340,6 +358,14 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           {Object.entries(LEAD_FORMS).map(([k, label]) => <option key={k} value={k}>{label}</option>)}
           <option value="other">Not from a form</option>
         </select>
+        {canAssign && (
+          <select className="a-inp" style={{ width: 'auto' }} value={routeF} onChange={(e) => setRouteF(e.target.value)} aria-label="Filter by routing">
+            <option value="">Any routing</option>
+            {ROUTED.map((r) => <option key={r} value={r}>Routed to {r}</option>)}
+            <option value="not">Not routed (test, residential, spam)</option>
+            <option value="none">Before routing</option>
+          </select>
+        )}
         {canAssign && (
           <select className="a-inp" style={{ width: 'auto' }} value={who} onChange={(e) => setWho(e.target.value)} aria-label="Filter by agent">
             <option value="">Anyone</option>
@@ -367,7 +393,7 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
           </span>
         )}
         {filtering && (
-          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); setWho(''); setFormF(''); pickRange(''); setFrom(''); setTo('') }}>
+          <button className="a-btn sm" onClick={() => { setQ(''); setStatusFilter(''); setWho(''); setFormF(''); setRouteF(''); pickRange(''); setFrom(''); setTo('') }}>
             Clear filters
           </button>
         )}
@@ -402,6 +428,11 @@ export function Leads({ onToast, adding, onAdded, openId = null }: {
                     {agents.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
                   </select>
                 ) : (l.assigned_name ?? <span className="a-hint">—</span>)}
+                {routeOf(l) !== 'none' && (
+                  <div className="a-meta" title={l.details?.routing ?? ''}>
+                    {routeOf(l) === 'not' ? 'Not routed' : `Routed: ${routeOf(l)}`}
+                  </div>
+                )}
               </td>
               <td>
                 <select className="a-inp" style={{ height: 28, fontSize: 12, width: 'auto' }}
