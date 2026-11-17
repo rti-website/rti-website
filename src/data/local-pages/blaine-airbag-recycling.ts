@@ -62,7 +62,7 @@ export const BLAINE_AIRBAG_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Scheduled for auto businesses within roughly 100 miles",
+              body: "Scheduled for auto businesses in the surrounding area",
             },
             { icon: "mail", title: "Mail-in", body: "Airbag recycling kits for customers outside our area" },
           ],
@@ -165,7 +165,7 @@ export const BLAINE_AIRBAG_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Body shops, collision centers, dealerships, vehicle dismantlers and fleet operators build up airbags faster than they can haul them. Scheduled pickup is a business service covering sites within roughly 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Lino Lakes, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Body shops, collision centers, dealerships, vehicle dismantlers and fleet operators build up airbags faster than they can haul them. Scheduled pickup is a business service covering sites around Blaine, including Coon Rapids, Andover, Anoka, Lino Lakes, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

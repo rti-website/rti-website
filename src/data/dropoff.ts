@@ -232,7 +232,7 @@ export const ARRIVE = {
 /** Recycling for Businesses — 7209:3323. */
 export const BUSINESS = {
   heading: 'Recycling for Businesses',
-  body: 'If you have larger volumes, schedule a pickup instead. We offer business pickup within about 100 miles of each of our facilities and across the Chicago area. Chicago has no drop-off facility, so Chicago-area businesses should use commercial pickup.',
+  body: 'If you have larger volumes, schedule a pickup instead. We offer business pickup around each of our facilities and across the Chicago area. Chicago has no drop-off facility, so Chicago-area businesses should use commercial pickup.',
   button: { label: 'Schedule a Pickup', href: PICKUP_HREF },
 }
 
@@ -253,7 +253,7 @@ export const FAQ = {
     { q: 'Is there a fee?', a: 'Fees depend on the item and the quantity. Call the location before you visit for pricing.' },
     { q: 'What payment do you accept?', a: 'We typically accept payments through Paypal, Wire Transfer, Bank Transfer, and Credit Cards. You may contact our support teams to confirm your desired payment method.' },
     { q: 'What happens to the data on my devices?', a: 'Recycle Technologies erases all the data through ADISA Level-5 certified data destruction methods, ensuring that your sensitive information and data no longer remain recoverable, so you have complete peace of mind.' },
-    { q: 'Can I drop off for my business?', a: 'Yes, businesses can drop off at our locations. For larger volumes, use Schedule a Pickup. We pick up from businesses within about 100 miles of each facility and across the Chicago area.' },
+    { q: 'Can I drop off for my business?', a: 'Yes, businesses can drop off at our locations. For larger volumes, use Schedule a Pickup. We pick up from businesses around each facility and across the Chicago area.' },
     { q: 'What if there’s no location near me?', a: 'Use our mail-in kit to recycle from anywhere in the US. Chicago-area businesses can schedule a commercial pickup.' },
   ],
 }

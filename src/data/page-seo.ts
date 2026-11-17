@@ -368,7 +368,7 @@ const RESTORED: Record<string, { title: string; description: string }> = {
  * what the page had. The trailing comment is the sheet tab(s).
  */
 const CONTENT_PLAN_14_OCT: Record<string, { title?: string; description?: string }> = {
-  "/minnesota-recycling/ramsey/": { title: "Electronics Recycling Ramsey MN | Drop-Off & Pickup", description: "Need electronics recycling in Ramsey, MN? Drop off or mail in your old devices, batteries and bulbs. Business pickup within 100 miles. Call for a free quote." }, // 01,03
+  "/minnesota-recycling/ramsey/": { title: "Electronics Recycling Ramsey MN | Drop-Off & Pickup", description: "Need electronics recycling in Ramsey, MN? Drop off or mail in your old devices, batteries and bulbs. Business pickup available. Call for a free quote." }, // 01,03
   "/": { title: "E-Waste Recycling, ITAD & Shredding | Recycle Technologies", description: "Full-service recycling facility for businesses handling e-waste, electronics, metals, bulbs, batteries, data destruction and logistics." }, // 05,06
   "/minnesota-recycling/hennepin-county-recycling-center/": { title: "Hennepin County Recycling: Electronics, Batteries & Bulbs", description: "Recycling center Hennepin County receiving electronics, computers, lamps, batteries, and devices, managed through documented intake and processing steps." }, // 05,06
   "/phone-shredding-chicago/": { title: "Phone Shredding in Chicago, IL | Recycle Technologies" }, // 05

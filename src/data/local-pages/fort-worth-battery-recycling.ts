@@ -21,7 +21,7 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
   hero: {
     crumb: "Battery Recycling in Fort Worth, TX",
     h1: "Battery Recycling in Fort Worth, TX",
-    body: ["Battery recycling for warehouses, hospitals, schools, contractors and homes across Tarrant County and Dallas-Fort Worth, through our Near Southside partner location, commercial pickup reaching about 100 miles, and prepaid battery kits."],
+    body: ["Battery recycling for warehouses, hospitals, schools, contractors and homes across Tarrant County and Dallas-Fort Worth, through our Near Southside partner location, commercial pickup across the surrounding area, and prepaid battery kits."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -63,7 +63,7 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Scheduled collection up to roughly 100 miles away.",
+              body: "Scheduled collection in the surrounding area.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid battery kits for smaller amounts." },
           ],
@@ -184,7 +184,7 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
           title: "Scheduled Business Pickup",
           dark: true,
           body: [
-            "Warehouse managers, facility directors, IT teams, fleet shops and building owners can book collection instead of hauling batteries across town. Pickup reaches roughly 100 miles from Fort Worth, including Arlington, Dallas, Irving, Grand Prairie, Grapevine, Euless, Denton, Waxahachie, Decatur, Mineral Wells and Granbury.",
+            "Warehouse managers, facility directors, IT teams, fleet shops and building owners can book collection instead of hauling batteries across town. Pickup covers the area around Fort Worth, including Arlington, Dallas, Irving, Grand Prairie, Grapevine, Euless, Denton, Waxahachie, Decatur, Mineral Wells and Granbury.",
           ],
           listIntro: "When you request a quote, include:",
           list: [
@@ -332,7 +332,7 @@ export const FORT_WORTH_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Reach across North Texas",
-              body: "Commercial pickup up to around 100 miles from Fort Worth.",
+              body: "Commercial pickup around Fort Worth.",
             },
             {
               icon: "clock",

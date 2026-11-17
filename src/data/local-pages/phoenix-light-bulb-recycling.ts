@@ -62,7 +62,7 @@ export const PHOENIX_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Within roughly 100 miles. Contact the team to confirm your site.",
+              body: "In the surrounding area. Contact the team to confirm your site.",
             },
             {
               icon: "mail",
@@ -167,7 +167,7 @@ export const PHOENIX_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Property managers, schools, hospitals, retailers and electrical contractors that replace lamps regularly can arrange pickup instead of hauling them in. Pickup is a business service, covering sites within roughly 100 miles, including Mesa, Scottsdale, Chandler, Gilbert, Glendale, Peoria and Goodyear.",
+            "Property managers, schools, hospitals, retailers and electrical contractors that replace lamps regularly can arrange pickup instead of hauling them in. Pickup is a business service, covering sites in the surrounding area, including Mesa, Scottsdale, Chandler, Gilbert, Glendale, Peoria and Goodyear.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [
@@ -229,7 +229,7 @@ export const PHOENIX_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For Valley businesses within roughly 100 miles with recurring bulb waste.",
+              body: "For Valley businesses in the surrounding area with recurring bulb waste.",
             },
             {
               icon: "pin",

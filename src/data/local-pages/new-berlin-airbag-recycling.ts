@@ -62,7 +62,7 @@ export const NEW_BERLIN_AIRBAG_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "For repair shops, dealerships, dismantlers, and fleets within 100 miles",
+              body: "For repair shops, dealerships, dismantlers, and fleets in the surrounding area",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid airbag kits for a few units at a time" },
           ],
@@ -165,7 +165,7 @@ export const NEW_BERLIN_AIRBAG_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            `Collision centers, independent repair shops, dealerships, auto dismantlers and fleet operators can schedule pickup instead of storing airbags on site. Commercial pickup reaches businesses within 100 miles of New Berlin, including Milwaukee, Waukesha, West Allis, Wauwatosa, Menomonee Falls, Oak Creek, Racine, Kenosha, West Bend and Madison. Our [automotive and fleet services page](${href('/industries/automotive-fleet/')}) covers what else we handle for shops.`,
+            `Collision centers, independent repair shops, dealerships, auto dismantlers and fleet operators can schedule pickup instead of storing airbags on site. Commercial pickup reaches businesses around New Berlin, including Milwaukee, Waukesha, West Allis, Wauwatosa, Menomonee Falls, Oak Creek, Racine, Kenosha, West Bend and Madison. Our [automotive and fleet services page](${href('/industries/automotive-fleet/')}) covers what else we handle for shops.`,
           ],
           listIntro: "When you ask for a quote, include:",
           list: [

@@ -29,7 +29,7 @@ export const RAMSEY: CountyPage = {
   about: {
     heading: "About Ramsey Recycling Center MN",
     blocks: [
-      { p: "Ramsey County falls under our 100-mile service area. You can avail our services by dropping off the items that you want to recycle. We have a drop-off facility that allows you to do that. On top of that, we also have a mail-in program that allows you to send your item for recycling via courier. We only require you to put your items in packaging, so they are safe for transport." },
+      { p: "Ramsey County falls under our service area. You can avail our services by dropping off the items that you want to recycle. We have a drop-off facility that allows you to do that. On top of that, we also have a mail-in program that allows you to send your item for recycling via courier. We only require you to put your items in packaging, so they are safe for transport." },
       { p: "We will send you the shipping tags. When the recycling is completed will send you the certificate for recycling. This protects you from improper disposal. You can call us at +1 763-559-5130 or [Fill out this Form](quote) to get a free quote. Government Agencies, Businesses, and Companies can rely on our services. We are AAA NAID Certified. You can [use this form](quote) to request a pickup. Pickup available for commercial clients only" },
       { p: "Recycle Technologies is an EPA Certified Recycler in the Midwest. We provide above-and-beyond services for you. Our belief is proper disposal is the only way to fight climate change. Recycling helps reduce the build-up of our carbon footprint. We mine fewer natural resources and instead reclaim them through recycling. Here is a list of locations we provide services to:" },
     ],

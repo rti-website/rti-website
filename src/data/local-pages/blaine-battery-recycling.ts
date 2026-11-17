@@ -21,7 +21,7 @@ export const BLAINE_BATTERY_RECYCLING: LocalPage = {
   hero: {
     crumb: "Battery Recycling in Blaine, Minnesota",
     h1: "Battery Recycling in Blaine, Minnesota",
-    body: ["Battery recycling for Blaine and the north metro, with weekday drop-off at our 99th Lane NE center, commercial pickup within about 100 miles, and mail-in kits for smaller quantities."],
+    body: ["Battery recycling for Blaine and the north metro, with weekday drop-off at our 99th Lane NE center, commercial pickup in the surrounding area, and mail-in kits for smaller quantities."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -62,7 +62,7 @@ export const BLAINE_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Arrange collection within about 100 miles of Blaine",
+              body: "Arrange collection around Blaine",
             },
             {
               icon: "mail",
@@ -213,7 +213,7 @@ export const BLAINE_BATTERY_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            `Businesses with larger battery collections can arrange pickup within about 100 miles of Blaine. We serve companies in [Coon Rapids](${href('/minnesota-recycling/coon-rapids/')}), Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), Brooklyn Park, Maple Grove, Plymouth, [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), [St. Paul](${href('/minnesota-recycling/battery-recycling-st-paul/')}), [Bloomington](${href('/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/')}), Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and [St. Cloud](${href('/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/')}).`,
+            `Businesses with larger battery collections can arrange pickup around Blaine. We serve companies in [Coon Rapids](${href('/minnesota-recycling/coon-rapids/')}), Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), Brooklyn Park, Maple Grove, Plymouth, [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), [St. Paul](${href('/minnesota-recycling/battery-recycling-st-paul/')}), [Bloomington](${href('/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/')}), Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and [St. Cloud](${href('/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/')}).`,
           ],
           listIntro: "To help us prepare a quote, provide:",
           list: [

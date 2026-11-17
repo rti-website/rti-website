@@ -21,7 +21,7 @@ export const BLAINE_HARD_DRIVE_DESTRUCTION: LocalPage = {
   hero: {
     crumb: "Hard Drive Destruction in Blaine, Minnesota",
     h1: "Hard Drive Destruction in Blaine, Minnesota",
-    body: ["Hard drive destruction for Blaine and the north metro, with drop-off and witnessed destruction at our 99th Lane NE facility, secure pickup for businesses within about 100 miles, and mail-in for remote offices."],
+    body: ["Hard drive destruction for Blaine and the north metro, with drop-off and witnessed destruction at our 99th Lane NE facility, secure pickup for businesses in the surrounding area, and mail-in for remote offices."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -59,7 +59,7 @@ export const BLAINE_HARD_DRIVE_DESTRUCTION: LocalPage = {
             {
               icon: "truck",
               title: "Secure pickup",
-              body: "For businesses within roughly 100 miles of Blaine",
+              body: "For businesses around Blaine",
             },
             {
               icon: "mail",
@@ -180,7 +180,7 @@ export const BLAINE_HARD_DRIVE_DESTRUCTION: LocalPage = {
           title: "Secure Business Pickup",
           dark: true,
           body: [
-            "Hospitals, clinics, schools, law and accounting offices, property management firms and IT teams often have drives piling up in a locked closet. We collect drives from businesses within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Edina, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Hospitals, clinics, schools, law and accounting offices, property management firms and IT teams often have drives piling up in a locked closet. We collect drives from businesses around Blaine, including Coon Rapids, Andover, Anoka, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Edina, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

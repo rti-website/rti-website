@@ -166,7 +166,7 @@ export const GREENWOOD_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Property managers, schools, hospitals, retailers and electrical contractors that replace lamps on a schedule can set up pickup instead of hauling bulbs in. Pickup is a business service, and we serve sites within about 100 miles of Greenwood, from Indianapolis and Franklin to Columbus, Bloomington and Muncie.",
+            "Property managers, schools, hospitals, retailers and electrical contractors that replace lamps on a schedule can set up pickup instead of hauling bulbs in. Pickup is a business service, and we serve sites around Greenwood, from Indianapolis and Franklin to Columbus, Bloomington and Muncie.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [
@@ -233,7 +233,7 @@ export const GREENWOOD_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For businesses within about 100 miles with steady bulb turnover",
+              body: "For businesses in the surrounding area with steady bulb turnover",
             },
             {
               icon: "mail",

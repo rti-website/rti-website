@@ -63,7 +63,7 @@ export const NEW_BERLIN_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Scheduled collection for companies within 100 miles of New Berlin.",
+              body: "Scheduled collection for companies around New Berlin.",
             },
             {
               icon: "mail",
@@ -176,7 +176,7 @@ export const NEW_BERLIN_BATTERY_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Property managers swapping out smoke detector and exit sign batteries, contractors with worn tool packs, schools and hospitals retiring backup units, and warehouses with sealed lead-acid batteries can book pickup instead of hauling. Pickup covers businesses within 100 miles, including Waukesha, Brookfield, Pewaukee, Menomonee Falls, Wauwatosa, Franklin, Milwaukee, Oak Creek, Racine, Kenosha and Madison. Our trucks secure each load with load bars and straps, and items are logged at collection.",
+            "Property managers swapping out smoke detector and exit sign batteries, contractors with worn tool packs, schools and hospitals retiring backup units, and warehouses with sealed lead-acid batteries can book pickup instead of hauling. Pickup covers businesses in the surrounding area, including Waukesha, Brookfield, Pewaukee, Menomonee Falls, Wauwatosa, Franklin, Milwaukee, Oak Creek, Racine, Kenosha and Madison. Our trucks secure each load with load bars and straps, and items are logged at collection.",
           ],
           listIntro: "To get an accurate quote, tell us:",
           list: [
@@ -289,7 +289,7 @@ export const NEW_BERLIN_BATTERY_RECYCLING: LocalPage = {
       { q: "Do I have to live in New Berlin to drop off?", a: "No. Drop-off is open to households and businesses from any town during regular hours." },
       { q: "Can my company drop off batteries instead of booking pickup?", a: "Yes. Businesses can bring batteries to South 171st Street on weekdays, which works well for smaller or one-time loads." },
       { q: "Can one pickup include more than batteries?", a: "Yes. A scheduled business collection can also cover electronics, lamps, and confidential documents." },
-      { q: "We have locations in Wisconsin and Minnesota. Can you serve both?", a: "Yes. Business pickup runs within 100 miles of our Wisconsin and Minnesota facilities, including St. Paul." },
+      { q: "We have locations in Wisconsin and Minnesota. Can you serve both?", a: "Yes. Business pickup runs around our Wisconsin and Minnesota facilities, including St. Paul." },
       { q: "How soon can a battery pickup be scheduled?", a: "Call 262-798-3040 to check the next open date for your area." },
     ],
   },

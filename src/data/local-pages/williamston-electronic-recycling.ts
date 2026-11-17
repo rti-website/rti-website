@@ -32,7 +32,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `South Carolina restricts the landfill disposal of certain covered electronics, including specified computers, monitors, printers and televisions. Recycle Technologies helps businesses manage retired electronics through our [Williamston location](${FACILITY}) at 109 Twenty Nine Ct. We accept desktops, laptops, servers, networking gear, CRT and flat-panel monitors, TVs, printers, copiers, scanners, fax machines, phones, cables, chargers and other accepted electronics. Our team coordinates pickups from offices, plants, schools and clinics within approximately 100 miles, including Greenville, Anderson and Spartanburg. Equipment is dismantled so plastics, wire, metals, glass and circuit boards can be recovered, and every completed recycling job is documented with a Certificate of Recycling. Recycling is handled through Recycle Technologies-certified recycling facilities.`,
+    `South Carolina restricts the landfill disposal of certain covered electronics, including specified computers, monitors, printers and televisions. Recycle Technologies helps businesses manage retired electronics through our [Williamston location](${FACILITY}) at 109 Twenty Nine Ct. We accept desktops, laptops, servers, networking gear, CRT and flat-panel monitors, TVs, printers, copiers, scanners, fax machines, phones, cables, chargers and other accepted electronics. Our team coordinates pickups from offices, plants, schools and clinics in the surrounding area, including Greenville, Anderson and Spartanburg. Equipment is dismantled so plastics, wire, metals, glass and circuit boards can be recovered, and every completed recycling job is documented with a Certificate of Recycling. Recycling is handled through Recycle Technologies-certified recycling facilities.`,
   ],
   bands: [
     {
@@ -48,7 +48,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
             { label: "Phone", value: "(864) 774-8310" },
             { label: "Email", value: "support@lightingresourcesinc.com" },
             { label: "Hours", value: "9:00 AM to 4:00 PM" },
-            { label: "Pickup area", value: "Offices, plants and campuses within approximately 100 miles of Williamston, from Anderson and Greenville to Spartanburg and the Lake Hartwell area." },
+            { label: "Pickup area", value: "Offices, plants and campuses around Williamston, from Anderson and Greenville to Spartanburg and the Lake Hartwell area." },
           ],
         },
         {
@@ -228,7 +228,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
             { icon: "recycle", title: "Materials recovered, not dumped", body: "Devices are broken down into plastics, wires, glass, metals and circuit boards for appropriate material recovery." },
             { icon: "file", title: "Documentation", body: "A Certificate of Recycling documents every completed load." },
             { icon: "layers", title: "One pickup for four recycling services", body: "Add accepted batteries, lamps and ballasts to your electronics collection." },
-            { icon: "truck", title: "Upstate coverage", body: "Pickup is coordinated for eligible business sites within approximately 100 miles of Williamston." },
+            { icon: "truck", title: "Upstate coverage", body: "Pickup is coordinated for eligible business sites around Williamston." },
             { icon: "clock", title: "Since 1993", body: "More than three decades of recycling experience." },
           ],
         },
@@ -244,7 +244,7 @@ export const WILLIAMSTON_ELECTRONIC_RECYCLING: LocalPage = {
       { q: "Do you take old CRT monitors and tube TVs?", a: "Yes. CRTs are accepted along with flat panels. Mention them on the quote form so we can plan the load." },
       { q: "Can you handle a full office or school cleanout?", a: "Yes. Share the equipment list, project size and timeline, and we'll plan collection around your schedule." },
       { q: "Can we add batteries or lamps to the same pickup?", a: "Yes. Accepted batteries, lamps and ballasts can be included with electronics when properly separated and prepared." },
-      { q: "Do you serve businesses in Greenville and Spartanburg?", a: "Yes. Pickup covers eligible sites within approximately 100 miles of Williamston, including both cities. Contact us to confirm your address." },
+      { q: "Do you serve businesses in Greenville and Spartanburg?", a: "Yes. Pickup covers eligible sites around Williamston, including both cities. Contact us to confirm your address." },
     ],
   },
   after: [

@@ -16,7 +16,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
   hero: {
     crumb: "Battery Recycling in Wisconsin",
     h1: "Certified Battery Recycling Services in Wisconsin",
-    body: "Reliable commercial battery recycling for Wisconsin businesses, with scheduled pickup within 100 miles of our R2v3-certified facility in New Berlin, WI. Alkaline, lithium-ion, lead-acid, NiCd, button cell, EV, and power tool batteries accepted, with a certificate of recycling and safe disposal for your records.",
+    body: "Reliable commercial battery recycling for Wisconsin businesses, with scheduled pickup around our R2v3-certified facility in New Berlin, WI. Alkaline, lithium-ion, lead-acid, NiCd, button cell, EV, and power tool batteries accepted, with a certificate of recycling and safe disposal for your records.",
     button: { label: 'Get a Quote', href: QUOTE_HREF },
     secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },
     image: '/images/landing/hero-battery.png',
@@ -34,7 +34,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
   options: {
     heading: "Battery Recycling Options in Wisconsin",
     cards: [
-      { title: "Business Pickup", body: "Scheduled collection of spent batteries from businesses within 100 miles of our New Berlin facility." },
+      { title: "Business Pickup", body: "Scheduled collection of spent batteries from businesses around our New Berlin facility." },
       { title: "Drop-Off", body: "Bring batteries to a nearby Recycle Technologies location." },
       { title: "Mail-In Program", body: "Order a mail-in kit for eligible battery types." },
     ],
@@ -44,7 +44,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
     heading: "Why Choose Recycle Technologies for Battery Recycling?",
     cards: [
       { title: "Nearby certified facility", body: "Batteries are sorted and processed at our R2v3-certified New Berlin, WI facility." },
-      { title: "Hassle-free pickup", body: "We collect directly from businesses within a 100-mile radius." },
+      { title: "Hassle-free pickup", body: "We collect directly from businesses in the surrounding area." },
       { title: "Certificate of recycling", body: "Proof of recycling and safe disposal for your compliance records." },
       { title: "Proven experience", body: "Recycling batteries since 1993." },
     ],
@@ -67,7 +67,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
     cards: [
       { title: "Request a Quote", body: "Share your battery types and estimated volume, and we'll set up the right service for your business." },
       { title: "Prepare Your Batteries", body: "Cover battery terminals to reduce fire risk. Mail-in batteries should be separated by type before shipping." },
-      { title: "Scheduled Pickup", body: "Our team collects spent batteries from your location within 100 miles and transports them to our New Berlin, WI facility." },
+      { title: "Scheduled Pickup", body: "Our team collects spent batteries from your location in the surrounding area and transports them to our New Berlin, WI facility." },
       { title: "Sorting & Separation", body: "Trained staff sort and separate batteries by chemistry so each type is handled properly." },
       { title: "Certificate of Recycling", body: "You receive a certificate of recycling and safe disposal for your records." },
     ],
@@ -84,7 +84,7 @@ export const LANDING_WISCONSIN_BATTERY_RECYCLING: LandingPage = {
       { title: "Automotive and fleet businesses", key: "automotive" },
     ],
   },
-  areas: { lead: "Commercial battery pickup within 100 miles of New Berlin, including Milwaukee, Waukesha, Madison, Racine, Sheboygan, Oconomowoc, Fond du Lac, and Appleton." },
+  areas: { lead: "Commercial battery pickup around New Berlin, including Milwaukee, Waukesha, Madison, Racine, Sheboygan, Oconomowoc, Fond du Lac, and Appleton." },
   certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   cta: {
     heading: "Get a Battery Recycling Quote in Wisconsin",

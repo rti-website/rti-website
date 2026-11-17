@@ -62,7 +62,7 @@ export const NEW_BERLIN_BALLAST_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Scheduled collection for commercial sites within 100 miles.",
+              body: "Scheduled collection for commercial sites in the surrounding area.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid kits for non-PCB ballasts." },
           ],
@@ -167,7 +167,7 @@ export const NEW_BERLIN_BALLAST_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Electrical contractors finishing LED conversions, property managers upgrading hallway fixtures, school districts relamping over the summer, hospitals, warehouses and manufacturers can schedule pickup instead of hauling ballasts in. Commercial pickup runs within 100 miles of New Berlin, covering Milwaukee, Waukesha, West Allis, Greenfield, Menomonee Falls, Oak Creek, Racine, Kenosha and Madison. Loads are logged at collection and strapped down for the drive.",
+            "Electrical contractors finishing LED conversions, property managers upgrading hallway fixtures, school districts relamping over the summer, hospitals, warehouses and manufacturers can schedule pickup instead of hauling ballasts in. Commercial pickup runs around New Berlin, covering Milwaukee, Waukesha, West Allis, Greenfield, Menomonee Falls, Oak Creek, Racine, Kenosha and Madison. Loads are logged at collection and strapped down for the drive.",
           ],
           listIntro: "For an accurate quote, send:",
           list: [

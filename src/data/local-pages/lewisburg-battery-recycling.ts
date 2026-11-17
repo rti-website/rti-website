@@ -26,7 +26,7 @@ export const LEWISBURG_BATTERY_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Recycle Technologies takes used batteries of every common chemistry at two Tennessee recycling centers: 1580 Old Columbia Road in Lewisburg for Middle Tennessee, and 2212 Buffalo Road in Johnson City for East Tennessee. That includes alkaline, zinc, lithium-ion, lead-acid, NiCd and button cells, plus EV, Tesla, e-bike, e-scooter, power tool and UPS backup batteries, and damaged or swollen units. Anyone can drop off on weekdays. Businesses can book pickup within about 100 miles of either center, which reaches Nashville and the Tri-Cities. Small batches can ship back in a prepaid kit, and each finished job comes with a certificate of recycling and safe disposal.",
+    "Recycle Technologies takes used batteries of every common chemistry at two Tennessee recycling centers: 1580 Old Columbia Road in Lewisburg for Middle Tennessee, and 2212 Buffalo Road in Johnson City for East Tennessee. That includes alkaline, zinc, lithium-ion, lead-acid, NiCd and button cells, plus EV, Tesla, e-bike, e-scooter, power tool and UPS backup batteries, and damaged or swollen units. Anyone can drop off on weekdays. Businesses can book pickup around either center, which reaches Nashville and the Tri-Cities. Small batches can ship back in a prepaid kit, and each finished job comes with a certificate of recycling and safe disposal.",
   ],
   bands: [
     {
@@ -62,7 +62,7 @@ export const LEWISBURG_BATTERY_RECYCLING: LocalPage = {
           heading: "At Both Centers",
           items: [
             { icon: "pin", title: "Drop-off", body: "Open to businesses and residents." },
-            { icon: "truck", title: "Business pickup", body: "About 100 miles around each center." },
+            { icon: "truck", title: "Business pickup", body: "Around each center." },
             {
               icon: "mail",
               title: "Mail-in",
@@ -154,7 +154,7 @@ export const LEWISBURG_BATTERY_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Auto shops, fleet yards, warehouses, hospitals, schools and data centers can book pickup within about 100 miles of either center. From Lewisburg, that covers Nashville and much of Middle Tennessee. From Johnson City, it covers the Tri-Cities and surrounding East Tennessee counties. When you request a quote, list the battery chemistries, a rough weight or pallet count, and your address. We'll confirm the schedule and price.",
+            "Auto shops, fleet yards, warehouses, hospitals, schools and data centers can book pickup around either center. From Lewisburg, that covers Nashville and much of Middle Tennessee. From Johnson City, it covers the Tri-Cities and surrounding East Tennessee counties. When you request a quote, list the battery chemistries, a rough weight or pallet count, and your address. We'll confirm the schedule and price.",
           ],
           buttons: {
             primary: { label: "Request a Battery Pickup Quote", href: QUOTE_HREF },
@@ -224,7 +224,7 @@ export const LEWISBURG_BATTERY_RECYCLING: LocalPage = {
             { icon: "layers", body: "Every chemistry accepted, from coin cells to EV and e-bike packs" },
             { icon: "battery", body: "Damaged and swollen batteries taken with advance notice" },
             { icon: "pin", body: "Drop-off open to anyone on weekdays" },
-            { icon: "truck", body: "Business pickup within about 100 miles of each center" },
+            { icon: "truck", body: "Business pickup around each center" },
             { icon: "mail", body: "Prepaid mail-in containers matched to each battery type" },
             { icon: "clock", body: "A minority-owned recycler handling batteries since 1993" },
           ],
@@ -237,7 +237,7 @@ export const LEWISBURG_BATTERY_RECYCLING: LocalPage = {
     heading: "Frequently Asked Questions",
     items: [
       { q: "Is battery recycling free in Tennessee?", a: "Cost depends on the battery type and quantity. Call the Lewisburg or Johnson City center, or request a quote, before you bring them in." },
-      { q: "Do you pick up batteries in Franklin and Murfreesboro?", a: "Yes. Both are within about 100 miles of our Lewisburg center. Confirm your address when you request a quote." },
+      { q: "Do you pick up batteries in Franklin and Murfreesboro?", a: "Yes. Both are within the pickup area around our Lewisburg center. Confirm your address when you request a quote." },
       { q: "How long can a business store used batteries before recycling?", a: "Under federal universal waste rules, no more than one year from when they're generated, so plan pickups well ahead." },
       { q: "Can I recycle batteries from outside Tennessee?", a: "Yes. Our prepaid mail-in kits ship nationwide, so offices in other states can send batteries back the same way." },
     ],

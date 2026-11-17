@@ -37,7 +37,7 @@ export const SHREDDING_WISCONSIN: CountyPage = {
     heading: "Wisconsin Shredding Service",
     blocks: [
       { p: "Are you looking for a one-off purge shredding service or want to set up a regular shredding service to remove your confidential data in Wisconsin?" },
-      { p: "Look no further than Recycle Technologies. We collect from a good 100-mile radius servicing Wisconsin and surrounding areas. We have a state-of-the-art shredding facility in Wisconsin, and we are AAA NAID certified. Recycle Technologies offers secure document shredding and confidential waste disposal services." },
+      { p: "Look no further than Recycle Technologies. We collect across a wide area, servicing Wisconsin and surrounding areas. We have a state-of-the-art shredding facility in Wisconsin, and we are AAA NAID certified. Recycle Technologies offers secure document shredding and confidential waste disposal services." },
       { h: "Secure & Affordable Shredding Services in Wisconsin" },
       { p: "We take pride in helping our valued customers with their shredding requirements. We guarantee to offer you an affordable price and peace of mind." },
       { h: "Shredding Service Options" },
@@ -55,7 +55,7 @@ export const SHREDDING_WISCONSIN: CountyPage = {
       ] },
     ] },
     { kind: 'text', heading: "Wisconsin Shredding Locations", blocks: [
-      { p: "We cover 100-mile radius and all major cities from our facility in Minnesota and Wisconsin. You can avail our services in the following major cities. Can not find your city? Call us at (800)969-5166 to speak to our sales expert." },
+      { p: "We cover the surrounding area and all major cities from our facility in Minnesota and Wisconsin. You can avail our services in the following major cities. Can not find your city? Call us at (800)969-5166 to speak to our sales expert." },
       { list: [
         { title: "Madison Shredding", text: "Take the burden off your shoulders by getting reliable shredding services in Madison from your trusted local partner." },
         { title: "Milwaukee Shredding", text: "Take the burden off your shoulders by getting reliable shredding services in Milwaukee from your trusted local partner." },

@@ -62,7 +62,7 @@ export const NEW_BERLIN_TELEVISION_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Scheduled collection for commercial sites within 100 miles",
+              body: "Scheduled collection for commercial sites in the surrounding area",
             },
             { icon: "mail", title: "Mail-in", body: "An electronics recycling kit for a small screen or two" },
           ],
@@ -164,7 +164,7 @@ export const NEW_BERLIN_TELEVISION_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Hotels and senior living communities replacing room TVs, property managers clearing out vacant units, schools, hospitals, offices, restaurants and retailers can have televisions collected on site. Commercial pickup covers businesses within 100 miles of New Berlin, including Milwaukee, Waukesha, Wauwatosa, Brookfield, Menomonee Falls, Oak Creek, Racine, Kenosha, West Bend and Madison. Every set is logged at collection, and loads are secured with load bars and straps.",
+            "Hotels and senior living communities replacing room TVs, property managers clearing out vacant units, schools, hospitals, offices, restaurants and retailers can have televisions collected on site. Commercial pickup covers businesses around New Berlin, including Milwaukee, Waukesha, Wauwatosa, Brookfield, Menomonee Falls, Oak Creek, Racine, Kenosha, West Bend and Madison. Every set is logged at collection, and loads are secured with load bars and straps.",
           ],
           listIntro: "To price your pickup, send us:",
           list: [

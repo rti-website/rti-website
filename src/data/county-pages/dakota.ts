@@ -31,7 +31,7 @@ export const DAKOTA: CountyPage = {
     blocks: [
       { p: "Dakota is part of numerous counties where we provide recycling services. It is considered to be the 3rd most populous county in the state of Minnesota. This county is on the east of the state and is famous for its Vermilion Falls Park and Minnesota Zoo. The residents of Dakota County can use our recycling services with ease." },
       { p: "Our State of art recycling center can cater to all your recycling needs. Please make sure to check what items we accept at our recycling center. Government Agencies, Companies, and Businesses can also rely on our services. You can request a pickup [using this form here](quote). For a free quote, you can contact us at +1-763-559-5130." },
-      { p: "Recycle Technologies has been the pinnacle in providing recycling services. We are an EPA-certified Recycler. Our recycling center's 100-mile coverage area allows us to reach places where recycling is non-existent. Recycling helps reduce carbon emissions and reclaim rare earth resources." },
+      { p: "Recycle Technologies has been the pinnacle in providing recycling services. We are an EPA-certified Recycler. Our recycling center's coverage area allows us to reach places where recycling is non-existent. Recycling helps reduce carbon emissions and reclaim rare earth resources." },
       { p: "Let's work together and make the future for our children greener." },
       { p: "Here are all the places in the county where we provide service to. You can always contact us to schedule services in your area. For a free quote, you can [use this form](quote). Pickups are exclusive to commercial businesses." },
     ],

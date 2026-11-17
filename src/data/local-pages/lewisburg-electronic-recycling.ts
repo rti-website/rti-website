@@ -26,7 +26,7 @@ export const LEWISBURG_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Recycle Technologies recycles computers, laptops, servers, monitors, TVs, printers, copiers, phones and other electronics at two Tennessee sites: 2212 Buffalo Road in Johnson City, serving East Tennessee, and 1580 Old Columbia Road in Lewisburg, serving Middle Tennessee. Businesses can drop off during weekday hours or book pickup within roughly 100 miles of our Johnson City facility. Offices without a site nearby can send small electronics back in a prepaid mail-in kit. Every load is sorted, dismantled and separated so metals, plastics, and circuit boards return to manufacturing instead of a landfill. A Certificate of Recycling documents the job.",
+    "Recycle Technologies recycles computers, laptops, servers, monitors, TVs, printers, copiers, phones and other electronics at two Tennessee sites: 2212 Buffalo Road in Johnson City, serving East Tennessee, and 1580 Old Columbia Road in Lewisburg, serving Middle Tennessee. Businesses can drop off during weekday hours or book pickup around our Johnson City facility. Offices without a site nearby can send small electronics back in a prepaid mail-in kit. Every load is sorted, dismantled and separated so metals, plastics, and circuit boards return to manufacturing instead of a landfill. A Certificate of Recycling documents the job.",
   ],
   bands: [
     {
@@ -157,7 +157,7 @@ export const LEWISBURG_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Offices, schools, healthcare practices, manufacturers and property managers can schedule pickup within roughly 100 miles of our Johnson City or Lewisburg facility, covering nearby areas across East and Middle Tennessee. Pickup is a business service. When you request a quote, list the equipment, an estimated pallet count, and your address. We'll confirm scheduling and pricing for your location.",
+            "Offices, schools, healthcare practices, manufacturers and property managers can schedule pickup around our Johnson City or Lewisburg facility, covering nearby areas across East and Middle Tennessee. Pickup is a business service. When you request a quote, list the equipment, an estimated pallet count, and your address. We'll confirm scheduling and pricing for your location.",
           ],
           buttons: {
             primary: { label: "Request a Pickup Quote", href: QUOTE_HREF },
@@ -229,7 +229,7 @@ export const LEWISBURG_ELECTRONIC_RECYCLING: LocalPage = {
               icon: "battery",
               body: "Lamps, batteries and ballasts accepted alongside electronics in Johnson City",
             },
-            { icon: "truck", body: "Business pickup within roughly 100 miles of Johnson City" },
+            { icon: "truck", body: "Business pickup around Johnson City" },
             { icon: "mail", body: "Prepaid mail-in kits for branch offices anywhere in the state" },
             { icon: "file", body: "A Certificate of Recycling for every completed job" },
             { icon: "clock", body: "A minority-owned recycler serving businesses since 1993" },
@@ -245,7 +245,7 @@ export const LEWISBURG_ELECTRONIC_RECYCLING: LocalPage = {
       { q: "Is electronics recycling free in Tennessee?", a: "Charges depend on the material and quantity. Call your nearest site or request a quote for pricing before you bring anything in." },
       { q: "Does recycling a computer erase the data on it?", a: "No. Wipe or remove drives first, or ask about our hard drive destruction service when you book." },
       { q: "Are the Tennessee sites open on Saturdays?", a: "No. Both Johnson City and Lewisburg take drop-offs Monday through Friday only." },
-      { q: "Do you pick up in Kingsport and Bristol?", a: "Both fall within the roughly 100-mile pickup area around our Johnson City facility. Confirm your address when you request a quote." },
+      { q: "Do you pick up in Kingsport and Bristol?", a: "Both fall within the pickup area around our Johnson City facility. Confirm your address when you request a quote." },
     ],
   },
   after: [

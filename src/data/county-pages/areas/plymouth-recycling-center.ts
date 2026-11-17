@@ -28,7 +28,7 @@ export const PLYMOUTH_RECYCLING_CENTER: CountyPage = {
     blocks: [
       { p: "Plymouth is a thriving city with rolling terrain and lakes. The city provides an impressive quality of life. Recycling Technologies Inc does provide a recycling service in your city. Scroll Below to view all items we accept at our recycling center. You will receive a certificate of recycling after the service." },
       { p: "Recycle Technologies provide to private businesses and government agencies. Bulk recycling is a specialty for us. For pickups, you can use [this form](pickup). We also provide guaranteed Data destruction. We are AAA NAID certified, meaning we follow strict DOD guidelines when dealing with sensitive data. You can get in touch with us at +1-763-559-5130." },
-      { p: "Recycle Technologies is a name you can trust when it comes to disposing of your items. We are a certified EPA recycler that has been providing impeccable services to you since 1993. The 100-mile coverage area enables us to cater to locations that are hard to reach. Recycling helps create opportunities and reclaims spent resources. The reclamation process helps you to mine fewer natural resources." },
+      { p: "Recycle Technologies is a name you can trust when it comes to disposing of your items. We are a certified EPA recycler that has been providing impeccable services to you since 1993. Our coverage area enables us to cater to locations that are hard to reach. Recycling helps create opportunities and reclaims spent resources. The reclamation process helps you to mine fewer natural resources." },
       { p: "Here are some of the places we provide services:" },
     ],
   },

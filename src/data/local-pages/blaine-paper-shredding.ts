@@ -21,7 +21,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
   hero: {
     crumb: "Secure Paper Shredding in Blaine, Minnesota",
     h1: "Secure Paper Shredding in Blaine, Minnesota",
-    body: ["Secure paper shredding for Blaine and the north metro, with document drop-off at our 99th Lane NE facility, witnessed shredding for sensitive files, and business pickup within about 100 miles."],
+    body: ["Secure paper shredding for Blaine and the north metro, with document drop-off at our 99th Lane NE facility, witnessed shredding for sensitive files, and business pickup in the surrounding area."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -58,7 +58,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Secure collection within roughly 100 miles of Blaine",
+              body: "Secure collection around Blaine",
             },
             {
               icon: "repeat",
@@ -195,7 +195,7 @@ export const BLAINE_PAPER_SHREDDING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Pickup is a business service. We collect documents within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Pickup is a business service. We collect documents around Blaine, including Coon Rapids, Andover, Anoka, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

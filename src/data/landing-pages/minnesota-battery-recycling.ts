@@ -34,7 +34,7 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
   options: {
     heading: "Battery Recycling Options in Minnesota",
     cards: [
-      { title: "Business Pickup", body: "Scheduled battery pickup within 100 miles of our Blaine facility." },
+      { title: "Business Pickup", body: "Scheduled battery pickup around our Blaine facility." },
       { title: "Drop-Off", body: "Bring spent batteries to our Blaine facility." },
       { title: "Mail-In Program", body: "Outside our pickup area? Ship eligible batteries through our mail-in program." },
     ],
@@ -44,7 +44,7 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
     heading: "Why Choose Recycle Technologies for Battery Recycling?",
     cards: [
       { title: "Local Minnesota facility", body: "Batteries are sorted at our own Blaine facility, not sent through a broker." },
-      { title: "Scheduled pickup", body: "We collect directly from your site within 100 miles of Blaine." },
+      { title: "Scheduled pickup", body: "We collect directly from your site around Blaine." },
       { title: "Compliance documentation", body: "A certificate of recycling for every processed pickup or drop-off." },
       { title: "Certified and experienced", body: "R2v3 and RIOS certified, serving businesses since 1993." },
     ],
@@ -65,7 +65,7 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
     cards: [
       { title: "Request a Quote", body: "Tell us your battery types and approximate quantity. Our team will recommend the right option for your business." },
       { title: "Prepare Your Batteries", body: "Tape battery terminals or bag each battery individually to prevent short circuits. Keep damaged, swollen, or leaking batteries separate and let us know before pickup." },
-      { title: "Pickup or Drop-Off", body: "Businesses within 100 miles of Blaine can arrange a pickup, and our team collects batteries directly from your location. You can also drop off batteries at our Blaine facility." },
+      { title: "Pickup or Drop-Off", body: "Businesses around Blaine can arrange a pickup, and our team collects batteries directly from your location. You can also drop off batteries at our Blaine facility." },
       { title: "Sorting at Our Minnesota Facility", body: "Trained staff at our Blaine facility sort batteries by chemistry, including lithium-ion, lead-acid, alkaline, and NiCd, so each type is handled correctly." },
       { title: "Certificate of Recycling", body: "Once your batteries are processed, you receive a certificate of recycling for your compliance records." },
     ],
@@ -81,13 +81,13 @@ export const LANDING_MINNESOTA_BATTERY_RECYCLING: LandingPage = {
       { title: "Government organizations", key: "government" },
     ],
   },
-  areas: { lead: "Battery pickup within 100 miles of our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
+  areas: { lead: "Battery pickup around our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
   certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',
     items: [
-      { q: "Where can businesses recycle batteries in Minnesota?", a: "Recycle Technologies offers battery pickup within 100 miles of Blaine, drop-off at our Blaine facility, and a mail-in program." },
+      { q: "Where can businesses recycle batteries in Minnesota?", a: "Recycle Technologies offers battery pickup around Blaine, drop-off at our Blaine facility, and a mail-in program." },
       { q: "Do you recycle lithium-ion batteries?", a: "Yes. We accept lithium-ion packs from laptops, phones, tools, and equipment, plus EV batteries." },
       { q: "How should I store batteries before pickup?", a: "Tape terminals or bag batteries individually and store them in a cool, dry container. Keep damaged or swollen batteries separate and let us know before pickup." },
       { q: "Do I need to sort batteries before pickup?", a: "No. Our team sorts batteries by type at our Blaine facility." },

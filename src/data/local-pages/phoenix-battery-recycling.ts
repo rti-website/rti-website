@@ -26,7 +26,7 @@ export const PHOENIX_BATTERY_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Recycle Technologies recycles used batteries for Phoenix businesses and residents at our site, 1545 East Victory Street, near I-17. We accept alkaline, zinc, lithium-ion, sealed lead-acid, NiCd and button cells, plus EV, e-bike, e-scooter, power tool and UPS backup batteries. Drop-off runs Monday to Friday, 7:30 AM to 2:00 PM, with walk-ins for 1 to 4 pallets. Businesses can book pickup within roughly 100 miles of our Phoenix facility, and small quantities can ship back in a prepaid mail-in kit. Each completed job comes with a certificate of recycling and safe disposal.",
+    "Recycle Technologies recycles used batteries for Phoenix businesses and residents at our site, 1545 East Victory Street, near I-17. We accept alkaline, zinc, lithium-ion, sealed lead-acid, NiCd and button cells, plus EV, e-bike, e-scooter, power tool and UPS backup batteries. Drop-off runs Monday to Friday, 7:30 AM to 2:00 PM, with walk-ins for 1 to 4 pallets. Businesses can book pickup around our Phoenix facility, and small quantities can ship back in a prepaid mail-in kit. Each completed job comes with a certificate of recycling and safe disposal.",
   ],
   bands: [
     {
@@ -152,7 +152,7 @@ export const PHOENIX_BATTERY_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Fleet operators, auto shops, warehouses, data centers, property managers and schools can schedule battery pickup within roughly 100 miles of our Phoenix facility. Pickup is a business service. When you request a quote, include the battery types, an estimated weight or pallet count, and your address, and we'll confirm scheduling and pricing for your site.",
+            "Fleet operators, auto shops, warehouses, data centers, property managers and schools can schedule battery pickup around our Phoenix facility. Pickup is a business service. When you request a quote, include the battery types, an estimated weight or pallet count, and your address, and we'll confirm scheduling and pricing for your site.",
           ],
           buttons: {
             primary: { label: "Request a Pickup Quote", href: QUOTE_HREF },
@@ -214,7 +214,7 @@ export const PHOENIX_BATTERY_RECYCLING: LocalPage = {
             { icon: "pin", body: "Walk-in drop-off for up to 4 pallets near I-17" },
             {
               icon: "truck",
-              body: "Commercial pickup within roughly 100 miles for fleets, shops and facilities",
+              body: "Commercial pickup in the surrounding area for fleets, shops and facilities",
             },
             { icon: "mail", body: "Prepaid mail-in kits matched to each battery type" },
             {

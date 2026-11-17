@@ -75,7 +75,7 @@ export const BLAINE: CountyPage = {
   about: {
     heading: "About Blaine Center Recycling",
     blocks: [
-      { p: "Recycle Technologies Inc. helps you recycle your end-of-life waste for a better tomorrow. We have a state-of-the-art recycling center in Blaine, Minnesota. You can trust us for your recycling needs. We focus on safe waste disposal and secure data destruction. You can come to our recycling center for proper disposal or rely on our mail-in program. We have a 100-mile coverage area. This allows us to serve places with no recycling options. For more than 30 years, we have been providing a better alternative for the disposal of items. We guarantee that no waste goes to a landfill. Our goals and vision align with what the circular economy offers. You can do your part by using us for your recycling needs. Together we can help reduce our carbon footprint and reliance on natural resources." },
+      { p: "Recycle Technologies Inc. helps you recycle your end-of-life waste for a better tomorrow. We have a state-of-the-art recycling center in Blaine, Minnesota. You can trust us for your recycling needs. We focus on safe waste disposal and secure data destruction. You can come to our recycling center for proper disposal or rely on our mail-in program. We have a wide coverage area. This allows us to serve places with no recycling options. For more than 30 years, we have been providing a better alternative for the disposal of items. We guarantee that no waste goes to a landfill. Our goals and vision align with what the circular economy offers. You can do your part by using us for your recycling needs. Together we can help reduce our carbon footprint and reliance on natural resources." },
       { p: "Recycle Technologies is an EPA Certified State Contracted recycler. We are solid and hazardous waste transporters. We are certified by both RIOS and R2. RT has a trust rating of A by BBB. We offer waste pickup for corporate and business clients. We’d love to give you a quote and could make sure you are getting the best value possible. Call us at +1 763-559-5130 or fill out [this form](quote) so we can talk further." },
       { p: "Here are some of the locations we provide commercial services:" },
     ],
@@ -104,7 +104,7 @@ export const BLAINE: CountyPage = {
     { kind: 'faq', heading: "Frequently Asked Questions", items: [
       { q: "Do I need an appointment to drop off at the Blaine facility?", a: "Drop-off requirements vary by material and quantity. Call +1-763-559-5130 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged — large or commercial loads in particular go faster when the loading area is expecting you." },
       { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call +1-763-559-5130 with a description of what you plan to bring and we will confirm any charges before you make the trip." },
-      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location and service required — request a quote to get started." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available around the facility. Pickup arrangements depend on the materials, quantity, location and service required — request a quote to get started." },
     ] },
   ],
   company: {

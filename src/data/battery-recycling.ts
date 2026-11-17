@@ -108,7 +108,7 @@ export const PROCESS = {
     + 'chemistries carry different handling requirements, sorting is central to how batteries '
     + 'move through the process.',
   steps: [
-    { label: 'Collection.',          text: 'Businesses can schedule a pickup, and Recycle Technologies covers a 100-mile radius around its Minnesota and Wisconsin facilities. Individuals can use a nearby drop-off location or order a mail-in kit.' },
+    { label: 'Collection.',          text: 'Businesses can schedule a pickup, and Recycle Technologies covers the areas around its Minnesota and Wisconsin facilities. Individuals can use a nearby drop-off location or order a mail-in kit.' },
     { label: 'Sorting and storage.', text: 'Once batteries arrive, trained staff sort and separate them by type. Battery terminals should be covered before shipping or storage to reduce the risk of fire, and batteries sent through the mail-in program should already be separated by type.' },
     { label: 'Documentation.',       text: 'Once a pickup or drop-off is processed, Recycle Technologies issues a certificate of recycling and safe disposal.' },
   ],
@@ -127,7 +127,7 @@ export const FAQS = [
   },
   {
     q: 'Can I request a pickup for old batteries?',
-    a: 'Yes. Business pickup is available within a 100-mile radius of the Minnesota and Wisconsin facilities.',
+    a: 'Yes. Business pickup is available around the Minnesota and Wisconsin facilities.',
   },
   {
     q: 'Do I need to sort batteries before recycling them?',

@@ -57,7 +57,7 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Secure collection within roughly 100 miles of Blaine",
+              body: "Secure collection around Blaine",
             },
             { icon: "repeat", title: "Purge or recurring", body: "A single cleanout or a regular schedule" },
             { icon: "pin", title: "Residential drop-off", body: "Weekdays at the north-end dock" },
@@ -189,7 +189,7 @@ export const BLAINE_OFF_SITE_SHREDDING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Pickup is reserved for commercial clients and covers sites within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Minnetonka, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Pickup is reserved for commercial clients and covers sites around Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Minnetonka, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

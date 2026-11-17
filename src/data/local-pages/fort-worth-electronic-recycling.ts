@@ -21,7 +21,7 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
   hero: {
     crumb: "Electronics Recycling in Fort Worth, TX",
     h1: "Electronics Recycling in Fort Worth, TX",
-    body: ["E-waste recycling for offices, schools, property managers and households across Fort Worth and Dallas-Fort Worth, with weekday drop-off at our East Bowie Street partner location, commercial pickup within about 100 miles, and mail-in kits."],
+    body: ["E-waste recycling for offices, schools, property managers and households across Fort Worth and Dallas-Fort Worth, with weekday drop-off at our East Bowie Street partner location, commercial pickup in the surrounding area, and mail-in kits."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -62,7 +62,7 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
               body: "Weekdays for companies and households. A quick call first is recommended for bigger loads.",
             },
             { icon: "drive", title: "Hard drives", body: "Drop-off accepted, with a certificate on request." },
-            { icon: "truck", title: "Business pickup", body: "Up to roughly 100 miles from Fort Worth." },
+            { icon: "truck", title: "Business pickup", body: "Around Fort Worth." },
             { icon: "mail", title: "Mail-in", body: "Prepaid electronics kits for small batches." },
           ],
         },
@@ -196,7 +196,7 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "IT departments, school districts, medical offices, property management firms, general contractors, and distribution centers near AllianceTexas or DFW Airport can have us collect on-site. Business pickup extends roughly 100 miles from Fort Worth, covering Dallas, Irving, Grand Prairie, Mansfield, Southlake, Colleyville, Bedford, Lewisville, Flower Mound, Granbury and Stephenville.",
+            "IT departments, school districts, medical offices, property management firms, general contractors, and distribution centers near AllianceTexas or DFW Airport can have us collect on-site. Business pickup covers the area around Fort Worth, including Dallas, Irving, Grand Prairie, Mansfield, Southlake, Colleyville, Bedford, Lewisville, Flower Mound, Granbury and Stephenville.",
           ],
           listIntro: "To price a pickup, tell us:",
           list: [
@@ -327,7 +327,7 @@ export const FORT_WORTH_ELECTRONIC_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Pickup reach",
-              body: "Commercial collection up to about 100 miles out from Fort Worth.",
+              body: "Commercial collection around Fort Worth.",
             },
             {
               icon: "pin",

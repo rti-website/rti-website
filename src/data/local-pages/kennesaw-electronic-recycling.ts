@@ -21,7 +21,7 @@ export const KENNESAW_ELECTRONIC_RECYCLING: LocalPage = {
   hero: {
     crumb: "Electronics Recycling in Kennesaw, GA",
     h1: "Electronics Recycling in Kennesaw, GA",
-    body: ["E-waste recycling for Kennesaw, Marietta and the Atlanta area, with weekday drop-off on Town Point Drive, pickup for businesses within about 100 miles, and electronics kits by mail."],
+    body: ["E-waste recycling for Kennesaw, Marietta and the Atlanta area, with weekday drop-off on Town Point Drive, pickup for businesses in the surrounding area, and electronics kits by mail."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -63,7 +63,7 @@ export const KENNESAW_ELECTRONIC_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Scheduled collection within roughly 100 miles of Kennesaw.",
+              body: "Scheduled collection around Kennesaw.",
             },
             { icon: "mail", title: "Mail-in", body: "Electronics recycling kits for a few items at a time." },
           ],
@@ -171,7 +171,7 @@ export const KENNESAW_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Offices and IT departments, school districts, hospitals and clinics, property managers clearing move-outs, warehouses along I-75 and I-575, retailers and managed IT providers can schedule collection instead of loading their own trucks. Pickup covers businesses within roughly 100 miles of Kennesaw, including Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville, Rome and Gainesville.",
+            "Offices and IT departments, school districts, hospitals and clinics, property managers clearing move-outs, warehouses along I-75 and I-575, retailers and managed IT providers can schedule collection instead of loading their own trucks. Pickup covers businesses around Kennesaw, including Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville, Rome and Gainesville.",
           ],
           listIntro: "Help us quote your job by sharing:",
           list: [

@@ -21,12 +21,12 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
   hero: {
     crumb: "Electronics Recycling in Blaine, Minnesota",
     h1: "Electronics Recycling in Blaine, Minnesota",
-    body: ["Electronics recycling for Blaine residents and businesses, with weekday drop-off at our 99th Lane NE center, commercial e-waste pickup within about 100 miles, and mail-in kits for smaller quantities."],
+    body: ["Electronics recycling for Blaine residents and businesses, with weekday drop-off at our 99th Lane NE center, commercial e-waste pickup in the surrounding area, and mail-in kits for smaller quantities."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Whether you're clearing out a few old household devices, replacing office computers, or managing a large equipment cleanout, Recycle Technologies offers electronics recycling in Blaine and across the Twin Cities metro. Our [Blaine site](${href('/minnesota-recycling/ramsey/blaine/')}) on 99th Lane NE accepts computers, laptops, servers, CRT and flat-screen monitors, televisions, copiers, printers, phones, small electronics, and other equipment containing circuit boards. Residents and businesses can drop off on weekdays; companies with larger volumes can schedule pickup within about 100 miles, and mail-in kits cover smaller quantities outside the pickup area. Every load is logged on arrival, customers receive a Certificate of Recycling, and businesses handling sensitive information can request hard drive destruction. Our recycling operations follow R2v3 and RIOS standards.`,
+    `Whether you're clearing out a few old household devices, replacing office computers, or managing a large equipment cleanout, Recycle Technologies offers electronics recycling in Blaine and across the Twin Cities metro. Our [Blaine site](${href('/minnesota-recycling/ramsey/blaine/')}) on 99th Lane NE accepts computers, laptops, servers, CRT and flat-screen monitors, televisions, copiers, printers, phones, small electronics, and other equipment containing circuit boards. Residents and businesses can drop off on weekdays; companies with larger volumes can schedule pickup in the surrounding area, and mail-in kits cover smaller quantities outside the pickup area. Every load is logged on arrival, customers receive a Certificate of Recycling, and businesses handling sensitive information can request hard drive destruction. Our recycling operations follow R2v3 and RIOS standards.`,
   ],
   bands: [
     {
@@ -61,7 +61,7 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Scheduled e-waste pickup within approximately 100 miles",
+              body: "Scheduled e-waste pickup in the surrounding area",
             },
             { icon: "mail", title: "Mail-in", body: "Electronics recycling kits for smaller quantities" },
             {
@@ -213,7 +213,7 @@ export const BLAINE_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Office upgrades, warehouse cleanouts, school equipment replacements and property turnovers all create more e-waste than a car can hold. Businesses can schedule pickup within approximately 100 miles of Blaine, including Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Office upgrades, warehouse cleanouts, school equipment replacements and property turnovers all create more e-waste than a car can hold. Businesses can schedule pickup around Blaine, including Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

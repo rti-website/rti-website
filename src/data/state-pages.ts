@@ -228,7 +228,7 @@ function batteries(state: StateName): StatePage {
   return {
     seo: {
       title: `Battery Recycling in ${state} | Recycle Technologies`,
-      description: `Battery recycling in ${state} from Recycle Technologies. Commercial pickup within 100 miles of our facility, plus drop-off and mail-in options. Get a quote.`,
+      description: `Battery recycling in ${state} from Recycle Technologies. Commercial pickup around our facility, plus drop-off and mail-in options. Get a quote.`,
     },
     content: {
       url: `/battery-recycling/${state}/`,
@@ -238,7 +238,7 @@ function batteries(state: StateName): StatePage {
         crumb: state,
         trail: trail('Battery Recycling', '/battery-recycling/', state),
         h1: `Battery Recycling in ${state}`,
-        lead: `Recycle Technologies provides battery recycling in ${state}, with commercial pickup available within a 100-mile radius of our ${state} facility. Since 1993, we’ve helped businesses recycle alkaline, lithium-ion, lead-acid, and other battery types.`,
+        lead: `Recycle Technologies provides battery recycling in ${state}, with commercial pickup available around our ${state} facility. Since 1993, we’ve helped businesses recycle alkaline, lithium-ion, lead-acid, and other battery types.`,
         cta: b.quote,
         secondaryCta: b.pickup,
         image: BATTERIES.hero.image,
@@ -266,14 +266,14 @@ function batteries(state: StateName): StatePage {
         heading: `How Do We Recycle Batteries in ${state}?`,
         intro: 'Batteries can enter the recycling process through a business pickup, a drop-off at a Recycle Technologies location, or the mail-in program. Because different battery chemistries have different handling requirements, sorting is central to the process.',
         steps: [
-          { label: 'Collection.', text: `Businesses can schedule a commercial pickup within a 100-mile radius of our ${state} facility. Individuals can use a nearby drop-off location or order a mail-in kit.` },
+          { label: 'Collection.', text: `Businesses can schedule a commercial pickup around our ${state} facility. Individuals can use a nearby drop-off location or order a mail-in kit.` },
           { label: 'Sorting and Storage.', text: 'Once batteries arrive, trained staff sort and separate them by type. Battery terminals should be covered before shipping or storage to reduce the risk of fire. Batteries sent through the mail-in program should already be separated by type.' },
           { label: 'Documentation.', text: 'Once a pickup or drop-off is processed, Recycle Technologies issues a certificate of recycling and safe disposal.' },
         ],
         extra: [
           {
             heading: `Battery Recycling Pickup in ${state}`,
-            body: [`Recycle Technologies offers commercial battery recycling pickup within a 100-mile radius of its ${state} facility. Businesses within that range can request a pickup to have spent batteries collected directly.`],
+            body: [`Recycle Technologies offers commercial battery recycling pickup around its ${state} facility. Businesses within that range can request a pickup to have spent batteries collected directly.`],
             cta: b.pickup,
           },
           {
@@ -288,15 +288,15 @@ function batteries(state: StateName): StatePage {
       },
       faqs: [
         { q: `What types of batteries can I recycle in ${state}?`, a: 'We accept alkaline, lithium-ion, lead-acid, nickel-cadmium, button-cell, EV, power tool, and backup batteries. Contact us about other battery types.' },
-        { q: `Does Recycle Technologies offer battery pickup in ${state}?`, a: `Yes. Commercial pickup is available within a 100-mile radius of our ${state} facility.` },
-        { q: `How far does the ${state} battery recycling pickup service extend?`, a: `Pickup is available to businesses within 100 miles of our ${state} facility.` },
+        { q: `Does Recycle Technologies offer battery pickup in ${state}?`, a: `Yes. Commercial pickup is available around our ${state} facility.` },
+        { q: `How far does the ${state} battery recycling pickup service extend?`, a: `Pickup is available to businesses around our ${state} facility.` },
         { q: 'Do batteries need to be sorted before recycling?', a: 'Our trained staff sort batteries by type when they arrive, though batteries sent by mail should already be separated by type.' },
         { q: 'Can batteries be recycled through the mail-in program?', a: 'Yes, for eligible battery types. Batteries must be separated by type before mailing.' },
       ],
       cta: {
         heading: `Ready to Recycle Your Batteries in ${state}?`,
         headingWidth: 686,
-        body: [`Businesses within 100 miles of our ${state} facility can request a quote or schedule a pickup to start recycling their spent batteries.`],
+        body: [`Businesses around our ${state} facility can request a quote or schedule a pickup to start recycling their spent batteries.`],
         primary: b.quote,
         secondary: b.pickup,
       },

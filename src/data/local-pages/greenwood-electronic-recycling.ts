@@ -26,7 +26,7 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Recycle Technologies recycles electronics at our [Greenwood](${href('/indiana/greenwood/')}) center, 498 Park 800 Drive, close to US-31 and I-65. We accept desktop and laptop computers, servers, monitors and TVs (tube-style CRTs too), printers, copiers, scanners, fax machines, cell phones, cables, chargers, keyboards and similar everyday electronics. Drop-off is open to everyone on weekdays from 7:00 AM until 2:00 PM, and scheduling a time ahead is preferred. Businesses can arrange pickup within about 100 miles, which covers Indianapolis, Columbus and Bloomington. Each device is processed so its metals, plastics, and circuit boards can be recovered, and a certificate is issued when the job is done.`,
+    `Recycle Technologies recycles electronics at our [Greenwood](${href('/indiana/greenwood/')}) center, 498 Park 800 Drive, close to US-31 and I-65. We accept desktop and laptop computers, servers, monitors and TVs (tube-style CRTs too), printers, copiers, scanners, fax machines, cell phones, cables, chargers, keyboards and similar everyday electronics. Drop-off is open to everyone on weekdays from 7:00 AM until 2:00 PM, and scheduling a time ahead is preferred. Businesses can arrange pickup in the surrounding area, which covers Indianapolis, Columbus and Bloomington. Each device is processed so its metals, plastics, and circuit boards can be recovered, and a certificate is issued when the job is done.`,
   ],
   bands: [
     {
@@ -60,7 +60,7 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
               title: "Residential and business drop-off",
               body: "Open to everyone. Scheduling an appointment is preferred.",
             },
-            { icon: "truck", title: "Business pickup", body: "Roughly 100 miles around Greenwood" },
+            { icon: "truck", title: "Business pickup", body: "Around Greenwood" },
             { icon: "mail", title: "Mail-in", body: "Prepaid e-waste kits for small loads" },
           ],
         },
@@ -150,7 +150,7 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Offices, schools, clinics, manufacturers, warehouses and IT teams can schedule pickup within about 100 miles of Greenwood. That includes Indianapolis, Franklin, Shelbyville, Columbus, Plainfield, Martinsville, Bloomington and Muncie.",
+            "Offices, schools, clinics, manufacturers, warehouses and IT teams can schedule pickup around Greenwood. That includes Indianapolis, Franklin, Shelbyville, Columbus, Plainfield, Martinsville, Bloomington and Muncie.",
             `Pickup is for business customers. In your quote request, list the equipment types, an estimated count or pallet total, and the site address. Also flag any drives that need [hard drive destruction](${href('/hard-drive-destruction-services/')}).`,
           ],
           buttons: {
@@ -225,7 +225,7 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
             { icon: "layers", body: "Drop-off open to everyone on weekdays, with scheduled visits preferred" },
             { icon: "tv", body: "CRT TVs and monitors accepted, along with flat screens" },
             { icon: "tv", body: "Monitors stripped of lead and circuit boards sent for metal recovery" },
-            { icon: "truck", body: "Business pickup within about 100 miles, from Indianapolis to Bloomington" },
+            { icon: "truck", body: "Business pickup in the surrounding area, from Indianapolis to Bloomington" },
             {
               icon: "thermometer",
               body: "Batteries, bulbs, ballasts and mercury devices taken on the same trip",
@@ -245,7 +245,7 @@ export const GREENWOOD_ELECTRONIC_RECYCLING: LocalPage = {
     items: [
       { q: "Is electronics recycling free in Greenwood?", a: "Pricing varies with what you bring and how much of it. Call (317) 888-3889 or request a quote before you come in." },
       { q: "Can I drop off without an appointment?", a: "Drop-off is available during weekday hours, though scheduling ahead is preferred so the loading area is ready for you." },
-      { q: "Do you collect from businesses in Carmel and Fishers?", a: "Yes. Both are well within our roughly 100-mile pickup area. Confirm your address when you book." },
+      { q: "Do you collect from businesses in Carmel and Fishers?", a: "Yes. Both are within our pickup area. Confirm your address when you book." },
       { q: "Can my company recover value from retired IT equipment?", a: "Ask about our IT asset disposition service, which is designed to get value back from retired hardware." },
     ],
   },

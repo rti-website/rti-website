@@ -21,7 +21,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
   hero: {
     crumb: "Light Bulb Recycling in Fort Worth, TX",
     h1: "Light Bulb Recycling in Fort Worth, TX",
-    body: ["Lamp recycling for Fort Worth, Arlington and the wider Dallas-Fort Worth area through our partner location on East Bowie Street, with loading-dock drop-off, business pickup within about 100 miles, and prepaid bulb kits."],
+    body: ["Lamp recycling for Fort Worth, Arlington and the wider Dallas-Fort Worth area through our partner location on East Bowie Street, with loading-dock drop-off, business pickup in the surrounding area, and prepaid bulb kits."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -67,7 +67,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Within roughly 100 miles of the Fort Worth partner location.",
+              body: "Around the Fort Worth partner location.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid bulb kits for smaller batches." },
           ],
@@ -168,7 +168,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Apartment communities, property managers, school districts, hospitals, warehouses around Alliance and DFW Airport, retail centers and electrical contractors finishing LED retrofits can schedule pickup instead of loading their own trucks. Business pickup runs within roughly 100 miles of the Fort Worth partner location, reaching Dallas, Arlington, Grand Prairie, Irving, Grapevine, Keller, Hurst, Euless, Denton, Weatherford, Cleburne and Waco.",
+            "Apartment communities, property managers, school districts, hospitals, warehouses around Alliance and DFW Airport, retail centers and electrical contractors finishing LED retrofits can schedule pickup instead of loading their own trucks. Business pickup runs around the Fort Worth partner location, reaching Dallas, Arlington, Grand Prairie, Irving, Grapevine, Keller, Hurst, Euless, Denton, Weatherford, Cleburne and Waco.",
           ],
           listIntro: "For a quote, send:",
           list: [
@@ -240,7 +240,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Pickup across North Texas",
-              body: "Business collection within roughly 100 miles of Fort Worth.",
+              body: "Business collection around Fort Worth.",
             },
             {
               icon: "truck",

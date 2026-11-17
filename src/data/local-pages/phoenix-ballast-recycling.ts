@@ -26,7 +26,7 @@ export const PHOENIX_BALLAST_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Recycle Technologies recycles fluorescent light ballasts for Phoenix contractors, facility teams, businesses and residents at our site, 1545 East Victory Street, near I-17. We accept PCB and non-PCB ballasts, magnetic and electronic ballasts, and loose PCB and non-PCB capacitors. Drop-off runs Monday to Friday, 7:30 AM to 2:00 PM, with walk-ins for 1 to 4 pallets. Businesses can book pickup within roughly 100 miles of our Phoenix facility, and small batches of non-PCB ballasts can ship in a prepaid kit. Capacitors containing PCBs or DEHP are removed and incinerated at an EPA-approved facility, copper and steel are reclaimed, and each completed job comes with a Certificate of Recycling.",
+    "Recycle Technologies recycles fluorescent light ballasts for Phoenix contractors, facility teams, businesses and residents at our site, 1545 East Victory Street, near I-17. We accept PCB and non-PCB ballasts, magnetic and electronic ballasts, and loose PCB and non-PCB capacitors. Drop-off runs Monday to Friday, 7:30 AM to 2:00 PM, with walk-ins for 1 to 4 pallets. Businesses can book pickup around our Phoenix facility, and small batches of non-PCB ballasts can ship in a prepaid kit. Capacitors containing PCBs or DEHP are removed and incinerated at an EPA-approved facility, copper and steel are reclaimed, and each completed job comes with a Certificate of Recycling.",
   ],
   bands: [
     {
@@ -148,7 +148,7 @@ export const PHOENIX_BALLAST_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Electrical contractors, lighting retrofit crews, property managers, schools, and facility maintenance teams can schedule ballast pickup within roughly 100 miles of our Phoenix facility. Pickup is for commercial clients only. When you request a quote, tell us whether the ballasts are PCB, non-PCB, or unlabeled, give an estimated count or weight, and add your address. We'll confirm scheduling and pricing for your site.",
+            "Electrical contractors, lighting retrofit crews, property managers, schools, and facility maintenance teams can schedule ballast pickup around our Phoenix facility. Pickup is for commercial clients only. When you request a quote, tell us whether the ballasts are PCB, non-PCB, or unlabeled, give an estimated count or weight, and add your address. We'll confirm scheduling and pricing for your site.",
           ],
           buttons: {
             primary: { label: "Request a Ballast Pickup Quote", href: QUOTE_HREF },
@@ -210,7 +210,7 @@ export const PHOENIX_BALLAST_RECYCLING: LocalPage = {
             { icon: "pin", body: "Walk-in drop-off for up to 4 pallets near I-17" },
             {
               icon: "truck",
-              body: "Commercial pickup within roughly 100 miles for contractors and facility teams",
+              body: "Commercial pickup in the surrounding area for contractors and facility teams",
             },
             {
               icon: "cpu",

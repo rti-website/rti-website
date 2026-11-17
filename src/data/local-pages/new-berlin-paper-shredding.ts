@@ -62,7 +62,7 @@ export const NEW_BERLIN_PAPER_SHREDDING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Routine routes or one-time purges within about 100 miles, with boxes and bins supplied on scheduled routes",
+              body: "Routine routes or one-time purges in the surrounding area, with boxes and bins supplied on scheduled routes",
             },
             {
               icon: "eye",
@@ -180,7 +180,7 @@ export const NEW_BERLIN_PAPER_SHREDDING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            `Medical and dental offices, law and accounting firms, banks and credit unions, property managers, HR departments, schools and manufacturers can have documents collected on a routine route or in a single cleanout. Pickup is for commercial customers within about 100 miles of New Berlin, including [Milwaukee](${href('/wisconsin-recycling/milwaukee/')}), [Waukesha](${href('/shredding-wisconsin/waukesha/')}), Wauwatosa, West Allis, Menomonee Falls, Oak Creek, [Racine](${href('/shredding-wisconsin/racine/')}), Kenosha and [Madison](${href('/wisconsin-recycling/madison/')}). On scheduled routes, we supply the boxes and bins.`,
+            `Medical and dental offices, law and accounting firms, banks and credit unions, property managers, HR departments, schools and manufacturers can have documents collected on a routine route or in a single cleanout. Pickup is for commercial customers around New Berlin, including [Milwaukee](${href('/wisconsin-recycling/milwaukee/')}), [Waukesha](${href('/shredding-wisconsin/waukesha/')}), Wauwatosa, West Allis, Menomonee Falls, Oak Creek, [Racine](${href('/shredding-wisconsin/racine/')}), Kenosha and [Madison](${href('/wisconsin-recycling/madison/')}). On scheduled routes, we supply the boxes and bins.`,
           ],
           listIntro: "To price your service, share:",
           list: [

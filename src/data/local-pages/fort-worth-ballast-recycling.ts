@@ -21,7 +21,7 @@ export const FORT_WORTH_BALLAST_RECYCLING: LocalPage = {
   hero: {
     crumb: "Ballast Recycling in Fort Worth, Texas",
     h1: "Ballast Recycling in Fort Worth, Texas",
-    body: [`Recycle PCB, non-PCB, magnetic and electronic ballasts in Fort Worth, TX. Recycle Technologies accepts ballasts at its [Fort Worth location](${href('/fort-worth-texas/')}) and offers commercial pickup within roughly 100 miles. Drop off your materials, request a business pickup, or use a mail-in kit for eligible non-PCB ballasts.`],
+    body: [`Recycle PCB, non-PCB, magnetic and electronic ballasts in Fort Worth, TX. Recycle Technologies accepts ballasts at its [Fort Worth location](${href('/fort-worth-texas/')}) and offers commercial pickup in the surrounding area. Drop off your materials, request a business pickup, or use a mail-in kit for eligible non-PCB ballasts.`],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -70,7 +70,7 @@ export const FORT_WORTH_BALLAST_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Businesses can request scheduled ballast pickup. RTI's Fort Worth location page gives an approximate service radius of 100 miles.",
+              body: "Businesses can request scheduled ballast pickup in the Fort Worth area.",
             },
             {
               icon: "mail",
@@ -233,7 +233,7 @@ export const FORT_WORTH_BALLAST_RECYCLING: LocalPage = {
           dark: true,
           body: [
             "Lighting contractors, property managers, and facility teams often remove ballasts during larger lighting upgrades. Transporting those materials from every job site may not be practical.",
-            "Recycle Technologies offers commercial pickup for business customers. Its Fort Worth location page identifies an approximate 100-mile pickup radius, with availability depending on the pickup address, material, quantity and service requirements.",
+            "Recycle Technologies offers commercial pickup for business customers. Pickup is available in the Fort Worth area, with availability depending on the pickup address, material, quantity and service requirements.",
             "Businesses in Fort Worth and nearby DFW communities, including Arlington, Dallas, Grand Prairie, Irving, Grapevine, North Richland Hills, Haltom City, Keller, Hurst, Euless and Burleson, can request a pickup quote. Contact RTI to confirm service at your specific address.",
           ],
           listIntro: "When requesting a quote, provide:",

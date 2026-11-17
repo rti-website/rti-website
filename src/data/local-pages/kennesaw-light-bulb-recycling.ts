@@ -21,7 +21,7 @@ export const KENNESAW_LIGHT_BULB_RECYCLING: LocalPage = {
   hero: {
     crumb: "Light Bulb Recycling in Kennesaw, GA",
     h1: "Light Bulb Recycling in Kennesaw, GA",
-    body: ["Lamp recycling for Kennesaw, Marietta, and metro Atlanta, with weekday drop-off at our Town Point Drive facility, pickup for businesses within about 100 miles, and prepaid bulb kits by mail."],
+    body: ["Lamp recycling for Kennesaw, Marietta, and metro Atlanta, with weekday drop-off at our Town Point Drive facility, pickup for businesses in the surrounding area, and prepaid bulb kits by mail."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -63,7 +63,7 @@ export const KENNESAW_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Within roughly 100 miles of Kennesaw, with packing materials available before your pickup.",
+              body: "Around Kennesaw, with packing materials available before your pickup.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid bulb kits for a few lamps at a time." },
           ],
@@ -167,7 +167,7 @@ export const KENNESAW_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Apartment communities, property managers, school districts, hospitals, warehouses along I-75 and I-575, retail centers and electrical contractors finishing LED retrofits can schedule pickup instead of hauling lamps. Business pickup covers roughly 100 miles around Kennesaw, reaching Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville and Rome.",
+            "Apartment communities, property managers, school districts, hospitals, warehouses along I-75 and I-575, retail centers and electrical contractors finishing LED retrofits can schedule pickup instead of hauling lamps. Business pickup covers the area around Kennesaw, reaching Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville and Rome.",
           ],
           listIntro: "For an accurate quote, send:",
           list: [
@@ -239,7 +239,7 @@ export const KENNESAW_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Pickup across metro Atlanta",
-              body: "Business collection within roughly 100 miles, with packing supplies on request.",
+              body: "Business collection in the surrounding area, with packing supplies on request.",
             },
             { icon: "clock", title: "Since 1993", body: "More than three decades of recycling experience." },
           ],

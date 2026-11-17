@@ -21,7 +21,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
   hero: {
     crumb: "Secure Phone Shredding in Blaine, Minnesota",
     h1: "Secure Phone Shredding in Blaine, Minnesota",
-    body: ["Secure phone shredding for Twin Cities businesses retiring devices in volume, with pickup within about 100 miles of our Blaine facility, witnessed destruction, and drop-off or mail-in for residential customers."],
+    body: ["Secure phone shredding for Twin Cities businesses retiring devices in volume, with pickup around our Blaine facility, witnessed destruction, and drop-off or mail-in for residential customers."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -57,7 +57,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For businesses retiring phones in volume, within roughly 100 miles",
+              body: "For businesses retiring phones in volume, in the surrounding area",
             },
             {
               icon: "eye",
@@ -165,7 +165,7 @@ export const BLAINE_PHONE_SHREDDING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "This service is built for organizations retiring phones in volume. Hospitals and clinics, schools, property management companies, contractors, warehouses, banks, and law offices can schedule a pickup instead of storing old devices in a locked drawer. Pickup is available to commercial clients within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "This service is built for organizations retiring phones in volume. Hospitals and clinics, schools, property management companies, contractors, warehouses, banks, and law offices can schedule a pickup instead of storing old devices in a locked drawer. Pickup is available to commercial clients around Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Roseville, Brooklyn Park, Maple Grove, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

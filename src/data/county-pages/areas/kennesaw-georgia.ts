@@ -79,7 +79,7 @@ export const KENNESAW_GEORGIA: CountyPage = {
     { kind: 'faq', heading: "Questions About This Location", items: [
       { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call (770) 426-5000 with a description of what you plan to bring, and we will confirm any charges before you make the trip." },
       { q: "Do I need an appointment to drop off at the Kennesaw facility?", a: "Drop-off requirements vary by material and quantity. Call (770) 426-5000 before you visit to confirm what you are bringing is accepted and whether you need to schedule a time. Large or commercial loads in particular go faster when the loading area is expecting you." },
-      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available within roughly a 100-mile radius of the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available around the facility. Pickup arrangements depend on the materials, quantity, location, and service required. Request a quote to get started." },
     ] },
     { kind: 'text', heading: "Counties We Serve", blocks: [{ list: [{ title: "Cobb County", text: "" }] }] },
   ],

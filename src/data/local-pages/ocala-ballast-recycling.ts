@@ -26,7 +26,7 @@ export const OCALA_BALLAST_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Recycle Technologies handles old lighting ballasts through a partner recycling center in [Ocala](${href('/florida/ocala/')}), located at 1007 SW 16th Lane. The center accepts PCB and non-PCB ballasts, including magnetic, electronic, and HID types, as well as leaking units that are bagged and flagged when you book. Drop-offs are available Monday to Friday, 6:00 AM to 2:30 PM, by appointment. Businesses can arrange pickup within about 100 miles, while smaller quantities of non-PCB ballasts can be sent back in a prepaid kit. Recycling includes capacitor removal and metal recovery, with a Certificate of Recycling provided when the work is complete.`,
+    `Recycle Technologies handles old lighting ballasts through a partner recycling center in [Ocala](${href('/florida/ocala/')}), located at 1007 SW 16th Lane. The center accepts PCB and non-PCB ballasts, including magnetic, electronic, and HID types, as well as leaking units that are bagged and flagged when you book. Drop-offs are available Monday to Friday, 6:00 AM to 2:30 PM, by appointment. Businesses can arrange pickup in the surrounding area, while smaller quantities of non-PCB ballasts can be sent back in a prepaid kit. Recycling includes capacitor removal and metal recovery, with a Certificate of Recycling provided when the work is complete.`,
   ],
   bands: [
     {
@@ -55,7 +55,7 @@ export const OCALA_BALLAST_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For companies with bulk or recurring ballast loads, within about 100 miles",
+              body: "For companies with bulk or recurring ballast loads, in the surrounding area",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid buckets for non-PCB ballasts only" },
           ],
@@ -157,7 +157,7 @@ export const OCALA_BALLAST_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Electrical contractors, facility managers, school districts, hospitals, hotels and retailers can schedule ballast pickup within about 100 miles of Ocala, from Belleview and Citra to Inverness, Leesburg and Gainesville.",
+            "Electrical contractors, facility managers, school districts, hospitals, hotels and retailers can schedule ballast pickup around Ocala, from Belleview and Citra to Inverness, Leesburg and Gainesville.",
             "Pickup is a business service. In your quote request, give an approximate ballast count or weight, note whether any are PCB or leaking, and add the job site address.",
           ],
           buttons: {
@@ -226,7 +226,7 @@ export const OCALA_BALLAST_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Convenient service routes",
-              body: "Choose weekday drop-off by appointment, commercial pickup within about 100 miles of Ocala, or mail-in kits for non-PCB ballasts",
+              body: "Choose weekday drop-off by appointment, commercial pickup around Ocala, or mail-in kits for non-PCB ballasts",
             },
             {
               icon: "bulb",

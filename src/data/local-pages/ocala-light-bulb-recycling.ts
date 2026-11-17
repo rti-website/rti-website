@@ -161,7 +161,7 @@ export const OCALA_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Offices, property managers, warehouses, schools and retailers that go through bulbs regularly can arrange pickup instead of hauling them in. Pickup is a business service, available within about 100 miles of Ocala, including Gainesville, The Villages, Leesburg, Inverness and Lady Lake.",
+            "Offices, property managers, warehouses, schools and retailers that go through bulbs regularly can arrange pickup instead of hauling them in. Pickup is a business service, available around Ocala, including Gainesville, The Villages, Leesburg, Inverness and Lady Lake.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [
@@ -223,7 +223,7 @@ export const OCALA_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For businesses within about 100 miles with recurring bulb waste",
+              body: "For businesses in the surrounding area with recurring bulb waste",
             },
             {
               icon: "pin",

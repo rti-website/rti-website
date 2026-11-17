@@ -26,7 +26,7 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Recycle Technologies provides electronics recycling services through a partner location at 1007 SW 16th Lane in [Ocala](${href('/florida/ocala/')}), just off the US-27, US-301 and US-441 corridor. We take desktops, laptops, servers, monitors and TVs (old CRT tube sets included), printers, copiers, scanners, fax machines, cell phones, cables, chargers and other everyday electronics. Businesses and residents can drop off on weekdays by appointment, so call before you come. Companies can book pickup within about 100 miles, from Gainesville to The Villages and Leesburg. Devices are taken apart so their metals, plastics, and circuit boards can be reused, and you get a certificate when the job is finished.`,
+    `Recycle Technologies provides electronics recycling services through a partner location at 1007 SW 16th Lane in [Ocala](${href('/florida/ocala/')}), just off the US-27, US-301 and US-441 corridor. We take desktops, laptops, servers, monitors and TVs (old CRT tube sets included), printers, copiers, scanners, fax machines, cell phones, cables, chargers and other everyday electronics. Businesses and residents can drop off on weekdays by appointment, so call before you come. Companies can book pickup in the surrounding area, from Gainesville to The Villages and Leesburg. Devices are taken apart so their metals, plastics, and circuit boards can be reused, and you get a certificate when the job is finished.`,
   ],
   bands: [
     {
@@ -56,7 +56,7 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
           heading: "At the Ocala Partner Location",
           items: [
             { icon: "pin", title: "Drop-off", body: "Open to businesses and residents, by appointment" },
-            { icon: "truck", title: "Business pickup", body: "Within about 100 miles of Ocala" },
+            { icon: "truck", title: "Business pickup", body: "Around Ocala" },
             {
               icon: "mail",
               title: "Mail-in",
@@ -149,7 +149,7 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Offices, medical practices, schools, property managers, retailers and IT departments can book pickup within about 100 miles of Ocala. That reaches Belleview, Dunnellon, Silver Springs, The Villages, Leesburg and Gainesville.",
+            "Offices, medical practices, schools, property managers, retailers and IT departments can book pickup around Ocala. That reaches Belleview, Dunnellon, Silver Springs, The Villages, Leesburg and Gainesville.",
             `Pickup is for business customers. When you request a quote, list the equipment types, a rough count or pallet total, and your site address, and mention any hard drives that need [secure destruction](${href('/hard-drive-destruction-services/')}).`,
           ],
           buttons: {
@@ -223,7 +223,7 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
             { icon: "pin", body: "CRT tube TVs and monitors accepted, when many local options turn them away" },
             { icon: "tv", body: "Monitors treated to remove lead, and circuit boards sent for metal recovery" },
             { icon: "pin", body: "Weekday drop-off from 6:00 AM for businesses and residents, by appointment" },
-            { icon: "truck", body: "Business pickup within about 100 miles, from Gainesville to Leesburg" },
+            { icon: "truck", body: "Business pickup in the surrounding area, from Gainesville to Leesburg" },
             {
               icon: "thermometer",
               body: "Batteries, lamps, ballasts and mercury devices taken in the same visit",
@@ -243,7 +243,7 @@ export const OCALA_ELECTRONIC_RECYCLING: LocalPage = {
     items: [
       { q: "Is electronics recycling free in Ocala?", a: "Fees depend on the item and quantity. Call 813-534-5735 or request a quote before you bring anything in." },
       { q: "Can I drop off electronics on a Saturday?", a: "No. The Ocala partner location is open Monday to Friday only, and every drop-off needs an appointment." },
-      { q: "Do you pick up from businesses in Alachua and Sumter counties?", a: "Yes. Both sit within our roughly 100-mile pickup area. Confirm your address when you book." },
+      { q: "Do you pick up from businesses in Alachua and Sumter counties?", a: "Yes. Both sit within our pickup area. Confirm your address when you book." },
       { q: "Can my company get value back for retired IT equipment?", a: "Ask about our IT asset disposition service, which is built to recover value from retired hardware." },
     ],
   },

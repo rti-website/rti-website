@@ -21,7 +21,7 @@ export const BLAINE_LIGHT_BULB_RECYCLING: LocalPage = {
   hero: {
     crumb: "Light Bulb Recycling in Blaine, Minnesota",
     h1: "Light Bulb Recycling in Blaine, Minnesota",
-    body: ["Light bulb recycling for Blaine and the north metro, with weekday drop-off at our Davenport St NE lamp building, commercial pickup within about 100 miles, and mail-in kits for small batches."],
+    body: ["Light bulb recycling for Blaine and the north metro, with weekday drop-off at our Davenport St NE lamp building, commercial pickup in the surrounding area, and mail-in kits for small batches."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -58,7 +58,7 @@ export const BLAINE_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Within roughly 100 miles of Blaine, with packing materials available beforehand",
+              body: "Around Blaine, with packing materials available beforehand",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid bulb kits for smaller amounts" },
           ],
@@ -165,7 +165,7 @@ export const BLAINE_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Many public bulb programs limit how many lamps a household can bring or don't take business bulbs at all. Property managers, electrical contractors, schools, hospitals, warehouses and retailers can skip that problem with a scheduled pickup. Pickup is a business service covering sites within roughly 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Fridley, Lino Lakes, Mounds View, Roseville, Maple Grove, Brooklyn Park, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
+            "Many public bulb programs limit how many lamps a household can bring or don't take business bulbs at all. Property managers, electrical contractors, schools, hospitals, warehouses and retailers can skip that problem with a scheduled pickup. Pickup is a business service covering sites around Blaine, including Coon Rapids, Andover, Anoka, Fridley, Lino Lakes, Mounds View, Roseville, Maple Grove, Brooklyn Park, Plymouth, Minneapolis, St. Paul, Bloomington, Woodbury, Burnsville, Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [

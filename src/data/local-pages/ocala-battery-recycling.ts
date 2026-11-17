@@ -26,7 +26,7 @@ export const OCALA_BATTERY_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    `Recycle Technologies accepts used batteries through our partner recycling center in [Ocala](${href('/florida/ocala/')}), at 1007 SW 16th Lane, near the US-27, US-301 and US-441 corridor. Accepted types include alkaline, zinc, lithium-ion, lead-acid, NiCd and button cells, as well as EV, Tesla, e-bike, e-scooter, power tool and UPS batteries. We also handle swollen or damaged batteries with advance arrangements. Businesses and residents can book weekday drop-off appointments, companies can request pickup within about 100 miles, and smaller quantities may qualify for a prepaid mail-in kit. A recycling certificate is provided after the job is completed.`,
+    `Recycle Technologies accepts used batteries through our partner recycling center in [Ocala](${href('/florida/ocala/')}), at 1007 SW 16th Lane, near the US-27, US-301 and US-441 corridor. Accepted types include alkaline, zinc, lithium-ion, lead-acid, NiCd and button cells, as well as EV, Tesla, e-bike, e-scooter, power tool and UPS batteries. We also handle swollen or damaged batteries with advance arrangements. Businesses and residents can book weekday drop-off appointments, companies can request pickup in the surrounding area, and smaller quantities may qualify for a prepaid mail-in kit. A recycling certificate is provided after the job is completed.`,
   ],
   bands: [
     {
@@ -53,7 +53,7 @@ export const OCALA_BATTERY_RECYCLING: LocalPage = {
           heading: "At the Ocala Center",
           items: [
             { icon: "pin", title: "Drop-off", body: "Available to businesses and residents by appointment" },
-            { icon: "truck", title: "Business pickup", body: "Available within roughly 100 miles of Ocala" },
+            { icon: "truck", title: "Business pickup", body: "Available around Ocala" },
             {
               icon: "mail",
               title: "Mail-in",
@@ -151,7 +151,7 @@ export const OCALA_BATTERY_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Auto repair shops, fleet operators, marinas, golf courses, warehouses, hospitals and data centers can request battery pickup within about 100 miles of Ocala. The service area includes Ocklawaha, Summerfield, Inverness, Gainesville and The Villages, among other North Central Florida communities.",
+            "Auto repair shops, fleet operators, marinas, golf courses, warehouses, hospitals and data centers can request battery pickup around Ocala. The service area includes Ocklawaha, Summerfield, Inverness, Gainesville and The Villages, among other North Central Florida communities.",
             "When requesting a quote, include the battery types, estimated weight or pallet count, and pickup address. This helps our team assess the load and provide a schedule and price.",
           ],
           buttons: {
@@ -230,7 +230,7 @@ export const OCALA_BATTERY_RECYCLING: LocalPage = {
               body: "A way to discuss swollen, leaking, and damaged batteries before transport",
             },
             { icon: "pin", body: "Weekday drop-off by appointment, starting at 6:00 AM" },
-            { icon: "truck", body: "Business pickup across roughly 100 miles of North Central Florida" },
+            { icon: "truck", body: "Business pickup across North Central Florida" },
             { icon: "battery", body: "Electronics, lamps and ballasts accepted alongside eligible batteries" },
             {
               icon: "clock",

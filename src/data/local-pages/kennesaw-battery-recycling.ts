@@ -21,7 +21,7 @@ export const KENNESAW_BATTERY_RECYCLING: LocalPage = {
   hero: {
     crumb: "Battery Recycling in Kennesaw, GA",
     h1: "Battery Recycling in Kennesaw, GA",
-    body: ["Battery recycling for Kennesaw, Marietta and metro Atlanta, with weekday drop-off on Town Point Drive, business pickup within about 100 miles, and prepaid battery kits by mail."],
+    body: ["Battery recycling for Kennesaw, Marietta and metro Atlanta, with weekday drop-off on Town Point Drive, business pickup in the surrounding area, and prepaid battery kits by mail."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -63,7 +63,7 @@ export const KENNESAW_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "For commercial sites within roughly 100 miles of Kennesaw.",
+              body: "For commercial sites around Kennesaw.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid battery kits, with batteries sorted by type." },
           ],
@@ -167,7 +167,7 @@ export const KENNESAW_BATTERY_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Property managers changing smoke detector and exit sign batteries, contractors with worn tool packs, schools, hospitals, offices with UPS units, warehouses along I-75 and I-575, and fleets with EV batteries can book collection instead of hauling. Business pickup covers roughly 100 miles around Kennesaw, reaching Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville and Rome.",
+            "Property managers changing smoke detector and exit sign batteries, contractors with worn tool packs, schools, hospitals, offices with UPS units, warehouses along I-75 and I-575, and fleets with EV batteries can book collection instead of hauling. Business pickup covers the area around Kennesaw, reaching Atlanta, Smyrna, Roswell, Alpharetta, Sandy Springs, Canton, Cartersville and Rome.",
           ],
           listIntro: "Include these details for a quote:",
           list: [
@@ -239,7 +239,7 @@ export const KENNESAW_BATTERY_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Pickup across metro Atlanta",
-              body: "Business collection within roughly 100 miles.",
+              body: "Business collection in the surrounding area.",
             },
             {
               icon: "shield",

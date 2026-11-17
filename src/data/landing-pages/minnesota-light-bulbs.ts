@@ -34,7 +34,7 @@ export const LANDING_MINNESOTA_LIGHT_BULBS: LandingPage = {
   options: {
     heading: "Light Bulb Recycling Options in Minnesota",
     cards: [
-      { title: "Business Pickup", body: "Scheduled pickup within 100 miles of our Blaine facility. Packing materials can be delivered ahead of your pickup." },
+      { title: "Business Pickup", body: "Scheduled pickup around our Blaine facility. Packing materials can be delivered ahead of your pickup." },
       { title: "Drop-Off", body: "Bring spent bulbs, ballasts, and fixtures to our Blaine facility." },
       { title: "Universal Waste Mail-In Program", body: "Outside our pickup area? Ship eligible bulbs through our mail-in program." },
     ],
@@ -68,7 +68,7 @@ export const LANDING_MINNESOTA_LIGHT_BULBS: LandingPage = {
     cards: [
       { title: "Request a Quote", body: "Tell us your bulb, ballast, and fixture types and approximate quantity. Our team will recommend the right option for your business." },
       { title: "Packaging", body: "The Department of Transportation regulates how bulbs are packaged for shipping. We recommend our fiber bins or the original boxes your replacement bulbs arrived in." },
-      { title: "Pickup or Drop-Off", body: "Businesses within 100 miles of Blaine can arrange a pickup, or drop off lighting at our Blaine facility." },
+      { title: "Pickup or Drop-Off", body: "Businesses around Blaine can arrange a pickup, or drop off lighting at our Blaine facility." },
       { title: "Processing & Separation", body: "Bulbs are processed at our Minnesota facility, where mercury-contaminated phosphor powder and filters, glass, and aluminum end caps are separated." },
       { title: "Recovery & Certificate", body: "Phosphor powder and filters go to a distillation company, glass is used in industrial applications, and aluminum end caps go to an aluminum salvage partner. You receive a certificate of recycling for your records." },
     ],
@@ -85,14 +85,14 @@ export const LANDING_MINNESOTA_LIGHT_BULBS: LandingPage = {
       { title: "Automotive and fleet organizations", key: "automotive" },
     ],
   },
-  areas: { lead: "Lighting pickup within 100 miles of our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
+  areas: { lead: "Lighting pickup around our Blaine facility, including Minneapolis, St. Paul, Bloomington, Plymouth, Maple Grove, Brooklyn Park, Coon Rapids, Blaine, Burnsville, Lakeville, Woodbury, and St. Cloud." },
   certBody: 'Recycle Technologies follows recognized industry certification standards for responsible recycling, including R2v3 and RIOS.',
   faq: {
     eyebrow: 'FAQs',
     heading: 'Frequently Asked Questions',
     items: [
       { q: "What lighting can I recycle in Minnesota?", a: "Fluorescent tubes, CFLs, LED, U-bend and circular lamps, HID, metal-halide, high-pressure sodium, UV, neon, argon, flood, incandescent, and halogen bulbs, plus ballasts and light fixtures." },
-      { q: "Do you offer commercial light bulb pickup in Minnesota?", a: "Yes. We offer pickup within 100 miles of our Blaine facility, and packing materials can be delivered ahead of time." },
+      { q: "Do you offer commercial light bulb pickup in Minnesota?", a: "Yes. We offer pickup around our Blaine facility, and packing materials can be delivered ahead of time." },
       { q: "Do you recycle ballasts and fixtures?", a: "Yes. We accept PCB and non-PCB ballasts as well as retired light fixtures." },
       { q: "Will I receive proof of recycling?", a: "Yes. You receive a certificate of recycling once your lighting is processed." },
       { q: "What happens to recycled light bulbs?", a: "Phosphor powder and filters go to a distillation company, glass is reused in industrial applications, and aluminum end caps go to an aluminum salvage partner." },

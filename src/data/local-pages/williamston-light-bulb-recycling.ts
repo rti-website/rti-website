@@ -28,7 +28,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Fluorescent and HID lamps contain small amounts of mercury, so spent tubes from a business need proper handling rather than being placed in regular trash without evaluation. Recycle Technologies provides lamp recycling services for Upstate businesses through our Williamston service location at 109 Twenty Nine Ct. We take fluorescent tubes (including plastic-coated and shielded types), CFLs, green-tipped, circular and U-bend lamps, UV lamps, neon, argon and other cold cathode lamps, metal halide and high-pressure sodium HID lamps, and flood, incandescent and halogen bulbs. Pickup covers offices, plants, schools and contractors within approximately 100 miles of Williamston. Lamps are separated into glass, aluminum end caps and mercury-bearing phosphor, with mercury-bearing material sent to Recycle Technologies’ Greenwood, Indiana facility for further processing. Recycling is handled through our Williamston location, backed by our certified Recycle Technologies facilities.",
+    "Fluorescent and HID lamps contain small amounts of mercury, so spent tubes from a business need proper handling rather than being placed in regular trash without evaluation. Recycle Technologies provides lamp recycling services for Upstate businesses through our Williamston service location at 109 Twenty Nine Ct. We take fluorescent tubes (including plastic-coated and shielded types), CFLs, green-tipped, circular and U-bend lamps, UV lamps, neon, argon and other cold cathode lamps, metal halide and high-pressure sodium HID lamps, and flood, incandescent and halogen bulbs. Pickup covers offices, plants, schools and contractors around Williamston. Lamps are separated into glass, aluminum end caps and mercury-bearing phosphor, with mercury-bearing material sent to Recycle Technologies’ Greenwood, Indiana facility for further processing. Recycling is handled through our Williamston location, backed by our certified Recycle Technologies facilities.",
   ],
   bands: [
     {
@@ -44,7 +44,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
             { label: "Phone", value: "(864) 774-8310" },
             { label: "Email", value: "support@lightingresourcesinc.com" },
             { label: "Hours", value: "9:00 AM to 4:00 PM" },
-            { label: "Pickup area", value: "Commercial sites within approximately 100 miles of Williamston, including Greenville, Anderson, Spartanburg, Easley and Clemson. Contact our team to confirm pickup availability for your ZIP code." },
+            { label: "Pickup area", value: "Commercial sites around Williamston, including Greenville, Anderson, Spartanburg, Easley and Clemson. Contact our team to confirm pickup availability for your ZIP code." },
           ],
         },
         {
@@ -249,7 +249,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
             { icon: "recycle", title: "Material recovery", body: "Glass, aluminum end caps and phosphor materials are separated for appropriate recovery and processing." },
             { icon: "zap", title: "Retrofit-ready", body: "Lamps and ballasts from the same project leave on one pickup." },
             { icon: "file", title: "Documentation", body: "A Certificate of Recycling is provided for every completed load." },
-            { icon: "truck", title: "Upstate coverage", body: "Commercial pickup is available within approximately 100 miles of Williamston, subject to location confirmation." },
+            { icon: "truck", title: "Upstate coverage", body: "Commercial pickup is available around Williamston, subject to location confirmation." },
             { icon: "clock", title: "Since 1993", body: "Recycle Technologies has provided recycling services for more than three decades." },
           ],
         },
@@ -265,7 +265,7 @@ export const WILLIAMSTON_LIGHT_BULB_RECYCLING: LocalPage = {
       { q: "What should we do with broken fluorescent tubes?", a: "Keep them separate from intact lamps and contact our team for appropriate containment and pickup instructions." },
       { q: "Where does the mercury from our lamps end up?", a: "Mercury-bearing material is sent to Recycle Technologies' Greenwood, Indiana facility for further processing." },
       { q: "Can ballasts go on the same pickup as our lamps?", a: "Yes. Ballasts from the same fixtures can be collected with your lamps if packed separately." },
-      { q: "Do you collect lamps from sites in Greenville and Spartanburg?", a: "Yes. Commercial pickup is available within approximately 100 miles of Williamston. Contact us to confirm your location." },
+      { q: "Do you collect lamps from sites in Greenville and Spartanburg?", a: "Yes. Commercial pickup is available around Williamston. Contact us to confirm your location." },
     ],
   },
   after: [

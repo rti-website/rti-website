@@ -62,7 +62,7 @@ export const NEW_BERLIN_PHONE_SHREDDING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Collection for companies within about 100 miles of New Berlin",
+              body: "Collection for companies around New Berlin",
             },
             { icon: "mail", title: "Mail-in", body: "An electronics recycling kit for one or two devices" },
           ],
@@ -181,7 +181,7 @@ export const NEW_BERLIN_PHONE_SHREDDING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            `Companies retiring field service, sales or delivery phones, along with hospitals, banks, insurance agencies, law firms, schools, property managers, managed IT providers and government offices, can schedule collection instead of driving devices in. Pickup is a commercial service within about 100 miles of New Berlin, covering [Milwaukee](${href('/wisconsin-recycling/milwaukee/')}), [Waukesha](${href('/shredding-wisconsin/waukesha/')}), Wauwatosa, Menomonee Falls, Oak Creek, [Racine](${href('/shredding-wisconsin/racine/')}), Kenosha and [Madison](${href('/wisconsin-recycling/madison/')}).`,
+            `Companies retiring field service, sales or delivery phones, along with hospitals, banks, insurance agencies, law firms, schools, property managers, managed IT providers and government offices, can schedule collection instead of driving devices in. Pickup is a commercial service around New Berlin, covering [Milwaukee](${href('/wisconsin-recycling/milwaukee/')}), [Waukesha](${href('/shredding-wisconsin/waukesha/')}), Wauwatosa, Menomonee Falls, Oak Creek, [Racine](${href('/shredding-wisconsin/racine/')}), Kenosha and [Madison](${href('/wisconsin-recycling/madison/')}).`,
           ],
           listIntro: "For a quote, tell us:",
           list: [

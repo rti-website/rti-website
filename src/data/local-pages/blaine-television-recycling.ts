@@ -21,7 +21,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
   hero: {
     crumb: "TV Recycling in Blaine, Minnesota",
     h1: "TV Recycling in Blaine, Minnesota",
-    body: ["TV recycling for Blaine and the north metro, with weekday drop-off at our 99th Lane NE center, commercial pickup for bulk sets within about 100 miles, and mail-in kits for a few smaller screens."],
+    body: ["TV recycling for Blaine and the north metro, with weekday drop-off at our 99th Lane NE center, commercial pickup for bulk sets in the surrounding area, and mail-in kits for a few smaller screens."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -62,7 +62,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Bulk TV collection within roughly 100 miles of Blaine",
+              body: "Bulk TV collection around Blaine",
             },
             { icon: "mail", title: "Mail-in", body: "Electronics kits for a few smaller screens" },
           ],
@@ -170,7 +170,7 @@ export const BLAINE_TELEVISION_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            `Many public programs charge per set, cap how many TVs a household can bring, or won't take sets used by a business or rental property. Property managers turning over units, schools retiring classroom displays, hospitals and clinics replacing room TVs, offices clearing conference rooms, and contractors finishing renovation cleanouts can schedule a pickup instead. Pickup covers businesses within roughly 100 miles of Blaine, including [Coon Rapids](${href('/minnesota-recycling/coon-rapids/')}), Andover, Anoka, Ham Lake, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), [Brooklyn Park](${href('/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/')}), Maple Grove, [Plymouth](${href('/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/')}), [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), St. Paul, Bloomington, [Woodbury](${href('/minnesota-recycling/electronic-recycling-in-woodbury/')}), Burnsville, [Lakeville](${href('/minnesota-recycling/dakota-county/lakeville-recycling-center/')}), Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.`,
+            `Many public programs charge per set, cap how many TVs a household can bring, or won't take sets used by a business or rental property. Property managers turning over units, schools retiring classroom displays, hospitals and clinics replacing room TVs, offices clearing conference rooms, and contractors finishing renovation cleanouts can schedule a pickup instead. Pickup covers businesses around Blaine, including [Coon Rapids](${href('/minnesota-recycling/coon-rapids/')}), Andover, Anoka, Ham Lake, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), [Brooklyn Park](${href('/minnesota-recycling/hennepin-county-recycling-center/brooklyn-park-recycling-center/')}), Maple Grove, [Plymouth](${href('/minnesota-recycling/hennepin-county-recycling-center/plymouth-recycling-center/')}), [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), St. Paul, Bloomington, [Woodbury](${href('/minnesota-recycling/electronic-recycling-in-woodbury/')}), Burnsville, [Lakeville](${href('/minnesota-recycling/dakota-county/lakeville-recycling-center/')}), Elk River, Forest Lake, Stillwater, Shakopee and St. Cloud.`,
           ],
           listIntro: "When requesting a quote, include:",
           list: [

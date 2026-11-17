@@ -21,7 +21,7 @@ export const BLAINE_BALLAST_RECYCLING: LocalPage = {
   hero: {
     crumb: "Ballast Recycling in Blaine, Minnesota",
     h1: "Ballast Recycling in Blaine, Minnesota",
-    body: ["Ballast recycling for Blaine and the Twin Cities metro, with weekday drop-off at our Davenport St NE lamp and ballast facility, commercial pickup within about 100 miles, and mail-in kits for eligible non-PCB ballasts. We accept PCB and non-PCB magnetic and electronic ballasts from contractors, businesses, and households."],
+    body: ["Ballast recycling for Blaine and the Twin Cities metro, with weekday drop-off at our Davenport St NE lamp and ballast facility, commercial pickup in the surrounding area, and mail-in kits for eligible non-PCB ballasts. We accept PCB and non-PCB magnetic and electronic ballasts from contractors, businesses, and households."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -59,7 +59,7 @@ export const BLAINE_BALLAST_RECYCLING: LocalPage = {
           heading: "Available Service Options",
           items: [
             { icon: "pin", title: "Weekday drop-off for businesses and households" },
-            { icon: "truck", title: "Commercial pickup within about 100 miles" },
+            { icon: "truck", title: "Commercial pickup in the surrounding area" },
             {
               icon: "mail",
               title: "[Mail-in kit](https://ezontheearth.com/collections/non-pcb-ballast?utm_source=recycletechnologies&utm_medium=referral&utm_campaign=kits) for non-PCB ballasts",
@@ -194,7 +194,7 @@ export const BLAINE_BALLAST_RECYCLING: LocalPage = {
           title: "Commercial Ballast Pickup in the Twin Cities",
           dark: true,
           body: [
-            `We collect ballasts from businesses within about 100 miles of Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), Brooklyn Park, Maple Grove, Plymouth, [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), St. Paul, [Bloomington](${href('/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/')}), [Woodbury](${href('/minnesota-recycling/electronic-recycling-in-woodbury/')}), [Burnsville](${href('/minnesota-recycling/dakota-county/burnsville-recycling-center/')}), Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and [St. Cloud](${href('/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/')}).`,
+            `We collect ballasts from businesses around Blaine, including Coon Rapids, Andover, Anoka, Ham Lake, Lino Lakes, Fridley, Mounds View, [Roseville](${href('/minnesota-recycling/ramsey/roseville/')}), Brooklyn Park, Maple Grove, Plymouth, [Minneapolis](${href('/minnesota-recycling/minneapolis/')}), St. Paul, [Bloomington](${href('/minnesota-recycling/hennepin-county-recycling-center/bloomington-recycling-center/')}), [Woodbury](${href('/minnesota-recycling/electronic-recycling-in-woodbury/')}), [Burnsville](${href('/minnesota-recycling/dakota-county/burnsville-recycling-center/')}), Lakeville, Elk River, Forest Lake, Stillwater, Shakopee and [St. Cloud](${href('/minnesota-recycling/benton-county-recycling/st-cloud-recycling-center/')}).`,
           ],
           listIntro: "For a pickup quote, send us:",
           list: [

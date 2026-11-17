@@ -62,7 +62,7 @@ export const NEW_BERLIN_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For companies within 100 miles, with packing materials delivered ahead if you need them.",
+              body: "For companies in the surrounding area, with packing materials delivered ahead if you need them.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid bulb kits that you fill and send back by FedEx." },
           ],
@@ -176,7 +176,7 @@ export const NEW_BERLIN_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Apartment complexes, school districts, hospitals, retail stores, warehouses and electrical contractors finishing LED retrofits often have more lamps than a pickup truck can carry. Commercial pickup is a business service within 100 miles of New Berlin, reaching Milwaukee, Waukesha, Wauwatosa, Pewaukee, Franklin, Oak Creek, Racine, Kenosha, West Bend and Madison.",
+            "Apartment complexes, school districts, hospitals, retail stores, warehouses and electrical contractors finishing LED retrofits often have more lamps than a pickup truck can carry. Commercial pickup is a business service around New Berlin, reaching Milwaukee, Waukesha, Wauwatosa, Pewaukee, Franklin, Oak Creek, Racine, Kenosha, West Bend and Madison.",
           ],
           listIntro: "Share these details for a quote:",
           list: [

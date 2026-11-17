@@ -21,7 +21,7 @@ export const KENNESAW_BALLAST_RECYCLING: LocalPage = {
   hero: {
     crumb: "Ballast Recycling in Kennesaw, GA",
     h1: "Ballast Recycling in Kennesaw, GA",
-    body: ["Lighting ballast recycling for Kennesaw, Marietta and metro Atlanta, with weekday drop-off on Town Point Drive, pickup for businesses within about 100 miles, and non-PCB ballast kits by mail."],
+    body: ["Lighting ballast recycling for Kennesaw, Marietta and metro Atlanta, with weekday drop-off on Town Point Drive, pickup for businesses in the surrounding area, and non-PCB ballast kits by mail."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
@@ -63,7 +63,7 @@ export const KENNESAW_BALLAST_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Business pickup",
-              body: "Collection for commercial sites within roughly 100 miles.",
+              body: "Collection for commercial sites in the surrounding area.",
             },
             { icon: "mail", title: "Mail-in", body: "Prepaid kits for non-PCB ballasts." },
           ],
@@ -164,7 +164,7 @@ export const KENNESAW_BALLAST_RECYCLING: LocalPage = {
           title: "Business Pickup",
           dark: true,
           body: [
-            "Electrical contractors wrapping up LED retrofits, property managers updating common areas, school districts, hospitals, warehouses along I-75 and I-575, and demolition crews can book pickup instead of hauling ballasts in. Commercial pickup reaches sites within roughly 100 miles of Kennesaw, including Atlanta, Roswell, Alpharetta, Sandy Springs, Woodstock, Canton, Cartersville and Rome.",
+            "Electrical contractors wrapping up LED retrofits, property managers updating common areas, school districts, hospitals, warehouses along I-75 and I-575, and demolition crews can book pickup instead of hauling ballasts in. Commercial pickup reaches sites around Kennesaw, including Atlanta, Roswell, Alpharetta, Sandy Springs, Woodstock, Canton, Cartersville and Rome.",
           ],
           listIntro: "To price your pickup, send:",
           list: [

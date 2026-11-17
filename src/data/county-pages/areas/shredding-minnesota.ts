@@ -31,7 +31,7 @@ export const SHREDDING_MINNESOTA: CountyPage = {
   about: {
     heading: "Document Shredding Minnesota",
     blocks: [
-      { p: "Recycle Technologies helps hundreds of businesses in a 100-mile area in Minnesota to keep their private information secure with shredding services, media destruction, and document destruction." },
+      { p: "Recycle Technologies helps hundreds of businesses across Minnesota to keep their private information secure with shredding services, media destruction, and document destruction." },
       { p: "We offer highly secure residential and business shredding services in Minnesota so that you can shred and destroy your confidential and sensitive information with the same care that large organizations benefit from." },
       { p: "At Recycle Technologies, our document destruction services are based on providing world-class security, safe environmental practices, and exceptional customer service in the document shredding and electronic media destruction industry. When you need residential shredding services or commercial shredding services in the Minnesota area, Recycle Technologies is always here to help you." },
       { h: "Secure & Affordable Shredding Services in Minnesota" },
@@ -47,10 +47,10 @@ export const SHREDDING_MINNESOTA: CountyPage = {
       { title: "No shredding job is too big or too . small", text: "We can offer you a one-off purge shredding service or can set up a regular shredding service. We can destroy a large volume of documents and even a single box of documents in your cabinet." },
       { title: "Fast & Efficient Customer Service", text: "We can provide you with our services as soon as you book or in the next available slot. We will ensure quality service all the time." },
       { title: "NAID AAA and Privacy Certified", text: "We are certified and keep you compliant with all data protection regulations." },
-      { title: "100% Local", text: "We are a local business based in Minnesota and Wisconsin. We cover a 100-Mile radius from both our facilities." },
+      { title: "100% Local", text: "We are a local business based in Minnesota and Wisconsin. We cover a wide area from both our facilities." },
     ] },
     { kind: 'text', heading: "Minnesota Shredding Locations", blocks: [
-      { p: "We cover 100-mile radius and all major cities from our facility in Minnesota and Wisconsin. You can avail our services in the following major cities. Can not find your city? Call us at (800)969-5166 to speak to our sales expert." },
+      { p: "We cover the surrounding area and all major cities from our facility in Minnesota and Wisconsin. You can avail our services in the following major cities. Can not find your city? Call us at (800)969-5166 to speak to our sales expert." },
       { list: [
         { title: "Duluth Shredding Service", text: "Take the burden off your shoulders by getting reliable battery recycling services in Duluth from your trusted local partner.", href: href("/shredding-minnesota/duluth/") },
         { title: "ST.Paul Shredding", text: "Take the burden off your shoulders by getting reliable battery recycling services in ST Paul from your trusted local partner.", href: href("/shredding-minnesota/st-paul/") },

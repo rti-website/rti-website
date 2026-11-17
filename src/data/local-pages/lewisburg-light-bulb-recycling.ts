@@ -58,7 +58,7 @@ export const LEWISBURG_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "Within about 100 miles of Lewisburg. Contact the team to confirm your site.",
+              body: "Around Lewisburg. Contact the team to confirm your site.",
             },
             {
               icon: "mail",
@@ -163,7 +163,7 @@ export const LEWISBURG_LIGHT_BULB_RECYCLING: LocalPage = {
           title: "Commercial Pickup",
           dark: true,
           body: [
-            "Offices, warehouses, farms, schools and retailers that go through bulbs regularly can set up pickup instead of storing and hauling them. Pickup is a business service, covering sites within about 100 miles of Lewisburg, including Nashville, Franklin, Murfreesboro, Pulaski and Tullahoma.",
+            "Offices, warehouses, farms, schools and retailers that go through bulbs regularly can set up pickup instead of storing and hauling them. Pickup is a business service, covering sites around Lewisburg, including Nashville, Franklin, Murfreesboro, Pulaski and Tullahoma.",
           ],
           listIntro: "When requesting a quote, include:",
           list: [
@@ -225,7 +225,7 @@ export const LEWISBURG_LIGHT_BULB_RECYCLING: LocalPage = {
             {
               icon: "truck",
               title: "Commercial pickup",
-              body: "For businesses within about 100 miles that need a steady schedule.",
+              body: "For businesses in the surrounding area that need a steady schedule.",
             },
             {
               icon: "pin",
