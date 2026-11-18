@@ -9,7 +9,6 @@ import { TawkChat } from '@/components/client/TawkChat'
 import { canvasZoomScript } from '@/lib/canvas-zoom'
 import { isPreview } from '@/lib/page-content'
 import { PreviewBar } from '@/components/client/PreviewBar'
-import { CookieConsent } from '@/components/client/CookieConsent'
 import { QuotePicker } from '@/components/client/QuotePicker'
 import { VisitorTracker } from '@/components/client/VisitorTracker'
 import { visitorConfig } from '@/lib/visitor/config'
@@ -68,8 +67,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             (4 Nov), so it is gone from the code, not just switched off. */}
         {/* Live chat, loaded after the page (management, 24 Sep 2026). */}
         <TawkChat propertyId={TAWK.propertyId} widgetId={TAWK.widgetId} />
-        {/* Cookie banner and settings panel (management, 27 Oct 2026). */}
-        {!preview && <CookieConsent orgLookup={visitorConfig.captureOn()} />}
+        {/* The cookie banner and settings panel (27 Oct 2026) were removed on
+            18 Nov 2026 (management: "remove the cookies thing from the
+            website"). Analytics stays on by default as since 4 Nov; a browser
+            that already chose Reject, or sends Global Privacy Control, is
+            still respected by the bootstrap (src/lib/tracking.ts). */}
         {/* Get a Quote asks "Who is this for?" first (28 Oct 2026). */}
         <QuotePicker />
         {preview && <PreviewBar />}

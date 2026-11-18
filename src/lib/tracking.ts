@@ -73,7 +73,9 @@ export const ATTR_MAX_AGE = 90 * 24 * 60 * 60
  *     Analytics declined, and that browser is not shown the banner.
  * With Analytics declined the visit's attribution is still held in
  * sessionStorage (`rti_attr_held`) and sent with a form the visitor submits.
- * The banner itself is src/components/client/CookieConsent.tsx.
+ * The banner (src/components/client/CookieConsent.tsx) was removed on 18 Nov
+ * 2026 (management). Nothing calls rtiSetConsent now; the default (granted),
+ * a choice saved before then, and GPC still apply.
  */
 export const CONSENT_COOKIE = 'rti_consent'
 export const CONSENT_MAX_AGE = 365 * 24 * 60 * 60
