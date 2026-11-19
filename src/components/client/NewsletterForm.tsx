@@ -87,7 +87,7 @@ export function NewsletterForm({ text = DEFAULT_TEXT }: { text?: Text } = {}) {
   if (state === 'sent') {
     return (
       <p role="status" className="font-roboto text-[15px] leading-[22px] text-brand lg:text-[14px]">
-        Thanks — you are on the list. We will only send the occasional update.
+        Thanks. You are on the list. We will only send the occasional update.
       </p>
     )
   }

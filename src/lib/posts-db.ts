@@ -79,7 +79,7 @@ function noDatabase(err: unknown): [] {
 
   if (process.env.DATABASE_URL) {
     throw new Error(
-      `Could not read posts, and DATABASE_URL is set — so this is a broken `
+      `Could not read posts, and DATABASE_URL is set, so this is a broken `
       + `connection, not a missing one:\n    ${message}\n`
       + `  Refusing to build a site with no articles in it. Check the database `
       + `is running and that DATABASE_URL is right.`,

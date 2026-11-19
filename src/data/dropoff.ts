@@ -39,7 +39,7 @@ export const FINDER = {
   placeholder: 'Enter your city or ZIP',
   find: 'Find a location',
   useMine: 'Use my location',
-  mapNote: 'Illustrative map — search above for exact directions',
+  mapNote: 'Illustrative map. Search above for exact directions',
   labels: {
     distance: 'Distance',
     address: 'Address',

@@ -362,7 +362,7 @@ export const SOUTH_CAROLINA_HUB = hub({
   lead: 'Recycling handled through our Williamston location, backed by our certified Recycle Technologies facilities, for South Carolina businesses, with every item logged at intake and a certificate issued on completion.',
   // 17 Nov 2026, the doc's update: "Our South Carolina Location", "Williamston Location", "View Location".
   sites: [{
-    ...site('South Carolina', 'Williamston', '/south-carolina/williamston/', '109 Twenty Nine Ct, Williamston, SC 29697', '+1-864-774-8310', 'Mon–Fri 9:00 AM–4:00 PM'),
+    ...site('South Carolina', 'Williamston', '/south-carolina/williamston/', '109 Twenty Nine Ct, Williamston, SC 29697', '+1-864-774-8310', 'Mon to Fri, 9:00 AM to 4:00 PM'),
     eyebrow: 'Our South Carolina Location', name: 'Williamston Location', view: 'View Location',
   }],
   materialsHeading: 'Recycling Services in South Carolina',

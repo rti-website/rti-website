@@ -52,8 +52,8 @@ export const WASHINGTON_WI: CountyPage = {
     name: "Recycle Technologies",
     text: "Recycle Technologies provides reliable and certified electronics recycling services for individuals and businesses.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 7:30 am – 4:00 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 7:30 am to 4:00 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "+1 262-798-3040", tel: "+12627983040" },
     ],
   },

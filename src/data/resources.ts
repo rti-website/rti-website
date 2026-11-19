@@ -97,7 +97,7 @@ export const GUIDES: { eyebrow: string; heading: string; lead: string; cards: Gu
       glyph: 'phone',
       category: 'Electronics',
       title: 'How to Recycle Old iPhone',
-      body: "What to do with your old iPhone once you've upgraded — from data wipe to responsible drop-off or mail-in.",
+      body: "What to do with your old iPhone once you've upgraded, from data wipe to responsible drop-off or mail-in.",
       href: href('/how-to-recycle-old-iphone/'),
     },
     {
@@ -157,7 +157,7 @@ export const ARTICLES: { eyebrow: string; heading: string; lead: string; rows: A
       category: 'Household',
       date: 'Dec 24, 2024',
       title: 'How to Dispose of Fire Extinguisher Properly',
-      body: "Fire extinguishers need special handling — here's how to retire one safely and legally.",
+      body: "Fire extinguishers need special handling. Here's how to retire one safely and legally.",
       href: href('/dispose-of-fire-extinguisher/'),
     },
     {

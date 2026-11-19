@@ -54,7 +54,7 @@ export async function ComplianceDownloads({ top, height }: { top: number; height
               <Mark glyph="arrow" size={16} />
               <span className="whitespace-nowrap">
                 {DOWNLOADS.action}
-                <span className="sr-only"> — {c.title}</span>
+                <span className="sr-only">: {c.title}</span>
               </span>
             </Link>
           </article>

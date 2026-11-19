@@ -15,7 +15,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
   design: 2,
   seo: {
     title: "Electronics Recycling in Phoenix, AZ | Recycle Technologies",
-    description: "Drop off business electronics, lamps, ballasts, and batteries at our Phoenix site off I-17, or book commercial pickup. Walk-ins for 1–4 pallets.",
+    description: "Drop off business electronics, lamps, ballasts, and batteries at our Phoenix site off I-17, or book commercial pickup. Walk-ins for 1 to 4 pallets.",
   },
   schema: { service: "Electronics Recycling", areaServed: ["Phoenix, AZ", "Arizona"] },
   hero: {
@@ -26,7 +26,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
     secondary: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   summary: [
-    "Walk-ins are accepted for 1–4 pallets, although appointments are preferred. Businesses with larger or recurring loads can request commercial pickup, while smaller quantities can be sent through our mail-in recycling program.",
+    "Walk-ins are accepted for 1 to 4 pallets, although appointments are preferred. Businesses with larger or recurring loads can request commercial pickup, while smaller quantities can be sent through our mail-in recycling program.",
   ],
   bands: [
     {
@@ -96,7 +96,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
           body: [
             "Bring eligible electronics and universal waste to our Phoenix collection site at 1545 East Victory Street, Phoenix, AZ 85040. The location is near I-17, at the corner of South 16th Street.",
             "Enter from Victory Street and continue toward the end of the cul-de-sac. The receiving area is on the left.",
-            "Walk-ins are accepted for 1–4 pallets, although appointments are preferred. Pricing depends on the materials and quantity.",
+            "Walk-ins are accepted for 1 to 4 pallets, although appointments are preferred. Pricing depends on the materials and quantity.",
             "Hours: Monday to Friday, 7:30 AM to 2:00 PM. Call (602) 276-1858 before visiting to confirm the current hours, accepted materials, and arrangements for larger loads.",
           ],
         },
@@ -140,7 +140,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
             {
               icon: "pin",
               title: "A Convenient Phoenix Drop-Off Location",
-              body: "Our site at 1545 East Victory Street is near I-17 and accepts eligible materials from businesses and residents. Walk-ins are available for 1–4 pallets, making drop-off an option for smaller loads that don't require commercial pickup.",
+              body: "Our site at 1545 East Victory Street is near I-17 and accepts eligible materials from businesses and residents. Walk-ins are available for 1 to 4 pallets, making drop-off an option for smaller loads that don't require commercial pickup.",
             },
             {
               icon: "layers",
@@ -182,7 +182,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
     eyebrow: "FAQs",
     heading: "Frequently Asked Questions",
     items: [
-      { q: "Can I drop off electronics without an appointment in Phoenix?", a: "Yes. Walk-ins are accepted for 1–4 pallets, although an appointment is preferred. Confirm the current hours before visiting." },
+      { q: "Can I drop off electronics without an appointment in Phoenix?", a: "Yes. Walk-ins are accepted for 1 to 4 pallets, although an appointment is preferred. Confirm the current hours before visiting." },
       { q: "Do you accept PCB ballasts and capacitors?", a: "Yes. The Phoenix location accepts PCB and non-PCB ballasts and capacitors." },
       { q: "Are electronics considered universal waste in Arizona?", a: "No. Arizona's universal waste list covers materials such as batteries, lamps, mercury-containing equipment, and aerosol cans, but not electronics." },
       { q: "Are electronics processed at the Phoenix location?", a: "No. The Phoenix site operates as a collection and transfer location. Materials are consolidated and shipped to a processing facility." },
@@ -209,7 +209,7 @@ export const PHOENIX_ELECTRONIC_RECYCLING: LocalPage = {
   ],
   cta: {
     heading: "Get Started With Electronics Recycling in Phoenix, AZ",
-    body: ["Whether you're recycling office electronics, managing universal waste, or arranging pickup for a larger business load, Recycle Technologies offers options to help you move forward.", "Bring 1–4 pallets to our Phoenix location, request a quote for commercial pickup, or explore our mail-in recycling kits for smaller quantities."],
+    body: ["Whether you're recycling office electronics, managing universal waste, or arranging pickup for a larger business load, Recycle Technologies offers options to help you move forward.", "Bring 1 to 4 pallets to our Phoenix location, request a quote for commercial pickup, or explore our mail-in recycling kits for smaller quantities."],
     primary: { label: "Get a Quote", href: QUOTE_HREF },
     secondary: { label: "Schedule Commercial Pickup", href: PICKUP_HREF },
   },

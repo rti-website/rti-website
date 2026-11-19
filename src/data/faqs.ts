@@ -668,5 +668,5 @@ export const ALL_FAQS: Faq[] = allFaqs(FAQ_GROUPS)
 export const TODO_FOR_CONTENT = [
   'Each group\'s one-line lead under the heading was written here, not supplied. The frame needs a third line in that block and the document has none. Seventeen short lines for Musaveer to replace or approve.',
   'The frame draws four groups of four questions. The real content is seventeen groups and 114 questions, so the page is much longer than the frame. The section pattern is unchanged.',
-  'Several answers point at pages by name — Locations, the Mail-In Recycling Program, service-area pages. Those are plain text today; linking them would help a reader and is a content decision.',
+  'Several answers point at pages by name: Locations, the Mail-In Recycling Program, service-area pages. Those are plain text today; linking them would help a reader and is a content decision.',
 ]

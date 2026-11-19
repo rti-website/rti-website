@@ -101,7 +101,7 @@ export async function Footer({ top = 1192 }: { top?: number } = {}) {
         <Box x={319} y={90} w={230} h={55}>
           {/* Sized on the link rather than the Box: below lg the Box has no
               height, and `size-full` against an auto-height parent collapses. */}
-          <Link href="/" aria-label="Recycle Technologies — home" className="block h-[55px] w-[230px] lg:size-full">
+          <Link href="/" aria-label="Recycle Technologies, home" className="block h-[55px] w-[230px] lg:size-full">
             <Image src="/images/logo.png" alt="Recycle Technologies" width={230} height={55} className="size-full object-contain" />
           </Link>
         </Box>
@@ -337,7 +337,7 @@ function Cert({ c, col }: { c: FooterCert; col: number }) {
      cell (117x97 on a 390 phone), not the 42px mark. */
   return c.href ? (
     <a href={c.href} target="_blank" rel={outboundRel(c.href)}
-      aria-label={`${c.name} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+      aria-label={`${c.name}, see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
       className={`${cell} transition-opacity hover:opacity-70`} style={vars}>
       {art}
     </a>

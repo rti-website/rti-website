@@ -28,7 +28,7 @@ export const KINDS: Record<string, string> = {
 export const ACCEPT = Object.keys(KINDS).join(',')
 
 export function describeRejection(file: { name?: string; type: string; size: number }): string | null {
-  if (!KINDS[file.type]) return `${file.type || 'that file type'} is not allowed — pictures (PNG, JPG, WebP, GIF) and PDFs only`
+  if (!KINDS[file.type]) return `${file.type || 'that file type'} is not allowed: pictures (PNG, JPG, WebP, GIF) and PDFs only`
   if (file.size > MAX_BYTES) return `it is ${(file.size / 1024 / 1024).toFixed(1)} MB and the limit is ${MAX_BYTES / 1024 / 1024} MB`
   return null
 }

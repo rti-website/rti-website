@@ -42,7 +42,7 @@ export const BLAINE: CountyPage = {
   quickInfo: [
     { glyph: 'pin',   label: "Address",       value: "1525 99th Ln NE, Blaine, MN 55449", href: "https://www.google.com/maps/dir/?api=1&destination=1525+99th+Ln+NE%2C+Blaine%2C+MN+55449" },
     { glyph: 'phone', label: "Phone",         value: "763-559-5130", href: "tel:+17635595130" },
-    { glyph: 'clock', label: "Hours",         value: "Mon–Fri 7:30 AM–4:00 PM" },
+    { glyph: 'clock', label: "Hours",         value: "Mon to Fri, 7:30 AM to 4:00 PM" },
     { glyph: 'badge', label: "Certification", value: "R2v3 Certified", href: R2_DIRECTORY },
   ],
   notice: {
@@ -57,7 +57,7 @@ export const BLAINE: CountyPage = {
   // and taken off /minnesota-recycling/. The accepted items line stays as the note.
   directions: {
     heading: "Getting Here",
-    intro: "Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area — a team member will meet you to log your materials.",
+    intro: "Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area. A team member will meet you to log your materials.",
     introShort: "Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area.",
     note: "Accepted here: electronics, batteries, light bulbs, ballasts, paper shredding, hard drives",
     rows: [
@@ -102,17 +102,17 @@ export const BLAINE: CountyPage = {
     // 9 Oct 2026, SEO sheet "Technical Fixes": an FAQ, the same questions the
     // New Berlin facility page (/wisconsin-recycling/) answers, for Blaine.
     { kind: 'faq', heading: "Frequently Asked Questions", items: [
-      { q: "Do I need an appointment to drop off at the Blaine facility?", a: "Drop-off requirements vary by material and quantity. Call +1-763-559-5130 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged — large or commercial loads in particular go faster when the loading area is expecting you." },
+      { q: "Do I need an appointment to drop off at the Blaine facility?", a: "Drop-off requirements vary by material and quantity. Call +1-763-559-5130 before you visit to confirm what you are bringing is accepted and whether a time needs to be arranged, large or commercial loads in particular go faster when the loading area is expecting you." },
       { q: "Is there a fee for dropping off at this location?", a: "Fees depend on the material and the quantity. Call +1-763-559-5130 with a description of what you plan to bring and we will confirm any charges before you make the trip." },
-      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available around the facility. Pickup arrangements depend on the materials, quantity, location and service required — request a quote to get started." },
+      { q: "Can businesses schedule a bulk pickup from this facility?", a: "Yes. Business pickups are available around the facility. Pickup arrangements depend on the materials, quantity, location and service required. Request a quote to get started." },
     ] },
   ],
   company: {
     name: "Recycle Technologies",
     text: "Providing certified recycling services to individuals and businesses.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 7:30 am – 4:00 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 7:30 am to 4:00 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "+1 763-559-5130", tel: "+17635595130" },
     ],
   },

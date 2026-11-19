@@ -34,7 +34,7 @@ export const TAWK = {
 export const FACILITIES = [
   {
     id: 'blaine-99th',
-    name: 'Recycle Technologies — Blaine (99th Ln)',
+    name: 'Recycle Technologies: Blaine (99th Ln)',
     street: '1525 99th Ln NE',
     locality: 'Blaine',
     region: 'MN',
@@ -46,7 +46,7 @@ export const FACILITIES = [
   },
   {
     id: 'new-berlin',
-    name: 'Recycle Technologies — New Berlin',
+    name: 'Recycle Technologies: New Berlin',
     street: '2815 South 171st Street',
     locality: 'New Berlin',
     region: 'WI',

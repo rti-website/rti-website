@@ -113,8 +113,8 @@ export const ONTARIO_CALIFORNIA: CountyPage = {
     name: "Recycle Technologies, Ontario",
     text: "805 E Francis St, Ontario, CA 91761. Full loading dock; no appointment needed for drop-offs.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 6:00 am – 2:30 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 6:00 am to 2:30 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "(909) 923-7252", tel: "+19099237252" },
       { kind: 'email', text: "dispatch@recycletechnologies.com" },
     ],

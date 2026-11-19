@@ -338,7 +338,7 @@ const RESTORED: Record<string, { title: string; description: string }> = {
   },
   "/category/news/": {
     title: "Recyling & E-waste latest news in USA | Recycle Technologies",
-    description: "Explore the ever-evolving landscape of US Recycling & E-waste through Recycle Technologies – delivering the latest updates for a sustainable tomorrow.",
+    description: "Explore the ever-evolving landscape of US Recycling & E-waste through Recycle Technologies, delivering the latest updates for a sustainable tomorrow.",
   },
   "/blog/": {
     title: 'Recyling & E-waste recycling trends Blog',

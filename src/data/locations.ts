@@ -140,7 +140,7 @@ export const COVERAGE = {
  */
 export const CTA = {
   heading: 'Don’t See Your City Listed?',
-  body: 'Our Mail-In Program brings the same certified recycling and shredding to all 50 states — order a kit, pack it up, and drop it at the nearest FedEx.',
+  body: 'Our Mail-In Program brings the same certified recycling and shredding to all 50 states: order a kit, pack it up, and drop it at the nearest FedEx.',
   /** 6750:8509 — the phone frame's shorter line. */
   bodyMobile: 'Our Mail-In Program brings certified recycling and shredding to all 50 states.',
   /** This page's own band (6491:6580 / 6750:8507) — see `narrow` in ClosingCta. */

@@ -139,7 +139,7 @@ function BadgeLogo({ f }: { f: Facility }) {
   )
   return l.href ? (
     <a href={l.href} target="_blank" rel={outboundRel(l.href)}
-      aria-label={`${l.alt} — see ${f.name} in the R2 certified facility directory (opens in a new tab)`}
+      aria-label={`${l.alt}, see ${f.name} in the R2 certified facility directory (opens in a new tab)`}
       className="btn-pop grid min-h-[44px] min-w-[44px] shrink-0 place-items-center transition-opacity hover:opacity-80">
       {body}
     </a>

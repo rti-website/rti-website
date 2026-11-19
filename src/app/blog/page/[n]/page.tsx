@@ -63,9 +63,9 @@ export async function generateMetadata({ params }: Props) {
      * verbatim under rule 6, and pages 2+ get their own short ones. These URLs
      * are new, so no rule 6 string is being touched here.
      */
-    title: `Blog — Page ${page} of ${pages} | Recycle Technologies`,
+    title: `Blog: Page ${page} of ${pages} | Recycle Technologies`,
     description:
-      `Recycling and e-waste articles from Recycle Technologies — page ${page} of ${pages}.`,
+      `Recycling and e-waste articles from Recycle Technologies, page ${page} of ${pages}.`,
   })
 }
 
@@ -95,7 +95,7 @@ export default async function BlogArchivePage({ params }: Props) {
           top={LIST_TOP} height={listH}
           posts={posts} chips={chips}
           page={page} pages={pages} pathFor={blogPagePath}
-          heading={`${INTRO.heading} — Page ${page}`}
+          heading={`${INTRO.heading}, Page ${page}`}
         />
         <BlogNewsletter top={NEWS_TOP} height={H.news} />
       </main>

@@ -226,7 +226,7 @@ const M = {
 const STEPS = [
   {
     title: 'Pull Around Back',
-    body: 'Enter via the parking lot and follow signage to the rear loading area — no need to check in at a front desk.',
+    body: 'Enter via the parking lot and follow signage to the rear loading area, no need to check in at a front desk.',
     bodyShort: 'Enter via the parking lot and follow signage to the rear loading area.',
   },
   {
@@ -285,8 +285,8 @@ export const MINNESOTA: Facility = {
   email: MN_CONTACT.email,
   // 13 Oct 2026, Figma 7329:6143: 7:30 to 4:00, as the Blaine page says (was
   // the old frame's unconfirmed 8:30 to 4:30 plus two Saturdays).
-  hours: 'Mon–Fri 7:30 AM–4:00 PM',
-  hoursShort: 'Mon–Fri 7:30 AM–4:00 PM',
+  hours: 'Mon to Fri, 7:30 AM to 4:00 PM',
+  hoursShort: 'Mon to Fri, 7:30 AM to 4:00 PM',
   cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified', certified: true },
   /* stat-r2.png is the R2v3 mark on a transparent ground (the hero stats
      strip's own file); the certifications page's r2v3.png has a white one. */
@@ -296,7 +296,7 @@ export const MINNESOTA: Facility = {
   materialsLead: 'The Blaine, Minnesota facility handles the full range of our electronics and document destruction services.',
   materials: [M.electronics, M.batteries, M.bulbs, M.ballasts, M.paper, M.hardDrive],
   directions: {
-    intro: 'Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area — a team member will meet you to log your materials.', // FRAME
+    intro: 'Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area. A team member will meet you to log your materials.', // FRAME
     introShort: 'Enter via the parking lot on 99th Lane NE. Signage directs drop-off traffic to the rear loading area.',
     rows: [
       { label: 'Nearest Highway',   value: 'I-35W & 99th Ave NE' },  // FRAME — unconfirmed
@@ -428,8 +428,8 @@ export const WISCONSIN: Facility = {
   email: WI_CONTACT.email,
   // 5 Oct 2026, Figma 6744:8392: 7:30 to 4:00 (as the New Berlin page and the
   // drop-off page already say) and R2v3 Certified (was "Pursuing R2v3").
-  hours: 'Mon–Fri 7:30 AM–4:00 PM',
-  hoursShort: 'Mon–Fri 7:30 AM–4:00 PM',
+  hours: 'Mon to Fri, 7:30 AM to 4:00 PM',
+  hoursShort: 'Mon to Fri, 7:30 AM to 4:00 PM',
   cert: { status: 'R2v3 Certified', badge: 'R2v3 Certified', certified: true },
   /* !! The card no longer says "Pursuing R2v3" — Asim, 23 Sep 2026, swapped
      the pill for the NAID AAA badge. The status still shows on the facility
@@ -629,7 +629,7 @@ export const EXTENDED = {
 export const NATIONWIDE = {
   eyebrow: 'Expanding Network',
   heading: 'Additional Facilities Nationwide',
-  lead: 'Our network is growing beyond Minnesota and Wisconsin — drop off electronics, batteries, and bulbs at any of these locations.',
+  lead: 'Our network is growing beyond Minnesota and Wisconsin: drop off electronics, batteries, and bulbs at any of these locations.',
   leadMobile: 'Our network is growing beyond Minnesota and Wisconsin.',
   logo: CARD_LOGO,
   /* The board's order (6833:2668), two to a row: Lewisburg · Greenwood /

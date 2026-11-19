@@ -54,7 +54,7 @@ export const STORY = {
   ],
   factsTitle: 'Quick Facts',
   facts: [
-    'Founded in 1993 — 30+ years in business',
+    'Founded in 1993, 30+ years in business',
     'Licensed facilities in Minnesota and Wisconsin',
     'Certified Minority Business Enterprise (MBE)',
     'Nationwide reach through our Mail-In Program',
@@ -70,7 +70,7 @@ export const VALUES = {
     {
       glyph: 'target' as const,
       title: 'Mission',
-      body: 'To help businesses and individuals recycle responsibly — offering secure, compliant, and convenient recycling and shredding services across the Midwest.',
+      body: 'To help businesses and individuals recycle responsibly, offering secure, compliant, and convenient recycling and shredding services across the Midwest.',
     },
     {
       glyph: 'eye' as const,
@@ -160,7 +160,7 @@ export const CTA = {
 export const TODO_FOR_DESIGN = [
   'Mission / Vision / Values: the frame carries older copy ("To be the primary recycling resource…", "A future where responsible recycling is the norm…", "…treat every customer’s materials with care"). The doc’s wording is built.',
   'Company story: the frame’s two paragraphs are a rewrite of the doc’s. The doc’s wording is built, which makes the left column taller than the 319px the frame allows.',
-  'Leadership: the frame adds "…building direct relationships with the businesses and communities we serve — not a distant corporate office", which the doc does not say. Built from the doc, so the block is shorter.',
+  'Leadership: the frame adds "…building direct relationships with the businesses and communities we serve, not a distant corporate office", which the doc does not say. Built from the doc, so the block is shorter.',
   'Facility cards have no row for a phone number, but the doc gives one for each of the two licensed sites. A third row was added.',
   'Doc fix needed: the Wisconsin facility is listed as "R2v3 Certified" in the facilities list while the same doc says twice that it is pursuing certification.',
 ]

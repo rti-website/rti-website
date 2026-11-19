@@ -18,7 +18,7 @@ import { R2_DIRECTORY } from '@/data/certifications'
 export const SEO = {
   title: 'Compliance Center | R2v3, EPA, MN & WI Law | Recycle Technologies',
   description:
-    'The certifications and regulations that govern how Recycle Technologies operates — R2v3 scope, EPA hazardous materials rules, and the Minnesota and Wisconsin electronics disposal bans.',
+    'The certifications and regulations that govern how Recycle Technologies operates: R2v3 scope, EPA hazardous materials rules, and the Minnesota and Wisconsin electronics disposal bans.',
 }
 
 /**
@@ -96,7 +96,7 @@ export const STANDARDS = {
     },
     {
       name:   'EPA Regulations',
-      detail: 'Federal rules governing hazardous materials handling, transport, and disposal — ballasts, batteries, airbags.',
+      detail: 'Federal rules governing hazardous materials handling, transport, and disposal: ballasts, batteries, airbags.',
       status: 'In Compliance',
       tone:   'ok' as StatusTone,
     },
@@ -130,7 +130,7 @@ export const STATE_LAW = {
       title: 'Minnesota Electronics Recycling Act',
       points: [
         'CRT devices (older tube-style monitors and TVs) have been banned from regular trash since 2006.',
-        'Video display devices — TVs, monitors, and related equipment — are required to be recycled under the state’s 2007 electronics law.',
+        'Video display devices (TVs, monitors, and related equipment) are required to be recycled under the state’s 2007 electronics law.',
         'Manufacturers must register and fund collection programs for covered devices sold in Minnesota.',
       ],
     },
@@ -139,7 +139,7 @@ export const STATE_LAW = {
       title: 'E-Cycle Wisconsin (Act 50)',
       points: [
         'TVs, computers, cell phones, monitors, and related electronics have been banned from Wisconsin landfills and incinerators since September 2010.',
-        'The ban applies to everyone — households, schools, businesses, and government offices alike.',
+        'The ban applies to everyone: households, schools, businesses, and government offices alike.',
         'Major appliances are also banned from Wisconsin landfills under a separate state recycling law.',
       ],
     },
@@ -161,7 +161,7 @@ export const STATE_LAW = {
 export const CASE_STUDIES = {
   eyebrow: 'Case Studies',
   heading: 'How We Solve Compliance Challenges',
-  lead: 'Representative examples of the kind of work we do — client names withheld for confidentiality.',
+  lead: 'Representative examples of the kind of work we do, client names withheld for confidentiality.',
 }
 
 /**
@@ -207,9 +207,9 @@ export const DOWNLOADS = {
 
 /** Gaps between Figma 6382:6227 and what can be verified. */
 export const TODO_FOR_DESIGN = [
-  'CLAIM NOT PUBLISHED: the standards table\'s "NAID AAA — Certified" row is built out, on Asim\'s decision of 15 Sep 2026. Nothing supports RTI holding NAID AAA; the live site\'s only NAID sentence describes ERI, a different company. This is the THIRD place the claim has surfaced — this frame, the Certifications frame (6381:1144) and the url-map description — all traceable to that one sentence. Someone should produce a certificate number or an i-SIGMA member listing, or have the sentence removed from the live homepage. Restoring the row is a one-line paste; the exact object is in the comment above STANDARDS.',
+  'CLAIM NOT PUBLISHED: the standards table\'s "NAID AAA: Certified" row is built out, on Asim\'s decision of 15 Sep 2026. Nothing supports RTI holding NAID AAA; the live site\'s only NAID sentence describes ERI, a different company. This is the THIRD place the claim has surfaced (this frame, the Certifications frame (6381:1144) and the url-map description) all traceable to that one sentence. Someone should produce a certificate number or an i-SIGMA member listing, or have the sentence removed from the live homepage. Restoring the row is a one-line paste; the exact object is in the comment above STANDARDS.',
   'The three "Compliance Documentation" PDFs do not exist. The frame\'s own label is "Request Download", so all three cards link to /contact-us/ instead of to a missing file. Produce the PDFs and they become real links with a two-field change each.',
-  'This frame has NO CONTENT DOC, unlike every other page in the build. Its copy has not been through Musaveer. Worth a read-through before launch, especially the three case studies — they are written as "representative examples" with names withheld, which is fine, but if any is a real engagement the details should be checked.',
+  'This frame has NO CONTENT DOC, unlike every other page in the build. Its copy has not been through Musaveer. Worth a read-through before launch, especially the three case studies. They are written as "representative examples" with names withheld, which is fine, but if any is a real engagement the details should be checked.',
   'The frame has no closing CTA, which every other interior page in this build has. Deliberate or an omission? The page currently ends on the downloads grid and goes straight into the footer.',
   'The glyphs are drawn inline rather than exported (figma.com is unreachable from the build sandbox). Originals: 6390:1568, 6390:1580, 6390:1593 (download kinds) and 6390:1574 (the download arrow); the three case-study marks live in src/components/ui/CaseStudyCard.tsx with the shared card.',
 ]

@@ -69,8 +69,8 @@ export const INTRO = {
   eyebrow: 'IT Asset Disposition',
   heading: 'Upgrade Your IT Asset Disposal Plan',
   paragraphs: [
-    'Every industry has its own approach to disposal, but IT assets are a different challenge entirely. Retiring laptops, servers, storage hardware, and networking equipment raises real concerns around data security, hardware recovery, and environmental responsibility — all at once.',
-    'Recycle Technologies offers a one-stop solution for IT asset disposition — our team ensures your retired equipment is securely wiped, responsibly recycled, and fully documented, so security, sustainability, and brand reputation are never in tension.',
+    'Every industry has its own approach to disposal, but IT assets are a different challenge entirely. Retiring laptops, servers, storage hardware, and networking equipment raises real concerns around data security, hardware recovery, and environmental responsibility, all at once.',
+    'Recycle Technologies offers a one-stop solution for IT asset disposition. Our team ensures your retired equipment is securely wiped, responsibly recycled, and fully documented, so security, sustainability, and brand reputation are never in tension.',
   ],
   cta: { label: 'Get a Quote', href: QUOTE_HREF },
   included: {
@@ -88,11 +88,11 @@ export const INTRO = {
 export const WHY = {
   eyebrow: 'Why It Matters',
   heading: 'ITAD for Businesses, Hospitals & Institutions',
-  lead: 'Retiring IT assets the right way protects your data, recovers real value, and clears IT waste off your hands responsibly — whatever your project’s size or complexity.',
+  lead: 'Retiring IT assets the right way protects your data, recovers real value, and clears IT waste off your hands responsibly, whatever your project’s size or complexity.',
   cards: [
-    { title: 'Data Protection',  body: 'Every device is securely wiped or destroyed before it leaves your hands — closing the door on unauthorized access to sensitive data.' },
+    { title: 'Data Protection',  body: 'Every device is securely wiped or destroyed before it leaves your hands, closing the door on unauthorized access to sensitive data.' },
     { title: 'Recovery Value',   body: 'Retired hardware often still has resale or materials value. Our team maximizes what’s recoverable instead of writing it off as waste.' },
-    { title: 'IT Waste Removal', body: 'One call clears your IT waste responsibly — no landfill, no lingering liability, and a documented trail for every asset.' },
+    { title: 'IT Waste Removal', body: 'One call clears your IT waste responsibly: no landfill, no lingering liability, and a documented trail for every asset.' },
   ],
 }
 
@@ -100,7 +100,7 @@ export const WHY = {
 export const SERVICES = {
   eyebrow: 'Full Service',
   heading: 'Complete IT Disposal Services',
-  lead: 'Follow your own ITAD policy, or let our team handle the project from scratch — the choice is yours.',
+  lead: 'Follow your own ITAD policy, or let our team handle the project from scratch. The choice is yours.',
   cards: [
     { img: '/images/itad/asset-destruction.png',       title: 'Asset Destruction',         body: 'Physical destruction of hard drives and storage media when policy calls for it, not just secure wiping.' },
     { img: '/images/itad/complete-data-removal.png',   title: 'Complete Data Removal',     body: 'Certified data sanitization that goes beyond formatting or deleting files, for devices being resold or recycled.' },
@@ -125,7 +125,7 @@ export const PROCESS = {
 export const FEATURES = {
   eyebrow: 'Why Work With Us',
   heading: 'Our Prominent Features',
-  lead: 'Client trust is what keeps us going — we go the extra mile to do every project the right way.',
+  lead: 'Client trust is what keeps us going. We go the extra mile to do every project the right way.',
   items: [
     { icon: '/images/itad/feature-eco.svg',         text: 'Eco-friendly, efficient recycling methods' },
     { icon: '/images/itad/feature-return.svg',      text: 'Maximum return on your retired assets' },
@@ -161,7 +161,7 @@ export const PICKUP = {
     address:   { label: 'Address',        placeholder: 'Street, City, State' },
     heard:     { label: 'How Did You Hear About Us?', placeholder: 'Select an option' },
     audience:  { label: 'Residential or Business?',   placeholder: 'Select an option' },
-    message:   { label: 'What Would You Like to Recycle?', placeholder: 'Please describe the assets you’d like picked up in detail — quantity, type, and condition.' },
+    message:   { label: 'What Would You Like to Recycle?', placeholder: 'Please describe the assets you’d like picked up in detail: quantity, type, and condition.' },
   },
   heard: ['Search engine', 'Referral', 'Social media', 'Returning customer', 'Other'],
   /* `id` is what the form posts and is fixed: /api/leads checks it against
@@ -174,7 +174,7 @@ export const PICKUP = {
   submit: 'Submit',
   /** The button while the request is on its way. */
   sending: 'Sending…',
-  sent: 'Thanks — your request is with us. We usually reply within one business day.',
+  sent: 'Thanks, your request is with us. We usually reply within one business day.',
   /** Shown under the button when /api/leads gives no message of its own, or cannot be reached. */
   errors: {
     generic: 'Something went wrong. Please try again.',

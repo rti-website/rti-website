@@ -25,7 +25,7 @@ export const COMPUTER_RECYCLE_DES_MOINES: CountyPage = {
   hero: {
     h1: "Environmental-Friendly Computer Recycling in Des Moines Minnesota",
     crumb: "Environmental-Friendly Computer Recycling in Des Moines Minnesota",
-    lead: "Recycle Technologies – Bringing you innovative computer recycling solutions all across Des Moines Minnesota.",
+    lead: "Recycle Technologies: Bringing you innovative computer recycling solutions all across Des Moines Minnesota.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
     secondary: { label: "Get a Quote", href: QUOTE_HREF },
   },

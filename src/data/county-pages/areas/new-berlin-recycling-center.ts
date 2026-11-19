@@ -52,7 +52,7 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
   quickInfo: [
     { glyph: 'pin',   label: "Address",      value: "2815 S 171st St, New Berlin, WI 53151", href: "https://www.google.com/maps/dir/?api=1&destination=2815+S+171st+St%2C+New+Berlin%2C+WI+53151" },
     { glyph: 'phone', label: "Phone",        value: "262-798-3040", href: "tel:+12627983040" },
-    { glyph: 'clock', label: "Hours",        value: "Mon–Fri 7:30 AM–4:00 PM" },
+    { glyph: 'clock', label: "Hours",        value: "Mon to Fri, 7:30 AM to 4:00 PM" },
     { glyph: 'badge', label: "Getting Here", value: "Main lot off S 171st St, near I-43" },
   ],
   directions: {
@@ -110,8 +110,8 @@ export const NEW_BERLIN_RECYCLING_CENTER: CountyPage = {
     name: "Recycle Technologies",
     text: "Providing reliable and certified electronics recycling services at individual and business levels.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 7:30 am – 4:00 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 7:30 am to 4:00 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "+1 262-798-3040", tel: "+12627983040" },
     ],
   },

@@ -97,7 +97,7 @@ export const CHECKLISTS: DownloadSection = {
       glyph: 'list',
       kind: 'PDF',
       title: 'Accepted Materials Checklist',
-      body: 'A printable checklist of what we accept — electronics, batteries, bulbs, and more — organized by category.',
+      body: 'A printable checklist of what we accept (electronics, batteries, bulbs, and more) organized by category.',
       href: request('Accepted Materials Checklist'),
     },
     {
@@ -135,7 +135,7 @@ export const SHIPPING: DownloadSection = {
       glyph: 'box',
       kind: 'PDF',
       title: 'Packaging Guide',
-      body: 'How to pack your devices safely — cushioning, sealing, and weight limits — so they arrive intact.',
+      body: 'How to pack your devices safely (cushioning, sealing, and weight limits) so they arrive intact.',
       href: request('Packaging Guide'),
     },
     {

@@ -26,14 +26,14 @@ export const MINNEAPOLIS: CountyPage = {
   about: {
     heading: "About Recycling Services in Minneapolis",
     blocks: [
-      { p: "At Recycle Technologies, we’re helping community reach its sustainability goals with a revolutionary solution in recycling. Recycle Technologies is one of the leading recycling companies in Minnesota, specializing in Electronics, Light Bulbs, Batteries, TVs or Ballasts recycling. Since 1993, we have been providing our professional recycling knowledge services to businesses and local governments. We have been successfully lowering the volume of waste going into the garbage dumps, lowering our carbon footprint and improving the overall sustainability of the environment. All of our services are carried out against our commitment to high-quality standards and a transparent pricing structure. We offer recycling services in all major cities in Minnesota – including Minneapolis, St. Paul, Duluth and more." },
+      { p: "At Recycle Technologies, we’re helping community reach its sustainability goals with a revolutionary solution in recycling. Recycle Technologies is one of the leading recycling companies in Minnesota, specializing in Electronics, Light Bulbs, Batteries, TVs or Ballasts recycling. Since 1993, we have been providing our professional recycling knowledge services to businesses and local governments. We have been successfully lowering the volume of waste going into the garbage dumps, lowering our carbon footprint and improving the overall sustainability of the environment. All of our services are carried out against our commitment to high-quality standards and a transparent pricing structure. We offer recycling services in all major cities in Minnesota, including Minneapolis, St. Paul, Duluth and more." },
       { h: "Minneapolis Recycling Dropoff Location" },
       { p: "Drop off your recycling material at our facility for affordable and safe recycling services. Your convenience is important to us which is why we offer pickup services all across Green Bay Wisconsin for all kinds of recycling solutions. You can schedule a pickup by calling us at or by filling out [a form](pickup) ." },
     ],
   },
   sections: [
     { kind: 'features', cards: [
-      { title: "Sustainable", text: "Protecting the future by choosing to recycle all of our waste – nothing goes to landfill." },
+      { title: "Sustainable", text: "Protecting the future by choosing to recycle all of our waste. Nothing goes to landfill." },
       { title: "Forward Thinking", text: "Coming up with new ideas and innovations to make the recyclable process easier." },
       { title: "Reliable & Flexible", text: "A flexible and adaptable collection for your waste, that can be customized to meet your very individual requirements." },
       { title: "Certified", text: "We will provide you with Certificate of Destruction and ensures that your recycled material stay out of landfills." },

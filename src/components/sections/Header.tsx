@@ -121,7 +121,7 @@ export async function Header({ quoteOnly = false, quoteHref = QUOTE_HREF }: { qu
       {/* Logo — Figma 6107:1841 at x319, 194x46, centred in the white bar, whose
           height is HEADER_H minus the 41px announcement bar. */}
       <Box x={319} y={41 + (HEADER_H - 41 - 46) / 2} w={194} h={46}>
-        <Link href="/" aria-label="Recycle Technologies — home" className="block size-full">
+        <Link href="/" aria-label="Recycle Technologies, home" className="block size-full">
           <Image src="/images/logo.png" alt="Recycle Technologies" width={194} height={46} priority className="size-full object-contain" />
         </Link>
       </Box>

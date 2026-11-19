@@ -21,7 +21,7 @@ export const COMPUTER_RECYCLING_MADISON: CountyPage = {
   hero: {
     h1: 'Computer Recycling in Madison, WI',
     crumb: "Environmental-Friendly Computer Recycling in Madison Wisconsin",
-    lead: "Recycle Technologies – Bringing you innovative computer recycling solutions all across Madison, Wisconsin.",
+    lead: "Recycle Technologies: Bringing you innovative computer recycling solutions all across Madison, Wisconsin.",
     button: { label: "Schedule a Pickup", href: PICKUP_HREF },
   },
   about: {

@@ -33,7 +33,7 @@ export const SHREDDING_APPLETON: CountyPage = {
     blocks: [
       { p: "We at Recycle Technologies take document destruction and document shredding very seriously. We follow a highly secure recycling process to ensure that we protect your organization’s big, small data and confidential information!" },
       { h: "AAA NAID Certified Paper Shredding Company" },
-      { p: "At Recycle Technologies, we use top of the range technology and gear. Our mechanics are highly trained, our standards of excellence are immaculate – we only employ the very best AAA NAID certified paper shredders in Appleton, Wisconsin. Operating under time pressure? We can accommodate you: we have a 24/7 emergency service ready to get you back on track with 100% customer satisfaction guaranteed! Call us at +1 262-798-3040 or fill out the [inquiry form](quote) to receive free, no-obligation quotes from us today." },
+      { p: "At Recycle Technologies, we use top of the range technology and gear. Our mechanics are highly trained, our standards of excellence are immaculate. We only employ the very best AAA NAID certified paper shredders in Appleton, Wisconsin. Operating under time pressure? We can accommodate you: we have a 24/7 emergency service ready to get you back on track with 100% customer satisfaction guaranteed! Call us at +1 262-798-3040 or fill out the [inquiry form](quote) to receive free, no-obligation quotes from us today." },
     ],
   },
   sections: [
@@ -48,7 +48,7 @@ export const SHREDDING_APPLETON: CountyPage = {
       { h2: "Appleton Trusted Choice For shredding & Destruction Services" },
       { p: "We offer broad range of shredding services in Appleton, Wisconsin and nearby areas." },
       { h2: "Request a Free Quote for Shredding Services in Appleton" },
-      { p: "Customers have trust in companies which guarantee the safety of their sensitive data. Nowadays, security is as much an obligation on a business’s list as profits, and we’re here to help ensure that your confidentiality records are handled with care—so you may rest easy knowing that your Appleton paper shredding environment is by no means vulnerable to threat! If you want to know more about the many advantages we offer, including our affordable prices and proximity to the greater Madison vicinity (as well as how we can assist whether it be financial records or confidential client information), then don’t hesitate to get in touch today." },
+      { p: "Customers have trust in companies which guarantee the safety of their sensitive data. Nowadays, security is as much an obligation on a business’s list as profits, and we’re here to help ensure that your confidentiality records are handled with care, so you may rest easy knowing that your Appleton paper shredding environment is by no means vulnerable to threat! If you want to know more about the many advantages we offer, including our affordable prices and proximity to the greater Madison vicinity (as well as how we can assist whether it be financial records or confidential client information), then don’t hesitate to get in touch today." },
       { p: "Call us at +1 262-798-3040 or fill out the [inquiry form](quote) to receive free, no-obligation quotes from us today." },
     ] },
   ],

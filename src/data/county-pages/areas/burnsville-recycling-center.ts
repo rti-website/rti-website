@@ -46,8 +46,8 @@ export const BURNSVILLE_RECYCLING_CENTER: CountyPage = {
     name: "Recycle Technologies",
     text: "Providing reliable and certified electronics recycling services at individual and business levels.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 7:30 am – 4:00 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 7:30 am to 4:00 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "+1 763-559-5130", tel: "+17635595130" },
     ],
   },

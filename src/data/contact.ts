@@ -207,7 +207,7 @@ export const FORM = {
     failed: 'Something went wrong. Please try again.',
     offline: 'Could not reach the server. Please check your connection and try again.',
   },
-  sent: 'Thanks — your message is with us. We usually reply within one business day.',
+  sent: 'Thanks, your message is with us. We usually reply within one business day.',
   /** The pop-up a sent form opens (SuccessDialog), 24 Sep 2026. The title
    *  gets the visitor's first name when they gave one: "Thank you, Jane!" */
   popup: {
@@ -241,7 +241,7 @@ export const FACILITIES = {
 export const FAQ = {
   eyebrow: 'FAQs',
   heading: 'Frequently Asked Questions',
-  lead: 'A few quick answers before you reach out — if you don’t see what you need, our team is happy to help.',
+  lead: 'A few quick answers before you reach out. If you don’t see what you need, our team is happy to help.',
   items: [
     { q: 'Why should I recycle?', a: 'Recycling is essential not only for conserving resources and reducing pollution but also for promoting economic sustainability.' },
     { q: 'What items are electronics?', a: 'Electronics include a wide range of items but are generally considered devices that use electricity and electronic circuits to function.' },
@@ -256,7 +256,7 @@ export const FAQ = {
 export const CTA = {
   heading: 'Ready to Get Your Recycling Scheduled?',
   body: [
-    'Recycle Technologies has been providing services to the community since 1993. Tell us what you need to recycle and we’ll send a fast, no-obligation quote — or set up a pickup with one of our licensed Minnesota or Wisconsin facilities.',
+    'Recycle Technologies has been providing services to the community since 1993. Tell us what you need to recycle and we’ll send a fast, no-obligation quote, or set up a pickup with one of our licensed Minnesota or Wisconsin facilities.',
   ],
   primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
   secondary: { label: 'Schedule a Pickup', href: PICKUP_HREF },

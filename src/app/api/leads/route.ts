@@ -387,9 +387,9 @@ export async function POST(req: Request): Promise<Response> {
     notified = result.sent
     notifyFail = result.reason
   } else if (!to) {
-    console.warn('[leads] saved, but LEAD_NOTIFY_TO is not set — nobody was emailed.')
+    console.warn('[leads] saved, but LEAD_NOTIFY_TO is not set, nobody was emailed.')
   } else {
-    console.warn('[leads] saved, but SMTP is not configured — nobody was emailed.')
+    console.warn('[leads] saved, but SMTP is not configured, nobody was emailed.')
   }
 
   // Assignment and the Activity lines for the routing, after the answer.

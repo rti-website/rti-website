@@ -125,7 +125,7 @@ export function MobileNav({
           target) is what sets the minimum. Phone only; this whole bar is
           lg:hidden. */}
       <div className="flex h-[56px] items-center justify-between border-b border-line bg-white py-[6px] pl-[20px] pr-[16px]">
-        <Link href="/" aria-label="Recycle Technologies — home" className="block h-[34px] w-[143.39px]">
+        <Link href="/" aria-label="Recycle Technologies, home" className="block h-[34px] w-[143.39px]">
           <Image src="/images/logo.png" alt="Recycle Technologies" width={287} height={68} priority className="size-full object-contain object-left" />
         </Link>
         {/* Frame 1000007602 — the Arrange Pickup button and the menu button,
@@ -183,7 +183,7 @@ export function MobileNav({
       >
         {/* Drawer Header — p-16, logo + 44px close */}
         <div className="flex shrink-0 items-center justify-between p-[16px]">
-          <Link href="/" aria-label="Recycle Technologies — home" onClick={() => setDrawer(false)} className="block h-[34px] w-[143.39px]">
+          <Link href="/" aria-label="Recycle Technologies, home" onClick={() => setDrawer(false)} className="block h-[34px] w-[143.39px]">
             <Image src="/images/logo.png" alt="Recycle Technologies" width={287} height={68} className="size-full object-contain object-left" />
           </Link>
           <button

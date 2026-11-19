@@ -43,7 +43,7 @@ export const BLAINE_BATTERY_RECYCLING: LocalPage = {
               value: "[1525 99th Ln NE, Blaine, MN 55449](https://www.google.com/maps/dir/?api=1&destination=1525%2099th%20Ln%20NE%2C%20Blaine%2C%20Minnesota%2055449)",
             },
             { label: "Phone", value: "763-559-5130" },
-            { label: "Hours", value: "Monday through Friday, 7:30 AM–4:00 PM" },
+            { label: "Hours", value: "Monday through Friday, 7:30 AM to 4:00 PM" },
             {
               label: "Arrival",
               value: "Take I-35W to 99th Ave NE, then head to 99th Lane NE. Battery drop-off is at the north-end dock behind the 1525 building. Follow the signs around to the rear loading area, where a team member will meet you. Parking is free.",

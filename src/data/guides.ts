@@ -65,7 +65,7 @@ export const GUIDES: {
     {
       glyph: 'laptop',
       title: 'What Is IT Asset Disposition (ITAD)?',
-      body: 'An overview of ITAD for businesses — what it covers, why it matters for compliance, and how it differs from standard recycling.',
+      body: 'An overview of ITAD for businesses, what it covers, why it matters for compliance, and how it differs from standard recycling.',
       // KEEP row in url-map.csv, built=FALSE. 404s until that page is migrated.
       href: href('/it-asset-disposition/'),
     },
@@ -140,7 +140,7 @@ export const DOCS = {
       glyph: 'list' as const,
       kind: 'PDF',
       title: 'Accepted Materials Checklist',
-      body: 'A printable checklist of what we accept — electronics, batteries, bulbs, and more — organized by category.',
+      body: 'A printable checklist of what we accept (electronics, batteries, bulbs, and more) organized by category.',
       href: request('Accepted Materials Checklist'),
     },
     {

@@ -50,7 +50,7 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage = {
   quickInfo: [
     { glyph: 'pin',   label: "Address", value: ADDRESS, href: MAPS },
     { glyph: 'phone', label: "Phone", value: "+1 (864) 774-8310", href: "tel:+18647748310" },
-    { glyph: 'clock', label: "Hours", value: "9:00 AM–4:00 PM" },
+    { glyph: 'clock', label: "Hours", value: "9:00 AM to 4:00 PM" },
     { glyph: 'badge', label: "Email", value: "support@lightingresourcesinc.com", href: "mailto:support@lightingresourcesinc.com" },
   ],
   directions: {
@@ -115,7 +115,7 @@ export const WILLIAMSTON_SOUTH_CAROLINA: CountyPage = {
     lines: [
       { kind: 'phone', text: "+1 (864) 774-8310", tel: "+18647748310" },
       { kind: 'email', text: "support@lightingresourcesinc.com" },
-      { kind: 'hours', text: "9:00 AM–4:00 PM" },
+      { kind: 'hours', text: "9:00 AM to 4:00 PM" },
     ],
   },
 }

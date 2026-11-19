@@ -34,7 +34,7 @@ export const SHREDDING_WAUKESHA: CountyPage = {
   },
   sections: [
     { kind: 'text', heading: "Secure Paper Shredding Services in Waukesha Wisconsin", blocks: [
-      { p: "Companies are making the switch to the digital format. Shredding old documents is part of this process. However, it’s important not just to make a document disappear digitally – it also must be shredded before being made into new paper. It’s vital that your clients’ private information doesn’t fall into the wrong hands; after all, you won’t believe how easy it is for paper containing important company or employee data to simply end up in the trash!" },
+      { p: "Companies are making the switch to the digital format. Shredding old documents is part of this process. However, it’s important not just to make a document disappear digitally. It also must be shredded before being made into new paper. It’s vital that your clients’ private information doesn’t fall into the wrong hands; after all, you won’t believe how easy it is for paper containing important company or employee data to simply end up in the trash!" },
       { p: "You don’t want your company to be at risk of a breach because someone threw information into the recycling bin without first shredding it by hand. Whenever you need a professional and reliable team to assist you in getting rid of sensitive information, Recycle Technologies can handle the task as well as come pick up and dispose of your documents. Call us today +1 262-798-3040 and we’ll schedule an appointment for when it’s convenient for you." },
       { h2: "Why is Paper Shredding Important?" },
       { h: "Environmentally Friendly" },

@@ -202,7 +202,7 @@ export const FORT_WORTH_LIGHT_BULB_RECYCLING: LocalPage = {
         {
           kind: "callout",
           body: [
-            "The Texas Commission on Environmental Quality lets businesses manage used fluorescent and HID lamps as universal waste. That means containers marked \"Universal Waste—Lamps,\" \"Waste Lamps\" or \"Used Lamps\" with a start date, storage that keeps lamps intact, and shipment to an approved facility within one year. Lamps from households and very small quantity generators are exempt from the landfill ban, though TCEQ still recommends recycling CFLs (TCEQ RG-377).",
+            "The Texas Commission on Environmental Quality lets businesses manage used fluorescent and HID lamps as universal waste. That means containers marked \"Universal Waste, Lamps,\" \"Waste Lamps\" or \"Used Lamps\" with a start date, storage that keeps lamps intact, and shipment to an approved facility within one year. Lamps from households and very small quantity generators are exempt from the landfill ban, though TCEQ still recommends recycling CFLs (TCEQ RG-377).",
             "Fort Worth's household collection center serves residents only, and limits bulbs per visit, so businesses across Tarrant County need a commercial route like our partner location.",
           ],
         },

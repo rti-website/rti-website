@@ -49,9 +49,9 @@ export async function generateMetadata({ params }: Props) {
        archive of sixteen pages is not sixteen identical <head>s. Built here
        rather than appended to cat.description, which can be long enough on its
        own to push the result past a SERP's cut-off. */
-    title: `${cat.name} — Page ${page} of ${pages} | Recycle Technologies`,
+    title: `${cat.name}, Page ${page} of ${pages} | Recycle Technologies`,
     description:
-      `${cat.name} articles from Recycle Technologies — page ${page} of ${pages}.`,
+      `${cat.name} articles from Recycle Technologies, page ${page} of ${pages}.`,
   })
 }
 

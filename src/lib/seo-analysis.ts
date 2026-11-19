@@ -256,7 +256,7 @@ export function analyse(input: AnalysisInput): Analysis {
     const d = Math.round(density * 100) / 100
     add('keyword-density', 'Keyword Density', 'keyword',
       d >= 0.5 && d <= 2.5 ? 'good' : d > 0 && d < 0.5 ? 'ok' : d === 0 ? 'bad' : 'bad',
-      `${d}% — ${kwCount} occurrence${kwCount === 1 ? '' : 's'} in ${wordCount} words. Aim for 0.5 to 2.5%.`)
+      `${d}%, ${kwCount} occurrence${kwCount === 1 ? '' : 's'} in ${wordCount} words. Aim for 0.5 to 2.5%.`)
   }
 
   if (!kw) noKw('keyword-prominence', 'Keyword Prominence', 'keyword')
@@ -294,7 +294,7 @@ export function analyse(input: AnalysisInput): Analysis {
     h1s.length === 0 ? 'good' : 'bad',
     h1s.length === 0
       ? 'One H1, printed from the title.'
-      : `The body contains ${h1s.length} more H1${h1s.length === 1 ? '' : 's'} — these should be H2.`)
+      : `The body contains ${h1s.length} more H1${h1s.length === 1 ? '' : 's'}, these should be H2.`)
 
   {
     const levels = headings.filter((h) => h.level >= 2).map((h) => h.level)

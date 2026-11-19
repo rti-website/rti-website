@@ -116,7 +116,7 @@ export const CTA = {
 /** Gaps between Figma 6374:4567, the doc and the facts. */
 export const TODO_FOR_DESIGN = [
   'DOC FIX NEEDED: the R2v3 card claims "Our Blaine, Minnesota, and Wisconsin facilities are R2v3-certified". Wisconsin is pursuing certification, per the About Us doc, the Certifications doc, this frame\'s own footnote and the live site. The frame\'s wording is built.',
-  'The frame\'s hero breadcrumb reads "Home / Resources" — the same leftover the Locations frame has. Built as "Home / Why Choose Us".',
+  'The frame\'s hero breadcrumb reads "Home / Resources". The same leftover the Locations frame has. Built as "Home / Why Choose Us".',
   'Several paragraphs are worded differently in the frame and the doc (both section leads, the Since 1993 card, all three trust cards, the CTA body). The doc\'s wording is built throughout except the R2v3 card above.',
   'The CTA body abbreviates the company to "RT", which appears nowhere else on the site. Kept as the writer wrote it; worth a decision.',
 ]

@@ -133,7 +133,7 @@ export const CERTS: CertCard[] = [
     logo: { src: `${L}/rcra.svg`, w: 120, h: 48, fit: 'fill' },
     name: 'RCRA',
     title: 'Resource Conservation and Recovery Act (RCRA)',
-    body: 'The Resource Conservation and Recovery Act governs how hazardous waste — including certain electronics and batteries — must be handled and disposed of.',
+    body: 'The Resource Conservation and Recovery Act governs how hazardous waste (including certain electronics and batteries) must be handled and disposed of.',
   },
   {
     logo: { src: `${L}/ieee.png`, w: 90, h: 40, fit: 'contain' },
@@ -145,7 +145,7 @@ export const CERTS: CertCard[] = [
     logo: { src: `${L}/fcra.svg`, w: 120, h: 48, fit: 'fill' },
     name: 'FCRA',
     title: 'Fair Credit Reporting Act (FCRA)',
-    body: 'The Fair Credit Reporting Act requires proper disposal of consumer report information — directly relevant to our shredding and hard drive destruction services.',
+    body: 'The Fair Credit Reporting Act requires proper disposal of consumer report information, directly relevant to our shredding and hard drive destruction services.',
   },
   {
     // The black wordmark the homepage strip uses since 2 Oct 2026 (Figma

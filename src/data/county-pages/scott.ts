@@ -48,15 +48,15 @@ export const SCOTT: CountyPage = {
       "Little Six Casino",
       "Wild Thing",
       "Excalibur",
-      "The Landing—Minnesota River Heritage Park",
+      "The Landing: Minnesota River Heritage Park",
     ],
   },
   company: {
     name: "Recycle Technologies",
     text: "Recycle Technologies provides reliable and certified electronics recycling services at individual and business levels.",
     lines: [
-      { kind: 'hours', text: "Monday – Friday: 7:30 am – 4:00 pm" },
-      { kind: 'hours', text: "Saturday – Sunday: Closed" },
+      { kind: 'hours', text: "Monday to Friday: 7:30 am to 4:00 pm" },
+      { kind: 'hours', text: "Saturday to Sunday: Closed" },
       { kind: 'phone', text: "+1 763-559-5130", tel: "+17635595130" },
     ],
   },

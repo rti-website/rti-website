@@ -80,7 +80,7 @@ export const NEWSLETTER = {
   button: 'Subscribe',
   disclaimer: 'By subscribing, you agree to receive occasional updates. Unsubscribe anytime.',
   /** Replaces the bar once the address is in. */
-  sent: 'Thanks — you are on the list.',
+  sent: 'Thanks. You are on the list.',
   /** Under the bar: an address that does not look like one, /api/subscribe
    *  failing without a message of its own, the server out of reach. */
   errors: {

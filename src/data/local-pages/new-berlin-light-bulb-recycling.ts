@@ -210,7 +210,7 @@ export const NEW_BERLIN_LIGHT_BULB_RECYCLING: LocalPage = {
         {
           kind: "callout",
           body: [
-            "The Wisconsin DNR regulates fluorescent and other mercury lamps from businesses as universal waste. That means closed, non-metal containers labeled \"Universal Waste – Lamps,\" \"Waste Lamps\" or \"Used Lamps,\" a start date on each container, and shipment to a recycler within one year (DNR guide WA-1810). Households aren't held to those rules, but the DNR still urges recycling mercury bulbs.",
+            "The Wisconsin DNR regulates fluorescent and other mercury lamps from businesses as universal waste. That means closed, non-metal containers labeled \"Universal Waste, Lamps,\" \"Waste Lamps\" or \"Used Lamps,\" a start date on each container, and shipment to a recycler within one year (DNR guide WA-1810). Households aren't held to those rules, but the DNR still urges recycling mercury bulbs.",
             "County household hazardous waste programs in Milwaukee and Waukesha counties serve residents only, so businesses need another route. Waukesha County lists Recycle Technologies in New Berlin as a local recycler for business lamps and ballasts (Waukesha County).",
           ],
         },

@@ -236,7 +236,7 @@ export async function Hero() {
               {i > 0 && <span className="w-px shrink-0 self-stretch bg-white/15" aria-hidden="true" />}
               {s.href ? (
                 <a href={s.href} target="_blank" rel={outboundRel(s.href)}
-                  aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+                  aria-label={`${s.v}, ${s.l}, see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
                   className={`${cls} transition-opacity hover:opacity-80`}>
                   {body}
                 </a>
@@ -274,7 +274,7 @@ export async function Hero() {
           )
           return s.href ? (
             <a key={s.icon} href={s.href} target="_blank" rel={outboundRel(s.href)}
-              aria-label={`${s.v}, ${s.l} — see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
+              aria-label={`${s.v}, ${s.l}, see Recycle Technologies in the R2 certified facility directory (opens in a new tab)`}
               className={`${cls} transition-opacity hover:opacity-80`}>
               {body}
             </a>

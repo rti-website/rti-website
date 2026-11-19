@@ -110,7 +110,7 @@ export const CASE_STUDY_CARDS: CaseStudyCard[] = [
     category: 'corporate-offices',
     glyph: 'laptop',
     title: 'A Midwest business goes paperless and waste-free',
-    blurb: 'See how Recycle Technologies cleared years of old electronics, batteries, bulbs and confidential paper for one growing business — in a single pickup.',
+    blurb: 'See how Recycle Technologies cleared years of old electronics, batteries, bulbs and confidential paper for one growing business, in a single pickup.',
     preview: '/images/case-studies/midwest-business-paperless-waste-free.jpg',
     challenge:
       'A growing business had old computers, batteries and light bulbs piling up in storage, '
@@ -225,7 +225,7 @@ export const COMPLIANCE_CASE_IDS = ['midwest-business', 'auto-repair-shop', 'hos
 export const GRID = {
   eyebrow: 'Case Studies',
   heading: 'How We Solve Real Recycling Challenges',
-  lead: 'Real engagements across the industries we serve — client names withheld for confidentiality.',
+  lead: 'Real engagements across the industries we serve, client names withheld for confidentiality.',
   /** 6391:1534. The first pill is the "no filter" state. */
   allLabel: 'All Industries',
   /** One pill per industry. `id` matches a card's `category` and is what the
@@ -255,8 +255,8 @@ export const CTA = {
 /** Gaps between Figma 6382:6595 and what can be verified. */
 export const TODO_FOR_DESIGN = [
   'The five invented stories are GONE (22 Sep 2026) and the three real ones from Asim\'s PDFs are in their place. The frame still draws five cards in a 3 + 2 layout; three fill one row and the grid height was re-measured to match. If Aqeel updates the frame, the card count is data-driven and nothing needs redrawing.',
-  'The PDFs in public/case-studies/ are ~2.5 MB each because they embed full-bleed photography. Worth running them through a PDF optimiser before launch — a visitor on a phone downloading 2.7 MB for a one-page document is a slow experience, and these are linked directly rather than behind a request form.',
-  'Each PDF\'s own footer carries "HIPPA" for HIPAA and lists NIST, GLBA, FCRA, RCRA, IEEE and NAID AAA as compliance marks — the same list flagged on the homepage certification strip, where only R2v3 and RIOS are certifications RTI actually holds. The typo and the claims are in the source documents, not in this site\'s copy, so fixing them means new PDFs from whoever produced these.',
-  'The industry filter is real, not decorative — it is the build\'s sixth client component (src/components/client/CaseStudyFilter.tsx). The section keeps its full height when a filter is applied, so the page below it never moves; that leaves whitespace under a one-card result. On a fixed canvas that is the safe trade, but if the team would rather the section shrink, the canvas has to become flow-positioned first.',
+  'The PDFs in public/case-studies/ are ~2.5 MB each because they embed full-bleed photography. Worth running them through a PDF optimiser before launch. A visitor on a phone downloading 2.7 MB for a one-page document is a slow experience, and these are linked directly rather than behind a request form.',
+  'Each PDF\'s own footer carries "HIPPA" for HIPAA and lists NIST, GLBA, FCRA, RCRA, IEEE and NAID AAA as compliance marks. The same list flagged on the homepage certification strip, where only R2v3 and RIOS are certifications RTI actually holds. The typo and the claims are in the source documents, not in this site\'s copy, so fixing them means new PDFs from whoever produced these.',
+  'The industry filter is real, not decorative. It is the build\'s sixth client component (src/components/client/CaseStudyFilter.tsx). The section keeps its full height when a filter is applied, so the page below it never moves; that leaves whitespace under a one-card result. On a fixed canvas that is the safe trade, but if the team would rather the section shrink, the canvas has to become flow-positioned first.',
   'The card glyphs are drawn inline rather than exported. The laptop and cross originals sit under 6391:1551 and 6391:1560; the automotive mark has no Figma original because the frame had no automotive story.',
 ]

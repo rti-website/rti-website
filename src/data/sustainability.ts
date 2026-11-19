@@ -20,7 +20,7 @@ import { QUOTE_HREF, href, PICKUP_HREF } from '@/lib/urls'
 export const SEO = {
   title: 'Sustainability & Environmental Impact | Recycle Technologies',
   description:
-    'How Recycle Technologies keeps electronics out of landfills — dismantling devices to base materials, routing them to vetted downstream vendors, and documenting every shipment.',
+    'How Recycle Technologies keeps electronics out of landfills, dismantling devices to base materials, routing them to vetted downstream vendors, and documenting every shipment.',
 }
 
 /*
@@ -76,7 +76,7 @@ export const CIRCULAR = {
     title: 'How Materials Re-Enter the Loop',
     steps: [
       'Devices are collected through pickup, drop-off, or our Mail-In Program.',
-      'Devices are dismantled into base materials — plastic, wire, circuit boards, metals, and glass.',
+      'Devices are dismantled into base materials: plastic, wire, circuit boards, metals, and glass.',
       'Materials follow a reuse → refurbishment → recovery hierarchy before disposal is ever considered.',
       'Recovered materials re-enter manufacturing supply chains as raw inputs for new products.',
     ],
@@ -97,7 +97,7 @@ export const ZERO_LANDFILL = {
     {
       glyph: 'loop' as const,
       title: 'How We Do It',
-      body: 'Incoming items are sorted and dismantled into base materials — metals, plastics, glass, and circuit boards — which are routed to vetted downstream processors for reprocessing rather than disposal.',
+      body: 'Incoming items are sorted and dismantled into base materials (metals, plastics, glass, and circuit boards) which are routed to vetted downstream processors for reprocessing rather than disposal.',
     },
     {
       glyph: 'alert' as const,
@@ -121,7 +121,7 @@ export const REPORTING = {
     { value: '32+',  label: 'Years of Operating Record' },
     { value: '50',   label: 'States Reached via Mail-In Program' },
   ],
-  note: 'Every shipment we process comes with a Certificate of Recycling or Destruction — documented proof your materials were handled the way we say they were, not just a promise.',
+  note: 'Every shipment we process comes with a Certificate of Recycling or Destruction, documented proof your materials were handled the way we say they were, not just a promise.',
 }
 
 /** Where we're headed — 6383:1164. Four cards, equal height. */

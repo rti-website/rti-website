@@ -111,7 +111,7 @@ export const HOME_INDUSTRIES = {
 export const HOME_HOW_IT_WORKS = {
   eyebrow: 'Simple & Secure',
   title: 'How It Works',
-  lead: 'Responsible recycling made simple — from ordering your kit to receiving your '
+  lead: 'Responsible recycling made simple, from ordering your kit to receiving your '
     + 'recycling documentation.',
   button: 'Get a Quote',
   /* The video card (7184:3248), 2 Oct 2026. */
@@ -347,11 +347,11 @@ export type Testimonial = {
  */
 export const TESTIMONIALS: Testimonial[] = [
   { name: 'Rachel Simmons', role: 'IT Director', stars: 5,
-    quote: 'No more guessing where your e-waste ends up — every shipment comes back with documented proof of responsible recycling. That transparency changed everything for us.' },
+    quote: 'No more guessing where your e-waste ends up. Every shipment comes back with documented proof of responsible recycling. That transparency changed everything for us.' },
   { name: 'Marcus Chen', role: 'Sustainability Manager', stars: 5,
     quote: 'We recycled over 2,000 laptops last year through their service. The pickup scheduling was seamless, and our compliance team loved the detailed audit reports.' },
   { name: 'Sarah Okonkwo', role: 'Small Business Owner', stars: 5,
-    quote: 'As a small business, I wasn’t sure how to dispose of old equipment safely. They made it incredibly easy — one call and everything was handled from start to finish.' },
+    quote: 'As a small business, I wasn’t sure how to dispose of old equipment safely. They made it incredibly easy. One call and everything was handled from start to finish.' },
   { name: 'David Hartwell', role: 'CTO', stars: 5,
     quote: 'The data destruction certificates gave us total peace of mind. Our clients trust us with sensitive information, and now we can prove it’s securely handled at end-of-life.' },
 
@@ -519,7 +519,7 @@ export const HOME_CTA = {
   body: [
     'Whether you’re a business managing IT asset disposition or an individual looking to '
     + 'recycle old electronics, Recycle Technologies makes it simple, secure, and sustainable.',
-    'Find a location near you or ship your items through our Mail-In Program — certified data '
+    'Find a location near you or ship your items through our Mail-In Program, certified data '
     + 'destruction and environmental impact reporting included.',
   ],
   primary:   { label: 'Get a Quote',       href: QUOTE_HREF },
