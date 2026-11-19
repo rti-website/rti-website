@@ -25,6 +25,10 @@ test('sentence dashes', () => {
   // Joined names and short labels keep one name (19 Nov 2026, after the first database run).
   assert.equal(undash('serving the Dallas–Fort Worth metroplex.'), 'serving the Dallas Fort Worth metroplex.')
   assert.equal(undash('Reduction in Air—Pollution'), 'Reduction in Air Pollution')
+  assert.equal(undash('Minneapolis–St. Paul area'), 'Minneapolis St. Paul area')
+  // A sentence dash written as an en dash with no spaces is not a joined name (20 Nov).
+  assert.equal(undash('regarding radon–the colorless gas causing cancer in nonsmokers–is heightened.'),
+    'regarding radon (the colorless gas causing cancer in nonsmokers) is heightened.')
 })
 
 test('hyphens, phone numbers and plain text are left alone', () => {

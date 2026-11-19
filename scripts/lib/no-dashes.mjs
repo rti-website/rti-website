@@ -59,7 +59,9 @@ export function undash(input) {
   // An en dash with no space joins two names: "Dallas–Fort Worth",
   // "Minneapolis–St. Paul". A space keeps them one name ("Dallas Fort Worth"),
   // where a comma or colon split it in two.
-  s = s.replace(/([A-Za-z])[–‒]([A-Za-z])/g, '$1 $2')
+  // Only between two capitalised words (20 Nov): "radon–the colorless gas" is
+  // a sentence dash written without spaces, and the rules below handle it.
+  s = s.replace(/\b([A-Z][A-Za-z.]*)[–‒]([A-Z])/g, '$1 $2')
   // A short heading or label joined by an em dash with no space ("Air—Pollution").
   if (s.trim().split(/\s+/).length <= 4) s = s.replace(/([A-Za-z])—([A-Z])/g, '$1 $2')
 
