@@ -55,6 +55,14 @@ export function undash(input) {
   s = s.replace(new RegExp(`\\b(${DAYS}\\.? to ${DAYS}\\.?) (\\d)`, 'g'), '$1, $2')
   s = s.replace(new RegExp(`\\b(${MONTHS}\\.?(?:\\s+\\d{1,2})?)\\s*${D}\\s*(${MONTHS}\\b)`, 'g'), '$1 to $2')
 
+  // --------------------------------------------------- joined words (19 Nov)
+  // An en dash with no space joins two names: "Dallas–Fort Worth",
+  // "Minneapolis–St. Paul". A space keeps them one name ("Dallas Fort Worth"),
+  // where a comma or colon split it in two.
+  s = s.replace(/([A-Za-z])[–‒]([A-Za-z])/g, '$1 $2')
+  // A short heading or label joined by an em dash with no space ("Air—Pollution").
+  if (s.trim().split(/\s+/).length <= 4) s = s.replace(/([A-Za-z])—([A-Z])/g, '$1 $2')
+
   // ------------------------------------------------------------ a pair
   // "x — a, b and c — y" in one sentence: brackets. Not across a sentence end.
   s = s.replace(new RegExp(`\\s*${D}\\s*([^${DASH}.!?\\n]{1,160}?)\\s*${D}\\s*`, 'g'), (m, inner, off, all) => {

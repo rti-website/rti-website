@@ -22,6 +22,9 @@ test('sentence dashes', () => {
   assert.equal(undash('Send a quote — or set up a pickup.'), 'Send a quote, or set up a pickup.')
   assert.equal(undash('The Landing—Minnesota River Heritage Park'), 'The Landing: Minnesota River Heritage Park')
   assert.equal(undash('University of Wisconsin–Madison Arboretum'), 'University of Wisconsin Madison Arboretum')
+  // Joined names and short labels keep one name (19 Nov 2026, after the first database run).
+  assert.equal(undash('serving the Dallas–Fort Worth metroplex.'), 'serving the Dallas Fort Worth metroplex.')
+  assert.equal(undash('Reduction in Air—Pollution'), 'Reduction in Air Pollution')
 })
 
 test('hyphens, phone numbers and plain text are left alone', () => {
