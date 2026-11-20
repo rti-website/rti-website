@@ -89,9 +89,16 @@ export function routeRecipients(d: RouteDecision, cc: string | null):
     : 'state not known, so it comes to you to hand out.'
   const line = `Routed to ${firsts} automatically: ${why}`
   const override = routeOverride()
-  if (override) return { to: override, cc: null, subjectPrefix: `[Routing test, would go to ${to}] `, line }
+  const routeCc = (ROUTES[d.route].cc ?? []).map((p) => p.email).join(', ')
+  if (override) return { to: override, cc: null, subjectPrefix: `[Routing test, would go to ${to}${routeCc ? `, cc ${routeCc}` : ''}] `, line }
+  // The route's own CC (Christine on Jason and Umer's, 20 Nov 2026) joins the
+  // server's CC (Usman); anyone already in To, or listed twice, appears once.
   const toList = to.toLowerCase().split(', ')
-  const keep = (cc ?? '').split(',').map((a) => a.trim()).filter((a) => a && !toList.includes(a.toLowerCase()))
+  const keep: string[] = []
+  for (const a of [...(cc ?? '').split(','), ...(ROUTES[d.route].cc ?? []).map((p) => p.email)]) {
+    const v = a.trim()
+    if (v && !toList.includes(v.toLowerCase()) && !keep.some((k) => k.toLowerCase() === v.toLowerCase())) keep.push(v)
+  }
   return { to, cc: keep.length ? keep.join(', ') : null, subjectPrefix: '', line }
 }
 

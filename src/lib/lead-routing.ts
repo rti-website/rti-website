@@ -26,7 +26,12 @@ export type RouteKey = 'christine' | 'jason-umer'
 
 export type Person = { name: string; email: string }
 
-export const ROUTES: Record<RouteKey, { label: string; people: Person[] }> = {
+/**
+ * `cc`: copied in on that route's email. Management, 20 Nov 2026 (via Umer
+ * Tariq): Christine is copied on the leads routed to Jason and Umer, so she
+ * sees which enquiries are being handed to them.
+ */
+export const ROUTES: Record<RouteKey, { label: string; people: Person[]; cc?: Person[] }> = {
   christine: {
     label: 'Christine',
     people: [{ name: 'Christine', email: 'christine@recycletechnologies.com' }],
@@ -37,6 +42,7 @@ export const ROUTES: Record<RouteKey, { label: string; people: Person[] }> = {
       { name: 'Jason Simister', email: 'jason.simister@lightingresourcesinc.com' },
       { name: 'Umer Tariq', email: 'umer.tariq@lightingresourcesinc.com' },
     ],
+    cc: [{ name: 'Christine', email: 'christine@recycletechnologies.com' }],
   },
 }
 
